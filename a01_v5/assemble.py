@@ -22,13 +22,13 @@ def ff(*args):
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", *args], check=True)
 
 
-def timecode(t0, f0):
+def timecode(t0, f0, col="0xECEDEF"):
     """drawtext: running hook timecode + frame counter, next to the mini drift line."""
     T = f"({t0:.3f}+t)"
     tc = (rf"%{{eif\:floor({T}/60)\:d\:2}}\:%{{eif\:mod(floor({T})\,60)\:d\:2}}."
           rf"%{{eif\:mod(floor({T}*100)\,100)\:d\:2}}")
-    return (f"drawtext=fontfile='{MONO}':fontsize=19:fontcolor=0xECEDEF@0.55:x=352:y=1003:text='{tc}',"
-            f"drawtext=fontfile='{MONO}':fontsize=19:fontcolor=0xECEDEF@0.35:x=474:y=1003:"
+    return (f"drawtext=fontfile='{MONO}':fontsize=19:fontcolor={col}@0.6:x=352:y=1003:text='{tc}',"
+            f"drawtext=fontfile='{MONO}':fontsize=19:fontcolor={col}@0.4:x=474:y=1003:"
             rf"text='F %{{eif\:n+{f0}\:d\:4}}'")
 
 
@@ -77,7 +77,7 @@ def finish(s, prev_world=None):
     if hits:
         tail += f",eq=brightness=0.07:saturation=1.3:enable='{hit_expr(hits, 0.085)}'"
     if s is not OUTRO:
-        tail += "," + timecode(s["t0"], round(s["t0"] * FPS))
+        tail += "," + timecode(s["t0"], round(s["t0"] * FPS), "0x0B0B0C" if s.get("hud") == "ink" else "0xECEDEF")
     if "fade_in" in s:
         tail += f",fade=t=in:st=0:d={s['fade_in']},fade=t=out:st={dur - s['fade_out']:.3f}:d={s['fade_out']}"
     grain = 11 if s is OUTRO else 9

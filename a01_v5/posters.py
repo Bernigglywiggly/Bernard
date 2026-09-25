@@ -233,18 +233,18 @@ def hud(s):
     W, H = 1920, 1080
     im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
-    wa = (236, 237, 239, 150)
-    crops(d, W, H, m=44, l=26, c=wa, wd=2)
+    fg = INK if s.get("hud") == "ink" else WHITE          # same layout, adapted to bright worlds
+    crops(d, W, H, m=44, l=26, c=fg + (150,), wd=2)
     m6, m5 = F("PlexMono-600", 22), F("PlexMono-500", 22)
-    d.text((80, 60), "A01", font=m6, fill=(236, 237, 239, 225))
-    d.text((80 + d.textlength("A01  ", font=m6), 60), "FOURTEEN POINTS", font=m5, fill=(236, 237, 239, 130))
+    d.text((80, 60), "A01", font=m6, fill=fg + (225,))
+    d.text((80 + d.textlength("A01  ", font=m6), 60), "FOURTEEN POINTS", font=m5, fill=fg + (130,))
     tw = d.textlength(s["world"], font=m6)
-    d.text((W - 80, 60), s["world"], font=m6, fill=(236, 237, 239, 225), anchor="ra")
+    d.text((W - 80, 60), s["world"], font=m6, fill=fg + (225,), anchor="ra")
     d.rectangle([W - 80 - tw - 26, 66, W - 80 - tw - 14, 78], fill=AMBER + (255,))
     # mini drift line + position
     x0, x1, y = 80, 330, 1012
     pts = [(x0 + i, y + 7 * math.sin(i / 28.0)) for i in range(0, x1 - x0 + 1, 2)]
-    d.line(pts, fill=(138, 144, 160, 170), width=2)
+    d.line(pts, fill=(fg if s.get("hud") == "ink" else STEEL) + (170,), width=2)
     frac = (s["t0"] + s["t1"]) / 2 / DURATION
     px = x0 + frac * (x1 - x0)
     py = y + 7 * math.sin((px - x0) / 28.0)
@@ -254,7 +254,7 @@ def hud(s):
     sw = [GROUND] + [WORLD_SWATCH[k] for k in names] + [AMBER]
     for i, c in enumerate(reversed(sw)):
         xx = W - 80 - 16 - i * 22
-        d.rectangle([xx, 1004, xx + 16, 1020], fill=c + (255,), outline=(236, 237, 239, 110), width=1)
+        d.rectangle([xx, 1004, xx + 16, 1020], fill=c + (255,), outline=fg + (110,), width=1)
     im.save(os.path.join(TEX, f"HUD_{s['id']}.png"))
 
 

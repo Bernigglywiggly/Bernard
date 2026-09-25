@@ -32,7 +32,7 @@ def timecode(t0, f0, col="0xECEDEF"):
             rf"text='F %{{eif\:n+{f0}\:d\:4}}'")
 
 
-def hit_expr(times, dur=0.13):
+def hit_expr(times, dur=0.085):
     return "+".join(rf"between(t\,{h:.3f}\,{h + dur:.3f})" for h in times)
 
 
@@ -75,7 +75,7 @@ def finish(s, prev_world=None):
         last = f"h{i + 1}"
     tail = "format=yuv444p"
     if hits:
-        tail += f",eq=brightness=0.07:saturation=1.3:enable='{hit_expr(hits, 0.085)}'"
+        tail += f",eq=brightness=0.05:saturation=1.3:enable='{hit_expr(hits, 0.042)}'"
     if s is not OUTRO:
         tail += "," + timecode(s["t0"], round(s["t0"] * FPS), "0x0B0B0C" if s.get("hud") == "ink" else "0xECEDEF")
     if "fade_in" in s:

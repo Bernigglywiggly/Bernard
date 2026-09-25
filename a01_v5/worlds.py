@@ -67,7 +67,7 @@ def reset(samples=None, blur=False, raytrace=False, res=None, engine="EEVEE"):
     if engine == "CYCLES":
         sc.render.engine = "CYCLES"
         use_gpu(sc)
-        safe(sc.cycles, samples=(samples or SAMPLES) * 4, adaptive_threshold=0.02, use_denoising=True,
+        safe(sc.cycles, samples=(samples or SAMPLES) * 2, adaptive_threshold=0.02, use_denoising=True,
              max_bounces=6, glossy_bounces=4, diffuse_bounces=2, transmission_bounces=2, volume_bounces=0)
         sc.render.use_persistent_data = True
     for eng in (() if engine == "CYCLES" else ("BLENDER_EEVEE_NEXT", "BLENDER_EEVEE")):

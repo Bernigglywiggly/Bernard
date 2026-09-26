@@ -6,8 +6,8 @@ Status tags: **[V]** verified this session (see `lab/research/script_facts.md`),
 ---
 
 ## EP01 · Sixteen Hours  *(being built: `lab/ep01/`)*
-- **Ground:** "This task takes a human expert sixteen hours. In March 2026 an AI finished tasks like it half the time, on its own." [V: METR, ≥16 h 50% horizon] "Seven years earlier, the best it could manage took you two seconds." [C: METR 2025 paper, 2019 model ≈ 2 s]
-- **Mechanism:** METR times people on ~228 tasks (seconds to days), gives the same tasks to models, finds where they win half the time: the *time horizon*. [V] Ladder: 2 s → 9 s → 5 min → 1 h → 16 h. [C for the middle rungs]
+- **Ground:** "This task takes a human expert sixteen hours. In March 2026 an AI finished tasks like it half the time, on its own." [V: METR, ≥16 h 50% horizon] "Seven years earlier, the best it could manage took you two seconds." [V: METR 2025, GPT-2-era ≈ 2 s]
+- **Mechanism:** METR times people on ~228 tasks (seconds to days), gives the same tasks to models, finds where they win half the time: the *time horizon*. [V] Ladder: 2 s (2019) → ~30 s (2022) → ~4 min (Mar 2023) → ~1 h (early 2025) → 16 h (Mar 2026). [V: METR 2025 paper + METR Mar 2026]
 - **You:** 16 hours = two working days: coursework, a takeaway's website, the mod you never finished.
 - **Idea:** exponential blindness. Fold paper 42 times and it passes the Moon. [M: 0.1 mm × 2⁴² ≈ 440,000 km] Doubling every ~7 months since 2019, lately ~4. [V]
 - **Imagine:** if it held: a working week by the end of 2026, a working month by mid-2027 [M, I]. What would you hand over? What would you keep?

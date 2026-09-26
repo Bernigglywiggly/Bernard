@@ -116,9 +116,9 @@
   {
    "i": 8,
    "floor": 1,
-   "text": "Two seconds. Nine seconds. Five minutes. An hour. Sixteen hours.",
+   "text": "Two seconds. Thirty seconds. Four minutes. An hour. Sixteen hours.",
    "start": 45.176,
-   "end": 50.383,
+   "end": 50.237,
    "card": null,
    "mark": 57600.0,
    "cut": false,

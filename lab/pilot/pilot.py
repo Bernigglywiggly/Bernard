@@ -125,10 +125,11 @@ def sc_curve(c, t, peer=0.0):
     ties = [np.array([P[q] + [0, 0, -0.8], P[q] + [0, 0, 0.8]]) for q in range(0, len(P), 5)]
     fr.lines(ties, MID, 1.0, 0.5 * kin, glow=0, tip=False)
     fr.lines([P[: i + 1]], TURQ, 2.6, 1.0, glow=1.1, tip=False)
-    if wv > 0.05:                                  # the rider marker only reads in the chase view
+    rv = clamp((wv - 0.75) / 0.25)                 # the rider marker only once the chase view has settled
+    if rv > 0:
         ring = h.circle(P[i], 1.1 + 0.15 * math.sin(t * 9), 40, "z")
-        fr.lines([ring], TURQ, 1.4, 0.9 * wv, glow=1.0, tip=False)
-        fr.points(P[i:i + 1], "#FFFFFF", 1.2, wv)
+        fr.lines([ring], TURQ, 1.4, 0.9 * rv, glow=1.0, tip=False)
+        fr.points(P[i:i + 1], "#FFFFFF", 1.2, rv)
     if peer > 0:                                   # the mouth of the vortex, waiting under the summit
         top = P[-1]
         mouth = []

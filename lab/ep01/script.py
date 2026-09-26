@@ -22,7 +22,7 @@ LINES = [
     dict(floor=1, text="Coding. Research. Fixing broken systems. From seconds to days."),
     dict(floor=1, text="Then they gave the same tasks to the machines, and found the length where the machine wins half the time."),
     dict(floor=1, text="They call it the time horizon.", cut=True),
-    dict(floor=1, text="Two seconds. Nine seconds. Five minutes. An hour. Sixteen hours.", mark=16 * H, ladder=True),
+    dict(floor=1, text="Two seconds. Thirty seconds. Four minutes. An hour. Sixteen hours.", mark=16 * H, ladder=True),
     # 2 · YOU
     dict(floor=2, text="Sixteen hours is two working days.", air=1, card=("2 DAYS", "AT 8 HOURS A DAY")),
     dict(floor=2, text="A coursework essay. A website for the takeaway round the corner. The game mod you never finished."),
@@ -47,12 +47,12 @@ LINES = [
     dict(floor=5, text="It took one more to get from an hour to sixteen.", cut=True, mark=16 * H),
 ]
 
-LADDER = [(2019, 2.0, "2 SEC"), (2020, 9.0, "9 SEC"), (2023, 300.0, "5 MIN"), (2025, 3600.0, "1 HOUR"), (2026, 16 * H, "16 HOURS")]
+LADDER = [(2019, 2.0, "2 SEC"), (2022, 30.0, "30 SEC"), (2023, 240.0, "4 MIN"), (2025, 3600.0, "1 HOUR"), (2026, 16 * H, "16 HOURS")]
 
 FLOORS = ["GROUND", "MECHANISM", "YOU", "IDEA", "IMAGINE", "SURFACE"]
 
 SOURCES = [
-    "METR, 'Measuring AI Ability to Complete Long Tasks' (19 Mar 2025): time horizon doubling ~7 months since 2019; per-model horizons (check the 2 s / 9 s / 5 min / 1 h rungs against the paper's figure)",
+    "METR, 'Measuring AI Ability to Complete Long Tasks' (19 Mar 2025): doubling ~7 months since 2019; horizons ~2 s (2019), ~30 s (2022), ~4 min (Mar 2023), ~1 h (early 2025)",
     "METR, 'Time Horizon 1.1' (29 Jan 2026): 228 tasks; post-2023 doubling ~130.8 days",
     "METR measurement, March 2026: an early frontier model at a 50% time horizon of at least 16 hours",
     "Paper folding: 0.1 mm × 2^42 ≈ 439,805 km; mean Earth–Moon distance 384,400 km",

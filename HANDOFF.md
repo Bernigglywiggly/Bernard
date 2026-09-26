@@ -32,8 +32,9 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   one metric ruler, silence cuts, a mirrored close). Episode bank: `lab/format/EPISODES.md` (facts tagged [V]/[C]/[M]/[I]).
 - **EP01 · Sixteen Hours** (`lab/ep01/`, 1080×1920, 2:25): METR time horizons (2 s in 2019 → ≥16 h in Mar 2026),
   the 50% line, a powers-of-ten paper fold to the Moon, the vortex into an ASCII IMAGINE layer, a mirrored close.
-  Build: `voice_build.py` → `music_build.py` → `ep01.py render` → `mix.py`. Check the middle ladder rungs
-  (9 s, 5 min, 1 h) against METR's 2025 paper before publishing. The inspo MP4 itself is not committed.
+  Build: `voice_build.py` → `music_build.py` → `ep01.py render` → `mix.py`; covers: `covers.py`; upload copy:
+  `lab/ep01/UPLOAD.md` (pilot: `lab/pilot/UPLOAD.md`). Ladder verified against METR: 2 s, ~30 s, ~4 min, ~1 h, 16 h.
+  The inspo MP4 itself is not committed.
 - Offline transcription works: sherpa-onnx + whisper base.en from GitHub releases
   (`k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-base.en.tar.bz2`).
 

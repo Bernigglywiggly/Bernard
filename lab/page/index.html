@@ -32,6 +32,18 @@ h2{font-family:var(--display);font-size:clamp(22px,3.2vw,30px);letter-spacing:.0
 .glass{background:linear-gradient(180deg,var(--glass),var(--glass2));border:1px solid var(--line);border-top-color:#3a414a;border-radius:16px}
 .player{overflow:hidden}
 .player video{display:block;width:100%;aspect-ratio:16/9;background:#0B0C0E}
+.vwrap{display:grid;grid-template-columns:minmax(0,380px) 1fr;gap:18px;align-items:start}
+.vplayer{overflow:hidden}
+.vplayer video{display:block;width:100%;aspect-ratio:9/16;background:#0B0C0E}
+.floors{width:100%;border-collapse:collapse;font-size:14.5px}
+.floors th,.floors td{text-align:left;padding:9px 10px;border-bottom:1px dashed var(--line);vertical-align:top}
+.floors th{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:400}
+.floors td:first-child{font-family:var(--mono);color:var(--turq);white-space:nowrap}
+.tbox{overflow-x:auto}
+.eps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ep{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--slate);font-size:14px;color:var(--mid)}
+.ep b{display:block;color:var(--type);font-weight:600;margin-bottom:2px}
+@media (max-width:820px){.vwrap,.eps{grid-template-columns:1fr}}
 .player .cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;padding:12px 16px;border-top:1px solid var(--line)}
 .cap span{font-family:var(--mono);font-size:12.5px;color:var(--soft)}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
@@ -100,8 +112,57 @@ textarea{font:inherit;font-size:15px;width:100%;min-height:80px;border-radius:10
 </header>
 
 <nav aria-label="Sections">
-  <a href="#pilot">Pilot</a><a href="#picks">Your picks</a><a href="#visual">Visuals</a><a href="#sound">Sound</a><a href="#music">Jungle</a><a href="#voice">Voice</a><a href="#script">Script</a><a href="#refs">References</a><a href="#rules">Rules</a><a href="#higgs">Higgsfield</a><a href="#status">A01 status</a>
+  <a href="#ep01">EP01 · new</a><a href="#pilot">Pilot</a><a href="#picks">Your picks</a><a href="#visual">Visuals</a><a href="#sound">Sound</a><a href="#music">Jungle</a><a href="#voice">Voice</a><a href="#script">Script</a><a href="#refs">References</a><a href="#rules">Rules</a><a href="#higgs">Higgsfield</a><a href="#status">A01 status</a>
 </nav>
+
+<section id="ep01">
+  <span class="eyebrow">00 · <b>Newest</b> · after the pollar inspo</span>
+  <h2>EP01 · Sixteen Hours</h2>
+  <p class="lede">Your inspo, taken apart and rebuilt one level up. Pollar's rigour (dates, sources, one metric running along the bottom, silence before each reveal, a mirrored close), plus three floors they never go down to: what it means for you, the idea underneath, and a labelled what-if. Vertical, 2:25, for TikTok and Shorts.</p>
+  <div class="vwrap">
+    <div class="glass vplayer"><video id="ep01Video" controls playsinline preload="metadata" poster="media/ep01_poster.jpg"></video></div>
+    <div class="glass status">
+      <span class="eyebrow">What pollar does (measured from the file)</span>
+      <ol>
+        <li><b>One arc:</b> a present-state hook ("PM since 20 July"), a flashback with a number ("176 days earlier"), a chain of dated reversals, the hidden rule (ministers vote with the government, always), the ceiling (95 of 95), then a mirrored close.</li>
+        <li><b>A spine you can see:</b> a day-count timeline that gains a marker at every event.</li>
+        <li><b>Silence as punctuation:</b> 0.1–0.4 s hard drops right before seven reveals.</li>
+        <li><b>A calm narrator:</b> ~146 Hz, ~140 wpm, no adjectives, fragments for the big beats.</li>
+        <li><b>A still, document-like screen:</b> one red accent, highlighted quotes, waffle grids, sources at the end.</li>
+      </ol>
+      <span class="eyebrow">What EP01 adds</span>
+      <ol>
+        <li><b>A depth gauge</b> (left edge): Ground → Mechanism → You → Idea → Imagine, then a climb back up to the Surface.</li>
+        <li><b>A log-time ruler</b> in place of their day count: the horizon marker slides from 2 seconds to 16 hours, collecting a dot for each year.</li>
+        <li><b>The idea made physical:</b> a powers-of-ten zoom as a sheet is folded 42 times, past a book, a person, Everest and the space station, to the Moon.</li>
+        <li><b>IMAGINE:</b> the vortex drop into an ASCII dream layer, dotted "if the trend held" markers, ghost cards, and two questions.</li>
+        <li><b>Motion and sound:</b> 228 task cards in 3D, the success curve, the 50% line, and mechanical cues, all with their silence cuts.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="glass tbox" style="padding:6px 10px">
+    <table class="floors">
+      <thead><tr><th>Floor</th><th>Job</th><th>In EP01</th></tr></thead>
+      <tbody>
+        <tr><td>0 · GROUND</td><td>The event, flat. A present-state hook, then a flashback with a number.</td><td>A 16-hour task; March 2026; "seven years earlier… two seconds"</td></tr>
+        <tr><td>1 · MECHANISM</td><td>The hidden rule, how it actually works.</td><td>METR's 228 tasks, the 50% line, "the time horizon", the ladder 2 s → 16 h</td></tr>
+        <tr><td>2 · YOU</td><td>The number in your units.</td><td>Two working days: an essay, a takeaway's website, the mod</td></tr>
+        <tr><td>3 · IDEA</td><td>The principle underneath.</td><td>Steps vs folds; 42 folds to the Moon; doubling every ~4 months</td></tr>
+        <tr><td>4 · IMAGINE</td><td>A labelled what-if that stretches the mind.</td><td>A working week, then a month; handing over a month; what would you keep?</td></tr>
+        <tr><td>5 · SURFACE</td><td>One thing tonight, then a mirrored close.</td><td>"Six years from two seconds to an hour. One more from an hour to sixteen."</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="glass pickbox">
+    <div class="pickrow"><span class="eyebrow">This format</span><div class="picks" data-cat="format" data-mode="many">
+      <button class="pick love" data-v="six-floors">Keep Six Floors</button><button class="pick love" data-v="depth-gauge">Keep the depth gauge</button><button class="pick love" data-v="log-ruler">Keep the metric ruler</button><button class="pick love" data-v="more-imagine">More IMAGINE</button><button class="pick" data-v="less-imagine">Less IMAGINE</button><button class="pick love" data-v="silence-cuts">Keep the silence cuts</button></div></div>
+    <div class="pickrow"><span class="eyebrow">EP01 voice</span><div class="picks" data-cat="ep01voice" data-mode="one">
+      <button class="pick" data-v="calm-british">This calm British read</button><button class="pick" data-v="george">George (ElevenLabs)</button><button class="pick" data-v="exo">The exo gunslinger</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Next episode</span><div class="picks" data-cat="next" data-mode="one" id="nextPicks"></div></div>
+  </div>
+  <span class="eyebrow">Episode bank · pick the next one above</span>
+  <div class="eps" id="eps"></div>
+</section>
 
 <section id="pilot">
   <span class="eyebrow">01 · <b>The pilot</b></span>
@@ -245,6 +306,26 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;
   else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
   else { $("#pilotNote").textContent = "This browser can't stream it; the full file is in the chat."; }
 })();
+
+// ---------- EP01 (vertical): same HLS approach as the pilot
+(function(){
+  const v = document.getElementById("ep01Video"), src = "media/ep01/ep01_playlist.txt";
+  if (window.Hls && window.Hls.isSupported()) { const hls = new Hls({maxBufferLength: 30}); hls.loadSource(src); hls.attachMedia(v); }
+  else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
+})();
+const EPS = [
+  ["EP02 · The Ninety-Minute War","Two labs, one afternoon, a price war. The Red Queen: running to stay in place. Imagine a genius for 8p an hour."],
+  ["EP03 · The Shovel Sellers","1848's real winners sold supplies. What are the shovels of 2026, and 2030?"],
+  ["EP04 · The Number That Decides What Gets Watched","Europe counts training arithmetic: 10²⁵. Goodhart's law. Imagine compute rationed like carbon."],
+  ["EP05 · The Exam and the Shirt","Moravec's paradox: why the easy things are hard. Imagine the first robot that moves like a toddler."],
+  ["EP06 · The Thirty-Year Delay","Electric motors took decades to pay off until factories were redesigned. Imagine an office built from zero around AI."],
+  ["EP07 · The Library of Every Book","Borges' infinite library, and models as compression. Imagine a librarian beside every child."],
+  ["EP08 · Cheaper Makes More","Jevons: efficiency increases total use. Name three jobs that exist only because thinking got cheap."],
+  ["EP09 · Who's Human Here?","People picked the AI as the human. Turing's real question. Imagine every voice might be synthetic."],
+  ["EP10 · Data Centres in Orbit","Computation follows energy, like mills followed rivers. Imagine a thinking ring around the Earth."],
+];
+document.getElementById("eps").innerHTML = EPS.map(([t, d]) => `<div class="ep"><b>${esc(t)}</b>${esc(d)}</div>`).join("");
+document.getElementById("nextPicks").innerHTML = EPS.map(([t]) => `<button class="pick" data-v="${esc(t.split(" · ")[0])}">${esc(t.split(" · ")[0])}</button>`).join("");
 
 // ---------- sound palette
 const SFX = [

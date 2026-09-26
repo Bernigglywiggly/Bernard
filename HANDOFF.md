@@ -25,7 +25,19 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
 - **Sales**: 85 independent takeaways/cafés (FSA register, Sept 2026) in walking order for Stone, Newcastle-under-Lyme
   and Tamworth. "Here" (the user's home town) is still unknown: ask, then pull its council's FSA file the same way.
 
-## What the user asked for (this round)
+## Newest: the Six Floors format and EP01 (after the @pollar.news inspo)
+- Inspo breakdown: `lab/inspo/pollar_breakdown.md` (frames `lab/inspo/tt1/sheet_*.jpg`, transcript `tt1/transcript.json`).
+  The user wants pollar's rigour plus deeper concepts, curiosity, perspective and labelled fantasy ideation.
+- Format bible: `lab/format/SIX_FLOORS.md` (GROUND → MECHANISM → YOU → IDEA → IMAGINE → SURFACE, a depth gauge,
+  one metric ruler, silence cuts, a mirrored close). Episode bank: `lab/format/EPISODES.md` (facts tagged [V]/[C]/[M]/[I]).
+- **EP01 · Sixteen Hours** (`lab/ep01/`, 1080×1920, 2:25): METR time horizons (2 s in 2019 → ≥16 h in Mar 2026),
+  the 50% line, a powers-of-ten paper fold to the Moon, the vortex into an ASCII IMAGINE layer, a mirrored close.
+  Build: `voice_build.py` → `music_build.py` → `ep01.py render` → `mix.py`. Check the middle ladder rungs
+  (9 s, 5 min, 1 h) against METR's 2025 paper before publishing. The inspo MP4 itself is not committed.
+- Offline transcription works: sherpa-onnx + whisper base.en from GitHub releases
+  (`k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-base.en.tar.bz2`).
+
+## What the user asked for (the previous round)
 - Video: clean, visually stable, addictive; digital cyber / ASCII / holographic detail; satisfying orchestrated layouts;
   not overstimulating, not bland, nothing tacky. **Camera may move** (orbits around exploded subjects, glides along
   line-work type), tastefully. Palette stays **turquoise + graphite** (the yellow/brown look was a BGRA bug, never a choice).

@@ -12,3 +12,10 @@ page/media/
 page/index.built.html
 out/music/stems/
 **/__pycache__/
+
+# third-party inspo media stays local (analysis lives in inspo/*.md)
+inspo/tt1/
+ep01/build/*
+!ep01/build/lines.json
+!ep01/build/events.json
+!ep01/build/music_arr.json

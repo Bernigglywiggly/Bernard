@@ -11,6 +11,11 @@ This repo is a scratch space (the DeepSeek-V3 files are unrelated). Work lives o
 - Old v5 page: https://claude.ai/artifact/QC6pJenfB7yJZk2WD9x3Zb (source: `a01_v5/page/index.html`).
 - Notion "QUIT HQ" is the user's project hub.
 
+## Current state
+**v6.2** (page Version 3): the 55.5 s hook, all dark, layered sound, George. The full-quality render was sent
+to the user as `A01_v6_2_mockup.mp4`; rebuild it from `a01_v6/` as below. Waiting on their reaction
+and a look pick (check the page's `picks`).
+
 ## What's where
 | Path | What |
 |---|---|
@@ -29,8 +34,8 @@ This repo is a scratch space (the DeepSeek-V3 files are unrelated). Work lives o
   smooth morphs. The push through the "0" is a favourite.
 - Palette: chrome + marl, turquoise accent, emerald only for gains. **Dark backgrounds, not white**
   (graphite for forming, slate with a dot grid for explaining, dark glass cards).
-- Voice: **George** (picked on the page). Sound: **"more layered"** (picked), with sound on every motion
-  for immersion.
+- Voice: **George** (picked on the page). Sound: **"more layered"** (picked; done in v6.2: every sound
+  placed where it happens, one shared room, swells, felt piano, a bed that ducks under the voice).
 - The CDE board is woven in (grid, HUD callouts, ridgeline pins, halftone icons, isometric stack,
   particle ring, ring tunnel). Maps are saved for A02; glass hands and gradients were left out.
 

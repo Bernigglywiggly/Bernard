@@ -18,7 +18,7 @@ The personality of the first full A01: calm, clear and warm, with no jokes. The 
 4. **What's in it for you**, as chapters: what it does for you, what it costs, how people earn with it,
    what's coming.
 5. **An open loop every 2–3 minutes** ("in a minute: the use that pays for itself"), and **a
-   pattern change every 60–90 s**: dark to light, card to chart, ASCII to chrome
+   pattern change every 60–90 s**: graphite to slate, card to chart, ASCII to chrome
    ([OutlierKit](https://outlierkit.com/resources/youtube-script-writing/)).
 6. **End hopeful and practical:** one thing to try today, one thing to watch for.
 
@@ -29,12 +29,16 @@ money or time". Money and time are what people care about most, so make the bene
 
 | Token | Value | Use |
 |---|---|---|
-| Light marl | `#E7E8EA` + heathered fleck | explaining, cards, chapters |
+| Slate marl | `#1B1E23` + heathered fleck + a faint dot grid | explaining, cards, chapters |
 | Graphite marl | `#14161A` + heathered fleck | forming, revealing, the Tron moments |
-| Ink | `#1C1F24` / soft `#6B717C` | type and line work on light |
+| Type and lines | `#E9EBEE` / mid `#C9CED6` / soft `#8A919C` | all type and line work |
+| Dark glass | `#2A2F36` → `#1F2329`, a hairline top highlight, a soft shadow | cards and tiles |
 | Turquoise | `#12B8AC` (glow `#3FE6D8`) | the one accent: what's active, what's new |
 | Emerald | `#12A36E` | gains only (+14.1) |
-| Chrome | white → steel → a thin dark horizon → faint turquoise reflection | hero numbers only |
+| Chrome | white → steel → a thin dark horizon → faint turquoise reflection, with a light rim | hero numbers only |
+
+**Always dark** (the user's preference): no white or light grounds, ever. The "room opening" moment is
+graphite → slate, not dark → light.
 
 **Type:** Michroma (wide, geometric) for numbers and titles; Inter Tight for sentences; IBM Plex Mono
 for labels and ASCII.
@@ -68,7 +72,11 @@ for labels and ASCII.
   - airy morph as the lines flow into a new form
   - a sub "thum" for the one big line
 - **Sync is the satisfaction:** sound lands on the exact frame of the motion.
-- **The bed changes key with the world:** Am9 in the dark, Cmaj9 when the light opens on "It isn't".
+- **The bed changes key with the world:** Am9 on graphite, Cmaj9 when the room opens to slate on "It isn't".
+- **Layered, not louder** (v6.2, the user's pick): foreground sounds are panned to where the motion is on
+  screen; sweeteners (reversed swells that breathe in before big moments, felt-piano notes as cards and
+  chapters arrive, a rolled Cmaj9 under the end card) share one room; the bed (pad, sub, air for each world)
+  ducks under the voice.
 - **Levels:** the mix sits at -14 LUFS, with the SFX 10–20 dB under the voice.
 
 ## 4. Techniques to keep using (underused on YouTube)

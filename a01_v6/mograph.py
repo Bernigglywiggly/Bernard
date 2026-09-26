@@ -18,7 +18,7 @@ import numpy as np
 import skia
 
 W, H, FPS = 1920, 1080, 30
-DUR = 54.0
+DUR = 55.5
 HERE = os.path.dirname(os.path.abspath(__file__))
 FONTS = os.environ.get("A01V6_FONTS", os.path.join(HERE, "fonts"))
 BUILD = os.environ.get("A01V6_BUILD", os.path.join(HERE, "build"))
@@ -1185,7 +1185,10 @@ def frame(c, t, ground):
     if t > 53.3:                                           # after the push: the ground and a mark
         k = seg(t, 53.3, 53.8)
         c.drawImage(ground["dark"], 0, 0, skia.SamplingOptions(), fill("#FFFFFF", k))
-        decode(c, "A01", W / 2, H / 2 + 12, font(DISPLAY, 34), ON_DARK, t, 53.4, 0.4, seed=99, align="center")
+        decode(c, "A01", W / 2, H / 2 + 12, font(DISPLAY, 34), ON_DARK, t, 53.85, 0.4, seed=99, align="center")
+        kl = ease(seg(t, 54.3, 55.0))
+        if kl > 0:                                         # a turquoise signature line settles under the mark
+            c.drawLine(W / 2 - 70 * kl, H / 2 + 44, W / 2 + 70 * kl, H / 2 + 44, stroke(TURQ, 1.4))
     # frame furniture: one thin line and a tiny label, always calm
     col = ON_DARK_SOFT
     c.drawString("A01  ·  FOURTEEN POINTS", 120, H - 60, font(MONO, 16), fill(col, 0.8))

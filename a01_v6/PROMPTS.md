@@ -12,8 +12,9 @@ Every number gets several everyday perspectives (student, gamer, business owner,
 "your time is money") so that it clicks for everyone, and every video makes the viewer's benefit
 explicit: what it does for you, what it costs, how people earn with it, what's coming.
 
-LOOK: "Chrome & Marl". Heathered marl grounds (light #E7E8EA for explaining, graphite #14161A for
-forming and revealing). Line work in ink #1C1F24. One accent: turquoise #12B8AC (glow #3FE6D8).
+LOOK: "Chrome & Marl", always dark. Heathered marl grounds: graphite #14161A for forming and revealing,
+slate #1B1E23 with a faint dot grid for explaining; cards are dark glass. Type and line work in soft
+white #E9EBEE. One accent: turquoise #12B8AC (glow #3FE6D8).
 Emerald #12A36E only for gains. Chrome only for hero numbers (white, steel, a thin dark horizon,
 a faint turquoise reflection). Type: Michroma for numbers and titles, Inter Tight for sentences,
 IBM Plex Mono for labels and ASCII.
@@ -95,8 +96,8 @@ SELF-CHECK: play a run of 20 ticks and 15 pips back to back: satisfying, never i
 
 ```
 Compose a minimal score for a calm AI explainer: an Am9 pad for the dark "forming" sections that
-lifts to Cmaj9 when the light opens, soft felt piano motifs, sub you feel more than hear, no drums
-until an optional gentle pulse in the last chapter. 70 BPM. Deliver 3 cues (dark, light, outro) as
+lifts to Cmaj9 when the room opens, soft felt piano motifs, sub you feel more than hear, no drums
+until an optional gentle pulse in the last chapter. 70 BPM. Deliver 3 cues (forming, explaining, outro) as
 60 s loops plus stems. -18 LUFS so the voice sits on top.
 SELF-CHECK: it never masks 1-4 kHz; the Am9-to-Cmaj9 lift is audible on phone speakers.
 ```

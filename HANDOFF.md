@@ -1,66 +1,75 @@
-# Handoff: the AI explainer channel (read this first in a new session)
+# Handoff: the AI explainer channel + walk-in sales (read this first in a new session)
 
-This repo is a scratch space (the DeepSeek-V3 files are unrelated). Work lives on branch
-`claude/funny-newton-gd9w8v`, draft PR bernigglywiggly/bernard#1. Updated 26 Sep 2026.
+This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
+(a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
+databases on one account can't be read from the other. Push anything the other side needs here.
+Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
 
-## Links
-- **Review page (current):** https://claude.ai/artifact/UcDevRSPUUxQznXKfMLAvL. The user's picks are in its
-  database, collection `picks` (read with ArtifactData). Page source: `a01_v6/page/index.html`; its media
-  (video, poster, voice clips, board thumbnails) are already published in the artifact, so republish with
-  `url` set and only the changed files.
-- Old v5 page: https://claude.ai/artifact/QC6pJenfB7yJZk2WD9x3Zb (source: `a01_v5/page/index.html`).
-- Notion "QUIT HQ" is the user's project hub.
+## Links (this account)
+- **Curve Lab** (v7 showcase: pilot, 4 visual directions, sound palette, jungle beds, voices, refs, Higgsfield prompts):
+  https://claude.ai/artifact/GvXy78rkrDiKJB418rxpsG. The user's picks save to its db, collection `picks`
+  (docs: `pilot`, `visual`, `voice`, `bed`, `sfx`, `notes`, each `{value}`). Read them with ArtifactData first.
+  Source: `lab/page/index.html` (+ `__LINES__` from `lab/pilot/build/lines.json`); media is published in the artifact.
+- **Takeaway Round** (walk-in sales kit: routes, pitch, audit, kit links, tracker): https://claude.ai/artifact/2f7kucmy3ptWePJ4UPgNUU.
+  Tracker db: `prospects/<FHRSID>` `{name, town, status, notes, value, updated}`, `setup/<step>` `{done}`.
+  Source: `sales/takeaway_round.src.html` (+ `__SEED__` from `sales/prospects_routed.json`).
+- Other account: v6.2 review page https://claude.ai/artifact/UcDevRSPUUxQznXKfMLAvL (not readable from here). Notion "QUIT HQ" lives there too.
 
-## Current state
-**v6.2** (page Version 3): the 55.5 s hook, all dark, layered sound, George. The full-quality render was sent
-to the user as `A01_v6_2_mockup.mp4`; rebuild it from `a01_v6/` as below. Waiting on their reaction
-and a look pick (check the page's `picks`).
+## State
+- **A01 (calm, George, v6 "Chrome & Marl")**: the full ~5-min build is **on the Mac only** (`~/youtube/a01_v6/full.py`,
+  `sfx_mech.py`, the full George voice, a jungle bed; handoff `~/RESUME_HERE_2026-09-26.md`). It needs the sound pass
+  and the final render, then upload. Fastest: resume that Mac session (sign it into whichever account has credits).
+  Or push the folder to branch `mac-sync` (command in the Curve Lab page, section 11) and finish it in the cloud.
+- **v7 lab (this session)**: `lab/`. A 105 s pilot "THE CURVE" in a new renegade register (exo-gunslinger voice,
+  cinema room, jungle bed, mechanical SFX, holographic/ASCII visuals with a moving camera). Waiting on the user's picks.
+- **Sales**: 85 independent takeaways/cafés (FSA register, Sept 2026) in walking order for Stone, Newcastle-under-Lyme
+  and Tamworth. "Here" (the user's home town) is still unknown: ask, then pull its council's FSA file the same way.
+
+## What the user asked for (this round)
+- Video: clean, visually stable, addictive; digital cyber / ASCII / holographic detail; satisfying orchestrated layouts;
+  not overstimulating, not bland, nothing tacky. **Camera may move** (orbits around exploded subjects, glides along
+  line-work type), tastefully. Palette stays **turquoise + graphite** (the yellow/brown look was a BGRA bug, never a choice).
+- SFX: less magical/sparkly; futuristic tech, ethereal, mechanical (satisfying keyboard "banana" switches: most likely
+  Keychron Banana tactiles or C³×TKC Banana Split); bass used tastefully for the stomach-drop vortex.
+- Music: jungle as a flowing bed. Script: renegade/Rick-Sanchez confidence, fluid, slightly weird-but-cool (santeluca
+  structure, see `lab/research/creative_research.md` §1), exponential AI, future possibilities, niche money, gold-rush
+  history. Voice experiments incl. a Cayde-6-*like* test (built as an original archetype, no actor cloning).
+- Show options and let them pick; full creative freedom; agents allowed.
 
 ## What's where
 | Path | What |
 |---|---|
-| `a01_v6/` | **Current pipeline**, "Chrome & Marl", calm and dark. `mograph.py` (skia vector motion graphics → silent mp4 + `events.json`), `sfx6.py` (event-driven sound design + mix), `PLAYBOOK.md` (rules), `PROMPTS.md` (GPT prompts), `SCRIPT.md` (hook narration, voice IDs, timings), `fonts/`, `voices/` (six takes of the hook), `page/` |
-| `a01_v5/` | Superseded Blender/Eevee pipeline (the user found it too energetic). Kept for reference. |
-| `channel/BACKLOG.md` | A02–A06 with sources. Order: A02 → A04 → A03 → A06 → A05. |
-| `channel/MONEY.md` | Products (infinity table, display mirror), affiliates, Patreon, merch. |
-| `channel/board_refs.json` | The CDE Pinterest refs and which ones the hook uses. |
+| `lab/visual/holo.py` | 3D line/point/ASCII renderer on skia: camera, formation reveals, depth fade, glow + bloom, 3D type, ASCII z-buffer, multi-process mp4 writer |
+| `lab/visual/clips.py` | the four directions: A exploded accelerator orbit, B type rail, C ASCII torus knot, D curve ride + ring-tunnel fall |
+| `lab/pilot/` | `script.py` (lines + on-screen sources) → `voice_build.py` (Kokoro, grid-aligned lines) → `pilot.py` (scenes, captions, cards, sound cues) → `music_build.py` → `mix.py` (ducking, vortex window, -14 LUFS, mux) |
+| `lab/sfx/palette.py` | 23 synthesised sounds (thock, typing, relay, latch, dock, servo, hydraulic, ticks, chatter, scan, form, whoosh, sub_drop, thum, vortex, riser, glitch, swell...) → `lab/out/sfx/*.mp3` |
+| `lab/music/jungle.py` | synthesised jungle at 170 BPM (breaks, rolls, sub, reese, F-minor pads, FM Rhodes), arrangements + stems |
+| `lab/voice/voice_lab.py`, `lab/audio_fx.py` | voice audition/blends, exo colour, ducked cinema reverb, exciter, loudness |
+| `lab/research/` | creative research (santeluca, 24 refs, 18 perception rules, Higgsfield presets/prompts, jungle, keyboards); script facts |
+| `sales/` | research (suppliers, stats, rules), prospects (+ routed with walking order), the Takeaway Round page source |
+| `a01_v6/`, `a01_v5/`, `channel/` | from the earlier cloud session (hook pipeline, backlog A02–A06, money notes) |
 
-## What the user wants (decisions so far)
-- The calm personality of the first full 8-min A01: no humour. Relatable, everyday perspectives so
-  non-AI people get it ("+14" for a student, gamer, business owner, "your time is money"). Always the
-  benefit to the viewer: use cases, making money, current resources, what's coming. Hopeful endings.
-- Visually appealing, satisfying and clean, never chaotic. The camera barely moves; detailed motion
-  graphics do the work: line work (Tron: Legacy formations), typography, ASCII, Pinterest-editorial cards,
-  smooth morphs. The push through the "0" is a favourite.
-- Palette: chrome + marl, turquoise accent, emerald only for gains. **Dark backgrounds, not white**
-  (graphite for forming, slate with a dot grid for explaining, dark glass cards).
-- Voice: **George** (picked on the page). Sound: **"more layered"** (picked; done in v6.2: every sound
-  placed where it happens, one shared room, swells, felt piano, a bed that ducks under the voice).
-- The CDE board is woven in (grid, HUD callouts, ridgeline pins, halftone icons, isometric stack,
-  particle ring, ring tunnel). Maps are saved for A02; glass hands and gradients were left out.
-
-## Rebuild the hook (about 3 min on 4 CPUs)
+## Rebuild (cloud, 4 CPUs)
 ```bash
-pip install skia-python numpy scipy          # plus ffmpeg
-cd a01_v6 && export A01V6_BUILD=build        # fonts load from ./fonts
-python3 mograph.py                           # build/mockup_silent.mp4 + build/events.json
-python3 sfx6.py voices/george.mp3            # build/mockup_mix.wav at -14 LUFS
-ffmpeg -y -i build/mockup_silent.mp4 -i build/mockup_mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 256k -shortest build/A01_v6_mockup.mp4
-python3 mograph.py --still 20                # a single frame, for checking
+pip install skia-python numpy scipy soundfile pyloudnorm pedalboard kokoro-onnx matplotlib; apt-get install -y ffmpeg libegl1
+# Kokoro weights come from GitHub releases (Hugging Face is blocked):
+#   https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/{kokoro-v1.0.onnx,voices-v1.0.bin} -> /opt/kokoro
+cd lab/sfx && python3 palette.py                   # sound palette
+cd ../music && python3 jungle.py                   # three demo beds
+cd ../pilot && python3 voice_build.py && python3 music_build.py && python3 pilot.py render && python3 mix.py   # ~15 min render
+cd ../visual && python3 clips.py render A          # or B, C, D; `still A 7.5` for one frame
 ```
-skia pixels are BGRA: keep `-pix_fmt bgra` on the raw pipe, or the colours shift.
+skia pixels are BGRA: keep `-pix_fmt bgra` on the raw pipe, or turquoise turns yellow/brown.
 
-## Next steps
-1. Build the full 8-minute A01 in this style with George: write the script (`PROMPTS.md` #3 and the
-   perspective writer #2), generate the voice through vidIQ (voice ID in `SCRIPT.md`), and time the scenes to
-   its sentence starts.
-2. Check the 52.3 → 66.4 (+14.1) coding-test scores against the source before publishing.
-3. Then A02 (war prep) from `channel/BACKLOG.md`.
+## Blocked from the cloud (network policy)
+chatgpt.com (the user's GPT share link couldn't be read; ask them to paste it), Higgsfield (`api.higgsfield.ai`,
+`platform.higgsfield.ai`, `cloud.higgsfield.ai`), ElevenLabs, TikTok, YouTube, Hugging Face, Google Maps, the FSA API
+(the GitHub mirror `food-hygiene-uk/data` works). Allowing hosts in the environment's Network access + API keys as
+environment secrets would let the cloud generate George and Higgsfield clips directly.
 
 ## Rules
 - The Pinterest account is personal: read-only references, never post, modify or save anything there.
-- Don't clone or imitate real people's voices; use described archetypes (`PROMPTS.md` #4).
-- No model names in commits or PRs. Push only to this branch.
-- The user wants short, concise replies.
-- Tools: vidIQ credits are limited (21 were left until 5 Oct, before the six voice takes). Higgsfield is usable from Thursday.
-  If GPT (Codex) returns 401: `unset OPENAI_API_KEY; codex logout; codex login` (with ChatGPT, or a new key).
+- Don't clone or imitate real people's voices; build described archetypes.
+- No model names in commits, PRs or pushed files. Push only to the session's branch.
+- Sales: never write reviews for clients, no incentives for reviews, ask every customer (Google policy, DMCC Act 2024).
+- The user wants short, concise replies, and to see options before committing to a direction.

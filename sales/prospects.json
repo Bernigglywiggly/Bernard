@@ -1,0 +1,767 @@
+[
+  {
+    "town": "Stone",
+    "name": "Priory Fish Bar",
+    "address": "Priory Fish Bar, 7 Lichfield Street, Stone, Staffordshire, ST15 8NA",
+    "cuisine": "Fish & chips (inferred from name)",
+    "signals": "FSA hygiene rating 4 (inspected 2026-04-09); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1195858; FSA page https://ratings.food.gov.uk/business/1195858 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Stonefield Fish Bar",
+    "address": "19 Old Road, Stone, Staffordshire, ST15 8JE",
+    "cuisine": "Fish & chips (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-03-11); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1195891; FSA page https://ratings.food.gov.uk/business/1195891 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Walton Fish Bar",
+    "address": "Walton Fish Bar, 5 Eccleshall Road, Stone, Staffordshire, ST15 0HJ",
+    "cuisine": "Fish & chips (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-04-30); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1196110; FSA page https://ratings.food.gov.uk/business/1196110 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Piccolo's Pizza & Kebab Land",
+    "address": "14-16 Stafford Street, Stone, Staffordshire, ST15 8QW",
+    "cuisine": "Pizza & kebab (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-04-13); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1196193; FSA page https://ratings.food.gov.uk/business/1196193 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Stone Kebab House",
+    "address": "10 Church Street, Stone, Staffordshire, ST15 8BD",
+    "cuisine": "Kebab (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-03-03); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1195735; FSA page https://ratings.food.gov.uk/business/1195735 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Dragon Palace",
+    "address": "6 Oulton Road, Stone, Staffordshire, ST15 8DZ",
+    "cuisine": "Chinese (inferred from name)",
+    "signals": "FSA hygiene rating 4 (inspected 2026-05-06); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1195816; FSA page https://ratings.food.gov.uk/business/1195816 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Red Roosters",
+    "address": "13 High Street, Stone, Staffordshire, ST15 8AJ",
+    "cuisine": "Chicken (inferred from name)",
+    "signals": "FSA hygiene rating 3 (inspected 2025-07-31); a takeaway called RED ROOSTERS is also on Borough Road, Newcastle, so this may be a small local group; FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1382329; FSA page https://ratings.food.gov.uk/business/1382329 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Valleys Fast Food",
+    "address": "2a Lichfield Street, Stone, Staffordshire, ST15 8BB",
+    "cuisine": "Fast food (type not stated)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-04-20); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1195941; FSA page https://ratings.food.gov.uk/business/1195941 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Millies",
+    "address": "14 Radford Street, Stone, Staffordshire, ST15 8DA",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 4 (inspected 2025-11-26); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1195502; FSA page https://ratings.food.gov.uk/business/1195502 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Flames",
+    "address": "11 Lichfield Street, Stone, Staffordshire, ST15 8NA",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA: awaiting first inspection (new or recently changed business); also listed here in the c.2015 FSA list, so 'awaiting inspection' probably means a re-registration; FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1195618; FSA page https://ratings.food.gov.uk/business/1195618 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Sunnyhill",
+    "address": "58 Pirehill Lane, Walton, Stone, ST15 0JN",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA: awaiting first inspection (new or recently changed business); also listed here in the c.2015 FSA list (as 'Sunny Hill Takeaway'), so probably a re-registration; FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1195483; FSA page https://ratings.food.gov.uk/business/1195483 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Proven Pizzeria",
+    "address": "56 Newcastle Road, Stone, Staffordshire, ST15 8LB",
+    "cuisine": "Pizza (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-07-31); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1195685; FSA page https://ratings.food.gov.uk/business/1195685 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Crown Of India",
+    "address": "40 High Street, Stone, Staffordshire, ST15 8AU",
+    "cuisine": "Indian restaurant (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-05-05); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1195796; FSA page https://ratings.food.gov.uk/business/1195796 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Pasta Di Piazza",
+    "address": "12 High Street, Stone, Staffordshire, ST15 8AW",
+    "cuisine": "Italian / pasta (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-02-10); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1195940; FSA page https://ratings.food.gov.uk/business/1195940 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Maru Bento",
+    "address": "2b Radford Street, Stone, Staffordshire, ST15 8DA",
+    "cuisine": "Japanese-style bento (inferred from name)",
+    "signals": "FSA hygiene rating 4 (inspected 2025-04-25); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1748271; FSA page https://ratings.food.gov.uk/business/1748271 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Mojaan",
+    "address": "7a Radford Street, Stone, Staffordshire, ST15 8DA",
+    "cuisine": "Unknown (FSA type: restaurant/cafe)",
+    "signals": "FSA hygiene rating 4 (inspected 2026-06-30); first appeared in FSA open data 2026-04-22 (independent-food-business-pulse tracker); older FHRSID, so possibly a re-listing rather than a brand-new business; FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1338807; FSA page https://ratings.food.gov.uk/business/1338807 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "The Ovilash Restaurant",
+    "address": "36 Radford Street, Stone, Staffordshire, ST15 8DA",
+    "cuisine": "Unknown (FSA type: restaurant/cafe)",
+    "signals": "FSA hygiene rating 5 (inspected 2024-12-19); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1195552; FSA page https://ratings.food.gov.uk/business/1195552 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "medium"
+  },
+  {
+    "town": "Stone",
+    "name": "Heaven Restaurant Bar & Grill",
+    "address": "11 High Street, Stone, Staffordshire, ST15 8AJ",
+    "cuisine": "Restaurant, bar & grill (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-04-15); first appeared in FSA open data 2025-11-12 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1889467; FSA page https://ratings.food.gov.uk/business/1889467 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Cavalli",
+    "address": "3 Lichfield Street, Stone, Staffordshire, ST15 8NA",
+    "cuisine": "Unknown (FSA type: restaurant/cafe)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-05-06); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1195498; FSA page https://ratings.food.gov.uk/business/1195498 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Little Seeds Bar & Kitchen",
+    "address": "16-18 Radford Street, Stone, Staffordshire, ST15 8DA",
+    "cuisine": "Bar & kitchen (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-03-06); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1195901; FSA page https://ratings.food.gov.uk/business/1195901 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Bear Coffee Company Ltd",
+    "address": "57 High Street, Stone, Staffordshire, ST15 8AD",
+    "cuisine": "Coffee shop (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-03-12); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1195354; FSA page https://ratings.food.gov.uk/business/1195354 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Arcadia Tea Shop",
+    "address": "Unit 4 And 5, High Street Arcade, Stone, Staffordshire, ST15 8AU",
+    "cuisine": "Tea shop (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-04-30); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1196000; FSA page https://ratings.food.gov.uk/business/1196000 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "The Secret Tea Room",
+    "address": "Unit 2, Adies Alley, Stone, Staffordshire, ST15 8YQ",
+    "cuisine": "Tea room (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-01-21); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1195166; FSA page https://ratings.food.gov.uk/business/1195166 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "Stone Bakehouse",
+    "address": "17 High Street, Stone, Staffordshire, ST15 8AJ",
+    "cuisine": "Bakery (from name)",
+    "signals": "FSA: awaiting first inspection (new or recently changed business); FSA type: Other catering premises; FSA extract 2026-09-16; FHRSID 1936488; FSA page https://ratings.food.gov.uk/business/1936488 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Stone",
+    "name": "The Roll in Stone",
+    "address": "Unit 24A Whitebridge Estate, Whitebridge Lane, Stone, ST15 8LQ",
+    "cuisine": "Sandwiches / rolls (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-02-27); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1557000; FSA page https://ratings.food.gov.uk/business/1557000 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS292en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "GEORGE STREET FISH AND CHIPS",
+    "address": "59 George Street, Newcastle Under Lyme, Staffordshire, ST5 1JU",
+    "cuisine": "Fish & chips (from name)",
+    "signals": "FSA hygiene rating 3 (inspected 2025-12-12); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1137166; FSA page https://ratings.food.gov.uk/business/1137166 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "BEST KEBAB HOUSE",
+    "address": "41 George Street, Newcastle Under Lyme, Staffordshire, ST5 1JU",
+    "cuisine": "Kebab (from name)",
+    "signals": "FSA hygiene rating 3 (inspected 2026-06-08); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1724991; FSA page https://ratings.food.gov.uk/business/1724991 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "NEWCASTLE KEBAB HOUSE",
+    "address": "7 George Street, Newcastle Under Lyme, Staffordshire, ST5 1JX",
+    "cuisine": "Kebab (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-02-17); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1828058; FSA page https://ratings.food.gov.uk/business/1828058 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "SHERIF KEBAB HOUSE",
+    "address": "Unit 8 Berkeley Court, Borough Road, Newcastle Under Lyme, Staffordshire, ST5 1TT",
+    "cuisine": "Kebab (from name)",
+    "signals": "FSA hygiene rating 3 (inspected 2026-05-19); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1772347; FSA page https://ratings.food.gov.uk/business/1772347 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "MARMARIS NEWCASTLE",
+    "address": "107 High Street, Newcastle Under Lyme, Staffordshire, ST5 1PS",
+    "cuisine": "Kebab / Turkish (the 2015 FSA list had 'MARMARIS KEBABS' here)",
+    "signals": "FSA hygiene rating 3 (inspected 2026-05-05); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1759579; FSA page https://ratings.food.gov.uk/business/1759579 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "DUO PIZZA AND SHAWARMA LTD",
+    "address": "89 High Street, Newcastle Under Lyme, Staffordshire, ST5 1PS",
+    "cuisine": "Pizza & shawarma (from name)",
+    "signals": "FSA hygiene rating 4 (inspected 2026-05-13); first appeared in FSA open data 2026-04-25 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1937678; FSA page https://ratings.food.gov.uk/business/1937678 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "PIZZARAMA",
+    "address": "8 Ryecroft, Newcastle Under Lyme, Staffordshire, ST5 1RW",
+    "cuisine": "Pizza (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-05-21); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 85714; FSA page https://ratings.food.gov.uk/business/85714 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "PIZZA BAR",
+    "address": "15 Merrial Street, Newcastle Under Lyme, Staffordshire, ST5 2AE",
+    "cuisine": "Pizza (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-07-03); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1822945; FSA page https://ratings.food.gov.uk/business/1822945 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "CHEESIOUS PIZZA/PERI PERI HOUSE",
+    "address": "54 Liverpool Road, Newcastle Under Lyme, Staffordshire, ST5 2AX",
+    "cuisine": "Pizza & peri-peri (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-09-04); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1870542; FSA page https://ratings.food.gov.uk/business/1870542 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "LIMS CHINESE TAKEAWAY",
+    "address": "28 George Street, Newcastle Under Lyme, Staffordshire, ST5 1DJ",
+    "cuisine": "Chinese (from name)",
+    "signals": "FSA hygiene rating 1 (inspected 2026-03-02); low hygiene rating, so pitch reviews with care; FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1685082; FSA page https://ratings.food.gov.uk/business/1685082 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "SUN CHINESE TAKEAWAY",
+    "address": "3 George Street, Newcastle Under Lyme, Staffordshire, ST5 1JX",
+    "cuisine": "Chinese (from name)",
+    "signals": "FSA hygiene rating 1 (inspected 2026-07-14); low hygiene rating, so pitch reviews with care; FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 81344; FSA page https://ratings.food.gov.uk/business/81344 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "FAVOURITE CHINESE TAKEAWAY",
+    "address": "14 Brunswick Street, Newcastle Under Lyme, Staffordshire, ST5 1HL",
+    "cuisine": "Chinese (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-09-23); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1877918; FSA page https://ratings.food.gov.uk/business/1877918 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "GOLDEN WOK",
+    "address": "43 George Street, Newcastle Under Lyme, Staffordshire, ST5 1JU",
+    "cuisine": "Chinese (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-02-27); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1004870; FSA page https://ratings.food.gov.uk/business/1004870 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "TASTY WOK",
+    "address": "18 Drayton Street, Newcastle Under Lyme, Staffordshire, ST5 2TW",
+    "cuisine": "Chinese (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-03-12); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1353828; FSA page https://ratings.food.gov.uk/business/1353828 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "TASTE OF SPICE",
+    "address": "14 Andrew Place, Newcastle Under Lyme, Staffordshire, ST5 1DL",
+    "cuisine": "Indian (inferred from name)",
+    "signals": "FSA hygiene rating 4 (inspected 2026-07-01); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1724989; FSA page https://ratings.food.gov.uk/business/1724989 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "CLAY OVEN",
+    "address": "12 Drayton Street, Newcastle Under Lyme, Staffordshire, ST5 2TW",
+    "cuisine": "Indian / tandoori (inferred from name)",
+    "signals": "FSA hygiene rating 4 (inspected 2026-01-27); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1055531; FSA page https://ratings.food.gov.uk/business/1055531 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "GO GRILL",
+    "address": "19-21 George Street, Newcastle Under Lyme, Staffordshire, ST5 1JX",
+    "cuisine": "Grill (inferred from name)",
+    "signals": "FSA hygiene rating 1 (inspected 2026-02-10); low hygiene rating, so pitch reviews with care; first appeared in FSA open data 2025-12-10 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1898760; FSA page https://ratings.food.gov.uk/business/1898760 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "SMASH CASTLE",
+    "address": "132 High Street, Newcastle Under Lyme, Staffordshire, ST5 1PT",
+    "cuisine": "Smash burgers (inferred from name)",
+    "signals": "FSA: awaiting first inspection (new or recently changed business); first appeared in FSA open data 2026-09-12 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1987198; FSA page https://ratings.food.gov.uk/business/1987198 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "RED ROOSTERS",
+    "address": "Unit 18, Borough Road, Newcastle Under Lyme, Staffordshire, ST5 1TT",
+    "cuisine": "Chicken (inferred from name)",
+    "signals": "FSA hygiene rating 3 (inspected 2026-01-15); first appeared in FSA open data 2025-11-25 (independent-food-business-pulse tracker), likely a new business or new owner; a takeaway called Red Roosters is also at 13 High Street, Stone, so this may be a small local group; FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1893677; FSA page https://ratings.food.gov.uk/business/1893677 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "CASTLE OATCAKES",
+    "address": "Castle Oatcakes, 78 London Road, Newcastle Under Lyme, Staffordshire, ST5 1LZ",
+    "cuisine": "Staffordshire oatcakes (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-02-07); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 85327; FSA page https://ratings.food.gov.uk/business/85327 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "CHILLI JACKS",
+    "address": "45-47 George Street, Newcastle Under Lyme, Staffordshire, ST5 1JU",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2024-11-19); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1050314; FSA page https://ratings.food.gov.uk/business/1050314 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "medium"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "THE ONE",
+    "address": "1 George Street, Newcastle Under Lyme, Staffordshire, ST5 1JX",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-08-25); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1722943; FSA page https://ratings.food.gov.uk/business/1722943 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "SHAWS",
+    "address": "103 High Street, Newcastle Under Lyme, Staffordshire, ST5 1PS",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-03-18); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 83640; FSA page https://ratings.food.gov.uk/business/83640 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "OASIS FAST FOOD NEWCASTLE",
+    "address": "6 The Midway, Newcastle Under Lyme, Staffordshire, ST5 1QG",
+    "cuisine": "Fast food (type not stated)",
+    "signals": "FSA hygiene rating 3 (inspected 2025-09-08); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1845664; FSA page https://ratings.food.gov.uk/business/1845664 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "CUISINE CART",
+    "address": "64 Liverpool Road, Newcastle Under Lyme, Staffordshire, ST5 2AX",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-02-14); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1776097; FSA page https://ratings.food.gov.uk/business/1776097 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "DANCING OCTOPUS",
+    "address": "12 Pool Dam, Newcastle Under Lyme, Staffordshire, ST5 2RR",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-08-11); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1749342; FSA page https://ratings.food.gov.uk/business/1749342 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "MO'S KITCHEN",
+    "address": "10 Pool Dam, Newcastle Under Lyme, Staffordshire, ST5 2RR",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-07-15); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1832506; FSA page https://ratings.food.gov.uk/business/1832506 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "NEL",
+    "address": "25 Bridge Street, Newcastle Under Lyme, Staffordshire, ST5 2RY",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2024-10-02); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 1722944; FSA page https://ratings.food.gov.uk/business/1722944 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "medium"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "THE FOYER",
+    "address": "3 Hassell Street, Newcastle under Lyme, Staffordshire, ST5 1AH",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-11-12); FSA type: Takeaway/sandwich shop; FSA extract 2026-09-16; FHRSID 701262; FSA page https://ratings.food.gov.uk/business/701262 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "THE MIDWAY CAFE",
+    "address": "12 The Midway, Newcastle Under Lyme, Staffordshire, ST5 1QG",
+    "cuisine": "Cafe (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-01-07); first appeared in FSA open data 2025-11-11 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1889228; FSA page https://ratings.food.gov.uk/business/1889228 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "MADO CAFE",
+    "address": "40 High Street, Newcastle Under Lyme, Staffordshire, ST5 1QL",
+    "cuisine": "Cafe (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-03-25); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1578883; FSA page https://ratings.food.gov.uk/business/1578883 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Newcastle-under-Lyme",
+    "name": "FRESCO CAFE & EATERY",
+    "address": "39-41 Merrial Street, Newcastle Under Lyme, Staffordshire, ST5 2AE",
+    "cuisine": "Cafe & eatery (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-03-21); FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-09-16; FHRSID 1799173; FSA page https://ratings.food.gov.uk/business/1799173 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS290en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Steves Fish Bar",
+    "address": "35 Lower Gungate, Tamworth, B79 7AT",
+    "cuisine": "Fish & chips (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-10-28); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1620292; FSA page https://ratings.food.gov.uk/business/1620292 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Mr. Chips",
+    "address": "5C VICTORIA ROAD, Tamworth, B79 7HL",
+    "cuisine": "Fish & chips (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-01-05); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1799468; FSA page https://ratings.food.gov.uk/business/1799468 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Rayu Pan Asian",
+    "address": "29 Lower Gungate, Tamworth, B79 7AT",
+    "cuisine": "Pan-Asian (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-10-13); first appeared in FSA open data 2025-12-20 (independent-food-business-pulse tracker), likely a new business or new owner; this unit was 'Shapla Indian Takeaway' in the c.2015 FSA list; FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1901935; FSA page https://ratings.food.gov.uk/business/1901935 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Swallow Cantonese Take Away",
+    "address": "Swallow Chinese Takeaway, 39A Aldergate, Tamworth, B79 7DD",
+    "cuisine": "Chinese / Cantonese (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-05-05); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1557638; FSA page https://ratings.food.gov.uk/business/1557638 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Rainbow Takeaway / China Palace Takeaway",
+    "address": "71 Church Street, Tamworth, B79 7DQ",
+    "cuisine": "Chinese (from name)",
+    "signals": "FSA hygiene rating 3 (inspected 2025-07-31); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1435377; FSA page https://ratings.food.gov.uk/business/1435377 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "China Aroma",
+    "address": "68 CHURCH STREET, Tamworth, B79 7DQ",
+    "cuisine": "Chinese (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-11-04); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1589615; FSA page https://ratings.food.gov.uk/business/1589615 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Tamworth Spice / Kiko Sushi",
+    "address": "72 Church Street, Tamworth, B79 7DQ",
+    "cuisine": "Indian + sushi (two trading names at one address)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-05-01); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1589630; FSA page https://ratings.food.gov.uk/business/1589630 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Papudom 4U",
+    "address": "39 Aldergate, Tamworth, B79 7DD",
+    "cuisine": "Indian (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-02-13); first appeared in FSA open data 2026-01-03 (independent-food-business-pulse tracker), likely a new business or new owner; new FHRSID in Jan 2026 (often a new owner); a 'Papadom 4 U' traded here in the c.2015 FSA list; FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1904493; FSA page https://ratings.food.gov.uk/business/1904493 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Pizza Boss",
+    "address": "36 ALDERGATE, Tamworth, B79 7DX",
+    "cuisine": "Pizza (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2025-03-24); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1785915; FSA page https://ratings.food.gov.uk/business/1785915 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Between the Buns",
+    "address": "64 Albert Road, Tamworth, B79 7JN",
+    "cuisine": "Burgers (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-07-08); first appeared in FSA open data 2026-03-13 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1923797; FSA page https://ratings.food.gov.uk/business/1923797 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "T&J Burgers / T&J Desserts",
+    "address": "86 - 87 Bolebridge Street, Tamworth, B79 7PD",
+    "cuisine": "Burgers & desserts (from name)",
+    "signals": "FSA hygiene rating 4 (inspected 2025-01-30); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1538176; FSA page https://ratings.food.gov.uk/business/1538176 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Benny's Chicken",
+    "address": "104 Lichfield Street, Tamworth, B79 7QB",
+    "cuisine": "Fried chicken (from name)",
+    "signals": "FSA hygiene rating 2 (inspected 2026-03-12); low hygiene rating, so pitch reviews with care; FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1878614; FSA page https://ratings.food.gov.uk/business/1878614 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Shake & Take Tamworth",
+    "address": "1A Little Church Lane, Tamworth, B79 7AX",
+    "cuisine": "Milkshakes / desserts (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-07-02); first appeared in FSA open data 2026-06-12 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1957914; FSA page https://ratings.food.gov.uk/business/1957914 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Ephesus Takeaway",
+    "address": "11a Church Street, Tamworth, B79 7DH",
+    "cuisine": "Unknown, possibly Turkish (Ephesus is a Turkish place name)",
+    "signals": "FSA hygiene rating 4 (inspected 2025-03-25); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1589550; FSA page https://ratings.food.gov.uk/business/1589550 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "ChaNoMa",
+    "address": "45-47 Church Street, Tamworth, B79 7DE",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 4 (inspected 2024-10-17); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1738218; FSA page https://ratings.food.gov.uk/business/1738218 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "medium"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Phat Bites",
+    "address": "64 CHURCH STREET, Tamworth, B79 7DF",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-02-25); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1692952; FSA page https://ratings.food.gov.uk/business/1692952 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Papa Gs",
+    "address": "63 Church Street, Tamworth, B79 7DF",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 3 (inspected 2025-06-04); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1775392; FSA page https://ratings.food.gov.uk/business/1775392 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Joba's Takeaway",
+    "address": "81b Bolebridge Street, Tamworth, B79 7RD",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 4 (inspected 2025-05-14); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1416191; FSA page https://ratings.food.gov.uk/business/1416191 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "VERO Fresh Food LTD",
+    "address": "119 Lichfield Street, Tamworth, B79 7BQ",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA: awaiting first inspection (new or recently changed business); first appeared in FSA open data 2026-07-24 (independent-food-business-pulse tracker), likely a new business or new owner; same address as 'Ana's Kebab-Tamworth' (FSA 5, Nov 2025), so probably a change of business; FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1971681; FSA page https://ratings.food.gov.uk/business/1971681 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "The Tamworth Tandoor",
+    "address": "332 Tamworth Road, Kettlebrook, Tamworth, B77 1DH",
+    "cuisine": "Indian / tandoori (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-06-11); first appeared in FSA open data 2026-04-23 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1937050; FSA page https://ratings.food.gov.uk/business/1937050 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Fu House Chinese Takeaway",
+    "address": "1-3 Springfield Road, TWO GATES, Tamworth, B77 1EB",
+    "cuisine": "Chinese (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-07-16); first appeared in FSA open data 2026-03-13 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1923798; FSA page https://ratings.food.gov.uk/business/1923798 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "2 Gates Grill",
+    "address": "Unit 2 St Catherine's Court, 104 Tamworth Road, Two Gates, Tamworth, B77 1EG",
+    "cuisine": "Grill (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-01-02); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1676090; FSA page https://ratings.food.gov.uk/business/1676090 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Golden Dragon",
+    "address": "49 Greatmead, Kettlebrook, Tamworth, B77 1DL",
+    "cuisine": "Chinese (inferred from name)",
+    "signals": "FSA hygiene rating 4 (inspected 2025-04-30); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1664140; FSA page https://ratings.food.gov.uk/business/1664140 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Dug Out Fish Bar",
+    "address": "461 Watling Street, Two Gates, Tamworth, B77 1EL",
+    "cuisine": "Fish & chips (from name)",
+    "signals": "FSA hygiene rating 3 (inspected 2024-09-12); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1416200; FSA page https://ratings.food.gov.uk/business/1416200 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "medium"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Eat Well",
+    "address": "156 Kettlebrook Road, Kettlebrook, Tamworth, B77 1AF",
+    "cuisine": "Unknown (FSA type: takeaway/sandwich shop)",
+    "signals": "FSA hygiene rating 5 (inspected 2024-05-08); FSA type: Takeaway/sandwich shop; FSA extract 2026-07-24; FHRSID 1688068; FSA page https://ratings.food.gov.uk/business/1688068 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "medium"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Piri Fino",
+    "address": "7 George Street, Tamworth, B79 7LH",
+    "cuisine": "Peri-peri chicken (inferred from name)",
+    "signals": "FSA hygiene rating 4 (inspected 2026-06-18); first appeared in FSA open data 2026-05-23 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-07-24; FHRSID 1948937; FSA page https://ratings.food.gov.uk/business/1948937 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Brew",
+    "address": "Unit 7 Town Hall Place, Market Street, Tamworth, B79 7FJ",
+    "cuisine": "Cafe / coffee (inferred from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-02-04); first appeared in FSA open data 2026-01-17 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-07-24; FHRSID 1908321; FSA page https://ratings.food.gov.uk/business/1908321 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  },
+  {
+    "town": "Tamworth",
+    "name": "Jeffrey’s Fine Sandwiches",
+    "address": "12A Silver Street, Tamworth, B79 7NH",
+    "cuisine": "Sandwiches (from name)",
+    "signals": "FSA hygiene rating 5 (inspected 2026-02-04); first appeared in FSA open data 2025-12-11 (independent-food-business-pulse tracker), likely a new business or new owner; FSA type: Restaurant/Cafe/Canteen; FSA extract 2026-07-24; FHRSID 1899172; FSA page https://ratings.food.gov.uk/business/1899172 (built from the confirmed URL format); Google/Tripadvisor rating, delivery apps and own website NOT checked (no web search left)",
+    "source_url": "https://raw.githubusercontent.com/food-hygiene-uk/data/main/public/files/open-data-files/FHRS295en-GB.json",
+    "confidence": "high"
+  }
+]

@@ -1,0 +1,14 @@
+# renders and intermediates are rebuilt from the code; mp3s, the pilot's chat cut and the timing JSON are kept
+*.wav
+*.part*.mp4
+out/visual/
+out/*.png
+pilot/build/*
+!pilot/build/lines.json
+!pilot/build/events.json
+!pilot/build/music_arr.json
+!pilot/build/THE_CURVE_pilot_chat.mp4
+page/media/
+page/index.built.html
+out/music/stems/
+**/__pycache__/

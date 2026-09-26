@@ -1,0 +1,217 @@
+{
+ "total": 105.081,
+ "bpm": 170.0,
+ "half_bar": 0.7058823529411765,
+ "lead_in": 2.823529411764706,
+ "voice": "michael+puck",
+ "lines": [
+  {
+   "i": 0,
+   "scene": "chip",
+   "text": "Hard being a chip in twenty twenty-six.",
+   "start": 2.824,
+   "end": 5.069,
+   "card": null
+  },
+  {
+   "i": 1,
+   "scene": "chip",
+   "text": "You wake up. You predict the next word.",
+   "start": 5.647,
+   "end": 7.77,
+   "card": null
+  },
+  {
+   "i": 2,
+   "scene": "chip",
+   "text": "Nine hundred million people a week ask you for help.",
+   "start": 8.471,
+   "end": 11.618,
+   "card": [
+    "900M+",
+    "WEEKLY USERS \u00b7 OPENAI, 2026"
+   ]
+  },
+  {
+   "i": 3,
+   "scene": "chip",
+   "text": "And roughly every four months, your replacement can work twice as long on its own.",
+   "start": 12.0,
+   "end": 16.927,
+   "card": [
+    "\u00d72 / 4.3 MO",
+    "TASK LENGTH AI CAN FINISH \u00b7 METR, JAN 2026"
+   ]
+  },
+  {
+   "i": 4,
+   "scene": "curve",
+   "text": "Here's the part nobody explains properly.",
+   "start": 19.059,
+   "end": 21.413,
+   "card": null
+  },
+  {
+   "i": 5,
+   "scene": "curve",
+   "text": "In nineteen fifty-six, ten scientists asked for one summer to teach machines to think.",
+   "start": 21.882,
+   "end": 27.501,
+   "card": [
+    "1956",
+    "DARTMOUTH \u00b7 'A 2-MONTH, 10-MAN STUDY'"
+   ]
+  },
+  {
+   "i": 6,
+   "scene": "curve",
+   "text": "That summer lasted seventy years.",
+   "start": 28.235,
+   "end": 30.051,
+   "card": null
+  },
+  {
+   "i": 7,
+   "scene": "curve",
+   "text": "Then the gaps started closing. Decades. Years. Months.",
+   "start": 30.353,
+   "end": 33.779,
+   "card": null
+  },
+  {
+   "i": 8,
+   "scene": "curve",
+   "text": "On September the twenty-second, two labs shipped new models, about ninety minutes apart.",
+   "start": 34.588,
+   "end": 39.978,
+   "card": [
+    "22 SEP 2026",
+    "TWO FRONTIER RELEASES \u00b7 ~90 MIN APART"
+   ]
+  },
+  {
+   "i": 9,
+   "scene": "curve",
+   "text": "That's not a trend line. That's a launch ramp.",
+   "start": 40.235,
+   "end": 42.756,
+   "card": null
+  },
+  {
+   "i": 10,
+   "scene": "curve",
+   "text": "The same level of AI got a thousand times cheaper in three years.",
+   "start": 43.059,
+   "end": 47.264,
+   "card": [
+    "1,000\u00d7",
+    "CHEAPER \u00b7 SAME CAPABILITY \u00b7 2021\u21922024 \u00b7 a16z"
+   ]
+  },
+  {
+   "i": 11,
+   "scene": "vortex",
+   "text": "So what do you do... when the floor starts moving?",
+   "start": 48.706,
+   "end": 51.427,
+   "card": null
+  },
+  {
+   "i": 12,
+   "scene": "gold",
+   "text": "Eighteen forty-eight. California. Gold.",
+   "start": 57.176,
+   "end": 59.688,
+   "card": null
+  },
+  {
+   "i": 13,
+   "scene": "gold",
+   "text": "Everyone ran for the rivers.",
+   "start": 60.0,
+   "end": 61.599,
+   "card": null
+  },
+  {
+   "i": 14,
+   "scene": "gold",
+   "text": "One guy, Sam Brannan, ran for the shovels.",
+   "start": 62.118,
+   "end": 64.622,
+   "card": null
+  },
+  {
+   "i": 15,
+   "scene": "gold",
+   "text": "Thirty-six thousand dollars in nine weeks. Without swinging a pick.",
+   "start": 64.941,
+   "end": 68.978,
+   "card": [
+    "$36,000",
+    "IN NINE WEEKS \u00b7 SELLING SUPPLIES, 1848"
+   ]
+  },
+  {
+   "i": 16,
+   "scene": "gold",
+   "text": "They saw a gold rush. He saw a supply chain.",
+   "start": 69.882,
+   "end": 72.69,
+   "card": [
+    "MINERS: 'SMALL OR EVEN ZERO'",
+    "EVERYONE ELSE: 'POSITIVE AND LARGE' \u00b7 CLAY & JONES, 2008"
+   ]
+  },
+  {
+   "i": 17,
+   "scene": "shop",
+   "text": "Right now, everyone's digging for the same gold. Apps. Agents. Startups.",
+   "start": 74.118,
+   "end": 78.782,
+   "card": null
+  },
+  {
+   "i": 18,
+   "scene": "shop",
+   "text": "Meanwhile, the takeaway round the corner is still handing up to thirty percent of every order to an app.",
+   "start": 79.059,
+   "end": 85.086,
+   "card": [
+    "UP TO 30%",
+    "DELIVERY-APP COMMISSION PER ORDER"
+   ]
+  },
+  {
+   "i": 19,
+   "scene": "shop",
+   "text": "The shovel isn't the model. The shovel is knowing what it can do... and walking in the door.",
+   "start": 85.412,
+   "end": 90.498,
+   "card": null
+  },
+  {
+   "i": 20,
+   "scene": "close",
+   "text": "So here's your homework, from one chip to another.",
+   "start": 91.765,
+   "end": 94.344,
+   "card": null
+  },
+  {
+   "i": 21,
+   "scene": "close",
+   "text": "Find one thing the curve just made cheap. Sell it to someone who hasn't noticed yet.",
+   "start": 94.588,
+   "end": 99.578,
+   "card": null
+  },
+  {
+   "i": 22,
+   "scene": "close",
+   "text": "See you on the curve.",
+   "start": 100.941,
+   "end": 102.081,
+   "card": null
+  }
+ ]
+}

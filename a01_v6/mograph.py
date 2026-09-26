@@ -29,9 +29,10 @@ def hexc(h, a=1.0):
     return skia.Color4f(int(h[0:2], 16) / 255, int(h[2:4], 16) / 255, int(h[4:6], 16) / 255, a)
 
 
-LIGHT, DARK = (231, 232, 234), (20, 22, 26)
-INK, INK_SOFT = "#1C1F24", "#6B717C"
-ON_DARK, ON_DARK_SOFT = "#E9EBEE", "#8A919C"
+DARK, SLATE = (20, 22, 26), (27, 30, 35)          # graphite for forming, slate (with a dot grid) for explaining
+ON_DARK, ON_DARK_MID, ON_DARK_SOFT = "#E9EBEE", "#C9CED6", "#8A919C"
+LINE_DIM, CELL = "#3B424C", "#9AA2AD"
+PANEL = ("#2A2F36", "#1F2329")                     # dark glass cards and tiles, top to bottom
 TURQ, TURQ_GLOW, EMERALD = "#12B8AC", "#3FE6D8", "#12A36E"
 CHROME = ["#FFFFFF", "#E4E8EC", "#A7AFBA", "#1F242B", "#5E6772", "#9FE9E2", "#EEF2F5", "#FFFFFF"]
 CHROME_POS = [0.0, 0.18, 0.44, 0.50, 0.58, 0.74, 0.9, 1.0]
@@ -81,10 +82,15 @@ EVENTS = []          # (time, kind) for the sound design; collected on the first
 _EV_ON = [False]
 
 
-def ev(t_evt, kind, now, fps=FPS):
-    """Register a sound event once, on the frame where it happens."""
+def ev(t_evt, kind, now, x=None, fps=FPS):
+    """Register a sound event once, on the frame where it happens; x (screen px) places it in stereo."""
     if _EV_ON[0] and t_evt <= now < t_evt + 1.0 / fps:     # the first frame at/after the event
-        EVENTS.append((round(t_evt, 3), kind))
+        EVENTS.append((round(t_evt, 3), kind, None if x is None else round(clamp((x - W / 2) / (W / 2), -1.0, 1.0), 2)))
+
+
+def scr_x(c, x, y=0.0):
+    """Where a local point lands on screen (to pan sounds made inside transformed layers)."""
+    return c.getTotalMatrix().mapXY(float(x), float(y)).x()
 
 
 # scene-level sound cues (independent of what happens to be drawn on the exact frame)
@@ -118,6 +124,23 @@ def chrome_paint(y0, y1, a=1.0, shift=0.0):
     return p
 
 
+def panel_paint(y0, y1, a=1.0):
+    sh = skia.GradientShader.MakeLinear(points=[(0, y0), (0, y1)], colors=[hexc(PANEL[0], a), hexc(PANEL[1], a)])
+    p = skia.Paint(AntiAlias=True, Style=skia.Paint.kFill_Style)
+    p.setShader(sh)
+    return p
+
+
+def glass(c, x, y, w, h, r, a=1.0, shadow=True):
+    """A dark glass panel: soft drop shadow, top-lit gradient, a hairline highlight along the top edge."""
+    if shadow:
+        sh = fill("#000000", 0.45 * a)
+        sh.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 26))
+        c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeXYWH(x, y + 18, w, h), r, r), sh)
+    c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeXYWH(x, y, w, h), r, r), panel_paint(y, y + h, 0.96 * a))
+    c.drawLine(x + r, y + 1, x + w - r, y + 1, stroke("#FFFFFF", 1, 0.07 * a))
+
+
 # ---------------------------------------------------------------- ground (marl)
 def marl(base, seed, amt):
     rng = np.random.default_rng(seed)
@@ -130,6 +153,18 @@ def marl(base, seed, amt):
     img = np.clip((np.array(base, np.float32)[None, None, :] + lum[..., None]) * vig[..., None], 0, 255).astype(np.uint8)
     rgba = np.dstack([img, np.full((H, W), 255, np.uint8)])
     return skia.Image.fromarray(rgba, colorType=skia.ColorType.kRGBA_8888_ColorType)
+
+
+def slate_ground():
+    """Slate marl with a faint dot grid: the explaining world (grid paper, in the dark)."""
+    surf = skia.Surface(W, H)
+    cc = surf.getCanvas()
+    cc.drawImage(marl(SLATE, 1, 2.6), 0, 0)
+    p = fill(ON_DARK, 0.07)
+    for y in range(30, H, 48):
+        for x in range(24, W, 48):
+            cc.drawCircle(x, y, 1.3, p)
+    return surf.makeImageSnapshot()
 
 
 # ---------------------------------------------------------------- geometry helpers
@@ -249,6 +284,8 @@ def decode(c, text, x, y, fnt, col, t, t0, dur=0.6, seed=0, align="left", a=1.0)
         return
     rng = random.Random(seed + int(t * 24))
     n = len(text)
+    tw = text_w(text, fnt)
+    x -= tw / 2 if align == "center" else tw if align == "right" else 0
     shown = []
     for i, ch in enumerate(text):
         ti = t0 + dur * (i / max(n, 1))
@@ -260,13 +297,8 @@ def decode(c, text, x, y, fnt, col, t, t0, dur=0.6, seed=0, align="left", a=1.0)
             shown.append(rng.choice(ASCII))
         else:
             shown.append(" ")
-        ev(ti + 0.12, "tick", t)
-    s = "".join(shown)
-    if align == "center":
-        x -= text_w(text, fnt) / 2
-    elif align == "right":
-        x -= text_w(text, fnt)
-    c.drawString(s, x, y, fnt, fill(col, a))
+        ev(ti + 0.12, "tick", t, scr_x(c, x + tw * i / max(n, 1), y))
+    c.drawString("".join(shown), x, y, fnt, fill(col, a))
 
 
 def type_on(c, text, x, y, fnt, col, t, t0, cps=38, a=1.0):
@@ -301,7 +333,7 @@ def dimension(c, x, y0, y1, col, t, t0, dur=0.7, label=None, fnt=None, lab_col=N
         c.drawString(label, x + side * 26, ym + 10, fnt, fill(lab_col or col, clamp((k - 0.6) / 0.4)))
 
 
-def grid100(c, x, y, size, t, n_base, n_extra, t_base, t_extra, col=INK, extra_col=TURQ, remove=False, a=1.0):
+def grid100(c, x, y, size, t, n_base, n_extra, t_base, t_extra, col=CELL, extra_col=TURQ, remove=False, a=1.0):
     """The 'per hundred' motif: a 10x10 grid whose cells fill in (or empty out)."""
     cell = size / 10
     gap = cell * 0.18
@@ -309,7 +341,7 @@ def grid100(c, x, y, size, t, n_base, n_extra, t_base, t_extra, col=INK, extra_c
         r, q = divmod(i, 10)
         cx, cy = x + q * cell, y + r * cell
         rect = skia.Rect.MakeXYWH(cx + gap / 2, cy + gap / 2, cell - gap, cell - gap)
-        c.drawRect(rect, stroke(INK_SOFT if col == INK else ON_DARK_SOFT, 1, 0.35 * a))
+        c.drawRect(rect, stroke(ON_DARK_SOFT, 1, 0.35 * a))
         if not remove:
             if i < n_base:
                 k = seg(t, t_base + i * 0.008, t_base + i * 0.008 + 0.12)
@@ -320,7 +352,7 @@ def grid100(c, x, y, size, t, n_base, n_extra, t_base, t_extra, col=INK, extra_c
                 k = seg(t, t_extra + j * 0.03, t_extra + j * 0.03 + 0.12)
                 if k > 0:
                     c.drawRect(rect, fill(extra_col, k * a))
-                    ev(t_extra + j * 0.03, "pip", t)
+                    ev(t_extra + j * 0.03, "pip", t, scr_x(c, cx + cell / 2, cy))
         else:
             if i < n_base:
                 keep = i < n_base - n_extra
@@ -332,7 +364,7 @@ def grid100(c, x, y, size, t, n_base, n_extra, t_base, t_extra, col=INK, extra_c
                     k_in = seg(t, t_base + i * 0.008, t_base + i * 0.008 + 0.12)
                     k_out = seg(t, t_extra + j * 0.03, t_extra + j * 0.03 + 0.15)
                     if k_out > 0:
-                        ev(t_extra + j * 0.03, "pip", t)
+                        ev(t_extra + j * 0.03, "pip", t, scr_x(c, cx + cell / 2, cy))
                     colr = extra_col if k_out > 0 else col
                     c.drawRect(rect, fill(colr, (0.85 * k_in) * (1 - k_out) * a))
 
@@ -378,7 +410,7 @@ def draw_icon(c, name, x, y, s, t, t0, col, dur=0.9, w=2.2):
         k = seg(t, t0 + i * dur * 0.12, t0 + i * dur * 0.12 + dur * 0.6)
         if k > 0:
             draw_poly(c, np.asarray(p, float) * s / 100 + [x, y], stroke(col, w), ease(k))
-            ev(t0 + i * dur * 0.12 + dur * 0.6, "tick", t)
+            ev(t0 + i * dur * 0.12 + dur * 0.6, "tick", t, scr_x(c, x + s / 2, y))
 
 
 # ---------------------------------------------------------------- the Tron formation (3D line work)
@@ -429,7 +461,7 @@ def draw_formation(c, segs, t, t0, dur, col=TURQ_GLOW, seed=0, glow=True):
         c.drawLine(*a, *tip, stroke(col, 1.6, 0.95))
         if k < 1:
             c.drawCircle(*tip, 3.2, fill("#FFFFFF", 0.9))
-        ev(ts, "form", t)
+        ev(ts, "form", t, scr_x(c, *segs[i].mean(axis=0)))
 
 
 def draw_segments(c, segs, col, w=1.6, a=1.0, glow=True):
@@ -471,7 +503,7 @@ def morph(a, b, k):
 # ---------------------------------------------------------------- CDE board motifs
 def brackets(c, x, y, w, h, t, t0, col, a=1.0, L=22):
     """HUD corner brackets that slide into place (board: the goat / crystal posters)."""
-    ev(t0, "blip", t)
+    ev(t0, "blip", t, scr_x(c, x + w / 2, y))
     k = ease(seg(t, t0, t0 + 0.5))
     if k <= 0:
         return
@@ -480,7 +512,6 @@ def brackets(c, x, y, w, h, t, t0, col, a=1.0, L=22):
     for cx, cy, sx, sy in ((x - off, y - off, 1, 1), (x + w + off, y - off, -1, 1), (x - off, y + h + off, 1, -1), (x + w + off, y + h + off, -1, -1)):
         c.drawLine(cx, cy, cx + sx * L, cy, p)
         c.drawLine(cx, cy, cx, cy + sy * L, p)
-    ev(t0, "blip", t)
 
 
 def crosshair(c, x, y, r, col, a=1.0):
@@ -491,7 +522,7 @@ def crosshair(c, x, y, r, col, a=1.0):
 
 def callout(c, ax, ay, lx, ly, lines, t, t0, col, lab_col, fnt, a=1.0):
     """Anchor dot + elbow leader + decoding label (scientific annotation)."""
-    ev(t0, "blip", t)
+    ev(t0, "blip", t, scr_x(c, lx, ly))
     k = ease(seg(t, t0, t0 + 0.6))
     if k <= 0:
         return
@@ -502,7 +533,6 @@ def callout(c, ax, ay, lx, ly, lines, t, t0, col, lab_col, fnt, a=1.0):
     for i, ln in enumerate(lines):
         decode(c, ln, lx + (8 if lx > ax else -8), ly + 6 + i * 22, fnt, lab_col, t, t0 + 0.35 + i * 0.12, 0.45,
                seed=int(ax + i), align="left" if lx > ax else "right", a=a)
-    ev(t0, "blip", t)
 
 
 VP = (960, 300)
@@ -540,7 +570,6 @@ def ground_grid(c, t, t0, a=1.0):
         if kk > 0:
             c.drawCircle(x, y, 5, fill(TURQ_GLOW, 0.18 * kk * tw * a))
             c.drawRect(skia.Rect.MakeXYWH(x - 2, y - 2, 4, 4), fill("#FFFFFF", 0.75 * kk * a))
-    ev(t0, "scan", t)
 
 
 # the ridgeline data landscape (board: the white line mountains, point-cloud terrain)
@@ -610,7 +639,7 @@ def draw_terrain(c, t, t0, ground_col=DARK, a=1.0):
 
 def pin(c, x, y, label, sub, t, t0, col, a=1.0, h=90):
     """A marker on the landscape with a label plate (board: 'have a nice day' terrain)."""
-    ev(t0, "blip", t)
+    ev(t0, "blip", t, scr_x(c, x, y))
     k = ease(seg(t, t0, t0 + 0.5))
     if k <= 0:
         return
@@ -626,7 +655,6 @@ def pin(c, x, y, label, sub, t, t0, col, a=1.0, h=90):
         c.drawRRect(skia.RRect.MakeRectXY(r, 10, 10), stroke(col, 1.2, a * kk))
         c.drawString(label, x - w / 2 + 20, y - 8 - h - 28, fnt, fill(ON_DARK, a * kk))
         c.drawString(sub, x - w / 2, y - 8 - h - 86, font(MONO, 16), fill(ON_DARK_SOFT, a * kk))
-    ev(t0, "blip", t)
 
 
 def particle_ring(c, t, t0, cx, cy, n=700, dur=1.6):
@@ -646,7 +674,6 @@ def particle_ring(c, t, t0, cx, cy, n=700, dur=1.6):
     for i in range(n):
         colr = TURQ_GLOW if i % 3 else "#FFFFFF"
         c.drawCircle(float(xs[i]), float(ys[i]), float(sz[i]), fill(colr, (1 - k) * 0.9))
-    ev(t0, "burst", t)
 
 
 _HT = {}
@@ -693,7 +720,7 @@ def draw_halftone(c, name, x, y, size, t, t0, col, dur=1.0, a=1.0):
         k = ease(seg(t, ts, ts + 0.18), "back")
         if k > 0:
             c.drawCircle(x + dx, y + dy, r * k, fill(col, a))
-    ev(t0, "dots", t)
+    ev(t0, "dots", t, scr_x(c, x + size / 2, y))
 
 
 def iso_affine(cx, cy, s, z):
@@ -716,7 +743,7 @@ def ring_tunnel(c, cx, cy, z, a=1.0):
         r = k * 9 * z ** 0.85
         if r > 2400:
             break
-        colr = TURQ if k % 2 else INK
+        colr = TURQ if k % 2 else "#5E6772"
         c.drawCircle(cx, cy, r, stroke(colr, max(1.0, 0.6 * z ** 0.5), a * 0.55))
 
 
@@ -758,7 +785,7 @@ def sc1(c, t):
             callout(c, cx + 150, 400, 1590, 330, ["CORE / B", "RELEASED  T+90 MIN"], t, t0 + 1.6, TURQ_GLOW, ON_DARK, font(MONO, 18))
         decode(c, lab, cx, 780, font(MONO_M, 22), ON_DARK, t, t0 + 1.2, 0.5, seed=5 + i, align="center")
         if t >= t0 + 1.7:
-            ev(t0 + 1.7, "chime", t)
+            ev(t0 + 1.7, "chime", t, cx)
     k = ease(seg(t, 4.5, 5.3))
     if k > 0:
         y = 870
@@ -798,7 +825,7 @@ def sc2(c, t):
             c.drawLine(x + 10, y, lerp(x + 10, 1360, k), y, stroke("#2BD48F", 1, 0.45))
     dimension(c, 1360, by, ay, "#2BD48F", t, 7.7, 0.7, "+14.1 POINTS", font(MONO_M, 24), "#2BD48F")
     if t >= 8.3:
-        ev(8.3, "chime", t)
+        ev(8.3, "chime", t, 1360)
     pin(c, ax, ay, "52.3", "PREVIOUS MODEL", t, 7.2, ON_DARK_SOFT)
     pin(c, bx, by, "66.4", "NEW MODEL", t, 7.4, TURQ_GLOW)
     decode(c, "CODING TEST · SHARE OF TASKS PASSED", 960, 960, font(MONO_M, 20), ON_DARK, t, 8.7, 0.8, seed=21, align="center")
@@ -837,7 +864,7 @@ def chrome_14(c, t, scale=1.0, cx=W / 2, cy=530, a=1.0, sweep_t=None, spectral=F
             c.drawPath(F14_PATH, p)
             c.restore()
     c.drawPath(F14_PATH, chrome_paint(b.top(), b.bottom(), a))
-    c.drawPath(F14_PATH, stroke("#2A2F37", 1.5, 0.6 * a))
+    c.drawPath(F14_PATH, stroke("#B8C0CA", 1.2, 0.5 * a))    # a rim, so the dark horizon never melts into the ground
     if sweep_t is not None and 0 < sweep_t < 1:        # a slow specular glint across the chrome
         c.save()
         c.clipPath(F14_PATH, skia.ClipOp.kIntersect, True)
@@ -873,7 +900,7 @@ def sc3(c, t, ground):
         clip = skia.Path()
         clip.addCircle(W / 2, 530, 1300 * kw)
         c.clipPath(clip, skia.ClipOp.kIntersect, True)
-        c.drawImage(ground["light"], 0, 0)
+        c.drawImage(ground["slate"], 0, 0)
         c.restore()
         c.drawCircle(W / 2, 530, 1300 * kw, stroke(TURQ, 2.5, 1 - kw))
         ev(14.3, "thum", t)
@@ -931,7 +958,7 @@ def card_rect(i, t):
     sx, sy = SHELF_X0 + i * (CARD_W * SHELF_S + 34), SHELF_Y
     k = ease(seg(t, t_dock, t_dock + 0.8))
     if k > 0:
-        ev(t_dock + 0.8, "thock", t)
+        ev(t_dock + 0.8, "thock", t, sx + CARD_W * SHELF_S / 2)
     return lerp(bx, sx, k), lerp(by, sy, k), lerp(big_s, SHELF_S, k)
 
 
@@ -950,29 +977,30 @@ GRID_X, GRID_Y, GRID_S = CARD_W - 270, 70, 230
 def card_body(c, i, t, a, active, grid=True, shadow=True):
     """A perspective card in its own coordinates (0..CARD_W, 0..CARD_H)."""
     cd = CARDS[i]
-    if shadow:
-        sh = fill("#000000", 0.08 * a)
-        sh.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 22))
-        c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeXYWH(0, 14, CARD_W, CARD_H), 24, 24), sh)
-    c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeWH(CARD_W, CARD_H), 24, 24), fill("#F5F6F7", 0.94 * a))
-    draw_poly(c, rrect_pts(0, 0, CARD_W, CARD_H, 24), stroke(TURQ if active else "#B9BEC6", 1.5, a), ease(seg(t, cd["t0"], cd["t0"] + 0.8)))
-    decode(c, cd["tag"], 40, 58, font(MONO_M, 20), TURQ, t, cd["t0"] + 0.2, 0.6, seed=30 + i, a=a)
-    draw_halftone(c, cd["icon"], 40, 92, 108, t, cd["t0"] + 0.3, INK, 1.0, a)
-    f_big = font(DISPLAY, 44)
+    glass(c, 0, 0, CARD_W, CARD_H, 24, a, shadow)
+    k_edge = ease(seg(t, cd["t0"], cd["t0"] + 0.8))
+    if active:                                   # the live card carries a faint turquoise halo
+        draw_poly(c, rrect_pts(0, 0, CARD_W, CARD_H, 24), stroke(TURQ, 4, 0.2 * a, glow=6), k_edge)
+    draw_poly(c, rrect_pts(0, 0, CARD_W, CARD_H, 24), stroke(TURQ if active else LINE_DIM, 1.5, a), k_edge)
+    decode(c, cd["tag"], 40, 58, font(MONO_M, 20), TURQ_GLOW, t, cd["t0"] + 0.2, 0.6, seed=30 + i, a=a)
+    draw_halftone(c, cd["icon"], 40, 92, 108, t, cd["t0"] + 0.3, ON_DARK_MID, 1.0, a)
     mx, my = 176, 170
+    m0, m1 = cd["metric"]
+    u = (text_w(m0, font(DISPLAY, 44)) + text_w(m1, font(DISPLAY, 44))) / 44       # width per point of type
+    f_big = font(DISPLAY, min(44.0, (GRID_X - 36 - mx - (102 if m0 else 0)) / u))    # always fits before the grid
     if cd["metric"][0] and t >= cd["t_a"]:
-        c.drawString(cd["metric"][0], mx, my, f_big, fill(INK_SOFT, a * ease(seg(t, cd["t_a"], cd["t_a"] + 0.3))))
+        c.drawString(cd["metric"][0], mx, my, f_big, fill(ON_DARK_SOFT, a * ease(seg(t, cd["t_a"], cd["t_a"] + 0.3))))
     if t >= cd["t_b"]:
         k = ease(seg(t, cd["t_b"], cd["t_b"] + 0.45))
         x2 = mx
         if cd["metric"][0]:
             w0 = text_w(cd["metric"][0], f_big) + 24
-            arrow(c, mx + w0, my - 16, 54, TURQ, a, k)
+            arrow(c, mx + w0, my - f_big.getSize() * 0.36, 54, TURQ, a, k)
             x2 = mx + w0 + 78
-        c.drawString(cd["metric"][1], x2, my + (1 - k) * 12, f_big, fill(INK, a * k))
-        ev(cd["t_b"], "chime_soft", t)
-    decode(c, cd["sub"], mx, my + 40, font(MONO, 17), INK_SOFT, t, cd["t_a"] - 0.2, 0.5, seed=40 + i, a=a)
-    type_on(c, cd["cap"], 40, 318, font(BODY, 28), INK, t, cd["t_cap"], 42, a)
+        c.drawString(cd["metric"][1], x2, my + (1 - k) * 12, f_big, fill(ON_DARK, a * k))
+        ev(cd["t_b"], "chime_soft", t, scr_x(c, x2, my))
+    decode(c, cd["sub"], mx, my + 40, font(MONO, 17), ON_DARK_SOFT, t, cd["t_a"] - 0.2, 0.5, seed=40 + i, a=a)
+    type_on(c, cd["cap"], 40, 318, font(BODY, 28), ON_DARK, t, cd["t_cap"], 42, a)
     if grid:
         n_base, n_extra = cd["grid"]
         grid100(c, GRID_X, GRID_Y, GRID_S, t, n_base, n_extra, cd["t0"] + 0.6, cd["t_b"] + 0.1, remove=(cd["mode"] == "remove"), a=a)
@@ -1011,6 +1039,7 @@ def sc5(c, t):
         for i in (3, 2, 1, 0):                          # bottom layer first
             k = ease(seg(t, 41.9 + (3 - i) * 0.08, 42.7 + (3 - i) * 0.08))
             x, y, s0 = card_rect(i, t)
+            ev(41.9 + (3 - i) * 0.08, "lift", t, x + CARD_W * s0 / 2)
             A_shelf = (s0, 0, x, 0, s0, y)
             z = (3 - i) * STACK_DZ * (1 - k_col)
             A_iso = iso_affine(STACK_C[0], STACK_C[1], STACK_S, z)
@@ -1024,12 +1053,9 @@ def sc5(c, t):
             if k > 0.95:                                # layer labels on leader lines (the map-legend look)
                 lx = A[0] * 0 + A[1] * CARD_H + A[2]
                 ly = A[3] * 0 + A[4] * CARD_H + A[5]
-                c.drawLine(lx, ly, lx - 60, ly, stroke(INK_SOFT, 1, 1 - k_col))
-                decode(c, LAYER_LAB[i], lx - 70, ly + 6, font(MONO_M, 17), INK, t, 42.6 + (3 - i) * 0.08, 0.5, seed=60 + i,
+                c.drawLine(lx, ly, lx - 60, ly, stroke(ON_DARK_SOFT, 1, 1 - k_col))
+                decode(c, LAYER_LAB[i], lx - 70, ly + 6, font(MONO_M, 17), ON_DARK, t, 42.6 + (3 - i) * 0.08, 0.5, seed=60 + i,
                        align="right", a=1 - k_col)
-        ev(41.9, "lift", t)
-        for q in range(1, 4):
-            ev(41.9 + q * 0.08, "lift", t)
     kp = ease(seg(t, 42.6, 43.1))
     if kp > 0 and pierce_pts and k_col < 1:
         xb, yb = pierce_pts[0][0], pierce_pts[0][1] + 70
@@ -1089,7 +1115,7 @@ def ascii_fourteen(c, t, k_in, k_out):
     a = 1 - ease(k_out)
     for i, (x, y) in enumerate(pos):
         chr_ = "+14#*"[i % 5] if k_in >= 1 else rng.choice(ASCII)
-        c.drawString(chr_, x, y, fnt, fill(TURQ if i % 7 == 0 else INK, a))
+        c.drawString(chr_, x, y, fnt, fill(TURQ_GLOW if i % 7 == 0 else ON_DARK_MID, a))
     if k_in > 0 and k_in < 0.05:
         ev(43.2, "decode", t)
     if k_out > 0:
@@ -1116,18 +1142,14 @@ def sc6(c, t):
         k = ease(seg(t, t0, t0 + 0.6))
         c.save()
         c.translate(0, (1 - k) * 30)
-        rect = skia.RRect.MakeRectXY(skia.Rect.MakeXYWH(x, y, 440, 560), 26, 26)
-        sh = fill("#000000", 0.07 * k)
-        sh.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 20))
-        c.drawRRect(skia.RRect.MakeRectXY(skia.Rect.MakeXYWH(x, y + 14, 440, 560), 26, 26), sh)
-        c.drawRRect(rect, fill("#F4F5F6", 0.95 * k))
+        glass(c, x, y, 440, 560, 26, k)
         draw_poly(c, rrect_pts(x, y, 440, 560, 26), stroke(TURQ, 1.4, k), ease(seg(t, t0, t0 + 0.9)))
-        c.drawString(num, x + 36, y + 110, font(DISPLAY, 64), fill(INK, k))
+        c.drawString(num, x + 36, y + 110, font(DISPLAY, 64), fill(ON_DARK, k))
         for j, line in enumerate(title.split("\n")):
-            type_on(c, line, x + 36, y + 420 + j * 44, font(BODY_M, 36), INK, t, t0 + 0.3 + j * 0.3, 34, k)
-        draw_icon(c, icon, x + 250, y + 170, 140, t, t0 + 0.2, INK, 1.0, 2.6)
+            type_on(c, line, x + 36, y + 420 + j * 44, font(BODY_M, 36), ON_DARK, t, t0 + 0.3 + j * 0.3, 34, k)
+        draw_icon(c, icon, x + 250, y + 170, 140, t, t0 + 0.2, ON_DARK_MID, 1.0, 2.6)
         c.restore()
-        ev(t0, "chime_soft", t)
+        ev(t0, "chime_soft", t, x + 220)
 
 
 def zoom_through(t):
@@ -1137,10 +1159,7 @@ def zoom_through(t):
 
 
 def frame(c, t, ground):
-    if t < 14.3:
-        c.drawImage(ground["dark"], 0, 0)
-    else:
-        c.drawImage(ground["light"], 0, 0)
+    c.drawImage(ground["dark"] if t < 15.2 else ground["slate"], 0, 0)     # sc3 wipes graphite -> slate from 14.3
     z, (zx, zy) = zoom_through(t)
     c.save()
     if z > 1:
@@ -1165,10 +1184,10 @@ def frame(c, t, ground):
         ring_tunnel(c, zx, zy, z, a=seg(t, 52.6, 52.9) * (1 - seg(t, 53.2, 53.5)))
     if t > 53.3:                                           # after the push: the ground and a mark
         k = seg(t, 53.3, 53.8)
-        c.drawImage(ground["light"], 0, 0, skia.SamplingOptions(), fill("#FFFFFF", k))
-        decode(c, "A01", W / 2, H / 2 + 12, font(DISPLAY, 34), INK, t, 53.4, 0.4, seed=99, align="center")
+        c.drawImage(ground["dark"], 0, 0, skia.SamplingOptions(), fill("#FFFFFF", k))
+        decode(c, "A01", W / 2, H / 2 + 12, font(DISPLAY, 34), ON_DARK, t, 53.4, 0.4, seed=99, align="center")
     # frame furniture: one thin line and a tiny label, always calm
-    col = ON_DARK_SOFT if t < 14.3 else INK_SOFT
+    col = ON_DARK_SOFT
     c.drawString("A01  ·  FOURTEEN POINTS", 120, H - 60, font(MONO, 16), fill(col, 0.8))
     c.drawLine(120, H - 84, 300, H - 84, stroke(col, 1, 0.6))
 
@@ -1177,7 +1196,7 @@ def main():
     global F14_POLYS, F14_PATH
     os.makedirs(BUILD, exist_ok=True)
     F14_POLYS, F14_PATH = fourteen_polys()
-    ground = {"light": marl(LIGHT, 1, 3.2), "dark": marl(DARK, 2, 2.4)}
+    ground = {"slate": slate_ground(), "dark": marl(DARK, 2, 2.4)}
     surface = skia.Surface(W, H)
     c = surface.getCanvas()
     if "--still" in sys.argv:
@@ -1199,7 +1218,11 @@ def main():
         ff.stdin.write(surface.makeImageSnapshot().toarray().tobytes())
     ff.stdin.close()
     ff.wait()
-    json.dump(sorted(set(EVENTS) | set(CUES)), open(os.path.join(BUILD, "events.json"), "w"))
+    merged = {}
+    for at, kind, pan in EVENTS + [(a, k, None) for a, k in CUES]:     # cues fill gaps; a placed event wins
+        if merged.get((at, kind)) is None:
+            merged[(at, kind)] = pan
+    json.dump([[at, kind, pan] for (at, kind), pan in sorted(merged.items())], open(os.path.join(BUILD, "events.json"), "w"))
     print(out, len(EVENTS), "sound events")
 
 

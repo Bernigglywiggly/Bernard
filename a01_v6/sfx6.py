@@ -121,6 +121,76 @@ def zoom():
     return norm(whoosh(1.3, 200, 5000) * np.linspace(0.3, 1, int(1.3 * SR)))
 
 
+def scan(d=1.5):
+    """A soft scanning sweep for grids and landscapes drawing in (like a slow radar/print pass)."""
+    t = t_(d)
+    sw = np.sin(2 * np.pi * np.cumsum(np.geomspace(180, 720, len(t))) / SR) * 0.35
+    return norm((whoosh(d, 500, 4000) * 0.6 + sw) * np.sin(np.pi * t / t[-1]) ** 1.5)
+
+
+def blip():
+    """Two-tone UI blip for a callout, bracket or pin appearing."""
+    t = t_(0.028)
+    a = np.sin(2 * np.pi * 2349 * t) * np.exp(-t * 90)
+    b = np.sin(2 * np.pi * 3136 * t) * np.exp(-t * 90)
+    return norm(np.concatenate([a, np.zeros(int(0.012 * SR)), b]))
+
+
+def dots(d=0.9):
+    """A granular run of tiny pips as a dot-matrix icon assembles."""
+    t = t_(d)
+    x = np.zeros(len(t))
+    for i in range(22):
+        s = int((i / 22) * d * 0.85 * SR)
+        f = 3136 * PENTA[i % 5] * (1 + (i // 5) * 0.12)
+        n = int(0.04 * SR)
+        tt = np.arange(n) / SR
+        x[s:s + n] += np.sin(2 * np.pi * f * tt) * np.exp(-tt * 120) * rng.uniform(0.4, 1)
+    return norm(x)
+
+
+def burst():
+    """The particle ring: a sparkle burst riding a soft outward whoosh."""
+    a, b = shimmer(1.4), whoosh(1.2, 600, 6000)
+    b = np.pad(b, (0, len(a) - len(b)))
+    return norm(a * 0.8 + b * 0.5)
+
+
+def glint():
+    """Spectral glint: a bright, shimmering upward glide."""
+    t = t_(0.7)
+    f = np.geomspace(2600, 5200, len(t))
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) * (0.6 + 0.4 * np.sin(2 * np.pi * 18 * t)) * np.sin(np.pi * t / t[-1])
+    return norm(verb(x, 1.6, 0.4, 9000))
+
+
+def lift():
+    """A card tilting up into the stack: an airy swish with a faint rising tone."""
+    t = t_(0.55)
+    tone = np.sin(2 * np.pi * np.cumsum(np.geomspace(330, 520, len(t))) / SR) * 0.2 * np.sin(np.pi * t / t[-1])
+    return norm(whoosh(0.55, 700, 3500) + tone)
+
+
+def pierce():
+    """The one line through every layer: a clean, glassy laser tone."""
+    t = t_(1.2)
+    f = np.geomspace(880, 1320, len(t))
+    x = sum(np.sin(2 * np.pi * np.cumsum(f * r) / SR) * g for r, g in ((1, 1), (1.003, 0.6), (2, 0.25)))
+    return norm(verb(x * np.minimum(1, t / 0.05) * np.exp(-t * 2.5), 2.0, 0.4, 8000))
+
+
+def tunnel():
+    """Travelling through the rings: accelerating soft ticks over a rising whoosh."""
+    d = 1.3
+    x = whoosh(d, 250, 5000) * 0.7
+    ts = np.cumsum(np.geomspace(0.12, 0.02, 24))
+    for k, at in enumerate(ts[ts < d - 0.05]):
+        c = tick(0.7 + k * 0.03)
+        s = int(at * SR)
+        x[s:s + len(c)] += c * 0.5
+    return norm(x)
+
+
 def pad(dur):
     """Clean pad: Am9 in the dark world, then Cmaj9 from 'It isn't' (14.3 s) onward."""
     t = t_(dur)
@@ -155,7 +225,7 @@ def build(events):
     pip_k = 0
     for at, kind in events:
         gap = at - last.get(kind, -9)
-        if kind in ("tick", "form", "count") and gap < 0.035:     # keep it crisp, never a buzz
+        if kind in ("tick", "form", "count", "blip") and gap < 0.035:     # keep it crisp, never a buzz
             continue
         last[kind] = at
         pan = float(rng.uniform(-0.35, 0.35))
@@ -186,7 +256,23 @@ def build(events):
             for j in range(10):
                 place(bus, tick(rng.uniform(0.8, 1.2)), at + j * 0.045, -31, float(rng.uniform(-0.5, 0.5)))
         elif kind == "zoom":
-            place(bus, zoom(), at, -18)
+            place(bus, zoom(), at, -20)
+        elif kind == "scan":
+            place(bus, scan(), at, -27)
+        elif kind == "blip":
+            place(bus, blip(), at, -29, pan)
+        elif kind == "dots":
+            place(bus, dots(), at, -30, pan * 0.5)
+        elif kind == "burst":
+            place(bus, burst(), at, -21)
+        elif kind == "glint":
+            place(bus, glint(), at, -26)
+        elif kind == "lift":
+            place(bus, lift(), at, -27, pan)
+        elif kind == "pierce":
+            place(bus, pierce(), at, -22)
+        elif kind == "tunnel":
+            place(bus, tunnel(), at, -21)
     p = pad(DUR)
     place(bus, p, 0.0, -30)
     return bus

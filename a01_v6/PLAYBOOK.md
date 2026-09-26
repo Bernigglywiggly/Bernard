@@ -89,3 +89,20 @@ you're at uni." Loop it: end on the chrome "+14" that opens it
 A consistent grid and margins · 3 type sizes max · crisp vector at 1080p/4K (no upscaling) ·
 textured grounds (marl), never flat digital grey · soft, real shadows · eased motion ·
 sound on every motion · no stock footage · every number sourced on screen.
+
+## 7. Board motifs (v6.1, from the CDE board)
+
+Each one is used once and only where it explains something; each has its own sound.
+
+| Motif | Where (hook) | Sound |
+|---|---|---|
+| Perspective ground grid + projection lines | 0–6 s, the two cores | scan |
+| HUD brackets, crosshairs, callouts | 0–11 s, labels and pins | blip |
+| Ridgeline terrain with pins (52.3 → 66.4) | 6–11 s, the scores as a landscape | scan, count |
+| Spectral glint lines on chrome | 12.8 s, the "+14" | glint, shimmer |
+| Particle ring | 14.3 s, the one big line | burst, thum |
+| Halftone dot-matrix icons | 15–41 s, the perspective cards | dots, thock |
+| Exploded isometric stack, pierced by one turquoise line | 41.9–43.6 s, "same number, every layer" | lift, pierce |
+| Concentric ring tunnel | 52.6 s, the push through the "0" | zoom, tunnel |
+
+Left out on purpose (didn't fit the calm look): maps (saved for A02), glass hands, gradients.

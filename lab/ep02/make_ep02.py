@@ -52,7 +52,12 @@ src = pre + section(parts, "def fl_surface(c, t):", "def build_cues():") + post
 pre, _, post = cut(src, "def build_cues():", 'if __name__ == "__main__":')
 src = pre + section(parts, "def build_cues():") + "\n\n" + post
 
-# 6. names
+# 6. the cards draw a trailing % small and raised (draw_big, in the parts)
+old_card = "        c.drawString(big, cx + 30 - slide, cy + 66, fb, mg.fill(WHITE, a))\n"
+assert old_card in src
+src = src.replace(old_card, "        draw_big(c, big, cx + 30 - slide, cy + 66, fb, mg.fill(WHITE, a))\n")
+
+# 7. names
 src = src.replace('"EP01 · SIXTEEN HOURS", 540, 100', '"EP02 · THE NINETY-MINUTE WAR", 540, 100')
 src = src.replace('"ep01_silent.mp4"', '"ep02_silent.mp4"')
 open(os.path.join(HERE, "ep02.py"), "w").write(src)

@@ -35,6 +35,13 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   Build: `voice_build.py` → `music_build.py` → `ep01.py render` → `mix.py`; covers: `covers.py`; upload copy:
   `lab/ep01/UPLOAD.md` (pilot: `lab/pilot/UPLOAD.md`). Ladder verified against METR: 2 s, ~30 s, ~4 min, ~1 h, 16 h.
   The inspo MP4 itself is not committed.
+- **EP02 · The Ninety-Minute War** (`lab/ep02/`, 1080×1920, 2:47): the 22 Sep 2026 price cuts (−20%, then −50%
+  about 90 minutes later; the gap is single-source and flagged on screen), price as the only readable signal, a16z's
+  $60 → $0.06 per million tokens, a million tokens ≈ 8 novels for under 10p, the Red Queen (Carroll 1871 / Van Valen
+  1973), IMAGINE "when thinking is almost free, what gets expensive?", and a mirrored close. The ruler is price per
+  million tokens (log, cheaper to the right). `ep02.py` is **generated**: edit `ep02_parts.py` (or the EP01 engine),
+  then `python3 make_ep02.py`. Build: `voice_build.py` → `music_build.py` → `make_ep02.py` → `ep02.py render` →
+  `mix.py`; covers: `covers.py`; upload copy: `lab/ep02/UPLOAD.md`. Topical: post it before EP01.
 - Offline transcription works: sherpa-onnx + whisper base.en from GitHub releases
   (`k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-base.en.tar.bz2`).
 

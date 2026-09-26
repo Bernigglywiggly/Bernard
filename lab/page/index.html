@@ -40,6 +40,8 @@ h2{font-family:var(--display);font-size:clamp(22px,3.2vw,30px);letter-spacing:.0
 .floors th{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:400}
 .floors td:first-child{font-family:var(--mono);color:var(--turq);white-space:nowrap}
 .tbox{overflow-x:auto}
+.covers{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 6px}
+.covers img{display:block;height:auto;max-height:280px;max-width:100%;border-radius:12px;border:1px solid var(--line)}
 .eps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .ep{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--slate);font-size:14px;color:var(--mid)}
 .ep b{display:block;color:var(--type);font-weight:600;margin-bottom:2px}
@@ -108,15 +110,67 @@ textarea{font:inherit;font-size:15px;width:100%;min-height:80px;border-radius:10
 <header>
   <span class="eyebrow">v7 lab · <b>26 Sep 2026</b> · built in the cloud session</span>
   <h1>Curve <span>Lab</span></h1>
-  <p>Everything from tonight's session, for you to judge: a 105-second pilot in the new renegade voice, four camera-led visual directions, a mechanical sound palette with the stomach-drop vortex, three jungle beds and the voice tests. Tap what you like below. Your picks save, and the next session reads them.</p>
+  <p><b>New on top: EP02 · The Ninety-Minute War</b> (the price war, the Red Queen, what gets expensive), with covers to pick from. Below it, everything from tonight's session, for you to judge: a 105-second pilot in the new renegade voice, four camera-led visual directions, a mechanical sound palette with the stomach-drop vortex, three jungle beds and the voice tests. Tap what you like below. Your picks save, and the next session reads them.</p>
 </header>
 
 <nav aria-label="Sections">
-  <a href="#ep01">EP01 · new</a><a href="#pilot">Pilot</a><a href="#picks">Your picks</a><a href="#visual">Visuals</a><a href="#sound">Sound</a><a href="#music">Jungle</a><a href="#voice">Voice</a><a href="#script">Script</a><a href="#refs">References</a><a href="#rules">Rules</a><a href="#higgs">Higgsfield</a><a href="#status">A01 status</a>
+  <a href="#ep02">EP02 · new</a><a href="#ep01">EP01</a><a href="#pilot">Pilot</a><a href="#picks">Your picks</a><a href="#visual">Visuals</a><a href="#sound">Sound</a><a href="#music">Jungle</a><a href="#voice">Voice</a><a href="#script">Script</a><a href="#refs">References</a><a href="#rules">Rules</a><a href="#higgs">Higgsfield</a><a href="#status">A01 status</a>
 </nav>
 
+<section id="ep02">
+  <span class="eyebrow">00 · <b>Newest</b> · episode two</span>
+  <h2>EP02 · The Ninety-Minute War</h2>
+  <p class="lede">On 22 September one lab cut its flagship's price by a fifth. About ninety minutes later its biggest rival launched two models at half the price. Why price is the only signal everyone can read, what a million tokens is in your units, the Red Queen, and a labelled what-if: when thinking is almost free, what gets expensive? Vertical, 2:47, same Six Floors format.</p>
+  <div class="vwrap">
+    <div class="glass vplayer"><video id="ep02Video" controls playsinline preload="metadata" poster="media/ep02_poster.jpg"></video></div>
+    <div class="glass status">
+      <span class="eyebrow">What's new since EP01</span>
+      <ol>
+        <li><b>The ruler is a price:</b> dollars per million tokens on a log scale, cheaper to the right. Every cut lands as a tag, and 2021 → 2024 ($60 → $0.06) runs as a glowing trail.</li>
+        <li><b>Glass price tags:</b> the old price gets struck through, the new one lands, and the percentage stamps in.</li>
+        <li><b>The Red Queen treadmill:</b> a chessboard rolling towards you, two queens running on the spot.</li>
+        <li><b>A quieter IMAGINE:</b> the drums drop out for the big question, then "your time, your attention, someone who turns up".</li>
+        <li><b>The mirrored close:</b> −20% and −50%, and both labs still running.</li>
+      </ol>
+      <span class="eyebrow">Facts</span>
+      <ol>
+        <li>Both price cuts are from launch-day coverage; the <b>90-minute gap is single-source</b>, and the video says so on screen.</li>
+        <li>$60 → $0.06 is a16z's "LLMflation" analysis (Nov 2024) for the same level of capability.</li>
+        <li>The Red Queen: Carroll (1871), borrowed by Van Valen (1973).</li>
+      </ol>
+    </div>
+  </div>
+  <div class="glass tbox" style="padding:6px 10px">
+    <table class="floors">
+      <thead><tr><th>Floor</th><th>In EP02</th></tr></thead>
+      <tbody>
+        <tr><td>0 · GROUND</td><td>−20% on the flagship, then −50% about ninety minutes later. "Two companies. One afternoon. Both went cheaper."</td></tr>
+        <tr><td>1 · MECHANISM</td><td>How good vs how much: nobody can judge quality in an afternoon, everyone can read a price. $60 → $0.06 in three years.</td></tr>
+        <tr><td>2 · YOU</td><td>A million tokens ≈ 750,000 words ≈ 8 novels, read for under 10p.</td></tr>
+        <tr><td>3 · IDEA</td><td>The Red Queen: all the running you can do, to stay in the same place.</td></tr>
+        <tr><td>4 · IMAGINE</td><td>The best tutor for less than a text message. When thinking is almost free, what gets expensive?</td></tr>
+        <tr><td>5 · SURFACE</td><td>Hand over the job you've been putting off. "One lab cut its price by a fifth. The other cut it in half. And both of them are still running."</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="eyebrow">Covers · 9:16 for TikTok and Shorts, 16:9 for a long upload</span>
+  <div class="covers">
+    <img src="media/covers/ep02_cover_a.jpg" alt="EP02 cover A: −20% and −50%, 90 minutes apart, two queens" loading="lazy">
+    <img src="media/covers/ep02_cover_b.jpg" alt="EP02 cover B: When thinking is free, what gets expensive?" loading="lazy">
+    <img src="media/covers/ep02_thumb_16x9.jpg" alt="EP02 16:9 thumbnail" loading="lazy">
+  </div>
+  <div class="glass pickbox">
+    <div class="pickrow"><span class="eyebrow">EP02 vs EP01</span><div class="picks" data-cat="ep02verdict" data-mode="one">
+      <button class="pick love" data-v="better">EP02 is better</button><button class="pick" data-v="same">About the same</button><button class="pick" data-v="ep01">EP01 is better</button></div></div>
+    <div class="pickrow"><span class="eyebrow">EP02 cover</span><div class="picks" data-cat="ep02cover" data-mode="one">
+      <button class="pick" data-v="a">A · −20% / −50%</button><button class="pick" data-v="b">B · the question</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Post first</span><div class="picks" data-cat="postfirst" data-mode="one">
+      <button class="pick" data-v="ep01">EP01 · Sixteen Hours</button><button class="pick" data-v="ep02">EP02 · The Ninety-Minute War</button><button class="pick" data-v="both">Both, a day apart</button></div></div>
+  </div>
+</section>
+
 <section id="ep01">
-  <span class="eyebrow">00 · <b>Newest</b> · after the pollar inspo</span>
+  <span class="eyebrow">00 · <b>Episode one</b> · after the pollar inspo</span>
   <h2>EP01 · Sixteen Hours</h2>
   <p class="lede">Your inspo, taken apart and rebuilt one level up. Pollar's rigour (dates, sources, one metric running along the bottom, silence before each reveal, a mirrored close), plus three floors they never go down to: what it means for you, the idea underneath, and a labelled what-if. Vertical, 2:25, for TikTok and Shorts.</p>
   <div class="vwrap">
@@ -313,8 +367,13 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;
   if (window.Hls && window.Hls.isSupported()) { const hls = new Hls({maxBufferLength: 30}); hls.loadSource(src); hls.attachMedia(v); }
   else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
 })();
+// ---------- EP02 (vertical)
+(function(){
+  const v = document.getElementById("ep02Video"), src = "media/ep02/ep02_playlist.txt";
+  if (window.Hls && window.Hls.isSupported()) { const hls = new Hls({maxBufferLength: 30}); hls.loadSource(src); hls.attachMedia(v); }
+  else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
+})();
 const EPS = [
-  ["EP02 · The Ninety-Minute War","Two labs, one afternoon, a price war. The Red Queen: running to stay in place. Imagine a genius for 8p an hour."],
   ["EP03 · The Shovel Sellers","1848's real winners sold supplies. What are the shovels of 2026, and 2030?"],
   ["EP04 · The Number That Decides What Gets Watched","Europe counts training arithmetic: 10²⁵. Goodhart's law. Imagine compute rationed like carbon."],
   ["EP05 · The Exam and the Shirt","Moravec's paradox: why the easy things are hard. Imagine the first robot that moves like a toddler."],

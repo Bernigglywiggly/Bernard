@@ -13,7 +13,7 @@ Status tags: **[V]** verified this session (see `lab/research/script_facts.md`),
 - **Imagine:** if it held: a working week by the end of 2026, a working month by mid-2027 [M, I]. What would you hand over? What would you keep?
 - **Close:** "It took six years to get from two seconds to an hour. It took one more to get from an hour to sixteen."
 
-## EP02 · The Ninety-Minute War
+## EP02 · The Ninety-Minute War  *(built: `lab/ep02/`; as made, the IDEA is the Red Queen and IMAGINE asks what gets expensive)*
 - **Ground:** on 22 Sep 2026 two labs launched new models about 90 minutes apart, and both cut prices. [V, the 90 minutes is single-source]
 - **Mechanism:** why launches cluster: nobody wants to own the news cycle second; price is the only lever everyone can read.
 - **You:** what a million tokens is in your units; what your side project costs now.

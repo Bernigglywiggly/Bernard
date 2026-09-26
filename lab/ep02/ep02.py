@@ -125,7 +125,8 @@ def ruler(c, t):
         x = rx(s)
         c.drawLine(x, RY - 9, x, RY + 9, mg.stroke(MID, 1.2, 0.7 * a))
         h.mono(c, lab, x, RY + 34, 14, SOFT, 0.85 * a, align="center")
-    h.mono(c, "PRICE PER MILLION TOKENS · CHEAPER →", RX0, RY - 26, 12, SOFT, 0.7 * a)
+    h.mono(c, "$ PER 1M TOKENS", RX0, RY - 26, 12, SOFT, 0.7 * a)
+    h.mono(c, "CHEAPER →", RX1, RY + 60, 12, SOFT, 0.7 * a, align="right")
 
     def tag(x, lab, col, k, up=0):
         path = skia.Path(); path.moveTo(x, RY - 4); path.lineTo(x - 8, RY - 18); path.lineTo(x + 8, RY - 18); path.close()
@@ -175,7 +176,7 @@ def card(c, t):
         slide = (1 - ease(seg(t, x["start"] + 0.2, x["start"] + 0.55), "o")) * 26
         mg.glass(c, cx - slide, cy, wdt, 124, 16, a)
         c.drawRect(skia.Rect.MakeXYWH(cx - slide, cy + 20, 3, 84), mg.fill(TURQ, a))
-        c.drawString(big, cx + 30 - slide, cy + 66, fb, mg.fill(WHITE, a))
+        draw_big(c, big, cx + 30 - slide, cy + 66, fb, mg.fill(WHITE, a))
         c.drawString(sub, cx + 30 - slide, cy + 98, fs, mg.fill(SOFT, a))
 
 
@@ -215,6 +216,23 @@ def captions(c, t):
 
 
 # ================================================================ small drawing helpers
+def big_parts(s, f):
+    if not s.endswith("%"):
+        return s, None, f.measureText(s), 0.0
+    fu = mg.font(mg.MONO_M, f.getSize() * 0.42)
+    num = s[:-1]
+    return num, fu, f.measureText(num) + f.getSize() * 0.06 + fu.measureText("%"), f.measureText(num) + f.getSize() * 0.06
+
+
+def draw_big(c, s, x, y, f, paint, align="left"):
+    num, fu, w, ux = big_parts(s, f)
+    x0 = x - w if align == "right" else x - w / 2 if align == "center" else x
+    c.drawString(num, x0, y, f, paint)
+    if fu is not None:
+        c.drawString("%", x0 + ux, y - f.getSize() * 0.40, fu, paint)
+    return w
+
+
 def price_card(c, x, y, w, title, old, new, pct, t0, t, col=WHITE, a=1.0, big=64, small=30):
     """A glass price tag: the old price gets struck through, the new one lands, the % stamps in."""
     mg.glass(c, x, y, w, 250, 18, a)
@@ -391,17 +409,22 @@ def fl_idea(c, t):
         lines_.append(h.densify(np.array([[x, 0, -40], [x, 0, 10]]), 2.0))
     ka = ease(seg(t, F_START[3], F_START[3] + 1.2))
     fr.lines(lines_, MID, 1.2, 0.55 * ka, glow=0.0, tip=False)
+    c.saveLayer()
     fr.draw(c, 0.6, 0.2)
+    mask = skia.Paint(BlendMode=skia.BlendMode.kDstIn)
+    mask.setShader(skia.GradientShader.MakeLinear([(0, 960), (0, 1130)], [skia.Color4f(0, 0, 0, 1), skia.Color4f(0, 0, 0, 0)]))
+    c.drawRect(skia.Rect.MakeWH(W, H), mask)
+    c.restore()
     kq = ease(seg(t, ls(L11 + 1) - 0.2, ls(L11 + 1) + 0.8))
     if kq > 0:
         bob1 = abs(math.sin(t * 7.0)) * -16
         bob2 = abs(math.sin(t * 7.0 + 1.3)) * -16
-        queen(c, 380, 1080, 1.6, kq, WHITE, bob1)
-        queen(c, 700, 1080, 1.6, kq, TURQ, bob2)
+        queen(c, 380, 1030, 1.6, kq, WHITE, bob1)
+        queen(c, 700, 1030, 1.6, kq, TURQ, bob2)
         kl = ease(seg(t, ls(L11 + 3), ls(L11 + 3) + 0.6))
         if kl > 0:
-            h.mono(c, "LAB A", 380, 1200, 18, WHITE, kl, align="center", font=mg.MONO_M)
-            h.mono(c, "LAB B", 700, 1200, 18, TURQ, kl, align="center", font=mg.MONO_M)
+            h.mono(c, "LAB A", 380, 1150, 18, WHITE, kl, align="center", font=mg.MONO_M)
+            h.mono(c, "LAB B", 700, 1150, 18, TURQ, kl, align="center", font=mg.MONO_M)
     # the quote, set like a page
     kq2 = ease(seg(t, ls(L11 + 1) + 0.6, ls(L11 + 1) + 1.4)) * (1 - ease(seg(t, ls(L11 + 2) + 0.2, ls(L11 + 2) + 0.8)))
     if kq2 > 0:
@@ -544,9 +567,9 @@ def fl_surface(c, t):
     k1 = ease(seg(t, ls(L21 + 1) + 0.1, ls(L21 + 1) + 0.6))
     if k1 > 0:
         f = mg.font(mg.DISPLAY, 96)
-        c.drawString("−20%", 300 - f.measureText("−20%") / 2, 760, f, mg.fill(WHITE, k1))
+        draw_big(c, "−20%", 300, 760, f, mg.fill(WHITE, k1), align="center")
         k2 = ease(seg(t, ls(L21 + 1) + 2.0, ls(L21 + 1) + 2.5))
-        c.drawString("−50%", 780 - f.measureText("−50%") / 2, 760, f, mg.fill(TURQ, k2))
+        draw_big(c, "−50%", 780, 760, f, mg.fill(TURQ, k2), align="center")
         h.mono(c, "ONE LAB", 300, 820, 18, SOFT, k1, align="center", font=mg.MONO_M)
         h.mono(c, "ITS RIVAL", 780, 820, 18, SOFT, k2, align="center", font=mg.MONO_M)
     k3 = ease(seg(t, ls(L21 + 2) + 0.1, ls(L21 + 2) + 0.7))

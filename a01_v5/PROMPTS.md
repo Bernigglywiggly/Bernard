@@ -180,3 +180,73 @@ c) Three thumbnail concepts in the v5 language (1280x720): the chrome +14, the d
    standing 90. Big type, one idea each, readable at 120 px wide.
 Folder: a01_v5/kit/a01/. SELF-CHECK: palette only; no real brands; each thumbnail readable at 120 px.
 ```
+
+## Making A02–A06 (see `channel/BACKLOG.md`)
+
+### 10. Research brief (one per video)
+
+```
+Research the topic below for a 12-16 minute explainer on the channel above. Today's date matters:
+state it, and only use facts you can date. Topic: <paste the video's title + spine from BACKLOG.md>
+Deliver:
+1. The 12 strongest facts, each with a number, the date it was true, and a primary source link
+   (government, official body, company filing, peer-reviewed study, or a major outlet quoting one).
+2. For every number, 2 "street unit" translations (things a UK 20-something has actually held,
+   bought or waited for).
+3. The strongest counter-argument or nuance for each big claim, so the video is never one-sided.
+4. 3 absurd-but-real facts that make people say "wait, what?".
+5. 3 future predictions with the best evidence for each, and one wild "Terminator-level"
+   extrapolation clearly labelled as fantasy.
+6. Anything that could get the video limited ads or flagged (graphic content, medical or legal
+   claims, named people) and how to say it safely.
+SELF-CHECK: every fact has a date and a source; no source older than the topic needs; claims that
+you could not verify are listed separately as UNVERIFIED, never mixed in.
+```
+
+### 11. Script writer (the Cousin)
+
+```
+Write the full narration for the video below in the Cousin's voice: hella smart, street smart, two
+beers deep; Riley in the jokes, Huey in the landings, facts always exact.
+Rules: 190-220 words per minute pace, so about 2,800 words for 14 minutes. Rotate the register every
+20-30 seconds: FACT -> TRANSLATE (street unit) -> JOKE or tangent ("anyway-") -> DEEP. One
+tangent per chapter. One "Huey line" per video: short, quiet, true. Heat 1: damn/hell/ass at most,
+and never in the first 30 seconds; no slurs; never accuse a named real person. Open with a
+50-second hook: fact, translation, joke, deep line. End in HOME: hopeful, warm, one line that makes
+the viewer feel part of something ("see you on the line").
+Mark each paragraph with its register in [brackets] and suggest the world (W0-W4 or the hero world)
+and a camera move from the grammar, so it drops straight into the shot-list director (prompt 8).
+Research to use: <paste the prompt 10 output>
+SELF-CHECK: read it aloud at 200 wpm; cut any sentence that needs a second read; every number has a
+street unit; the ending would make a stranger feel better about the future without lying to them.
+```
+
+### 12. Title and thumbnail lab
+
+```
+For the video below, write 20 titles and rank the top 5 by likely click-through. Rules: under 60
+characters; a specific number or a surprising claim; curiosity without lying (the video must
+deliver exactly what the title promises); no ALL CAPS words except one; no "WW3", gore, or fake
+urgency. Then design 3 thumbnails in the channel's world language (PRESS poster, CHROME hero or
+SIGNAL dither), each readable at 120 px wide: one idea, max 3 words of type (Unbounded), the amber
+line somewhere in frame, near-black edges. Describe each precisely enough to build in Blender or
+Figma, then generate them at 1280x720.
+Video: <title + spine>
+SELF-CHECK: shrink each thumbnail to 120 px wide and check it still reads in one second; the title
+and thumbnail say different things that add up (never repeat the same words).
+```
+
+### 13. FX set-piece designer (the "whoa" shots)
+
+```
+Design the 3 jaw-drop set-pieces for the video below, in the channel's visual system. For each:
+the moment in the script it lands on, the world (existing or the video's new hero world), what the
+viewer sees second by second (camera move from the grammar, what moves, what glows), the one
+detail that makes it feel hand-made, and the sound (from the sound kit). Then give build
+instructions for the best tool for each: Blender (Python-friendly steps: objects, materials,
+keyframes), TouchDesigner (network outline), or an image/video model (exact prompt, aspect ratio,
+seed advice). Keep the amber line in every set-piece and near-black edges.
+Video: <title + outline>
+SELF-CHECK: each set-piece could only belong to this channel; none relies on real violent
+footage; each is renderable in under 2 hours on a laptop GPU.
+```

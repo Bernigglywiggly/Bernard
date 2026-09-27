@@ -68,6 +68,11 @@ def ruler(c, t):
 
 
 # ================================================================ small drawing helpers
+def I(name):
+    """The index of the line with this id (see script.py)."""
+    return next(i for i, x in enumerate(L) if x.get("id") == name)
+
+
 def big_parts(s, f):
     if not s.endswith("%"):
         return s, None, f.measureText(s), 0.0
@@ -233,30 +238,34 @@ def fl_ground(c, t):
     c.drawImage(h.ground("graphite"), 0, 0)
     a_in = ease(seg(t, 0.2, 1.2))
     # the bottle, held up
-    kb = a_in * (1 - ease(seg(t, ls(1) - 0.3, ls(1) + 0.5)))
+    ib, im, ish, i36, inv = I("bottle"), I("mind"), I("shop"), I("36k"), I("never")
+    kb = a_in * (1 - ease(seg(t, ls(ish) - 0.3, ls(ish) + 0.5)))
+    km = ease(seg(t, ls(im) - 0.1, ls(im) + 0.5)) * (1 - ease(seg(t, ls(ish) - 0.4, ls(ish) + 0.3)))
+    if km > 0:                                                 # half the town legs it for the river
+        swarm(c, t, ls(im) + 0.2, le(im) + 0.3, 420, 13, (40, 640), km, col=WHITE, spread=(300, 1040), ystart=(1060, 1170))
     if kb > 0:
-        rise = smooth(seg(t, ls(0), le(0))) * 60
+        rise = smooth(seg(t, ls(ib), le(ib))) * 60
         bottle(c, 540, 820 - rise, 1.55, kb, t)
         h.mono(c, "SAN FRANCISCO · 1848", 540, 1130 - rise * 0.2, 18, SOFT, kb, align="center", font=mg.MONO_M)
     # the shop: pans and shovels, bought up first
-    ks = ease(seg(t, ls(1) - 0.3, ls(1) + 0.6)) * (1 - ease(seg(t, ls(3) - 0.3, ls(3) + 0.3)))
+    ks = ease(seg(t, ls(ish) - 0.3, ls(ish) + 0.6)) * (1 - ease(seg(t, ls(inv) - 0.3, ls(inv) + 0.3)))
     if ks > 0:
-        u = seg(t, ls(1) - 0.3, ls(3))
+        u = seg(t, ls(ish) - 0.3, ls(inv))
         cam = h.orbit((1.0, 1.3, 0.2), 14.0, lerp(-32, 8, smooth(u)), 12, fov=44)
         fr = h.Frame(cam, fade=(8, 30))
         frame_, pans, shovels = store()
-        kr = seg(t, ls(1) - 0.2, ls(1) + 2.2)
+        kr = seg(t, ls(ish) - 0.2, ls(ish) + 2.2)
         fr.lines(frame_, MID, 1.3, 0.8 * ks, glow=0.2, k=kr, stagger=0.3, tip=False, seed=1)
-        fr.lines(pans, WHITE, 1.3, 0.9 * ks, glow=0.5, k=seg(t, ls(1), ls(1) + 2.6), stagger=0.6, seed=2)
-        fr.lines(shovels, TURQ, 1.5, ks, glow=0.9, k=seg(t, ls(1) + 0.6, ls(1) + 2.8), stagger=0.4, seed=3)
+        fr.lines(pans, WHITE, 1.3, 0.9 * ks, glow=0.5, k=seg(t, ls(ish), ls(ish) + 2.6), stagger=0.6, seed=2)
+        fr.lines(shovels, TURQ, 1.5, ks, glow=0.9, k=seg(t, ls(ish) + 0.6, ls(ish) + 2.8), stagger=0.4, seed=3)
         c.saveLayer()
         fr.draw(c, 0.8, 0.35)
         fade_below(c, 1080, 1190)
         c.restore()
     # nine weeks, thirty-six thousand dollars
-    kc = ease(seg(t, ls(2) - 0.1, ls(2) + 0.4)) * (1 - ease(seg(t, ls(3) - 0.3, ls(3) + 0.2)))
+    kc = ease(seg(t, ls(i36) - 0.1, ls(i36) + 0.4)) * (1 - ease(seg(t, ls(inv) - 0.3, ls(inv) + 0.2)))
     if kc > 0:
-        kw = seg(t, ls(2) + 0.2, le(2) - 0.1)
+        kw = seg(t, ls(i36) + 0.2, le(i36) - 0.1)
         c.drawRect(skia.Rect.MakeWH(W, H), mg.fill("#0E1013", 0.55 * kc))
         v = int(round(36000 * smooth(kw) / 100.0) * 100)
         centred(c, f"${v:,}", 900, 104, TURQ if kw >= 1 else WHITE, kc)
@@ -269,11 +278,11 @@ def fl_ground(c, t):
                 c.drawRoundRect(skia.Rect.MakeXYWH(r.left(), r.top(), w * kk, 16), 4, 4, mg.fill(TURQ, 0.9 * kc))
             h.mono(c, f"WK {j + 1}", r.centerX(), y0 + 44, 12, SOFT, 0.8 * kc, align="center")
     # never dug: the one clean shovel
-    k3 = ease(seg(t, ls(3) + 0.05, ls(3) + 0.8))
+    k3 = ease(seg(t, ls(inv) + 0.05, ls(inv) + 0.8))
     if k3 > 0:
         cam = h.orbit((0, 0.5, 0), 12.6, t * 24 % 360, 8, fov=40)
         fr = h.Frame(cam, fade=(4, 20))
-        fr.lines(shovel(1.0), WHITE, 1.8, k3, glow=1.0, k=seg(t, ls(3), ls(3) + 1.2), stagger=0.2, seed=4)
+        fr.lines(shovel(1.0), WHITE, 1.8, k3, glow=1.0, k=seg(t, ls(inv), ls(inv) + 1.2), stagger=0.2, seed=4)
         fr.draw(c, 1.0, 0.45)
         h.mono(c, "NEVER DUG", 540, 1150, 20, TURQ, k3, align="center", font=mg.MONO_M)
     h.vignette(c, 0.5)
@@ -282,8 +291,7 @@ def fl_ground(c, t):
 # ================================================================ floor 1 · MECHANISM
 def fl_mechanism(c, t):
     c.drawImage(h.ground("slate"), 0, 0)
-    L4 = first_of_floor(1)["i"]
-    L5, L6, L7, L8 = L4 + 1, L4 + 2, L4 + 3, L4 + 4
+    L4, L5, L6, L7, L8 = I("rule"), I("split"), I("pan"), I("census"), I("verdict")
     PX, PY = 540, 560
     kgone = 1 - ease(seg(t, ls(L7) - 0.3, ls(L7) + 0.4))
     kp = ease(seg(t, ls(L4) - 0.2, ls(L4) + 0.6)) * kgone
@@ -366,8 +374,7 @@ def fl_mechanism(c, t):
 # ================================================================ floor 2 · YOU
 def fl_you(c, t):
     c.drawImage(h.ground("slate"), 0, 0)
-    L9 = first_of_floor(2)["i"]
-    L10, L11 = L9 + 1, L9 + 2
+    L9, L10, L11 = I("now"), I("receipt"), I("door")
     k9 = ease(seg(t, ls(L9) - 0.2, ls(L9) + 0.5)) * (1 - ease(seg(t, ls(L10) - 0.2, ls(L10) + 0.4)))
     if k9 > 0:
         prize_node(c, 540, 560, 30, k9, "THE SAME GOLD")
@@ -451,8 +458,7 @@ def routes():
 
 def fl_idea(c, t):
     c.drawImage(h.ground("graphite"), 0, 0)
-    L12 = first_of_floor(3)["i"]
-    L13, L14, L15, L16 = L12 + 1, L12 + 2, L12 + 3, L12 + 4
+    L12, L13, L14, L15, L16 = I("before"), I("acts"), I("third"), I("miles"), I("layers")
     kt = ease(seg(t, ls(L13) - 0.4, ls(L13) + 0.6))
     if kt > 0:
         u = t - ls(L13)
@@ -507,30 +513,30 @@ def fl_idea(c, t):
 
 # ================================================================ floor 4 · IMAGINE (the drop is shared)
 def dream_extras(c, t, kout):
-    Lg = DROP_LINE + 1
+    Lg, Lr = I("certainty"), I("repair")
     stamp = ease(seg(t, LAND + 0.4, LAND + 1.0)) * kout
     if stamp > 0:
         r = skia.Rect.MakeXYWH(300, 350, 480, 64)
         p = mg.stroke(GLOW, 1.6, stamp); p.setPathEffect(skia.DashPathEffect.Make([7, 6], 0))
         c.drawRoundRect(r, 10, 10, p)
         h.mono(c, "IMAGINE · 2030 · NOT A FORECAST", 540, 392, 20, GLOW, stamp, align="center", font=mg.MONO_M)
-    d2 = le(Lg + 1) - ls(Lg + 1)
+    d2 = le(Lr) - ls(Lr)
     shops = [("CERTAINTY", "EVERY ANSWER CHECKED BY A PERSON", ls(Lg) + 0.4, 340),
-             ("AGENT REPAIR", "FOR THE ONES THAT GOT CONFUSED", ls(Lg + 1) + 0.2, 740),
-             ("MODEL TAILOR", "FITTED TO ONE FAMILY", ls(Lg + 1) + 0.5 * d2, 380)]
+             ("AGENT REPAIR", "FOR THE ONES GONE FERAL", ls(Lr) + 0.2, 740),
+             ("MODEL TAILOR", "FITTED TO ONE FAMILY", ls(Lr) + 0.5 * d2, 380)]
     for j, (a1, a2, tk, x) in enumerate(shops):
         kk = seg(t, tk, tk + 5.2)
         if 0 < kk < 1:
             a = math.sin(math.pi * kk) ** 0.7 * kout
             y = lerp(1120, 560, kk)
             shopfront(c, x, y, 520 if j == 0 else 480, 150, a1, a2, a)
-    qi = next(i for i, x in enumerate(L) if x.get("quiet"))
-    kq = ease(seg(t, ls(qi), ls(qi) + 0.6)) * kout * (1 - ease(seg(t, ls(qi + 1) + 0.4, ls(qi + 1) + 1.0)))
+    qi, qb = I("question"), I("boring")
+    kq = ease(seg(t, ls(qi), ls(qi) + 0.6)) * kout * (1 - ease(seg(t, ls(qb) + 0.4, ls(qb) + 1.0)))
     if kq > 0:
         centred(c, "WHAT WILL THEY NEED", 720, 42, WHITE, kq)
         centred(c, "THAT NOBODY'S SELLING?", 790, 42, TURQ, kq)
     for j, s_ in enumerate(["PROBABLY BORING.", "SHOVELS ALWAYS ARE."]):
-        tk = ls(qi + 1) + (1.0 if j == 0 else 0.55 * (le(qi + 1) - ls(qi + 1)))
+        tk = ls(qb) + (1.0 if j == 0 else 0.55 * (le(qb) - ls(qb)))
         ka = ease(seg(t, tk, tk + 0.4)) * kout
         if ka > 0:
             centred(c, s_, 760 + j * 90, 40 if j else 34, GLOW if j else WHITE, ka)
@@ -539,8 +545,8 @@ def dream_extras(c, t, kout):
 # ================================================================ floor 5 · SURFACE
 def fl_surface(c, t):
     c.drawImage(h.ground("graphite"), 0, 0)
-    L21 = first_of_floor(5)["i"]
-    ka = ease(seg(t, ls(L21) + 0.3, ls(L21) + 1.2)) * (1 - ease(seg(t, ls(L21 + 1) - 0.6, ls(L21 + 1))))
+    L21, Lrush, Lchain = I("homework"), I("rush"), I("chain")
+    ka = ease(seg(t, ls(L21) + 0.3, ls(L21) + 1.2)) * (1 - ease(seg(t, ls(Lrush) - 0.6, ls(Lrush))))
     if ka > 0:
         mg.glass(c, 150, 520, 780, 360, 20, ka)
         h.mono(c, "TONIGHT'S VERSION · YOUR SHOVEL LIST", 190, 580, 18, TURQ, ka, font=mg.MONO_M)
@@ -549,13 +555,13 @@ def fl_surface(c, t):
             c.drawString(s_, 190, 670 + j * 80, mg.font(mg.BODY_M, 29), mg.fill(WHITE, ka * kk))
     # the mirrored close
     for j, (l1, l2, col) in enumerate([("THEY SAW", "A GOLD RUSH.", WHITE), ("HE SAW", "A SUPPLY CHAIN.", TURQ)]):
-        li = L21 + 1 + j
+        li = (Lrush, Lchain)[j]
         kk = ease(seg(t, ls(li) + 0.05, ls(li) + 0.6))
         if kk > 0:
             y = 640 + j * 250
             h.mono(c, l1, 540, y - 58, 24, SOFT if j == 0 else GLOW, kk, align="center", font=mg.MONO_M)
             centred(c, l2, y + 10, 54, col, kk)
-    ke = ease(seg(t, le(L21 + 2) + 0.4, le(L21 + 2) + 1.2))
+    ke = ease(seg(t, le(Lchain) + 0.4, le(Lchain) + 1.2))
     if ke > 0:
         h.mono(c, "EP03 · THE SHOVEL SELLERS", 540, 1070, 20, WHITE, ke, align="center", font=mg.MONO_M)
         for j, s_ in enumerate(SOURCES[:4]):
@@ -567,61 +573,69 @@ def build_cues():
     CUES.clear()
     d = 0.012
     cue(0.25, "power_up", -10)
-    cue(ls(0) + 0.3, "form", -12)                              # the bottle
-    cue(ls(0) + 0.6, "chatter", -20, 0.2)
+    cue(ls(I("bottle")) + 0.3, "form", -12)                     # the bottle
+    cue(ls(I("mind")) + 0.2, "chatter", -15, -0.3)              # the town runs
+    cue(ls(I("mind")) + 0.4, "whoosh", -15, -0.5)
     for f in range(1, 6):
         cue(F_START[f] - 0.2, "hydraulic" if f < 4 else "servo", -12, -0.7)
+    ish = I("shop")
     for k in range(10):                                        # the shop assembles
-        cue(ls(1) + 0.1 + k * 0.26 + d, "tick_run", -20, -0.4 + 0.08 * k)
-    cue(ls(1) + 0.7, "servo", -15, 0.3)
+        cue(ls(ish) + 0.1 + k * 0.26 + d, "tick_run", -20, -0.4 + 0.08 * k)
+    cue(ls(ish) + 0.7, "servo", -15, 0.3)
+    i36 = I("36k")
     for k in range(9):                                         # nine weeks
-        cue(ls(2) + 0.2 + (le(2) - 0.3 - ls(2)) * k / 9 + d, "thock", -13, -0.4 + 0.1 * k)
-    cue(le(2) - 0.1 + d, "latch", -9)
-    cue(ls(3) + 0.05, "thum", -11)
-    L4 = first_of_floor(1)["i"]
-    cue(ls(L4) - 0.2, "form", -12)
-    cue(ls(L4 + 1) - 0.2, "chatter", -15)
-    cue(ls(L4 + 1) + 0.2, "whoosh", -14, 0.0)
-    cue(le(L4 + 1) - 1.5, "glitch", -18)                       # the prize splits
-    cue(le(L4 + 1) - 1.4, "scan", -15, 0.2)
+        cue(ls(i36) + 0.2 + (le(i36) - 0.3 - ls(i36)) * k / 9 + d, "thock", -13, -0.4 + 0.1 * k)
+    cue(le(i36) - 0.1 + d, "latch", -9)
+    cue(ls(I("never")) + 0.05, "thum", -11)
+    cue(ls(I("rule")) - 0.2, "form", -12)
+    isp = I("split")
+    cue(ls(isp) - 0.2, "chatter", -15)
+    cue(ls(isp) + 0.2, "whoosh", -14, 0.0)
+    cue(le(isp) - 1.5, "glitch", -18)                          # the prize splits
+    cue(le(isp) - 1.4, "scan", -15, 0.2)
+    ip = I("pan")
     for k in range(16):                                        # pans sold
-        cue(ls(L4 + 2) + 0.2 + k * (le(L4 + 2) - ls(L4 + 2) - 0.3) / 16 + d, "tick_run", -21, 0.4)
-    cue(ls(L4 + 3) + 0.6, "scan", -14, -0.3)
-    cue(ls(L4 + 3) + 1.1, "scan", -16, 0.3)
-    cue(ls(L4 + 4) + 0.3 + d, "latch", -11, -0.3)
-    cue(ls(L4 + 4) + 0.55 * (le(L4 + 4) - ls(L4 + 4)) + d, "dock", -9, 0.3)
-    L9 = first_of_floor(2)["i"]
-    cue(ls(L9), "chatter", -16)
+        cue(ls(ip) + 0.2 + k * (le(ip) - ls(ip) - 0.3) / 16 + d, "tick_run", -21, 0.4)
+    ic = I("census")
+    cue(ls(ic) + 0.6, "scan", -14, -0.3)
+    cue(ls(ic) + 1.1, "scan", -16, 0.3)
+    iv = I("verdict")
+    cue(ls(iv) + 0.3 + d, "latch", -11, -0.3)
+    cue(ls(iv) + 0.55 * (le(iv) - ls(iv)) + d, "dock", -9, 0.3)
+    inow = I("now")
+    cue(ls(inow), "chatter", -16)
     for j in range(3):
-        cue(le(L9) - 2.1 + j * 0.7 + d, "thock", -11, [-0.4, 0.0, 0.4][j])
-    cue(ls(L9 + 1) + 0.1, "form", -13)
-    cue(ls(L9 + 1) + 0.5 * (le(L9 + 1) - ls(L9 + 1)) + d, "relay", -10, 0.3)
-    cue(le(L9 + 1) - 0.9 + d, "latch", -10, 0.3)
-    cue(ls(L9 + 2) + 0.5 * (le(L9 + 2) - ls(L9 + 2)), "hydraulic", -14, 0.0)   # the door opens
-    cue(le(L9 + 2) - 1.6 + d, "confirm", -13)
-    L12 = first_of_floor(3)["i"]
-    cue(ls(L12 + 1) - 0.2, "form", -13)
+        cue(le(inow) - 2.1 + j * 0.7 + d, "thock", -11, [-0.4, 0.0, 0.4][j])
+    ir = I("receipt")
+    cue(ls(ir) + 0.1, "form", -13)
+    cue(ls(ir) + 0.5 * (le(ir) - ls(ir)) + d, "relay", -10, 0.3)
+    cue(le(ir) - 0.9 + d, "latch", -10, 0.3)
+    idr = I("door")
+    cue(ls(idr) + 0.5 * (le(idr) - ls(idr)), "hydraulic", -14, 0.0)   # the door opens
+    cue(le(idr) - 1.6 + d, "confirm", -13)
+    ia, it, im, il = I("acts"), I("third"), I("miles"), I("layers")
+    cue(ls(ia) - 0.2, "form", -13)
     for k in range(12):                                        # the lines get drawn
-        cue(ls(L12 + 1) + 0.1 + k * 0.25, "tick_run", -21, -0.5 + 0.09 * k)
-    cue(ls(L12 + 2) + 0.4, "servo", -15, -0.3)
-    cue(le(L12 + 2) - 0.9, "sub_drop", -8)                     # the burst
-    cue(ls(L12 + 3) + 1.6, "swell", -12)
-    d16 = le(L12 + 4) - ls(L12 + 4)
-    for j, tk in enumerate((ls(L12 + 4) + 0.2, ls(L12 + 4) + 0.18 * d16, ls(L12 + 4) + 0.5 * d16)):
+        cue(ls(ia) + 0.1 + k * 0.25, "tick_run", -21, -0.5 + 0.09 * k)
+    cue(ls(it) + 0.4, "servo", -15, -0.3)
+    cue(le(it) - 0.9, "sub_drop", -8)                          # the burst
+    cue(ls(im) + 1.6, "swell", -12)
+    d16 = le(il) - ls(il)
+    for j, tk in enumerate((ls(il) + 0.2, ls(il) + 0.18 * d16, ls(il) + 0.5 * d16)):
         cue(tk + d, "dock", -12 + j, [-0.3, 0.3, 0.0][j])
     cue(FALL_T0 - 0.56, "vortex", -2)
     cue(LAND + 0.4, "swell", -10)
     cue(LAND + 0.5, "chatter", -16)
-    Lg = DROP_LINE + 1
-    d2 = le(Lg + 1) - ls(Lg + 1)
-    for j, tk in enumerate((ls(Lg) + 0.4, ls(Lg + 1) + 0.2, ls(Lg + 1) + 0.5 * d2)):
+    Lg, Lr = I("certainty"), I("repair")
+    d2 = le(Lr) - ls(Lr)
+    for j, tk in enumerate((ls(Lg) + 0.4, ls(Lr) + 0.2, ls(Lr) + 0.5 * d2)):
         cue(tk, "whoosh", -18, [-0.4, 0.4, -0.2][j])
-    qi = next(i for i, x in enumerate(L) if x.get("quiet"))
-    cue(ls(qi + 1) + 1.0 + d, "thock", -11, -0.2)
-    cue(ls(qi + 1) + 0.55 * (le(qi + 1) - ls(qi + 1)) + d, "latch", -10, 0.2)
+    qb = I("boring")
+    cue(ls(qb) + 1.0 + d, "thock", -11, -0.2)
+    cue(ls(qb) + 0.55 * (le(qb) - ls(qb)) + d, "latch", -10, 0.2)
     cue(F_START[5] - 0.3, "riser", -15)
-    L21 = first_of_floor(5)["i"]
+    L21 = I("homework")
     for j in range(3):
         cue(ls(L21) + 1.2 + j * 1.9 + d, "thock", -10)
-    for j in range(2):
-        cue(ls(L21 + 1 + j) + 0.05 + d, "latch", -9, [-0.2, 0.2][j])
+    for j, li in enumerate((I("rush"), I("chain"))):
+        cue(ls(li) + 0.05 + d, "latch", -9, [-0.2, 0.2][j])

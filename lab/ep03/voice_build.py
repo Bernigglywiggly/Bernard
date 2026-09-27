@@ -1,5 +1,6 @@
-"""EP03 voice: a calm British narrator (Kokoro bm_george, the closest local match to the inspo's voice:
-~142 Hz, ~147 wpm), a small studio room, lines on the 170 BPM half-bar grid, extra room before hard cuts.
+"""EP03 voice: George (Kokoro bm_george) at the faster pace the user asked for, a small studio room, lines on the
+170 BPM half-bar grid, a little room before hard cuts. Slot lines use the user's own punchline from build/slots.json
+({"e2": "..."}, pulled from the plan page) and fall back to the script's text.
 Writes build/voice_dry.wav, build/voice.wav, build/lines.json.
 """
 import json
@@ -20,7 +21,8 @@ BUILD = os.path.join(HERE, "build")
 BPM = 170.0
 HB = 2 * 60.0 / BPM
 LEAD = 4 * HB
-VOICE, SPEED = "bm_george", 0.92
+VOICE, SPEED = "bm_george", 1.02
+SLOTS_PATH = os.path.join(HERE, "build", "slots.json")
 
 
 def trim(a, thresh=0.004):
@@ -31,16 +33,21 @@ def trim(a, thresh=0.004):
 def main():
     os.makedirs(BUILD, exist_ok=True)
     k = vl.engine()
+    slots = json.load(open(SLOTS_PATH)) if os.path.exists(SLOTS_PATH) else {}
     prev_end, clips, meta = LEAD - 0.3, [], []
     for i, ln in enumerate(LINES):
-        y = trim(vl.say(k, ln.get("say", ln["text"]), VOICE, speed=SPEED, pause=0.36))
-        gap = 0.24 + ln.get("air", 0) * HB + (0.45 if ln.get("cut") else 0.0)
+        ln = dict(ln)
+        if ln.get("slot") and (slots.get(ln["slot"]) or "").strip():
+            ln["text"] = slots[ln["slot"]].strip()
+            ln.pop("say", None)
+        y = trim(vl.say(k, ln.get("say", ln["text"]), VOICE, speed=SPEED, pause=0.24))
+        gap = 0.12 + ln.get("air", 0) * HB + (0.35 if ln.get("cut") else 0.0)
         start = max(LEAD, prev_end + gap)
         start = math.ceil((start - LEAD) / HB - 1e-6) * HB + LEAD
         end = start + len(y) / fx.SR
         clips.append((start, y))
         meta.append(dict(i=i, floor=ln["floor"], text=ln["text"], start=round(start, 3), end=round(end, 3),
-                         card=ln.get("card"), mark=ln.get("mark"), cut=bool(ln.get("cut")), ladder=bool(ln.get("ladder")), drop=bool(ln.get("drop")), quiet=bool(ln.get("quiet"))))
+                         card=ln.get("card"), mark=ln.get("mark"), id=ln.get("id"), slot=ln.get("slot"), cut=bool(ln.get("cut")), ladder=bool(ln.get("ladder")), drop=bool(ln.get("drop")), quiet=bool(ln.get("quiet"))))
         prev_end = end
         print(f"{i:2d} F{ln['floor']} {start:6.2f}-{end:6.2f} {ln['text'][:64]}")
     total = prev_end + 4.0

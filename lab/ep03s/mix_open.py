@@ -61,7 +61,7 @@ def main():
     for v in sorted(glob.glob(os.path.join(BUILD, "style_*_silent.mp4"))):
         final = v.replace("_silent.mp4", ".mp4")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", v, "-i", out, "-map", "0:v", "-map", "1:a", "-c:v", "libx264",
-                        "-preset", "slow", "-crf", "21", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "256k", "-shortest",
+                        "-preset", "slow", "-crf", "22", "-maxrate", "4500k", "-bufsize", "9000k", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "256k", "-shortest",
                         "-movflags", "+faststart", final], check=True)
         print(final, round(os.path.getsize(final) / 1e6, 1), "MB")
 

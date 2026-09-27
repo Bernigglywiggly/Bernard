@@ -50,6 +50,7 @@ h2{font-family:var(--display);font-size:clamp(22px,3.2vw,30px);letter-spacing:.0
 .cap span{font-family:var(--mono);font-size:12.5px;color:var(--soft)}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+code{font-family:var(--mono);font-size:.9em;color:var(--glow);background:#101215;border:1px solid var(--line);border-radius:6px;padding:1px 5px;overflow-wrap:anywhere}
 .clip{overflow:hidden;display:grid}
 .clip video{width:100%;aspect-ratio:16/9;display:block;background:#0B0C0E}
 .clip .body{padding:14px 16px;display:grid;gap:8px}
@@ -110,15 +111,41 @@ textarea{font:inherit;font-size:15px;width:100%;min-height:80px;border-radius:10
 <header>
   <span class="eyebrow">v7 lab · <b>26 Sep 2026</b> · built in the cloud session</span>
   <h1>Curve <span>Lab</span></h1>
-  <p><b>New on top: EP03 · The Shovel Sellers</b> in the new voice (draft), then EP02 · The Ninety-Minute War. Below them, everything from tonight's session, for you to judge: a 105-second pilot in the new renegade voice, four camera-led visual directions, a mechanical sound palette with the stomach-drop vortex, three jungle beds and the voice tests. Tap what you like below. Your picks save, and the next session reads them.</p>
+  <p><b>New on top: the style shoot-out</b>, the EP03 opening built five different ways (line morph, ASCII, feedback, Blender, Higgsfield prompts). Then the EP03 draft and EP02. Below them, everything from tonight's session, for you to judge: a 105-second pilot in the new renegade voice, four camera-led visual directions, a mechanical sound palette with the stomach-drop vortex, three jungle beds and the voice tests. Tap what you like below. Your picks save, and the next session reads them.</p>
 </header>
 
 <nav aria-label="Sections">
-  <a href="#ep03">EP03 · draft</a><a href="#ep02">EP02</a><a href="#ep01">EP01</a><a href="#pilot">Pilot</a><a href="#picks">Your picks</a><a href="#visual">Visuals</a><a href="#sound">Sound</a><a href="#music">Jungle</a><a href="#voice">Voice</a><a href="#script">Script</a><a href="#refs">References</a><a href="#rules">Rules</a><a href="#higgs">Higgsfield</a><a href="#status">A01 status</a>
+  <a href="#styles">Style shoot-out</a><a href="#ep03">EP03 · draft</a><a href="#ep02">EP02</a><a href="#ep01">EP01</a><a href="#pilot">Pilot</a><a href="#picks">Your picks</a><a href="#visual">Visuals</a><a href="#sound">Sound</a><a href="#music">Jungle</a><a href="#voice">Voice</a><a href="#script">Script</a><a href="#refs">References</a><a href="#rules">Rules</a><a href="#higgs">Higgsfield</a><a href="#status">A01 status</a>
 </nav>
 
+<section id="styles">
+  <span class="eyebrow">00 · <b>Newest</b> · one opening, five looks</span>
+  <h2>Style shoot-out: the same 35 seconds</h2>
+  <p class="lede">The EP03 opening (1848, the bottle of gold, the rush, the store, $36,000, the shovel, the push into the next part), built five completely different ways from one timeline. Same music and effects on each. The words are captions for now, until ElevenLabs George is connected. Tap the ones you love, and I'll build the channel's look from the winners.</p>
+  <div class="grid2">
+    <div class="glass clip"><video controls playsinline preload="metadata" src="media/styles/style_A_line.mp4"></video>
+      <div class="body"><span class="tag">A · Line morph</span><h3>The A01 look</h3><p>Lines form objects with bright tips, then flow into the next shape: 1848 becomes the bottle, the store becomes $36,000, the street becomes one shovel. No axes, one push-through into the next part.</p></div></div>
+    <div class="glass clip"><video controls playsinline preload="metadata" src="media/styles/style_B_ascii.mp4"></video>
+      <div class="body"><span class="tag">B · Heavy ASCII</span><h3>Everything is characters</h3><p>The same shapes, rebuilt from glyphs over a slowly drifting sea of characters. Strokes grow a character thick; chrome becomes dense blocks. Terminal-meets-art-print.</p></div></div>
+    <div class="glass clip"><video controls playsinline preload="metadata" src="media/styles/style_C_feedback.mp4"></video>
+      <div class="body"><span class="tag">C · Feedback trails</span><h3>The TouchDesigner look</h3><p>Every frame is fed back into the next, zoomed and turned a touch, with the colour channels split, so shapes leave echo tunnels and chromatic fringes. Built in code, since TouchDesigner has no Linux version.</p></div></div>
+    <div class="glass clip" id="styleD"><div style="aspect-ratio:16/9;display:grid;place-items:center;background:#0B0C0E;color:var(--soft);font-family:var(--mono);font-size:13px;letter-spacing:.08em">RENDERING IN BLENDER · LANDS WITHIN THE HOUR</div>
+      <div class="body"><span class="tag">D · Blender 3D</span><h3>Chrome, glass and gold</h3><p>Real objects, rendered in Blender: brushed-chrome 1848, a glass bottle heaped with gold that bursts, the store's steel pans, $36,000 over a model street, one clean shovel in untouched sand, then into its grip.</p></div></div>
+  </div>
+  <div class="glass pad">
+    <h3>E · Higgsfield (photoreal AI video)</h3>
+    <p class="lede">Blocked from here, so it's a prompt pack: seven shots with camera presets, in <code>lab/ep03s/HIGGSFIELD.md</code>. Generate them on the Mac, drop them in <code>lab/ep03s/plates/</code>, and I'll cut them to the same sound and captions.</p>
+  </div>
+  <div class="glass pickbox">
+    <div class="pickrow"><span class="eyebrow">Love</span><div class="picks" data-cat="stylelove" data-mode="many">
+      <button class="pick love" data-v="A">A · Line morph</button><button class="pick love" data-v="B">B · ASCII</button><button class="pick love" data-v="C">C · Feedback</button><button class="pick love" data-v="D">D · Blender</button><button class="pick love" data-v="E">E · Higgsfield</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Mix</span><div class="picks" data-cat="stylemix" data-mode="many">
+      <button class="pick" data-v="A+B">Line + ASCII</button><button class="pick" data-v="A+D">Line + Blender</button><button class="pick" data-v="B+C">ASCII + Feedback</button><button class="pick" data-v="D+C">Blender + Feedback</button></div></div>
+  </div>
+</section>
+
 <section id="ep03">
-  <span class="eyebrow">00 · <b>Newest</b> · the new voice, draft</span>
+  <span class="eyebrow">01 · <b>EP03 draft</b> · the old engine</span>
   <h2>EP03 · The Shovel Sellers</h2>
   <p class="lede">George is back, faster, sharper and swearing where it lands. In 1848 the richest man in the gold rush sold the shovels, the census showed the miners mostly didn't get rich, and the same pattern runs through railway mania and the AI rush. It lands on your walk-in pitch. This draft uses my fallback lines in the seven gaps marked for your punchlines. Fill them in on the plan page and I'll re-voice it.</p>
   <div class="vwrap">
@@ -346,7 +373,7 @@ textarea{font:inherit;font-size:15px;width:100%;min-height:80px;border-radius:10
 <section id="refs">
   <span class="eyebrow">08 · <b>References</b></span>
   <h2>What to steal (techniques, not looks)</h2>
-  <div class="refs" id="refs"></div>
+  <div class="refs" id="refsList"></div>
 </section>
 
 <section id="rules">
@@ -469,7 +496,7 @@ const REFS = [
   ["DeepMind · Visualising AI","A calibration set for AI imagery that isn't robots and brains.","https://www.deepmind.com/visualising-ai"],
   ["Tron: Ares (2025)","UI designed from story analysis, so every element carries a beat. Sharper, angular grids.","https://www.ilm.com/inside-the-ilm-art-department-tron-ares/"],
 ];
-$("#refs").innerHTML = REFS.map(([t, d, u]) => `<article class="glass ref"><b>${esc(t)}</b><p>${esc(d)}</p><a href="${u}" target="_blank" rel="noopener">${esc(new URL(u).hostname)} ↗</a></article>`).join("");
+$("#refsList").innerHTML = REFS.map(([t, d, u]) => `<article class="glass ref"><b>${esc(t)}</b><p>${esc(d)}</p><a href="${u}" target="_blank" rel="noopener">${esc(new URL(u).hostname)} ↗</a></article>`).join("");
 
 // ---------- rules
 const RULES = [

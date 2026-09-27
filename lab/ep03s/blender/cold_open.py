@@ -8,6 +8,7 @@ Rendered at 960x540, 12 fps (then smoothed to 30 fps and upscaled by build_blend
 
     python3 blender/cold_open.py            # build/blender/frame_####.png
     python3 blender/cold_open.py 40 120     # just those frames
+    python3 blender/cold_open.py --inbetweens   # build/blender24/####.png: real 24 fps in-betweens for the fast shots
 """
 import json
 import math
@@ -89,7 +90,7 @@ def build():
         glass=mat("glass", (0.95, 0.98, 1.0), 0.0, 0.02, trans=1.0),
         steel=mat("steel", (0.55, 0.58, 0.62), 1.0, 0.32),
         wood=mat("wood", (0.18, 0.11, 0.06), 0.0, 0.55),
-        sand=mat("sand", (0.55, 0.47, 0.36), 0.0, 0.85),
+        sand=mat("sand", (0.40, 0.29, 0.17), 0.0, 0.9),
         floor=mat("floor", (0.02, 0.022, 0.025), 0.0, 0.22),
         house=mat("house", (0.62, 0.58, 0.52), 0.0, 0.6),
         sold=mat("sold", (0.02, 0.4, 0.37), 0.0, 0.4, emit=(0.07, 0.72, 0.67), strength=4.0),
@@ -114,6 +115,7 @@ def build():
 
     # a dark glossy floor under everything
     bpy.ops.mesh.primitive_plane_add(size=60, location=(0, 0, -1.0)); fl = bpy.context.object; fl.data.materials.append(M["floor"])
+    fl.name = "floor"
 
     # 1 · 1848
     c1 = coll("s1848")
@@ -165,6 +167,9 @@ def build():
     def shovel(c_, loc, tilt=0.0, scale=1.0):
         parts = []
         bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 0, 0)); bl = bpy.context.object
+        for v in bl.data.vertices:                           # taper to a spade: the cutting edge is narrower
+            if v.co.z < 0:
+                v.co.x *= 0.62
         bl.scale = (0.16 * scale, 0.012 * scale, 0.22 * scale); link_new(bl, c_); bl.data.materials.append(M["steel"])
         bev = bl.modifiers.new("b", "BEVEL"); bev.width = 0.03 * scale; bev.segments = 4
         bpy.ops.mesh.primitive_cylinder_add(radius=0.022 * scale, depth=1.1 * scale, location=(0, 0, 0.72 * scale)); hd = bpy.context.object
@@ -192,17 +197,24 @@ def build():
         tg.data.materials.append(M["sold"]); sold_tags.append(tg)
     # 6 · the shovel in the sand
     c6 = coll("shovel")
-    bpy.ops.mesh.primitive_plane_add(size=12, location=(0, 0, -0.98)); sd = bpy.context.object; link_new(sd, c6)
-    sd.modifiers.new("sub", "SUBSURF").levels = 5
-    sd.modifiers["sub"].render_levels = 5
-    tex = bpy.data.textures.new("dune", "CLOUDS"); tex.noise_scale = 1.4
-    dsp = sd.modifiers.new("d", "DISPLACE"); dsp.texture = tex; dsp.strength = 0.25
+    # a wide dune field (dense grid, displaced upward only, so the dark floor never shows through), running out to
+    # the horizon; the floor and the studio lights are switched off for this shot, a low warm sun does the work
+    bpy.ops.mesh.primitive_grid_add(x_subdivisions=320, y_subdivisions=320, size=40, location=(0, 0, -1.02)); sd = bpy.context.object
+    link_new(sd, c6)
+    tex = bpy.data.textures.new("dune", "CLOUDS"); tex.noise_scale = 2.4; tex.noise_depth = 1
+    dsp = sd.modifiers.new("d", "DISPLACE"); dsp.texture = tex; dsp.strength = 0.42; dsp.mid_level = 0.0
+    rip = bpy.data.textures.new("ripple", "WOOD"); rip.wood_type = "BANDNOISE"; rip.noise_scale = 0.08; rip.turbulence = 4.0
+    dr = sd.modifiers.new("r", "DISPLACE"); dr.texture = rip; dr.strength = 0.012; dr.mid_level = 0.5
     sd.data.materials.append(M["sand"])
     for p in sd.data.polygons:
         p.use_smooth = True
-    big = shovel(c6, (0, 0, -1.05), 0.0, 1.35)
-    Ls = bpy.data.lights.new("sun_low", "SUN"); Ls.energy = 2.2; Ls.color = (1.0, 0.8, 0.6); Ls.angle = math.radians(3)
-    so = bpy.data.objects.new("sun_low", Ls); so.rotation_euler = (math.radians(80), 0, math.radians(-35)); c6.objects.link(so)
+    deps = bpy.context.evaluated_depsgraph_get(); ev = sd.evaluated_get(deps); em = ev.to_mesh()
+    z_sand = min(((v.co.x ** 2 + v.co.y ** 2), (ev.matrix_world @ v.co).z) for v in em.vertices)[1]
+    ev.to_mesh_clear()
+    z_root = z_sand - 0.06
+    big = shovel(c6, (0, 0, z_root), 0.0, 1.35)
+    Ls = bpy.data.lights.new("sun_low", "SUN"); Ls.energy = 5.0; Ls.color = (1.0, 0.8, 0.6); Ls.angle = math.radians(3)
+    so = bpy.data.objects.new("sun_low", Ls); so.rotation_euler = (math.radians(79), 0, math.radians(-58)); c6.objects.link(so)
     # 7 · the prize
     c7 = coll("prize")
     bpy.ops.mesh.primitive_uv_sphere_add(radius=0.12, location=(0, 0, 0.1)); pz = bpy.context.object; link_new(pz, c7); pz.data.materials.append(M["prize"])
@@ -221,7 +233,7 @@ def build():
     aim = bpy.data.objects.new("aim", None); sc.collection.objects.link(aim)
     cst = co.constraints.new("TRACK_TO"); cst.target = aim; cst.track_axis = "TRACK_NEGATIVE_Z"; cst.up_axis = "UP_Y"
     cam.dof.focus_object = aim
-    return dict(sc=sc, cols={s[2]: bpy.data.collections[s[2]] for s in SHOTS if s[2] in bpy.data.collections}, cam=co, aim=aim, grains=grains, sold=sold_tags, big=big, prize=pz)
+    return dict(sc=sc, rig=rig, floor=fl, grip=Vector((0, 0, z_root + 1.36 * 1.35)), z_root=z_root, cols={s[2]: bpy.data.collections[s[2]] for s in SHOTS if s[2] in bpy.data.collections}, cam=co, aim=aim, grains=grains, sold=sold_tags, big=big, prize=pz)
 
 
 def ease(x):
@@ -235,6 +247,11 @@ def pose(W, t):
     for name, c in W["cols"].items():
         vis = name == shot[2] or (shot[2] == "burst" and name == "bottle")
         c.hide_render = not vis
+    sand = shot[2] == "shovel"                               # the dune shot is lit by the low sun alone
+    W["floor"].hide_render = sand
+    for k in ("key", "top", "fill"):
+        W["rig"][k].hide_render = sand
+    W["rig"]["rim"].data.energy = 140 if sand else 1100
     cam, aim = W["cam"], W["aim"]
     u = (t - shot[0]) / max(0.01, shot[1] - shot[0])
     name = shot[2]
@@ -261,15 +278,45 @@ def pose(W, t):
         tl = ls("never") + 0.72 * (le("never") - ls("never"))
         W["big"].rotation_euler = (0, math.radians(-26 * ease((t - tl) / 0.35)), 0)
         push = ease((t - le("never") - 0.1) / max(0.1, T_RULE - le("never") - 0.1))
-        grip = Vector((0, 0, -1.05 + 1.36 * 1.35))
-        cam.location = Vector((1.6, -4.6, -0.55)).lerp(grip + Vector((0, -0.05, 0)), push ** 2)
-        aim.location = Vector((0, 0, -0.35)).lerp(grip, min(1.0, push * 2))
+        grip = W["grip"]
+        cam.location = Vector((2.0, -6.0, W["z_root"] + 0.35)).lerp(grip + Vector((0, -0.05, 0)), push ** 2)
+        aim.location = Vector((0, 0, W["z_root"] + 0.8)).lerp(grip, min(1.0, push * 2))
     else:
         cam.location = (0, -3.0, 0.1); aim.location = (0, 0, 0.1)
         W["prize"].scale = (1, 1, 1)
 
 
+def shot_at(t):
+    return next((s for s in SHOTS if s[0] <= t < s[1]), SHOTS[-1])[2]
+
+
+def inbetweens():
+    """24 fps frame numbers worth rendering for real (the rest are motion-interpolated from the 12 fps frames):
+    every in-between of the fast shots (the gold burst, the shovel and the push into its grip), plus the one
+    in-between at each cut, which interpolation would smear across two shots."""
+    out = []
+    for n in range(1, int(T_END * 24), 2):
+        t, t0, t1 = n / 24, (n - 1) / 24, (n + 1) / 24
+        if shot_at(t) in ("burst", "shovel") or shot_at(t0) != shot_at(t1):
+            out.append(n)
+    return out
+
+
+def render_inbetweens():
+    W = build()
+    out24 = os.path.join(EP, "build", "blender24")
+    os.makedirs(out24, exist_ok=True)
+    todo = inbetweens()
+    for i, n in enumerate(todo):
+        pose(W, n / 24)
+        W["sc"].render.filepath = os.path.join(out24, f"{n:04d}.png")
+        bpy.ops.render.render(write_still=True)
+        print("inbetween", n, f"({i + 1}/{len(todo)})", flush=True)
+
+
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "--inbetweens":
+        return render_inbetweens()
     W = build()
     os.makedirs(OUT, exist_ok=True)
     n = int(T_END * FPS)

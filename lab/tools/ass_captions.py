@@ -23,7 +23,7 @@ WrapStyle: 0
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,Inter Tight Medium,38,&H00FFFFFF,&H00FFFFFF,&H8C0E0C0B,&H8C0E0C0B,0,0,0,0,100,100,0,0,3,14,0,2,260,260,96,1
+Style: Cap,Inter Tight Medium,50,&H00FFFFFF,&H00FFFFFF,&H8C0E0C0B,&H8C0E0C0B,0,0,0,0,100,100,0,0,3,16,0,2,240,240,110,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text

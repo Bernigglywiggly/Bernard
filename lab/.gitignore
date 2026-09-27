@@ -29,3 +29,6 @@ ep03/build/*
 !ep03/build/events.json
 !ep03/build/music_arr.json
 stickman/build/
+
+# analyse.py pictures
+out/music/**/*_spec.png

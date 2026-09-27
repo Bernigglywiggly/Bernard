@@ -102,7 +102,10 @@ def tv_band(x, fc, bw_oct=0.7, nfft=1024, hop=256):
 
 
 def sat(x, drive=1.5):
-    return (np.tanh(x * drive) / np.tanh(drive)).astype(np.float32)
+    """Saturation at 2x the sample rate, so the harmonics stay clean."""
+    x = np.asarray(x, np.float32)
+    up = signal.resample_poly(x, 2, 1, axis=0)
+    return signal.resample_poly(np.tanh(up * drive) / np.tanh(drive), 1, 2, axis=0)[: len(x)].astype(np.float32)
 
 
 def peak(x, db=-3.0):
@@ -491,7 +494,7 @@ def main():
             reel.append(np.zeros((int(0.25 * SR), 2), np.float32))
         reel.append(y)
         reel.append(np.zeros((int(0.7 * SR), 2), np.float32))
-    fx.save(os.path.join(OUT, "palette_reel.wav"), fx.soft_limit(np.concatenate(reel), 0.95))
+    fx.save(os.path.join(OUT, "palette_reel.wav"), fx.true_peak_limit(np.concatenate(reel), -1.0))
     print("reel done")
 
 

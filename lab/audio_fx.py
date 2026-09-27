@@ -52,17 +52,57 @@ def lufs(x, sr=SR):
 
 
 def norm_lufs(x, target=-16.0, sr=SR, peak=-1.0):
+    """Gain to the loudness target, then a clean true-peak limiter (gain riding, no waveshaping)."""
     g = 10 ** ((target - lufs(x, sr)) / 20)
-    y = x * g
-    pk = np.max(np.abs(y)) + 1e-9
-    lim = 10 ** (peak / 20)
-    if pk > lim:
-        y = soft_limit(y, lim)
-    return y.astype(np.float32)
+    return true_peak_limit(x * g, peak, sr)
 
 
 def soft_limit(x, ceiling=0.89):
+    """Kept for old scripts only: tanh on every sample adds distortion to the whole signal. Use true_peak_limit."""
     return (np.tanh(x / ceiling) * ceiling).astype(np.float32)
+
+
+def true_peak_limit(x, ceiling_db=-1.0, sr=SR, lookahead=0.005, release=0.08, os_factor=4):
+    """A look-ahead peak limiter that rides gain instead of bending the waveform, so nothing below the ceiling is
+    touched and there are no clipping harmonics. Peaks are found on a 4x oversampled copy, which catches the
+    inter-sample overs that decoders and cheap DACs turn into crackle."""
+    x = np.asarray(x, np.float32)
+    x2 = stereo(x)
+    ceil = 10 ** (ceiling_db / 20)
+    up = signal.resample_poly(x2, os_factor, 1, axis=0)
+    pk = np.abs(up).max(1).reshape(-1, os_factor).max(1)[: len(x2)]
+    pk = np.pad(pk, (0, len(x2) - len(pk)))
+    need = np.minimum(1.0, ceil / np.maximum(pk, 1e-9))            # gain each sample needs
+    if need.min() >= 1.0:
+        return x
+    la = max(1, int(lookahead * sr))
+    from scipy.ndimage import minimum_filter1d
+    g = minimum_filter1d(need, size=2 * la + 1, mode="nearest")    # start reducing before the peak arrives
+    g = np.convolve(g, np.hanning(2 * la + 1) / np.hanning(2 * la + 1).sum(), mode="same")
+    g = np.minimum(g, minimum_filter1d(need, size=la, mode="nearest"))
+    r = np.exp(-1 / (release * sr))                                  # smooth recovery
+    rec = signal.lfilter([1 - r], [1, -r], g - 1) + 1
+    g = np.minimum(g, np.maximum(rec, g))
+    g = np.clip(g, 0, 1).astype(np.float32)
+    y = x2 * g[:, None]
+    y = np.clip(y, -ceil, ceil) if np.abs(y).max() > ceil * 1.02 else y  # belt and braces for the last 0.1 dB
+    return (y if x.ndim == 2 else y[:, 0]).astype(np.float32)
+
+
+def bass_mono(x, sr=SR, f=120.0):
+    """Mono below f: small speakers and phones get one clean bass signal, and stereo bass can't cancel."""
+    x = stereo(x)
+    m, s_ = (x[:, 0] + x[:, 1]) / 2, (x[:, 0] - x[:, 1]) / 2
+    s_ = bq(bq(s_, "hp", f, sr), "hp", f, sr)
+    return np.stack([m + s_, m - s_], 1).astype(np.float32)
+
+
+def master(x, sr=SR, target=-14.0, ceiling_db=-1.0):
+    """Final bus: DC and rumble out, bass mono, loudness to target, clean true-peak ceiling."""
+    y = bq(bq(stereo(x), "hp", 22, sr, q=0.6), "hp", 22, sr, q=0.6)
+    y = bass_mono(y, sr)
+    y = y * db(target - lufs(y, sr))
+    return true_peak_limit(y, ceiling_db, sr)
 
 
 def db(v):
@@ -164,9 +204,11 @@ def ducked_room(dry, ir, wet_db=-8.0, duck_db=7.0, sr=SR, tail_s=None):
 
 # ---------------------------------------------------------------- tone
 def exciter(x, amount=0.18, sr=SR):
-    """Air above the TTS band: saturate the 3-11 kHz band and keep only the new harmonics up top."""
+    """Air above the TTS band: gently saturate the 3-11 kHz band at 4x the sample rate (so the new harmonics
+    can't fold back down as fizz) and keep only the harmonics up top."""
     band = bq(bq(x, "hp", 3000, sr), "lp", 11000, sr)
-    h = np.tanh(band * 6.0)
+    up = signal.resample_poly(band, 4, 1, axis=0)
+    h = signal.resample_poly(np.tanh(up * 2.5) / 2.5, 1, 4, axis=0)[: len(band)]
     h = bq(bq(h, "hp", 9500, sr), "hp", 9500, sr)
     return (x + h * amount).astype(np.float32)
 
@@ -226,15 +268,17 @@ def exo(x, sr=SR, amount=0.5, ring_hz=62.0):
     return y.astype(np.float32)
 
 
-def chain_voice(x, sr=SR, exo_amt=0.0, room=None, room_wet=-9.0, air=0.18, target=-16.0):
-    """Full voice chain: exo colour (optional) -> clean-up EQ -> de-ess -> compress -> exciter -> room."""
+def chain_voice(x, sr=SR, exo_amt=0.0, room=None, room_wet=-9.0, air=0.0, target=-16.0):
+    """Full voice chain: exo colour (optional) -> clean-up EQ -> de-ess -> compress -> (exciter) -> room.
+    The exciter is off by default: it added grit, and a clean voice needs none."""
     y = x if x.ndim == 1 else x.mean(1)
     if exo_amt > 0:
         y = exo(y, sr, exo_amt)
     y = crisp(y, sr)
     y = deess(y, sr)
     y = compress(y, sr)
-    y = exciter(y, air, sr)
+    if air > 0:
+        y = exciter(y, air, sr)
     if room is not None:
         y = ducked_room(y, room, wet_db=room_wet, sr=sr, tail_s=2.5)
     return norm_lufs(stereo(y), target, sr)

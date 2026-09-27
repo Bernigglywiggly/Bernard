@@ -66,7 +66,11 @@ def sine_f(freq, n, phase0=0.0):
 
 
 def sat(x, d=1.5):
-    return (np.tanh(x * d) / np.tanh(d)).astype(np.float32)
+    """Tape-ish saturation, run at 2x the sample rate so its harmonics can't fold back as fizz."""
+    x = np.asarray(x, np.float32)
+    up = signal.resample_poly(x, 2, 1, axis=0)
+    y = signal.resample_poly(np.tanh(up * d) / np.tanh(d), 1, 2, axis=0)[: len(x)]
+    return y.astype(np.float32)
 
 
 # ---------------------------------------------------------------- the kit
@@ -359,7 +363,7 @@ def render(arr, name, flavour="liquid", rhodes_on=True, reese_on=False, master_l
             parts[k] = parts[k] * fx.db(tgt.get(k, -30) - fx.lufs(parts[k]))
     mix = sum(parts.values())
     g = fx.db(master_lufs - fx.lufs(mix))
-    mix = fx.soft_limit(mix * g, 0.93)
+    mix = fx.true_peak_limit(mix * g, -1.0)
     fx.save(os.path.join(OUT, f"{name}.wav"), mix, br="224k")
     if stems:
         for k, v in parts.items():

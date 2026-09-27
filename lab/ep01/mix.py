@@ -93,14 +93,11 @@ def main():
     music *= gate[:, None]
     sfx *= gate[:, None]
     mix = voice + music + sfx
-    mix = fx.bq(mix, "hp", 24)
-    g = fx.db(-14.0 - fx.lufs(mix))
-    mix = mix * g
-    # true-peak-ish ceiling: 4x oversampled peak check, then a gentle soft clip if needed
-    up = signal.resample_poly(mix, 4, 1, axis=0)
+    raw = mix
+    up = signal.resample_poly(fx.bq(raw, "hp", 24) * fx.db(-14.0 - fx.lufs(raw)), 4, 1, axis=0)
     tp = 20 * np.log10(np.max(np.abs(up)) + 1e-9)
-    if tp > -1.0:
-        mix = fx.soft_limit(mix, fx.db(-1.2))
+    mix = fx.master(raw, target=-14.0, ceiling_db=-1.0)      # rumble out, bass mono, -14 LUFS, clean -1 dBTP ceiling
+    g = fx.db(fx.lufs(mix) - fx.lufs(raw))
     out = os.path.join(BUILD, "ep01_mix.wav")
     fx.save(out, mix, mp3=False)
     print("mix", round(fx.lufs(mix), 2), "LUFS", "true peak before limit", round(tp, 2), "dB",
@@ -109,7 +106,7 @@ def main():
     if os.path.exists(vid):
         final = os.path.join(BUILD, "EP01_sixteen_hours.mp4")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", vid, "-i", out, "-map", "0:v", "-map", "1:a",
-                        "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-shortest", "-movflags", "+faststart", final], check=True)
+                        "-c:v", "copy", "-c:a", "aac", "-b:a", "384k", "-shortest", "-movflags", "+faststart", final], check=True)
         print(final)
 
 

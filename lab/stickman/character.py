@@ -73,8 +73,8 @@ def _limb(c, pts, w, col, a):
     c.drawPath(path, paint)
 
 
-def hat(c, cx, cy, R, tilt=0.0, a=1.0, glint=0.0):
-    """The chrome conical hat. (cx, cy) is the centre of the brim; tilt in degrees."""
+def hat(c, cx, cy, R, tilt=0.0, a=1.0, glint=0.0, soot=False):
+    """The chrome conical hat. (cx, cy) is the centre of the brim; tilt in degrees. soot=True: blackened."""
     c.save()
     c.translate(cx, cy)
     c.rotate(tilt)
@@ -88,6 +88,8 @@ def hat(c, cx, cy, R, tilt=0.0, a=1.0, glint=0.0):
     cone.quadTo(0, 0.28 * R, -w / 2, 0)
     cone.close()
     cols = ["#1F242B", "#5E6772", "#E4E8EC", "#FFFFFF", "#A7AFBA", "#1F242B", "#9FE9E2", "#EEF2F5", "#5E6772"]
+    if soot:
+        cols = ["#0B0B0C", "#1A1A1C", "#2C2C2F", "#3A3A3D", "#1E1E20", "#0B0B0C", "#252527", "#303033", "#151517"]
     pos = [0.0, 0.14, 0.30, 0.36, 0.46, 0.60, 0.76, 0.88, 1.0]
     sh = skia.GradientShader.MakeLinear([(-w / 2, -h), (w / 2, 0.2 * R)], [mg.hexc(x, a) for x in cols], pos)
     fp = skia.Paint(AntiAlias=True)
@@ -110,14 +112,27 @@ def hat(c, cx, cy, R, tilt=0.0, a=1.0, glint=0.0):
     c.restore()
 
 
-def face(c, cx, cy, R, kind, a=1.0, tilt=0.0):
+def face(c, cx, cy, R, kind, a=1.0, tilt=0.0, col=None, bg=None):
+    INK, HEAD_FILL = col or globals()["INK"], bg or globals()["HEAD_FILL"]
     c.save()
     c.translate(cx, cy)
     c.rotate(tilt)
     ink = mg.fill(INK, a)
     ln = lambda x0, y0, x1, y1, w=0.1: _limb(c, [(x0 * R, y0 * R), (x1 * R, y1 * R)], w * R, INK, a)
     ey, ex = 0.12, 0.36
-    if kind == "neutral":
+    if kind == "blink":
+        for s_ in (-1, 1):
+            ln(s_ * 0.24, ey, s_ * 0.48, ey, 0.08)
+        ln(-0.14, 0.5, 0.14, 0.5, 0.07)
+    elif kind == "shock":
+        for s_ in (-1, 1):
+            c.drawCircle(s_ * ex * R, ey * R, 0.06 * R, ink)
+        c.drawCircle(0, 0.5 * R, 0.1 * R, mg.stroke(INK, 0.06 * R, a))
+    elif kind == "oh":
+        for s_ in (-1, 1):
+            c.drawCircle(s_ * ex * R, ey * R, 0.14 * R, ink)
+        c.drawOval(skia.Rect.MakeXYWH(-0.12 * R, 0.38 * R, 0.24 * R, 0.3 * R), mg.stroke(INK, 0.07 * R, a))
+    elif kind == "neutral":
         for s in (-1, 1):
             c.drawCircle(s * ex * R, ey * R, 0.1 * R, ink)
         ln(-0.16, 0.5, 0.16, 0.5, 0.07)
@@ -150,22 +165,28 @@ def face(c, cx, cy, R, kind, a=1.0, tilt=0.0):
     c.restore()
 
 
-def draw(c, p, a=1.0, glint=0.0):
-    """Draw one pose: limbs, the head (filled so it hides what's behind), the face, the hat."""
+SOOT = dict(line="#17181B", back="#111214", head="#0E0F11", face="#F4F5F7")
+
+
+def draw(c, p, a=1.0, glint=0.0, skin=None):
+    """Draw one pose: limbs, the head (filled so it hides what's behind), the face, the hat.
+    skin = dict(line, back, head, face) recolours him (SOOT after an explosion)."""
+    sk = skin or {}
+    line, backc, head_fill, face_col = sk.get("line", INK), sk.get("back", INK_MID), sk.get("head", HEAD_FILL), sk.get("face", INK)
     R = p["R"]
     J = joints(p)
     w = 0.34 * R
     back, front = ("l", "r")
-    _limb(c, [J["hip"], J["knee_" + back], J["foot_" + back]], w, INK_MID, a)
-    _limb(c, [J["shoulder"], J["elbow_" + back], J["hand_" + back]], w, INK_MID, a)
-    _limb(c, [J["hip"], J["shoulder"], J["neck"]], w, INK, a)
-    _limb(c, [J["hip"], J["knee_" + front], J["foot_" + front]], w, INK, a)
-    _limb(c, [J["shoulder"], J["elbow_" + front], J["hand_" + front]], w, INK, a)
+    _limb(c, [J["hip"], J["knee_" + back], J["foot_" + back]], w, backc, a)
+    _limb(c, [J["shoulder"], J["elbow_" + back], J["hand_" + back]], w, backc, a)
+    _limb(c, [J["hip"], J["shoulder"], J["neck"]], w, line, a)
+    _limb(c, [J["hip"], J["knee_" + front], J["foot_" + front]], w, line, a)
+    _limb(c, [J["shoulder"], J["elbow_" + front], J["hand_" + front]], w, line, a)
     hx, hy = J["head"]
-    c.drawCircle(hx, hy, R, mg.fill(HEAD_FILL, a))
-    c.drawCircle(hx, hy, R, mg.stroke(INK, w * 0.85, a))
+    c.drawCircle(hx, hy, R, mg.fill(head_fill, a))
+    c.drawCircle(hx, hy, R, mg.stroke(line, w * 0.85, a))
     tilt = p.get("lean", 0.0) + p.get("head", 0.0)
-    face(c, hx, hy, R, p.get("face", "neutral"), a, tilt)
+    face(c, hx, hy, R, p.get("face", "neutral"), a, tilt, col=face_col, bg=head_fill)
     hp = p.get("hat", {})
     ha = hp.get("a", 1.0)
     if ha > 0:
@@ -173,7 +194,7 @@ def draw(c, p, a=1.0, glint=0.0):
         up = np.array([math.sin(ang), -math.cos(ang)])
         rt = np.array([math.cos(ang), math.sin(ang)])
         base = np.array([hx, hy]) + up * (0.42 * R + hp.get("lift", 0.0) * R) + rt * hp.get("dx", 0.0) * R
-        hat(c, base[0], base[1], R, tilt + hp.get("tilt", 0.0), a * ha, glint)
+        hat(c, base[0], base[1], R, tilt + hp.get("tilt", 0.0), a * ha, glint, soot=bool(skin))
     return J
 
 

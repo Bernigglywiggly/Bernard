@@ -84,6 +84,14 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   `HIGGSFIELD.md` is E (prompt pack, run on the Mac, plates to `lab/ep03s/plates/`).
 - All five are on Curve Lab (https://claude.ai/artifact/GvXy78rkrDiKJB418rxpsG, section "Style shoot-out") with
   love/mix picks (db `picks`: `stylelove`, `stylemix`). Build the rest of EP03 in whichever style wins.
+- **Decided (27 Sep): ASCII all the way.** One focused style: ASCII (style B) as the channel look, a little Blender
+  realism for the big physical objects, the other looks (line morph, feedback) only as rare accents.
+- **Music (27 Sep): the jungle is scrapped.** `lab/music/beds.py` renders six new beds (terminal, tape_loop,
+  night_drive, low_orbit, two_step, chrome_marl) → `lab/out/music/new/`; `lab/music/analyse.py` checks tonal balance,
+  loudness arc, width and clicks (nobody can listen from the cloud). The user liked some *original* music: the A01
+  Chrome & Marl bed (`a01_v6/build/bed6.wav` + `sfx6.wav`) and the A01 v5 outro pad are pulled back up. All of it is in
+  Curve Lab's "Music box" with picks (db `picks`: `musicnew`, `musicorig`). Keep tops dark and smooth (the user's
+  favourite is dark up there; the jungle was fizzy).
 - **The relay** (`lab/ep03s/relay.py`, the user's "mix of all, seamlessly blended, contrasting styles"): each beat in
   a different look, 24 fps, with match-moved hand-offs (trace, fill, frenzy, calm, digitise, develop, through the
   ring); captions/label/vignette on top; transition hits in `relay_mix.wav`. Pick: db `picks` → `relay`

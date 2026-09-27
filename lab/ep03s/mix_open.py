@@ -2,7 +2,7 @@
 picture's events (build/events.json) played from the sound palette. No voice yet: captions carry the words until
 ElevenLabs George is connected. Master: -14 LUFS, -1 dBTP.
 
-    python3 mix_open.py          # build/open_mix.wav, then muxes onto every build/style_*_silent.mp4
+    python3 mix_open.py [--fresh-bed]   # build/open_mix.wav, then muxes onto build/style_{A,B,C}_*_silent.mp4
 """
 import glob
 import json
@@ -24,19 +24,22 @@ MAP = {"form": "form", "morph": "whoosh", "glint": "scan", "scan": "scan", "whoo
 GAIN = {"form": -12, "whoosh": -13, "scan": -16, "latch": -10, "tick_run": -18, "thock": -9, "riser": -12, "confirm": -12}
 
 
-def bed(total):
-    import jungle
-    arr = [("intro", 5), ("build", 12), ("full", 5), ("drop", 1), ("coda", 2)]
-    jungle.render(arr, "ep03s_open_bed", flavour="liquid", rhodes_on=True, reese_on=False)
-    y = fx.load(os.path.join(HERE, "..", "out", "music", "ep03s_open_bed.wav"))
+def bed(total, fresh=True):
+    path = os.path.join(HERE, "..", "out", "music", "ep03s_open_bed.wav")
+    if fresh or not os.path.exists(path):
+        import jungle
+        arr = [("intro", 5), ("build", 12), ("full", 5), ("drop", 1), ("coda", 2)]
+        jungle.render(arr, "ep03s_open_bed", flavour="liquid", rhodes_on=True, reese_on=False)
+    y = fx.load(path)
     return y[: int(total * fx.SR)]
 
 
-def main():
+def build_mix(extra=(), out_name="open_mix.wav", fresh_bed=True):
+    """The bed + the picture's events + `extra` hits [(seconds, sfx name, gain dB)], mastered."""
     ev = json.load(open(os.path.join(BUILD, "events.json")))
     total = ev["dur"]
     n = int(total * fx.SR)
-    music = bed(total)
+    music = bed(total, fresh_bed)
     music = np.pad(music, ((0, max(0, n - len(music))), (0, 0)))[:n]
     music *= fx.db(-18.0 - fx.lufs(music))
     sfx = np.zeros((n, 2), np.float32)
@@ -54,16 +57,33 @@ def main():
         i = int(at * fx.SR); j = min(n, i + len(x))
         if j > i:
             sfx[i:j] += x[: j - i]
+    for at, name, gain in extra:
+        if name not in cache:
+            cache[name] = fx.load(os.path.join(SFX, name + ".wav"))
+        x = cache[name] * fx.db(gain)
+        i = int(at * fx.SR); j = min(n, i + len(x))
+        if j > i:
+            sfx[i:j] += x[: j - i]
     mix = fx.master(music + sfx, target=-14.0, ceiling_db=-1.0)
-    out = os.path.join(BUILD, "open_mix.wav")
+    out = os.path.join(BUILD, out_name)
     fx.save(out, mix, mp3=False)
-    print("mix", round(fx.lufs(mix), 2), "LUFS,", len(seen), "effects")
+    print("mix", round(fx.lufs(mix), 2), "LUFS,", len(seen) + len(extra), "effects")
+    return out
+
+
+def mux(video, audio, final, crf=22, maxrate="4500k", abr="256k"):
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", video, "-i", audio, "-map", "0:v", "-map", "1:a", "-c:v", "libx264",
+                    "-preset", "slow", "-crf", str(crf), "-maxrate", maxrate, "-bufsize", str(int(maxrate[:-1]) * 2) + "k", "-pix_fmt", "yuv420p",
+                    "-c:a", "aac", "-b:a", abr, "-shortest", "-movflags", "+faststart", final], check=True)
+    print(final, round(os.path.getsize(final) / 1e6, 1), "MB")
+
+
+def main():
+    out = build_mix(fresh_bed="--fresh-bed" in sys.argv)        # keep one bed across every version by default
     for v in sorted(glob.glob(os.path.join(BUILD, "style_*_silent.mp4"))):
-        final = v.replace("_silent.mp4", ".mp4")
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", v, "-i", out, "-map", "0:v", "-map", "1:a", "-c:v", "libx264",
-                        "-preset", "slow", "-crf", "22", "-maxrate", "4500k", "-bufsize", "9000k", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "256k", "-shortest",
-                        "-movflags", "+faststart", final], check=True)
-        print(final, round(os.path.getsize(final) / 1e6, 1), "MB")
+        if "_D_" in v or "_R_" in v:                   # Blender and the relay are muxed by their own builds
+            continue
+        mux(v, out, v.replace("_silent.mp4", ".mp4"))
 
 
 if __name__ == "__main__":

@@ -31,32 +31,33 @@ DUR = S.ls("rule") + 2.4
 
 
 def captions(c, t, dark_box=True):
-    for ln in L:
-        if ln["start"] - 0.05 <= t <= ln["end"] + 0.25:
-            f = mg.font(mg.BODY_M, 38)
-            words, lines, cur = ln["text"].split(), [], []
-            for w in words:
-                if f.measureText(" ".join(cur + [w])) > 1400 and cur:
-                    lines.append(cur); cur = [w]
-                else:
-                    cur.append(w)
-            lines.append(cur)
-            k = (t - ln["start"]) / max(0.1, ln["end"] - ln["start"])
-            nwords = len(words)
-            spoken = int(k * nwords + 0.5)
-            y0 = H - 150 - (len(lines) - 1) * 48
-            wi = 0
-            for li, ws in enumerate(lines):
-                s = " ".join(ws)
-                wtot = f.measureText(s)
-                x = W / 2 - wtot / 2
-                if dark_box:
-                    c.drawRoundRect(skia.Rect.MakeXYWH(x - 18, y0 + li * 48 - 36, wtot + 36, 50), 10, 10, mg.fill("#0B0C0E", 0.55))
-                for w in ws:
-                    col = "#FFFFFF" if wi < spoken else mg.ON_DARK_SOFT
-                    c.drawString(w, x, y0 + li * 48, f, mg.fill(col, 1.0))
-                    x += f.measureText(w + " ")
-                    wi += 1
+    live = [ln for ln in L if ln["start"] - 0.05 <= t <= ln["end"] + 0.25 and ln["start"] < DUR - 0.6]   # no flash of the next part's line
+    if not live:
+        return
+    ln = live[-1]                             # the newest line wins, so two never overlap at a hand-over
+    f = mg.font(mg.BODY_M, 38)
+    words, lines, cur = ln["text"].split(), [], []
+    for w in words:
+        if f.measureText(" ".join(cur + [w])) > 1400 and cur:
+            lines.append(cur); cur = [w]
+        else:
+            cur.append(w)
+    lines.append(cur)
+    k = (t - ln["start"]) / max(0.1, ln["end"] - ln["start"])
+    spoken = int(k * len(words) + 0.5)
+    y0 = H - 150 - (len(lines) - 1) * 48
+    wi = 0
+    for li, ws in enumerate(lines):
+        s = " ".join(ws)
+        wtot = f.measureText(s)
+        x = W / 2 - wtot / 2
+        if dark_box:
+            c.drawRoundRect(skia.Rect.MakeXYWH(x - 18, y0 + li * 48 - 36, wtot + 36, 50), 10, 10, mg.fill("#0B0C0E", 0.55))
+        for w in ws:
+            col = "#FFFFFF" if wi < spoken else mg.ON_DARK_SOFT
+            c.drawString(w, x, y0 + li * 48, f, mg.fill(col, 1.0))
+            x += f.measureText(w + " ")
+            wi += 1
 
 
 # ---------------------------------------------------------------- B · ASCII

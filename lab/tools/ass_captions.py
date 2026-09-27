@@ -29,10 +29,12 @@ Style: Cap,Inter Tight Medium,50,&H00FFFFFF,&H00FFFFFF,&H8C0E0C0B,&H8C0E0C0B,0,0
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
     out = [head]
-    for ln in L:
-        if until is not None and ln["start"] > until:
+    for i, ln in enumerate(L):
+        if until is not None and ln["start"] > until - 0.6:     # no flash of a line that only just starts
             break
         end = ln["end"] + 0.25 if until is None else min(ln["end"] + 0.25, until)
+        if i + 1 < len(L):
+            end = min(end, L[i + 1]["start"] - 0.06)      # never two lines on screen at once
         text = ln["text"].replace("\n", " ")
         out.append(f"Dialogue: 0,{ts(ln['start'] - 0.05)},{ts(end)},Cap,,0,0,0,,{text}\n")
     open(dst, "w").write("".join(out))

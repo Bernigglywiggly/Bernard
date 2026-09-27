@@ -277,6 +277,7 @@ def dust_at(t):
 
 # ---------------------------------------------------------------- the frame
 GROUND = {}
+FURNITURE = {"label": True}                        # relay.py draws the label once, on top of every style
 
 
 def frame(c, t):
@@ -429,7 +430,12 @@ def frame(c, t):
         c.drawCircle(CX, 520, (r + 14) * k, mg.stroke(GLOW, 1.4, 0.6 * k))
         label(c, "THE PRIZE", CX, 470, t, tr + 0.3, 20, SOFT)
         ev(tr, "confirm", t)
-    # the only furniture: one thin line and a tiny label, as in A01
+    if FURNITURE["label"]:
+        furniture(c)
+
+
+def furniture(c):
+    """The only furniture: one thin line and a tiny label, as in A01."""
     c.drawString("EP03  ·  THE SHOVEL SELLERS", 120, H - 60, mg.font(mg.MONO, 16), mg.fill(SOFT, 0.8))
     c.drawLine(120, H - 84, 300, H - 84, mg.stroke(SOFT, 1, 0.6))
 

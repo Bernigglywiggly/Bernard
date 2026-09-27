@@ -897,6 +897,10 @@ def build_cues():
         cue(ls(L21) + 1.2 + j * 1.9 + d, "thock", -10)
     for j, li in enumerate((I("rush"), I("chain"))):
         cue(ls(li) + 0.05 + d, "latch", -9, [-0.2, 0.2][j])
+    cue(le(I("chain")) + 0.4, "thum", -14)
+    json.dump(dict(cues=CUES, floors=F_START, fall=FALL_T0, land=LAND, total=DUR,
+                   cuts=[x["start"] for x in L if x.get("cut")]), open(os.path.join(BUILD, "events.json"), "w"), indent=1)
+    return CUES
 
 
 if __name__ == "__main__":

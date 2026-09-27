@@ -24,3 +24,8 @@ ep02/build/*
 !ep02/build/lines.json
 !ep02/build/events.json
 !ep02/build/music_arr.json
+ep03/build/*
+!ep03/build/lines.json
+!ep03/build/events.json
+!ep03/build/music_arr.json
+stickman/build/

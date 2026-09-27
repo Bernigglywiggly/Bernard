@@ -110,15 +110,46 @@ textarea{font:inherit;font-size:15px;width:100%;min-height:80px;border-radius:10
 <header>
   <span class="eyebrow">v7 lab · <b>26 Sep 2026</b> · built in the cloud session</span>
   <h1>Curve <span>Lab</span></h1>
-  <p><b>New on top: EP02 · The Ninety-Minute War</b> (the price war, the Red Queen, what gets expensive), with covers to pick from. Below it, everything from tonight's session, for you to judge: a 105-second pilot in the new renegade voice, four camera-led visual directions, a mechanical sound palette with the stomach-drop vortex, three jungle beds and the voice tests. Tap what you like below. Your picks save, and the next session reads them.</p>
+  <p><b>New on top: EP03 · The Shovel Sellers</b> in the new voice (draft), then EP02 · The Ninety-Minute War. Below them, everything from tonight's session, for you to judge: a 105-second pilot in the new renegade voice, four camera-led visual directions, a mechanical sound palette with the stomach-drop vortex, three jungle beds and the voice tests. Tap what you like below. Your picks save, and the next session reads them.</p>
 </header>
 
 <nav aria-label="Sections">
-  <a href="#ep02">EP02 · new</a><a href="#ep01">EP01</a><a href="#pilot">Pilot</a><a href="#picks">Your picks</a><a href="#visual">Visuals</a><a href="#sound">Sound</a><a href="#music">Jungle</a><a href="#voice">Voice</a><a href="#script">Script</a><a href="#refs">References</a><a href="#rules">Rules</a><a href="#higgs">Higgsfield</a><a href="#status">A01 status</a>
+  <a href="#ep03">EP03 · draft</a><a href="#ep02">EP02</a><a href="#ep01">EP01</a><a href="#pilot">Pilot</a><a href="#picks">Your picks</a><a href="#visual">Visuals</a><a href="#sound">Sound</a><a href="#music">Jungle</a><a href="#voice">Voice</a><a href="#script">Script</a><a href="#refs">References</a><a href="#rules">Rules</a><a href="#higgs">Higgsfield</a><a href="#status">A01 status</a>
 </nav>
 
+<section id="ep03">
+  <span class="eyebrow">00 · <b>Newest</b> · the new voice, draft</span>
+  <h2>EP03 · The Shovel Sellers</h2>
+  <p class="lede">George is back, faster, sharper and swearing where it lands. In 1848 the richest man in the gold rush sold the shovels, the census showed the miners mostly didn't get rich, and the same pattern runs through railway mania and the AI rush. It lands on your walk-in pitch. This draft uses my fallback lines in the seven gaps marked for your punchlines. Fill them in on the plan page and I'll re-voice it.</p>
+  <div class="vwrap">
+    <div class="glass vplayer"><video id="ep03Video" controls playsinline preload="metadata" poster="media/ep03_poster.jpg"></video></div>
+    <div class="glass status">
+      <span class="eyebrow">What changed</span>
+      <ol>
+        <li><b>Voice:</b> George at 1.02 with tighter gaps, in the new register: quick, dry, well read, "not one fucking scoop".</li>
+        <li><b>Your gaps:</b> seven places where your punchline replaces mine, listed on the plan page with the setup line before each.</li>
+        <li><b>Ruler:</b> a timeline with a broken axis, the 1840s on the left and now on the right. The marker jumps the 150-year gap.</li>
+        <li><b>Scenes:</b> the bottle of gold, a 3D shop of pans and shovels, the $36,000 counter, the swarm that splits the prize, the pan gate, the census, a takeaway receipt, the door, railway mania drawing itself, the layers, and 2030 shopfronts.</li>
+        <li><b>Length:</b> 3:35, over the Shorts limit, so it posts as a normal video and to TikTok. A 60-second Short gets cut from the cold open.</li>
+      </ol>
+    </div>
+  </div>
+  <span class="eyebrow">Covers</span>
+  <div class="covers">
+    <img src="media/covers/ep03_cover_a.jpg" alt="EP03 cover A: $36,000 in nine weeks, he never dug for gold" loading="lazy">
+    <img src="media/covers/ep03_cover_b.jpg" alt="EP03 cover B: They saw a gold rush. He saw a supply chain." loading="lazy">
+    <img src="media/covers/ep03_thumb_16x9.jpg" alt="EP03 16:9 thumbnail" loading="lazy">
+  </div>
+  <div class="glass pickbox">
+    <div class="pickrow"><span class="eyebrow">The new voice</span><div class="picks" data-cat="ep03voice" data-mode="one">
+      <button class="pick love" data-v="yes">Yes, this is it</button><button class="pick" data-v="faster">Even faster</button><button class="pick" data-v="calmer">Too much, calm it</button></div></div>
+    <div class="pickrow"><span class="eyebrow">EP03 cover</span><div class="picks" data-cat="ep03cover" data-mode="one">
+      <button class="pick" data-v="a">A · $36,000</button><button class="pick" data-v="b">B · the mirrored line</button></div></div>
+  </div>
+</section>
+
 <section id="ep02">
-  <span class="eyebrow">00 · <b>Newest</b> · episode two</span>
+  <span class="eyebrow">01 · <b>Episode two</b> · the price war</span>
   <h2>EP02 · The Ninety-Minute War</h2>
   <p class="lede">On 22 September one lab cut its flagship's price by a fifth. About ninety minutes later its biggest rival launched two models at half the price. Why price is the only signal everyone can read, what a million tokens is in your units, the Red Queen, and a labelled what-if: when thinking is almost free, what gets expensive? Vertical, 2:47, same Six Floors format.</p>
   <div class="vwrap">
@@ -367,6 +398,12 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;
   if (window.Hls && window.Hls.isSupported()) { const hls = new Hls({maxBufferLength: 30}); hls.loadSource(src); hls.attachMedia(v); }
   else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
 })();
+// ---------- EP03 (vertical)
+(function(){
+  const v = document.getElementById("ep03Video"), src = "media/ep03/ep03_playlist.txt";
+  if (window.Hls && window.Hls.isSupported()) { const hls = new Hls({maxBufferLength: 30}); hls.loadSource(src); hls.attachMedia(v); }
+  else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
+})();
 // ---------- EP02 (vertical)
 (function(){
   const v = document.getElementById("ep02Video"), src = "media/ep02/ep02_playlist.txt";
@@ -374,7 +411,6 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;
   else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
 })();
 const EPS = [
-  ["EP03 · The Shovel Sellers","1848's real winners sold supplies. What are the shovels of 2026, and 2030?"],
   ["EP04 · The Number That Decides What Gets Watched","Europe counts training arithmetic: 10²⁵. Goodhart's law. Imagine compute rationed like carbon."],
   ["EP05 · The Exam and the Shirt","Moravec's paradox: why the easy things are hard. Imagine the first robot that moves like a toddler."],
   ["EP06 · The Thirty-Year Delay","Electric motors took decades to pay off until factories were redesigned. Imagine an office built from zero around AI."],

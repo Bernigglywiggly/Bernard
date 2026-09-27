@@ -1,0 +1,471 @@
+<title>Five by February</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600&family=Michroma&display=swap">
+<style>
+/* Chrome & Marl, the channel's own system: always dark, by the owner's choice */
+:root{
+  color-scheme:dark;
+  --graphite:#14161A; --slate:#1B1E23; --glass:#23272D; --glass2:#1D2126; --line:#2E343C; --line2:#3B424C;
+  --type:#E9EBEE; --mid:#C9CED6; --soft:#8A919C; --turq:#12B8AC; --glow:#3FE6D8; --warn:#E0B458; --red:#E26D5C;
+  --display:"Michroma","Eurostile","Arial Black",sans-serif; --body:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--graphite);color:var(--type);font-family:var(--body);font-size:16px;line-height:1.55;
+  background-image:radial-gradient(rgba(233,235,238,.035) 1px,transparent 1.2px);background-size:22px 22px}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:24px 80px}
+a{color:var(--glow);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:400}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.eyebrow b{color:var(--turq);font-weight:500}
+header{display:grid;gap:14px;padding-block:8px 26px;border-bottom:1px solid var(--line)}
+header h1{font-family:var(--display);font-size:clamp(32px,6vw,60px);line-height:1.04;letter-spacing:.02em}
+header h1 span{color:var(--turq)}
+header p{color:var(--mid);max-width:68ch;font-weight:300;font-size:18px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:4;display:flex;gap:6px;overflow-x:auto;padding-block:10px;background:rgba(20,22,26,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);scrollbar-width:none}
+nav a{flex:0 0 auto;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--mid);padding:7px 12px;border:1px solid var(--line);border-radius:999px}
+nav a:hover{border-color:var(--turq);color:var(--type)}
+section{padding-top:44px;display:grid;gap:16px}
+h2{font-family:var(--display);font-size:clamp(21px,3.2vw,29px);letter-spacing:.03em}
+h3{font-family:var(--body);font-weight:600;font-size:17px}
+.lede{color:var(--mid);max-width:68ch;font-weight:300}
+.glass{background:linear-gradient(180deg,var(--glass),var(--glass2));border:1px solid var(--line);border-top-color:#3a414a;border-radius:16px}
+.pad{padding:16px 18px;display:grid;gap:10px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+ul,ol{margin:0;padding-left:20px;display:grid;gap:6px;color:var(--mid)}
+li b{color:var(--type);font-weight:600}
+.num{font-family:var(--display);font-size:clamp(26px,4vw,38px);color:var(--turq);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.stat{display:grid;gap:4px}
+.stat .k{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.stat p{color:var(--mid);font-size:14.5px}
+.tbox{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px dashed var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:400}
+td:first-child{font-family:var(--mono);color:var(--turq);white-space:nowrap}
+td{color:var(--mid)}
+.chip{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px;border:1px solid var(--line2);color:var(--mid)}
+.chip.go{border-color:var(--turq);color:var(--glow)}
+.chip.warn{border-color:var(--warn);color:var(--warn)}
+.chip.no{border-color:var(--red);color:var(--red)}
+.vid{display:grid;gap:8px;padding:16px 18px}
+.vid .top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.vid h3{font-family:var(--display);font-weight:400;font-size:17px;letter-spacing:.03em}
+.vid p{color:var(--mid);font-size:15px}
+.vid .meta{font-family:var(--mono);font-size:12px;color:var(--soft);letter-spacing:.04em}
+.script{display:grid;gap:10px;padding:16px 18px}
+.script .who{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--turq)}
+.script .say{font-size:17px;line-height:1.65;color:var(--type);max-width:66ch}
+.script .note{font-family:var(--mono);font-size:12.5px;color:var(--soft)}
+.slot{display:grid;gap:6px;border:1px dashed var(--warn);border-radius:12px;padding:10px 12px;background:rgba(224,180,88,.05)}
+.slot label{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--warn)}
+.slot .mine{color:var(--soft);font-size:14px}
+.slot textarea{width:100%;min-height:44px;resize:vertical;background:#101215;color:var(--type);border:1px solid var(--line2);border-radius:10px;padding:8px 10px;font:inherit;font-size:15px}
+.check{font-family:var(--mono);font-size:11px;color:var(--warn)}
+audio{width:100%;height:40px}
+.aud{display:grid;gap:8px;padding:14px 16px}
+.aud p{color:var(--soft);font-size:13.5px}
+.picks{display:flex;flex-wrap:wrap;gap:6px}
+.pick{font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--mid);background:transparent;border:1px solid var(--line2);border-radius:999px;padding:7px 11px;min-height:34px;cursor:pointer}
+.pick[aria-pressed="true"]{background:var(--turq);border-color:var(--turq);color:#071413}
+.state{font-family:var(--mono);font-size:12px;color:var(--soft)}
+.bible{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+@media (max-width:820px){.bible{grid-template-columns:1fr}}
+.warnbox{border-color:rgba(224,180,88,.5)}
+.concept{margin:0;display:grid;gap:8px}
+.concept img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--line)}
+.src{font-size:13.5px;color:var(--soft)}
+.src li{color:var(--soft)}
+#ideas{width:100%;min-height:120px;background:#101215;color:var(--type);border:1px solid var(--line2);border-radius:12px;padding:10px 12px;font:inherit;font-size:15px;resize:vertical}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Plan · <b>27 Sep 2026</b> · 18 weeks to the deadline</span>
+  <h1>Five by <span>February</span></h1>
+  <p>On 1 February 2027 YouTube doubles the watch-time bar for new channels. This is the plan to get channels monetised before then without making slop: the rules that decide who gets paid, what actually performs, the next five videos, your stickman, the channel stack, and a voice section with lines for you to read and gaps for your own jokes. Anything you type in the yellow boxes saves for the next session.</p>
+</header>
+
+<nav aria-label="Sections">
+  <a href="#deadline">Deadline</a><a href="#rules">Rules</a><a href="#works">What works</a><a href="#next5">Next 5</a><a href="#hat">The stickman</a><a href="#stack">5 channels</a><a href="#voice">Voice</a><a href="#read">Read these</a><a href="#community">Community</a><a href="#yours">Your ideas</a><a href="#sources">Sources</a>
+</nav>
+
+<section id="deadline">
+  <span class="eyebrow">The deadline</span>
+  <h2>What changes on 1 Feb 2027</h2>
+  <div class="grid3">
+    <div class="glass pad stat"><span class="k">New channels, until 31 Jan</span><span class="num">4,000 h</span><p>1,000 subscribers plus 4,000 public watch hours in 12 months, or 10M Shorts views in 90 days.</p></div>
+    <div class="glass pad stat"><span class="k">New channels, from 1 Feb</span><span class="num">8,000 h</span><p>1,000 subscribers plus 8,000 watch hours, or 20M Shorts views in 90 days. Double.</p></div>
+    <div class="glass pad stat"><span class="k">Already in, from 1 Feb</span><span class="num">10M</span><p>Channels already in keep their place. Shorts ad money needs 10M Shorts views per 90 days; long-form keeps earning either way.</p></div>
+  </div>
+  <div class="glass pad">
+    <h3>What that means for us</h3>
+    <ul>
+      <li><b>The goal is 4,000 hours before 1 Feb, per channel.</b> That's about 80,000 views of videos watched for 3 minutes on average, spread over 18 weeks.</li>
+      <li><b>Our vertical episodes count as Shorts.</b> Anything vertical and under 3 minutes is a Short, and Shorts watch time doesn't count towards the 4,000 hours. So every channel needs a <b>long-form 16:9 backbone</b> (8–15 minutes), and the vertical cuts become trailers that pull people in.</li>
+      <li><b>Five channels all crossing 4,000 hours in 18 weeks is unlikely</b> if we keep the quality bar. Three is realistic: The Curve, the stickman channel, and one money channel. The other two can launch now and qualify later through the higher bar or a Shorts hit. Fan funding (memberships, Super Thanks) stays at 500 subs plus 3,000 hours.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="rules">
+  <span class="eyebrow">Who gets paid</span>
+  <h2>The AI rules, and the swearing rules</h2>
+  <div class="grid2">
+    <div class="glass pad warnbox">
+      <h3>Not monetisable since 16 July 2026</h3>
+      <ul>
+        <li><b>Generic, repetitive or template content.</b> Text-to-speech over stock slideshows, cookie-cutter formats.</li>
+        <li><b>Off-putting or emotionally manipulative content.</b></li>
+        <li><b>AI personas on sensitive topics:</b> finance, legal, health and medical. An AI narrator giving money advice gets no ads.</li>
+      </ul>
+      <p class="src">Reported enforcement: mass-AI channels removed in waves, and repeat offenders get a warning, then a 90-day suspension, then removal from the Partner Program.</p>
+    </div>
+    <div class="glass pad">
+      <h3>What keeps us safe</h3>
+      <ul>
+        <li><b>A human in every video:</b> your voice, your jokes, your picks, a recurring character, original visuals. Nothing templated.</li>
+        <li><b>Money channels on finance, law or health need your real voice</b>, not George and not a voice changer. Or we pick high-paying niches that aren't on that list.</li>
+        <li><b>Swearing:</b> since July 2025 strong swearing is fine anywhere in the video, even the first 7 seconds. Never in titles or thumbnails, not every other word, and no slurs ever.</li>
+        <li><b>Disclosure:</b> tick "altered or synthetic" when something realistic is AI-made.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="works">
+  <span class="eyebrow">Research</span>
+  <h2>What gets clicked, and what gets finished</h2>
+  <p class="lede">Nobody has published a study comparing crazy and mild hypotheticals. The evidence on viral video points one way: a premise has to be extreme or outlandish to travel, and it only keeps travelling if the payoff is real. YouTube now ranks mostly on satisfaction, so a video people rate "worth my time" beats a longer one they sat through.</p>
+  <div class="grid2">
+    <div class="glass pad">
+      <h3>Our rules for every video</h3>
+      <ol>
+        <li><b>Crazy premise, sober payoff.</b> "What if WW3 started tomorrow?" beats "How to prepare for emergencies". The answer inside is real, useful and sourced.</li>
+        <li><b>Premise in the first 5 seconds.</b> People watch for the payoff, not the surprise. Say what we're doing, then open one loop.</li>
+        <li><b>Packaging first.</b> Title and thumbnail get written before the script. Three titles per video, tested with Test &amp; Compare where YouTube offers it.</li>
+        <li><b>A pattern break every 20–40 seconds:</b> a new visual, a joke beat or a silence cut.</li>
+        <li><b>Series, not one-offs.</b> Numbered episodes and recurring characters keep people in the session, which is now a big long-form signal.</li>
+        <li><b>Close the loop.</b> Every video ends on the thing it promised, then one question for the comments.</li>
+      </ol>
+    </div>
+    <div class="glass pad">
+      <h3>Signals YouTube reportedly weighs in 2026</h3>
+      <ul>
+        <li><b>Post-watch surveys:</b> "was this worth your time?"</li>
+        <li><b>Viewers coming back</b> to the channel within 7 days.</li>
+        <li><b>Shares</b> off the platform.</li>
+        <li><b>Completion</b> on the right-sized video.</li>
+        <li><b>Shorts and long-form are ranked separately,</b> so a flop Short doesn't drag the long videos down.</li>
+      </ul>
+      <p class="src">From creator-analytics trackers, not YouTube's own docs, so treat the weights as reported.</p>
+    </div>
+  </div>
+</section>
+
+<section id="next5">
+  <span class="eyebrow">The Curve · backlog</span>
+  <h2>The next five videos</h2>
+  <p class="lede">Each gets a long 16:9 cut for watch hours and a vertical cut for discovery. Facts marked <span class="check">[check]</span> come from news summaries and get verified before posting.</p>
+  <div class="grid2">
+    <div class="glass vid">
+      <div class="top"><h3>1 · The Shovel Sellers</h3><span class="chip go">Script ready</span></div>
+      <p>1848: the richest man in the gold rush sold the shovels. Clay &amp; Jones (2008) found the miners' gains were small or even zero, and everyone else's were positive and large. The shovels of 2026 are setup, trust and walking in the door. It ends on your takeaway pitch as the example.</p>
+      <p class="meta">George, faster · long cut 9 min · vertical 2:50 · your lines in the gaps</p>
+    </div>
+    <div class="glass vid">
+      <div class="top"><h3>2 · From Spandex Suit to Robot UFC</h3><span class="chip warn">Your voiceover</span></div>
+      <p>In 2021 a car company announced a humanoid robot, and the robot on stage was a man in a spandex suit. In 2025 humanoids boxed on Chinese state TV. On 18 Sep 2026 a man got in a cage with a six-foot robot in San Francisco. Then the military part: armed robot dogs, ground robots in Ukraine. <span class="check">[check]</span></p>
+      <p class="meta">You, relaxed and rambling · slow orbital holo visuals · long cut 12 min</p>
+    </div>
+    <div class="glass vid">
+      <div class="top"><h3>3 · Your Job's Night Shift</h3><span class="chip">To script</span></div>
+      <p>The helpful-AI episode: what an agent can actually do for you tonight while you sleep, following EP01's 16-hour horizon. Five real jobs handed over live, with timings and costs on screen, and the ones it fucked up left in.</p>
+      <p class="meta">George plus screen captures · long cut 10 min</p>
+    </div>
+    <div class="glass vid">
+      <div class="top"><h3>4 · A Ring of Thinking Around the Earth</h3><span class="chip">To script</span></div>
+      <p>Plans to put AI chips in orbit, where the sun never sets. Mills followed rivers, computers follow energy. The big what-if: who owns sunlight? The most visual one on the list, built for the holo style. <span class="check">[check]</span></p>
+      <p class="meta">George · long cut 9 min · heavy on the 3D</p>
+    </div>
+    <div class="glass vid">
+      <div class="top"><h3>5 · Who's Human Here?</h3><span class="chip">To script</span></div>
+      <p>In a 2025 study people picked the AI as the human more often than the actual human. How to tell online now, what Turing really asked in 1950, and a world where any voice could be synthetic. <span class="check">[check]</span></p>
+      <p class="meta">George · long cut 9 min · a live test viewers can play along with</p>
+    </div>
+    <div class="glass vid">
+      <div class="top"><h3>Pilot for channel 2 · WW3 Survival Guide</h3><span class="chip warn">Your voiceover</span></div>
+      <p>A hypothetical, played for laughs, with real advice underneath. It stars the stickman below. It's his own channel's launch video, or it can go out on The Curve if you'd rather stay on one channel for now.</p>
+      <p class="meta">You, fast and tense · stickman animation · long cut 10 min · 3 Shorts</p>
+    </div>
+  </div>
+</section>
+
+<section id="hat">
+  <span class="eyebrow">Character bible</span>
+  <h2>The stickman in the chrome hat</h2>
+  <p class="lede">A main character who can't die, so the most dangerous stuff on Earth can be a joke while the advice stays real. He never speaks. You narrate, he reacts, and sometimes he ignores you completely.</p>
+  <figure class="concept"><img src="media/stickman_concept.jpg" alt="Concept sheet: the stickman in a chrome conical hat, idle, panicking with the hat flying off, running Looney Tunes style, smug, and a serious close-up with the brim shading his eyes" loading="lazy"><figcaption class="state">Concept 0.1, drawn in code as a rig, so the same file animates the WW3 video. Tell me what to change: hat size, line weight, faces.</figcaption></figure>
+  <div class="bible">
+    <div class="glass pad">
+      <h3>Look</h3>
+      <ul>
+        <li><b>Body:</b> a clean black-line stickman with a round head and dot eyes, drawn with weight and squash-and-stretch so he feels alive.</li>
+        <li><b>The hat:</b> a chrome conical rice-farmer hat, the only shiny thing in frame. It reflects the scene, including explosions, sunsets and the narrator's disappointment.</li>
+        <li><b>Faces:</b> blank, determined, panic, a smug grin, and the dead-serious close-up with a dramatic sting.</li>
+        <li><b>Palette:</b> graphite and turquoise like the channel, with a warning orange for danger.</li>
+      </ul>
+      <p class="src"><b>Troll face warning:</b> the original Trollface is copyrighted and its creator has collected licensing fees and had a game pulled over it. We draw our own smug face instead, which is also better for owning the character.</p>
+    </div>
+    <div class="glass pad">
+      <h3>Rules of his world</h3>
+      <ul>
+        <li><b>Looney Tunes physics:</b> he gets flattened and pops back, gets blackened by a blast and blinks, falls off a cliff and waits for gravity to notice.</li>
+        <li><b>The hat does everything:</b> shield, umbrella, wok, sledge, satellite dish, parachute, begging bowl.</li>
+        <li><b>He is always a step ahead or a mile behind the narrator,</b> never level. The joke is the gap.</li>
+        <li><b>Every gag carries a real tip.</b> The joke shows the wrong way, the narrator gives the right one, and the tip ends up on screen as a checklist line.</li>
+        <li><b>A running bit per episode,</b> such as the one tin of beans he refuses to share.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="glass pad">
+    <h3>WW3 Survival Guide: the spine</h3>
+    <div class="tbox"><table>
+      <thead><tr><th>Beat</th><th>What you say</th><th>What he does</th></tr></thead>
+      <tbody>
+        <tr><td>Cold open</td><td>"World War Three. Hypothetically. Nobody panic."</td><td>Already panicking, hat on fire.</td></tr>
+        <tr><td>Go in</td><td>UK advice for a radiation emergency: get inside a proper building, go to the middle, away from windows.</td><td>Hides in the shed, the car, then a bin, before the house.</td></tr>
+        <tr><td>Stay in</td><td>Shut doors and windows and stay put.</td><td>Keeps opening the door to check if it's over.</td></tr>
+        <tr><td>Tune in</td><td>Radio, TV, your council's website. "Go in, stay in, tune in" is the actual government line.</td><td>Tunes into a cooking show, takes notes.</td></tr>
+        <tr><td>The kit</td><td>Three days of water and food, tin opener, wind-up radio, torch, batteries, first aid, documents.</td><td>Packs the kit, then a second bag of snacks, then a lamp.</td></tr>
+        <tr><td>The mind</td><td>Why panic kills more plans than bombs do, and what calm looks like.</td><td>The serious close-up.</td></tr>
+        <tr><td>Close</td><td>What to do tonight in ten minutes. One question for the comments.</td><td>Asleep in the hat.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="stack">
+  <span class="eyebrow">The stack</span>
+  <h2>Five channels</h2>
+  <p class="lede">Two personal channels in your voice and style, and three money channels in niches that pay well and aren't on YouTube's sensitive list for AI narrators. Rough ad earnings per 1,000 views are from 2026 creator surveys and vary a lot by audience country.</p>
+  <div class="tbox glass" style="padding:6px 10px">
+    <table>
+      <thead><tr><th>Channel</th><th>What it is</th><th>Voice</th><th>Why it pays</th><th>By 1 Feb</th></tr></thead>
+      <tbody>
+        <tr><td>1 · The Curve</td><td>AI and tech moving fast: Six Floors episodes, robots, agents, space compute.</td><td>George, plus your specials</td><td>Tech audiences pay mid to high. AI-tool affiliates.</td><td><span class="chip go">4,000 h</span></td></tr>
+        <tr><td>2 · The stickman</td><td>Crazy hypotheticals with real survival and world knowledge: WW3, blackout, AI takeover, alien contact.</td><td>You</td><td>Huge reach, merch (the hat), affiliate survival kits.</td><td><span class="chip go">4,000 h</span></td></tr>
+        <tr><td>3 · AI for small business</td><td>Practical AI setups for shops, takeaways, trades. Tutorials and honest tool reviews. Feeds your walk-in business.</td><td>You on screen-recordings, or George</td><td>AI tools and software reviews are among the best-paying faceless niches ($8–25 per 1,000). Affiliates.</td><td><span class="chip go">4,000 h</span></td></tr>
+        <tr><td>4 · How It's Built</td><td>Megaproject and engineering documentaries, 12–20 minutes. Tunnels, dams, the deepest hole, the biggest machine.</td><td>George</td><td>Long watch time fills the hours fastest. The holo style is made for it.</td><td><span class="chip warn">Launch</span></td></tr>
+        <tr><td>5 · How They Make Money</td><td>Business breakdowns: how a company, an app or a scam actually earns. Stories, never personal advice.</td><td>You, since it sits near finance</td><td>Business audiences are near the top of ad rates. Not advice, so not a sensitive topic.</td><td><span class="chip warn">Launch</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="glass pad">
+    <h3>Pick the second channel to start</h3>
+    <div class="picks" data-cat="channel2" data-mode="one">
+      <button class="pick" data-v="stickman">The stickman</button><button class="pick" data-v="smallbiz">AI for small business</button><button class="pick" data-v="built">How It's Built</button><button class="pick" data-v="money">How They Make Money</button>
+    </div>
+    <p class="state" id="pickState">Connecting…</p>
+  </div>
+</section>
+
+<section id="voice">
+  <span class="eyebrow">Voice</span>
+  <h2>George, faster, and your own voice</h2>
+  <p class="lede">George is back as the narrator. The same passage at the old pace and two faster ones is below: pick the one that sounds like a man with too much to say and no trouble saying it. The writing does the rest: quick, precise, dry, well read, and swearing where it lands. I write the setups and leave the punchlines to you, marked in yellow.</p>
+  <div class="grid3">
+    <div class="glass aud"><h3>Old pace · 0.92</h3><p>EP01 and EP02.</p><audio controls preload="none" src="media/george_old_092.mp3"></audio></div>
+    <div class="glass aud"><h3>Fast · 1.02</h3><p>Tighter gaps, same warmth.</p><audio controls preload="none" src="media/george_fast_102.mp3"></audio></div>
+    <div class="glass aud"><h3>Faster · 1.10</h3><p>Barely stops for breath.</p><audio controls preload="none" src="media/george_faster_110.mp3"></audio></div>
+  </div>
+  <div class="glass pad"><div class="picks" data-cat="pace" data-mode="one">
+    <button class="pick" data-v="092">Old pace</button><button class="pick" data-v="102">Fast</button><button class="pick" data-v="110">Faster</button>
+  </div></div>
+  <div class="grid2">
+    <div class="glass pad">
+      <h3>Your voice through a voice changer</h3>
+      <ul>
+        <li><b>Best: ElevenLabs Voice Changer</b> (speech to speech). You record, it keeps your timing, emotion, pauses and laughs and swaps the voice. Up to 5 minutes per clip, so record in sections.</li>
+        <li><b>Pick a library voice or design one</b> (Voice Design) that fits the visuals: deep, warm, a bit of grit. Don't clone a real person.</li>
+        <li><b>Your real voice might win anyway.</b> It's the strongest "human" signal for YouTube and the thing people subscribe to. For the money channels near finance it's the only safe option.</li>
+        <li>I can't reach ElevenLabs from here, so run the conversion yourself and put the file in the repo. If you add an ElevenLabs API key as an environment secret and allow the domain, I can do it for you.</li>
+      </ul>
+    </div>
+    <div class="glass pad">
+      <h3>How to record so it sounds expensive</h3>
+      <ol>
+        <li>Phone or USB mic 10–15 cm from your mouth, slightly off to the side.</li>
+        <li>A soft room: in front of a wardrobe of clothes, or under a duvet. No bare walls.</li>
+        <li>Record WAV at 48 kHz. Leave 2 seconds of silence at the start.</li>
+        <li>One paragraph per take. Fluffed a line? Pause, then say the whole sentence again. I cut the best take.</li>
+        <li>Don't add effects. The changer and my mix do that.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="read">
+  <span class="eyebrow">Read these</span>
+  <h2>Try these out loud</h2>
+  <p class="lede">Four short pieces in the new voice. Read them into the voice changer, or just out loud, to find the character. The yellow boxes are setups where a real person's punchline beats mine. Mine is underneath as a fallback. Type yours and it saves.</p>
+
+  <div class="glass script">
+    <span class="who">A · The Curve · EP03 cold open · George or you</span>
+    <p class="say">1848. San Francisco. A shopkeeper called Sam Brannan walks down the street holding up a bottle of gold like he's just won the bloody Champions League. The whole city loses its mind.</p>
+    <div class="slot"><label for="s_a1">Your line · what people abandoned for gold</label><p class="mine">Mine: "Sailors walked off ships. Bakers walked out of bakeries. One bloke probably walked out of his own wedding." <span class="check">[check the ships]</span></p><textarea id="s_a1" data-slot="a1" placeholder="Your punchline…"></textarea></div>
+    <p class="say">And Sam? Sam had already bought up the pans. And the shovels. Nine weeks later he'd made thirty-six thousand dollars. He never dug for gold. Not once. Not one fucking scoop.</p>
+    <div class="slot"><label for="s_a2">Your line · what $36,000 was worth then</label><p class="mine">Mine: "In 1848 money, that's not rich. That's buy-the-street rich."</p><textarea id="s_a2" data-slot="a2" placeholder="Your punchline…"></textarea></div>
+    <p class="note">Delivery: quick and amused, like you've told this story at the pub and it still gets you. Hit "not one fucking scoop" dead flat.</p>
+  </div>
+
+  <div class="glass script">
+    <span class="who">B · Robots · you, relaxed, talking it through</span>
+    <p class="say">Right. So in 2021 a car company announces it's building a humanoid robot. Big stage, lights, the works. And the robot comes out… and it's a bloke. In a spandex suit. Doing the robot.</p>
+    <div class="slot"><label for="s_b1">Your line · your reaction to the spandex guy</label><p class="mine">Mine: "Somewhere there's a CV that says 'humanoid robot, 2021' and it's technically true."</p><textarea id="s_b1" data-slot="b1" placeholder="Your punchline…"></textarea></div>
+    <p class="say">Five years later, humanoids are boxing each other on Chinese state telly, and last week in San Francisco a man climbed into a cage with a six-foot robot. On purpose.</p>
+    <div class="slot"><label for="s_b2">Your line · why anyone would do that</label><p class="mine">Mine: "I've had bad ideas, but I've never had a bad idea with a referee."</p><textarea id="s_b2" data-slot="b2" placeholder="Your punchline…"></textarea></div>
+    <p class="say">And somewhere, right now, a robot dog is having an anti-tank missile bolted to its back. Which, I think we can all agree, is a lot of dog. <span class="check">[check]</span></p>
+    <p class="note">Delivery: slow, curious, a bit amazed, tangents allowed. Let the pauses sit. This one's you, so don't copy my rhythm.</p>
+  </div>
+
+  <div class="glass script">
+    <span class="who">C · WW3 Survival Guide · you, fast and tense, the stickman on screen</span>
+    <p class="say">World War Three. Hypothetically. Nobody panic.</p>
+    <div class="slot"><label for="s_c1">Your line · he's already panicking</label><p class="mine">Mine: "Nobody except him. He's been panicking since 2019."</p><textarea id="s_c1" data-slot="c1" placeholder="Your punchline…"></textarea></div>
+    <p class="say">Step one: go in. Not the shed. Not the car. A proper building, the middle of it, away from the windows. Step two: stay in. Doors shut, windows shut. Step three: tune in. Radio, telly, your council's website. That's the actual UK government advice: go in, stay in, tune in.</p>
+    <div class="slot"><label for="s_c2">Your line · the worst place he could hide</label><p class="mine">Mine: "He's gone in. He's gone into the fridge. Technically he's inside something."</p><textarea id="s_c2" data-slot="c2" placeholder="Your punchline…"></textarea></div>
+    <p class="note">Delivery: quick, urgent, a news-reader who's slightly losing it. Deadpan on the real advice so it lands as real.</p>
+  </div>
+
+  <div class="glass script">
+    <span class="who">D · A 20-second Short · George</span>
+    <p class="say">The cheapest AI on Earth can now read eight novels for under ten pence.</p>
+    <div class="slot"><label for="s_d1">Your line · compare it to a human reader</label><p class="mine">Mine: "It took me a whole term to read Of Mice and Men, and I still think it was about rabbits."</p><textarea id="s_d1" data-slot="d1" placeholder="Your punchline…"></textarea></div>
+    <p class="say">So when reading is basically free, everything that used to need a clever person and an afternoon now needs neither.</p>
+    <div class="slot"><label for="s_d2">Your line · the sting at the end</label><p class="mine">Mine: "Which is great news, unless you're a clever person with an afternoon."</p><textarea id="s_d2" data-slot="d2" placeholder="Your punchline…"></textarea></div>
+  </div>
+</section>
+
+<section id="community">
+  <span class="eyebrow">Beyond views</span>
+  <h2>Community, merch, giveaways, affiliates</h2>
+  <div class="grid2">
+    <div class="glass pad">
+      <h3>Community</h3>
+      <ul>
+        <li><b>A pinned question on every video</b> that people want to answer. "What would you keep?" style.</li>
+        <li><b>Viewers pick the next hypothetical</b> with a Community-tab poll. They'll watch the one they chose.</li>
+        <li><b>A Discord at about 1,000 subscribers,</b> not before. Empty servers look dead.</li>
+        <li><b>Name the fans</b> after the stickman's world. People join identities, not channels.</li>
+      </ul>
+    </div>
+    <div class="glass pad">
+      <h3>Money beyond ads</h3>
+      <ul>
+        <li><b>Merch: the chrome hat,</b> for real. It's the one thing only we can sell. Then stickers, a tee, the tin of beans.</li>
+        <li><b>Affiliates:</b> survival-kit items on the stickman channel, AI tools on The Curve and the small-business channel. Label every link as an ad or affiliate link under UK advertising rules.</li>
+        <li><b>Giveaways:</b> free entry only (a paid entry can count as an illegal lottery in the UK), clear written rules, and YouTube's contest policies.</li>
+        <li><b>Sponsors</b> once a channel steadily gets 10,000+ views a video. AI tool companies pay well for this audience.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="glass pad">
+    <h3>The next 18 weeks</h3>
+    <div class="tbox"><table>
+      <thead><tr><th>When</th><th>What</th></tr></thead>
+      <tbody>
+        <tr><td>Now → 11 Oct</td><td>Lock George's pace and your voice test. EP03 with your lines. Build the stickman and his rig. Open channels 2 and 3 (names, banners, the first long video each).</td></tr>
+        <tr><td>12 Oct → 15 Nov</td><td>Two long videos a week across the three main channels, plus three Shorts from each. The robots video and the WW3 guide go out here.</td></tr>
+        <tr><td>16 Nov → 31 Dec</td><td>Double down on whatever the analytics say is working, and a sequel to the best video on each channel. Channels 4 and 5 go live.</td></tr>
+        <tr><td>January</td><td>Push the channels closest to 4,000 hours: playlists, premieres, community posts. Apply the moment one qualifies.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section id="yours">
+  <span class="eyebrow">Your turn</span>
+  <h2>Your channel ideas</h2>
+  <p class="lede">You said you've got ideas for other channels. Dump them here, rough is fine. They save, and I'll work them into the stack next session.</p>
+  <textarea id="ideas" placeholder="Channel ideas, video ideas, names for the stickman…"></textarea>
+  <p class="state" id="ideaState"></p>
+</section>
+
+<section id="sources">
+  <span class="eyebrow">Sources</span>
+  <h2>Where this comes from</h2>
+  <ul class="src">
+    <li>Partner Program changes from 1 Feb 2027: <a href="https://www.androidheadlines.com/2026/08/youtube-doubles-partner-program-monetization-requirements-2027-update.html">Android Headlines</a>, <a href="https://www.socialmediatoday.com/news/youtube-announces-changes-to-creator-monetization/827515/">Social Media Today</a>, <a href="https://americanbazaaronline.com/2026/08/11/youtube-to-raise-monetization-requirements-in-2027-what-creators-need-to-know-486184/">American Bazaar</a></li>
+    <li>AI slop and inauthentic content, July 2026: <a href="https://www.tubefilter.com/2026/07/13/youtube-inauthentic-content-monetization-policy-update/">Tubefilter</a>, <a href="https://www.niemanlab.org/reading/youtube-clarifies-policies-around-ai-slop/">Nieman Lab</a>, <a href="https://gizmodo.com/youtube-cracks-down-on-off-putting-content-and-ai-slop-2000787956">Gizmodo</a></li>
+    <li>Swearing in the first 7 seconds: <a href="https://www.pcgamer.com/software/platforms/youtube-will-no-longer-demonetize-videos-with-strong-profanity-in-the-first-7-seconds-but-youll-still-need-to-choose-your-f-ks-carefully/">PC Gamer</a>, <a href="https://support.google.com/youtube/answer/9725604?hl=en">YouTube Help</a></li>
+    <li>Satisfaction signals, as reported: <a href="https://outlierkit.com/resources/youtube-viewer-satisfaction-algorithm-2026/">OutlierKit</a>, <a href="https://vidiq.com/blog/post/understanding-youtube-algorithm/">vidIQ</a></li>
+    <li>What makes video travel: <a href="https://www.practicalecommerce.com/the-essential-component-of-viral-videos">Practical Ecommerce</a>, <a href="https://1of10.com/blog/most-youtube-videos-views-why-the-biggest-videos-in-history-dominated-the-platform/">1of10</a></li>
+    <li>Niche ad rates: <a href="https://outlierkit.com/blog/most-profitable-youtube-niches">OutlierKit</a>, <a href="https://youtubeniches.com/blog/best-faceless-youtube-niches-2026">YouTube Niches</a></li>
+    <li>Voice Changer: <a href="https://elevenlabs.io/docs/eleven-creative/playground/voice-changer">ElevenLabs docs</a>, <a href="https://elevenlabs.io/blog/speech-to-speech">ElevenLabs blog</a></li>
+    <li>Robot fights: <a href="https://www.livescience.com/technology/robotics/china-pits-rival-humanoids-against-each-other-in-worlds-first-robot-boxing-tournament">Live Science</a>, <a href="https://restofworld.org/2026/chinese-robot-boxing-unitree-rek/">Rest of World</a>, <a href="https://tech.supercarblondie.com/human-vs-humanoid-robot-rekbot-mma-fight/">Supercar Blondie</a></li>
+    <li>Military robots: <a href="https://www.rferl.org/a/serbia-china-military-dogs-quadraped-weapon/33857596.html">RFE/RL</a>, <a href="https://www.forbes.com/sites/amirhusain/2026/02/18/chinas-robot-dogs-have-been-armed-with-missiles/">Forbes</a>, <a href="https://time.com/article/2026/03/09/ai-robots-soldiers-war/">TIME</a></li>
+    <li>Home robots: <a href="https://en.wikipedia.org/wiki/1X_Technologies">1X Technologies</a>, <a href="https://easternherald.com/2026/06/14/humanoid-robots-home-price-figure-ai-tesla-optimus-2026/">Eastern Herald</a></li>
+    <li>UK emergency advice: <a href="https://britbrief.co.uk/weather/warnings/uk-nuclear-attack-safety-go-in-stay-in-tune-in.html">Brit Brief</a>, <a href="https://www.royalgreenwich.gov.uk/sites/default/files/2025-11/preparing-for-emergencies-booklet-2025.pdf">Royal Greenwich booklet</a></li>
+  </ul>
+</section>
+</div>
+
+<script>
+const $ = (s, r=document) => r.querySelector(s);
+const picks = {}, lines = {};
+let db = null;
+
+function paint(){
+  document.querySelectorAll(".picks").forEach(g => {
+    const cur = picks[g.dataset.cat] || [];
+    g.querySelectorAll(".pick").forEach(b => b.setAttribute("aria-pressed", cur.includes(b.dataset.v) ? "true" : "false"));
+  });
+}
+
+async function save(path, body, stateEl){
+  if (!db){ if (stateEl) stateEl.textContent = "Not saved: this view can't reach the shared store."; return; }
+  try { await db.doc(path).set(Object.assign({updated: new Date().toISOString()}, body)); if (stateEl) stateEl.textContent = "Saved. The next session will read this."; }
+  catch(e){ if (stateEl) stateEl.textContent = "Couldn't save (" + (e && e.code || "error") + "). Try again in a moment."; }
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest(".pick"); if (!b) return;
+  const g = b.closest(".picks"), cat = g.dataset.cat, v = b.dataset.v;
+  let cur = picks[cat] || [];
+  cur = g.dataset.mode === "one" ? (cur[0] === v ? [] : [v]) : (cur.includes(v) ? cur.filter(x => x !== v) : cur.concat(v));
+  picks[cat] = cur; paint(); save("picks/" + cat, {value: cur}, $("#pickState"));
+});
+
+const timers = {};
+document.querySelectorAll("textarea[data-slot]").forEach(t => {
+  t.addEventListener("input", () => {
+    const id = t.dataset.slot; lines[id] = t.value;
+    clearTimeout(timers[id]);
+    timers[id] = setTimeout(() => save("lines/" + id, {text: t.value}, null), 900);
+  });
+});
+$("#ideas").addEventListener("input", () => {
+  clearTimeout(timers.ideas);
+  timers.ideas = setTimeout(() => save("notes/ideas", {text: $("#ideas").value}, $("#ideaState")), 900);
+});
+
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch(e){ db = null; }
+  if (!db){ $("#pickState").textContent = "Picks show here but won't save in this view."; return; }
+  $("#pickState").textContent = "Connected. Picks and lines save for the next session.";
+  db.collection("picks").onSnapshot(snap => { snap.docs.forEach(d => { const x = d.data(); if (x) picks[d.id] = x.value || []; }); paint(); });
+  db.collection("lines").onSnapshot(snap => {
+    snap.docs.forEach(d => {
+      const x = d.data(), t = document.querySelector('textarea[data-slot="' + d.id + '"]');
+      if (x && t && document.activeElement !== t) t.value = x.text || "";
+    });
+  });
+  db.doc("notes/ideas").onSnapshot(d => { const x = d.data(); if (x && document.activeElement !== $("#ideas")) $("#ideas").value = x.text || ""; });
+})();
+</script>

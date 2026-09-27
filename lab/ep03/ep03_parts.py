@@ -1,0 +1,627 @@
+# EP03-specific parts, spliced into the EP01 engine by make_ep03.py (the furniture, captions, cards,
+# the gauge and the frame loop are shared). Timeline ruler with a broken axis + six floors + cues.
+
+RX0, RX1, RY = 96, 900, 1488                  # timeline ruler: 1840–1860 | 2000–2032 (a broken axis)
+SEG_A = (1840.0, 1860.0, 96.0, 420.0)
+SEG_B = (2000.0, 2032.0, 540.0, 900.0)
+TICKS = [1840, 1850, 1860, 2000, 2010, 2020, 2030]
+MARKS = [(i, abs(x["mark"]), x["mark"] < 0) for i, x in enumerate(L) if x.get("mark") is not None]
+MARK_LABEL = {1846: "260+ RAILWAY ACTS", 1847: "THE BURST", 1848: "A BOTTLE OF GOLD", 1850: "~6,000 MILES OF TRACK",
+              2008: "CLAY & JONES", 2026: "NOW"}
+
+
+def rx(year):
+    y0, y1, x0, x1 = SEG_A if year < 1930 else SEG_B
+    return lerp(x0, x1, clamp((year - y0) / (y1 - y0)))
+
+
+def ruler(c, t):
+    a = ease(seg(t, ls(0) - 0.4, ls(0) + 0.6))
+    if a <= 0:
+        return
+    for _, _, x0, x1 in (SEG_A, SEG_B):
+        c.drawLine(x0, RY, x1, RY, mg.stroke(MID, 1.3, 0.6 * a))
+    for dx in (-7, 7):                                         # the break, and the 150 years it hides
+        c.drawLine(480 + dx - 6, RY + 10, 480 + dx + 6, RY - 10, mg.stroke(MID, 1.4, 0.7 * a))
+    h.mono(c, "≈150 YRS", 480, RY + 34, 11, SOFT, 0.7 * a, align="center")
+    for yr in TICKS:
+        x = rx(yr)
+        c.drawLine(x, RY - 9, x, RY + 9, mg.stroke(MID, 1.2, 0.7 * a))
+        h.mono(c, str(yr), x, RY + 34, 14, SOFT, 0.85 * a, align="center")
+    h.mono(c, "THEN", (SEG_A[2] + SEG_A[3]) / 2, RY + 62, 12, SOFT, 0.7 * a, align="center")
+    h.mono(c, "NOW", (SEG_B[2] + SEG_B[3]) / 2, RY + 62, 12, SOFT, 0.7 * a, align="center")
+    # the marker glides between marks by screen position, so a jump across the break reads as travel
+    sx, syr, dots, ki, if_yr = None, None, [], 0.0, None
+    for (i, yr, is_if) in MARKS:
+        t0 = ls(i) + 0.2
+        if t < t0:
+            break
+        if is_if:
+            ki = ease(seg(t, t0, t0 + 1.0)) * (1 - ease(seg(t, F_START[5], F_START[5] + 1.2)))
+            if_yr = yr
+            continue
+        if sx is None:
+            sx, syr = rx(yr), yr
+            continue
+        k = smooth(seg(t, t0, t0 + 0.9))
+        if k >= 1:
+            dots.append(sx)
+        sx = lerp(sx, rx(yr), k)
+        if k > 0.5:
+            syr = yr
+    for x in dots:
+        c.drawCircle(x, RY, 3.2, mg.fill(MID, 0.8 * a))
+    if sx is None:
+        return
+    c.drawCircle(sx, RY, 7, mg.fill(TURQ, a))
+    c.drawCircle(sx, RY, 13, mg.stroke(GLOW, 1.2, 0.5 * a))
+    h.mono(c, str(int(syr)), sx, RY - 24, 14, TURQ, a, align="center", font=mg.MONO_M)
+    lab = MARK_LABEL.get(int(syr), "")
+    if lab and ki <= 0.02:
+        h.mono(c, lab, min(max(sx, RX0 + 70), RX1 - 70), RY - 46, 11, SOFT, 0.85 * a, align="center")
+    if ki > 0:
+        x = rx(if_yr)
+        p = mg.stroke(GLOW, 1.4, ki); p.setPathEffect(skia.DashPathEffect.Make([5, 6], 0))
+        c.drawLine(sx + 14, RY - 5, x - 9, RY - 5, p)
+        c.drawCircle(x, RY, 7, mg.stroke(GLOW, 1.6, ki))
+        h.mono(c, f"{int(if_yr)} · IF", x, RY - 46, 13, GLOW, ki, align="center", font=mg.MONO_M)
+
+
+# ================================================================ small drawing helpers
+def big_parts(s, f):
+    if not s.endswith("%"):
+        return s, None, f.measureText(s), 0.0
+    fu = mg.font(mg.MONO_M, f.getSize() * 0.42)
+    num = s[:-1]
+    return num, fu, f.measureText(num) + f.getSize() * 0.06 + fu.measureText("%"), f.measureText(num) + f.getSize() * 0.06
+
+
+def draw_big(c, s, x, y, f, paint, align="left"):
+    num, fu, w, ux = big_parts(s, f)
+    x0 = x - w if align == "right" else x - w / 2 if align == "center" else x
+    c.drawString(num, x0, y, f, paint)
+    if fu is not None:
+        c.drawString("%", x0 + ux, y - f.getSize() * 0.40, fu, paint)
+    return w
+
+
+def centred(c, s, y, size, col, a, font=None):
+    f = mg.font(font or mg.DISPLAY, size)
+    c.drawString(s, 540 - f.measureText(s) / 2, y, f, mg.fill(col, a))
+
+
+def fade_below(c, y0, y1):
+    """Fade whatever was drawn in the current layer to nothing between y0 and y1 (keeps captions clean)."""
+    mask = skia.Paint(BlendMode=skia.BlendMode.kDstIn)
+    mask.setShader(skia.GradientShader.MakeLinear([(0, y0), (0, y1)], [skia.Color4f(0, 0, 0, 1), skia.Color4f(0, 0, 0, 0)]))
+    c.drawRect(skia.Rect.MakeWH(W, H), mask)
+
+
+def shovel(s=1.0):
+    """A line-art shovel in 3D: blade at the origin, the handle up +y, a D-grip on top."""
+    polys = []
+    for dx in (-0.045, 0.045):
+        polys.append(h.densify(np.array([[dx, 1.22, 0.0], [dx, 3.0, 0.0]]), 0.2) * s)
+    polys.append(h.circle((0, 3.22, 0), 0.22, 28, "z") * s)
+    polys.append(np.array([[-0.22, 3.22, 0], [0.22, 3.22, 0]]) * s)
+    for sx in (-1, 1):                                        # the socket
+        polys.append(np.array([[sx * 0.12, 0.95, 0.0], [sx * 0.05, 1.25, 0.0]]) * s)
+    out = np.array([(-0.46, 0.95), (0.46, 0.95), (0.44, 0.35), (0.30, 0.08), (0.0, -0.12), (-0.30, 0.08), (-0.44, 0.35), (-0.46, 0.95)])
+    P = h.densify(np.c_[out[:, 0], out[:, 1], np.zeros(len(out))], 0.06)
+    P[:, 2] = 0.10 * (P[:, 0] / 0.46) ** 2                    # the blade is dished
+    polys.append(P * s)
+    polys.append(h.densify(np.array([[0, 0.9, 0.012], [0, 0.02, 0.0]]), 0.1) * s)
+    return polys
+
+
+def pan(cx, cy, cz, r=0.8):
+    hgt = 0.26 * r / 0.8
+    polys = [h.circle((cx, cy + hgt, cz), r, 48, "y"), h.circle((cx, cy + hgt * 1.08, cz), r * 1.07, 48, "y"),
+             h.circle((cx, cy, cz), r * 0.6, 36, "y")]
+    for q in range(12):
+        a = q * 2 * math.pi / 12
+        polys.append(np.array([[cx + r * 0.6 * math.cos(a), cy, cz + r * 0.6 * math.sin(a)],
+                               [cx + r * math.cos(a), cy + hgt, cz + r * math.sin(a)]]))
+    return polys
+
+
+_STORE = {}
+
+
+def store():
+    """A tall shop unit: four shelves of pans, three shovels leaning against it."""
+    if not _STORE:
+        frame_, pans, shovels = [], [], []
+        for yy in (0.0, 1.35, 2.7, 4.05):
+            frame_.append(h.rect_xz(0, yy, 0, 3.8, 1.5))
+        for x in (-1.9, 1.9):
+            for z in (-0.75, 0.75):
+                frame_.append(np.array([[x, 0, z], [x, 4.7, z]]))
+        for yy in (0.0, 1.35, 2.7, 4.05):
+            for x in (-0.95, 0.95):
+                pans += pan(x, yy + 0.02, 0.0, 0.66)
+        for j in range(3):
+            for p in shovel(1.0):
+                shovels.append(h.rot_x(h.rot_y(p, 0.3 + j * 0.2), -0.16) + np.array([2.45 + j * 0.5, 0.05, 0.95]))
+        _STORE.update(frame=frame_, pans=pans, shovels=shovels)
+    return _STORE["frame"], _STORE["pans"], _STORE["shovels"]
+
+
+def bottle(c, cx, cy, s, a, t):
+    """The bottle of gold: a line-art flask with dust settled in it, a few grains adrift."""
+    body = skia.Path()
+    body.moveTo(cx - 22 * s, cy - 150 * s)
+    body.lineTo(cx - 22 * s, cy - 110 * s)
+    body.cubicTo(cx - 22 * s, cy - 80 * s, cx - 72 * s, cy - 82 * s, cx - 72 * s, cy - 40 * s)
+    body.lineTo(cx - 72 * s, cy + 110 * s)
+    body.quadTo(cx - 72 * s, cy + 132 * s, cx - 50 * s, cy + 132 * s)
+    body.lineTo(cx + 50 * s, cy + 132 * s)
+    body.quadTo(cx + 72 * s, cy + 132 * s, cx + 72 * s, cy + 110 * s)
+    body.lineTo(cx + 72 * s, cy - 40 * s)
+    body.cubicTo(cx + 72 * s, cy - 82 * s, cx + 22 * s, cy - 80 * s, cx + 22 * s, cy - 110 * s)
+    body.lineTo(cx + 22 * s, cy - 150 * s)
+    g = mg.stroke(GLOW, 9 * s, 0.25 * a)
+    g.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 10))
+    c.drawPath(body, g)
+    c.drawPath(body, mg.stroke(WHITE, 2.4, a))
+    c.drawRoundRect(skia.Rect.MakeXYWH(cx - 27 * s, cy - 188 * s, 54 * s, 40 * s), 7 * s, 7 * s, mg.stroke(MID, 2.0, a))
+    rng = np.random.default_rng(3)
+    n = 180
+    gx = rng.uniform(-62, 62, n)
+    gy = 126 - rng.power(2.2, n) * 70                        # settled towards the bottom
+    ph = rng.uniform(0, 6.28, n)
+    drift = np.where(rng.uniform(0, 1, n) < 0.12, 1.0, 0.0)  # a few grains float
+    x = cx + (gx + drift * 10 * np.sin(t * 0.9 + ph)) * s
+    y = cy + (gy - drift * (40 + 50 * (0.5 + 0.5 * np.sin(t * 0.6 + ph)))) * s
+    for j in range(n):
+        col = GLOW if j % 3 else WHITE
+        c.drawCircle(float(x[j]), float(y[j]), (1.6 + (j % 4) * 0.5) * s, mg.fill(col, a * (0.55 + 0.45 * (j % 2))))
+
+
+def swarm(c, t, t0, t1, n, seed, prize, a, col=WHITE, spread=(110, 970), ystart=(1040, 1150)):
+    """n runners set off from the bottom and converge on one prize. Returns the share that has arrived."""
+    rng = np.random.default_rng(seed)
+    x0 = rng.uniform(spread[0], spread[1], n)
+    y0 = rng.uniform(ystart[0], ystart[1], n)
+    d = rng.uniform(0, 0.5, n)
+    bend = rng.normal(0, 70, n)
+    k = seg(t, t0, t1)
+    p = np.clip((k - d) / 0.5, 0, 1)
+    p = p * p * (3 - 2 * p)
+    x = x0 + (prize[0] - x0) * p + bend * np.sin(np.pi * p)
+    y = y0 + (prize[1] - y0) * p
+    for q in range(4):                                         # alpha buckets keep the draw calls few
+        sel = (np.arange(n) % 4) == q
+        pts = [skia.Point(float(xx), float(yy)) for xx, yy in zip(x[sel], y[sel])]
+        paint = mg.stroke(col if q else TURQ, 3.2 + q * 0.6, a * (0.45 + 0.15 * q))
+        paint.setStrokeCap(skia.Paint.kRound_Cap)
+        c.drawPoints(skia.Canvas.kPoints_PointMode, pts, paint)
+    return float((p >= 1).mean())
+
+
+def prize_node(c, x, y, r, a, label="THE PRIZE"):
+    g = mg.fill(GLOW, 0.35 * a)
+    g.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 18))
+    c.drawCircle(x, y, r * 1.6, g)
+    c.drawCircle(x, y, r, mg.fill(TURQ, a))
+    c.drawCircle(x, y, r + 12, mg.stroke(GLOW, 1.4, 0.6 * a))
+    if label:
+        h.mono(c, label, x, y - r - 30, 16, SOFT, a, align="center", font=mg.MONO_M)
+
+
+def shopfront(c, x, y, w, hh, title, sub, a, col=GLOW):
+    """A ghost shop sign: a dashed front with an awning."""
+    p = mg.stroke(col, 1.4, 0.85 * a); p.setPathEffect(skia.DashPathEffect.Make([4, 5], 0))
+    c.drawRoundRect(skia.Rect.MakeXYWH(x - w / 2, y - hh / 2, w, hh), 14, 14, p)
+    aw = skia.Path()
+    n = 8
+    aw.moveTo(x - w / 2 - 10, y - hh / 2)
+    for q in range(n):
+        xa = x - w / 2 - 10 + (w + 20) * (q + 0.5) / n
+        xb = x - w / 2 - 10 + (w + 20) * (q + 1) / n
+        aw.quadTo(xa, y - hh / 2 + 22, xb, y - hh / 2)
+    c.drawPath(aw, mg.stroke(col, 1.6, a))
+    c.drawLine(x - w / 2 - 10, y - hh / 2, x - w / 2 + 6, y - hh / 2 - 26, mg.stroke(col, 1.2, 0.6 * a))
+    c.drawLine(x + w / 2 + 10, y - hh / 2, x + w / 2 - 6, y - hh / 2 - 26, mg.stroke(col, 1.2, 0.6 * a))
+    c.drawLine(x - w / 2 + 6, y - hh / 2 - 26, x + w / 2 - 6, y - hh / 2 - 26, mg.stroke(col, 1.2, 0.6 * a))
+    h.mono(c, title, x, y + 8, 24, WHITE, a, align="center", font=mg.MONO_M)
+    h.mono(c, sub, x, y + 42, 15, col, a, align="center")
+
+
+# ================================================================ floor 0 · GROUND
+def fl_ground(c, t):
+    c.drawImage(h.ground("graphite"), 0, 0)
+    a_in = ease(seg(t, 0.2, 1.2))
+    # the bottle, held up
+    kb = a_in * (1 - ease(seg(t, ls(1) - 0.3, ls(1) + 0.5)))
+    if kb > 0:
+        rise = smooth(seg(t, ls(0), le(0))) * 60
+        bottle(c, 540, 820 - rise, 1.55, kb, t)
+        h.mono(c, "SAN FRANCISCO · 1848", 540, 1130 - rise * 0.2, 18, SOFT, kb, align="center", font=mg.MONO_M)
+    # the shop: pans and shovels, bought up first
+    ks = ease(seg(t, ls(1) - 0.3, ls(1) + 0.6)) * (1 - ease(seg(t, ls(3) - 0.3, ls(3) + 0.3)))
+    if ks > 0:
+        u = seg(t, ls(1) - 0.3, ls(3))
+        cam = h.orbit((1.0, 1.3, 0.2), 14.0, lerp(-32, 8, smooth(u)), 12, fov=44)
+        fr = h.Frame(cam, fade=(8, 30))
+        frame_, pans, shovels = store()
+        kr = seg(t, ls(1) - 0.2, ls(1) + 2.2)
+        fr.lines(frame_, MID, 1.3, 0.8 * ks, glow=0.2, k=kr, stagger=0.3, tip=False, seed=1)
+        fr.lines(pans, WHITE, 1.3, 0.9 * ks, glow=0.5, k=seg(t, ls(1), ls(1) + 2.6), stagger=0.6, seed=2)
+        fr.lines(shovels, TURQ, 1.5, ks, glow=0.9, k=seg(t, ls(1) + 0.6, ls(1) + 2.8), stagger=0.4, seed=3)
+        c.saveLayer()
+        fr.draw(c, 0.8, 0.35)
+        fade_below(c, 1080, 1190)
+        c.restore()
+    # nine weeks, thirty-six thousand dollars
+    kc = ease(seg(t, ls(2) - 0.1, ls(2) + 0.4)) * (1 - ease(seg(t, ls(3) - 0.3, ls(3) + 0.2)))
+    if kc > 0:
+        kw = seg(t, ls(2) + 0.2, le(2) - 0.1)
+        c.drawRect(skia.Rect.MakeWH(W, H), mg.fill("#0E1013", 0.55 * kc))
+        v = int(round(36000 * smooth(kw) / 100.0) * 100)
+        centred(c, f"${v:,}", 900, 104, TURQ if kw >= 1 else WHITE, kc)
+        x0, y0, w, gap = 150, 990, 78, 12
+        for j in range(9):
+            kk = clamp(kw * 9 - j)
+            r = skia.Rect.MakeXYWH(x0 + j * (w + gap), y0, w, 16)
+            c.drawRoundRect(r, 4, 4, mg.stroke(MID, 1.2, 0.7 * kc))
+            if kk > 0:
+                c.drawRoundRect(skia.Rect.MakeXYWH(r.left(), r.top(), w * kk, 16), 4, 4, mg.fill(TURQ, 0.9 * kc))
+            h.mono(c, f"WK {j + 1}", r.centerX(), y0 + 44, 12, SOFT, 0.8 * kc, align="center")
+    # never dug: the one clean shovel
+    k3 = ease(seg(t, ls(3) + 0.05, ls(3) + 0.8))
+    if k3 > 0:
+        cam = h.orbit((0, 0.5, 0), 12.6, t * 24 % 360, 8, fov=40)
+        fr = h.Frame(cam, fade=(4, 20))
+        fr.lines(shovel(1.0), WHITE, 1.8, k3, glow=1.0, k=seg(t, ls(3), ls(3) + 1.2), stagger=0.2, seed=4)
+        fr.draw(c, 1.0, 0.45)
+        h.mono(c, "NEVER DUG", 540, 1150, 20, TURQ, k3, align="center", font=mg.MONO_M)
+    h.vignette(c, 0.5)
+
+
+# ================================================================ floor 1 · MECHANISM
+def fl_mechanism(c, t):
+    c.drawImage(h.ground("slate"), 0, 0)
+    L4 = first_of_floor(1)["i"]
+    L5, L6, L7, L8 = L4 + 1, L4 + 2, L4 + 3, L4 + 4
+    PX, PY = 540, 560
+    kgone = 1 - ease(seg(t, ls(L7) - 0.3, ls(L7) + 0.4))
+    kp = ease(seg(t, ls(L4) - 0.2, ls(L4) + 0.6)) * kgone
+    ksplit = ease(seg(t, le(L5) - 1.5, le(L5) - 0.5))
+    if kp > 0:
+        prize_node(c, PX, PY, lerp(34, 7, ksplit), kp)
+        if ksplit > 0:
+            rng = np.random.default_rng(11)
+            ang = rng.uniform(0, 6.283, 90)
+            rad = rng.uniform(30, 190, 90) * ksplit
+            for j in range(90):
+                c.drawCircle(PX + math.cos(ang[j]) * rad[j], PY + math.sin(ang[j]) * rad[j] * 0.7, 2.2, mg.fill(GLOW, kp * (1 - 0.6 * ksplit)))
+            h.mono(c, "÷ 1,000", PX + 210, PY + 12, 30, WHITE, kp * ksplit, font=mg.MONO_M)
+    # everyone runs for the same prize
+    ksw = ease(seg(t, ls(L5) - 0.3, ls(L5) + 0.3)) * kgone * (1 - 0.65 * ease(seg(t, ls(L6) - 0.2, ls(L6) + 0.5)))
+    if ksw > 0:
+        swarm(c, t, ls(L5) - 0.2, ls(L5) + 0.62 * (le(L5) - ls(L5)), 1000, 5, (PX, PY), ksw)
+    # but every one of them needs a pan: the gate, the counter
+    kg = ease(seg(t, ls(L6) - 0.1, ls(L6) + 0.5)) * kgone
+    if kg > 0:
+        GY = 930
+        c.drawLine(120, GY, 960, GY, mg.stroke(TURQ, 2.0, kg))
+        for j in range(9):
+            cx = 150 + j * 97
+            c.drawOval(skia.Rect.MakeXYWH(cx - 30, GY - 11, 60, 22), mg.stroke(WHITE, 1.6, kg))
+            c.drawOval(skia.Rect.MakeXYWH(cx - 18, GY - 6, 36, 12), mg.stroke(MID, 1.2, 0.8 * kg))
+        rng = np.random.default_rng(21)
+        n = 160
+        xs = rng.uniform(130, 950, n)
+        ph = rng.uniform(0, 1, n)
+        u = (t * 0.55 + ph) % 1.0
+        ys = lerp(1150, 720, u)
+        for q in range(n):
+            passed = ys[q] < GY
+            c.drawCircle(float(xs[q]), float(ys[q]), 3.2, mg.fill(TURQ if passed else WHITE, kg * (0.75 if passed else 0.5)))
+        kcnt = seg(t, ls(L6) + 0.2, le(L6))
+        h.mono(c, "PANS SOLD", 960, GY - 70, 16, SOFT, kg, align="right", font=mg.MONO_M)
+        h.mono(c, f"{int(1000 * smooth(kcnt)):,}", 960, GY - 30, 34, TURQ, kg, align="right", font=mg.MONO_M)
+        h.mono(c, "GOLD OR NO GOLD", 120, GY - 30, 16, WHITE, kg * ease(seg(t, le(L6) - 1.8, le(L6) - 1.2)), font=mg.MONO_M)
+    # the census, re-read
+    kc = ease(seg(t, ls(L7) - 0.1, ls(L7) + 0.6)) * (1 - ease(seg(t, ls(L8) - 0.2, ls(L8) + 0.3)))
+    if kc > 0:
+        for j, (yr, x) in enumerate(((1850, 130), (1852, 560))):
+            mg.glass(c, x, 470, 390, 560, 18, kc)
+            h.mono(c, f"CENSUS · {yr}", x + 28, 520, 18, TURQ, kc, font=mg.MONO_M)
+            rng = np.random.default_rng(40 + j)
+            for r in range(14):
+                yy = 570 + r * 32
+                c.drawLine(x + 28, yy + 8, x + 362, yy + 8, mg.stroke(MID, 1.0, 0.5 * kc))
+                xx = x + 34
+                for _ in range(rng.integers(3, 6)):
+                    wl = rng.uniform(26, 80)
+                    c.drawLine(xx, yy + 2, xx + wl, yy - 1, mg.stroke(WHITE, 1.4, 0.55 * kc))
+                    xx += wl + rng.uniform(10, 22)
+                    if xx > x + 330:
+                        break
+            ksc = seg(t, ls(L7) + 0.6 + j * 0.5, ls(L7) + 3.2 + j * 0.5)
+            if 0 < ksc < 1:
+                ys = lerp(560, 1010, ksc)
+                gl = mg.stroke(GLOW, 3, 0.8 * kc)
+                gl.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 4))
+                c.drawLine(x + 14, ys, x + 376, ys, gl)
+    # the finding: small or even zero / positive and large
+    kf = ease(seg(t, ls(L8) - 0.1, ls(L8) + 0.4))
+    if kf > 0:
+        base = 1090
+        k1 = ease(seg(t, ls(L8) + 0.3, ls(L8) + 1.0))
+        k2 = ease(seg(t, ls(L8) + 0.55 * (le(L8) - ls(L8)), ls(L8) + 0.55 * (le(L8) - ls(L8)) + 1.2), "o")
+        c.drawLine(140, base, 940, base, mg.stroke(MID, 1.4, kf))
+        c.drawRect(skia.Rect.MakeLTRB(230, base - 12 * k1, 370, base), mg.fill(WHITE, 0.9 * kf))
+        c.drawRect(skia.Rect.MakeLTRB(710, base - 400 * k2, 850, base), mg.fill(TURQ, 0.9 * kf))
+        h.mono(c, "MINERS", 300, base + 40, 18, WHITE, kf, align="center", font=mg.MONO_M)
+        h.mono(c, "EVERYONE ELSE", 780, base + 40, 18, TURQ, kf, align="center", font=mg.MONO_M)
+        h.mono(c, "SMALL OR EVEN ZERO", 300, base - 40, 18, WHITE, kf * k1, align="center", font=mg.MONO_M)
+        h.mono(c, "POSITIVE AND LARGE", 780, base - 400 * k2 - 26, 18, TURQ, kf * k2, align="center", font=mg.MONO_M)
+        h.mono(c, "THE PAPER'S WORDS · BARS NOT TO SCALE", 540, base + 76, 12, SOFT, 0.8 * kf, align="center")
+    h.vignette(c, 0.5)
+
+
+# ================================================================ floor 2 · YOU
+def fl_you(c, t):
+    c.drawImage(h.ground("slate"), 0, 0)
+    L9 = first_of_floor(2)["i"]
+    L10, L11 = L9 + 1, L9 + 2
+    k9 = ease(seg(t, ls(L9) - 0.2, ls(L9) + 0.5)) * (1 - ease(seg(t, ls(L10) - 0.2, ls(L10) + 0.4)))
+    if k9 > 0:
+        prize_node(c, 540, 560, 30, k9, "THE SAME GOLD")
+        swarm(c, t, ls(L9), le(L9) - 0.4, 700, 9, (540, 560), k9, col=WHITE)
+        for j, (w_, x) in enumerate((("APPS", 250), ("AGENTS", 540), ("STARTUPS", 830))):
+            tk = le(L9) - 2.1 + j * 0.7
+            kk = ease(seg(t, tk, tk + 0.35), "o") * k9
+            if kk > 0:
+                y = 800 + (j % 2) * 70
+                r = skia.Rect.MakeXYWH(x - 105, y - 34, 210, 52)
+                c.drawRoundRect(r, 10, 10, mg.fill("#0E1013", 0.8 * kk))
+                c.drawRoundRect(r, 10, 10, mg.stroke(TURQ, 1.4, kk))
+                h.mono(c, w_, x, y + 1, 22, WHITE, kk, align="center", font=mg.MONO_M)
+    # the takeaway's receipt
+    kr = ease(seg(t, ls(L10) + 0.1, ls(L10) + 0.7)) * (1 - ease(seg(t, ls(L11) - 0.2, ls(L11) + 0.4)))
+    if kr > 0:
+        x, y, w = 150, 450, 780
+        mg.glass(c, x, y, w, 470, 20, kr)
+        h.mono(c, "EXAMPLE ORDER · THE TAKEAWAY ROUND THE CORNER", x + 36, y + 56, 15, SOFT, kr, font=mg.MONO_M)
+        f = mg.font(mg.BODY_M, 34)
+        c.drawString("Food", x + 36, y + 140, f, mg.fill(WHITE, kr))
+        h.mono(c, "£20.00", x + w - 36, y + 140, 30, WHITE, kr, align="right", font=mg.MONO_M)
+        kcm = ease(seg(t, ls(L10) + 0.5 * (le(L10) - ls(L10)), ls(L10) + 0.5 * (le(L10) - ls(L10)) + 0.5))
+        if kcm > 0:
+            c.drawString("App commission · up to 30%", x + 36, y + 216, f, mg.fill(TURQ, kr * kcm))
+            h.mono(c, "−£6.00", x + w - 36, y + 216, 30, TURQ, kr * kcm, align="right", font=mg.MONO_M)
+        c.drawLine(x + 36, y + 262, x + w - 36, y + 262, mg.stroke(MID, 1.2, kr))
+        kk = ease(seg(t, le(L10) - 1.0, le(L10) - 0.4))
+        c.drawString("They keep", x + 36, y + 330, f, mg.fill(WHITE, kr))
+        h.mono(c, "£14.00" if kk > 0.5 else "£20.00", x + w - 36, y + 330, 38, WHITE, kr, align="right", font=mg.MONO_M)
+        bx, by, bw = x + 36, y + 390, w - 72
+        c.drawRoundRect(skia.Rect.MakeXYWH(bx, by, bw, 22), 6, 6, mg.stroke(MID, 1.2, kr))
+        c.drawRoundRect(skia.Rect.MakeXYWH(bx, by, bw * (1 - 0.3 * kcm), 22), 6, 6, mg.fill(WHITE, 0.85 * kr))
+        if kcm > 0:
+            c.drawRoundRect(skia.Rect.MakeXYWH(bx + bw * 0.7, by, bw * 0.3 * kcm, 22), 6, 6, mg.fill(TURQ, kr))
+    # the door
+    kd = ease(seg(t, ls(L11) - 0.1, ls(L11) + 0.5))
+    if kd > 0:
+        dx, dy, dw, dh = 390, 480, 300, 520
+        ko = smooth(seg(t, ls(L11) + 0.5 * (le(L11) - ls(L11)), le(L11) - 0.3))
+        if ko > 0:                                              # light spilling out as it opens
+            sp = skia.Path()
+            sp.moveTo(dx, dy + dh); sp.lineTo(dx + dw, dy + dh); sp.lineTo(dx + dw + 200 * ko, dy + dh + 110); sp.lineTo(dx - 200 * ko, dy + dh + 110); sp.close()
+            lp = mg.fill(GLOW, 0.22 * ko * kd)
+            lp.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 14))
+            c.drawPath(sp, lp)
+            c.drawRect(skia.Rect.MakeXYWH(dx, dy, dw, dh), mg.fill(GLOW, 0.10 * ko * kd))
+        c.drawRect(skia.Rect.MakeXYWH(dx - 14, dy - 14, dw + 28, dh + 14), mg.stroke(MID, 2.0, kd))
+        pw = dw * (1 - 0.78 * ko)
+        panel = skia.Path()
+        panel.moveTo(dx, dy); panel.lineTo(dx + pw, dy + 26 * ko); panel.lineTo(dx + pw, dy + dh - 26 * ko); panel.lineTo(dx, dy + dh); panel.close()
+        c.drawPath(panel, mg.fill("#15181C", 0.95 * kd))
+        c.drawPath(panel, mg.stroke(WHITE, 2.2, kd))
+        c.drawCircle(dx + pw - 30 * (1 - 0.7 * ko), dy + dh * 0.53, 7, mg.fill(TURQ, kd))
+        kl = ease(seg(t, le(L11) - 1.6, le(L11) - 0.9))
+        if kl > 0:
+            centred(c, "THE SHOVEL", 430, 40, TURQ, kl)
+            h.mono(c, "KNOW WHAT THE TOOLS CAN DO · WALK IN", 540, 1080, 18, WHITE, kl, align="center", font=mg.MONO_M)
+    h.vignette(c, 0.5)
+
+
+# ================================================================ floor 3 · IDEA
+_ROUTES = []
+
+
+def routes():
+    """Railway Mania: 72 proposed lines across a plane; every third one never gets built."""
+    if not _ROUTES:
+        rng = np.random.default_rng(1846)
+        for j in range(72):
+            p = np.array([rng.uniform(-14, 14), 0.0, rng.uniform(-44, 4)])
+            hd = rng.uniform(0, 2 * math.pi)
+            pts = [p.copy()]
+            for _ in range(rng.integers(10, 22)):
+                hd += rng.normal(0, 0.25)
+                p = p + np.array([math.cos(hd), 0, math.sin(hd)]) * 1.4
+                pts.append(p.copy())
+            _ROUTES.append(h.densify(np.array(pts), 0.5))
+    return _ROUTES
+
+
+def fl_idea(c, t):
+    c.drawImage(h.ground("graphite"), 0, 0)
+    L12 = first_of_floor(3)["i"]
+    L13, L14, L15, L16 = L12 + 1, L12 + 2, L12 + 3, L12 + 4
+    kt = ease(seg(t, ls(L13) - 0.4, ls(L13) + 0.6))
+    if kt > 0:
+        u = t - ls(L13)
+        cam = h.Cam((0, 9.0, 15.0 - 0.9 * u), (0, 0, -13.0 - 0.9 * u), fov=58)
+        fr = h.Frame(cam, fade=(6, 50))
+        R = routes()
+        unbuilt, built = R[0::3], [r for j, r in enumerate(R) if j % 3]
+        kr = seg(t, ls(L13) - 0.2, ls(L13) + 3.2)
+        ku = ease(seg(t, ls(L14) + 0.4, ls(L14) + 1.8))
+        kb = ease(seg(t, ls(L15) + 1.6, ls(L15) + 2.6))
+        dim = 1 - 0.7 * ease(seg(t, ls(L16) - 0.2, ls(L16) + 0.6))
+        fr.lines(unbuilt, MID if ku > 0.5 else WHITE, 1.3, kt * dim * (1 - 0.85 * ku), glow=0.2, k=kr, stagger=0.7, seed=5)
+        fr.lines(built, TURQ if kb > 0.5 else WHITE, 1.5, kt * dim, glow=0.3 + 0.7 * kb, k=kr, stagger=0.7, seed=6)
+        c.saveLayer()
+        fr.draw(c, 0.7 + 0.5 * kb, 0.3 + 0.3 * kb)
+        fade_below(c, 1020, 1170)
+        c.restore()
+    kx = seg(t, le(L14) - 0.9, le(L14) + 0.6)                  # the burst
+    if 0 < kx < 1:
+        r = 60 + 520 * ease(kx, "o")
+        c.drawCircle(540, 760, r, mg.stroke(WHITE, 3.0 * (1 - kx) + 0.5, 0.8 * (1 - kx)))
+        c.drawCircle(540, 760, r * 0.8, mg.stroke(TURQ, 1.5, 0.5 * (1 - kx)))
+    k6 = ease(seg(t, ls(L15) + 1.6, ls(L15) + 2.4)) * (1 - ease(seg(t, ls(L16) - 0.3, ls(L16) + 0.3)))
+    if k6 > 0:
+        h.mono(c, "THE INVESTORS LOST", 540, 520, 20, SOFT, k6, align="center", font=mg.MONO_M)
+        h.mono(c, "THE TRACKS STAYED", 540, 560, 26, TURQ, k6, align="center", font=mg.MONO_M)
+    # the layers: the prize, one layer below, the tracks
+    kl = ease(seg(t, ls(L16) - 0.1, ls(L16) + 0.5))
+    if kl > 0:
+        d = le(L16) - ls(L16)
+        slabs = [("THE PRIZE", "WHERE EVERYONE RUNS", 560, MID, ls(L16) + 0.2),
+                 ("ONE LAYER BELOW", "WHERE THE STEADY MONEY SITS", 760, TURQ, ls(L16) + 0.5 * d),
+                 ("THE TRACKS", "WHAT STAYS", 960, WHITE, ls(L16) + 0.18 * d)]
+        for title, sub, y, col, tk in slabs:
+            k = ease(seg(t, tk, tk + 0.5), "o") * kl
+            if k <= 0:
+                continue
+            flick = 0.55 + 0.45 * abs(math.sin(t * 13.0)) if title == "THE PRIZE" and t > ls(L16) + 1.0 else 1.0
+            sk = skia.Path()
+            x0, x1, dy = 200, 880, 34
+            sk.moveTo(x0 + 60, y - 70 + (1 - k) * 30); sk.lineTo(x1 + 60, y - 70 + (1 - k) * 30); sk.lineTo(x1 - 60, y + 30 + (1 - k) * 30); sk.lineTo(x0 - 60, y + 30 + (1 - k) * 30); sk.close()
+            c.drawPath(sk, mg.fill("#15181C", 0.85 * k))
+            if col is TURQ:
+                gp = mg.stroke(GLOW, 8, 0.35 * k)
+                gp.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 12))
+                c.drawPath(sk, gp)
+            c.drawPath(sk, mg.stroke(col, 2.0, k * flick))
+            h.mono(c, title, 540, y - 22 + (1 - k) * 30, 26, WHITE if col is MID else col, k * flick, align="center", font=mg.MONO_M)
+            h.mono(c, sub, 540, y + 10 + (1 - k) * 30, 14, SOFT, k * flick, align="center")
+    h.vignette(c, 0.5)
+
+
+# ================================================================ floor 4 · IMAGINE (the drop is shared)
+def dream_extras(c, t, kout):
+    Lg = DROP_LINE + 1
+    stamp = ease(seg(t, LAND + 0.4, LAND + 1.0)) * kout
+    if stamp > 0:
+        r = skia.Rect.MakeXYWH(300, 350, 480, 64)
+        p = mg.stroke(GLOW, 1.6, stamp); p.setPathEffect(skia.DashPathEffect.Make([7, 6], 0))
+        c.drawRoundRect(r, 10, 10, p)
+        h.mono(c, "IMAGINE · 2030 · NOT A FORECAST", 540, 392, 20, GLOW, stamp, align="center", font=mg.MONO_M)
+    d2 = le(Lg + 1) - ls(Lg + 1)
+    shops = [("CERTAINTY", "EVERY ANSWER CHECKED BY A PERSON", ls(Lg) + 0.4, 340),
+             ("AGENT REPAIR", "FOR THE ONES THAT GOT CONFUSED", ls(Lg + 1) + 0.2, 740),
+             ("MODEL TAILOR", "FITTED TO ONE FAMILY", ls(Lg + 1) + 0.5 * d2, 380)]
+    for j, (a1, a2, tk, x) in enumerate(shops):
+        kk = seg(t, tk, tk + 5.2)
+        if 0 < kk < 1:
+            a = math.sin(math.pi * kk) ** 0.7 * kout
+            y = lerp(1120, 560, kk)
+            shopfront(c, x, y, 520 if j == 0 else 480, 150, a1, a2, a)
+    qi = next(i for i, x in enumerate(L) if x.get("quiet"))
+    kq = ease(seg(t, ls(qi), ls(qi) + 0.6)) * kout * (1 - ease(seg(t, ls(qi + 1) + 0.4, ls(qi + 1) + 1.0)))
+    if kq > 0:
+        centred(c, "WHAT WILL THEY NEED", 720, 42, WHITE, kq)
+        centred(c, "THAT NOBODY'S SELLING?", 790, 42, TURQ, kq)
+    for j, s_ in enumerate(["PROBABLY BORING.", "SHOVELS ALWAYS ARE."]):
+        tk = ls(qi + 1) + (1.0 if j == 0 else 0.55 * (le(qi + 1) - ls(qi + 1)))
+        ka = ease(seg(t, tk, tk + 0.4)) * kout
+        if ka > 0:
+            centred(c, s_, 760 + j * 90, 40 if j else 34, GLOW if j else WHITE, ka)
+
+
+# ================================================================ floor 5 · SURFACE
+def fl_surface(c, t):
+    c.drawImage(h.ground("graphite"), 0, 0)
+    L21 = first_of_floor(5)["i"]
+    ka = ease(seg(t, ls(L21) + 0.3, ls(L21) + 1.2)) * (1 - ease(seg(t, ls(L21 + 1) - 0.6, ls(L21 + 1))))
+    if ka > 0:
+        mg.glass(c, 150, 520, 780, 360, 20, ka)
+        h.mono(c, "TONIGHT'S VERSION · YOUR SHOVEL LIST", 190, 580, 18, TURQ, ka, font=mg.MONO_M)
+        for j, s_ in enumerate(["1 · WALK PAST THREE SHOPS", "2 · ONE JOB EACH STILL DOES BY HAND", "3 · WRITE IT DOWN. THAT'S THE LIST."]):
+            kk = ease(seg(t, ls(L21) + 1.2 + j * 1.9, ls(L21) + 1.7 + j * 1.9))
+            c.drawString(s_, 190, 670 + j * 80, mg.font(mg.BODY_M, 29), mg.fill(WHITE, ka * kk))
+    # the mirrored close
+    for j, (l1, l2, col) in enumerate([("THEY SAW", "A GOLD RUSH.", WHITE), ("HE SAW", "A SUPPLY CHAIN.", TURQ)]):
+        li = L21 + 1 + j
+        kk = ease(seg(t, ls(li) + 0.05, ls(li) + 0.6))
+        if kk > 0:
+            y = 640 + j * 250
+            h.mono(c, l1, 540, y - 58, 24, SOFT if j == 0 else GLOW, kk, align="center", font=mg.MONO_M)
+            centred(c, l2, y + 10, 54, col, kk)
+    ke = ease(seg(t, le(L21 + 2) + 0.4, le(L21 + 2) + 1.2))
+    if ke > 0:
+        h.mono(c, "EP03 · THE SHOVEL SELLERS", 540, 1070, 20, WHITE, ke, align="center", font=mg.MONO_M)
+        for j, s_ in enumerate(SOURCES[:4]):
+            h.mono(c, s_[:86] + ("…" if len(s_) > 86 else ""), 540, 1600 + j * 22, 11, SOFT, 0.8 * ke, align="center")
+    h.vignette(c, 0.5)
+
+
+def build_cues():
+    CUES.clear()
+    d = 0.012
+    cue(0.25, "power_up", -10)
+    cue(ls(0) + 0.3, "form", -12)                              # the bottle
+    cue(ls(0) + 0.6, "chatter", -20, 0.2)
+    for f in range(1, 6):
+        cue(F_START[f] - 0.2, "hydraulic" if f < 4 else "servo", -12, -0.7)
+    for k in range(10):                                        # the shop assembles
+        cue(ls(1) + 0.1 + k * 0.26 + d, "tick_run", -20, -0.4 + 0.08 * k)
+    cue(ls(1) + 0.7, "servo", -15, 0.3)
+    for k in range(9):                                         # nine weeks
+        cue(ls(2) + 0.2 + (le(2) - 0.3 - ls(2)) * k / 9 + d, "thock", -13, -0.4 + 0.1 * k)
+    cue(le(2) - 0.1 + d, "latch", -9)
+    cue(ls(3) + 0.05, "thum", -11)
+    L4 = first_of_floor(1)["i"]
+    cue(ls(L4) - 0.2, "form", -12)
+    cue(ls(L4 + 1) - 0.2, "chatter", -15)
+    cue(ls(L4 + 1) + 0.2, "whoosh", -14, 0.0)
+    cue(le(L4 + 1) - 1.5, "glitch", -18)                       # the prize splits
+    cue(le(L4 + 1) - 1.4, "scan", -15, 0.2)
+    for k in range(16):                                        # pans sold
+        cue(ls(L4 + 2) + 0.2 + k * (le(L4 + 2) - ls(L4 + 2) - 0.3) / 16 + d, "tick_run", -21, 0.4)
+    cue(ls(L4 + 3) + 0.6, "scan", -14, -0.3)
+    cue(ls(L4 + 3) + 1.1, "scan", -16, 0.3)
+    cue(ls(L4 + 4) + 0.3 + d, "latch", -11, -0.3)
+    cue(ls(L4 + 4) + 0.55 * (le(L4 + 4) - ls(L4 + 4)) + d, "dock", -9, 0.3)
+    L9 = first_of_floor(2)["i"]
+    cue(ls(L9), "chatter", -16)
+    for j in range(3):
+        cue(le(L9) - 2.1 + j * 0.7 + d, "thock", -11, [-0.4, 0.0, 0.4][j])
+    cue(ls(L9 + 1) + 0.1, "form", -13)
+    cue(ls(L9 + 1) + 0.5 * (le(L9 + 1) - ls(L9 + 1)) + d, "relay", -10, 0.3)
+    cue(le(L9 + 1) - 0.9 + d, "latch", -10, 0.3)
+    cue(ls(L9 + 2) + 0.5 * (le(L9 + 2) - ls(L9 + 2)), "hydraulic", -14, 0.0)   # the door opens
+    cue(le(L9 + 2) - 1.6 + d, "confirm", -13)
+    L12 = first_of_floor(3)["i"]
+    cue(ls(L12 + 1) - 0.2, "form", -13)
+    for k in range(12):                                        # the lines get drawn
+        cue(ls(L12 + 1) + 0.1 + k * 0.25, "tick_run", -21, -0.5 + 0.09 * k)
+    cue(ls(L12 + 2) + 0.4, "servo", -15, -0.3)
+    cue(le(L12 + 2) - 0.9, "sub_drop", -8)                     # the burst
+    cue(ls(L12 + 3) + 1.6, "swell", -12)
+    d16 = le(L12 + 4) - ls(L12 + 4)
+    for j, tk in enumerate((ls(L12 + 4) + 0.2, ls(L12 + 4) + 0.18 * d16, ls(L12 + 4) + 0.5 * d16)):
+        cue(tk + d, "dock", -12 + j, [-0.3, 0.3, 0.0][j])
+    cue(FALL_T0 - 0.56, "vortex", -2)
+    cue(LAND + 0.4, "swell", -10)
+    cue(LAND + 0.5, "chatter", -16)
+    Lg = DROP_LINE + 1
+    d2 = le(Lg + 1) - ls(Lg + 1)
+    for j, tk in enumerate((ls(Lg) + 0.4, ls(Lg + 1) + 0.2, ls(Lg + 1) + 0.5 * d2)):
+        cue(tk, "whoosh", -18, [-0.4, 0.4, -0.2][j])
+    qi = next(i for i, x in enumerate(L) if x.get("quiet"))
+    cue(ls(qi + 1) + 1.0 + d, "thock", -11, -0.2)
+    cue(ls(qi + 1) + 0.55 * (le(qi + 1) - ls(qi + 1)) + d, "latch", -10, 0.2)
+    cue(F_START[5] - 0.3, "riser", -15)
+    L21 = first_of_floor(5)["i"]
+    for j in range(3):
+        cue(ls(L21) + 1.2 + j * 1.9 + d, "thock", -10)
+    for j in range(2):
+        cue(ls(L21 + 1 + j) + 0.05 + d, "latch", -9, [-0.2, 0.2][j])

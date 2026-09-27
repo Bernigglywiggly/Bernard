@@ -45,6 +45,23 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
 - Offline transcription works: sherpa-onnx + whisper base.en from GitHub releases
   (`k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-base.en.tar.bz2`).
 
+## Newest direction (27 Sep): Five by February
+- Plan page: https://claude.ai/artifact/8tVyExzYz4cXDneYtUSWxp (source `lab/plan/index.html`; db collections `picks`,
+  `lines` = the user's own punchlines per slot id a1..d2, `notes/ideas` = their channel ideas). Read these first next session.
+- **Deadline:** from 1 Feb 2027 new YPP applicants need 8,000 watch hours (or 20M Shorts views / 90 days); now 4,000 h or
+  10M. Channels already in keep their place. Goal: get channels over 4,000 h before then. Vertical <3 min = Shorts, whose
+  watch time doesn't count, so every channel needs a 16:9 long-form backbone.
+- **Policy:** since 16 Jul 2026 no ads for generic/templated AI content or AI personas on finance/legal/health; strong
+  swearing is fine (since Jul 2025) except in titles/thumbnails, and not constantly.
+- **Voice:** "the first British guy" = George (Kokoro bm_george); faster (samples at 0.92 / 1.02 / 1.10 in `lab/plan/media`).
+  Style: quick, eloquent, witty, swears where it lands; mark setups as [YOUR LINE] slots for the user's own jokes.
+  The user will also try their own voice through ElevenLabs Voice Changer (blocked here; they'll upload results).
+- **Next 5 (The Curve):** EP03 Shovel Sellers (new style), Robots "From Spandex Suit to Robot UFC" (user VO), agents
+  "Your Job's Night Shift", space compute, "Who's Human Here?". Channel 2 pilot: WW3 Survival Guide with the stickman.
+- **Stickman:** `lab/stickman/character.py` (rig + faces + chrome hat; `python3 character.py` → concept sheet). Never
+  use the real Trollface (copyrighted); we have our own smug face.
+- **Stack:** The Curve, the stickman channel, AI for small business, How It's Built, How They Make Money.
+
 ## What the user asked for (the previous round)
 - Video: clean, visually stable, addictive; digital cyber / ASCII / holographic detail; satisfying orchestrated layouts;
   not overstimulating, not bland, nothing tacky. **Camera may move** (orbits around exploded subjects, glides along

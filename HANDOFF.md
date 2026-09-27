@@ -61,6 +61,15 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
 - **Stickman:** `lab/stickman/character.py` (rig + faces + chrome hat; `python3 character.py` → concept sheet). Never
   use the real Trollface (copyrighted); we have our own smug face.
 - **Stack:** The Curve, the stickman channel, AI for small business, How It's Built, How They Make Money.
+- **Big Man (the stickman show, 27 Sep brain dump):** a god-powered goofball who can't die and never talks (the user
+  narrates, sometimes as him); signature move: he rips the frame like paper into the next scene; a flat white cartoon
+  inside real-looking backgrounds with real contact (shadows, occlusion, dust, shake); Tom and Jerry / Gen Z editing
+  (smash cuts, cut-off reactions, the giant fist, the aux-cable music switch). Tests: `lab/stickman/test_anim.py`,
+  `lab/stickman/gag_reel.py`. Guardrails: no famous songs (Content ID), no game assets, our own meme sounds, recreated
+  history (no real casualty footage). Blocked: full-size plates (Canva downloads are blocked here; the user uploads to
+  `lab/plates/` or allows export-download.canva.com + media.canva.com); ElevenLabs needs `ELEVENLABS_API_KEY` + api.elevenlabs.io.
+- **EP03 draft** (`lab/ep03/`): George at 1.02, new register, 7 slots (e2–e8) for the user's punchlines (plan page db
+  `lines/e*` → `build/slots.json` → re-voice). 3:35, so a normal video + TikTok; `build/EP03_short_cold_open.mp4` is the 40 s Short.
 
 ## What the user asked for (the previous round)
 - Video: clean, visually stable, addictive; digital cyber / ASCII / holographic detail; satisfying orchestrated layouts;

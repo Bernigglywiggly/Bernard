@@ -84,7 +84,8 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   and serious topics to it. The standalone bed is `lab/out/music/new/mainframe.mp3`.
 - **Voice:** `ELEVENLABS_API_KEY` still isn't set in this session; the user is adding it in the environment settings
   (a new session picks it up). Then: `cd lab && python3 tools/eleven_tts.py ep03s --speed 1.2`, `cd ep03s &&
-  python3 voice_build.py`, and build the full EP03 (task 29: the cold open exists; MECHANISM → SURFACE need visuals).
+  python3 voice_build.py`, and build the full EP03 (task 29: the cold open exists; MECHANISM → SURFACE need visuals;
+  the beat-by-beat plan is `lab/ep03s/FULL_PLAN.md`).
 - **Particles:** `ep03s.dust_at` is now fixed per-grain smooth paths (pour stream through the neck, fountain matched
   launch-order→landing, drift on the bank, left-to-right re-form); the Blender burst is a cork pop + fountain
   (`blender/cold_open.py`, `LINES_JSON=build/lines_blender.json` to render on the Blender timeline).

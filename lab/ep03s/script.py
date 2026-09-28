@@ -1,4 +1,9 @@
-"""EP03 · THE SHOVEL SELLERS, v3 (28 Sep, later): v2 plus funny units said straight. The user: the humour belongs in
+"""EP03 · THE SHOVEL SELLERS, v4 (28 Sep, latest): analogies wherever a number needs one (the user: "make use of
+analogies as much as possible"), out-of-the-ordinary where they fit: a million dollars a day since the Romans invaded
+Britain, what Nvidia takes in per second in Big Macs, a dollar sixty-five out for every dollar in, five railway
+companies a week, London to Tokyo in track. Still said straight (playbook rule 12, lab/format/units.py).
+
+v3 (28 Sep, later): v2 plus funny units said straight. The user: the humour belongs in
 the comparisons, not the dialogue (like the TikToks that weigh a tank round in Big Macs). So three numbers are also
 given in Big Macs ($6.22, The Economist, July 2026), read deadpan: the 1848 markup at today's prices, and Nvidia's
 takings against OpenAI's burn, per second. The lines around them stay as plain as before (playbook rule 12).
@@ -40,31 +45,35 @@ LINES = [
     dict(floor=2, id="now", air=1, text="Now look at 2026.", say="Now look at twenty twenty-six."),
     dict(floor=2, id="capex", card=("$725 BILLION", "AMAZON · MICROSOFT · ALPHABET · META · 2026 PLANS"),
          text="This year, Amazon, Microsoft, Alphabet and Meta plan to spend around seven hundred and twenty-five billion dollars, most of it on AI data centres."),
-    dict(floor=2, id="nvidia", card=("$96.2 BILLION", "NVIDIA · ONE QUARTER · 75% GROSS MARGIN"),
-         text="The company selling the chips inside them, Nvidia, took in ninety-six billion dollars in three months. Its gross margin: seventy-five per cent."),
+    dict(floor=2, id="rome", card=("$1M A DAY SINCE AD 43", "SPENT AT A MILLION A DAY · 1,985 YEARS"),
+         text="Spend a million dollars a day, every day since the Romans invaded Britain, and you'd only just have spent it."),
+    dict(floor=2, id="nvidia", card=("$96.2 BILLION", "NVIDIA · ONE QUARTER"),
+         text="The company selling the chips inside them, Nvidia, took in ninety-six billion dollars in three months."),
     dict(floor=2, id="nvidia_mac", card=("≈2,000 BIG MACS", "EVERY SECOND · FOR THREE MONTHS"),
-         text="That's twelve thousand dollars a second. About two thousand Big Macs, every second, for three months."),
+         text="That's about two thousand Big Macs, every second."),
+    dict(floor=2, id="margin", card=("75% GROSS MARGIN", "OF EVERY $4 · ABOUT $1 MAKES THE CHIPS"),
+         text="And of every four dollars, only about one goes on making the chips."),
     dict(floor=2, id="openai", card=("$5.7B IN · $3.7B OUT", "OPENAI · JAN–MAR 2026 · THE INFORMATION"),
          text="The best-known company doing the digging, OpenAI, took in five point seven billion in the first three months of the year, and burned through three point seven."),
-    dict(floor=2, id="openai_mac", card=("≈75 BIG MACS", "BURNED EVERY SECOND · JAN–MAR 2026"),
-         text="That's about seventy-five Big Macs a second."),
+    dict(floor=2, id="openai_mac", card=("$1.65 OUT · $1 IN", "OPENAI · JAN–MAR 2026 · ≈75 BIG MACS A SECOND"),
+         text="For every dollar it took in, it spent about a dollar sixty-five. The gap: about seventy-five Big Macs, every second."),
     dict(floor=2, id="fair", text="That doesn't make the diggers wrong. Some of them will find gold. But the supplier is paid first, whoever finds it."),
     # 3 · IDEA
     dict(floor=3, id="before", air=2, cut=True, text="It has happened before."),
     dict(floor=3, id="acts", card=("272 ACTS", "RAILWAY MANIA · PARLIAMENT, 1846"),
-         text="1846. Britain's railway mania. Parliament approves two hundred and seventy-two new railway companies in a single year.",
-         say="Eighteen forty-six. Britain's railway mania. Parliament approves two hundred and seventy-two new railway companies in a single year."),
+         text="1846. Britain's railway mania. Parliament approves two hundred and seventy-two new railway companies in a single year. More than five a week.",
+         say="Eighteen forty-six. Britain's railway mania. Parliament approves two hundred and seventy-two new railway companies in a single year. More than five a week."),
     dict(floor=3, id="third", card=("1/3 NEVER BUILT", "TRACK AUTHORISED 1844–47"),
          text="About a third of the track they authorised was never built. Then the bubble burst."),
     dict(floor=3, id="miles", card=("~6,000 MILES", "BRITAIN'S RAILWAYS BY 1850"),
-         text="Investors lost fortunes. But by 1850, Britain had about six thousand miles of railway.",
-         say="Investors lost fortunes. But by eighteen fifty, Britain had about six thousand miles of railway."),
+         text="Investors lost fortunes. But by 1850, Britain had about six thousand miles of railway. About London to Tokyo.",
+         say="Investors lost fortunes. But by eighteen fifty, Britain had about six thousand miles of railway. About London to Tokyo."),
     dict(floor=3, id="layers", text="The speculation disappears. The infrastructure stays."),
     # 4 · IMAGINE
     dict(floor=4, id="imagine", air=3, cut=True, text="So imagine it's 2030, and the build-out is finished.",
          say="So imagine it's twenty thirty, and the build-out is finished."),
     dict(floor=4, id="whatif", air=2, text="Not a forecast. A what-if."),
-    dict(floor=4, id="cheap", text="Intelligence is cheap, and everywhere, all the time."),
+    dict(floor=4, id="cheap", text="Intelligence is cheap, and everywhere, like tap water."),
     dict(floor=4, id="scarce", text="Then what becomes scarce? Electricity. Chips. Land and water to cool them."),
     dict(floor=4, id="trust", text="And something harder to manufacture: knowing which answer to trust."),
     dict(floor=4, id="question", air=1, text="In every rush, the question isn't where the gold is. It's what everyone looking for it will need."),
@@ -92,5 +101,10 @@ SOURCES = [
     "so $6.22 x 75 = $466.50",
     "Per second: Nvidia $96.2 billion over the 13 weeks to 26 July 2026 = about $12,200 a second = about 1,970 Big Macs; "
     "OpenAI's $3.7 billion burn over Jan-Mar 2026 (90 days) = about $476 a second = about 76 Big Macs (lab/format/units.py)",
+    "$725 billion at $1 million a day = 725,000 days = about 1,985 years, i.e. since about AD 41; the Roman invasion of "
+    "Britain was AD 43",
+    "Nvidia's 75% gross margin: cost of revenue is 25%, about $1 of every $4; OpenAI's spending = revenue + cash burn = "
+    "about $9.4 billion, about $1.65 for every $1 of revenue (a cash reading, so 'about')",
+    "Railway mania: 272 Acts in 1846 = 5.2 a week; London to Tokyo is about 9,560 km (5,940 miles) great-circle",
     "The 2030 section is a labelled what-if, not a forecast",
 ]

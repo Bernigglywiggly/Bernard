@@ -1,7 +1,7 @@
 # The Curve · format bible v2 (28 Sep 2026), from @pollar.news
 
 The user's call: Pollar is the core inspiration. Keep a solid, consistent look and sound, but the topic and the
-script are the main thing. No jokes in the lines (the humour lives in the comparisons: funny units, said
+script are the main thing. No jokes in the lines (the humour lives in the analogies: funny, exact comparisons, said
 straight). Straight into the facts, then curiosity and imagination. George (ElevenLabs),
 fast. Mostly ASCII with a touch of Blender realism. All six new beds, matched to each topic's tone.
 
@@ -35,7 +35,7 @@ fast. Mostly ASCII with a touch of Blender realism. All six new beds, matched to
 5. **Curiosity is the engine:** each line opens a question the next one closes. One clearly labelled IMAGINE
    (not a forecast, a what-if) stretches the viewer's imagination; it is never passed off as fact.
 6. **No jokes in the lines, no swearing, no hype words.** Short declarative sentences; fragments for the big beats.
-   The humour lives in the comparisons (rule 12), never in the phrasing.
+   The humour lives in the analogies (rule 12), never in the phrasing.
 7. **Fast:** George at ~1.15-1.2 speed (≈170-190 wpm), tight gaps, but a hard silence before each reveal.
 8. **Close quietly:** a mirrored pair of lines, then sources.
 9. **Look:** ASCII all the way (characters on black, turquoise accent, monospace chapter labels); Blender realism
@@ -48,12 +48,14 @@ fast. Mostly ASCII with a touch of Blender realism. All six new beds, matched to
     there is always one focal point; the key number big (at least 12 rows of characters tall); small monospace
     labels drawn crisp on top, never as characters.
 11. **Length:** 2:00-3:00 (long enough to count as long-form in 16:9 for watch hours; cut vertical for TikTok/Shorts).
-12. **Funny units, said straight (the user, 28 Sep):** like the TikToks that weigh a tank round in Big Macs. One
-    comparison per section in an absurd but exact unit, read deadpan by George ("About two thousand Big Macs, every
-    second.") and drawn on screen as the unit itself (an ASCII Big Mac, a counter). The Big Mac is the house unit
-    ($6.22, 580 kcal: one price, one calorie count, known everywhere); a contrasted pair counts as one comparison.
-    Exact to two figures, sourced, never at a person's expense; no wink or punchline word after it. Everything else
-    stays plain (a stack of notes, a ladder from your hand). Bank and calculator: `lab/format/units.py`.
+12. **Analogies, as many as it takes (the user, 28 Sep):** every big number gets something people can picture, and
+    the out-of-the-ordinary ones are the house style: what a missile *costs* in Big Macs (a Patriot interceptor, about
+    $4.2M, is about 680,000 Big Macs; the drone it's fired at, about 5,600), a million dollars a day since the Romans
+    invaded Britain, per second, per person on Earth, average UK houses, years of the median salary, notes stacked
+    past the space station. Mix the funny with the plain; use as many as the story needs, not one per section. Read
+    them straight: the humour is in the comparison, never in the phrasing (no wink, no punchline word). Exact to two
+    figures and sourced. The Big Mac ($6.22, The Economist, July 2026) is the house unit for money. Bank and
+    calculator: `lab/format/units.py` (`usd`, `gbp`, `item`).
 
 ## Music by topic tone (all six new beds are in use)
 The bed sits under the voice: steady, dark-topped, no lead melody, no busy drums (the user, 28 Sep: Terminal

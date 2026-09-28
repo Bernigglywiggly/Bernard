@@ -53,9 +53,11 @@ BPM = {"mainframe": 104.0, "low_orbit": 120.0, "night_drive": 108.0, "terminal":
 
 
 def build(out_path, marks, dur, anchors=None, bed="mainframe", bpm=None):
-    bar, lead = grid(anchors, bpm or BPM.get(bed, 104.0))
+    """bed: a name in beds.py, optionally with ":calm" (Night Drive's version cut for under a voice)."""
+    name, _, opt = bed.partition(":")
+    bar, lead = grid(anchors, bpm or BPM.get(name, 104.0))
     p = plan(marks, dur, bar, lead)
-    x = getattr(beds, bed)(240.0 / bar, p, lead)
+    x = getattr(beds, name)(240.0 / bar, p, lead, **({"calm": True} if opt == "calm" else {}))
     fx.save(out_path, np.asarray(x, np.float32), mp3=False)
     print(f"score: {bed} at {240.0 / bar:.2f} BPM, lead {lead:.2f}s, plan {p}")
     return out_path

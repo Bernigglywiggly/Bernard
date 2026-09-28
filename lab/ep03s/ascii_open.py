@@ -28,7 +28,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "music"))
 import relay as R  # noqa: E402
-from relay import S, ST, mg, skia, W, H, FPS, ASC, surface, plus, a_img, d_img, blend, cells_to_px  # noqa: E402
+from relay import S, ST, mg, skia, W, H, FPS, surface, plus, a_img, d_img, blend  # noqa: E402
 
 BUILD = S.BUILD
 DUR = S.ls("rule") + 2.4
@@ -53,53 +53,130 @@ EXTRA_SFX = [(SW1848, "scan", -18), (X2A + 0.3, "swell", -15), (UD3A - 0.05, "gl
              (SW36, "scan", -17), (X6A + 0.35, "swell", -16), (UD7A + 0.1, "glitch", -19), (TR - 0.12, "sub_drop", -13)]
 
 
-# ---------------------------------------------------------------- characters
+# ---------------------------------------------------------------- characters (v3: finer, true strokes, one clear focus)
+RAMP = " .,:;-=+*o%#@"                        # fills, from sparse to dense
+EDGE = "-\\|/"                                # outlines, by the stroke's angle on screen: 0, 45 (down-right), 90, 135
+
+
+class Grid:
+    """A character grid with its glyph atlas: a luminance ramp for fills plus four stroke glyphs for outlines."""
+
+    def __init__(self, cw, ch, font=mg.MONO_M):
+        self.cw, self.ch = cw, ch
+        self.cols, self.rows = W // cw, H // ch
+        f = mg.font(font, ch * 1.0)
+        glyphs = RAMP + EDGE
+        self.atlas = np.zeros((len(glyphs), ch, cw), np.float32)
+        for i, g in enumerate(glyphs):
+            sf = skia.Surface(cw, ch); c = sf.getCanvas(); c.clear(skia.ColorBLACK)
+            c.drawString(g, (cw - f.measureText(g)) / 2, ch * 0.8, f, skia.Paint(AntiAlias=True, Color=skia.ColorWHITE))
+            self.atlas[i] = sf.makeImageSnapshot().toarray()[:, :, 1] / 255.0
+        self.n_ramp = len(RAMP)
+
+
+G = Grid(8, 12)                                                  # 240 x 90 characters (was 192 x 72)
+NOISE2 = np.random.default_rng(4).random((G.rows, G.cols))
+S.E2.update(s=0.8, up=-275.0, label_y=345)                      # the $36,000 stays big over the street
+
+
+def cells_to_px(m):
+    return np.repeat(np.repeat(m, G.ch, 0), G.cw, 1)[..., None]
+
+
 def cells(arr, photo=0.0):
-    """A frame (BGRA array) → the character field: the line mapping (thin strokes light a cell) or the tonal one
-    (a lit surface becomes graded characters), blended by `photo`."""
+    """A frame (BGRA array) → (field, edge): the field is how lit each character is (the line mapping, where thin
+    strokes light a cell, or the tonal one for photographs, blended by `photo`); edge is the stroke direction where
+    the cell sits on a clear outline (0-3, else -1), from the structure tensor of the smoothed luminance, so
+    outlines are drawn with | / - \\ that follow the shape instead of blobs."""
+    from scipy.ndimage import gaussian_filter, sobel
     lum = (0.2126 * arr[..., 2] + 0.7152 * arr[..., 1] + 0.0722 * arr[..., 0]) / 255.0
-    L2 = lum[: ASC.rows * ASC.ch, : ASC.cols * ASC.cw].reshape(ASC.rows, ASC.ch, ASC.cols, ASC.cw)
+    L2 = lum[: G.rows * G.ch, : G.cols * G.cw].reshape(G.rows, G.ch, G.cols, G.cw)
     mean, mx = L2.mean(axis=(1, 3)), L2.max(axis=(1, 3))
-    line = np.clip((np.maximum(mean * 2.4, mx * 0.95) - 0.10) / 0.9, 0, 1) ** 0.75
-    if photo <= 0:
-        return line
-    tonal = np.clip((0.75 * mean + 0.25 * mx - 0.04) * 1.6, 0, 1) ** 0.9
-    return line * (1 - photo) + tonal * photo
+    fld = np.clip((np.maximum(mean * 2.4, mx * 0.95) - 0.10) / 0.9, 0, 1) ** 0.75
+    if photo > 0:
+        tonal = np.clip((0.75 * mean + 0.25 * mx - 0.04) * 1.6, 0, 1) ** 0.9
+        fld = fld * (1 - photo) + tonal * photo
+    sm = gaussian_filter(lum[::2, ::2], 1.0)
+    gx, gy = sobel(sm, 1), sobel(sm, 0)
+    h2, w2 = G.ch // 2, G.cw // 2
+    cs = lambda v: v[: G.rows * h2, : G.cols * w2].reshape(G.rows, h2, G.cols, w2).sum(axis=(1, 3))
+    jxx, jyy, jxy = cs(gx * gx), cs(gy * gy), cs(gx * gy)
+    tr = jxx + jyy + 1e-9
+    coh = np.sqrt((jxx - jyy) ** 2 + 4 * jxy ** 2) / tr
+    theta = 0.5 * np.degrees(np.arctan2(2 * jxy, jxx - jyy))       # the gradient's angle (y down)
+    b = np.round(((theta + 90) % 180) / 45).astype(int) % 4          # the stroke runs across it
+    strong = (coh > 0.55) & (np.sqrt(tr / (h2 * w2)) > 0.05) & (mean < 0.5) & (mx > 0.55)   # the line's core, not its glow
+    return fld, np.where(strong, b, -1)
 
 
-def chars(cell, t, boost=None, sea=1.0):
-    """The character layer (on black) from a field: strokes grow a character thick, the drifting sea underneath."""
-    cell = np.maximum(cell, maximum_filter(cell, size=3) * 0.45)
+def mix(a, b, u):
+    """Blend two (field, edge) pairs; each cell keeps the stroke of whichever source is brighter there."""
+    fa, fb = a[0] * (1 - u), b[0] * u
+    return fa + fb, np.where(fa >= fb, a[1], b[1])
+
+
+def brighter(a, b, ka=1.0):
+    fa = a[0] * ka
+    return np.maximum(fa, b[0]), np.where(fa >= b[0], a[1], b[1])
+
+
+def chars(fe, t, boost=None, sea=1.0):
+    """The character layer (on black) and the subject's field. The subject is drawn in bright white-cyan with true
+    strokes; the drifting sea is faint and cleared around the subject, so the eye has one place to go."""
+    from scipy.ndimage import distance_transform_edt
+    fld, edge = fe
+    fld = np.maximum(fld, maximum_filter(fld, size=3) * 0.28)
     if boost is not None:
-        cell = np.maximum(cell, boost)
+        fld = np.maximum(fld, boost)
+    subj = fld.copy()
     if sea > 0:
-        cell = np.maximum(cell, ST.sea(t, ASC.cols, ASC.rows) ** 1.6 * 0.30 * sea)
-    rgba = ASC.compose(cell, tint_lo=(18, 120, 112), tint_hi=(240, 244, 246))
-    return skia.Image.fromarray(rgba, colorType=skia.ColorType.kRGBA_8888_ColorType)
+        mask = fld > 0.14
+        d = distance_transform_edt(~mask) if mask.any() else np.full(fld.shape, 99.0)
+        fld = np.maximum(fld, ST.sea(t, G.cols, G.rows) ** 1.6 * 0.13 * sea * np.clip((d - 2) / 10, 0, 1))
+    fld = np.where(subj < 0.2, np.minimum(fld, np.maximum(subj - 0.12, 0) + (fld - subj).clip(0)), fld)   # halo → quiet
+    idx = np.clip((fld * (G.n_ramp - 1)).round().astype(int), 0, G.n_ramp - 1)
+    stroke = (edge >= 0) & (subj > 0.12)
+    idx = np.where(stroke, G.n_ramp + np.maximum(edge, 0), idx)
+    fld = np.where(stroke, np.maximum(fld, 0.9), fld)                                          # strokes at full light
+    tiles = G.atlas[idx]
+    img = tiles.transpose(0, 2, 1, 3).reshape(G.rows * G.ch, G.cols * G.cw)
+    lo, hi = np.array((16, 96, 90), np.float32), np.array((236, 246, 245), np.float32)
+    k = cells_to_px(np.clip(fld * 1.15, 0, 1) ** 1.1)
+    rgb = ((lo * (1 - k) + hi * k) * img[..., None]).clip(0, 255).astype(np.uint8)
+    out = np.zeros((H, W, 4), np.uint8)
+    out[: rgb.shape[0], : rgb.shape[1], :3] = rgb
+    out[: rgb.shape[0], : rgb.shape[1], 3] = (img * 255).astype(np.uint8)
+    return skia.Image.fromarray(out, colorType=skia.ColorType.kRGBA_8888_ColorType), subj
 
 
-def screen(layer):
-    """Characters on the dark ground with their soft glow."""
-    s = skia.Surface(W, H); c = s.getCanvas(); c.clear(skia.Color(8, 9, 11))
+def screen(layer, subj=None):
+    """Characters on the dark ground: a soft light behind the subject (from its field, so shapes read at a glance),
+    the characters, and a tight glow."""
+    sf = skia.Surface(W, H); c = sf.getCanvas(); c.clear(skia.Color(8, 9, 11))
+    if subj is not None and np.any(subj > 0.14):
+        g = (np.clip(subj, 0, 1) ** 1.5 * 255).astype(np.uint8)
+        rgba = np.stack([(g * 0.22).astype(np.uint8), (g * 0.78).astype(np.uint8), (g * 0.74).astype(np.uint8), g], -1)
+        small = skia.Image.fromarray(np.ascontiguousarray(rgba), colorType=skia.ColorType.kRGBA_8888_ColorType)
+        p = plus(0.32); p.setImageFilter(skia.ImageFilters.Blur(12, 12))
+        c.drawImageRect(small, skia.Rect.MakeWH(W, H), skia.SamplingOptions(skia.FilterMode.kLinear), p)
     c.drawImage(layer, 0, 0)
-    gp = plus(0.5); gp.setImageFilter(skia.ImageFilters.Blur(6, 6))
+    gp = plus(0.35); gp.setImageFilter(skia.ImageFilters.Blur(3.5, 3.5))
     c.drawImage(layer, 0, 0, skia.SamplingOptions(), gp)
-    return s.makeImageSnapshot()
+    return sf.makeImageSnapshot()
 
 
-def glint(k, cell, width=0.035):
+def glint(k, fld, width=0.035):
     """A diagonal band of bright characters sweeping left to right, only where there's something to light."""
-    yy, xx = np.mgrid[0:ASC.rows, 0:ASC.cols]
-    u = xx / ASC.cols + 0.35 * (yy / ASC.rows)
-    x0 = lerp(-0.2, 1.4, k)
-    return np.exp(-((u - x0) / width) ** 2) * 0.95 * (cell > 0.12)
+    yy, xx = np.mgrid[0:G.rows, 0:G.cols]
+    u = xx / G.cols + 0.35 * (yy / G.rows)
+    return np.exp(-((u - lerp(-0.2, 1.4, k)) / width) ** 2) * 0.95 * (fld > 0.12)
 
 
 def develop(k, cx, cy):
     """Per-cell photo mask, spreading out from (cx, cy), each cell fading over a few frames."""
-    yy, xx = np.mgrid[0:ASC.rows, 0:ASC.cols]
-    dist = np.hypot((xx + 0.5) * ASC.cw - cx, ((yy + 0.5) * ASC.ch - cy) * 1.4) / 1150
-    return np.clip((k * 1.35 - dist - 0.2 * R.NOISE2) / 0.12, 0, 1).astype(np.float32)
+    yy, xx = np.mgrid[0:G.rows, 0:G.cols]
+    dist = np.hypot((xx + 0.5) * G.cw - cx, ((yy + 0.5) * G.ch - cy) * 1.4) / 1150
+    return np.clip((k * 1.35 - dist - 0.2 * NOISE2) / 0.12, 0, 1).astype(np.float32)
 
 
 # ---------------------------------------------------------------- feedback on the characters (the one accent)
@@ -123,53 +200,73 @@ def fb_at(t, layer_fn):
     return out
 
 
+# ---------------------------------------------------------------- sources (small labels stay crisp, on top)
+def a_src(t, xf=None, lines_only=True):
+    """The line layer for the characters, without its small monospace labels (they'd turn to mush as characters):
+    untransformed frames queue them to be drawn crisp over the characters; transformed ones drop them."""
+    S.LABELS["mode"] = "collect" if xf is None else "skip"
+    try:
+        return a_img(t, xf, lines_only=lines_only)
+    finally:
+        S.LABELS["mode"] = "draw"
+
+
+def crisp_labels(c, t):
+    seen = set()
+    for s_, x, y, tt, t0, size, col, align, a in S.LABELS["queue"]:
+        if abs(tt - t) > 1e-6 or (s_, x, y) in seen:
+            continue
+        seen.add((s_, x, y))
+        S.label(c, s_, x, y, tt, t0, size, col, align, a)
+    S.LABELS["queue"].clear()
+
+
 # ---------------------------------------------------------------- the field at time t
 def field(t):
     """The character field for the ASCII parts, from whichever sources are live at t."""
     if t < X1B:                                                    # D's chrome 1848 in tonal characters + the traced lines
         cd = cells(d_img(t).toarray(), 1.0)
-        cl = cells(a_img(t, R.xf_1848(0.0), lines_only=True).toarray(), 0.0)
-        c = np.maximum(cd * 0.9, cl)
+        cl = cells(a_src(t, R.xf_1848(0.0)).toarray(), 0.0)
+        c = brighter(cd, cl, 0.9)
         if t >= X1A:                                               # hand over to the line characters (same framing)
-            u = ease(seg(t, X1A, X1B))
-            c = c * (1 - u) + cl * u
-        g = glint(seg(t, SW1848, SW1848 + 0.9), c) if SW1848 <= t < SW1848 + 0.9 else None
+            c = mix(c, cl, ease(seg(t, X1A, X1B)))
+        g = glint(seg(t, SW1848, SW1848 + 0.9), c[0]) if SW1848 <= t < SW1848 + 0.9 else None
         return c, g
     if t < X2A:                                                    # lines: the morph, the pour
-        return cells(a_img(t, R.xf_1848(ease(seg(t, P1A, P1B))), lines_only=True).toarray(), 0.0), None
+        return cells(a_src(t, R.xf_1848(ease(seg(t, P1A, P1B))) if t < P1B else None).toarray(), 0.0), None
     if t < X3A:                                                    # line bottle → the glass bottle, in characters
         w = ease(seg(t, X2A, X2B), "i")
         u = ease(seg(t, X2A + 0.1, X2B))
         cd = cells(d_img(t, R.xf_d_bottle(t)).toarray(), 1.0)
         if u >= 1:
             return cd, None
-        ca = cells(a_img(t, R.xf_bottle(w), lines_only=True).toarray(), 0.0)
-        return ca * (1 - u) + cd * u, None
+        ca = cells(a_src(t, R.xf_bottle(w) if w > 0 else None).toarray(), 0.0)
+        return mix(ca, cd, u), None
     if t < X3B:                                                    # the burst → the dust stream
         u = ease(seg(t, X3A, X3B))
         cd = cells(d_img(t).toarray(), 1.0)
-        return cd * (1 - u) + cells(a_img(t, lines_only=True).toarray(), 0.0) * u, None
+        return mix(cd, cells(a_src(t).toarray(), 0.0), u), None
     if t < X6A:                                                    # clean characters: store, $36,000, the street
-        c = cells(a_img(t, lines_only=True).toarray(), 0.0)
-        g = glint(seg(t, SW36, SW36 + 0.9), c) if SW36 <= t < SW36 + 0.9 else None
+        c = cells(a_src(t).toarray(), 0.0)
+        g = glint(seg(t, SW36, SW36 + 0.9), c[0]) if SW36 <= t < SW36 + 0.9 else None
         return c, g
     if t < X7A:                                                    # the dunes, in characters (tonal), matched grip to grip
         u = ease(seg(t, X6A, X6A + 0.5))
         cd = cells(d_img(t, R.xf_shovel(t)).toarray(), 1.0)
         if u >= 1:
             return cd, None
-        return cells(a_img(t, lines_only=True).toarray(), 0.0) * (1 - u) + cd * u, None
+        return mix(cells(a_src(t).toarray(), 0.0), cd, u), None
     u = ease(seg(t, X7A, X7B))                                     # into the grip, out into the prize
     cd = cells(d_img(t).toarray(), 1.0)
-    return cd * (1 - u) + cells(a_img(t, lines_only=True).toarray(), 0.0) * u, tunnel_and_prize(t)
+    return mix(cd, cells(a_src(t).toarray(), 0.0), u), tunnel_and_prize(t)
 
 
 def tunnel_and_prize(t):
     """ASCII-native ending: rings of bright characters rushing outward as we pass through the grip, then the prize
     as a glowing, pulsing orb of characters."""
-    yy, xx = np.mgrid[0:ASC.rows, 0:ASC.cols]
-    d = np.hypot((xx + 0.5) * ASC.cw - 960, ((yy + 0.5) * ASC.ch - 520) * 1.15)
-    b = np.zeros((ASC.rows, ASC.cols))
+    yy, xx = np.mgrid[0:G.rows, 0:G.cols]
+    d = np.hypot((xx + 0.5) * G.cw - 960, ((yy + 0.5) * G.ch - 520) * 1.15)
+    b = np.zeros((G.rows, G.cols))
     for k in (0.0, 0.11, 0.22):
         a0 = TR - 0.4 + k
         if a0 <= t < a0 + 0.5:
@@ -193,24 +290,26 @@ def photo_mask(t):
 
 
 def compose(t):
+    S.LABELS["queue"].clear()
     c, g = field(t)
     if FB_ON <= t < FB_OFF + 0.8:                                  # the one feedback accent: character trails
-        layer_fn = lambda tt: chars(field(tt)[0], tt, sea=0.0)
+        layer_fn = lambda tt: chars(field(tt)[0], tt, sea=0.0)[0]
         fb = fb_at(t, layer_fn)
         s = skia.Surface(W, H); cv = s.getCanvas(); cv.clear(skia.Color(8, 9, 11))
-        cv.drawImage(chars(np.zeros_like(c), t), 0, 0)             # the sea stays calm underneath
+        cv.drawImage(chars((np.zeros_like(c[0]), np.full(c[1].shape, -1)), t, sea=0.6)[0], 0, 0)   # a calm sea underneath
         cv.drawImage(fb, 0, 0, skia.SamplingOptions(), plus())
         gp = plus(0.45); gp.setImageFilter(skia.ImageFilters.Blur(6, 6))
         cv.drawImage(fb, 0, 0, skia.SamplingOptions(), gp)
         img = s.makeImageSnapshot()
     else:
-        img = screen(chars(c, t, g))
+        img = screen(*chars(c, t, g))
     m, xf = photo_mask(t)
     if m is not None:
         img = blend(img.toarray(), d_img(t, xf).toarray(), cells_to_px(m))
     s = skia.Surface(W, H); cv = s.getCanvas()
     cv.drawImage(img, 0, 0)
     cv.drawRect(skia.Rect.MakeWH(W, H), R.VIGNETTE)
+    crisp_labels(cv, t)
     S.furniture(cv)
     ST.captions(cv, t)
     return s.makeImageSnapshot()

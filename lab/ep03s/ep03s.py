@@ -212,7 +212,15 @@ def sample_on(polys, n, rng):
     return np.array(out)
 
 
+LABELS = {"mode": "draw", "queue": []}             # ascii_open collects the labels and draws them crisp on top
+
+
 def label(c, s, x, y, t, t0, size=20, col=SOFT, align="center", a=1.0):
+    if LABELS["mode"] == "skip":
+        return
+    if LABELS["mode"] == "collect":
+        LABELS["queue"].append((s, x, y, t, t0, size, col, align, a))
+        return
     mg.decode(c, s, x, y, mg.font(mg.MONO_M, size), col, t, t0, 0.5, seed=hash(s) % 97, align=align, a=a)
 
 
@@ -325,6 +333,7 @@ def dust_at(t):
 # ---------------------------------------------------------------- the frame
 GROUND = {}
 FURNITURE = {"label": True}                        # relay.py draws the label once, on top of every style
+E2 = {"s": 0.55, "up": -420.0, "label_y": 330}      # how far the $36,000 shrinks and rises over the street (ASCII: bigger)
 
 
 def frame(c, t):
@@ -378,7 +387,7 @@ def frame(c, t):
         ev(at("shop", 0.3), "form", t)
         ev(at("shop", 0.72), "latch", t, CX + 400)
         if t < t_36:
-            label(c, "SAM BRANNAN'S STORE · STOCKED FIRST", CX, 900, t, at("shop", 0.5), 20, SOFT)
+            label(c, "SAM BRANNAN'S STORE · STOCKED FIRST", CX, 832, t, at("shop", 0.5), 20, SOFT)
     # nine weeks, then the shop flows into $36,000
     S36 = segs(G36K)
     t_m36 = at("36k", 0.55)
@@ -391,7 +400,7 @@ def frame(c, t):
                 c.drawRect(skia.Rect.MakeXYWH(r[:, 0].min(), r[:, 1].min(), (r[:, 0].max() - r[:, 0].min()) * kk, 26), mg.fill(TURQ, 0.85))
                 ev(ls("36k") + 0.1 + j * (at("36k", 0.5) - ls("36k") - 0.1) / 9, "tick", t, r[:, 0].mean())
         if kw > 0:
-            label(c, "NINE WEEKS", CX, 912, t, ls("36k") + 0.2, 20, SOFT)
+            label(c, "NINE WEEKS", CX, 812, t, ls("36k") + 0.2, 20, SOFT)
         km = seg(t, t_m36, t_m36 + 1.0)
         if t < t_m36:
             draw_segs(c, S_SHOP, WHITE, 1.6, 0.9)
@@ -408,13 +417,13 @@ def frame(c, t):
     if te2 <= t < t_never + 1.2:
         up = ease(seg(t, te2 + 0.1, te2 + 0.8))
         c.save()
-        c.translate(CX, CY - 30); c.scale(lerp(1, 0.55, up), lerp(1, 0.55, up)); c.translate(-CX, -(CY - 30) + lerp(0, -420, up))
+        c.translate(CX, CY - 30); c.scale(lerp(1, E2["s"], up), lerp(1, E2["s"], up)); c.translate(-CX, -(CY - 30) + lerp(0, E2["up"], up))
         kfade = 1 - ease(seg(t, t_never, t_never + 0.5))
         c.saveLayerAlpha(None, int(255 * kfade))
         chrome_fill(c, P36K, 1.0)
         c.restore()
         c.restore()
-        label(c, "IN 1848 MONEY", CX, 330, t, te2 + 0.9, 20, SOFT, a=kfade)
+        label(c, "IN 1848 MONEY", CX, E2["label_y"], t, te2 + 0.9, 20, SOFT, a=kfade)
         SW = segs(sum(([w] for w in WEEKS), []), 360)
         SS = segs(STREET, 360)
         ks = seg(t, te2 + 0.6, te2 + 1.6)
@@ -435,7 +444,7 @@ def frame(c, t):
     if t_never <= t:
         k_in = seg(t, t_never, t_never + 1.0)
         # the $36,000 starts where it is on screen (shrunk and raised over the street), not at full size
-        g36 = [np.column_stack([CX + 0.55 * (q[:, 0] - CX), CY - 30 + 0.55 * (q[:, 1] - CY + 30 - 420)]) for q in G36K]
+        g36 = [np.column_stack([CX + E2["s"] * (q[:, 0] - CX), CY - 30 + E2["s"] * (q[:, 1] - CY + 30 + E2["up"])]) for q in G36K]
         src = segs(STREET + g36, N)
         dst = segs(BIG_SHOVEL, N)
         S, kk = morph_flow(src, dst, k_in)

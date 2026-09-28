@@ -39,7 +39,12 @@ fast. Mostly ASCII with a touch of Blender realism. All six new beds, matched to
 9. **Look:** ASCII all the way (characters on black, turquoise accent, monospace chapter labels); Blender realism
    only for the one or two objects that carry the story, developing out of the characters and back; one other accent
    at most (the feedback trails) per film. One visual system per film.
-10. **Length:** 2:00-3:00 (long enough to count as long-form in 16:9 for watch hours; cut vertical for TikTok/Shorts).
+10. **ASCII that reads (v3, 28 Sep):** a fine grid (8×12 px characters, 240×90); outlines drawn with stroke glyphs
+    (| / - \\) that follow each shape, dense fills (@ # %) for solids, faint glow cells dropped; the subject bright
+    white-cyan with a soft light behind it; the drifting background sea faint and cleared around the subject, so
+    there is always one focal point; the key number big (at least 12 rows of characters tall); small monospace
+    labels drawn crisp on top, never as characters.
+11. **Length:** 2:00-3:00 (long enough to count as long-form in 16:9 for watch hours; cut vertical for TikTok/Shorts).
 
 ## Music by topic tone (all six new beds are in use)
 | Bed | Tone | Use it for |

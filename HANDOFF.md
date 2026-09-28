@@ -82,10 +82,16 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   swells in b, booms at section changes, a soft taiko, no drum kit). The cold open is scored with it (v5.1:
   `python3 ascii_open.py mix` re-scores the rendered picture in about 2 minutes); the playbook and plan map EP03
   and serious topics to it. The standalone bed is `lab/out/music/new/mainframe.mp3`.
-- **Voice:** `ELEVENLABS_API_KEY` still isn't set in this session; the user is adding it in the environment settings
-  (a new session picks it up). Then: `cd lab && python3 tools/eleven_tts.py ep03s --speed 1.2`, `cd ep03s &&
-  python3 voice_build.py`, and build the full EP03 (task 29: the cold open exists; MECHANISM → SURFACE need visuals;
-  the beat-by-beat plan is `lab/ep03s/FULL_PLAN.md`).
+- **EP03 in full is built (28 Sep, v1, with a stand-in voice):** `ep03_body.py` draws everything after the cold open
+  in the same ASCII system (plan: `lab/ep03s/FULL_PLAN.md`); labels type on with a mechanical key per character
+  (`typeon.py` + `lab/sfx/detail.py`, ASMR-style thock); `mix_full.py` is the voice-first mix (voice about -14 LUFS
+  while talking, Mainframe ducked about 15 dB under it and up in the gaps, dips before each cut line, the detail
+  layer tucked under; master -14 LUFS, -1 dBTP). Output: `build/ep03_full.mp4` (1080p), about 3:07.
+  The voice in it is the local Kokoro stand-in (bm_george): the user signed in to ElevenLabs in their Chrome, which
+  a cloud session can't use; the key has to go in the environment settings.
+- **Swap in George (one command, in a new session once `ELEVENLABS_API_KEY` is set):**
+  `cd lab && python3 tools/eleven_tts.py ep03s --speed 1.2 && cd ep03s && python3 voice_build.py &&
+  EP03_FULL=1 python3 ascii_open.py full 4` (everything re-times from lines.json; about 25 minutes).
 - **Particles:** `ep03s.dust_at` is now fixed per-grain smooth paths (pour stream through the neck, fountain matched
   launch-order→landing, drift on the bank, left-to-right re-form); the Blender burst is a cork pop + fountain
   (`blender/cold_open.py`, `LINES_JSON=build/lines_blender.json` to render on the Blender timeline).

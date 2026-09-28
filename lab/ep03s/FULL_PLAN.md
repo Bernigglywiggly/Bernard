@@ -1,4 +1,4 @@
-# EP03 in full: the build plan (28 Sep)
+# EP03 in full: the build plan (28 Sep), built as v1 the same day
 
 The cold open is done (`ep03s.py` line art → `ascii_open.py` characters, ASCII v5.1). The rest of script v4
 (`script.py`, 34 lines, about 2:55) needs its visuals, in the same system: line art keyed by line id, turned into
@@ -21,3 +21,10 @@ analogy drawn as the thing itself.
 **Score (Mainframe, one bar grid for the film):** cold open as now (intro, a on "mind", b with the Big Mac, break
 on "never"); MECHANISM a; NOW b (brass for the money); "It has happened before." a boom into a break; IDEA a;
 IMAGINE break-like (strings and a filtered ostinato only); SURFACE b, then out. Hard dips before each `cut` line.
+
+**Built (v1, 28 Sep):** `ep03_body.py` (the table above, scene by scene), labels typed on with a key per character
+(`typeon.py`, `lab/sfx/detail.py`), the whole film rendered in parallel slices (`EP03_FULL=1 python3 ascii_open.py
+full 4`), and `mix_full.py`: the voice on top (de-essed), Mainframe about 15 dB under it while it talks and up in the
+gaps, a dip into every cut line, keys about 11 LU under the voice while text types, the other detail sounds (forms,
+morphs, latches, coins, paper, pops, links, ticks) around them; master -14 LUFS, -1 dBTP. The voice is the Kokoro
+stand-in until the ElevenLabs key is in the environment; the swap is the one command in HANDOFF.md.

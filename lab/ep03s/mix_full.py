@@ -3,7 +3,7 @@ under the picture. The user: "background music not too loud", "the voice whateve
 detail sound effects", mechanical-keyboard keys where text types on ("the really satisfying ones people use for
 ASMR"), "but don't force it".
 
-  voice   build/voice.wav as voice_build.py made it (chained, a small room), about -16 LUFS while talking
+  voice   build/voice.wav as voice_build.py made it (chained, a small room), de-essed, on top
   music   Mainframe re-cut to the floors (ascii_open.score_full), ducked about 11 dB whenever the voice talks and
           breathing back up in the gaps; a hard dip into every "cut" line (the silence before a reveal)
   detail  the picture's own events (forms, morphs, latches, coins, paper, pops, links, ticks...), one mechanical key
@@ -32,11 +32,11 @@ SR = fx.SR
 BUILD = os.path.join(HERE, "build")
 SFX = os.path.join(HERE, "..", "out", "sfx")
 # event kind -> (sound, gain dB); the files are peak-normalised, so these are the relative levels
-MAP = {"form": ("form", -19), "morph": ("whoosh", -21), "whoosh": ("whoosh", -21), "glint": ("scan", -24),
-       "scan": ("scan", -24), "latch": ("latch", -18), "thock": ("thock", -15), "zoom": ("riser", -22),
-       "confirm": ("confirm", -20), "coin": ("coin", -17), "paper": ("paper", -17), "pop": ("pop", -18),
-       "link": ("link", -16), "grains": ("grains", -21), "tick": ("tick", -21)}
-KEY_DB = -19.0                     # a mechanical key per typed character
+MAP = {"form": ("form", -13), "morph": ("whoosh", -15), "whoosh": ("whoosh", -15), "glint": ("scan", -18),
+       "scan": ("scan", -18), "latch": ("latch", -12), "thock": ("thock", -9), "zoom": ("riser", -16),
+       "confirm": ("confirm", -14), "coin": ("coin", -11), "paper": ("paper", -11), "pop": ("pop", -12),
+       "link": ("link", -10), "grains": ("grains", -15), "tick": ("tick", -15)}
+KEY_DB = -11.0                     # a mechanical key per typed character: heard, about 11 LU under the voice
 DUCK_MUSIC, DUCK_SFX = -12.5, -4.0
 
 
@@ -59,6 +59,20 @@ def place(dst, x, at, gain_db=0.0, pan=0.0):
         x, i = x[-i:], 0
     j = min(len(dst), i + len(x))
     dst[i:j] += x[: j - i] * fx.db(gain_db)
+
+
+def deess(v, xover=5200.0, thresh=0.32, max_db=-9.0):
+    """A split-band de-esser: the band above ~5 kHz is turned down only while it outweighs the rest (the "s" sounds),
+    by up to 9 dB, so a bright TTS voice stops hissing and a warm one is left alone. Linkwitz-Riley split (sums flat)."""
+    lp = lambda x: fx.bq(fx.bq(x, "lp", xover, q=0.7071), "lp", xover, q=0.7071)
+    hp = lambda x: fx.bq(fx.bq(x, "hp", xover, q=0.7071), "hp", xover, q=0.7071)
+    lo, hi = lp(v), hp(v)
+    m = lambda x: np.sqrt(np.convolve((x.mean(1) if x.ndim == 2 else x) ** 2, np.ones(240) / 240, mode="same")) + 1e-7
+    r = m(hi) / m(v)
+    g_db = np.clip((r - thresh) / thresh, 0, 1) * max_db
+    k = int(0.004 * SR)                                                 # smooth the gain a little (4 ms)
+    g_db = np.convolve(g_db, np.ones(k) / k, mode="same")
+    return (lo + hi * fx.db(g_db)[:, None]).astype(np.float32)
 
 
 def talking(lines, n):
@@ -93,7 +107,7 @@ def main(bed_path=os.path.join(BUILD, "full_bed.wav"), out_name="ep03_full_mix.w
     n = int(total * SR)
     fit = lambda y: np.pad(y, ((0, max(0, n - len(y))), (0, 0)))[:n]
 
-    voice = fit(fx.load(os.path.join(BUILD, "voice.wav")))
+    voice = fit(deess(fx.load(os.path.join(BUILD, "voice.wav"))))
     music = fit(fx.load(bed_path))
     music = music * fx.db(-19.0 - fx.lufs(music))
     tk = talking(lines, n)

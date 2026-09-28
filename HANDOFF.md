@@ -86,6 +86,12 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   love/mix picks (db `picks`: `stylelove`, `stylemix`). Build the rest of EP03 in whichever style wins.
 - **Decided (27 Sep): ASCII all the way.** One focused style: ASCII (style B) as the channel look, a little Blender
   realism for the big physical objects, the other looks (line morph, feedback) only as rare accents.
+  v1 of the look: `lab/ep03s/ascii_open.py` → `build/style_S_ascii.mp4` (Curve Lab card "S · The decided look").
+  Grammar: line sources → characters (line mapping); Blender renders → tonal characters; the real Blender image only
+  where the characters DEVELOP into it (the bottle of gold, the lone shovel) and break back; one feedback accent
+  (character trails) for the frenzy; glints of bright characters over chrome; the prize as an orb of characters.
+  Scored with Terminal re-cut so bar lines land on spoken lines (`beds.terminal(bpm, plan, lead)`). Pick: db
+  `picks` → `asciilook`. Next: build all of EP03 this way (task: EP03 in ASCII), then the backlog.
 - **Music (27 Sep): the jungle is scrapped.** `lab/music/beds.py` renders six new beds (terminal, tape_loop,
   night_drive, low_orbit, two_step, chrome_marl) → `lab/out/music/new/`; `lab/music/analyse.py` checks tonal balance,
   loudness arc, width and clicks (nobody can listen from the cloud). The user liked some *original* music: the A01

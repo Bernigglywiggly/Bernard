@@ -476,11 +476,16 @@ def balance(song, targets, glue=True, pocket=True, sidechain=None, hpf=None, dyn
 
 
 # ================================================================ 1 · TERMINAL (glitch / IDM, 96 BPM)
-def terminal():
-    s = Song(96, 28, swing=0.08, seed=11)
+def terminal(bpm=96, plan=None, lead=0.0):
+    """plan: the sections in bars (the default is the 70-second preview); lead: seconds of silence before bar 0,
+    so a cut can put a bar line exactly on a spoken line."""
+    plan = plan or [("intro", 4), ("a", 8), ("b", 8), ("break", 4), ("out", 4)]
+    s = Song(bpm, sum(b for _, b in plan), swing=0.08, seed=11)
     rng = s.rng
     prog = [(38, "m9"), (34, "maj7#11"), (31, "m9"), (33, "7sus4")]          # Dm9  Bbmaj7#11  Gm9  A7sus4
-    sec = sections(s, [("intro", 4), ("a", 8), ("b", 8), ("break", 4), ("out", 4)])
+    sec = sections(s, plan)
+    n_intro = sum(1 for x in sec if x == "intro")
+    first_break = sec.index("break") if "break" in sec else None
     arp_shape = [0, 2, 4, 1, 3, 5, 2, 4, 6, 3, 5, 2, 4, 1, 3, 0]
     for b in range(s.bars):
         root, q = prog[b % 4]
@@ -521,10 +526,11 @@ def terminal():
     for k in range(int(s.dur * 5)):
         t0 = rng.uniform(0, s.dur)
         s.put("chatter", grain(rng, 0.006), t0, pan=rng.uniform(-1, 1), gain=rng.uniform(0.2, 0.6))
-    s.put("fx", riser(s.bar * 2, 400, 7000), s.at(18))
+    if first_break and first_break >= 2:
+        s.put("fx", riser(s.bar * 2, 400, 7000), s.at(first_break - 2))
     # processing
     s.stems["arp"] = reverb(pingpong(s.stems["arp"], s.step * 3, 0.42, 6, 0.45, 5000), 0.55, 0.22, 0.6)
-    cut = lambda t: 500 + 3200 * np.clip((t - 4 * s.bar) / (8 * s.bar), 0, 1) * (1 - 0.6 * (sec[min(s.bars - 1, int(t / s.bar))] == "break"))
+    cut = lambda t: 500 + 3200 * np.clip((t - n_intro * s.bar) / (8 * s.bar), 0, 1) * (1 - 0.6 * (sec[min(s.bars - 1, int(t / s.bar))] == "break"))
     s.stems["pad"] = reverb(pb(ladder(s.stems["pad"], cut, 0.22), Chorus(rate_hz=0.3, depth=0.25, mix=0.4)), 0.85, 0.35, 0.5)
     s.stems["crush"] = fx.bq(pb(s.stems["crush"], Bitcrush(bit_depth=6)), "lp", 8000)
     s.stems["glitch"] = fx.bq(pb(s.stems["glitch"], Bitcrush(bit_depth=8)), "lp", 9000)
@@ -534,7 +540,8 @@ def terminal():
                       "chatter": -41, "fx": -31},
                   sidechain={"pad": (0.35, 0.2), "sub": (0.55, 0.14), "arp": (0.15, 0.12)}, hpf={"pad": 170, "arp": 240},
                   dyn=(sec, {"intro": -3, "a": -1, "b": 0, "break": -3, "out": (-2, -4)}))
-    return fx.master(fx.bq(mix, "peak", 380, q=0.8, gain_db=-2.5), target=-14.0)
+    mix = fx.master(fx.bq(mix, "peak", 380, q=0.8, gain_db=-2.5), target=-14.0)
+    return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
 
 
 # ================================================================ 2 · TAPE LOOP (lo-fi hip hop, 84 BPM)

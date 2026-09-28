@@ -34,14 +34,15 @@ def bed(total, fresh=True):
     return y[: int(total * fx.SR)]
 
 
-def build_mix(extra=(), out_name="open_mix.wav", fresh_bed=True):
-    """The bed + the picture's events + `extra` hits [(seconds, sfx name, gain dB)], mastered."""
+def build_mix(extra=(), out_name="open_mix.wav", fresh_bed=True, bed_path=None, bed_lufs=-18.0):
+    """The bed + the picture's events + `extra` hits [(seconds, sfx name, gain dB)], mastered. bed_path: use that
+    music file instead of the jungle bed."""
     ev = json.load(open(os.path.join(BUILD, "events.json")))
     total = ev["dur"]
     n = int(total * fx.SR)
-    music = bed(total, fresh_bed)
+    music = fx.load(bed_path)[: n] if bed_path else bed(total, fresh_bed)
     music = np.pad(music, ((0, max(0, n - len(music))), (0, 0)))[:n]
-    music *= fx.db(-18.0 - fx.lufs(music))
+    music *= fx.db(bed_lufs - fx.lufs(music))
     sfx = np.zeros((n, 2), np.float32)
     seen, cache = set(), {}
     for at, kind, pan in ev["events"]:

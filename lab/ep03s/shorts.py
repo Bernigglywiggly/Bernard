@@ -155,12 +155,14 @@ def frame(src, t, clip, t0, t1, chs):
     s = skia.Surface(W, H)
     c = s.getCanvas()
     c.clear(skia.Color(6, 7, 9))
-    bg = skia.Paint()                                            # a blurred, dark glow of the film behind it all
-    bg.setImageFilter(skia.ImageFilters.Blur(38, 38))
-    bw = H * SW / SH
-    c.save(); c.translate(W / 2 - bw / 2, 0)
-    c.drawImageRect(src, skia.Rect.MakeWH(bw, H), skia.SamplingOptions(skia.FilterMode.kLinear), bg)
-    c.restore()
+    k = 8                                                        # a blurred, dark glow of the film behind it all,
+    sm = skia.Surface(W // k, H // k)                            # blurred small and scaled up (the same look, far quicker)
+    sc = sm.getCanvas(); sc.clear(skia.Color(6, 7, 9))
+    bw = (H // k) * SW / SH
+    bg = skia.Paint(); bg.setImageFilter(skia.ImageFilters.Blur(38 / k, 38 / k))
+    sc.translate((W // k) / 2 - bw / 2, 0)
+    sc.drawImageRect(src, skia.Rect.MakeWH(bw, H // k), skia.SamplingOptions(skia.FilterMode.kLinear), bg)
+    c.drawImageRect(sm.makeImageSnapshot(), skia.Rect.MakeWH(W, H), skia.SamplingOptions(skia.FilterMode.kLinear))
     c.drawRect(skia.Rect.MakeWH(W, H), mg.fill("#050607", 0.62))
     x, y, w, h = CROP                                            # the film
     c.drawImageRect(src, skia.Rect.MakeXYWH(x, y, w, h), skia.Rect.MakeXYWH(0, FILM_Y, W, FILM_H),

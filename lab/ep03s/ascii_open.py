@@ -17,6 +17,8 @@ re-cut so the pulse arrives on "Within weeks the town empties", the brass with t
     python3 ascii_open.py still 2 9.6 13 ...   # build/ascii_still_*.png + build/ascii_sheet.jpg
     python3 ascii_open.py render               # build/style_S_ascii.mp4
     python3 ascii_open.py mix                  # the same picture, a fresh score and mix
+    EP03_FULL=1 python3 ascii_open.py full 4   # the whole episode: 4 parallel slices, then events, score, mix
+    EP03_FULL=1 python3 ascii_open.py sound_full   # just the sound again, onto build/ep03_full_silent.mp4
 """
 import math
 import os
@@ -31,9 +33,17 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "music"))
 import relay as R  # noqa: E402
 from relay import S, ST, mg, skia, W, H, FPS, surface, plus, a_img, d_img, blend  # noqa: E402
+import typeon as TO  # noqa: E402
 
 BUILD = S.BUILD
-DUR = S.ls("rule") + 2.4
+FULL = os.environ.get("EP03_FULL") == "1"                        # the whole episode, not just the cold open
+T_BODY = S.ls("census") if "census" in S.IDS else 1e9
+if FULL:
+    import ep03_body
+    DUR = ep03_body.end_time()
+    ST.DUR = DUR                                                  # captions run to the end
+else:
+    DUR = S.ls("rule") + 2.4
 ease, seg, lerp = mg.ease, mg.seg, mg.lerp
 
 TB, TM, TSH, TN, TR = S.ls("bottle"), S.ls("mind"), S.ls("shop"), S.ls("never"), S.ls("rule")
@@ -222,12 +232,35 @@ def a_src(t, xf=None, lines_only=True):
 
 def crisp_labels(c, t):
     seen = set()
-    for s_, x, y, tt, t0, size, col, align, a in S.LABELS["queue"]:
+    for item in S.LABELS["queue"]:
+        s_, x, y, tt, t0, size, col, align, a = item[:9]
+        cps = item[9] if len(item) > 9 else None
         if abs(tt - t) > 1e-6 or (s_, x, y) in seen:
             continue
         seen.add((s_, x, y))
-        S.label(c, s_, x, y, tt, t0, size, col, align, a)
+        typed(c, s_, x, y, t, t0, size, col, align, a, cps)
     S.LABELS["queue"].clear()
+
+
+def typed(c, s_, x, y, t, t0, size, col, align, a, cps=None):
+    """A label typed on, one character per keystroke (typeon.schedule, which the mix plays a key for), with a block
+    cursor while it types and a moment after. t0 < 0: shown whole (a live counter)."""
+    if a <= 0.01:
+        return
+    f = mg.font(mg.MONO_M, size)
+    w = f.measureText(s_)
+    x0 = x - w / 2 if align == "center" else x - w if align == "right" else x
+    if t0 < 0:
+        c.drawString(s_, x0, y, f, mg.fill(col, a))
+        return
+    sched = TO.schedule(s_, t0, cps or TO.CPS)
+    n = int(np.searchsorted(sched, t, side="right"))
+    if n == 0:
+        return
+    c.drawString(s_[:n], x0, y, f, mg.fill(col, a))
+    if t < sched[-1] + 0.45 and (n < len(s_) or (t - sched[-1]) % 0.3 < 0.18):
+        cx_ = x0 + f.measureText(s_[:n]) + 2
+        c.drawRect(skia.Rect.MakeXYWH(cx_, y - size * 0.78, size * 0.56, size * 0.94), mg.fill(col, 0.75 * a))
 
 
 # ---------------------------------------------------------------- the field at time t
@@ -265,6 +298,8 @@ def field(t):
         if u >= 1:
             return cd, None
         return mix(cells(a_src(t).toarray(), 0.0), cd, u), None
+    if t >= X7B + 0.3:                                             # past the grip: line art only (the body too)
+        return cells(a_src(t).toarray(), 0.0), (tunnel_and_prize(t) if t < T_BODY + 0.7 else None)
     u = ease(seg(t, X7A, X7B))                                     # into the grip, out into the prize
     cd = cells(d_img(t).toarray(), 1.0)
     return mix(cd, cells(a_src(t).toarray(), 0.0), u), tunnel_and_prize(t)
@@ -283,7 +318,8 @@ def tunnel_and_prize(t):
             b = np.maximum(b, np.exp(-((d - r) / (14 + 0.05 * r)) ** 2) * 0.9 * (1 - 0.6 * seg(t, a0, a0 + 0.5)))
     if t >= TR - 0.05:
         r = 14 + 60 * ease(seg(t, TR, TR + 0.6), "o") + 5 * math.sin((t - TR) * 5)
-        b = np.maximum(b, np.exp(-2 * (d / r) ** 2) * 0.95 + np.exp(-(d / (r * 2.6)) ** 2) * 0.35)
+        k = 1 - ease(seg(t, T_BODY - 0.1, T_BODY + 0.6))            # the prize hands over to the body
+        b = np.maximum(b, (np.exp(-2 * (d / r) ** 2) * 0.95 + np.exp(-(d / (r * 2.6)) ** 2) * 0.35) * k)
     return b
 
 
@@ -342,17 +378,67 @@ def score():
     return path
 
 
+def score_full():
+    """Mainframe for the whole episode, on one bar grid (the cold open's, near 104 BPM), its sections following the
+    floors: the cold open as before; MECHANISM a; NOW b (brass for the money); a break for "It has happened before";
+    IDEA a; IMAGINE a long break (strings, cello and sub only, the ostinato gone); SURFACE b; the sources out."""
+    import beds
+    import audio_fx as fx
+    n = max(4, round((TN - TM) / (240.0 / 104)))
+    bar = (TN - TM) / n
+    bpm = 240.0 / bar
+    n_intro = int(TM // bar)
+    lead = TM - n_intro * bar
+    t_big = S.ls("markup") if "markup" in S.IDS else S.ls("36k")
+    edges_ = [(TM, "intro"), (TM + round((t_big - TM) / bar) * bar - 0.01, "a"), (TN - 0.01, "b"), (S.ls("census") - 0.4, "break"),
+              (S.ls("now") - 0.4, "a"), (S.ls("before") - 0.4, "b"), (S.ls("acts") - 0.4, "break"), (S.ls("imagine") - 0.4, "a"),
+              (S.ls("rush") - 0.4, "break"), (S.L[-1]["end"] + 1.0, "b"), (1e9, "out")]
+    total = int(math.ceil((DUR - lead) / bar)) + 1
+    names = []
+    for b in range(total):
+        tb = lead + (b + 0.25) * bar
+        names.append(next(nm for te, nm in edges_ if tb < te))
+    plan = []
+    for nm in names:
+        if plan and plan[-1][0] == nm:
+            plan[-1][1] += 1
+        else:
+            plan.append([nm, 1])
+    x = beds.mainframe(bpm, [tuple(p) for p in plan], lead)
+    path = os.path.join(BUILD, "full_bed.wav")
+    fx.save(path, x.astype(np.float32), mp3=False)
+    print(f"score: Mainframe at {bpm:.2f} BPM, lead {lead:.2f}s, plan {[tuple(p) for p in plan]}")
+    return path
+
+
 def collect_events():
     """The picture's sound cues (forms, morphs, ticks, latches...) on the current timeline, at 30 fps as ep03s
-    records them, into build/events.json for the mix."""
+    records them, and every label that types on (with its keystroke times, from typeon), into build/events.json."""
     import json
     S.EVENTS.clear()
     surf = skia.Surface(W, H)
-    for i in range(int(DUR * S.FPS)):
-        c = surf.getCanvas(); c.clear(skia.ColorBLACK)
-        S.frame(c, i / S.FPS)
-    json.dump(dict(events=S.EVENTS, dur=DUR), open(os.path.join(BUILD, "events.json"), "w"))
-    print(len(S.EVENTS), "events")
+    typed_, seen = [], {}
+    S.LABELS["mode"] = "collect"
+    try:
+        for i in range(int(DUR * S.FPS)):
+            t = i / S.FPS
+            S.LABELS["queue"].clear()
+            c = surf.getCanvas(); c.clear(skia.ColorBLACK)
+            S.frame(c, t)
+            for item in S.LABELS["queue"]:
+                s_, x, y, tt, t0, size, col, align, a = item[:9]
+                cps = item[9] if len(item) > 9 else None
+                if t0 < 0 or a < 0.05:
+                    continue
+                k = (s_, round(t0, 3))
+                if k not in seen:
+                    seen[k] = len(typed_)
+                    typed_.append(dict(text=s_, t0=round(t0, 3), cps=cps or TO.CPS, x=float(x), size=size))
+    finally:
+        S.LABELS["mode"] = "draw"
+        S.LABELS["queue"].clear()
+    json.dump(dict(events=S.EVENTS, typing=typed_, dur=DUR), open(os.path.join(BUILD, "events.json"), "w"))
+    print(len(S.EVENTS), "events,", len(typed_), "typed labels")
 
 
 def main():
@@ -374,6 +460,46 @@ def main():
         subprocess.run(["ffmpeg", "-v", "error", "-y"] + ins + ["-filter_complex", pad + blanks + grid + f"xstack=inputs={rows * cols}:grid={cols}x{rows}",
                         "-frames:v", "1", sheet], check=True)
         print(sheet)
+        return
+    if sys.argv[1] == "chunk":                                    # one slice of the film (render_full runs several)
+        i0, i1, out = int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
+        ff = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}", "-r", str(FPS),
+                               "-i", "-", "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-pix_fmt", "yuv420p", out], stdin=subprocess.PIPE)
+        for i in range(i0, i1):
+            ff.stdin.write(compose(i / FPS).tobytes())
+            if (i - i0) % 240 == 0:
+                print(f"chunk {i0}-{i1}: {i / FPS:6.1f}s", flush=True)
+        ff.stdin.close(); ff.wait()
+        return
+    if sys.argv[1] in ("render_full", "full"):                    # the whole episode, in parallel slices
+        assert FULL, "set EP03_FULL=1"
+        jobs = int(sys.argv[2]) if len(sys.argv) > 2 else 4
+        n = int(DUR * FPS)
+        w = np.where(np.arange(n) / FPS < X7B + 0.3, 4.0, 1.0)   # the cold open's frames cost about 4x (Blender, chrome)
+        cw = np.cumsum(w)
+        cuts = [0] + [int(np.searchsorted(cw, cw[-1] * k / jobs)) for k in range(1, jobs)] + [n]
+        parts, procs = [], []
+        for k in range(jobs):
+            part = os.path.join(BUILD, f"full_part{k}.mp4")
+            parts.append(part)
+            procs.append(subprocess.Popen([sys.executable, os.path.abspath(__file__), "chunk", str(cuts[k]), str(cuts[k + 1]), part]))
+        codes = [p.wait() for p in procs]
+        assert all(c == 0 for c in codes), codes
+        lst = os.path.join(BUILD, "full_parts.txt")
+        open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
+        silent_full = os.path.join(BUILD, "ep03_full_silent.mp4")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", silent_full], check=True)
+        print(silent_full, flush=True)
+        if sys.argv[1] == "render_full":
+            return
+    if sys.argv[1] in ("sound_full", "full"):                     # events, score, mix, then onto the picture
+        import mix_full
+        import mix_open
+        collect_events()
+        score_full()
+        audio = mix_full.main()
+        mix_open.mux(os.path.join(BUILD, "ep03_full_silent.mp4"), audio, os.path.join(BUILD, "ep03_full.mp4"), crf=20,
+                     maxrate="5000k", abr="192k")
         return
     silent = os.path.join(BUILD, "style_S_ascii_silent.mp4")
     if sys.argv[1] == "mix":                                      # a new score on the picture already rendered

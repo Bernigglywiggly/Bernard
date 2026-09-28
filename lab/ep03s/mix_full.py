@@ -1,0 +1,145 @@
+"""The full EP03 mix (28 Sep): the voice on top, the music well under it, and a detailed, satisfying layer of sound
+under the picture. The user: "background music not too loud", "the voice whatever volume level is needed", "lots of
+detail sound effects", mechanical-keyboard keys where text types on ("the really satisfying ones people use for
+ASMR"), "but don't force it".
+
+  voice   build/voice.wav as voice_build.py made it (chained, a small room), about -16 LUFS while talking
+  music   Mainframe re-cut to the floors (ascii_open.score_full), ducked about 11 dB whenever the voice talks and
+          breathing back up in the gaps; a hard dip into every "cut" line (the silence before a reveal)
+  detail  the picture's own events (forms, morphs, latches, coins, paper, pops, links, ticks...), one mechanical key
+          per character that types on screen (lab/sfx/detail.py, timed by typeon.schedule), tucked 4 dB under the
+          voice while it talks
+  master  -14 LUFS integrated, -1 dBTP
+
+    python3 mix_full.py     # after ascii_open.py collect/score: build/ep03_full_mix.wav, with a level report
+"""
+import json
+import os
+import sys
+
+import numpy as np
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(HERE, ".."))
+sys.path.insert(0, os.path.join(HERE, "..", "sfx"))
+import audio_fx as fx  # noqa: E402
+import detail as D  # noqa: E402
+import palette as PAL  # noqa: E402
+import typeon as TO  # noqa: E402
+
+SR = fx.SR
+BUILD = os.path.join(HERE, "build")
+SFX = os.path.join(HERE, "..", "out", "sfx")
+# event kind -> (sound, gain dB); the files are peak-normalised, so these are the relative levels
+MAP = {"form": ("form", -19), "morph": ("whoosh", -21), "whoosh": ("whoosh", -21), "glint": ("scan", -24),
+       "scan": ("scan", -24), "latch": ("latch", -18), "thock": ("thock", -15), "zoom": ("riser", -22),
+       "confirm": ("confirm", -20), "coin": ("coin", -17), "paper": ("paper", -17), "pop": ("pop", -18),
+       "link": ("link", -16), "grains": ("grains", -21), "tick": ("tick", -21)}
+KEY_DB = -19.0                     # a mechanical key per typed character
+DUCK_MUSIC, DUCK_SFX = -12.5, -4.0
+
+
+def load(name):
+    if name == "tick":
+        return None                                                    # synthesised per event, a little different each
+    y = fx.load(os.path.join(SFX, name + ".wav"))
+    return y if y.ndim == 2 else np.stack([y, y], 1)
+
+
+def place(dst, x, at, gain_db=0.0, pan=0.0):
+    i = int(round(at * SR))
+    if i >= len(dst) or i + len(x) <= 0:
+        return
+    if x.ndim == 1:
+        x = PAL.pan(x, pan)
+    elif pan:
+        x = x * np.array([np.sqrt((1 - pan) / 2) * 1.414, np.sqrt((1 + pan) / 2) * 1.414])[None, :]
+    if i < 0:
+        x, i = x[-i:], 0
+    j = min(len(dst), i + len(x))
+    dst[i:j] += x[: j - i] * fx.db(gain_db)
+
+
+def talking(lines, n):
+    """0..1 per sample: the voice is talking (attack 120 ms ahead of each line, release 500 ms after)."""
+    k = 100                                                            # a control rate of 100 Hz
+    a = np.zeros(int(n / SR * k) + 2)
+    for ln in lines:
+        a[int((ln["start"] - 0.12) * k): int((ln["end"] + 0.05) * k) + 1] = 1.0
+    env = np.zeros_like(a)
+    for i in range(1, len(a)):                                         # fast up, slow down
+        c = 0.35 if a[i] > env[i - 1] else 0.02
+        env[i] = env[i - 1] + c * (a[i] - env[i - 1])
+    return np.interp(np.arange(n) / SR, np.arange(len(env)) / k, env).astype(np.float32)
+
+
+def cut_dips(lines, n):
+    """A hard dip in the music just before each 'cut' line: the silence before a reveal."""
+    g = np.zeros(n, np.float32)
+    t = np.arange(n) / SR
+    for ln in lines:
+        if ln.get("cut"):
+            s = ln["start"]
+            g = np.minimum(g, np.interp(t, [s - 0.55, s - 0.3, s + 0.05, s + 0.9], [0, -14, -14, 0]).astype(np.float32))
+    return g
+
+
+def main(bed_path=os.path.join(BUILD, "full_bed.wav"), out_name="ep03_full_mix.wav"):
+    meta = json.load(open(os.path.join(BUILD, "lines.json")))
+    lines = meta["lines"]
+    ev = json.load(open(os.path.join(BUILD, "events.json")))
+    total = ev["dur"]
+    n = int(total * SR)
+    fit = lambda y: np.pad(y, ((0, max(0, n - len(y))), (0, 0)))[:n]
+
+    voice = fit(fx.load(os.path.join(BUILD, "voice.wav")))
+    music = fit(fx.load(bed_path))
+    music = music * fx.db(-19.0 - fx.lufs(music))
+    tk = talking(lines, n)
+    music = music * fx.db(DUCK_MUSIC * tk + cut_dips(lines, n))[:, None]
+
+    detail = np.zeros((n, 2), np.float32)
+    cache = {}
+    seen = set()
+    for i, (at, kind, pan) in enumerate(ev["events"]):
+        if kind not in MAP or (round(at, 2), kind) in seen:
+            continue
+        seen.add((round(at, 2), kind))
+        name, gain = MAP[kind]
+        if name == "tick":
+            x = PAL.tick(i % 7)
+        else:
+            if name not in cache:
+                cache[name] = load(name)
+            x = cache[name]
+        place(detail, x, at, gain, pan)
+    keys = 0
+    for lab in ev["typing"]:                                          # a key for every character that types on
+        times = TO.schedule(lab["text"], lab["t0"], lab["cps"])
+        vel = 0.75 if lab["cps"] > 30 else 1.0                          # the fast sources, a touch lighter
+        run = D.keystrokes(lab["text"], times, seed=int(lab["t0"] * 100), vel=vel)
+        pan = float(np.clip((lab["x"] - 960) / 960, -0.6, 0.6)) * 0.5
+        place(detail, run, times[0], KEY_DB, pan)
+        keys += len(lab["text"])
+    detail = detail * fx.db(DUCK_SFX * tk)[:, None]
+
+    pre = voice + music + detail
+    mix = fx.master(pre, target=-14.0, ceiling_db=-1.0)
+    g = fx.db(fx.lufs(mix) - fx.lufs(pre))                             # the master's gain, to measure the stems as heard
+    speech = tk > 0.9
+    st = lambda y: fx.lufs(y[speech]) if speech.any() else float("nan")
+    gaps = tk < 0.1
+    report = dict(master=round(fx.lufs(mix), 2), voice_talking=round(st(voice * g), 1), music_under_voice=round(st(music * g), 1),
+                  music_in_gaps=round(fx.lufs((music * g)[gaps]), 1) if gaps.sum() > SR else None,
+                  detail=round(fx.lufs(detail * g), 1), keys=keys, events=len(seen))
+    out = os.path.join(BUILD, out_name)
+    fx.save(out, mix, mp3=False)
+    for nm, y in (("stem_voice.wav", voice * g), ("stem_music.wav", music * g), ("stem_detail.wav", detail * g)):
+        fx.save(os.path.join(BUILD, nm), y.astype(np.float32), mp3=False)
+    print("mix", report)
+    return out
+
+
+if __name__ == "__main__":
+    main()

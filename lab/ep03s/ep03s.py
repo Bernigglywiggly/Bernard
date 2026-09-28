@@ -246,11 +246,13 @@ def sample_on(polys, n, rng):
 LABELS = {"mode": "draw", "queue": []}             # ascii_open collects the labels and draws them crisp on top
 
 
-def label(c, s, x, y, t, t0, size=20, col=SOFT, align="center", a=1.0):
+def label(c, s, x, y, t, t0, size=20, col=SOFT, align="center", a=1.0, cps=None):
+    """A small monospace label. In the ASCII films it is queued and typed on crisp over the characters (t0 < 0:
+    shown whole, for live counters); cps is its typing speed."""
     if LABELS["mode"] == "skip":
         return
     if LABELS["mode"] == "collect":
-        LABELS["queue"].append((s, x, y, t, t0, size, col, align, a))
+        LABELS["queue"].append((s, x, y, t, t0, size, col, align, a, cps))
         return
     mg.decode(c, s, x, y, mg.font(mg.MONO_M, size), col, t, t0, 0.5, seed=hash(s) % 97, align=align, a=a)
 
@@ -481,7 +483,7 @@ def frame(c, t):
                 c.drawString("SOLD", x - f.measureText("SOLD") / 2, 851, f, mg.fill("#071413", ka))
                 ev(tk, "latch", t, x)
     # he never dug: everything becomes one shovel, which starts to scoop and stops dead
-    if t_never <= t:
+    if t_never <= t < ls("rule") + 1.0:
         k_in = seg(t, t_never, t_never + 1.0)
         # the $36,000 starts where it is on screen (shrunk and raised over the street), not at full size
         g36 = [np.column_stack([CX + E2["s"] * (q[:, 0] - CX), CY - 30 + E2["s"] * (q[:, 1] - CY + 30 + E2["up"])]) for q in G36K]
@@ -517,17 +519,21 @@ def frame(c, t):
         ev(le("never") + 0.15, "zoom", t)
         if kz > 0.6:
             mg.ring_tunnel(c, CX, 540, lerp(1, 40, (kz - 0.6) / 0.4), a=0.8 * (1 - kz))
-    # the prize, waiting on the other side
+    # the prize, waiting on the other side (until the body takes over from it)
     tr = ls("rule")
-    if t >= tr - 0.05:
-        k = ease(seg(t, tr, tr + 0.5), "o")
+    t_body = ls("census") if "census" in IDS else 1e9
+    if tr - 0.05 <= t < t_body + 0.6:
+        k = ease(seg(t, tr, tr + 0.5), "o") * (1 - ease(seg(t, t_body - 0.1, t_body + 0.6)))
         r = 16 + 3 * math.sin((t - tr) * 5)
         g = mg.fill(GLOW, 0.35 * k); g.setMaskFilter(skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 22))
         c.drawCircle(CX, 520, r * 2.2, g)
         c.drawCircle(CX, 520, r * k, mg.fill(TURQ, k))
         c.drawCircle(CX, 520, (r + 14) * k, mg.stroke(GLOW, 1.4, 0.6 * k))
-        label(c, "THE PRIZE", CX, 470, t, tr + 0.3, 20, SOFT)
+        label(c, "THE PRIZE", CX, 470, t, tr + 0.3, 20, SOFT, a=k)
         ev(tr, "confirm", t)
+    if t >= t_body - 0.2:
+        import ep03_body
+        ep03_body.frame(c, t)
     if FURNITURE["label"]:
         furniture(c)
 

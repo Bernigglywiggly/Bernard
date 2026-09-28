@@ -38,7 +38,8 @@ fast. Mostly ASCII with a touch of Blender realism. All six new beds, matched to
 8. **Close quietly:** a mirrored pair of lines, then sources.
 9. **Look:** ASCII all the way (characters on black, turquoise accent, monospace chapter labels); Blender realism
    only for the one or two objects that carry the story, developing out of the characters and back; one other accent
-   at most (the feedback trails) per film. One visual system per film.
+   at most per film, and it stays polished: a phosphor trail in the grid (moving things leave a short tail stepping
+   down the ramp, nothing else moves), never a zooming, colour-split feedback tunnel. One visual system per film.
 10. **ASCII that reads (v3, 28 Sep):** a fine grid (8×12 px characters, 240×90); outlines drawn with stroke glyphs
     (| / - \\) that follow each shape, dense fills (@ # %) for solids, faint glow cells dropped; the subject bright
     white-cyan with a soft light behind it; the drifting background sea faint and cleared around the subject, so
@@ -47,10 +48,14 @@ fast. Mostly ASCII with a touch of Blender realism. All six new beds, matched to
 11. **Length:** 2:00-3:00 (long enough to count as long-form in 16:9 for watch hours; cut vertical for TikTok/Shorts).
 
 ## Music by topic tone (all six new beds are in use)
+The bed sits under the voice: steady, dark-topped, no lead melody, no busy drums (the user, 28 Sep: Terminal
+"takes too much attention"; the calm Night Drive is the model). `beds.night_drive(..., calm=True)`.
+
 | Bed | Tone | Use it for |
 |---|---|---|
-| Terminal (glitch/IDM) | analytical, digital | chips, agents, software, money-in-tech (EP03 The Shovel Sellers) |
-| Night Drive (dark pulse) | tension | security, surveillance, military, AI incidents (robots & military, an agent escaping a sandbox) |
+| Night Drive, calm cut (dark pulse) | steady, low-key | money-in-tech and history-as-mechanism stories told straight (EP03 The Shovel Sellers); the default under a voice |
+| Night Drive (full) | tension | security, surveillance, military, AI incidents (robots & military, an agent escaping a sandbox) |
+| Terminal (glitch/IDM) | analytical, digital | chips, agents, software; busy, so thin it out under a voice (under EP03 it took too much attention) |
 | Low Orbit (cinematic pulse) | scale, awe | energy, data centres, space compute, "how big is this" stories |
 | Two-Step (UK garage) | moody, urban | UK and society stories, cities, work and money on the street |
 | Tape Loop (lo-fi) | human, reflective-light | everyday AI, jobs, education, how people actually use it |

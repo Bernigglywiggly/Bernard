@@ -598,67 +598,96 @@ def tape_loop():
 
 
 # ================================================================ 3 · NIGHT DRIVE (dark synth pulse, 108 BPM)
-def night_drive():
-    s = Song(108, 32, seed=33)
+def night_drive(bpm=108, plan=None, lead=0.0, calm=False):
+    """plan/lead as for terminal(). calm=True is the bed cut for under a voice (EP03): the same pulse and pads, but
+    half-time soft kicks (rounded, no click), no claps or open hats, an 8th-note arp only in the b section, and a
+    softer pad gate, so it carries the mood without asking for attention."""
+    plan = plan or [("intro", 4), ("a", 8), ("b", 8), ("break", 4), ("b2", 8)]
+    s = Song(bpm, sum(n for _, n in plan), seed=33)
     rng = s.rng
     claps = []
     prog = [(33, "m9"), (29, "maj9"), (38, "m9"), (40, "7sus4")]            # Am9  Fmaj9  Dm9  E7sus4
-    sec = sections(s, [("intro", 4), ("a", 8), ("b", 8), ("break", 4), ("b2", 8)])
+    sec = sections(s, plan)
+    n_intro = sum(1 for x in sec if x == "intro")
     for b in range(s.bars):
         root, q = prog[b % 4]
         v = voicing(root, q, 52)
         name = sec[b]
-        # the pulse: 8th-note bass, octave jumps on the offbeats in the b sections
+        last_of_break = name == "break" and (b + 1 == s.bars or sec[b + 1] != "break")
+        # the pulse: 8th-note bass (octave jumps on the offbeats in the b sections, unless calm)
         for e in range(8):
-            m = low(root, 40) + (12 if name in ("b", "b2") and e % 2 == 1 else 0)
-            s.put("bass", pluck(m, s.step * 1.6, 0.9, 7.0, 16), s.at(b, e * 2), gain=1.0 if e % 2 == 0 else 0.8)
-            if name != "intro":
+            jump = name in ("b", "b2") and e % 2 == 1 and not calm
+            m = low(root, 40) + (12 if jump else 0)
+            s.put("bass", pluck(m, s.step * 1.6, 0.9, 7.0, 16), s.at(b, e * 2), gain=(1.0 if e % 2 == 0 else 0.8) * (0.85 if name == "out" else 1))
+            if name not in ("intro", "out"):
                 s.put("sub", sub(low(root, 28), s.step * 1.8), s.at(b, e * 2), gain=0.9)
         for m in v:
             s.put("pad", supersaw(m, s.bar * 0.99, rng, voices=7, detune=0.16, r=1.0, a=0.25), s.at(b))
         if name in ("b", "b2"):
             tones = sorted(set(v + [x + 12 for x in v]))
-            for st in range(16):
+            for st in range(0, 16, 2 if calm else 1):
                 m = tones[(st * 3 + b) % len(tones)]
                 s.put("arp", pluck(m, s.step * 0.9, 1.2, 9.0, 14), s.at(b, st), pan=0.5 * np.sin(st), gain=0.9 if st % 4 == 0 else 0.6)
         if name in ("a", "b", "b2"):
-            for beat in range(4):
-                s.put("kick", kick(47, 160, 0.03, 0.3, 0.4, seed=beat), s.at(b, beat * 4)); s.kicks.append(s.at(b, beat * 4))
-            for st in (4, 12):
-                s.put("clap", clap(seed=b), s.at(b, st, 0.002))
-                claps.append(s.at(b, st))
-            for st in range(16):
-                if name != "a" or st % 2 == 0:
-                    s.put("hats", hat(0.04, seed=st + 17 * b, metal=0.7), s.at(b, st, 0.002), pan=0.3,
-                          gain=(1.0 if st % 4 == 2 else 0.55) * rng.uniform(0.85, 1.0))
-            if name == "b2":
-                for st in (2, 6, 10, 14):
-                    s.put("hats", hat(open_=True, seed=st + b), s.at(b, st), pan=-0.3, gain=0.45)
-        if name == "break" and b == 23:
+            for beat in ((0, 2) if calm else range(4)):
+                if calm:                                                    # rounded, and eased in over 2 ms: no tick
+                    k = kick(47, 140, 0.03, 0.3, 0.15, soft=True, seed=beat)
+                    k[:96] *= np.sin(np.linspace(0, np.pi / 2, 96)) ** 2
+                else:
+                    k = kick(47, 160, 0.03, 0.3, 0.4, seed=beat)
+                s.put("kick", k, s.at(b, beat * 4)); s.kicks.append(s.at(b, beat * 4))
+            if calm:
+                if name != "a":
+                    s.put("rim", rim(), s.at(b, 8, 0.002), pan=0.1)
+                    for st in range(0, 16, 2):
+                        s.put("hats", hat(0.035, seed=st + 17 * b, metal=0.6), s.at(b, st, 0.002), pan=0.3, gain=0.8 if st % 4 == 2 else 0.5)
+            else:
+                for st in (4, 12):
+                    s.put("clap", clap(seed=b), s.at(b, st, 0.002))
+                    claps.append(s.at(b, st))
+                for st in range(16):
+                    if name != "a" or st % 2 == 0:
+                        s.put("hats", hat(0.04, seed=st + 17 * b, metal=0.7), s.at(b, st, 0.002), pan=0.3,
+                              gain=(1.0 if st % 4 == 2 else 0.55) * rng.uniform(0.85, 1.0))
+                if name == "b2":
+                    for st in (2, 6, 10, 14):
+                        s.put("hats", hat(open_=True, seed=st + b), s.at(b, st), pan=-0.3, gain=0.45)
+        if last_of_break:
             s.put("fx", riser(s.bar, 300, 8000), s.at(b))
     # gates and rooms
-    gate = np.ones(s.n, np.float32)
     tt = np.arange(s.n) / SR
     ph = (tt / s.step) % 1
-    gate = 0.55 + 0.45 * np.clip(1 - ph * 1.6, 0, 1)                         # a soft 16th trance gate on the pad
+    depth = 0.25 if calm else 0.45
+    gate = (1 - depth) + depth * np.clip(1 - ph * 1.6, 0, 1)                 # a soft 16th trance gate on the pad
     s.stems["pad"] = s.stems["pad"] * gate[:, None]
     cut = lambda t: 700 + 2600 * (0.5 + 0.5 * np.sin(2 * np.pi * t / (s.bar * 8) - 1.5))
     s.stems["pad"] = reverb(ladder(s.stems["pad"], cut, 0.25), 0.8, 0.3, 0.5)
-    bcut = lambda t: 600 + 1800 * np.clip((t - 4 * s.bar) / (16 * s.bar), 0, 1) * (1 - 0.7 * (sec[min(s.bars - 1, int(t / s.bar))] == "break"))
+    top = 1300 if calm else 1800
+    bcut = lambda t: 600 + top * np.clip((t - n_intro * s.bar) / (16 * s.bar), 0, 1) * (1 - 0.7 * (sec[min(s.bars - 1, int(t / s.bar))] in ("break", "out")))
     s.stems["bass"] = ladder(s.stems["bass"], bcut, 0.3, 1.5)
-    s.stems["arp"] = reverb(pingpong(s.stems["arp"], s.step * 3, 0.35, 5, 0.35, 5000), 0.6, 0.2, 0.5)
+    if "arp" in s.stems:
+        s.stems["arp"] = fx.bq(reverb(pingpong(s.stems["arp"], s.step * 3, 0.35, 5, 0.35, 5000), 0.6, 0.2, 0.5), "lp", 8000)
     s.stems["pad"] = pb(s.stems["pad"], Chorus(rate_hz=0.4, depth=0.3, mix=0.45))
-    s.stems["hats"] = fx.bq(s.stems["hats"], "lp", 9500)
-    s.stems["arp"] = fx.bq(s.stems["arp"], "lp", 8000)
-    cl = fx.bq(s.stems["clap"], "lp", 9000)
-    g = np.zeros(s.n, np.float32)                                             # the gated reverb: a big room cut short
-    for tc in claps:
-        i = int(tc * SR); k = min(s.n - i, int(0.24 * SR))
-        g[i:i + k] = np.maximum(g[i:i + k], np.clip((0.24 - np.arange(k) / SR) / 0.05, 0, 1))
-    s.stems["clap"] = cl + 0.7 * pb(cl, Reverb(room_size=0.95, damping=0.25, wet_level=1.0, dry_level=0.0)) * g[:, None]
-    return balance(s, {"bass": -22, "sub": -25, "pad": -23, "arp": -25, "kick": -20, "clap": -24, "hats": -33, "fx": -30},
-                   sidechain={"pad": (0.5, 0.22), "bass": (0.45, 0.12), "sub": (0.6, 0.12), "arp": (0.2, 0.12)},
-                   hpf={"bass": 60}, dyn=(sec, {"intro": -4, "a": -1, "b": 0, "break": -4, "b2": 0.5}))
+    if "hats" in s.stems:
+        s.stems["hats"] = fx.bq(s.stems["hats"], "lp", 9500)
+    if claps:
+        cl = fx.bq(s.stems["clap"], "lp", 9000)
+        g = np.zeros(s.n, np.float32)                                         # the gated reverb: a big room cut short
+        for tc in claps:
+            i = int(tc * SR); k = min(s.n - i, int(0.24 * SR))
+            g[i:i + k] = np.maximum(g[i:i + k], np.clip((0.24 - np.arange(k) / SR) / 0.05, 0, 1))
+        s.stems["clap"] = cl + 0.7 * pb(cl, Reverb(room_size=0.95, damping=0.25, wet_level=1.0, dry_level=0.0)) * g[:, None]
+    if "rim" in s.stems:
+        s.stems["rim"] = reverb(s.stems["rim"], 0.6, 0.25, 0.5)
+    if calm:
+        levels = {"bass": -23, "sub": -25, "pad": -21, "arp": -30, "kick": -24, "rim": -31, "hats": -37, "fx": -32}
+        dyn = {"intro": -3, "a": -1, "b": 0, "break": -3, "out": (-2, -5)}
+    else:
+        levels = {"bass": -22, "sub": -25, "pad": -23, "arp": -25, "kick": -20, "clap": -24, "hats": -33, "fx": -30}
+        dyn = {"intro": -4, "a": -1, "b": 0, "break": -4, "b2": 0.5}
+    mix = balance(s, levels, sidechain={"pad": (0.35 if calm else 0.5, 0.22), "bass": (0.45, 0.12), "sub": (0.6, 0.12), "arp": (0.2, 0.12)},
+                  hpf={"bass": 60}, dyn=(sec, dyn))
+    return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
 
 
 # ================================================================ 4 · LOW ORBIT (cinematic pulse, 120 BPM)

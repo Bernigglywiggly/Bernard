@@ -61,6 +61,12 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   `relay.D_WARP` (mapping today's lines onto `build/lines_blender.json`, the timeline they were rendered on).
 - **EP03 v2** script: `lab/ep03s/script.py` (the old comedic one stays in `lab/ep03/` for the old engine). Facts checked
   28 Sep (Nvidia Q2 FY27 8-K; big-tech 2026 capex ~$725B; OpenAI Q1 2026 via The Information; Clay & Jones 2008; CPI).
+- **ASCII v4 (the user's notes on v3, 28 Sep):** v3 was "awesome", but the feedback ("TouchDesigner") moment felt
+  sporadic and unpolished, and Terminal took too much attention. v4: the accent is now a phosphor trail in the
+  character grid (`ascii_open.trail`: each cell keeps max(now, 0.82 × last frame), eased in at the burst and out as the
+  store forms; no zoom, rotation or colour split), and the bed is `beds.night_drive(..., calm=True)`: half-time soft
+  kicks, no claps or open hats, the arp in 8ths only in the b section, a softer pad gate. Night Drive's calm cut is
+  now the default under a voice (playbook table); Terminal stays for chips/agents/software, thinned out.
 - **Particles:** `ep03s.dust_at` is now fixed per-grain smooth paths (pour stream through the neck, fountain matched
   launch-order→landing, drift on the bank, left-to-right re-form); the Blender burst is a cork pop + fountain
   (`blender/cold_open.py`, `LINES_JSON=build/lines_blender.json` to render on the Blender timeline).

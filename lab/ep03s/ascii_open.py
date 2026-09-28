@@ -4,14 +4,14 @@
                 and a glint of bright characters sweeping across
   1848 → bottle the lines flow into the bottle in characters; the gold pours in
   the bottle    the characters re-form as Blender's glass bottle, then DEVELOP into the real image from the bottle out
-  the burst     the photo breaks back into characters and, once, the feedback loop runs on them: character trails for
-                "the whole city loses its mind"
-  the store     the trails die away into clean characters; $36,000 in dense blocks with a glint; the street sells out
+  the burst     the photo breaks back into characters and, once, the gold leaves a trail: a phosphor persistence in
+                the grid, so the stream draws its own path in characters stepping down the ramp (no zoom, no colour split)
+  the store     the trail fades into clean characters; $36,000 in dense blocks with a glint; the street sells out
   the shovel    the characters re-form as the Blender dunes and develop into the image again, for the one lonely shot
   the grip      the push into the grip breaks back into characters, and the prize is a character too
 
-Scored with Terminal (lab/music/beds.py), re-arranged so the drums arrive on "loses its mind" and drop out on
-"never dug".
+Scored with Night Drive in its calm cut (lab/music/beds.py): a low pulse that carries the mood without asking for
+attention, re-cut so the soft kicks arrive on "Within weeks the town empties" and drop out on "He never panned".
 
     python3 ascii_open.py still 2 9.6 13 ...   # build/ascii_still_*.png + build/ascii_sheet.jpg
     python3 ascii_open.py render               # build/style_S_ascii.mp4
@@ -49,7 +49,7 @@ X6A = TN + 0.95; DV6A, DV6B = X6A + 0.4, X6A + 1.3               # the dunes: re
 UD7A, UD7B = TR - 0.6, TR - 0.12                                 # into the grip: back to characters
 X7A, X7B = TR - 0.3, TR + 0.15                                   # ...and on to A's ring and prize
 
-EXTRA_SFX = [(SW1848, "scan", -18), (X2A + 0.3, "swell", -15), (UD3A - 0.05, "glitch", -17), (FB_OFF + 0.1, "thum", -15),
+EXTRA_SFX = [(SW1848, "scan", -18), (X2A + 0.3, "swell", -15), (UD3A - 0.05, "form", -16), (FB_OFF + 0.1, "thum", -15),
              (SW36, "scan", -17), (X6A + 0.35, "swell", -16), (UD7A + 0.1, "glitch", -19), (TR - 0.12, "sub_drop", -13)]
 
 
@@ -179,25 +179,32 @@ def develop(k, cx, cy):
     return np.clip((k * 1.35 - dist - 0.2 * NOISE2) / 0.12, 0, 1).astype(np.float32)
 
 
-# ---------------------------------------------------------------- feedback on the characters (the one accent)
-FB = {"prev": None, "i": None}
+# ---------------------------------------------------------------- the one accent: a phosphor trail on the characters
+TRAIL = {"f": None, "i": None}
 
 
-def fb_gain(t):
+def trail_k(t):
+    """How much of the last frame survives into this one: eases in as the gold streams out, out as the store forms."""
     if t < FB_OFF:
-        return lerp(0.5, 0.86, ease(seg(t, FB_ON, FB_ON + 0.6)))
-    return 0.86 * (1 - ease(seg(t, FB_OFF, FB_OFF + 0.7)))
+        return 0.82 * ease(seg(t, FB_ON, FB_ON + 0.6))
+    return 0.82 * (1 - ease(seg(t, FB_OFF, FB_OFF + 0.7)))
 
 
-def fb_at(t, layer_fn):
+def trail(t, cur):
+    """Persistence, like a slow phosphor: each cell keeps the brighter of what it shows now and a fading memory of
+    what it showed, so moving gold leaves a short tail stepping down the ramp (@ # % o * + = - ; : , .) and anything
+    still doesn't change at all. No zoom, no rotation, no colour split: the motion draws its own path. Stepped one
+    frame at a time from FB_ON (a still far into the window replays the frames before it)."""
     i_t, i0 = int(round(t * FPS)), int(round(FB_ON * FPS))
-    if FB["i"] is None or FB["i"] >= i_t or FB["i"] < i0 - 1:
-        R.FB["prev"], FB["i"] = None, i0 - 1
-    out = R.FB["prev"]
-    for i in range(FB["i"] + 1, i_t + 1):
-        out = R.fb_step(layer_fn(i / FPS), i / FPS, fb_gain(i / FPS))
-        FB["i"] = i
-    return out
+    if TRAIL["i"] is None or TRAIL["i"] >= i_t or TRAIL["i"] < i0 - 1:
+        TRAIL["f"], TRAIL["i"] = None, i0 - 1
+    for i in range(TRAIL["i"] + 1, i_t + 1):
+        f = cur[0] if i == i_t else field(i / FPS)[0][0]
+        k = trail_k(i / FPS)
+        TRAIL["f"] = f if TRAIL["f"] is None or k < 0.002 else np.maximum(f, TRAIL["f"] * k)
+        TRAIL["i"] = i
+    f = TRAIL["f"]
+    return f, np.where(cur[0] >= f - 1e-6, cur[1], -1)                # tails are fills; strokes stay on the live shape
 
 
 # ---------------------------------------------------------------- sources (small labels stay crisp, on top)
@@ -292,17 +299,9 @@ def photo_mask(t):
 def compose(t):
     S.LABELS["queue"].clear()
     c, g = field(t)
-    if FB_ON <= t < FB_OFF + 0.8:                                  # the one feedback accent: character trails
-        layer_fn = lambda tt: chars(field(tt)[0], tt, sea=0.0)[0]
-        fb = fb_at(t, layer_fn)
-        s = skia.Surface(W, H); cv = s.getCanvas(); cv.clear(skia.Color(8, 9, 11))
-        cv.drawImage(chars((np.zeros_like(c[0]), np.full(c[1].shape, -1)), t, sea=0.6)[0], 0, 0)   # a calm sea underneath
-        cv.drawImage(fb, 0, 0, skia.SamplingOptions(), plus())
-        gp = plus(0.45); gp.setImageFilter(skia.ImageFilters.Blur(6, 6))
-        cv.drawImage(fb, 0, 0, skia.SamplingOptions(), gp)
-        img = s.makeImageSnapshot()
-    else:
-        img = screen(*chars(c, t, g))
+    if FB_ON <= t < FB_OFF + 0.8:                                  # the one accent: the gold leaves a trail
+        c = trail(t, c)
+    img = screen(*chars(c, t, g))
     m, xf = photo_mask(t)
     if m is not None:
         img = blend(img.toarray(), d_img(t, xf).toarray(), cells_to_px(m))
@@ -317,24 +316,25 @@ def compose(t):
 
 # ---------------------------------------------------------------- the score
 def score():
-    """Terminal, re-arranged so a bar line falls on "loses its mind" (drums in) and on "never dug" (drums out),
-    then dipped for "Here's the bit nobody tells you"."""
+    """Night Drive, the calm cut (lab/music/beds.py), re-cut so its bar lines fall on the picture: pads and the bass
+    pulse under 1848 and the bottle, soft half-time kicks from "Within weeks the town empties", the arp and quiet hats
+    once the store forms, the drums out on "He never panned for gold", then dipped for the question."""
     import beds
     import audio_fx as fx
-    n = max(4, round((TN - TM) / (240.0 / 96)))                   # bars from "mind" to "never", near 96 BPM
+    n = max(4, round((TN - TM) / (240.0 / 108)))                  # bars from "mind" to "never", near 108 BPM
     bar = (TN - TM) / n
     bpm = 240.0 / bar
-    n_intro = int((TM - 0.5) // bar)
+    n_intro = int(TM // bar)                                      # the pads are there almost from the first frame
     lead = TM - n_intro * bar
     n_break = max(1, math.ceil((TR - TN) / bar))
     a = min(3, n - 1)
-    x = beds.terminal(bpm, [("intro", n_intro), ("a", a), ("b", n - a), ("break", n_break), ("out", 2)], lead)
+    x = beds.night_drive(bpm, [("intro", n_intro), ("a", a), ("b", n - a), ("break", n_break), ("out", 2)], lead, calm=True)
     t = np.arange(len(x)) / fx.SR
     dip = 1 - 0.8 * np.clip((t - (TR - 0.05)) / 0.12, 0, 1) * np.clip(1 - (t - (TR + 1.2)) / 1.0, 0.35, 1)
     x = (x * dip[:, None]).astype(np.float32)
     path = os.path.join(BUILD, "ascii_bed.wav")
     fx.save(path, x, mp3=False)
-    print(f"score: Terminal at {bpm:.2f} BPM, lead {lead:.2f}s")
+    print(f"score: Night Drive (calm) at {bpm:.2f} BPM, lead {lead:.2f}s")
     return path
 
 

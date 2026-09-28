@@ -169,25 +169,25 @@ def full_card(ep):
     import subprocess
     e = html.escape
     path = os.path.join(LAB, ep["full"])
+    if not os.path.exists(path):
+        path = path.replace("_720.mp4", ".mp4").replace("ep03_full_720", "ep03_full")
     d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path],
                              capture_output=True, text=True, check=True).stdout)
     title, blurb = ep["yt"]
     desc = blurb + "\n\nSources:\n" + "\n".join("• " + x for x in sources(ep))
-    src = f"media/{ep['slug']}/{os.path.basename(path)}"
     th = ep.get("thumb") and os.path.exists(os.path.join(LAB, ep["thumb"]))
     tsrc = f"media/{ep['slug']}/{os.path.basename(ep['thumb'])}" if th else ""
-    poster = f' poster="{e(tsrc)}"' if th else ""
+    pic = f'<img class="thumb" src="{e(tsrc)}" alt="{e(title)}: the YouTube thumbnail" loading="lazy">' if th else ""
     tbtn = f'\n      <button type="button" data-save="{e(tsrc)}">Save thumbnail</button>' if th else ""
     return f"""<article class="card wide" id="{e(ep['slug'])}-full">
-  <video controls playsinline preload="metadata"{poster} src="{e(src)}"></video>
+  {pic}
   <div class="body">
-    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE</span><span>{int(d // 60)}:{int(d % 60):02d} · 16:9</span></div>
+    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE</span><span>{int(d // 60)}:{int(d % 60):02d} · 16:9 · the 1080p file is in the chat</span></div>
     <p class="hook">{e(title)}</p>
     <p class="post">{e(desc)}</p>
     <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
-      <button class="main" type="button" data-copy="post">Copy description</button>
-      <button type="button" data-save="{e(src)}">Save 720p preview</button>{tbtn}</div>
-    <p class="note" aria-live="polite">The 1080p file for YouTube was sent in the chat.</p>
+      <button class="main" type="button" data-copy="post">Copy description</button>{tbtn}</div>
+    <p class="note" aria-live="polite"></p>
   </div>
 </article>"""
 
@@ -205,7 +205,7 @@ def files():
     """The artifact files map: media/<slug>/<file> -> the mp4 on disk."""
     out = {}
     for ep in episodes():
-        for key in ("full", "thumb"):
+        for key in ("thumb",):
             if ep.get(key) and os.path.exists(os.path.join(LAB, ep[key])):
                 out[f"media/{ep['slug']}/{os.path.basename(ep[key])}"] = os.path.join(LAB, ep[key])
         for k in ep["kit"].values():
@@ -223,7 +223,7 @@ def section(ep):
                    for d, a, b in ep["schedule"] if a in kit)
     return f"""<section id="{slug}" class="ep">
   <div><span class="eyebrow">{html.escape(ep['title'])}</span><h2 class="ep-title">{html.escape(ep['sub'])}</h2></div>
-  {full_card(ep) if ep.get("full") and os.path.exists(os.path.join(LAB, ep["full"])) else ""}
+  {full_card(ep) if ep.get("thumb") and os.path.exists(os.path.join(LAB, ep["thumb"])) else ""}
   <h3>Suggested order</h3>
   <div class="plan">{plan}</div>
   <h3>The whole film, in {len(parts)} parts</h3>
@@ -251,6 +251,7 @@ nav a:focus-visible{{outline:2px solid var(--accent);outline-offset:2px}}
 .day span{{display:block}}
 .card.wide{{grid-template-rows:auto 1fr}}
 .card.wide video{{aspect-ratio:16/9;max-height:none}}
+.card img.thumb{{width:100%;max-width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}}
 .day .plus{{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted)}}
 </style>
 <div class="wrap">

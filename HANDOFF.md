@@ -54,6 +54,12 @@ Updated 28 Sep 2026 (afternoon), cloud session on branch `claude/lucid-archimede
 - **EP07 · The Thirty-Year Delay** (`lab/ep07/`, ~2:02, Night Drive calm): NBER Feb 2026 (~90% of 6,000 firms saw no
   AI productivity change), Paul David's dynamo story (one big motor on the old shaft; the gains came with a motor in
   every machine), Solow 1987, MIT's 95% of pilots, an office built from zero around AI. 8 shorts.
+- **EP08 · Cheaper Makes More** (`lab/ep08/`, 1:45, Terminal): the Jevons paradox (coal 1865; light 3,000x cheaper
+  and 40,000x more used; a million tokens from ~10 Big Macs to 1/100 of one; Google's 3.2 quadrillion tokens a month,
+  300x in two years; Nadella's post). 7 shorts.
+- **Kit storage:** one artifact version holds at most 256 MiB. The kit now carries thumbnails + shorts only (the 720p
+  previews came out; the 1080p films go in the chat) and holds EP03-EP08 at ~210 MiB. For EP09 on, either start a
+  second kit page ("The Curve Shorts II") or drop the shorts of episodes already posted (publish them as `null`).
 - **Every film also gets** a thumbnail (`python3 -m engine.thumb <feed> <t> "LINE|LINE|LINE" <out.jpg> <accent> fx,fy,zoom`)
   and a 720p preview (`film.py preview`); the kit shows both with the YouTube title and description to copy.
 - **Channel 2** is still the user's pick (the plan page's vote, db `picks`, was empty on 28 Sep).

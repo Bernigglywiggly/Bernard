@@ -23,6 +23,7 @@ Captions, the episode label and a vignette go on top of everything, so it reads 
     python3 relay.py still 1.0 2.2 9.3 ...   # build/relay_still_*.png + build/relay_sheet.jpg
     python3 relay.py render                  # build/style_R_relay.mp4 (1080p24, with the relay mix)
 """
+import json
 import math
 import os
 import subprocess
@@ -104,7 +105,28 @@ def a_img(t, xf=None, lines_only=False):
 _D = {"i": None, "img": None}
 
 
+def _warp():
+    """The Blender frames were rendered on an earlier timeline (build/lines_blender.json); map today's time onto
+    theirs line by line, so a new voice or script re-times the 3D without a re-render."""
+    p = os.path.join(BUILD, "lines_blender.json")
+    if not os.path.exists(p):
+        return None
+    old = {x.get("id") or x.get("slot"): x for x in json.load(open(p))["lines"]}
+    new = {x.get("id") or x.get("slot"): x for x in S.L}
+    pts = [(0.0, 0.0)]
+    for k in ("bottle", "mind", "shop", "36k", "e2", "never", "rule"):
+        if k in old and k in new:
+            pts += [(new[k]["start"], old[k]["start"]), (new[k]["end"], old[k]["end"])]
+    xs, ys = zip(*sorted(pts))
+    return lambda t: float(np.interp(t, xs, ys)) if t <= xs[-1] else ys[-1] + (t - xs[-1])
+
+
+D_WARP = _warp()
+
+
 def d_raw(t):
+    if D_WARP:
+        t = D_WARP(t)
     i = min(max(0, int(round(t * FPS))), ND - 1)
     if _D["i"] != i:
         _D["img"] = skia.Image.open(os.path.join(D_DIR, f"{i:04d}.png"))

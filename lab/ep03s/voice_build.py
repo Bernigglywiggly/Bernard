@@ -1,4 +1,4 @@
-"""EP03 seamless: the voice at the new pace ("pretty fucking fast"), from the EP03 script.
+"""EP03 seamless: the voice at the fast pace, from ep03s/script.py (v2: factual, curious, no jokes).
 
 Engine: ElevenLabs George (the first British guy) whenever lab/voice/cache/eleven has every line at SPEED
 (see tools/eleven_tts.py); otherwise a local stand-in so the picture can be timed. Lines sit on an eighth-note
@@ -21,7 +21,7 @@ LAB = os.path.join(HERE, "..")
 sys.path.insert(0, LAB)
 sys.path.insert(0, os.path.join(LAB, "voice"))
 sys.path.insert(0, os.path.join(LAB, "tools"))
-sys.path.insert(0, os.path.join(LAB, "ep03"))
+sys.path.insert(0, HERE)                        # this episode's script (v2: no jokes, straight into the facts)
 import audio_fx as fx  # noqa: E402
 import eleven_tts as el  # noqa: E402
 from script import LINES  # noqa: E402

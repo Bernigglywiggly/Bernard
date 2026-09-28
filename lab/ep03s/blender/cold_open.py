@@ -24,7 +24,7 @@ EP = os.path.join(HERE, "..")
 OUT = os.path.join(EP, "build", "blender")
 FONT = os.path.join(EP, "..", "..", "a01_v6", "fonts", "Michroma-400.ttf")
 FPS = 12
-L = json.load(open(os.path.join(EP, "build", "lines.json")))["lines"]
+L = json.load(open(os.environ.get("LINES_JSON", os.path.join(EP, "build", "lines.json"))))["lines"]   # the timeline to render on
 
 
 def ls(name):
@@ -144,6 +144,7 @@ def build():
     bo.data.materials.append(M["glass"])
     cork = bpy.data.meshes.new("cork")
     bpy.ops.mesh.primitive_cylinder_add(radius=0.13, depth=0.18, location=(0, 0, 1.08)); ck = bpy.context.object; link_new(ck, c2)
+    cork_obj = ck
     ck.data.materials.append(mat("cork", (0.35, 0.24, 0.14), 0.0, 0.7))
     bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1, radius=0.022); grain = bpy.context.object; grain.data.materials.append(M["gold"])
     link_new(grain, c2); grain.hide_render = True; grain.hide_viewport = True
@@ -154,6 +155,10 @@ def build():
         g = grain.copy(); g.hide_render = False; g.hide_viewport = False; g.location = home; c2.objects.link(g)
         out = Vector((random.gauss(0, 1.0), random.gauss(0, 0.6), random.uniform(1.5, 3.2)))
         grains.append((g, home, out, random.uniform(0, 0.35)))
+    # the fountain: the heap empties from the top down, each grain on its own smooth arc out of the neck
+    order = sorted(range(len(grains)), key=lambda i: -grains[i][1].z)
+    rng2 = random.Random(9)
+    grains = [(grains[i][0], grains[i][1], k / (len(order) - 1), rng2.random(), rng2.uniform(-0.12, 0.12)) for k, i in enumerate(order)]
     # 4 · the store
     c4 = coll("shop")
     bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 0.1, -0.2)); sh = bpy.context.object; sh.scale = (3.2, 0.5, 0.06); link_new(sh, c4); sh.data.materials.append(M["wood"])
@@ -233,7 +238,7 @@ def build():
     aim = bpy.data.objects.new("aim", None); sc.collection.objects.link(aim)
     cst = co.constraints.new("TRACK_TO"); cst.target = aim; cst.track_axis = "TRACK_NEGATIVE_Z"; cst.up_axis = "UP_Y"
     cam.dof.focus_object = aim
-    return dict(sc=sc, rig=rig, floor=fl, grip=Vector((0, 0, z_root + 1.36 * 1.35)), z_root=z_root, cols={s[2]: bpy.data.collections[s[2]] for s in SHOTS if s[2] in bpy.data.collections}, cam=co, aim=aim, grains=grains, sold=sold_tags, big=big, prize=pz)
+    return dict(sc=sc, rig=rig, floor=fl, cork=cork_obj, grip=Vector((0, 0, z_root + 1.36 * 1.35)), z_root=z_root, cols={s[2]: bpy.data.collections[s[2]] for s in SHOTS if s[2] in bpy.data.collections}, cam=co, aim=aim, grains=grains, sold=sold_tags, big=big, prize=pz)
 
 
 def ease(x):
@@ -261,12 +266,27 @@ def pose(W, t):
         a = math.radians(-20 + 35 * u)
         d = 4.6 if name == "bottle" else 5.6
         cam.location = (d * math.sin(a), -d * math.cos(a), 0.15 + (0.5 * u if name == "burst" else 0)); aim.location = (0, 0, -0.1 + (0.6 * u if name == "burst" else 0))
-        for g, home, out, delay in W["grains"]:
-            if name == "burst":
-                k = ease((u - delay) / 0.6)
-                g.location = home.lerp(home + out, k) + Vector((0, 0, -1.6 * k * k)) + Vector((0, 0, 1.3 * math.sin(math.pi * k)))
-            else:
+        ck = W["cork"]
+        kc = max(0.0, min(1.0, (t - T_MIND) / 0.45)) if name == "burst" else 0.0
+        ck.location = Vector((0.7 * kc, 0.0, 1.08 + 3.2 * kc - 1.0 * kc * kc))           # the cork pops
+        ck.rotation_euler = (0.0, 3.0 * kc, 0.0)
+        ck.hide_render = kc >= 1.0
+        neck = Vector((0.0, 0.0, 1.02))
+        for g, home, rank, fan, oy in W["grains"]:
+            if name != "burst":
                 g.location = home
+                continue
+            s_ = (t - (T_MIND + 0.2 + rank * 2.8)) / 1.5
+            if s_ <= 0:
+                g.location = home
+            elif s_ < 0.25:                                                              # up to the neck
+                g.location = home.lerp(neck, ease(s_ / 0.25))
+            else:                                                                        # up, over and away left
+                b = ease((s_ - 0.25) / 0.75)
+                p1, p2 = Vector((0.0, oy, 1.9)), Vector((-1.3 - 1.1 * fan, oy, 2.4 + 0.5 * fan))
+                p3 = Vector((-3.2 - 2.0 * fan, 3 * oy, -0.97))
+                c = 1 - b
+                g.location = neck * c ** 3 + p1 * 3 * c * c * b + p2 * 3 * c * b * b + p3 * b ** 3
     elif name == "shop":
         cam.location = (-1.4 + 2.2 * ease(u), -4.4, 0.35); aim.location = (-0.3 + 1.2 * ease(u), 0.2, -0.45)
     elif name == "money":
@@ -302,11 +322,11 @@ def inbetweens():
     return out
 
 
-def render_inbetweens():
+def render_inbetweens(only=None):
     W = build()
     out24 = os.path.join(EP, "build", "blender24")
     os.makedirs(out24, exist_ok=True)
-    todo = inbetweens()
+    todo = [n for n in inbetweens() if only is None or shot_at(n / 24) == only]
     for i, n in enumerate(todo):
         pose(W, n / 24)
         W["sc"].render.filepath = os.path.join(out24, f"{n:04d}.png")
@@ -316,7 +336,7 @@ def render_inbetweens():
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--inbetweens":
-        return render_inbetweens()
+        return render_inbetweens(sys.argv[2] if len(sys.argv) > 2 else None)
     W = build()
     os.makedirs(OUT, exist_ok=True)
     n = int(T_END * FPS)

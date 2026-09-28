@@ -38,10 +38,10 @@ TB, TM, TSH, TN, TR = S.ls("bottle"), S.ls("mind"), S.ls("shop"), S.ls("never"),
 T_MORPH = S.at("bottle", 0.55)                                   # A's 1848 → bottle morph, and D's cut to the bottle
 X1A, X1B = T_MORPH - 0.6, T_MORPH + 0.2                          # D's chrome characters hand over to the line ones
 P1A, P1B = T_MORPH + 0.1, T_MORPH + 1.2                          # ...and the framing eases back to A's own
-X2A = S.at("bottle", 0.77); X2B = X2A + 0.5                      # the line bottle re-forms as the glass one (in characters)
-DV2A, DV2B = X2B - 0.1, X2B + 0.8                                # ...then develops into the image
-UD3A, UD3B = TM + 1.0, TM + 1.55                                 # the burst breaks back into characters
-X3A, X3B = TM + 1.4, TM + 2.2                                    # the characters' source: the burst → the dust stream
+X2A = S.at("bottle", 0.95); X2B = X2A + 0.45                     # once the pour has settled, the line bottle re-forms as
+DV2A, DV2B = X2A + 0.2, X2A + 0.8                                # the glass one (in characters), then develops into the image
+UD3A, UD3B = TM + 1.2, TM + 1.75                                 # the cork pops, the gold streams out, then back to characters
+X3A, X3B = TM + 1.5, TM + 2.3                                    # the characters' source: the Blender stream → the line one
 FB_ON, FB_OFF = UD3A, TSH - 0.2                                  # the feedback loop on the characters
 SW36 = S.at("36k", 0.55) + 1.25                                  # the $36,000 glint
 SW1848 = TB + 1.5                                                # the 1848 glint
@@ -222,11 +222,14 @@ def score():
     then dipped for "Here's the bit nobody tells you"."""
     import beds
     import audio_fx as fx
-    bars_between = 7                                               # mind → never
-    bar = (TN - TM) / bars_between
+    n = max(4, round((TN - TM) / (240.0 / 96)))                   # bars from "mind" to "never", near 96 BPM
+    bar = (TN - TM) / n
     bpm = 240.0 / bar
-    lead = TM - 4 * bar
-    x = beds.terminal(bpm, [("intro", 4), ("a", 3), ("b", 4), ("break", 2), ("out", 1)], lead)
+    n_intro = int((TM - 0.5) // bar)
+    lead = TM - n_intro * bar
+    n_break = max(1, math.ceil((TR - TN) / bar))
+    a = min(3, n - 1)
+    x = beds.terminal(bpm, [("intro", n_intro), ("a", a), ("b", n - a), ("break", n_break), ("out", 2)], lead)
     t = np.arange(len(x)) / fx.SR
     dip = 1 - 0.8 * np.clip((t - (TR - 0.05)) / 0.12, 0, 1) * np.clip(1 - (t - (TR + 1.2)) / 1.0, 0.35, 1)
     x = (x * dip[:, None]).astype(np.float32)
@@ -234,6 +237,19 @@ def score():
     fx.save(path, x, mp3=False)
     print(f"score: Terminal at {bpm:.2f} BPM, lead {lead:.2f}s")
     return path
+
+
+def collect_events():
+    """The picture's sound cues (forms, morphs, ticks, latches...) on the current timeline, at 30 fps as ep03s
+    records them, into build/events.json for the mix."""
+    import json
+    S.EVENTS.clear()
+    surf = skia.Surface(W, H)
+    for i in range(int(DUR * S.FPS)):
+        c = surf.getCanvas(); c.clear(skia.ColorBLACK)
+        S.frame(c, i / S.FPS)
+    json.dump(dict(events=S.EVENTS, dur=DUR), open(os.path.join(BUILD, "events.json"), "w"))
+    print(len(S.EVENTS), "events")
 
 
 def main():
@@ -266,6 +282,7 @@ def main():
             print(f"{i / FPS:5.1f}s / {DUR:.1f}s", flush=True)
     ff.stdin.close(); ff.wait()
     import mix_open
+    collect_events()
     audio = mix_open.build_mix(extra=EXTRA_SFX, out_name="ascii_mix.wav", bed_path=score(), bed_lufs=-17.0)
     mix_open.mux(silent, audio, os.path.join(BUILD, "style_S_ascii.mp4"), crf=21, maxrate="3600k", abr="192k")
 

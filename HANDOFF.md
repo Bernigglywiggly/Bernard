@@ -45,6 +45,26 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
 - Offline transcription works: sherpa-onnx + whisper base.en from GitHub releases
   (`k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-base.en.tar.bz2`).
 
+## Latest (28 Sep): the format is decided — read `lab/inspo/pollar_playbook.md` first
+- **Pollar (@pollar.news) is the core inspiration.** Studied 28 Sep: their hits are AI/big-tech power stories with a
+  hidden mechanism (Nvidia's $250B guarantee 4.6M views; an OpenAI agent escaping its sandbox 717K; Meta glasses light
+  550K); 2:30-3:00; spoken hooks are concrete and personal, never the headline; numbers made physical by a ladder;
+  dated sources; what's unconfirmed said plainly; one visual system per film. (TikTok is reachable now; yt-dlp works with
+  `--impersonate chrome` + curl_cffi. Downloads stay in gitignored `lab/inspo/tt*/`.)
+- **The user's rules:** NO humour, no swearing, no punchline slots; straight into the facts, then curiosity and one
+  labelled IMAGINE; George (ElevenLabs) voices everything, fast (~1.15-1.2); no own-voice recordings, no voice changer.
+  Mostly ASCII with a touch of Blender realism (see `ascii_open.py`). All six new beds get used, matched to topic tone
+  (table in the playbook and on the plan page). The stickman show is parked (it was built on comedy).
+- **Voice blocker:** api.elevenlabs.io is reachable now, but `ELEVENLABS_API_KEY` isn't set. Once it is (new session):
+  `cd lab && python3 tools/eleven_tts.py ep03s --speed 1.2` then `cd ep03s && python3 voice_build.py` (auto-picks George)
+  then `python3 ascii_open.py render`. Everything re-times itself from lines.json; the Blender frames re-time through
+  `relay.D_WARP` (mapping today's lines onto `build/lines_blender.json`, the timeline they were rendered on).
+- **EP03 v2** script: `lab/ep03s/script.py` (the old comedic one stays in `lab/ep03/` for the old engine). Facts checked
+  28 Sep (Nvidia Q2 FY27 8-K; big-tech 2026 capex ~$725B; OpenAI Q1 2026 via The Information; Clay & Jones 2008; CPI).
+- **Particles:** `ep03s.dust_at` is now fixed per-grain smooth paths (pour stream through the neck, fountain matched
+  launch-order→landing, drift on the bank, left-to-right re-form); the Blender burst is a cork pop + fountain
+  (`blender/cold_open.py`, `LINES_JSON=build/lines_blender.json` to render on the Blender timeline).
+
 ## Newest direction (27 Sep): Five by February
 - Plan page: https://claude.ai/artifact/8tVyExzYz4cXDneYtUSWxp (source `lab/plan/index.html`; db collections `picks`,
   `lines` = the user's own punchlines per slot id a1..d2, `notes/ideas` = their channel ideas). Read these first next session.

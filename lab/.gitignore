@@ -32,3 +32,8 @@ stickman/build/
 
 # analyse.py pictures
 out/music/**/*_spec.png
+
+# more third-party inspo (media and scraped listings stay local)
+inspo/tt*/
+inspo/*.jsonl
+inspo/err.log

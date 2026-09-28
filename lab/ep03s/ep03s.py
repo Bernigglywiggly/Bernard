@@ -241,38 +241,85 @@ def dust_home():
 
 
 DUST_HOME = dust_home()
-DUST_SKY = np.column_stack([CX + RNG.normal(0, 18, N_DUST), np.full(N_DUST, CY - 520.0) - RNG.uniform(0, 300, N_DUST)])
-DUST_SHOP = sample_on(SHOP + SHELF, N_DUST, RNG)
+_shop = sample_on(SHOP + SHELF, N_DUST, RNG)
 _rx = RNG.uniform(90, 460, N_DUST)
-RUN_TARGET = np.column_stack([_rx, 790 + (_rx - 90) * 0.12 + RNG.normal(0, 22, N_DUST)])
-RUN_DELAY = RNG.uniform(0, 0.45, N_DUST)
+_run = np.column_stack([_rx, 790 + (_rx - 90) * 0.12 + RNG.normal(0, 22, N_DUST)])
+_DR = np.random.default_rng(21)
+_rank = lambda v: np.argsort(np.argsort(v)) / (len(v) - 1)
+POUR_RANK = _rank(-DUST_HOME[:, 1])                                  # the heap fills from the bottom up
+BURST_RANK = _rank(DUST_HOME[:, 1])                                  # ...and empties from the top down
+# landing spots matched to launch order, so paths never cross: the first grains out land furthest away (the
+# fountain lays the bank down like a hose, far end first), and the store is built left to right from the bank
+RUN_TARGET = np.empty_like(_run)
+RUN_TARGET[np.argsort(BURST_RANK)] = _run[np.argsort(_run[:, 0])]
+DUST_SHOP = np.empty_like(_shop)
+DUST_SHOP[np.argsort(RUN_TARGET[:, 0])] = _shop[np.argsort(_shop[:, 0])]
+SHOP_RANK = _rank(DUST_SHOP[:, 0])
+OX = _DR.normal(0, 5, N_DUST)                                        # each grain's place across the thin stream
+FAN = np.clip((CX - RUN_TARGET[:, 0]) / (CX - 90), 0, 1) * 0.85 + 0.15 * _DR.random(N_DUST)   # far grains fly higher
+PHASE = _DR.random(N_DUST) * 2 * np.pi
+NECK_TOP, NECK_LOW = CY + 20 - 1.5 * 190, CY + 20 - 0.9 * 190
+
+
+def _smooth(x):
+    x = np.clip(x, 0, 1)
+    return x * x * (3 - 2 * x)
+
+
+def _bez3(p0, p1, p2, p3, s):
+    s = s[:, None]
+    u = 1 - s
+    return u ** 3 * p0 + 3 * u * u * s * p1 + 3 * u * s * s * p2 + s ** 3 * p3
+
+
+def _col(x, y):
+    return np.column_stack([np.broadcast_to(x, N_DUST), np.broadcast_to(y, N_DUST)]).astype(float)
+
+
+def _river(t, arrived):
+    """At the river the grains drift gently, like a crowd along the bank."""
+    return RUN_TARGET + arrived[:, None] * np.column_stack([4 * np.sin(0.9 * t + PHASE), 2.5 * np.sin(1.4 * t + 1.3 * PHASE)])
 
 
 def dust_at(t):
-    """The one set of dust that pours in, bursts out, runs for the river, and re-forms as the shop."""
+    """The one set of gold that pours in, streams out, runs for the river and re-forms as the shop. Every grain
+    follows its own smooth, fixed path (nothing is re-randomised per frame): a thin stream pours down through the
+    neck and heaps from the bottom up; the heap empties from the top down through the neck in a fountain that arcs
+    over to the river; the grains drift on the bank; then they lift and settle into the store, left to right."""
     t_pour0, t_pour1 = at("bottle", 0.66), at("bottle", 0.95)
-    t_burst = ls("mind") + 0.1
-    t_run1 = at("mind", 0.95)
+    t_burst, t_run1 = ls("mind") + 0.1, at("mind", 0.95)
     t_shop0, t_shop1 = ls("shop") + 0.05, at("shop", 0.55)
     if t < t_pour0:
         return None, 0
-    if t < t_burst:                                   # falling into the bottle, heaping at the bottom
-        k = np.clip((t - t_pour0 - RUN_DELAY * (t_pour1 - t_pour0)) / (0.55 * (t_pour1 - t_pour0)), 0, 1)
-        k = k * k
-        return DUST_SKY + (DUST_HOME - DUST_SKY) * k[:, None], 1
-    if t < t_shop0:                                    # out of the neck, then streaming left for the river
-        u = (t - t_burst) / (t_run1 - t_burst)
-        k = np.clip((u - RUN_DELAY) / 0.55, 0, 1)
-        k = k * k * (3 - 2 * k)
-        neck = np.array([CX, CY - 260.0])
-        up = np.clip(u * 3, 0, 1)
-        mid = DUST_HOME + (neck + RNG.normal(0, 1, (N_DUST, 2)) * [120, 60] - DUST_HOME) * up
-        pos = mid + (RUN_TARGET - mid) * k[:, None]
-        pos[:, 1] += np.sin(np.pi * k) * -120
+    if t < t_burst:                                   # the pour
+        span = t_pour1 - t_pour0
+        dur = 0.38 * span
+        s = _smooth((t - (t_pour0 + POUR_RANK * (span - dur))) / dur)
+        p0 = _col(CX + 2 * OX, NECK_TOP - 330)
+        pos = _bez3(p0, _col(CX + OX, NECK_TOP - 60), _col(CX + 0.5 * OX, NECK_LOW + 10), DUST_HOME, s)
         return pos, 1
-    k = np.clip((t - t_shop0 - RUN_DELAY * 0.5) / (t_shop1 - t_shop0), 0, 1)
-    k = k * k * (3 - 2 * k)
-    return RUN_TARGET + (DUST_SHOP - RUN_TARGET) * k[:, None], 1 - clamp((t - t_shop1) / 0.8)
+    if t < t_shop0:                                   # the fountain, then the river
+        span = t_run1 - t_burst
+        dur = 0.55 * span
+        s = np.clip((t - (t_burst + BURST_RANK * (span - dur))) / dur, 0, 1)
+        neck = _col(CX + OX, NECK_TOP - 10)
+        a = _smooth(s / 0.25)                                          # first, up to the neck
+        pos = DUST_HOME + (neck - DUST_HOME) * a[:, None]
+        b = _smooth((s - 0.25) / 0.75)                                 # then up, over and down to the bank
+        apex = np.column_stack([CX - 140 - 260 * FAN, NECK_TOP - 190 - 90 * FAN])
+        arc = _bez3(neck, _col(CX + OX, NECK_TOP - 260), apex, RUN_TARGET, b)
+        pos = np.where((s > 0.25)[:, None], arc, pos)
+        arrived = _smooth((s - 0.9) / 0.1)
+        pos = np.where((s >= 1)[:, None], _river(t, arrived), pos)
+        return pos, 1
+    span = t_shop1 - t_shop0                          # the store forms where the gold lands
+    dur = 0.45 * span
+    s = _smooth((t - (t_shop0 + SHOP_RANK * (span - dur))) / dur)
+    p0 = _river(t_shop0, np.ones(N_DUST))
+    lift = (p0 + DUST_SHOP) / 2 - np.array([0.0, 220.0])
+    u = s[:, None]
+    pos = (1 - u) ** 2 * p0 + 2 * (1 - u) * u * lift + u ** 2 * DUST_SHOP
+    return pos, 1 - clamp((t - t_shop1) / 0.8)
 
 
 # ---------------------------------------------------------------- the frame
@@ -387,7 +434,9 @@ def frame(c, t):
     # he never dug: everything becomes one shovel, which starts to scoop and stops dead
     if t_never <= t:
         k_in = seg(t, t_never, t_never + 1.0)
-        src = segs(STREET + [q for q in G36K], N)
+        # the $36,000 starts where it is on screen (shrunk and raised over the street), not at full size
+        g36 = [np.column_stack([CX + 0.55 * (q[:, 0] - CX), CY - 30 + 0.55 * (q[:, 1] - CY + 30 - 420)]) for q in G36K]
+        src = segs(STREET + g36, N)
         dst = segs(BIG_SHOVEL, N)
         S, kk = morph_flow(src, dst, k_in)
         ev(t_never, "morph", t)

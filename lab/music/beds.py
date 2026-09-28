@@ -695,27 +695,32 @@ def night_drive(bpm=108, plan=None, lead=0.0, calm=False):
 
 
 # ================================================================ 4 · LOW ORBIT (cinematic pulse, 120 BPM)
-def low_orbit():
-    s = Song(120, 36, seed=44)
+def low_orbit(bpm=120, plan=None, lead=0.0):
+    """plan/lead as for terminal(). Sections: its own (intro, build, main, peak, out) or the film names the engine
+    uses (intro, a = main, b = peak, break = build: the clock and pads without the heartbeat, out), so a film can
+    re-cut it to picture (EP05). The pad's filter opens by section instead of across a fixed 70 seconds."""
+    alias = {"a": "main", "b": "peak", "break": "build"}
+    plan = [(alias.get(n, n), k) for n, k in (plan or [("intro", 4), ("build", 8), ("main", 8), ("peak", 8), ("out", 8)])]
+    s = Song(bpm, sum(k for _, k in plan), seed=44)
     rng = s.rng
     prog = [(36, "maj7"), (40, "m7"), (33, "m9"), (29, "maj7#11")]          # Cmaj7  Em7  Am9  Fmaj7#11, 2 bars each
-    sec = sections(s, [("intro", 4), ("build", 8), ("main", 8), ("peak", 8), ("out", 8)])
+    sec = sections(s, plan)
     motif = [67, 64, 62, 60]
+    loud = {"intro": 0.35, "build": 0.65, "main": 1.0, "peak": 1.0, "out": 0.55}
     for b in range(s.bars):
         root, q = prog[(b // 2) % 4]
         v = voicing(root, q, 50)
         name = sec[b]
-        k_in = min(1.0, b / 12)
         if b % 2 == 0:
             for m in v:
                 s.put("pad", supersaw(m, s.bar * 1.98, rng, voices=7, detune=0.1, r=2.5, a=1.2), s.at(b))
             s.put("sub", sub(low(root, 28), s.bar * 1.9, harm=0.05) * env(int((s.bar * 1.9 + 0.08) * SR), 1.5, s.bar * 1.9, 1.0), s.at(b))
         # the clock: muted 16th plucks on the fifth and root, louder as it builds
-        if name != "out" or b < 32:
+        if name != "out" or b < s.bars - 4:
             for st in range(16):
                 m = low(root, 55) + (7 if st % 2 else 0)
                 s.put("clock", pluck(m, 0.05, 1.5, 30.0, 8), s.at(b, st), pan=0.4 * (-1) ** st,
-                      gain=(0.35 + 0.65 * k_in) * (1.0 if st % 4 == 0 else 0.6))
+                      gain=loud[name] * (1.0 if st % 4 == 0 else 0.6))
         if name in ("main", "peak"):
             for st in (0, 3):                                                   # the heartbeat: da-dum
                 s.put("kick", kick(44, 110, 0.04, 0.4, 0.1, soft=True, seed=st), s.at(b, st), gain=1.0 if st == 0 else 0.7)
@@ -728,17 +733,27 @@ def low_orbit():
         if name in ("main", "peak") and b % 2 == 1:                          # a high shimmer, far away
             for k, m in enumerate(v[-3:]):
                 s.put("shimmer", bell(m + 24, 1.2, 0.5, ratio=3.0, bright=0.6), s.at(b, 4 + k * 4), pan=0.5 * (-1) ** k)
-        if b == 17:
-            s.put("fx", riser(s.bar * 3, 200, 9000), s.at(17))
-    cut = lambda t: 280 + 4200 * np.clip(t / (20 * s.bar), 0, 1) ** 1.6 * (1 - 0.5 * np.clip((t - 28 * s.bar) / (8 * s.bar), 0, 1))
+        if b + 1 < s.bars and sec[b + 1] != name and sec[b + 1] in ("main", "peak"):
+            s.put("fx", riser(s.bar * min(3, max(1, b)), 200, 9000), s.at(max(0, b - 2) if b >= 2 else b))
+    lvl = {"intro": 500, "build": 1600, "main": 3200, "peak": 4600, "out": 900}
+    bt = np.arange(s.bars) * s.bar
+    bc = np.array([lvl.get(n, 1500) for n in sec], float)
+    if sec[0] == "intro":                                                      # the intro opens slowly
+        k = [i for i, n in enumerate(sec) if n == "intro"]
+        bc[k] = np.linspace(300, 1200, len(k))
+    cut = lambda t: float(np.interp(t, bt + s.bar * 0.5, bc))
     s.stems["pad"] = reverb(ladder(s.stems["pad"], cut, 0.2), 0.95, 0.42, 0.4)
-    s.stems["cello"] = reverb(fx.bq(s.stems["cello"], "lp", 1600), 0.8, 0.3, 0.5)
+    if "cello" in s.stems:
+        s.stems["cello"] = reverb(fx.bq(s.stems["cello"], "lp", 1600), 0.8, 0.3, 0.5)
     s.stems["clock"] = reverb(fx.bq(s.stems["clock"], "hp", 700), 0.4, 0.12, 0.7)
-    s.stems["piano"] = reverb(s.stems["piano"], 0.9, 0.4, 0.5)
-    s.stems["shimmer"] = fx.bq(reverb(s.stems["shimmer"], 0.97, 0.6, 0.3), "lp", 11000)
-    return balance(s, {"pad": -19, "sub": -23, "clock": -26, "kick": -24, "piano": -24, "cello": -27, "fx": -30, "shimmer": -28},
-                   sidechain={"pad": (0.2, 0.3)},
-                   dyn=(sec, {"intro": -6, "build": (-4, -1), "main": 0, "peak": 1, "out": (-1, -6)}))
+    if "piano" in s.stems:
+        s.stems["piano"] = reverb(s.stems["piano"], 0.9, 0.4, 0.5)
+    if "shimmer" in s.stems:
+        s.stems["shimmer"] = fx.bq(reverb(s.stems["shimmer"], 0.97, 0.6, 0.3), "lp", 11000)
+    mix = balance(s, {"pad": -19, "sub": -23, "clock": -26, "kick": -24, "piano": -24, "cello": -27, "fx": -30, "shimmer": -28},
+                  sidechain={"pad": (0.2, 0.3)},
+                  dyn=(sec, {"intro": (-6, -3), "build": -3, "main": 0, "peak": 1, "out": (-1, -8)}))
+    return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
 
 
 # ================================================================ 5 · TWO-STEP (UK future garage, 132 BPM)

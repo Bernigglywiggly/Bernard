@@ -49,8 +49,11 @@ def plan(marks, dur, bar, lead):
     return [tuple(p) for p in out]
 
 
-def build(out_path, marks, dur, anchors=None, bed="mainframe", bpm=104.0):
-    bar, lead = grid(anchors, bpm)
+BPM = {"mainframe": 104.0, "low_orbit": 120.0, "night_drive": 108.0, "terminal": 96.0}
+
+
+def build(out_path, marks, dur, anchors=None, bed="mainframe", bpm=None):
+    bar, lead = grid(anchors, bpm or BPM.get(bed, 104.0))
     p = plan(marks, dur, bar, lead)
     x = getattr(beds, bed)(240.0 / bar, p, lead)
     fx.save(out_path, np.asarray(x, np.float32), mp3=False)

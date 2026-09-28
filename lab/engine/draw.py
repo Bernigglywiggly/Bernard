@@ -402,3 +402,124 @@ def figure(x, y, s, pose, face=1, robot=False, mask=False):
         out.append(P([(fx_ - face * 0.02 * s, fy_), (fx_ + face * 0.07 * s, fy_)]))
     j["closed"] = closed
     return out, j
+
+
+# ---------------------------------------------------------------- motion and set pieces shared by episodes
+def keys(t, ks):
+    """Eased motion through keyframes [(time, value), ...]."""
+    if t <= ks[0][0]:
+        return ks[0][1]
+    for (t0, v0), (t1, v1) in zip(ks, ks[1:]):
+        if t < t1:
+            return lerp(v0, v1, ease(seg(t, t0, t1)))
+    return ks[-1][1]
+
+
+def bump(t, a, peak, b):
+    """0 -> 1 -> 0: up from a to peak, down to b."""
+    if t <= a or t >= b:
+        return 0.0
+    return ease(seg(t, a, peak)) if t < peak else 1 - ease(seg(t, peak, b))
+
+
+def morph_polys(c, pa, pb, k, col=WHITE, n=720):
+    """Any line art into any other: segments sweep across on a slight arc, bright tips while they travel."""
+    Sa, Sb = segs(pa, n), segs(pb, n)
+    Sg, kk = morph_flow(Sa, Sb, k)
+    draw_segs(c, Sg, col, 1.8, 1.0, tips=kk if k < 1 else None)
+
+
+def dotted_num(c, text, size, cx, cy, t, t0, a=1.0):
+    """A number drawn in dashes (a what-if, not a fact)."""
+    if t < t0 or a <= 0:
+        return
+    sg, _ = big(text, size, cx, cy, 520)
+    sel = sg[::2]
+    n = int(len(sel) * ease(seg(t, t0, t0 + 0.8)))
+    draw_segs(c, sel[:n], GLOW, 2.2, a)
+    tl.ev(t0, "form", t, cx)
+
+
+def roll(c, a_txt, b_txt, size, cx, cy, t, t0, t_m, a=1.0):
+    """A number that forms, then morphs into another, then fills with chrome."""
+    if t < t0 or a <= 0:
+        return
+    with layer(c, a):
+        if t < t_m:
+            bignum(c, t, a_txt, size, cx, cy, t0, fill=False)
+            return
+        sa, _ = big(a_txt, size, cx, cy)
+        sb, pb = big(b_txt, size, cx, cy)
+        k = seg(t, t_m, t_m + 0.8)
+        Sg, kk = morph_flow(sa, sb, k)
+        kf = ease(seg(t, t_m + 0.7, t_m + 1.2))
+        draw_segs(c, Sg, GLOW, 1.7, 1 - 0.8 * kf, tips=kk if k < 1 else None)
+        chrome_fill(c, pb, kf, sweep=seg(t, t_m + 1.0, t_m + 1.9))
+        tl.ev(t_m, "morph", t, cx)
+        tl.ev(t_m + 0.75, "thock", t, cx)
+
+
+def page(x, y, w, h):
+    """A document: the outline, a folded corner, lines of text."""
+    out = [P([(x, y), (x + 0.82 * w, y), (x + w, y + 0.18 * w), (x + w, y + h), (x, y + h), (x, y)]),
+           P([(x + 0.82 * w, y), (x + 0.82 * w, y + 0.18 * w), (x + w, y + 0.18 * w)])]
+    for k in range(7):
+        yy = y + (0.28 + 0.1 * k) * h
+        out.append(P([(x + 0.12 * w, yy), (x + (0.45 + 0.4 * ((k * 37) % 7) / 7) * w, yy)]))
+    return out
+
+
+def burst(c, x, y, t, t0, r=60, a=1.0, n=9):
+    """An impact or a spark: short lines flying out and fading."""
+    k = seg(t, t0, t0 + 0.32)
+    if k <= 0 or k >= 1:
+        return
+    p = mg.stroke(WHITE, 2.2, a * (1 - k))
+    for i in range(n):
+        ang = i * 2 * math.pi / n + 0.3
+        r0, r1 = r * (0.3 + 0.9 * ease(k, "o")), r * (0.6 + 1.3 * ease(k, "o"))
+        c.drawLine(x + r0 * math.cos(ang), y + r0 * math.sin(ang), x + r1 * math.cos(ang), y + r1 * math.sin(ang), p)
+
+
+def sun(cx, cy, r, rot=0.0, n=16):
+    """The sun: a disc and rays."""
+    out = [ellipse(cx, cy, r, r, 0, 360, 72)]
+    for k in range(n):
+        a = rot + k * 2 * math.pi / n
+        r0, r1 = r * 1.25, r * (1.6 if k % 2 == 0 else 1.45)
+        out.append(P([(cx + r0 * math.cos(a), cy + r0 * math.sin(a)), (cx + r1 * math.cos(a), cy + r1 * math.sin(a))]))
+    return out
+
+
+def globe(cx, cy, r, rot=0.0, n_mer=10, lats=(-60, -30, 0, 30, 60)):
+    """The Earth seen from the equator (orthographic): the rim, the visible halves of the meridians (turning with
+    rot, in radians), and the parallels."""
+    out = [ellipse(cx, cy, r, r, 0, 360, 120)]
+    lat = np.radians(np.linspace(-90, 90, 40))
+    for k in range(n_mer):
+        lon = (rot + k * math.pi / n_mer * 2) % (2 * math.pi)
+        if math.cos(lon) <= 0.02:
+            continue
+        out.append(np.column_stack([cx + r * np.cos(lat) * math.sin(lon), cy - r * np.sin(lat)]))
+    for d in lats:
+        f = math.sin(math.radians(d))
+        w = r * math.cos(math.radians(d))
+        out.append(P([(cx - w, cy - f * r), (cx + w, cy - f * r)]))
+    return out
+
+
+def satellite(cx, cy, s, ang=0.0):
+    """A satellite: a body with a dish and two solar wings of cells."""
+    out = [P([(-0.18, -0.16), (0.18, -0.16), (0.18, 0.16), (-0.18, 0.16), (-0.18, -0.16)])]
+    for sgn in (-1, 1):
+        x0, x1 = sgn * 0.24, sgn * 0.95
+        out.append(P([(sgn * 0.18, 0.0), (x0, 0.0)]))
+        out.append(P([(x0, -0.14), (x1, -0.14), (x1, 0.14), (x0, 0.14), (x0, -0.14)]))
+        for k in range(1, 5):
+            xx = x0 + (x1 - x0) * k / 5
+            out.append(P([(xx, -0.14), (xx, 0.14)]))
+        out.append(P([(x0, 0.0), (x1, 0.0)]))
+    out.append(P([(0.0, -0.16), (0.0, -0.28)]))
+    out.append(np.column_stack([0.12 * np.cos(np.linspace(0.2, math.pi - 0.2, 12)), -0.3 - 0.06 * np.sin(np.linspace(0.2, math.pi - 0.2, 12))]))
+    ca, sa = math.cos(ang), math.sin(ang)
+    return [np.column_stack([cx + s * (q[:, 0] * ca - q[:, 1] * sa), cy + s * (q[:, 0] * sa + q[:, 1] * ca)]) for q in out]

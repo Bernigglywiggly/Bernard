@@ -50,7 +50,7 @@ fast. Mostly ASCII with a touch of Blender realism. All six new beds, matched to
 11. **Length:** 2:00-3:00 (long enough to count as long-form in 16:9 for watch hours; cut vertical for TikTok/Shorts).
 12. **Analogies, as many as it takes (the user, 28 Sep):** every big number gets something people can picture, and
     the out-of-the-ordinary ones are the house style: what a missile *costs* in Big Macs (a Patriot interceptor, about
-    $4.2M, is about 680,000 Big Macs; the drone it's fired at, about 5,600), a million dollars a day since the Romans
+    $4.2M, is about 680,000 Big Macs; the drone it's fired at, $20-50K, is 3,000 to 8,000: say the range when the source gives one), a million dollars a day since the Romans
     invaded Britain, per second, per person on Earth, average UK houses, years of the median salary, notes stacked
     past the space station. Mix the funny with the plain; use as many as the story needs, not one per section. Read
     them straight: the humour is in the comparison, never in the phrasing (no wink, no punchline word). Exact to two

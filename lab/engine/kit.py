@@ -58,6 +58,16 @@ EPISODES = [
              "prove you're you?"),
          schedule=[("Day 18", "part1", "picked"), ("Day 19", "part2", "persona"), ("Day 20", "part3", "captcha"),
                    ("Day 21", "bots", "secretword")]),
+    dict(dir="ep07", slug="ep07", title="EP07 · The Thirty-Year Delay", sub="Why AI hasn't changed productivity (yet)",
+         full="ep07/build/ep07_720.mp4", thumb="ep07/build/ep07_thumb.jpg",
+         yt=("Why AI Hasn't Made Companies More Productive (Yet)",
+             "In February 2026, economists asked 6,000 bosses what AI had done for their companies. Nearly nine in ten "
+             "said: nothing. This has happened before, almost exactly.\n\nIn this video: why electricity took decades to "
+             "show up in factory productivity (one big motor on the old shaft), the redesign that finally made it pay, "
+             "Robert Solow's computer paradox, why 95% of company AI pilots made no measurable return, and a labelled "
+             "what-if: an office designed from zero around AI."),
+         schedule=[("Day 22", "part1", "nothing"), ("Day 23", "part2", "shaft"), ("Day 24", "part3", "redesign"),
+                   ("Day 25", "pilots", "office")]),
 ]
 
 CSS = """

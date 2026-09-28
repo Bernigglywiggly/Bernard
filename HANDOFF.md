@@ -48,6 +48,15 @@ Updated 28 Sep 2026 (afternoon), cloud session on branch `claude/lucid-archimede
   SpaceX up to 1,000,000 vs ~16,500 working satellites; $7,000 a kilo, so launching one Big Mac costs ~250 Big Macs;
   Google's break-even under $200/kg (~35x cheaper); a 2040 what-if on who owns what catches the sunlight. 10 shorts.
   Post it while the launch is news.
+- **EP06 · Who's Human Here?** (`lab/ep06/`, ~1:45, Chrome & Marl): the 2025 Turing test (284 people; the AI picked
+  as the human 73% of the time, 36% without its persona), Turing's 1950 30% bar, bots at 53% of web traffic in 2025,
+  the agent clicking "verify you are human", the FBI's family secret word, a 2030 what-if. 8 shorts.
+- **EP07 · The Thirty-Year Delay** (`lab/ep07/`, ~2:02, Night Drive calm): NBER Feb 2026 (~90% of 6,000 firms saw no
+  AI productivity change), Paul David's dynamo story (one big motor on the old shaft; the gains came with a motor in
+  every machine), Solow 1987, MIT's 95% of pilots, an office built from zero around AI. 8 shorts.
+- **Every film also gets** a thumbnail (`python3 -m engine.thumb <feed> <t> "LINE|LINE|LINE" <out.jpg> <accent> fx,fy,zoom`)
+  and a 720p preview (`film.py preview`); the kit shows both with the YouTube title and description to copy.
+- **Channel 2** is still the user's pick (the plan page's vote, db `picks`, was empty on 28 Sep).
 - The ElevenLabs key lives only in the session scratchpad (`.el_key`), never in the repo; every voiced line is cached
   in `lab/voice/cache/eleven` (committed), so any session can rebuild the films without the key.
 

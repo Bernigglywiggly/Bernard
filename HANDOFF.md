@@ -82,13 +82,13 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   swells in b, booms at section changes, a soft taiko, no drum kit). The cold open is scored with it (v5.1:
   `python3 ascii_open.py mix` re-scores the rendered picture in about 2 minutes); the playbook and plan map EP03
   and serious topics to it. The standalone bed is `lab/out/music/new/mainframe.mp3`.
-- **EP03 in full is built (28 Sep, v1, with a stand-in voice):** `ep03_body.py` draws everything after the cold open
-  in the same ASCII system (plan: `lab/ep03s/FULL_PLAN.md`); labels type on with a mechanical key per character
-  (`typeon.py` + `lab/sfx/detail.py`, ASMR-style thock); `mix_full.py` is the voice-first mix (voice about -14 LUFS
-  while talking, Mainframe ducked about 15 dB under it and up in the gaps, dips before each cut line, the detail
-  layer tucked under; master -14 LUFS, -1 dBTP). Output: `build/ep03_full.mp4` (1080p), about 3:07.
-  The voice in it is the local Kokoro stand-in (bm_george): the user signed in to ElevenLabs in their Chrome, which
-  a cloud session can't use; the key has to go in the environment settings.
+- **EP03 in full is built (28 Sep, v1.1):** `ep03_body.py` draws everything after the cold open in the same ASCII
+  system (plan: `lab/ep03s/FULL_PLAN.md`); labels type on visually (`typeon.py`). Output `build/ep03_full.mp4`
+  (1080p, 3:07). **On v1 the user said: no typing sounds, and "go back to the very original British voice ... get rid
+  of this voice right now".** So v1.1 has no keystrokes and no voice: captions carry the words until George.
+  **Never put the local Kokoro voice in anything the user hears** (bm_george was rejected before, and again here);
+  `mix_full.py` now only mixes a voice when lines.json says the engine is "eleven" (George). The ElevenLabs login in
+  the user's Chrome can't be used from the cloud; the API key has to go in the environment settings.
 - **Swap in George (one command, in a new session once `ELEVENLABS_API_KEY` is set):**
   `cd lab && python3 tools/eleven_tts.py ep03s --speed 1.2 && cd ep03s && python3 voice_build.py &&
   EP03_FULL=1 python3 ascii_open.py full 4` (everything re-times from lines.json; about 25 minutes).

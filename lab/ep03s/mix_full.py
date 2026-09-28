@@ -1,14 +1,14 @@
-"""The full EP03 mix (28 Sep): the voice on top, the music well under it, and a detailed, satisfying layer of sound
-under the picture. The user: "background music not too loud", "the voice whatever volume level is needed", "lots of
-detail sound effects", mechanical-keyboard keys where text types on ("the really satisfying ones people use for
-ASMR"), "but don't force it".
+"""The full EP03 mix (28 Sep): the voice on top, the music well under it, and a detailed layer of sound under the
+picture. The user: "background music not too loud", "the voice whatever volume level is needed", "lots of detail
+sound effects". Then, on v1: no typing sounds, and only the very first British voice (ElevenLabs George), never the
+local stand-in: "get rid of this voice right now".
 
-  voice   build/voice.wav as voice_build.py made it (chained, a small room), de-essed, on top
+  voice   ElevenLabs George only (lines.json engine "eleven"): build/voice.wav, de-essed, on top. With any other
+          engine there is no voice at all (captions carry the words) and the music isn't ducked
   music   Mainframe re-cut to the floors (ascii_open.score_full), ducked about 11 dB whenever the voice talks and
           breathing back up in the gaps; a hard dip into every "cut" line (the silence before a reveal)
-  detail  the picture's own events (forms, morphs, latches, coins, paper, pops, links, ticks...), one mechanical key
-          per character that types on screen (lab/sfx/detail.py, timed by typeon.schedule), tucked 4 dB under the
-          voice while it talks
+  detail  the picture's own events (forms, morphs, latches, coins, paper, pops, links, ticks...), tucked 4 dB under
+          the voice while it talks. No keystrokes (the user took them out)
   master  -14 LUFS integrated, -1 dBTP
 
     python3 mix_full.py     # after ascii_open.py collect/score: build/ep03_full_mix.wav, with a level report
@@ -24,9 +24,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, ".."))
 sys.path.insert(0, os.path.join(HERE, "..", "sfx"))
 import audio_fx as fx  # noqa: E402
-import detail as D  # noqa: E402
 import palette as PAL  # noqa: E402
-import typeon as TO  # noqa: E402
 
 SR = fx.SR
 BUILD = os.path.join(HERE, "build")
@@ -36,7 +34,6 @@ MAP = {"form": ("form", -13), "morph": ("whoosh", -15), "whoosh": ("whoosh", -15
        "scan": ("scan", -18), "latch": ("latch", -12), "thock": ("thock", -9), "zoom": ("riser", -16),
        "confirm": ("confirm", -14), "coin": ("coin", -11), "paper": ("paper", -11), "pop": ("pop", -12),
        "link": ("link", -10), "grains": ("grains", -15), "tick": ("tick", -15)}
-KEY_DB = -11.0                     # a mechanical key per typed character: heard, about 11 LU under the voice
 DUCK_MUSIC, DUCK_SFX = -12.5, -4.0
 
 
@@ -107,10 +104,11 @@ def main(bed_path=os.path.join(BUILD, "full_bed.wav"), out_name="ep03_full_mix.w
     n = int(total * SR)
     fit = lambda y: np.pad(y, ((0, max(0, n - len(y))), (0, 0)))[:n]
 
-    voice = fit(deess(fx.load(os.path.join(BUILD, "voice.wav"))))
+    george = meta.get("engine") == "eleven"                          # the local stand-in voice is never heard
+    voice = fit(deess(fx.load(os.path.join(BUILD, "voice.wav")))) if george else np.zeros((n, 2), np.float32)
     music = fit(fx.load(bed_path))
     music = music * fx.db(-19.0 - fx.lufs(music))
-    tk = talking(lines, n)
+    tk = talking(lines, n) if george else np.zeros(n, np.float32)
     music = music * fx.db(DUCK_MUSIC * tk + cut_dips(lines, n))[:, None]
 
     detail = np.zeros((n, 2), np.float32)
@@ -128,14 +126,6 @@ def main(bed_path=os.path.join(BUILD, "full_bed.wav"), out_name="ep03_full_mix.w
                 cache[name] = load(name)
             x = cache[name]
         place(detail, x, at, gain, pan)
-    keys = 0
-    for lab in ev["typing"]:                                          # a key for every character that types on
-        times = TO.schedule(lab["text"], lab["t0"], lab["cps"])
-        vel = 0.75 if lab["cps"] > 30 else 1.0                          # the fast sources, a touch lighter
-        run = D.keystrokes(lab["text"], times, seed=int(lab["t0"] * 100), vel=vel)
-        pan = float(np.clip((lab["x"] - 960) / 960, -0.6, 0.6)) * 0.5
-        place(detail, run, times[0], KEY_DB, pan)
-        keys += len(lab["text"])
     detail = detail * fx.db(DUCK_SFX * tk)[:, None]
 
     pre = voice + music + detail
@@ -144,9 +134,9 @@ def main(bed_path=os.path.join(BUILD, "full_bed.wav"), out_name="ep03_full_mix.w
     speech = tk > 0.9
     st = lambda y: fx.lufs(y[speech]) if speech.any() else float("nan")
     gaps = tk < 0.1
-    report = dict(master=round(fx.lufs(mix), 2), voice_talking=round(st(voice * g), 1), music_under_voice=round(st(music * g), 1),
-                  music_in_gaps=round(fx.lufs((music * g)[gaps]), 1) if gaps.sum() > SR else None,
-                  detail=round(fx.lufs(detail * g), 1), keys=keys, events=len(seen))
+    report = dict(voice="George" if george else "none (captions only)", master=round(fx.lufs(mix), 2),
+                  voice_talking=round(st(voice * g), 1) if george else None, music_under_voice=round(st(music * g), 1) if george else None,
+                  music=round(fx.lufs(music * g), 1), detail=round(fx.lufs(detail * g), 1), events=len(seen))
     out = os.path.join(BUILD, out_name)
     fx.save(out, mix, mp3=False)
     for nm, y in (("stem_voice.wav", voice * g), ("stem_music.wav", music * g), ("stem_detail.wav", detail * g)):

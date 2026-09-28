@@ -49,7 +49,7 @@ def plan(marks, dur, bar, lead):
     return [tuple(p) for p in out]
 
 
-BPM = {"mainframe": 104.0, "low_orbit": 120.0, "night_drive": 108.0, "terminal": 96.0}
+BPM = {"mainframe": 104.0, "low_orbit": 120.0, "night_drive": 108.0, "terminal": 96.0, "chrome_marl": 72.0}
 
 
 def build(out_path, marks, dur, anchors=None, bed="mainframe", bpm=None):

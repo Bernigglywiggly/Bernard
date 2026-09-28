@@ -808,11 +808,13 @@ def two_step():
 
 
 # ================================================================ 6 · CHROME & MARL II (72 BPM, calm)
-def chrome_marl():
-    s = Song(72, 22, seed=66)
+def chrome_marl(bpm=72, plan=None, lead=0.0):
+    """plan/lead as for terminal(); "break" plays like the intro (pads, sub and air only), so a film can re-cut it (EP06)."""
+    plan = [("intro" if n == "break" else n, k) for n, k in (plan or [("intro", 2), ("a", 8), ("b", 8), ("out", 4)])]
+    s = Song(bpm, sum(k for _, k in plan), seed=66)
     rng = s.rng
     prog = [(45, "m9"), (45, "m9"), (41, "maj9"), (41, "maj9"), (48, "maj9"), (48, "maj9"), (40, "m7"), (43, "6/9")]
-    sec = sections(s, [("intro", 2), ("a", 8), ("b", 8), ("out", 4)])
+    sec = sections(s, plan)
     motifs = [(72, 76, 79), (74, 79, 83), (76, 79, 84), (79, 83, 86)]       # the A01 cards, rising
     for b in range(s.bars):
         root, q = prog[(b - 2) % 8] if b >= 2 else prog[0]
@@ -842,9 +844,10 @@ def chrome_marl():
     s.stems["pad"] = reverb(fx.bq(s.stems["pad"], "lp", 1900), 0.9, 0.45, 0.5)
     s.stems["piano"] = reverb(s.stems["piano"], 0.85, 0.38, 0.5)
     s.stems["tick"] = reverb(fx.bq(s.stems["tick"], "hp", 2000), 0.5, 0.2, 0.6)
-    return balance(s, {"pad": -18, "sub": -25, "piano": -22, "tick": -34, "shaker": -34, "kick": -27, "air": -38},
-                   sidechain={"pad": (0.12, 0.35)}, glue=False, dyn=(sec, {"intro": -4, "a": -1.5, "b": 0, "out": (-1, -4)}),
-                   hpf={"pad": 120})
+    mix = balance(s, {"pad": -18, "sub": -25, "piano": -22, "tick": -34, "shaker": -34, "kick": -27, "air": -38},
+                  sidechain={"pad": (0.12, 0.35)}, glue=False, dyn=(sec, {"intro": -4, "a": -1.5, "b": 0, "out": (-1, -4)}),
+                  hpf={"pad": 120})
+    return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
 
 
 # ================================================================ 7 · MAINFRAME (dark synth-orchestral, 104 BPM)

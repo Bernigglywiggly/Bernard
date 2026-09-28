@@ -68,6 +68,15 @@ EPISODES = [
              "what-if: an office designed from zero around AI."),
          schedule=[("Day 22", "part1", "nothing"), ("Day 23", "part2", "shaft"), ("Day 24", "part3", "redesign"),
                    ("Day 25", "pilots", "office")]),
+    dict(dir="ep08", slug="ep08", title="EP08 · Cheaper Makes More", sub="The Jevons paradox: why cheaper AI means more of it",
+         full="ep08/build/ep08_720.mp4", thumb="ep08/build/ep08_thumb.jpg",
+         yt=("Why Cheaper AI Means MORE Data Centres, Not Fewer",
+             "In 1865, a British economist noticed something strange: steam engines had become far more efficient, so "
+             "Britain should have burned less coal. It burned more.\n\nIn this video: the Jevons paradox, light in Britain "
+             "(3,000 times cheaper and 40,000 times more used), a million AI tokens falling from about ten Big Macs to a "
+             "hundredth of one, Google's 3.2 quadrillion tokens a month, and a labelled what-if: what would we use "
+             "thinking for if it got as cheap as light?"),
+         schedule=[("Day 26", "part1", "light"), ("Day 27", "part2", "bigmacs"), ("Day 28", "part3", "google"), ("Day 29", "nadella", None)]),
 ]
 
 CSS = """

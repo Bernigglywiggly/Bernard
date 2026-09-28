@@ -15,7 +15,7 @@ LAB = engine.LAB
 OUT = os.path.join(LAB, "shorts", "index.html")
 EPISODES = [
     dict(dir="ep03s", slug="ep03", title="EP03 · The Shovel Sellers", sub="AI, gold rushes and who really gets rich",
-         full="page/media/ep03/ep03_full_720.mp4",
+         full="page/media/ep03/ep03_full_720.mp4", thumb="ep03s/build/ep03_thumb.jpg",
          yt=("The Shovel Sellers: Who Really Gets Rich in the AI Gold Rush",
              "May 1848: a shopkeeper walks through San Francisco holding up a bottle of gold. He had already bought every "
              "pan and shovel in town. 178 years later, the AI build-out has its own shovel sellers.\n\nIn this video: what "
@@ -26,7 +26,7 @@ EPISODES = [
          schedule=[("Day 1", "part1", "bigmac"), ("Day 2", "part2", "romans"), ("Day 3", "part3", "nvidia"),
                    ("Day 4", "part4", "openai"), ("Day 5", "railway", None), ("Day 6", "scarce", None)]),
     dict(dir="ep04", slug="ep04", title="EP04 · The Man in the Machine", sub="Robots, war and the person still inside",
-         full="ep04/build/ep04_720.mp4",
+         full="ep04/build/ep04_720.mp4", thumb="ep04/build/ep04_thumb.jpg",
          yt=("Who's Really Inside the Robots?",
              "18 September 2026: a man steps into a cage in San Francisco to fight a six-foot humanoid robot. The clips "
              "left one thing out: a person backstage in a VR headset was deciding its every move.\n\nIn this video: Tesla's "
@@ -37,7 +37,7 @@ EPISODES = [
          schedule=[("Day 7", "part1", "cagefight"), ("Day 8", "part2", "tesla"), ("Day 9", "part3", "patriot"),
                    ("Day 10", "part4", "boxing"), ("Day 11", "price", "ukraine"), ("Day 12", "loop", None)]),
     dict(dir="ep05", slug="ep05", title="EP05 · Follow the Sun", sub="AI data centres, leaving the planet",
-         full="ep05/build/ep05_720.mp4",
+         full="ep05/build/ep05_720.mp4", thumb="ep05/build/ep05_thumb.jpg",
          yt=("Why AI Is Leaving the Planet",
              "Google has built a satellite to carry four of its AI chips into orbit. Last December, a satellite the size "
              "of a small fridge trained an AI model in space. Why is the AI industry trying to leave Earth?\n\nIn this "
@@ -144,15 +144,19 @@ def full_card(ep):
     title, blurb = ep["yt"]
     desc = blurb + "\n\nSources:\n" + "\n".join("• " + x for x in sources(ep))
     src = f"media/{ep['slug']}/{os.path.basename(path)}"
+    th = ep.get("thumb") and os.path.exists(os.path.join(LAB, ep["thumb"]))
+    tsrc = f"media/{ep['slug']}/{os.path.basename(ep['thumb'])}" if th else ""
+    poster = f' poster="{e(tsrc)}"' if th else ""
+    tbtn = f'\n      <button type="button" data-save="{e(tsrc)}">Save thumbnail</button>' if th else ""
     return f"""<article class="card wide" id="{e(ep['slug'])}-full">
-  <video controls playsinline preload="metadata" src="{e(src)}"></video>
+  <video controls playsinline preload="metadata"{poster} src="{e(src)}"></video>
   <div class="body">
     <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE</span><span>{int(d // 60)}:{int(d % 60):02d} · 16:9</span></div>
     <p class="hook">{e(title)}</p>
     <p class="post">{e(desc)}</p>
     <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
       <button class="main" type="button" data-copy="post">Copy description</button>
-      <button type="button" data-save="{e(src)}">Save 720p preview</button></div>
+      <button type="button" data-save="{e(src)}">Save 720p preview</button>{tbtn}</div>
     <p class="note" aria-live="polite">The 1080p file for YouTube was sent in the chat.</p>
   </div>
 </article>"""
@@ -171,8 +175,9 @@ def files():
     """The artifact files map: media/<slug>/<file> -> the mp4 on disk."""
     out = {}
     for ep in episodes():
-        if ep.get("full") and os.path.exists(os.path.join(LAB, ep["full"])):
-            out[f"media/{ep['slug']}/{os.path.basename(ep['full'])}"] = os.path.join(LAB, ep["full"])
+        for key in ("full", "thumb"):
+            if ep.get(key) and os.path.exists(os.path.join(LAB, ep[key])):
+                out[f"media/{ep['slug']}/{os.path.basename(ep[key])}"] = os.path.join(LAB, ep[key])
         for k in ep["kit"].values():
             out[f"media/{ep['slug']}/{k['file']}"] = os.path.join(LAB, ep["dir"], "build", "shorts", k["file"])
     return out

@@ -37,6 +37,7 @@ import typeon as TO  # noqa: E402
 
 BUILD = S.BUILD
 FULL = os.environ.get("EP03_FULL") == "1"                        # the whole episode, not just the cold open
+NO_CAPTIONS = os.environ.get("NO_CAPTIONS") == "1"               # the clean feed, for shorts (they caption themselves)
 T_BODY = S.ls("census") if "census" in S.IDS else 1e9
 if FULL:
     import ep03_body
@@ -348,7 +349,8 @@ def compose(t):
     cv.drawRect(skia.Rect.MakeWH(W, H), R.VIGNETTE)
     crisp_labels(cv, t)
     S.furniture(cv)
-    ST.captions(cv, t)
+    if not NO_CAPTIONS:
+        ST.captions(cv, t)
     return s.makeImageSnapshot()
 
 
@@ -480,17 +482,17 @@ def main():
         cuts = [0] + [int(np.searchsorted(cw, cw[-1] * k / jobs)) for k in range(1, jobs)] + [n]
         parts, procs = [], []
         for k in range(jobs):
-            part = os.path.join(BUILD, f"full_part{k}.mp4")
+            part = os.path.join(BUILD, f"full_{'clean_' if NO_CAPTIONS else ''}part{k}.mp4")
             parts.append(part)
             procs.append(subprocess.Popen([sys.executable, os.path.abspath(__file__), "chunk", str(cuts[k]), str(cuts[k + 1]), part]))
         codes = [p.wait() for p in procs]
         assert all(c == 0 for c in codes), codes
-        lst = os.path.join(BUILD, "full_parts.txt")
+        lst = os.path.join(BUILD, "full_clean_parts.txt" if NO_CAPTIONS else "full_parts.txt")
         open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
-        silent_full = os.path.join(BUILD, "ep03_full_silent.mp4")
+        silent_full = os.path.join(BUILD, "ep03_full_clean_silent.mp4" if NO_CAPTIONS else "ep03_full_silent.mp4")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", silent_full], check=True)
         print(silent_full, flush=True)
-        if sys.argv[1] == "render_full":
+        if sys.argv[1] == "render_full" or NO_CAPTIONS:
             return
     if sys.argv[1] in ("sound_full", "full"):                     # events, score, mix, then onto the picture
         import mix_full

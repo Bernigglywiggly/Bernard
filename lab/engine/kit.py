@@ -47,6 +47,17 @@ EPISODES = [
              "own break-even, and a labelled what-if: who owns the sunlight?"),
          schedule=[("Day 13", "part1", "suncatcher"), ("Day 14", "part2", "bigmac"), ("Day 15", "part3", "million"),
                    ("Day 16", "part4", "shakespeare"), ("Day 17", "japan", "sunlight")]),
+    dict(dir="ep06", slug="ep06", title="EP06 · Who's Human Here?", sub="The Turing test, bots and proving you're you",
+         full="ep06/build/ep06_720.mp4", thumb="ep06/build/ep06_thumb.jpg",
+         yt=("They Picked the AI as the Human",
+             "In 2025, 284 people chatted with two strangers at once for five minutes: one a person, one an AI. Their "
+             "job was to pick the human. They picked the AI 73% of the time, more often than the real person.\n\nIn this "
+             "video: what Alan Turing actually proposed in 1950 and the bar he set, the trick that doubled the AI's score, "
+             "why most web traffic is no longer human, the AI agent that clicked \"verify you are human\", the FBI's "
+             "low-tech advice for voice scams, and a labelled what-if: when any voice could be synthetic, how do you "
+             "prove you're you?"),
+         schedule=[("Day 18", "part1", "picked"), ("Day 19", "part2", "persona"), ("Day 20", "part3", "captcha"),
+                   ("Day 21", "bots", "secretword")]),
 ]
 
 CSS = """

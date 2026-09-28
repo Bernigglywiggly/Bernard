@@ -5,7 +5,7 @@ import zlib
 
 import numpy as np
 
-CPS = 17.0                                         # characters a second: quick, but you can hear every key
+CPS = 24.0                                         # characters a second: quick enough for George's pace
 
 
 def schedule(text, t0, cps=CPS):

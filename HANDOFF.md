@@ -89,9 +89,10 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   **Never put the local Kokoro voice in anything the user hears** (bm_george was rejected before, and again here);
   `mix_full.py` now only mixes a voice when lines.json says the engine is "eleven" (George). The ElevenLabs login in
   the user's Chrome can't be used from the cloud; the API key has to go in the environment settings.
-- **Swap in George (one command, in a new session once `ELEVENLABS_API_KEY` is set):**
-  `cd lab && python3 tools/eleven_tts.py ep03s --speed 1.2 && cd ep03s && python3 voice_build.py &&
-  EP03_FULL=1 python3 ascii_open.py full 4` (everything re-times from lines.json; about 25 minutes).
+- **George is in (28 Sep):** the user sent an ElevenLabs key in the chat (kept out of the repo; only in the session's
+  scratchpad); all 34 lines of script v4 are cached in `lab/voice/cache/eleven/` (committed), so any session builds
+  with George without the key: `cd lab/ep03s && python3 voice_build.py` (engine "eleven" automatically) then
+  `EP03_FULL=1 python3 ascii_open.py full 4`. George at 1.2 runs the film to about 2:36.
 - **Particles:** `ep03s.dust_at` is now fixed per-grain smooth paths (pour stream through the neck, fountain matched
   launch-order→landing, drift on the bank, left-to-right re-form); the Blender burst is a cork pop + fountain
   (`blender/cold_open.py`, `LINES_JSON=build/lines_blender.json` to render on the Blender timeline).

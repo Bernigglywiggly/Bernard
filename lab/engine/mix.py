@@ -112,7 +112,7 @@ def build(build_dir, bed_path, out_name="mix.wav", extra=()):
         place(detail, x, at, gain, pan)
     detail = detail * fx.db(DUCK_SFX * tk)[:, None]
     pre = voice + music + detail
-    mix = fx.master(pre, target=-14.0, ceiling_db=-1.0)
+    mix = fx.master(pre, target=-14.0, ceiling_db=-1.5)            # -1.5 dBTP: room for the AAC encode
     g = fx.db(fx.lufs(mix) - fx.lufs(pre))
     speech = tk > 0.9
     st = lambda y: round(float(fx.lufs(y[speech])), 1) if speech.any() else None

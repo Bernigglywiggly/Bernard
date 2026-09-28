@@ -57,13 +57,16 @@ fast. Mostly ASCII with a touch of Blender realism. All six new beds, matched to
     figures and sourced. The Big Mac ($6.22, The Economist, July 2026) is the house unit for money. Bank and
     calculator: `lab/format/units.py` (`usd`, `gbp`, `item`).
 
-## Music by topic tone (all six new beds are in use)
+## Music by topic tone (all seven new beds are in use)
 The bed sits under the voice: steady, dark-topped, no lead melody, no busy drums (the user, 28 Sep: Terminal
-"takes too much attention"; the calm Night Drive is the model). `beds.night_drive(..., calm=True)`.
+"takes too much attention"), and serious rather than light (later the same day: the calm Night Drive felt "too
+lighthearted"; they pointed at The Son of Flynn). The model is now `beds.mainframe(...)`: a synth ostinato, strings,
+brass swells, booms, no drum kit.
 
 | Bed | Tone | Use it for |
 |---|---|---|
-| Night Drive, calm cut (dark pulse) | steady, low-key | money-in-tech and history-as-mechanism stories told straight (EP03 The Shovel Sellers); the default under a voice |
+| Mainframe (dark synth-orchestral) | serious, cinematic | big-tech money and power, history as mechanism (EP03 The Shovel Sellers); the default under a voice |
+| Night Drive, calm cut (dark pulse) | steady, lighter | quick explainers and lighter tech stories |
 | Night Drive (full) | tension | security, surveillance, military, AI incidents (robots & military, an agent escaping a sandbox) |
 | Terminal (glitch/IDM) | analytical, digital | chips, agents, software; busy, so thin it out under a voice (under EP03 it took too much attention) |
 | Low Orbit (cinematic pulse) | scale, awe | energy, data centres, space compute, "how big is this" stories |

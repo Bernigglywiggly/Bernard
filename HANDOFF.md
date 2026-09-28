@@ -76,6 +76,15 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   (34 lines, about 2:55): the cold-open Big Mac line ($466, drawn in `ep03s.markup_beat`), plus Romans, Big Macs a
   second, $1 of every $4, $1.65 out per $1 in, five railway companies a week, London to Tokyo, tap water.
   **ASCII v5** (the cold open with the Big Mac beat, 40.8 s) is on Curve Lab. Old timelines: `build/lines_v4.json`.
+- **Mainframe (the user, 28 Sep, on v5):** the calm Night Drive felt "too lighthearted"; they want something closer
+  to Tron: Legacy's The Son of Flynn. `beds.mainframe(bpm, plan, lead)` is an original in that style (D minor,
+  Dm-Bb-Gm-A, a 16th-note pluck ostinato through a section-opening filter, strings, cello, violins and low brass
+  swells in b, booms at section changes, a soft taiko, no drum kit). The cold open is scored with it (v5.1:
+  `python3 ascii_open.py mix` re-scores the rendered picture in about 2 minutes); the playbook and plan map EP03
+  and serious topics to it. The standalone bed is `lab/out/music/new/mainframe.mp3`.
+- **Voice:** `ELEVENLABS_API_KEY` still isn't set in this session; the user is adding it in the environment settings
+  (a new session picks it up). Then: `cd lab && python3 tools/eleven_tts.py ep03s --speed 1.2`, `cd ep03s &&
+  python3 voice_build.py`, and build the full EP03 (task 29: the cold open exists; MECHANISM → SURFACE need visuals).
 - **Particles:** `ep03s.dust_at` is now fixed per-grain smooth paths (pour stream through the neck, fountain matched
   launch-order→landing, drift on the bank, left-to-right re-form); the Blender burst is a cork pop + fountain
   (`blender/cold_open.py`, `LINES_JSON=build/lines_blender.json` to render on the Blender timeline).

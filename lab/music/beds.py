@@ -14,6 +14,9 @@ with an intro, a build, a main section, a breakdown and an outro, so you can hea
                from filters (no real voice), rain and crackle. Moody and very London.
   chrome_marl  back to the A01 bed you liked: Am9 to Cmaj9 pads, felt-piano motifs, soft sub, a quiet pulse,
                grown into a full minute.
+  mainframe    dark synth-orchestral, 104 BPM, D minor (28 Sep, after "too lighthearted"; the user pointed at The
+               Son of Flynn, and this is an original in that style): a rolling 16th synth ostinato, strings, low
+               brass swells, booms at the section changes, no drum kit.
 
 Stems are balanced to loudness targets per bed (the mix is decided by numbers, then checked), the bus gets a small
 dip around 2.8 kHz so a voice sits on top, and the preview master is -14 LUFS / -1 dBTP.
@@ -380,7 +383,8 @@ def riser(dur, lo=300, hi=6000, seed=6):
 # ---------------------------------------------------------------- harmony
 Q = {"m9": [0, 3, 7, 10, 14], "maj7": [0, 4, 7, 11], "maj9": [0, 4, 7, 11, 14], "maj7#11": [0, 4, 7, 11, 18],
      "7sus4": [0, 5, 7, 10], "m7": [0, 3, 7, 10], "m11": [0, 3, 7, 10, 14, 17], "13": [0, 4, 10, 14, 21],
-     "7b9": [0, 4, 7, 10, 13], "6/9": [0, 4, 7, 9, 14], "sus2": [0, 2, 7, 14], "add9": [0, 4, 7, 14]}
+     "7b9": [0, 4, 7, 10, 13], "6/9": [0, 4, 7, 9, 14], "sus2": [0, 2, 7, 14], "add9": [0, 4, 7, 14],
+     "m": [0, 3, 7], "maj": [0, 4, 7], "sus4": [0, 5, 7], "madd9": [0, 3, 7, 14]}
 
 
 def voicing(root, q, lo=50, rootless=True):
@@ -828,8 +832,95 @@ def chrome_marl():
                    hpf={"pad": 120})
 
 
+# ================================================================ 7 · MAINFRAME (dark synth-orchestral, 104 BPM)
+def boom(dur=3.0, seed=9):
+    """A cinematic impact: a sub that drops from 75 to 30 Hz under a short dark noise burst."""
+    t = T(dur)
+    f = 30 + 45 * np.exp(-t / 0.12)
+    y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.9)
+    y = y + 0.5 * fx.bq(np.random.default_rng(seed).normal(0, 1, len(t)), "lp", 1800) * np.exp(-t / 0.07)
+    return (np.tanh(1.6 * y) / np.tanh(1.6) * np.minimum(1, t / 0.002)).astype(np.float32)
+
+
+def mainframe(bpm=104, plan=None, lead=0.0):
+    """Dark synth-orchestral in D minor (the user, 28 Sep: "closer to The Son of Flynn"; an original piece in that
+    style, not a copy of it): a rolling 16th-note synth ostinato through a filter that opens section by section,
+    8th-note low pulses under a sustained sub, a string ensemble, low "brass" swells on the chord changes, deep booms
+    at the section changes, and no drum kit, so it is serious and cinematic but steady enough to sit under a voice.
+    plan/lead as for terminal()."""
+    plan = plan or [("intro", 4), ("a", 8), ("b", 8), ("break", 4), ("b", 4), ("out", 4)]
+    s = Song(bpm, sum(n for _, n in plan), seed=77)
+    rng = s.rng
+    sec = sections(s, plan)
+    prog = [(38, "m"), (34, "maj"), (43, "m"), (45, "sus4")]                   # Dm  Bb  Gm  A(sus4 -> A), 2 bars each
+    starts = [b for b in range(s.bars) if b == 0 or sec[b] != sec[b - 1]]
+    for b in range(s.bars):
+        root, q = prog[(b // 2) % 4]
+        if q == "sus4" and b % 2 == 1:
+            q = "maj"                                                          # the V resolves its suspension
+        name = sec[b]
+        strings = voicing(root, q, 50, rootless=False)
+        tones = sorted(set(strings + [x + 12 for x in strings]))
+        # the ostinato: 16ths rolling through two octaves of the chord, accents on the beat
+        if name != "break":
+            for st in range(16):
+                m = tones[(0, 2, 4, 2, 1, 3, 5, 3)[st % 8] % len(tones)]
+                s.put("arp", pluck(m, s.step * 0.95, 0.8, 10.0, 24), s.at(b, st), gain=1.0 if st % 4 == 0 else 0.62)
+        # low pulses (8ths) and the sub
+        if name in ("a", "b"):
+            for e in range(8):
+                x = saw(float(hz(low(root, 33))), int(s.step * 1.7 * SR)) * env(int(s.step * 1.7 * SR), 0.003, s.step * 1.3, 0.08)
+                s.put("bass", x, s.at(b, e * 2), gain=1.0 if e % 2 == 0 else 0.75)
+        if name != "out" or b < s.bars - 2:
+            s.put("sub", sub(low(root, 28), s.bar * 0.98, harm=0.08) * env(int((s.bar * 0.98 + 0.08) * SR), 0.08, s.bar * 0.9, 0.3), s.at(b))
+        # strings (every chord, two bars long), the low line, and the violins an octave up in b
+        if b % 2 == 0:
+            for m in strings:
+                s.put("strings", supersaw(m, s.bar * 1.96, rng, voices=7, detune=0.09, r=1.6, a=0.7), s.at(b))
+            if name != "intro":
+                s.put("cello", supersaw(low(root, 38), s.bar * 1.96, rng, voices=3, detune=0.05, r=1.2, a=0.5), s.at(b))
+            if name == "b":
+                s.put("violins", supersaw(strings[-1] + 12, s.bar * 1.96, rng, voices=5, detune=0.07, r=1.8, a=1.1), s.at(b))
+                for m in (low(root, 38), low(root, 38) + 7, low(root, 38) + 12):
+                    s.put("brass", supersaw(m, s.bar * 1.9, rng, voices=5, detune=0.06, r=1.0, a=0.9), s.at(b))
+                s.put("taiko", kick(62, 110, 0.05, 0.45, 0.08, 1.0, soft=True, seed=b), s.at(b))
+        if b in starts and name in ("a", "b", "break"):
+            s.put("boom", boom(seed=b), s.at(b))
+        if b + 1 < s.bars and sec[b + 1] != name and sec[b + 1] in ("b", "a"):
+            s.put("fx", riser(s.bar, 200, 5000, seed=b), s.at(b))
+    # the ostinato's filter opens by section; the brass swells on each chord
+    lvl = {"intro": 900, "a": 3200, "b": 5200, "break": 800, "out": 1000}
+    bt = np.arange(s.bars) * s.bar
+    bc = np.array([lvl.get(n, 1500) for n in sec], float)
+    if sec[0] == "intro":                                                      # the intro opens slowly
+        k = [i for i, n in enumerate(sec) if n == "intro"]
+        bc[k] = np.linspace(700, 1800, len(k))
+    cut = lambda t: float(np.interp(t, bt + s.bar * 0.5, bc))
+    s.stems["arp"] = reverb(pingpong(ladder(s.stems["arp"], cut, 0.2), s.step * 3, 0.35, 5, 0.3, 4200), 0.7, 0.22, 0.55)
+    s.stems["bass"] = ladder(s.stems["bass"], lambda t: 500 + 250 * (cut(t) > 2000), 0.25, 1.4)
+    scut = lambda t: 1200 + 0.45 * cut(t)
+    s.stems["strings"] = fx.bq(reverb(pb(ladder(s.stems["strings"], scut, 0.1), Chorus(rate_hz=0.25, depth=0.25, mix=0.35)), 0.92, 0.4, 0.45),
+                               "peak", 300, q=0.8, gain_db=-2.5)
+    if "violins" in s.stems:
+        s.stems["violins"] = reverb(fx.bq(s.stems["violins"], "lp", 6000), 0.95, 0.45, 0.4)
+    if "cello" in s.stems:
+        s.stems["cello"] = reverb(fx.bq(s.stems["cello"], "lp", 900), 0.8, 0.3, 0.5)
+    if "brass" in s.stems:
+        swell = lambda t: 320 + 1700 * np.sin(np.pi * min(1.0, ((t % (2 * s.bar)) / (1.4 * s.bar)))) ** 1.5
+        s.stems["brass"] = reverb(ladder(s.stems["brass"], swell, 0.15, 1.3), 0.85, 0.3, 0.5)
+    if "boom" in s.stems:
+        s.stems["boom"] = reverb(s.stems["boom"], 0.95, 0.5, 0.35)
+    if "taiko" in s.stems:
+        s.stems["taiko"] = reverb(s.stems["taiko"], 0.9, 0.35, 0.4)
+    levels = {"strings": -20, "arp": -21.5, "bass": -24, "sub": -25, "cello": -25, "violins": -26, "brass": -27,
+              "boom": -24, "taiko": -29, "fx": -32}
+    dyn = {"intro": (-6, -2), "a": 0, "b": 1, "break": -3, "out": (-2, -9)}
+    mix = balance(s, levels, hpf={"arp": 180, "strings": 160, "violins": 250, "brass": 90}, dyn=(sec, dyn))
+    return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
+
+
 BEDS = {"terminal": terminal, "tape_loop": tape_loop, "night_drive": night_drive, "low_orbit": low_orbit,
-        "two_step": two_step, "chrome_marl": chrome_marl}
+        "two_step": two_step, "chrome_marl": chrome_marl, "mainframe": mainframe}
 
 
 def main():

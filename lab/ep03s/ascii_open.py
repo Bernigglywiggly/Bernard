@@ -10,11 +10,13 @@
   the shovel    the characters re-form as the Blender dunes and develop into the image again, for the one lonely shot
   the grip      the push into the grip breaks back into characters, and the prize is a character too
 
-Scored with Night Drive in its calm cut (lab/music/beds.py): a low pulse that carries the mood without asking for
-attention, re-cut so the soft kicks arrive on "Within weeks the town empties" and drop out on "He never panned".
+Scored with Mainframe (lab/music/beds.py): dark synth-orchestral, an original in the spirit of The Son of Flynn,
+re-cut so the pulse arrives on "Within weeks the town empties", the brass with the Big Mac, and the pulse drops out on
+"He never panned".
 
     python3 ascii_open.py still 2 9.6 13 ...   # build/ascii_still_*.png + build/ascii_sheet.jpg
     python3 ascii_open.py render               # build/style_S_ascii.mp4
+    python3 ascii_open.py mix                  # the same picture, a fresh score and mix
 """
 import math
 import os
@@ -316,25 +318,27 @@ def compose(t):
 
 # ---------------------------------------------------------------- the score
 def score():
-    """Night Drive, the calm cut (lab/music/beds.py), re-cut so its bar lines fall on the picture: pads and the bass
-    pulse under 1848 and the bottle, soft half-time kicks from "Within weeks the town empties", the arp and quiet hats
-    once the store forms, the drums out on "He never panned for gold", then dipped for the question."""
+    """Mainframe (lab/music/beds.py; the user asked for something closer to The Son of Flynn), re-cut so its bar lines
+    fall on the picture: strings and a filtered ostinato under 1848 and the bottle; a boom, the low pulse and the open
+    ostinato on "Within weeks the town empties"; brass and violins from the Big Mac; the pulse out on "He never panned
+    for gold"; then dipped for the question."""
     import beds
     import audio_fx as fx
-    n = max(4, round((TN - TM) / (240.0 / 108)))                  # bars from "mind" to "never", near 108 BPM
+    n = max(4, round((TN - TM) / (240.0 / 104)))                  # bars from "mind" to "never", near 104 BPM
     bar = (TN - TM) / n
     bpm = 240.0 / bar
-    n_intro = int(TM // bar)                                      # the pads are there almost from the first frame
+    n_intro = int(TM // bar)                                      # the strings are there almost from the first frame
     lead = TM - n_intro * bar
     n_break = max(1, math.ceil((TR - TN) / bar))
-    a = min(3, n - 1)
-    x = beds.night_drive(bpm, [("intro", n_intro), ("a", a), ("b", n - a), ("break", n_break), ("out", 2)], lead, calm=True)
+    t_big = S.ls("markup") if "markup" in S.IDS else S.ls("36k")   # the brass arrives with the Big Mac
+    a = min(max(2, round((t_big - TM) / bar)), n - 2)
+    x = beds.mainframe(bpm, [("intro", n_intro), ("a", a), ("b", n - a), ("break", n_break), ("out", 2)], lead)
     t = np.arange(len(x)) / fx.SR
     dip = 1 - 0.8 * np.clip((t - (TR - 0.05)) / 0.12, 0, 1) * np.clip(1 - (t - (TR + 1.2)) / 1.0, 0.35, 1)
     x = (x * dip[:, None]).astype(np.float32)
     path = os.path.join(BUILD, "ascii_bed.wav")
     fx.save(path, x, mp3=False)
-    print(f"score: Night Drive (calm) at {bpm:.2f} BPM, lead {lead:.2f}s")
+    print(f"score: Mainframe at {bpm:.2f} BPM, lead {lead:.2f}s, b from {TM + a * bar:.2f}s")
     return path
 
 
@@ -372,6 +376,12 @@ def main():
         print(sheet)
         return
     silent = os.path.join(BUILD, "style_S_ascii_silent.mp4")
+    if sys.argv[1] == "mix":                                      # a new score on the picture already rendered
+        import mix_open
+        collect_events()
+        audio = mix_open.build_mix(extra=EXTRA_SFX, out_name="ascii_mix.wav", bed_path=score(), bed_lufs=-17.0)
+        mix_open.mux(silent, audio, os.path.join(BUILD, "style_S_ascii.mp4"), crf=21, maxrate="3600k", abr="192k")
+        return
     ff = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}", "-r", str(FPS),
                            "-i", "-", "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-pix_fmt", "yuv420p", silent], stdin=subprocess.PIPE)
     n = int(DUR * FPS)

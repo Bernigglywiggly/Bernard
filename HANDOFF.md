@@ -67,6 +67,13 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
   store forms; no zoom, rotation or colour split), and the bed is `beds.night_drive(..., calm=True)`: half-time soft
   kicks, no claps or open hats, the arp in 8ths only in the b section, a softer pad gate. Night Drive's calm cut is
   now the default under a voice (playbook table); Terminal stays for chips/agents/software, thinned out.
+- **Funny units, said straight (the user, 28 Sep, after v4):** the comedy comes back, but only in the comparisons
+  (like the TikToks that weigh a tank round in Big Macs); the lines stay plain and George reads them deadpan. Rule 12
+  in the playbook; the bank and calculator is `lab/format/units.py` (Big Mac $6.22 = The Economist, July 2026; 580
+  kcal; rifle/.50/tank-round energies; world population; banknote stacks). EP03 is now **v3** (`script.py`, 32 lines,
+  2:48): a new cold-open line ("At that markup, a Big Mac would cost four hundred and sixty-six dollars.") drawn in
+  `ep03s.markup_beat` (the store dims, a Big Mac forms in characters, $6.22 runs to $466), and a contrasted pair in
+  NOW (Nvidia about 2,000 Big Macs a second; OpenAI burning about 75). The v4 timeline is kept in `build/lines_v4.json`.
 - **Particles:** `ep03s.dust_at` is now fixed per-grain smooth paths (pour stream through the neck, fountain matched
   launch-order→landing, drift on the bank, left-to-right re-form); the Blender burst is a cork pop + fountain
   (`blender/cold_open.py`, `LINES_JSON=build/lines_blender.json` to render on the Blender timeline).

@@ -4,8 +4,8 @@ line formations with bright tips, morphs (any shape's segments flow into any oth
 chrome numerals, and push-throughs into the next part. Timings come from build/lines.json (voice_build.py), by
 line id, so a new voice (ElevenLabs George) just re-times everything.
 
-This file is the cold open (1848 -> the bottle -> the rush -> the shop -> $36,000 -> the street -> the shovel ->
-through the handle -> the prize).
+This file is the cold open (1848 -> the bottle -> the rush -> the shop -> the same markup on a Big Mac ->
+$36,000 -> the street -> the shovel -> through the handle -> the prize).
 
     python3 ep03s.py still 5 12 18 ...     # build/still_*.png
     python3 ep03s.py render                # build/ep03s_open_silent.mp4 + build/events.json
@@ -109,6 +109,37 @@ def house(x, y, w, h):
 def river(x0, x1, y, amp=18, n=90):
     xs = np.linspace(x0, x1, n)
     return [np.column_stack([xs, y + amp * np.sin(xs / 60.0)]), np.column_stack([xs, y + 30 + amp * np.sin(xs / 60.0 + 1.2)])]
+
+
+def bigmac(cx, cy, s):
+    """A Big Mac side on, the house unit for funny comparisons: (cx, cy) = the middle of the top bun's base, s = half
+    its width. Returns (outlines, buns, patties, seeds): the line art, and closed shapes for the fills, so in
+    characters the buns read dense, the patties dark and the sesame seeds as specks."""
+    def rr(x0, y0, x1, y1, r):
+        return mg.rrect_pts(cx + x0 * s, cy + y0 * s, (x1 - x0) * s, (y1 - y0) * s, r * s, 6)
+    dome = np.vstack([ellipse(cx, cy, s, 0.62 * s, 180, 360, 64), ellipse(cx, cy, s, 0.07 * s, 0, 180, 32)])
+    xs = np.linspace(-1.04, 1.04, 70)
+    lettuce = [np.column_stack([cx + xs * s, cy + (y0 + a * np.sin(xs * f + ph)) * s]) for y0, a, f, ph in ((0.12, 0.035, 14, 0), (0.575, 0.03, 16, 1))]
+    cheese = P([(cx + x * s, cy + y * s) for x, y in ((-0.97, 0.17), (0.28, 0.17), (0.4, 0.3), (0.52, 0.17), (0.97, 0.17))])
+    patties = [rr(-1.0, 0.2, 1.0, 0.37, 0.08), rr(-1.0, 0.61, 1.0, 0.78, 0.08)]
+    buns = [dome, rr(-0.97, 0.41, 0.97, 0.53, 0.05), rr(-0.97, 0.82, 0.97, 1.02, 0.1)]
+    seeds = [ellipse(cx + x * s, cy + y * s, 0.05 * s, 0.022 * s, 0, 360, 12) for x, y in
+             ((-0.62, -0.22), (-0.34, -0.42), (-0.02, -0.5), (0.3, -0.44), (0.6, -0.26), (-0.18, -0.2), (0.16, -0.18), (0.42, -0.08), (-0.46, -0.04))]
+    return buns + patties + lettuce + [cheese], buns, patties, seeds
+
+
+def closed_fill(c, polys, k, paint):
+    """Fill closed polylines, rising from the bottom (k 0..1), like chrome_fill."""
+    if k <= 0:
+        return
+    path = skia.Path()
+    for q in polys:
+        path.addPoly([skia.Point(float(x), float(y)) for x, y in q], True)
+    b = path.getBounds()
+    c.save()
+    c.clipRect(skia.Rect.MakeLTRB(b.left() - 10, lerp(b.bottom(), b.top(), k), b.right() + 10, b.bottom() + 10))
+    c.drawPath(path, paint)
+    c.restore()
 
 
 def glyphs(text, size, cx, cy):
@@ -237,6 +268,11 @@ SHELF = [P([(CX - 700, 668), (CX + 640, 668)]), P([(CX - 700, 776), (CX + 640, 7
 WEEKS = [mg.rrect_pts(CX - 560 + j * 128, 840, 100, 26, 6, 3) for j in range(9)]
 STREET = [q for j in range(7) for q in house(CX - 700 + j * 205, 820, 150, 120)]
 BIG_SHOVEL = shovel(CX, 930, 820)
+IDS = {x.get("id") for x in L}
+MAC_X, PRICE_X = CX - 290, CX + 300                # the markup at today's prices: a Big Mac, and what it would cost
+MAC, MAC_BUNS, MAC_PATTIES, MAC_SEEDS = bigmac(MAC_X, 430, 230)
+G_P622, P_P622 = glyphs("$6.22", 170, PRICE_X, 480)
+G_P466, P_P466 = glyphs("$466", 170, PRICE_X, 480)
 N_DUST = 900
 DUST_IN = None
 
@@ -387,7 +423,7 @@ def frame(c, t):
         ev(at("shop", 0.3), "form", t)
         ev(at("shop", 0.72), "latch", t, CX + 400)
         if t < t_36:
-            label(c, "SAM BRANNAN'S STORE · STOCKED FIRST", CX, 832, t, at("shop", 0.5), 20, SOFT)
+            label(c, "SAM BRANNAN'S STORE · STOCKED FIRST", CX, 832, t, at("shop", 0.5), 20, SOFT, a=1 - mk_dim(t))
     # nine weeks, then the shop flows into $36,000
     S36 = segs(G36K)
     t_m36 = at("36k", 0.55)
@@ -411,6 +447,10 @@ def frame(c, t):
             chrome_fill(c, P36K, kf, sweep=seg(t, t_m36 + 1.3, t_m36 + 2.3))
             ev(t_m36, "morph", t)
             ev(t_m36 + 1.0, "thock", t)
+    # the same markup at today's prices (a funny unit, said straight): the store dims, a Big Mac forms, and its price
+    # runs from $6.22 to $466; it all clears for "In nine weeks"
+    if "markup" in IDS and ls("markup") - 0.1 <= t < t_36 + 0.5:
+        markup_beat(c, t, t_36)
     # buy-the-street rich: the weeks become a street, and it all sells
     te2 = ls("e2")
     t_never = ls("never")
@@ -490,6 +530,43 @@ def frame(c, t):
         ev(tr, "confirm", t)
     if FURNITURE["label"]:
         furniture(c)
+
+
+def mk_dim(t):
+    """How far the store is dimmed behind the Big Mac (0 when the script has no markup line)."""
+    if "markup" not in IDS:
+        return 0.0
+    t_mk, t_36 = ls("markup"), ls("36k")
+    return ease(seg(t, t_mk - 0.1, t_mk + 0.4)) * (1 - ease(seg(t, t_36 - 0.05, t_36 + 0.45)))
+
+
+def markup_beat(c, t, t_36):
+    t_mk = ls("markup")
+    c.drawRect(skia.Rect.MakeWH(W, H), mg.fill("#0B0C0E", 0.94 * mk_dim(t)))
+    a = 1 - ease(seg(t, t_36 - 0.05, t_36 + 0.4))
+    c.saveLayerAlpha(None, int(255 * a))
+    formation(c, segs(MAC, 520), t, t_mk + 0.05, 1.0, WHITE, seed_pt=(MAC_X, 820))
+    kb = ease(seg(t, t_mk + 0.55, t_mk + 1.15))
+    closed_fill(c, MAC_BUNS, kb, mg.chrome_paint(260, 680))
+    closed_fill(c, MAC_PATTIES, kb, mg.fill(MID, 0.45))
+    closed_fill(c, MAC_SEEDS, kb, mg.fill("#0B0C0E", 0.9))
+    t_p, t_up = at("markup", 0.3), at("markup", 0.58)
+    if t < t_up:
+        formation(c, segs(G_P622, 360), t, t_p, 0.6, GLOW, seed_pt=(PRICE_X, 700))
+    else:
+        km = seg(t, t_up, t_up + 0.9)
+        S, kk = morph_flow(segs(G_P622, 360), segs(G_P466, 360), km)
+        kf = ease(seg(t, t_up + 0.9, t_up + 1.4))
+        draw_segs(c, S, GLOW, 1.7, 1 - 0.85 * kf, tips=kk if km < 1 else None)
+        chrome_fill(c, P_P466, kf, sweep=seg(t, t_up + 1.2, t_up + 2.1))
+    c.restore()
+    label(c, "ONE BIG MAC · $6.22 TODAY", MAC_X, 740, t, t_mk + 0.5, 20, SOFT, a=a)
+    label(c, "THE SAME 75× MARKUP", PRICE_X, 740, t, t_up + 0.2, 20, GLOW, a=a)
+    ev(t_mk + 0.05, "form", t, MAC_X)
+    ev(t_p, "form", t, PRICE_X)
+    for j in range(9):
+        ev(t_up + j * 0.1, "tick", t, PRICE_X)
+    ev(t_up + 0.9, "thock", t, PRICE_X)
 
 
 def furniture(c):

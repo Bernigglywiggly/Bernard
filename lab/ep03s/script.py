@@ -1,4 +1,9 @@
-"""EP03 · THE SHOVEL SELLERS, v2 (28 Sep): the new register. No jokes, no swearing, no gaps for punchlines.
+"""EP03 · THE SHOVEL SELLERS, v3 (28 Sep, later): v2 plus funny units said straight. The user: the humour belongs in
+the comparisons, not the dialogue (like the TikToks that weigh a tank round in Big Macs). So three numbers are also
+given in Big Macs ($6.22, The Economist, July 2026), read deadpan: the 1848 markup at today's prices, and Nvidia's
+takings against OpenAI's burn, per second. The lines around them stay as plain as before (playbook rule 12).
+
+v2 (28 Sep): the new register. No jokes, no swearing, no gaps for punchlines.
 Straight into the facts, precise and sourced, fast; curiosity carries it, and one clearly labelled what-if stretches
 the imagination. George (ElevenLabs), fast. Pollar's lessons (lab/inspo/pollar_playbook.md): a concrete hook in the
 first line, numbers made physical, the hidden mechanism, what is uncertain said plainly, a mirrored close, sources.
@@ -16,6 +21,8 @@ LINES = [
          say="May, eighteen forty-eight. San Francisco. A shopkeeper named Sam Brannan walks through the streets holding up a bottle of gold dust."),
     dict(floor=0, id="mind", text="Within weeks the town empties. Its newspaper stops printing, because its readers have gone to dig."),
     dict(floor=0, id="shop", text="Brannan had already bought every pan, pick and shovel he could find. A pan that cost him twenty cents sold for fifteen dollars."),
+    dict(floor=0, id="markup", card=("$466", "ONE BIG MAC · THE SAME 75× MARKUP"),
+         text="At that markup, a Big Mac would cost four hundred and sixty-six dollars."),
     dict(floor=0, id="36k", card=("$36,000", "IN NINE WEEKS · ONE STORE"), text="In nine weeks, his store took in thirty-six thousand dollars."),
     dict(floor=0, id="e2", text="About one and a half million dollars today."),
     dict(floor=0, id="never", cut=True, card=("1ST MILLIONAIRE", "CALIFORNIA · WITHOUT MINING"),
@@ -35,8 +42,12 @@ LINES = [
          text="This year, Amazon, Microsoft, Alphabet and Meta plan to spend around seven hundred and twenty-five billion dollars, most of it on AI data centres."),
     dict(floor=2, id="nvidia", card=("$96.2 BILLION", "NVIDIA · ONE QUARTER · 75% GROSS MARGIN"),
          text="The company selling the chips inside them, Nvidia, took in ninety-six billion dollars in three months. Its gross margin: seventy-five per cent."),
+    dict(floor=2, id="nvidia_mac", card=("≈2,000 BIG MACS", "EVERY SECOND · FOR THREE MONTHS"),
+         text="That's twelve thousand dollars a second. About two thousand Big Macs, every second, for three months."),
     dict(floor=2, id="openai", card=("$5.7B IN · $3.7B OUT", "OPENAI · JAN–MAR 2026 · THE INFORMATION"),
          text="The best-known company doing the digging, OpenAI, took in five point seven billion in the first three months of the year, and burned through three point seven."),
+    dict(floor=2, id="openai_mac", card=("≈75 BIG MACS", "BURNED EVERY SECOND · JAN–MAR 2026"),
+         text="That's about seventy-five Big Macs a second."),
     dict(floor=2, id="fair", text="That doesn't make the diggers wrong. Some of them will find gold. But the supplier is paid first, whoever finds it."),
     # 3 · IDEA
     dict(floor=3, id="before", air=2, cut=True, text="It has happened before."),
@@ -77,5 +88,9 @@ SOURCES = [
     "OpenAI Jan-Mar 2026: revenue $5.7 billion, cash burn $3.7 billion (The Information)",
     "Railway Mania: 272 Acts of Parliament in 1846; about a third of the mileage authorised 1844-47 never built; "
     "~6,000 miles by 1850 (Wikipedia, 'Railway Mania')",
+    "Big Mac: US average $6.22, The Economist Big Mac index, July 2026; the 1848 markup (20 cents to $15) is 75x, "
+    "so $6.22 x 75 = $466.50",
+    "Per second: Nvidia $96.2 billion over the 13 weeks to 26 July 2026 = about $12,200 a second = about 1,970 Big Macs; "
+    "OpenAI's $3.7 billion burn over Jan-Mar 2026 (90 days) = about $476 a second = about 76 Big Macs (lab/format/units.py)",
     "The 2030 section is a labelled what-if, not a forecast",
 ]

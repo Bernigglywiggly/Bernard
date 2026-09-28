@@ -37,6 +37,23 @@ def sheet(paths, out):
     return out
 
 
+def preview(src, out, mb=14.0):
+    """Two-pass 720p encode sized to fit the artifact's 15 MB file limit."""
+    d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src],
+                             capture_output=True, text=True, check=True).stdout)
+    kbps = int(mb * 8e3 / d) - 128
+    log = out + ".log"
+    base = ["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-vf", "scale=1280:720:flags=lanczos", "-c:v", "libx264", "-preset", "slow",
+            "-b:v", f"{kbps}k", "-passlogfile", log]
+    subprocess.run(base + ["-pass", "1", "-an", "-f", "mp4", "/dev/null"], check=True)
+    subprocess.run(base + ["-pass", "2", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", out], check=True)
+    for f in os.listdir(os.path.dirname(out)):
+        if f.startswith(os.path.basename(log)):
+            os.remove(os.path.join(os.path.dirname(out), f))
+    print(out, round(os.path.getsize(out) / 1e6, 1), "MB", flush=True)
+    return out
+
+
 def collect_events(scenes, dur, build):
     """Every sound cue the picture makes (forms, morphs, thuds, ticks...), frame by frame at 24 fps."""
     tl.EVENTS.clear()
@@ -148,6 +165,8 @@ def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainfram
             i += 1
         dec.wait(); enc.stdin.close(); enc.wait()
         print(final, round(os.path.getsize(final) / 1e6, 1), "MB", flush=True)
+    if cmd in ("preview", "all"):                                 # a 720p copy under 14 MB, for the posting kit page
+        preview(final, os.path.join(build, f"{name}_720.mp4"))
     if cmd in ("shorts", "all"):
         from engine import shorts
         want = argv[1:] if cmd == "shorts" else ()

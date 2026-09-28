@@ -3,7 +3,7 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
+Updated 28 Sep 2026 (afternoon), cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
 
 ## Links (this account)
 - **Curve Lab** (v7 showcase: pilot, 4 visual directions, sound palette, jungle beds, voices, refs, Higgsfield prompts):
@@ -25,7 +25,33 @@ Updated 26 Sep 2026 (late), cloud session on branch `claude/lucid-archimedes-77t
 - **Sales**: 85 independent takeaways/cafés (FSA register, Sept 2026) in walking order for Stone, Newcastle-under-Lyme
   and Tamworth. "Here" (the user's home town) is still unknown: ask, then pull its council's FSA file the same way.
 
-## Newest: the Six Floors format and EP01 (after the @pollar.news inspo)
+## Newest (28 Sep, afternoon): the factory — the engine, the posting kit, EP04, EP05
+- **The user's plan:** break every long video into shorts (parts that add up to the whole, plus highlights), push them
+  hard on TikTok, Reels, YouTube Shorts and Facebook, then repeat across 5-10 channels ("quality of volume").
+- **Posting kit** (artifact, `downloads` capability): https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE. Per episode:
+  the full film (720p preview; title and description with sources to copy; the 1080p file goes in the chat), a
+  suggested posting order, the parts, the highlights, each with its caption + hashtags. Source `lab/shorts/index.html`,
+  built by `cd lab && python3 -m engine.kit` (it prints the files map to publish: `media/<slug>/<file>` → disk).
+  Media limits: 15 MB per file, 64 MB per publish (publish in batches: files left out are kept), 256 MiB per version.
+- **The engine** `lab/engine/`: an episode is `script.py` + `scenes.py` + a small `film.py` (see `lab/ep05/film.py`).
+  `python3 film.py voice | lines <t..> | still <t..> | render 4 | sound | master | preview | shorts | all 4`.
+  Modules: `tl` (line and word times from lines.json: `word("line_id", "word")`), `draw` (formations, morphs, chrome
+  numbers, Big Macs, figures and poses, globe, satellite, sun...), `look` (the ASCII look; the glow is blurred small),
+  `captions`, `voice` (George from the cache, or the API with ELEVENLABS_API_KEY), `score` (a bed re-cut by section
+  marks and two anchor lines; Mainframe 104, Low Orbit 120), `mix`, `shorts`, `kit`. Render: ~0.6 s a frame a core,
+  so a 2:15 film is ~15 min on 4 cores; shorts ~1 min each. EP03 (`lab/ep03s`) predates it and keeps its own scripts.
+- **EP04 · The Man in the Machine** (`lab/ep04/`, 2:13, Mainframe): the SF cage fight piloted from a VR headset, the
+  Tesla dancer, robot boxing, the G1 as 2,200 Big Macs, the rifle dog, Ukraine's ground robots, Patriot vs Shahed in
+  Big Macs, the shrinking loop, a 2030 what-if, a mirrored close. 11 shorts.
+- **EP05 · Follow the Sun** (`lab/ep05/`, ~2:14, Low Orbit): timed to Google's Suncatcher launch (four TPUs, set for
+  1 Oct 2026). Mills to rivers, data centres to reactors, chips to orbit (up to 8x the solar energy); Starcloud 88,000,
+  SpaceX up to 1,000,000 vs ~16,500 working satellites; $7,000 a kilo, so launching one Big Mac costs ~250 Big Macs;
+  Google's break-even under $200/kg (~35x cheaper); a 2040 what-if on who owns what catches the sunlight. 10 shorts.
+  Post it while the launch is news.
+- The ElevenLabs key lives only in the session scratchpad (`.el_key`), never in the repo; every voiced line is cached
+  in `lab/voice/cache/eleven` (committed), so any session can rebuild the films without the key.
+
+## Earlier: the Six Floors format and EP01 (after the @pollar.news inspo)
 - Inspo breakdown: `lab/inspo/pollar_breakdown.md` (frames `lab/inspo/tt1/sheet_*.jpg`, transcript `tt1/transcript.json`).
   The user wants pollar's rigour plus deeper concepts, curiosity, perspective and labelled fantasy ideation.
 - Format bible: `lab/format/SIX_FLOORS.md` (GROUND → MECHANISM → YOU → IDEA → IMAGINE → SURFACE, a depth gauge,

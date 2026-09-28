@@ -15,11 +15,38 @@ LAB = engine.LAB
 OUT = os.path.join(LAB, "shorts", "index.html")
 EPISODES = [
     dict(dir="ep03s", slug="ep03", title="EP03 · The Shovel Sellers", sub="AI, gold rushes and who really gets rich",
+         full="page/media/ep03/ep03_full_720.mp4",
+         yt=("The Shovel Sellers: Who Really Gets Rich in the AI Gold Rush",
+             "May 1848: a shopkeeper walks through San Francisco holding up a bottle of gold. He had already bought every "
+             "pan and shovel in town. 178 years later, the AI build-out has its own shovel sellers.\n\nIn this video: what "
+             "economists found in the gold rush census, the $725 billion big tech plans to spend this year (a million "
+             "dollars a day since the Romans invaded Britain), Nvidia's 2,000 Big Macs a second, why OpenAI spends about "
+             "$1.65 for every $1 it makes, Britain's railway mania, and a labelled what-if: when intelligence is cheap, "
+             "what becomes scarce?"),
          schedule=[("Day 1", "part1", "bigmac"), ("Day 2", "part2", "romans"), ("Day 3", "part3", "nvidia"),
                    ("Day 4", "part4", "openai"), ("Day 5", "railway", None), ("Day 6", "scarce", None)]),
     dict(dir="ep04", slug="ep04", title="EP04 · The Man in the Machine", sub="Robots, war and the person still inside",
+         full="ep04/build/ep04_720.mp4",
+         yt=("Who's Really Inside the Robots?",
+             "18 September 2026: a man steps into a cage in San Francisco to fight a six-foot humanoid robot. The clips "
+             "left one thing out: a person backstage in a VR headset was deciding its every move.\n\nIn this video: Tesla's "
+             "2021 robot reveal (a dancer in a bodysuit), China's first humanoid robot boxing, what the machines really "
+             "do on their own, a $13,500 humanoid in Big Macs, a robot dog with a rifle, Ukraine's 50,000 ground robots, "
+             "a $4.2M Patriot against a drone that costs 3,000 to 8,000 Big Macs, and a labelled what-if: who decides "
+             "when the pilot isn't needed?"),
          schedule=[("Day 7", "part1", "cagefight"), ("Day 8", "part2", "tesla"), ("Day 9", "part3", "patriot"),
                    ("Day 10", "part4", "boxing"), ("Day 11", "price", "ukraine"), ("Day 12", "loop", None)]),
+    dict(dir="ep05", slug="ep05", title="EP05 · Follow the Sun", sub="AI data centres, leaving the planet",
+         full="ep05/build/ep05_720.mp4",
+         yt=("Why AI Is Leaving the Planet",
+             "Google has built a satellite to carry four of its AI chips into orbit. Last December, a satellite the size "
+             "of a small fridge trained an AI model in space. Why is the AI industry trying to leave Earth?\n\nIn this "
+             "video: why industry always goes to its power (a 1771 mill and its water wheel), data centres heading for "
+             "as much electricity as Japan, a reactor restarting at Three Mile Island, the orbit where the sun almost "
+             "never sets, SpaceX's filing for up to a million satellites, what it costs to launch one Big Mac, Google's "
+             "own break-even, and a labelled what-if: who owns the sunlight?"),
+         schedule=[("Day 13", "part1", "suncatcher"), ("Day 14", "part2", "bigmac"), ("Day 15", "part3", "million"),
+                   ("Day 16", "part4", "shakespeare"), ("Day 17", "japan", "sunlight")]),
 ]
 
 CSS = """
@@ -61,9 +88,9 @@ footer{margin-top:44px;font-size:13px;color:var(--muted);max-width:62ch}
 JS = """
 const note=(el,msg)=>{el.textContent=msg;};
 document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
-  const card=b.closest('.card');const text=card.querySelector('.post').textContent;const n=card.querySelector('.note');
-  try{await navigator.clipboard.writeText(text);note(n,'Caption copied.');}
-  catch(e){const r=document.createRange();r.selectNodeContents(card.querySelector('.post'));const s=getSelection();
+  const card=b.closest('.card');const el=card.querySelector('.'+(b.dataset.copy||'post'));const text=el.textContent;const n=card.querySelector('.note');
+  try{await navigator.clipboard.writeText(text);note(n,(b.dataset.copy==='hook'?'Title':b.dataset.copy==='post'&&card.classList.contains('wide')?'Description':'Caption')+' copied.');}
+  catch(e){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();
     s.removeAllRanges();s.addRange(r);note(n,'Selected: copy it from the menu.');}
 }));
 let downloads=null;
@@ -100,6 +127,37 @@ def card(k, slug):
 </article>"""
 
 
+def sources(ep):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("s_" + ep["slug"], os.path.join(LAB, ep["dir"], "script.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return getattr(mod, "SOURCES", [])
+
+
+def full_card(ep):
+    import subprocess
+    e = html.escape
+    path = os.path.join(LAB, ep["full"])
+    d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path],
+                             capture_output=True, text=True, check=True).stdout)
+    title, blurb = ep["yt"]
+    desc = blurb + "\n\nSources:\n" + "\n".join("• " + x for x in sources(ep))
+    src = f"media/{ep['slug']}/{os.path.basename(path)}"
+    return f"""<article class="card wide" id="{e(ep['slug'])}-full">
+  <video controls playsinline preload="metadata" src="{e(src)}"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE</span><span>{int(d // 60)}:{int(d % 60):02d} · 16:9</span></div>
+    <p class="hook">{e(title)}</p>
+    <p class="post">{e(desc)}</p>
+    <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
+      <button class="main" type="button" data-copy="post">Copy description</button>
+      <button type="button" data-save="{e(src)}">Save 720p preview</button></div>
+    <p class="note" aria-live="polite">The 1080p file for YouTube was sent in the chat.</p>
+  </div>
+</article>"""
+
+
 def episodes():
     out = []
     for ep in EPISODES:
@@ -111,8 +169,13 @@ def episodes():
 
 def files():
     """The artifact files map: media/<slug>/<file> -> the mp4 on disk."""
-    return {f"media/{ep['slug']}/{k['file']}": os.path.join(LAB, ep["dir"], "build", "shorts", k["file"])
-            for ep in episodes() for k in ep["kit"].values()}
+    out = {}
+    for ep in episodes():
+        if ep.get("full") and os.path.exists(os.path.join(LAB, ep["full"])):
+            out[f"media/{ep['slug']}/{os.path.basename(ep['full'])}"] = os.path.join(LAB, ep["full"])
+        for k in ep["kit"].values():
+            out[f"media/{ep['slug']}/{k['file']}"] = os.path.join(LAB, ep["dir"], "build", "shorts", k["file"])
+    return out
 
 
 def section(ep):
@@ -125,6 +188,7 @@ def section(ep):
                    for d, a, b in ep["schedule"] if a in kit)
     return f"""<section id="{slug}" class="ep">
   <div><span class="eyebrow">{html.escape(ep['title'])}</span><h2 class="ep-title">{html.escape(ep['sub'])}</h2></div>
+  {full_card(ep) if ep.get("full") and os.path.exists(os.path.join(LAB, ep["full"])) else ""}
   <h3>Suggested order</h3>
   <div class="plan">{plan}</div>
   <h3>The whole film, in {len(parts)} parts</h3>
@@ -150,6 +214,8 @@ nav a{{font:500 13px/1 "IBM Plex Mono",monospace;color:var(--accent);text-decora
 border-radius:999px;padding:8px 12px;background:var(--surface)}}
 nav a:focus-visible{{outline:2px solid var(--accent);outline-offset:2px}}
 .day span{{display:block}}
+.card.wide{{grid-template-rows:auto 1fr}}
+.card.wide video{{aspect-ratio:16/9;max-height:none}}
 .day .plus{{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted)}}
 </style>
 <div class="wrap">

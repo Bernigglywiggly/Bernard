@@ -171,7 +171,7 @@ def build(build_dir, bed_path, out_name="mix.wav", extra=(), deafen_at=(), music
     g = fx.db(fx.lufs(mix) - fx.lufs(pre))
     speech = tk > 0.9
     st = lambda y: round(float(fx.lufs(y[speech])), 1) if speech.any() else None
-    report = dict(voice="George" if george else "none", master=round(float(fx.lufs(mix)), 2), voice_talking=st(voice * g),
+    report = dict(voice=meta.get("voice", "george") if george else "none", master=round(float(fx.lufs(mix)), 2), voice_talking=st(voice * g),
                   music_under_voice=st(music * g), music=round(float(fx.lufs(music * g)), 1),
                   detail=round(float(fx.lufs(detail * g)), 1), events=len(seen))
     out = os.path.join(build_dir, out_name)

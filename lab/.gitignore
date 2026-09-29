@@ -37,3 +37,6 @@ out/music/**/*_spec.png
 inspo/tt*/
 inspo/*.jsonl
 inspo/err.log
+
+# films staged to send in chat
+out/share/

@@ -3,8 +3,10 @@ The user: "background music not too loud", "the voice whatever volume level is n
 effects"; no typing sounds; only George, never a stand-in.
 
   voice   build/voice.wav, de-essed, on top
-  music   the score at -19 LUFS, ducked 12.5 dB while George talks, breathing back up in the gaps, with a hard dip
-          before every "cut" line (the silence before a reveal)
+  music   the score at -19 LUFS, ducked while George talks and breathing back up in the gaps, with a hard dip
+          before every "cut" line (the silence before a reveal). Split at 160 Hz: above it (where a voice lives)
+          down 12.5 dB, the kick and bass only 9, so the groove keeps its hold under him (28 Sep night: the beds
+          didn't "lock people in"). Under the voice it lands near -27 LUFS, about 13 LU below him.
   detail  the picture's events (forms, morphs, latches, coins, pops, links, ticks...), 4 dB under the voice
   master  -14 LUFS integrated, -1 dBTP
 """
@@ -26,7 +28,8 @@ MAP = {"form": ("form", -13), "morph": ("whoosh", -15), "whoosh": ("whoosh", -15
        "glitch": ("glitch", -17), "swell": ("swell", -15), "sub_drop": ("sub_drop", -13), "thum": ("thum", -14),
        "servo": ("servo", -15), "hydraulic": ("hydraulic", -14), "power_up": ("power_up", -16), "clack": ("clack", -12),
        "dock": ("dock", -12)}
-DUCK_MUSIC, DUCK_SFX = -12.5, -4.0
+DUCK_MUSIC, DUCK_LOW, DUCK_SFX = -12.5, -9.0, -4.0
+SPLIT = 160.0
 
 
 def load_sfx(name):
@@ -95,7 +98,10 @@ def build(build_dir, bed_path, out_name="mix.wav", extra=()):
     music = fit(fx.load(bed_path))
     music = music * fx.db(-19.0 - fx.lufs(music))
     tk = talking(lines, n) if george else np.zeros(n, np.float32)
-    music = music * fx.db(DUCK_MUSIC * tk + cut_dips(lines, n))[:, None]
+    lo = fx.bq(fx.bq(music, "lp", SPLIT), "lp", SPLIT)                # Linkwitz-Riley: lo + hi sums back flat
+    hi = fx.bq(fx.bq(music, "hp", SPLIT), "hp", SPLIT)
+    dips = cut_dips(lines, n)
+    music = lo * fx.db(DUCK_LOW * tk + dips)[:, None] + hi * fx.db(DUCK_MUSIC * tk + dips)[:, None]
     detail = np.zeros((n, 2), np.float32)
     cache, seen = {}, set()
     for i, (at, kind, pan) in enumerate(list(ev["events"]) + [list(e) for e in extra]):

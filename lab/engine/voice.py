@@ -1,9 +1,11 @@
-"""The voice for any episode: ElevenLabs George at speed 1.2 (the user's "very original British voice"), from the line
-cache in lab/voice/cache/eleven (tools/eleven_tts.py fills it; credits are spent once per line). There is no stand-in:
-without every line cached and no ELEVENLABS_API_KEY in the environment, it stops.
+"""The voice for any episode: ElevenLabs George (the user's "very original British voice") at his own speed, 1.0, from
+the line cache in lab/voice/cache/eleven (tools/eleven_tts.py fills it; credits are spent once per line). There is no
+stand-in: without every line cached and no ELEVENLABS_API_KEY in the environment, it stops.
 
-Lines sit on an eighth-note grid at 170 BPM with short gaps; `air` adds half-bars before a line, `cut` a beat of
-silence before a reveal. Writes <ep>/build/voice_dry.wav, voice.wav (a touch of cinema room) and lines.json (with
+Pace: the user asked for fast on 28 Sep (George at 1.2, lines nearly touching), then that night: "way too fast... go
+back to the original voice speed". So 1.0 with a breath between sentences is the default; EL_SPEED=1.2 rebuilds the
+fast cut exactly as it was. Lines sit on an eighth-note grid at 170 BPM; `air` adds half-bars before a line, `cut` a
+beat of silence before a reveal. Writes <ep>/build/voice_dry.wav, voice.wav (a touch of cinema room) and lines.json (with
 George's word timings, for the captions and for scenes that sync to a word).
 
     python3 -m engine.voice ep04          # from lab/
@@ -24,7 +26,7 @@ BPM = 170.0
 HB = 2 * 60.0 / BPM
 GRID = HB / 4
 LEAD = 1.2
-SPEED = float(os.environ.get("EL_SPEED", "1.2"))
+SPEED = float(os.environ.get("EL_SPEED", "1.0"))
 
 
 def script(ep_dir):
@@ -32,6 +34,15 @@ def script(ep_dir):
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
+
+
+def gap(ln, speed):
+    """The silence before a line: at 1.0 a breath between sentences and most of a half-bar per unit of air; the 1.2
+    cut had almost none (air halved)."""
+    air = ln.get("air", 0)
+    if speed > 1.1:
+        return 0.06 + (air if ln.get("drop") else math.ceil(air / 2)) * HB + (0.25 if ln.get("cut") else 0.0)
+    return 0.30 + 0.75 * air * HB + (0.35 if ln.get("cut") else 0.0)
 
 
 def trim(a, thresh=0.004):
@@ -59,10 +70,7 @@ def build(ep_dir, lead=LEAD, speed=SPEED):
         y = fx.resample(y.astype(np.float32), sr)
         y, off = trim(y)
         w = el.words_from_alignment(al, texts[i])
-        air = ln.get("air", 0)
-        air = air if ln.get("drop") else math.ceil(air / 2)
-        gap = 0.06 + air * HB + (0.25 if ln.get("cut") else 0.0)
-        start = max(lead, prev_end + gap)
+        start = max(lead, prev_end + gap(ln, speed))
         start = math.ceil((start - lead) / GRID - 1e-6) * GRID + lead
         end = start + len(y) / fx.SR
         clips.append((start, y))

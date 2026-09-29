@@ -49,15 +49,26 @@ def plan(marks, dur, bar, lead):
     return [tuple(p) for p in out]
 
 
-BPM = {"mainframe": 104.0, "low_orbit": 120.0, "night_drive": 108.0, "terminal": 96.0, "chrome_marl": 72.0}
+BPM = {"mainframe": 104.0, "low_orbit": 120.0, "night_drive": 108.0, "terminal": 96.0, "chrome_marl": 72.0,
+       "deep_field": 112.0}
 
 
 def build(out_path, marks, dur, anchors=None, bed="mainframe", bpm=None):
-    """bed: a name in beds.py, optionally with ":calm" (Night Drive's version cut for under a voice)."""
+    """bed: a name in beds.py, optionally with options after a colon: "night_drive:calm" (Night Drive's version cut
+    for under a voice), "deep_field:key=-3" (Deep Field in D minor)."""
     name, _, opt = bed.partition(":")
     bar, lead = grid(anchors, bpm or BPM.get(name, 104.0))
     p = plan(marks, dur, bar, lead)
-    x = getattr(beds, name)(240.0 / bar, p, lead, **({"calm": True} if opt == "calm" else {}))
+    kw = {}
+    for o in filter(None, opt.split(",")):
+        k, eq, v = o.partition("=")
+        kw[k] = (float(v) if "." in v else int(v)) if eq else True
+    if lead > 0.05:                  # no dead air at the top: one more intro bar, cut in so its last part plays from 0
+        p[0] = (p[0][0], p[0][1] + 1)
+        x = np.asarray(getattr(beds, name)(240.0 / bar, p, 0.0, **kw), np.float32)[int(round((bar - lead) * fx.SR)):]
+        x = x * np.minimum(1.0, np.arange(len(x)) / (0.4 * fx.SR))[:, None]
+    else:
+        x = getattr(beds, name)(240.0 / bar, p, lead, **kw)
     fx.save(out_path, np.asarray(x, np.float32), mp3=False)
     print(f"score: {bed} at {240.0 / bar:.2f} BPM, lead {lead:.2f}s, plan {p}")
     return out_path

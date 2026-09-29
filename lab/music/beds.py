@@ -17,6 +17,8 @@ with an intro, a build, a main section, a breakdown and an outro, so you can hea
   mainframe    dark synth-orchestral, 104 BPM, D minor (28 Sep, after "too lighthearted"; the user pointed at The
                Son of Flynn, and this is an original in that style): a rolling 16th synth ostinato, strings, low
                brass swells, booms at the section changes, no drum kit.
+  deep_field   dark deep house, 112 BPM, F minor (28 Sep night: "more serious... futuristic tech, deep house", slower):
+               a round 4/4 kick, an off-beat bass, filtered m9 stabs with dub echoes, a pumping pad, a pulse arp.
 
 Stems are balanced to loudness targets per bed (the mix is decided by numbers, then checked), the bus gets a small
 dip around 2.8 kHz so a voice sits on top, and the preview master is -14 LUFS / -1 dBTP.
@@ -937,8 +939,146 @@ def mainframe(bpm=104, plan=None, lead=0.0):
     return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
 
 
+# ================================================================ 8 · DEEP FIELD (dark deep house, 112 BPM)
+def stab(m, dur, rng, vel=0.8):
+    """A deep-house chord-stab voice: a short detuned saw that decays like a pluck, over an FM-piano body."""
+    x = supersaw(m, dur, rng, voices=4, detune=0.09, r=0.3, a=0.003)
+    t = np.arange(len(x)) / SR
+    x = x * (0.3 + 0.7 * np.exp(-t / 0.14))[:, None]
+    body = rhodes(m, dur, 0.55)
+    k = min(len(x), len(body))
+    x[:k] += 0.6 * body[:k, None]
+    return (x * vel).astype(np.float32)
+
+
+def deep_field(bpm=112, plan=None, lead=0.0, key=0):
+    """Dark deep house in F minor, for the serious, futuristic topics (the user, 28 Sep night: "more serious...
+    futuristic tech, sort of deep house... [the beds] don't really lock people in... too light-hearted", and slower).
+    What it leans on: slow and minor reads as serious (tempo weighs even more than mode: Gagnon & Peretz, 2003); fast
+    and loud background music hurts comprehension (Thompson, Schellenberg & Letnic, 2012), so it is moderate and sits
+    under the voice; and a steady four-on-the-floor with a rolling off-beat bass is what makes house hypnotic: the loop
+    locks you in and only the filters move.
+
+      intro   a dark pad, a low drone, the chord stabs far away behind a closed filter, a muffled kick (the room next door)
+      a       the groove: a round 4/4 kick, the off-beat bass, off-beat hats, a soft rim on 2 and 4, dub stabs on
+              Fm9 Dbmaj7 Bbm9 Cm7 (two bars each, dotted-8th echoes), a pulse arp in 8ths behind a filter
+      b       the peak: the arp in 16ths and opening up, a clap, longer hats and a shaker, a far glass motif
+      break   no drums: the pad, the drone, the stabs' echoes, the arp filtered down, a riser back in
+      out     the tail
+    plan/lead as for terminal(); key moves the whole thing by semitones (-3 is D minor), so episodes can share the
+    sound without sharing the exact loop."""
+    plan = plan or [("intro", 4), ("a", 8), ("b", 8), ("break", 4), ("b", 8), ("out", 4)]
+    s = Song(bpm, sum(n for _, n in plan), seed=88 + key)
+    rng = s.rng
+    sec = sections(s, plan)
+    prog = [(41 + key, "m9"), (37 + key, "maj7"), (34 + key, "m9"), (36 + key, "m7")]   # Fm9 Dbmaj7 Bbm9 Cm7, two bars each
+    chord = lambda b: prog[(b // 2) % 4]
+    STABS = {"a": (2, 10, 18, 23, 30), "b": (2, 7, 10, 18, 23, 26, 30)}   # steps in the two-bar cycle; 30 pushes the next chord
+    ARP = (0, 2, 4, 1, 3, 5, 2, 4)
+    GLASS = tuple((st, m + key) for st, m in ((0, 84), (6, 80), (12, 79), (20, 75)))   # C6 Ab5 G5 Eb5: in every chord
+    starts = [b for b in range(s.bars) if b == 0 or sec[b] != sec[b - 1]]
+    for b in range(s.bars):
+        root, q = chord(b)
+        name = sec[b]
+        groove = name in ("a", "b")
+        v = voicing(root, q, 50)
+        # the pad: the chord for two bars, low and wide
+        if b % 2 == 0:
+            for m in voicing(root, q, 46):
+                s.put("pad", supersaw(m, s.bar * 1.97, rng, voices=7, detune=0.13, r=1.8, a=0.5), s.at(b))
+        # the stabs (on the off-beats, a push into the next chord), sparse and far away outside the groove
+        for st in (STABS[name] if groove else (10, 26)):
+            if (b % 2) * 16 <= st < (b % 2 + 1) * 16:
+                r2, q2 = chord(b + 1) if st == 30 else (root, q)
+                for k, m in enumerate(voicing(r2, q2, 50)):
+                    s.put("stabs", stab(m, s.step * 1.3, rng, (0.9 if st % 8 == 2 else 0.7) * rng.uniform(0.9, 1.0)),
+                          s.at(b, st % 16) + 0.004 * k, pan=-0.2 + 0.13 * k)
+        # the bass: off-beat sub notes between the kicks, a lead-in note before each chord change
+        bm = low(root, 33)
+        if groove:
+            for st in (2, 6, 10, 14):
+                s.put("bass", sub(bm, s.step * 1.5, harm=0.28), s.at(b, st), gain=1.0 if st != 14 else 0.85)
+            if b % 2 == 1:
+                s.put("bass", sub(low(chord(b + 1)[0], 33) + 12, s.step * 0.8, harm=0.28), s.at(b, 15), gain=0.6)
+        elif name != "out" or b < s.bars - 2:
+            n_ = int((s.bar * 0.99 + 0.08) * SR)
+            s.put("sub", sub(bm, s.bar * 0.99, harm=0.1) * env(n_, 0.4, s.bar * 0.9, 0.5), s.at(b))
+        # drums
+        if groove:
+            for beat in range(4):
+                k = kick(44, 125, 0.03, 0.32, 0.1, 0.5, soft=True, seed=beat)
+                k[:96] *= np.sin(np.linspace(0, np.pi / 2, 96)) ** 2           # eased in: a thump, no tick
+                s.put("kick", k, s.at(b, beat * 4)); s.kicks.append(s.at(b, beat * 4))
+            for st in (2, 6, 10, 14):
+                s.put("hats", hat(0.09 if name == "b" else 0.05, seed=st + 13 * b, metal=0.55, tone=7000), s.at(b, st, 0.002),
+                      pan=0.25, gain=rng.uniform(0.85, 1.0))
+            for st in (4, 12):
+                if name == "a":
+                    s.put("rim", rim(), s.at(b, st, 0.002), pan=-0.1)
+                else:
+                    s.put("clap", clap(seed=b + st), s.at(b, st, 0.002))
+            if name == "b":
+                for st in range(16):
+                    if st % 4:
+                        s.put("shaker", shaker(seed=st + b), s.at(b, st, 0.003), pan=-0.35, gain=0.8 if st % 2 else 0.5)
+        elif name == "intro":
+            for beat in range(4):
+                k = kick(44, 110, 0.03, 0.35, 0.0, 0.5, soft=True, seed=beat)
+                s.put("kick_far", k, s.at(b, beat * 4)); s.kicks.append(s.at(b, beat * 4))
+        # the arp: the machine thinking, in 8ths in a and the break, 16ths in b
+        if name in ("a", "b", "break"):
+            tones = sorted(set(voicing(root, q, 62) + [x + 12 for x in voicing(root, q, 62)]))
+            for st in range(0, 16, 1 if name == "b" else 2):
+                m = tones[ARP[(st + 16 * (b % 2)) % 8] % len(tones)]
+                s.put("arp", pluck(m, s.step * 0.8, 1.1, 10.0, 16), s.at(b, st), pan=0.45 * np.sin(1.3 * st),
+                      gain=(1.0 if st % 4 == 0 else 0.65))
+        # the glass: a far four-note motif in b
+        if name == "b" and b % 2 == 0:
+            for st, m in GLASS:
+                s.put("glass", bell(m, 1.6, 0.5, ratio=3.5, bright=0.7), s.at(b, st % 16) + (s.bar if st >= 16 else 0),
+                      pan=0.55 if st % 12 else -0.55)
+        # section changes: a riser into the groove, a low boom where it lands
+        if b + 1 < s.bars and sec[b + 1] != name and sec[b + 1] in ("a", "b"):
+            s.put("fx", riser(s.bar * (2 if b >= 1 else 1), 250, 6500, seed=b), s.at(max(0, b - 1)))
+        if b in starts and name in ("a", "b") and b > 0 and sec[b - 1] in ("intro", "break"):
+            s.put("boom", boom(2.5, seed=b), s.at(b))
+    # filters: everything tonal opens by section (closed in the intro, open at the peak) and breathes over 8 bars
+    lvl = {"intro": 650, "a": 1500, "b": 2500, "break": 700, "out": 800}
+    bt = np.arange(s.bars) * s.bar
+    bc = np.array([lvl.get(n, 1200) for n in sec], float)
+    if sec[0] == "intro":
+        k = [i for i, n in enumerate(sec) if n == "intro"]
+        bc[k] = np.linspace(420, 1000, len(k))
+    base = lambda t: float(np.interp(t, bt + s.bar * 0.5, bc))
+    lfo = lambda t: 1.0 + 0.18 * np.sin(2 * np.pi * t / (8 * s.bar) - 1.2)
+    s.stems["pad"] = reverb(pb(ladder(s.stems["pad"], lambda t: 0.55 * base(t) * lfo(t), 0.2), Chorus(rate_hz=0.3, depth=0.3, mix=0.4)),
+                            0.9, 0.38, 0.5)
+    s.stems["stabs"] = reverb(pingpong(ladder(s.stems["stabs"], lambda t: 0.9 * base(t) * lfo(t), 0.3, 1.2),
+                                       s.step * 3, 0.42, 6, 0.4, 2600), 0.8, 0.28, 0.55)
+    if "arp" in s.stems:
+        s.stems["arp"] = reverb(pingpong(ladder(s.stems["arp"], lambda t: 1.1 * base(t) * lfo(t), 0.32, 1.1),
+                                         s.step * 3, 0.35, 5, 0.3, 4000), 0.6, 0.22, 0.5)
+    if "bass" in s.stems:
+        s.stems["bass"] = ladder(s.stems["bass"], lambda t: 320 + 0.12 * base(t), 0.2, 1.3)
+    if "kick_far" in s.stems:
+        s.stems["kick_far"] = fx.bq(fx.bq(s.stems["kick_far"], "lp", 140), "lp", 140)
+    for nm, (size, wet) in {"rim": (0.6, 0.25), "clap": (0.75, 0.3), "glass": (0.97, 0.55), "boom": (0.9, 0.4), "fx": (0.7, 0.3)}.items():
+        if nm in s.stems:
+            s.stems[nm] = reverb(s.stems[nm], size, wet, 0.5)
+    for nm, f in {"hats": 9000, "shaker": 8500, "clap": 6000, "glass": 9000}.items():
+        if nm in s.stems:
+            s.stems[nm] = fx.bq(s.stems[nm], "lp", f)
+    levels = {"pad": -21, "stabs": -22, "bass": -21, "sub": -24, "kick": -20, "kick_far": -27, "hats": -31, "shaker": -37,
+              "rim": -31, "clap": -28, "arp": -26, "glass": -31, "fx": -31, "boom": -27}
+    dyn = {"intro": (-5, -2), "a": 0, "b": 1, "break": -3, "out": (-2, -9)}
+    mix = balance(s, levels, sidechain={"pad": (0.4, 0.22), "stabs": (0.25, 0.15), "bass": (0.3, 0.1), "arp": (0.2, 0.12),
+                                        "sub": (0.3, 0.2)},
+                  hpf={"pad": 120, "stabs": 180, "arp": 250, "kick_far": 20, "boom": 25, "glass": 400}, dyn=(sec, dyn))
+    return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
+
+
 BEDS = {"terminal": terminal, "tape_loop": tape_loop, "night_drive": night_drive, "low_orbit": low_orbit,
-        "two_step": two_step, "chrome_marl": chrome_marl, "mainframe": mainframe}
+        "two_step": two_step, "chrome_marl": chrome_marl, "mainframe": mainframe, "deep_field": deep_field}
 
 
 def main():

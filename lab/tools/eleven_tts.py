@@ -1,4 +1,4 @@
-"""ElevenLabs text-to-speech for our scripts: George (the "first British guy" from A01) by default, fast.
+"""ElevenLabs text-to-speech for our scripts: George (the "first British guy" from A01) by default, at his own speed (1.0).
 
 Every line is cached by (text, voice, model, speed) as lossless FLAC plus the character timings, in
 lab/voice/cache/eleven/. So credits are only spent once per line, and the cache can be made on any machine that
@@ -7,7 +7,7 @@ the repo for the others to build from.
 
     ELEVENLABS_API_KEY=... python3 tools/eleven_tts.py ep03              # every line of lab/ep03/script.py
     python3 tools/eleven_tts.py ep03 --dry-run                         # what it would send, and what's cached
-    python3 tools/eleven_tts.py ep03 --speed 1.2 --voice JBFqnCBsd6RMkjVDRZzb
+    python3 tools/eleven_tts.py ep03 --speed 1.0 --voice JBFqnCBsd6RMkjVDRZzb
 
 voice_build.py uses the cache automatically when it has every line (VOICE_ENGINE=eleven forces it).
 """
@@ -39,7 +39,7 @@ def key_of(text, voice, model, speed):
     return hashlib.sha1(json.dumps([text, voice, model, round(speed, 3), SETTINGS], sort_keys=True).encode()).hexdigest()[:16]
 
 
-def cached(text, voice=GEORGE, model=MODEL, speed=1.2):
+def cached(text, voice=GEORGE, model=MODEL, speed=1.0):
     """(audio float32 mono at 44.1 kHz or None, alignment dict or None)."""
     k = key_of(text, voice, model, speed)
     fl, js = os.path.join(CACHE, k + ".flac"), os.path.join(CACHE, k + ".json")
@@ -57,7 +57,7 @@ def _post(url, body, key):
         return json.loads(r.read())
 
 
-def synth(text, key, voice=GEORGE, model=MODEL, speed=1.2, prev=None, nxt=None):
+def synth(text, key, voice=GEORGE, model=MODEL, speed=1.0, prev=None, nxt=None):
     """Calls the API (with timestamps) and caches the result. Returns ((audio, sr), alignment)."""
     hit = cached(text, voice, model, speed)
     if hit[0] is not None:
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     ap.add_argument("ep")
     ap.add_argument("--voice", default=GEORGE)
     ap.add_argument("--model", default=MODEL)
-    ap.add_argument("--speed", type=float, default=1.2)
+    ap.add_argument("--speed", type=float, default=1.0)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
     slots_p = os.path.join(LAB, a.ep, "build", "slots.json")

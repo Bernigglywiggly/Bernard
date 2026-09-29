@@ -25,7 +25,24 @@ Updated 28 Sep 2026 (afternoon), cloud session on branch `claude/lucid-archimede
 - **Sales**: 85 independent takeaways/cafés (FSA register, Sept 2026) in walking order for Stone, Newcastle-under-Lyme
   and Tamworth. "Here" (the user's home town) is still unknown: ask, then pull its council's FSA file the same way.
 
-## Newest (29 Sep, night): George at his own pace, and Deep Field
+## Newest (29 Sep, after midnight): Arena, and the ears going
+- **The user on Deep Field:** "still way too lighthearted. It needs to be as serious as The Son of Flynn" (Daft
+  Punk, Tron: Legacy), and the arena build-up (the crowd chanting "Rinzler"), and the moment "all the sound got
+  muted... your ears sort of lose hearing... then slowly come back". They'd also like to hear the real track under
+  a film, privately, never published: we can't fetch or ship Daft Punk's audio, so `film.py nomusic` makes
+  `build/<ep>_no_music.mp4` (voice + picture sounds only) for them to lay it under in CapCut themselves.
+- **Arena** (`beds.arena`, preview `lab/out/music/new/arena.mp3`): an original in that style, 100 BPM, D minor,
+  Dm Bb Gm A: low brass (open fifths in a, full chords in b), a low-string ostinato on a D pedal, a mechanical synth
+  arpeggio, war drums and a driven bass in b, a braam on each arrival, tremolo strings and a Shepard tone in the
+  breaks, a slow violin line. Nothing bright; the weight is low, so it stays serious under the voice.
+- **The ears going** (`engine.mix.deafen`, `film.main(..., deafen=("line_id", ...))`): just after the line before,
+  a hit, then music and picture sounds drop behind a low-pass (18 kHz to 260 Hz in 70 ms), hold 0.7 s under a
+  ring at ~6 kHz, and open again over 3.5 s; George's next line cuts through clear. EP08 uses it before "ai" (the
+  cold open's turn) and "imagine" (the what-if).
+- **The queue now renders pictures only** (`pictures.sh` in the scratchpad: EP04, EP06, EP07, then EP03 captioned and
+  clean); sound, master and shorts wait until the user approves a bed. EP05's picture and voice are done.
+
+## Earlier (29 Sep, night): George at his own pace, and Deep Field
 - **The user (28 Sep, late):** the music should be "more serious... futuristic tech, sort of deep house"; the beds
   "don't really lock people in", too light; and the pace is "way too fast": "go back to the original voice speed",
   with the video synced to it. (Earlier that day they had asked for fast; this reverses it.)

@@ -87,7 +87,50 @@ def cut_dips(lines, n):
     return g
 
 
-def build(build_dir, bed_path, out_name="mix.wav", extra=()):
+def deafen(x, times):
+    """The ears going (the user's Tron: Legacy moment, 29 Sep: "all the sound got muted... your ears sort of lose
+    hearing... then slowly come back"): from each time the layer drops behind a low-pass that closes in a blink,
+    holds under a ring in the ears, then opens again over a few seconds. For the music and the picture's sounds; the
+    voice stays clear, so the next line cuts through the muffled room."""
+    import beds
+    y = x.copy()
+    for T in times:
+        i0, i1 = max(0, int((T - 0.05) * SR)), min(len(y), int((T + 4.6) * SR))
+        t0 = T - i0 / SR
+
+        def cut(tt):
+            u = tt - t0
+            if u < 0 or u > 4.3:
+                return 18000.0
+            if u < 0.07:
+                return 18000.0 * (260.0 / 18000.0) ** (u / 0.07)
+            if u < 0.8:
+                return 260.0
+            return 260.0 * (18000.0 / 260.0) ** (((u - 0.8) / 3.5) ** 1.6)
+        seg = beds.ladder(np.ascontiguousarray(y[i0:i1]), cut, 0.1, 1.0, 256)
+        u = np.arange(i1 - i0) / SR - t0
+        g = np.where(u < 0, 0.0, np.where(u < 0.8, -7.0 * np.minimum(1, u / 0.07), -7.0 * (1 - np.clip((u - 0.8) / 3.5, 0, 1) ** 1.2)))
+        seg = seg * fx.db(g)[:, None]
+        k = int(0.01 * SR)
+        w = np.ones(i1 - i0); w[:k] = np.linspace(0, 1, k); w[-k:] = np.linspace(1, 0, k)
+        y[i0:i1] = y[i0:i1] * (1 - w[:, None]) + seg * w[:, None]
+    return y.astype(np.float32)
+
+
+def ring(n, times):
+    """The ring in the ears: two high tones a little apart, in at once, gone over about three seconds."""
+    out = np.zeros((n, 2), np.float32)
+    for T in times:
+        t = np.arange(int(4.0 * SR)) / SR
+        y = (np.sin(2 * np.pi * 6100 * t) * (1 + 0.1 * np.sin(2 * np.pi * 5 * t)) + 0.35 * np.sin(2 * np.pi * 6740 * t))
+        y *= 0.016 * np.minimum(1, t / 0.03) * np.exp(-t / 1.1)
+        place(out, np.stack([y, 0.9 * y], 1).astype(np.float32), T + 0.02)
+    return out
+
+
+def build(build_dir, bed_path, out_name="mix.wav", extra=(), deafen_at=(), music_on=True):
+    """deafen_at: times for the ears-going moment; music_on=False leaves the score out (the voice and the picture's
+    sounds only: a track to lay any music under, privately)."""
     meta = json.load(open(os.path.join(build_dir, "lines.json")))
     lines = meta["lines"]
     ev = json.load(open(os.path.join(build_dir, "events.json")))
@@ -96,7 +139,7 @@ def build(build_dir, bed_path, out_name="mix.wav", extra=()):
     george = meta.get("engine") == "eleven"
     voice = fit(deess(fx.load(os.path.join(build_dir, "voice.wav")))) if george else np.zeros((n, 2), np.float32)
     music = fit(fx.load(bed_path))
-    music = music * fx.db(-19.0 - fx.lufs(music))
+    music = music * fx.db(-19.0 - fx.lufs(music)) * (1.0 if music_on else 0.0)
     tk = talking(lines, n) if george else np.zeros(n, np.float32)
     lo = fx.bq(fx.bq(music, "lp", SPLIT), "lp", SPLIT)                # Linkwitz-Riley: lo + hi sums back flat
     hi = fx.bq(fx.bq(music, "hp", SPLIT), "hp", SPLIT)
@@ -117,6 +160,12 @@ def build(build_dir, bed_path, out_name="mix.wav", extra=()):
             x = cache[name]
         place(detail, x, at, gain, pan)
     detail = detail * fx.db(DUCK_SFX * tk)[:, None]
+    if deafen_at:
+        import beds
+        for T in deafen_at:                                          # the hit that takes the hearing
+            place(detail, beds.boom(2.5, seed=int(T)), T, -5.0)
+        music, detail = deafen(music, deafen_at), deafen(detail, deafen_at)
+        detail = detail + ring(n, deafen_at)
     pre = voice + music + detail
     mix = fx.master(pre, target=-14.0, ceiling_db=-1.5)            # -1.5 dBTP: room for the AAC encode
     g = fx.db(fx.lufs(mix) - fx.lufs(pre))

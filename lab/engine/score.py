@@ -50,7 +50,7 @@ def plan(marks, dur, bar, lead):
 
 
 BPM = {"mainframe": 104.0, "low_orbit": 120.0, "night_drive": 108.0, "terminal": 96.0, "chrome_marl": 72.0,
-       "deep_field": 112.0}
+       "deep_field": 112.0, "arena": 100.0}
 
 
 def build(out_path, marks, dur, anchors=None, bed="mainframe", bpm=None):

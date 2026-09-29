@@ -71,7 +71,8 @@ def collect_events(scenes, dur, build):
     print(len(tl.EVENTS), "sound events")
 
 
-def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainframe", extra_sfx=()):
+def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainframe", extra_sfx=(), deafen=()):
+    """deafen: line ids; just before each, the ears go (engine.mix.deafen) and the line cuts through the muffled room."""
     ep_dir = os.path.dirname(os.path.abspath(film_file))
     build = os.path.join(ep_dir, "build")
     os.makedirs(build, exist_ok=True)
@@ -136,13 +137,23 @@ def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainfram
         for p in parts:
             os.remove(p)
         print(feed, flush=True)
+    deaf = [(tl.L[tl.I(m) - 1]["end"] + 0.1) if tl.I(m) else tl.ls(m) - 0.8 for m in deafen]
     if cmd in ("sound", "all"):
         from engine import score, mix
         collect_events(scenes, dur, build)
         marks = [(t_of(m), s) for m, s in music]
         anc = tuple(t_of(a) for a in anchors) if anchors else None
         bed_path = score.build(os.path.join(build, "bed.wav"), marks, dur, anc, bed)
-        mix.build(build, bed_path, "mix.wav", extra=[(t_of(m), k, p) for m, k, p in extra_sfx])
+        mix.build(build, bed_path, "mix.wav", extra=[(t_of(m), k, p) for m, k, p in extra_sfx], deafen_at=deaf)
+    if cmd == "nomusic":                                          # the voice and the picture's sounds only, on the film
+        from engine import mix
+        wav = mix.build(build, os.path.join(build, "bed.wav"), "mix_nomusic.wav", extra=[(t_of(m), k, p) for m, k, p in extra_sfx],
+                        deafen_at=deaf, music_on=False)
+        out = os.path.join(build, f"{name}_no_music.mp4")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", final, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy",
+                        "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", out], check=True)
+        print(out)
+        return
     if cmd in ("master", "all"):                                  # captions over the clean picture + the mix, one pass
         dec = subprocess.Popen(["ffmpeg", "-v", "error", "-i", feed, "-f", "rawvideo", "-pix_fmt", "bgra", "-"], stdout=subprocess.PIPE)
         enc = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}", "-r", str(FPS),

@@ -19,6 +19,10 @@ with an intro, a build, a main section, a breakdown and an outro, so you can hea
                brass swells, booms at the section changes, no drum kit.
   deep_field   dark deep house, 112 BPM, F minor (28 Sep night: "more serious... futuristic tech, deep house", slower):
                a round 4/4 kick, an off-beat bass, filtered m9 stabs with dub echoes, a pumping pad, a pulse arp.
+               The user, 29 Sep: "still way too lighthearted".
+  arena        dark hybrid orchestral-electronic, 100 BPM, D minor, an original in the spirit of the Tron: Legacy score
+               (29 Sep: "as serious as The Son of Flynn", the arena build-up): low brass, a low-string ostinato, a
+               mechanical synth arp, a sub pedal, war drums, a braam on each arrival, a Shepard tone in the breaks.
 
 Stems are balanced to loudness targets per bed (the mix is decided by numbers, then checked), the bus gets a small
 dip around 2.8 kHz so a voice sits on top, and the preview master is -14 LUFS / -1 dBTP.
@@ -1077,8 +1081,197 @@ def deep_field(bpm=112, plan=None, lead=0.0, key=0):
     return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
 
 
+# ================================================================ 9 · ARENA (dark hybrid orchestral-electronic, 100 BPM)
+def shepard(dur, rate=1 / 7.0, fmin=40.0, octaves=8, centre=420.0, width=1.1, seed=12):
+    """A Shepard glissando: octave-spaced sines that seem to climb for ever (the rising dread of a war-film score),
+    each fading in at the bottom and out at the top. rate is in octaves a second."""
+    n = int(dur * SR)
+    t = np.arange(n) / SR
+    y = np.zeros(n)
+    c = np.log2(centre / fmin)
+    ph0 = np.random.default_rng(seed).random(octaves) * 2 * np.pi
+    for k in range(octaves):
+        pos = (k + rate * t) % octaves
+        y += np.exp(-0.5 * ((pos - c) / width) ** 2) * np.sin(ph0[k] + 2 * np.pi * np.cumsum(fmin * 2 ** pos) / SR)
+    y *= np.minimum(1, t / 1.0) * np.clip((dur - t) / 0.3, 0, 1)
+    return (y / (np.max(np.abs(y)) + 1e-9)).astype(np.float32)
+
+
+def horn(m, dur, rng, a=0.35, r=0.9):
+    """A brass-section note: three saws a few cents apart, a slow breath in, a little grit. The stem's filter makes the
+    'bwah' (it opens with each chord and settles)."""
+    n = int((dur + r) * SR)
+    f = float(hz(m))
+    y = sum(saw(f * 2 ** (c / 1200), n, rng.random()) for c in (-6, 0, 5)) / 3
+    return (np.tanh(1.6 * y) / np.tanh(1.6) * env(n, a, dur, r)).astype(np.float32)
+
+
+def braam(m, dur=4.5, seed=3):
+    """The low brass-and-synth blast on a section's arrival: the root in two octaves with its fifth, driven hard,
+    through a filter that snaps open and slowly closes, and a sub dropping under it."""
+    n = int(dur * SR)
+    t = np.arange(n) / SR
+    rng = np.random.default_rng(seed)
+    y = np.zeros(n, np.float32)
+    for mm, g in ((m - 12, 1.0), (m, 0.9), (m + 7, 0.6), (m + 12, 0.45)):
+        for c in (-8, 0, 7):
+            y += g * saw(float(hz(mm)) * 2 ** (c / 1200), n, rng.random())
+    y = np.tanh(2.2 * y / 6.0)
+    x = ladder(np.stack([y, y], 1).astype(np.float32), lambda tt: 170 + 2600 * np.exp(-tt / 0.4) * min(1.0, tt / 0.05), 0.25, 1.5)
+    s_ = np.sin(2 * np.pi * np.cumsum(float(hz(m - 12)) * (1 + 0.6 * np.exp(-t / 0.08))) / SR) * np.exp(-t / 1.3)
+    e = np.minimum(1, t / 0.03) * np.exp(-t / 1.7)
+    return (x * e[:, None] + 0.7 * (s_ * np.minimum(1, t / 0.005))[:, None]).astype(np.float32)
+
+
+def spicc(m, dur, rng, vel=1.0):
+    """A low-strings spiccato note: two saws a hair apart, a bowed bite and a quick decay."""
+    n = int((dur + 0.15) * SR)
+    t = np.arange(n) / SR
+    f = float(hz(m))
+    y = 0.6 * saw(f, n, rng.random()) + 0.4 * saw(f * 1.004, n, rng.random())
+    return (y * np.minimum(1, t / 0.006) * np.exp(-t / (dur * 0.55)) * vel).astype(np.float32)
+
+
+def grid_note(m, dur, rng):
+    """The arp's voice: a saw and a band-limited square (two saws half a cycle apart), with a short filter-like blip
+    at the front: the pulse of the machine."""
+    n = int((dur + 0.05) * SR)
+    t = np.arange(n) / SR
+    f = float(hz(m))
+    p = rng.random()
+    y = 0.6 * saw(f, n, p) + 0.25 * (saw(f, n, p) - saw(f, n, (p + 0.5) % 1.0))
+    y *= np.minimum(1, t / 0.003) * np.where(t > dur, np.exp(-(t - dur) / 0.01), 1.0) * (0.55 + 0.45 * np.exp(-t / 0.06))
+    return y.astype(np.float32)
+
+
+def arena(bpm=100, plan=None, lead=0.0, key=0):
+    """Dark hybrid orchestral-electronic in D minor, an original in the spirit of Daft Punk's Tron: Legacy score (the
+    user, 29 Sep: "as serious as The Son of Flynn", and the arena build-up with the crowd chanting): low brass, a
+    driving low-string ostinato, a mechanical synth arpeggio, a pedal in the sub, war drums, a braam on each arrival,
+    a Shepard tone that climbs through the breaks. Nothing bright: the weight sits low, where it reads as serious
+    even ducked under a voice.
+
+      intro   strings and a D pedal, the arp in 8ths behind a closed filter
+      a       the low strings in 8ths on the pedal, a heartbeat, the arp in 16ths, open fifths in the brass
+      b       the arrival: a braam, the strings' 16ths on the chord's root, a driven synth bass, war drums, full brass
+              chords, a slow violin line (D, Bb, F, G, Bb, A, C# and home)
+      break   tremolo strings and the Shepard tone, the arp filtered down: the held breath before the next arrival
+      out     the brass's last chord and the strings, dying away
+    Dm Bb Gm A (i bVI iv V), two bars each. plan/lead as for terminal(); key moves it by semitones."""
+    plan = plan or [("intro", 4), ("a", 8), ("b", 8), ("break", 4), ("b", 8), ("out", 4)]
+    s = Song(bpm, sum(n for _, n in plan), seed=99 + key)
+    rng = s.rng
+    sec = sections(s, plan)
+    D = 38 + key
+    prog = [(D, "m"), (D - 4, "maj"), (D + 5, "m"), (D + 7, "maj")]
+    chord = lambda b: prog[(b // 2) % 4]
+    MEL = {0: (2, 86), 2: (1, 82), 3: (1, 77), 4: (1, 79), 5: (1, 82), 6: (1, 81), 7: (1, 85)}   # bar in the 8: (bars, note)
+    ARP = (0, 1, 2, 3, 4, 3, 2, 1)
+    starts = [b for b in range(s.bars) if b == 0 or sec[b] != sec[b - 1]]
+    for b in range(s.bars):
+        root, q = chord(b)
+        name = sec[b]
+        prev = sec[b - 1] if b else None
+        big = name == "b"
+        pedal = name in ("intro", "a")
+        # strings: the chord for two bars, low and dark
+        if b % 2 == 0:
+            for m in voicing(root, q, 50, rootless=False):
+                s.put("strings", supersaw(m, s.bar * 1.97, rng, voices=6, detune=0.1, r=1.8, a=0.9), s.at(b))
+        # brass: open fifths in a (hollow, grave), the full chord in b and at the end
+        if b % 2 == 0 and name in ("a", "b", "out"):
+            r0 = low(root, 36)
+            for m in [r0, r0 + 7, r0 + 12] + ([r0 + 12 + Q[q][1]] if name != "a" else []):
+                s.put("brass", horn(m, s.bar * 1.9, rng, a=0.45 if big else 0.8), s.at(b))
+        # the low strings' ostinato: 8ths on the pedal in a, 16ths on the chord's root in b
+        if name in ("a", "b"):
+            bm = low(D if pedal else root, 38)
+            k = 1 if big else 2
+            for st in range(0, 16, k):
+                s.put("cello", spicc(bm + (12 if st % 8 == 6 else 0), s.step * k * 0.9, rng, 1.0 if st % 4 == 0 else 0.7),
+                      s.at(b, st, 0.002))
+        # the sub: the pedal, then the roots
+        if name != "out" or b < s.bars - 1:
+            n_ = int((s.bar * 0.99 + 0.08) * SR)
+            s.put("sub", sub(low(D if pedal else root, 28), s.bar * 0.99, harm=0.15) * env(n_, 0.05, s.bar * 0.95, 0.2), s.at(b))
+        # the driven synth bass and the war drums in b; a heartbeat in a
+        if big:
+            for e in range(8):
+                x = saw(float(hz(low(root, 38))), int(s.step * 1.8 * SR), rng.random())
+                s.put("bass", np.tanh(2.5 * x) * env(len(x), 0.004, s.step * 1.4, 0.06), s.at(b, e * 2), gain=1.0 if e % 2 == 0 else 0.8)
+            for st, g in ((0, 1.0), (6, 0.55), (8, 0.9), (11, 0.5), (14, 0.65)):
+                s.put("taiko", kick(62, 115, 0.05, 0.5, 0.06, 1.0, soft=True, seed=b * 16 + st), s.at(b, st, 0.003), gain=g)
+                s.kicks.append(s.at(b, st))
+            if b % 4 == 3:
+                for j, st in enumerate((12, 13, 14, 15)):
+                    s.put("taiko", kick(110 - 12 * j, 170 - 15 * j, 0.03, 0.25, 0.05, 0.5, soft=True, seed=j), s.at(b, st),
+                          gain=0.55, pan=0.4 - 0.25 * j)
+        elif name == "a":
+            for st, g in ((0, 1.0), (3, 0.7)):
+                s.put("heart", kick(44, 100, 0.04, 0.4, 0.0, 0.6, soft=True, seed=st), s.at(b, st), gain=g)
+                s.kicks.append(s.at(b, st))
+        # the arp: 8ths in the intro, 16ths after
+        if name != "out":
+            tones = voicing(root, q, 57, rootless=False)
+            tones = sorted(set(tones + [x + 12 for x in tones]))
+            for st in range(0, 16, 2 if name == "intro" else 1):
+                s.put("arp", grid_note(tones[ARP[st % 8] % len(tones)], s.step * 0.8, rng), s.at(b, st),
+                      pan=0.3 * np.sin(st * 0.7), gain=1.0 if st % 4 == 0 else 0.7)
+        # the violins' line in b
+        if big and (b % 8) in MEL:
+            nb, m = MEL[b % 8]
+            s.put("violins", supersaw(m + key, s.bar * nb * 0.97, rng, voices=5, detune=0.06, r=1.6, a=0.5), s.at(b), pan=0.1)
+        # the breaks: tremolo strings and the Shepard tone
+        if name == "break" and b % 2 == 0:
+            for m in voicing(root, q, 62, rootless=False):
+                x = supersaw(m, s.bar * 1.97, rng, voices=4, detune=0.08, r=1.0, a=0.3)
+                tt = np.arange(len(x)) / SR
+                s.put("trem", x * (0.55 + 0.45 * np.sin(2 * np.pi * 11.0 * tt))[:, None], s.at(b))
+        # arrivals: a braam into b, a boom into a, the Shepard through each break, a riser before b
+        if b in starts:
+            if big:
+                s.put("braam", braam(low(root, 38), 4.5, seed=b), s.at(b))
+            elif name == "a" and prev in ("intro", "break"):
+                s.put("boom", boom(3.0, seed=b), s.at(b))
+            elif name == "break":
+                nb = next((k for k in range(b, s.bars) if sec[k] != "break"), s.bars) - b
+                s.put("shepard", shepard(nb * s.bar + 0.5), s.at(b))
+        if b + 1 < s.bars and sec[b + 1] == "b" and not big:
+            s.put("fx", riser(s.bar * (2 if b >= 1 else 1), 150, 5000, seed=b), s.at(max(0, b - 1)))
+    # filters: the arp opens by section; the brass breathes with each chord
+    lvl = {"intro": 700, "a": 1000, "b": 1800, "break": 550, "out": 600}
+    bt = np.arange(s.bars) * s.bar
+    bc = np.array([lvl.get(n, 900) for n in sec], float)
+    if sec[0] == "intro":
+        k = [i for i, n in enumerate(sec) if n == "intro"]
+        bc[k] = np.linspace(420, 800, len(k))
+    base = lambda t: float(np.interp(t, bt + s.bar * 0.5, bc))
+    peak = lambda t: 1400.0 if sec[min(s.bars - 1, int(t / s.bar))] == "b" else 800.0
+    s.stems["arp"] = reverb(pingpong(ladder(s.stems["arp"], base, 0.42, 1.3), s.step * 3, 0.35, 5, 0.28, 3500), 0.7, 0.2, 0.55)
+    s.stems["strings"] = fx.bq(reverb(pb(ladder(s.stems["strings"], lambda t: 700 + 0.8 * base(t), 0.1),
+                                         Chorus(rate_hz=0.25, depth=0.25, mix=0.35)), 0.92, 0.4, 0.45), "peak", 300, q=0.8, gain_db=-2.5)
+    if "brass" in s.stems:
+        s.stems["brass"] = reverb(ladder(s.stems["brass"], lambda t: 250 + peak(t) * np.sin(np.pi * min(1.0, (t % (2 * s.bar)) / (1.3 * s.bar))) ** 1.5,
+                                         0.12, 1.4), 0.88, 0.32, 0.5)
+    for nm, (size, wet) in {"braam": (0.95, 0.45), "taiko": (0.85, 0.35), "boom": (0.9, 0.4), "fx": (0.7, 0.3), "heart": (0.5, 0.15)}.items():
+        if nm in s.stems:
+            s.stems[nm] = reverb(s.stems[nm], size, wet, 0.5)
+    for nm, f, size, wet in (("cello", 1400, 0.6, 0.18), ("violins", 6000, 0.95, 0.45), ("trem", 4000, 0.9, 0.4), ("shepard", 3500, 0.9, 0.35)):
+        if nm in s.stems:
+            s.stems[nm] = reverb(fx.bq(s.stems[nm], "lp", f), size, wet, 0.5)
+    if "bass" in s.stems:
+        s.stems["bass"] = ladder(s.stems["bass"], lambda t: 480.0, 0.2, 1.2)
+    levels = {"strings": -21, "cello": -22, "brass": -21, "braam": -23, "arp": -25, "violins": -25, "sub": -24, "bass": -22,
+              "taiko": -23, "heart": -26, "trem": -27, "shepard": -28, "fx": -31, "boom": -25}
+    dyn = {"intro": (-7, -3), "a": -1, "b": 1, "break": (-4, -1), "out": (-1, -9)}
+    mix = balance(s, levels, sidechain={"strings": (0.15, 0.25), "bass": (0.3, 0.1), "arp": (0.12, 0.12)},
+                  hpf={"strings": 110, "arp": 200, "violins": 300, "brass": 55, "braam": 25, "taiko": 30, "heart": 25, "boom": 25,
+                       "trem": 250, "shepard": 120}, dyn=(sec, dyn))
+    return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
+
+
 BEDS = {"terminal": terminal, "tape_loop": tape_loop, "night_drive": night_drive, "low_orbit": low_orbit,
-        "two_step": two_step, "chrome_marl": chrome_marl, "mainframe": mainframe, "deep_field": deep_field}
+        "two_step": two_step, "chrome_marl": chrome_marl, "mainframe": mainframe, "deep_field": deep_field, "arena": arena}
 
 
 def main():

@@ -40,3 +40,5 @@ inspo/err.log
 
 # films staged to send in chat
 out/share/
+# variant builds (EP_BUILD=build_<name>)
+**/build_*/

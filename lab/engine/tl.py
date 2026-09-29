@@ -15,8 +15,9 @@ LABELS = {"mode": "draw", "queue": []}
 
 def load(ep_dir, title=""):
     d = os.path.abspath(ep_dir)
-    EP.update(dir=d, build=os.path.join(d, "build"), title=title, name=os.path.basename(d))
-    p = os.path.join(d, "build", "lines.json")
+    b = os.path.join(d, os.environ.get("EP_BUILD", "build"))             # EP_BUILD: a variant's own folder
+    EP.update(dir=d, build=b, title=title, name=os.path.basename(d))
+    p = os.path.join(b, "lines.json")
     EP["meta"] = json.load(open(p)) if os.path.exists(p) else {"lines": [], "total": 0.0}
     L[:] = EP["meta"]["lines"]
     IDS[:] = [x.get("id") for x in L]

@@ -74,7 +74,7 @@ def collect_events(scenes, dur, build):
 def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainframe", extra_sfx=(), deafen=()):
     """deafen: line ids; just before each, the ears go (engine.mix.deafen) and the line cuts through the muffled room."""
     ep_dir = os.path.dirname(os.path.abspath(film_file))
-    build = os.path.join(ep_dir, "build")
+    build = os.path.join(ep_dir, os.environ.get("EP_BUILD", "build"))    # EP_BUILD=build_elder: a variant's own folder
     os.makedirs(build, exist_ok=True)
     name = os.path.basename(ep_dir)
     argv = sys.argv[1:] or ["help"]

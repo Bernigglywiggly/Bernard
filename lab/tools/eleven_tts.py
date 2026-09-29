@@ -30,13 +30,22 @@ LAB = os.path.join(HERE, "..")
 CACHE = os.path.join(LAB, "voice", "cache", "eleven")
 API = "https://api.elevenlabs.io/v1"
 GEORGE = "JBFqnCBsd6RMkjVDRZzb"           # ElevenLabs' premade "George": warm British storyteller
+# Narrators by name (EL_VOICE). The elders are archetypes designed from a description on 29 Sep (an older American
+# man, a very deep, warm, slightly gravelly baritone, slow and calm, a veteran documentary narrator), not copies of
+# anyone: the user's rule is no imitating real people's voices.
+VOICES = {"george": GEORGE, "elder": "zCRDVM74mhi1dWed3bbU", "elder_b": "HZMgvLFIGAb1Xo3Q0QT6", "elder_c": "Al2jx16NmIFECTUrK4O7"}
 MODEL = "eleven_multilingual_v2"
 SETTINGS = dict(stability=0.42, similarity_boost=0.8, style=0.18, use_speaker_boost=True)
+CALM = dict(stability=0.5, similarity_boost=0.8, style=0.12, use_speaker_boost=True)     # the elders: steadier
+
+
+def settings(voice):
+    return SETTINGS if voice == GEORGE else CALM
 FORMATS = ("pcm_44100", "mp3_44100_192", "mp3_44100_128")   # best first; the API refuses what the plan can't use
 
 
 def key_of(text, voice, model, speed):
-    return hashlib.sha1(json.dumps([text, voice, model, round(speed, 3), SETTINGS], sort_keys=True).encode()).hexdigest()[:16]
+    return hashlib.sha1(json.dumps([text, voice, model, round(speed, 3), settings(voice)], sort_keys=True).encode()).hexdigest()[:16]
 
 
 def cached(text, voice=GEORGE, model=MODEL, speed=1.0):
@@ -62,7 +71,7 @@ def synth(text, key, voice=GEORGE, model=MODEL, speed=1.0, prev=None, nxt=None):
     hit = cached(text, voice, model, speed)
     if hit[0] is not None:
         return hit
-    body = dict(text=text, model_id=model, voice_settings=dict(SETTINGS, speed=speed))
+    body = dict(text=text, model_id=model, voice_settings=dict(settings(voice), speed=speed))
     if prev:
         body["previous_text"] = prev          # keeps the delivery continuous across lines
     if nxt:

@@ -50,22 +50,26 @@ def trim(a, thresh=0.004):
     return (a[max(0, idx[0] - 240): idx[-1] + 1800], max(0, idx[0] - 240)) if len(idx) else (a, 0)
 
 
-def build(ep_dir, lead=LEAD, speed=SPEED):
+def build(ep_dir, lead=LEAD, speed=SPEED, voice=None):
+    """voice: a name in eleven_tts.VOICES (or an id); EL_VOICE, else George. EP_BUILD names the build folder, so a
+    variant (EP_BUILD=build_elder EL_VOICE=elder) never touches the main cut."""
     ep_dir = os.path.abspath(ep_dir)
-    out = os.path.join(ep_dir, "build")
+    vname = voice or os.environ.get("EL_VOICE", "george")
+    vid = el.VOICES.get(vname, vname)
+    out = os.path.join(ep_dir, os.environ.get("EP_BUILD", "build"))
     os.makedirs(out, exist_ok=True)
     lines = script(ep_dir).LINES
     sp = os.path.join(out, "slots.json")
     slots = json.load(open(sp)) if os.path.exists(sp) else {}
     texts = [el.spoken(x, slots) for x in lines]
-    missing = [t for t in texts if el.cached(t, speed=speed)[0] is None]
+    missing = [t for t in texts if el.cached(t, voice=vid, speed=speed)[0] is None]
     key = os.environ.get("ELEVENLABS_API_KEY", "")
     if missing and not key:
         sys.exit(f"{len(missing)} lines aren't in the George cache and there's no ELEVENLABS_API_KEY: nothing built")
     prev_end, clips, meta = lead, [], []
     for i, ln in enumerate(lines):
         shown = slots[ln["slot"]].strip() if ln.get("slot") and (slots.get(ln["slot"]) or "").strip() else ln["text"]
-        (y, sr), al = el.synth(texts[i], key, speed=speed, prev=texts[i - 1] if i else None,
+        (y, sr), al = el.synth(texts[i], key, voice=vid, speed=speed, prev=texts[i - 1] if i else None,
                                nxt=texts[i + 1] if i + 1 < len(texts) else None)
         y = fx.resample(y.astype(np.float32), sr)
         y, off = trim(y)
@@ -87,7 +91,7 @@ def build(ep_dir, lead=LEAD, speed=SPEED):
     room = fx.cinema_ir(rt60=1.4, predelay=0.02, seed=5, dark=0.6)
     wet = fx.chain_voice(dry, room=room, room_wet=-16.0, target=-16.0)
     fx.save(os.path.join(out, "voice.wav"), wet, mp3=False)
-    json.dump(dict(total=round(total, 3), bpm=BPM, engine="eleven", speed=speed, lines=meta),
+    json.dump(dict(total=round(total, 3), bpm=BPM, engine="eleven", voice=vname, speed=speed, lines=meta),
               open(os.path.join(out, "lines.json"), "w"), indent=1)
     print("total", round(total, 2))
     return total

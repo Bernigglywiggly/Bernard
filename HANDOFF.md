@@ -25,7 +25,19 @@ Updated 28 Sep 2026 (afternoon), cloud session on branch `claude/lucid-archimede
 - **Sales**: 85 independent takeaways/cafés (FSA register, Sept 2026) in walking order for Stone, Newcastle-under-Lyme
   and Tamworth. "Here" (the user's home town) is still unknown: ask, then pull its council's FSA file the same way.
 
-## Newest (29 Sep, after midnight): Arena, and the ears going
+## Newest (29 Sep, ~1am): a deep elder narrator (the user asked for "a Morgan Freeman voice variation")
+- Not an imitation of him (the user's own rule: no copying real people's voices; he has also objected publicly to AI
+  copies of his voice). Instead, three archetypes designed in ElevenLabs from a description (an older American man,
+  very deep, warm, slightly gravelly baritone, slow and calm, a veteran documentary narrator) and saved to the
+  account: **Curve Elder A** `zCRDVM74mhi1dWed3bbU` (deep, warm, clear; ~88 Hz, ~125 wpm), **B**
+  `HZMgvLFIGAb1Xo3Q0QT6` (deeper, rougher), **C** `Al2jx16NmIFECTUrK4O7` (very gravelly). Names in
+  `tools/eleven_tts.VOICES` (`george`, `elder`, `elder_b`, `elder_c`); the elders use steadier settings (`CALM`).
+- Any film can be voiced by one in its own folder: `EP_BUILD=build_elder EL_VOICE=elder python3 film.py voice`
+  then `render 4`, `sound`, `master` with the same two variables (script: `elder_ep08.sh` in the scratchpad). EP08
+  in Elder A runs 2:31 (voice built; picture next). The audition reel (George, A, B, C on the same opening over
+  Arena) was sent in the chat.
+
+## Earlier (29 Sep, after midnight): Arena, and the ears going
 - **The user on Deep Field:** "still way too lighthearted. It needs to be as serious as The Son of Flynn" (Daft
   Punk, Tron: Legacy), and the arena build-up (the crowd chanting "Rinzler"), and the moment "all the sound got
   muted... your ears sort of lose hearing... then slowly come back". They'd also like to hear the real track under

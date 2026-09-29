@@ -381,12 +381,14 @@ def score():
 
 
 def score_full():
-    """Mainframe for the whole episode, on one bar grid (the cold open's, near 104 BPM), its sections following the
-    floors: the cold open as before; MECHANISM a; NOW b (brass for the money); a break for "It has happened before";
-    IDEA a; IMAGINE a long break (strings, cello and sub only, the ostinato gone); SURFACE b; the sources out."""
+    """Deep Field (lab/music/beds.py, dark deep house; since 29 Sep, after "more serious... futuristic tech, deep
+    house"; it was Mainframe) for the whole episode, in A minor, on one bar grid (the cold open's, near 112 BPM), its
+    sections following the floors: the cold open's intro; MECHANISM a; NOW b; a break for "It has happened before";
+    IDEA a; IMAGINE a long break (no drums); SURFACE b; the sources out. It plays from the first frame (an extra
+    intro bar cut in), as engine/score.py does."""
     import beds
     import audio_fx as fx
-    n = max(4, round((TN - TM) / (240.0 / 104)))
+    n = max(4, round((TN - TM) / (240.0 / 112)))
     bar = (TN - TM) / n
     bpm = 240.0 / bar
     n_intro = int(TM // bar)
@@ -406,10 +408,13 @@ def score_full():
             plan[-1][1] += 1
         else:
             plan.append([nm, 1])
-    x = beds.mainframe(bpm, [tuple(p) for p in plan], lead)
+    plan = [tuple(p) for p in plan]
+    plan[0] = (plan[0][0], plan[0][1] + 1)
+    x = np.asarray(beds.deep_field(bpm, plan, 0.0, key=4), np.float32)[int(round((bar - lead) * fx.SR)):]
+    x = x * np.minimum(1.0, np.arange(len(x)) / (0.4 * fx.SR))[:, None]
     path = os.path.join(BUILD, "full_bed.wav")
     fx.save(path, x.astype(np.float32), mp3=False)
-    print(f"score: Mainframe at {bpm:.2f} BPM, lead {lead:.2f}s, plan {[tuple(p) for p in plan]}")
+    print(f"score: Deep Field (A minor) at {bpm:.2f} BPM, lead {lead:.2f}s, plan {plan}")
     return path
 
 

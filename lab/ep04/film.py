@@ -47,4 +47,5 @@ MUSIC = [(0.0, "intro"), ("lost", "a"), ("pilot", "b"), ("close", "break"), ("te
          ("edge", "a"), ("imagine", "break"), ("then", "b"), ("end", "out")]
 
 if __name__ == "__main__":
-    engine.film.main(__file__, title="EP04  ·  THE MAN IN THE MACHINE", music=MUSIC, anchors=("pilot", "dogs"), clips=CLIPS, tags=TAGS)
+    engine.film.main(__file__, title="EP04  ·  THE MAN IN THE MACHINE", music=MUSIC, anchors=("pilot", "dogs"), clips=CLIPS, tags=TAGS,
+                     bed="deep_field:key=2")

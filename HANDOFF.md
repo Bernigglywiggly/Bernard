@@ -25,7 +25,31 @@ Updated 28 Sep 2026 (afternoon), cloud session on branch `claude/lucid-archimede
 - **Sales**: 85 independent takeaways/cafés (FSA register, Sept 2026) in walking order for Stone, Newcastle-under-Lyme
   and Tamworth. "Here" (the user's home town) is still unknown: ask, then pull its council's FSA file the same way.
 
-## Newest (28 Sep, afternoon): the factory — the engine, the posting kit, EP04, EP05
+## Newest (29 Sep, night): George at his own pace, and Deep Field
+- **The user (28 Sep, late):** the music should be "more serious... futuristic tech, sort of deep house"; the beds
+  "don't really lock people in", too light; and the pace is "way too fast": "go back to the original voice speed",
+  with the video synced to it. (Earlier that day they had asked for fast; this reverses it.)
+- **Voice:** ElevenLabs speed **1.0** (was 1.2) and a breath between sentences (`engine.voice.gap`: 0.30 s, most of
+  a half-bar per unit of `air`, 0.35 s before a `cut`). `EL_SPEED=1.2` rebuilds the fast cut exactly. The scenes are
+  keyed to line ids and word times, so the picture re-times itself; EP03's Blender frames warp line by line
+  (`relay._warp`). Films run ~25% longer (EP08 2:15, EP05 2:44, EP04 2:44, EP06 2:09, EP07 2:30).
+- **Deep Field** (`beds.deep_field`, preview `lab/out/music/new/deep_field.mp3`): dark deep house at 112 BPM, F minor
+  (round 4/4 kick eased in, off-beat bass, filtered m9 stabs with dotted-8th echoes, a pumping pad, a pulse arp, a far
+  glass motif; breaks drop the drums). `key=` moves it per episode: EP08 F (`deep_field`), EP05 D (`:key=-3`), EP04
+  G (`:key=2`), EP06 C (`:key=-5`), EP07 E (`:key=-1`), EP03 A (`key=4` in `ascii_open.score_full`). Reasoning, from
+  the literature: slow + minor reads as serious (Gagnon & Peretz 2003; tempo weighs more than mode), fast + loud
+  background music hurts comprehension (Thompson, Schellenberg & Letnic 2012), so it stays moderate and under him.
+- **Mix:** the music is split at 160 Hz; above it ducks 12.5 dB under the voice, the kick and bass only 9, so the
+  groove holds; it sits ~13 LU under George (-27 vs -14 LUFS; it was ~-29). The bed now plays from frame one (an
+  extra intro bar cut in by `engine/score.py`), not after up to a bar of silence.
+- **The fast cuts are kept** beside the new ones in each `build/` as `fast_*` (film, lines.json, mix, bed) and
+  `fast_shorts/`. EP08 was the test sent to the user; EP05, EP04, EP06, EP07 follow (the queue script lives in the
+  session scratchpad), then EP03.
+- **Kit:** the slower shorts don't fit one 256 MiB version, so the kit is two pages: `python3 -m engine.kit` (EP03-EP05,
+  the existing artifact) and `python3 -m engine.kit 2` (EP06-EP08, "The Curve Shorts II", `lab/shorts2/index.html`;
+  put its URL in `engine/kit.py` PAGES so the pages link to each other). Thumbnails are unchanged (same pictures).
+
+## Earlier (28 Sep, afternoon): the factory — the engine, the posting kit, EP04, EP05
 - **The user's plan:** break every long video into shorts (parts that add up to the whole, plus highlights), push them
   hard on TikTok, Reels, YouTube Shorts and Facebook, then repeat across 5-10 channels ("quality of volume").
 - **Posting kit** (artifact, `downloads` capability): https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE. Per episode:

@@ -2,8 +2,12 @@
 Save button (the page's downloads capability; plain download links don't work inside an artifact), each episode as
 the parts that make the whole film, then its highlights, with a suggested posting order.
 
-    python3 -m engine.kit      # every lab/<ep>/build/shorts/kit.json -> lab/shorts/index.html
-                               # publish it with media/<slug>/<file> -> lab/<ep>/build/shorts/<file>
+    python3 -m engine.kit      # page 1 (EP03-EP05): lab/<ep>/build/shorts/kit.json -> lab/shorts/index.html
+    python3 -m engine.kit 2    # page 2 (EP06-EP08) -> lab/shorts2/index.html
+                               # publish each with media/<slug>/<file> -> lab/<ep>/build/shorts/<file>
+
+Two pages because an artifact version holds at most 256 MiB, and the shorts at George's own pace (29 Sep) come to
+more than that together.
 """
 import html
 import json
@@ -12,7 +16,10 @@ import os
 import engine  # noqa: F401  (paths)
 
 LAB = engine.LAB
-OUT = os.path.join(LAB, "shorts", "index.html")
+PAGES = {1: dict(title="The Curve Shorts", out=os.path.join(LAB, "shorts", "index.html"), slugs=("ep03", "ep04", "ep05"),
+                 url="https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE"),
+         2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep08"),
+                 url=None)}
 EPISODES = [
     dict(dir="ep03s", slug="ep03", title="EP03 · The Shovel Sellers", sub="AI, gold rushes and who really gets rich",
          full="page/media/ep03/ep03_full_720.mp4", thumb="ep03s/build/ep03_thumb.jpg",
@@ -168,9 +175,9 @@ def sources(ep):
 def full_card(ep):
     import subprocess
     e = html.escape
-    path = os.path.join(LAB, ep["full"])
+    path = os.path.join(LAB, ep["full"]).replace("_720.mp4", ".mp4")        # the 1080p film (the 720p copies went stale)
     if not os.path.exists(path):
-        path = path.replace("_720.mp4", ".mp4").replace("ep03_full_720", "ep03_full")
+        path = os.path.join(LAB, ep["full"])
     d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path],
                              capture_output=True, text=True, check=True).stdout)
     title, blurb = ep["yt"]
@@ -192,19 +199,19 @@ def full_card(ep):
 </article>"""
 
 
-def episodes():
+def episodes(page=1):
     out = []
     for ep in EPISODES:
         p = os.path.join(LAB, ep["dir"], "build", "shorts", "kit.json")
-        if os.path.exists(p):
+        if ep["slug"] in PAGES[page]["slugs"] and os.path.exists(p):
             out.append(dict(ep, kit={k["name"]: k for k in json.load(open(p))}))
     return out
 
 
-def files():
+def files(page=1):
     """The artifact files map: media/<slug>/<file> -> the mp4 on disk."""
     out = {}
-    for ep in episodes():
+    for ep in episodes(page):
         for key in ("thumb",):
             if ep.get(key) and os.path.exists(os.path.join(LAB, ep[key])):
                 out[f"media/{ep['slug']}/{os.path.basename(ep[key])}"] = os.path.join(LAB, ep[key])
@@ -233,11 +240,15 @@ def section(ep):
 </section>"""
 
 
-def main():
-    eps = episodes()
+def main(page=1):
+    eps = episodes(page)
     n = sum(len(ep["kit"]) for ep in eps)
     nav = "".join(f'<a href="#{ep["slug"]}">{html.escape(ep["title"])}</a>' for ep in eps)
-    page = f"""<title>The Curve Shorts</title>
+    for k, pg in PAGES.items():                                     # the other page, when it has a link
+        if k != page and pg["url"]:
+            others = " – ".join(s.upper() for s in (pg["slugs"][0], pg["slugs"][-1]))
+            nav += f'<a href="{html.escape(pg["url"])}" target="_blank" rel="noopener">{others} → {html.escape(pg["title"])}</a>'
+    doc = f"""<title>{PAGES[page]["title"]}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter+Tight:wght@400;600&family=Michroma&display=swap">
 <style>{CSS}
@@ -266,12 +277,15 @@ nav a:focus-visible{{outline:2px solid var(--accent);outline-offset:2px}}
 </div>
 <script>{JS}</script>
 """
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    open(OUT, "w").write(page)
-    print(OUT, n, "shorts from", len(eps), "films")
-    return OUT
+    out = PAGES[page]["out"]
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    open(out, "w").write(doc)
+    print(out, n, "shorts from", len(eps), "films")
+    return out
 
 
 if __name__ == "__main__":
-    main()
-    print(json.dumps(files(), indent=1))
+    import sys
+    pg = int(sys.argv[1]) if len(sys.argv) > 1 else 1
+    main(pg)
+    print(json.dumps(files(pg), indent=1))

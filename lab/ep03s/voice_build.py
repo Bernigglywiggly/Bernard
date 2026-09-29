@@ -1,9 +1,10 @@
-"""EP03 seamless: the voice at the fast pace, from ep03s/script.py (v2: factual, curious, no jokes).
+"""EP03 seamless: the voice from ep03s/script.py (v2: factual, curious, no jokes), at George's own pace since 29 Sep
+(the user: "way too fast... go back to the original voice speed"); EL_SPEED=1.2 rebuilds the fast cut.
 
 Engine: ElevenLabs George (the first British guy) whenever lab/voice/cache/eleven has every line at SPEED
 (see tools/eleven_tts.py); otherwise a local stand-in so the picture can be timed. Lines sit on an eighth-note
-grid at 170 BPM (not the old half-bar grid, which added up to 0.7 s of waiting per line), short gaps, and half
-the old air before reveals. Slot lines take the user's punchline from build/slots.json.
+grid at 170 BPM with the same pauses as every other episode (engine.voice.gap). Slot lines take the user's
+punchline from build/slots.json.
 Writes build/voice_dry.wav, build/voice.wav, build/lines.json (with word timings when ElevenLabs made them).
 
     python3 voice_build.py            # auto
@@ -24,6 +25,7 @@ sys.path.insert(0, os.path.join(LAB, "tools"))
 sys.path.insert(0, HERE)                        # this episode's script (v2: no jokes, straight into the facts)
 import audio_fx as fx  # noqa: E402
 import eleven_tts as el  # noqa: E402
+from engine.voice import gap  # noqa: E402
 from script import LINES  # noqa: E402
 
 BUILD = os.path.join(HERE, "build")
@@ -31,7 +33,7 @@ BPM = 170.0
 HB = 2 * 60.0 / BPM
 GRID = HB / 4                                  # an eighth note
 LEAD = 1.2
-EL_SPEED = float(os.environ.get("EL_SPEED", "1.2"))
+EL_SPEED = float(os.environ.get("EL_SPEED", "1.0"))
 KOKORO = ("bm_george", 1.16)
 SLOTS_PATH = os.path.join(BUILD, "slots.json")
 
@@ -70,10 +72,7 @@ def main():
                 words = [(wd, round(a - off / fx.SR, 3), round(b - off / fx.SR, 3)) for wd, a, b in w]
         else:
             y, _ = trim(vl.say(k, texts[i], KOKORO[0], speed=KOKORO[1], pause=0.16))
-        air = ln.get("air", 0)
-        air = air if ln.get("drop") else math.ceil(air / 2)
-        gap = 0.06 + air * HB + (0.25 if ln.get("cut") else 0.0)
-        start = max(LEAD, prev_end + gap)
+        start = max(LEAD, prev_end + gap(ln, EL_SPEED))
         start = math.ceil((start - LEAD) / GRID - 1e-6) * GRID + LEAD
         end = start + len(y) / fx.SR
         clips.append((start, y))

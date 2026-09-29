@@ -5,8 +5,9 @@ local stand-in: "get rid of this voice right now".
 
   voice   ElevenLabs George only (lines.json engine "eleven"): build/voice.wav, de-essed, on top. With any other
           engine there is no voice at all (captions carry the words) and the music isn't ducked
-  music   Mainframe re-cut to the floors (ascii_open.score_full), ducked about 11 dB whenever the voice talks and
-          breathing back up in the gaps; a hard dip into every "cut" line (the silence before a reveal)
+  music   Deep Field re-cut to the floors (ascii_open.score_full; Mainframe until 29 Sep), ducked whenever the voice
+          talks (12.5 dB above 160 Hz, 9 below, so the groove holds) and breathing back up in the gaps; a hard dip
+          into every "cut" line (the silence before a reveal)
   detail  the picture's own events (forms, morphs, latches, coins, paper, pops, links, ticks...), tucked 4 dB under
           the voice while it talks. No keystrokes (the user took them out)
   master  -14 LUFS integrated, -1 dBTP
@@ -34,7 +35,8 @@ MAP = {"form": ("form", -13), "morph": ("whoosh", -15), "whoosh": ("whoosh", -15
        "scan": ("scan", -18), "latch": ("latch", -12), "thock": ("thock", -9), "zoom": ("riser", -16),
        "confirm": ("confirm", -14), "coin": ("coin", -11), "paper": ("paper", -11), "pop": ("pop", -12),
        "link": ("link", -10), "grains": ("grains", -15), "tick": ("tick", -15)}
-DUCK_MUSIC, DUCK_SFX = -12.5, -4.0
+DUCK_MUSIC, DUCK_LOW, DUCK_SFX = -12.5, -9.0, -4.0                     # the kick and bass (below SPLIT) duck less
+SPLIT = 160.0
 
 
 def load(name):
@@ -109,7 +111,10 @@ def main(bed_path=os.path.join(BUILD, "full_bed.wav"), out_name="ep03_full_mix.w
     music = fit(fx.load(bed_path))
     music = music * fx.db(-19.0 - fx.lufs(music))
     tk = talking(lines, n) if george else np.zeros(n, np.float32)
-    music = music * fx.db(DUCK_MUSIC * tk + cut_dips(lines, n))[:, None]
+    lo = fx.bq(fx.bq(music, "lp", SPLIT), "lp", SPLIT)                # as engine/mix.py: the groove holds under him
+    hi = fx.bq(fx.bq(music, "hp", SPLIT), "hp", SPLIT)
+    dips = cut_dips(lines, n)
+    music = lo * fx.db(DUCK_LOW * tk + dips)[:, None] + hi * fx.db(DUCK_MUSIC * tk + dips)[:, None]
 
     detail = np.zeros((n, 2), np.float32)
     cache = {}
@@ -129,7 +134,7 @@ def main(bed_path=os.path.join(BUILD, "full_bed.wav"), out_name="ep03_full_mix.w
     detail = detail * fx.db(DUCK_SFX * tk)[:, None]
 
     pre = voice + music + detail
-    mix = fx.master(pre, target=-14.0, ceiling_db=-1.0)
+    mix = fx.master(pre, target=-14.0, ceiling_db=-1.5)                 # -1.5 dBTP: room for the AAC encode
     g = fx.db(fx.lufs(mix) - fx.lufs(pre))                             # the master's gain, to measure the stems as heard
     speech = tk > 0.9
     st = lambda y: fx.lufs(y[speech]) if speech.any() else float("nan")

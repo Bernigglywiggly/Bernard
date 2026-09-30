@@ -19,12 +19,12 @@ import engine  # noqa: F401  (paths)
 LAB = engine.LAB
 PAGES = {1: dict(title="The Curve Shorts", out=os.path.join(LAB, "shorts", "index.html"), slugs=("ep05", "ep08", "ep04"),
                  url="https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE"),
-         2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep03"),
+         2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep03", "ep09", "ep10"),
                  url=None)}
 # The upload order (30 Sep, "lets just get it done and posted"): EP05 first (Google's Suncatcher launches 1 Oct), then a
 # new film every two days; the shorts run one a day from day 1 in the same order.
 START = datetime.date(2026, 10, 1)
-FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03")
+FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03", "ep09", "ep10")
 EPISODES = [
     dict(dir="ep03s", slug="ep03", title="EP03 · The Shovel Sellers", sub="AI, gold rushes and who really gets rich",
          full="ep03s/build/ep03_full.mp4", thumb="ep03s/build/ep03_thumb.jpg",
@@ -89,6 +89,25 @@ EPISODES = [
              "hundredth of one, Google's 3.2 quadrillion tokens a month, and a labelled what-if: what would we use "
              "thinking for if it got as cheap as light?"),
          schedule=[("Day 26", "part1", "light"), ("Day 27", "part2", "bigmacs"), ("Day 28", "part3", "google"), ("Day 29", "nadella", None)]),
+    dict(dir="ep09", slug="ep09", title="EP09 · The Laundry Problem", sub="Moravec's paradox: why the easy things are hardest for robots",
+         full="ep09/build/ep09.mp4", thumb="ep09/build/ep09_thumb.jpg",
+         yt=("Why Robots Can Pass Exams but Can't Fold Your Shirt",
+             "In July 2025, an AI scored gold at the International Mathematical Olympiad. Years earlier, a company raised about "
+             "$89 million to build a machine that folds laundry, and went bankrupt before it shipped. Why is the exam easy and "
+             "the laundry hard?\n\nIn this video: Moravec's paradox (1988), why seeing and gripping are hundreds of millions of "
+             "years old and written numbers about 5,000, the 17,000 touch nerve fibres in the palm side of your hand, chess in "
+             "1997 against towels in 2025, a $16,000 laundry machine in Big Macs, and a labelled what-if: the first robot that "
+             "moves like a toddler."),
+         schedule=[("", "part1", "olympiad"), ("", "part2", "day"), ("", "part3", "hand"), ("", "toddler", None)]),
+    dict(dir="ep10", slug="ep10", title="EP10 · Counting Sums", sub="The 10^25 line: why the law counts calculations, not danger",
+         full="ep10/build/ep10.mp4", thumb="ep10/build/ep10_thumb.jpg",
+         yt=("The Number That Decides Which AI Gets Watched",
+             "In Europe, one number decides which AI models get the closest watch: ten to the power of twenty-five. Not a test "
+             "score: the number of calculations it took to train the model.\n\nIn this video: why the law counts sums instead "
+             "of danger, how big 10^25 really is (everyone on Earth doing a sum a second for about 39 million years), "
+             "California's line ten times higher, why the compute for the same result keeps halving, Goodhart's law, and a "
+             "labelled what-if: thinking rationed like carbon."),
+         schedule=[("", "part1", "size"), ("", "part2", "dinosaur"), ("", "part3", "halves")]),
 ]
 
 CSS = """

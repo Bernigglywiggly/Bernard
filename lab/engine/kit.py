@@ -131,7 +131,7 @@ JS = """
 const note=(el,msg)=>{el.textContent=msg;};
 document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
   const card=b.closest('.card');const el=card.querySelector('.'+(b.dataset.copy||'post'));const text=el.textContent;const n=card.querySelector('.note');
-  try{await navigator.clipboard.writeText(text);note(n,(b.dataset.copy==='hook'?'Title':b.dataset.copy==='post'&&card.classList.contains('wide')?'Description':'Caption')+' copied.');}
+  try{await navigator.clipboard.writeText(text);note(n,(b.dataset.what||(b.dataset.copy==='hook'?'Title':b.dataset.copy==='post'&&card.classList.contains('wide')?'Description':'Caption'))+' copied.');}
   catch(e){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();
     s.removeAllRanges();s.addRange(r);note(n,'Selected: copy it from the menu.');}
 }));
@@ -236,9 +236,16 @@ def episodes(page=1):
     return out
 
 
+BRAND = os.path.join(LAB, "out", "brand")
+
+
 def files(page=1):
-    """The artifact files map: media/<slug>/<file> -> the mp4 on disk."""
+    """The artifact files map: media/<slug>/<file> -> the mp4 on disk (and the channel art on page 1)."""
     out = {}
+    if page == 1:
+        for f in ("banner.jpg", "avatar.png"):
+            if os.path.exists(os.path.join(BRAND, f)):
+                out[f"media/brand/{f}"] = os.path.join(BRAND, f)
     for ep in episodes(page):
         for key in ("thumb",):
             if ep.get(key) and os.path.exists(os.path.join(LAB, ep[key])):
@@ -285,8 +292,27 @@ def start(page):
     <li>Then its Part 1 on TikTok, Instagram Reels, YouTube Shorts and Facebook: Save video, Copy caption, post. On TikTok,
       switch on "AI-generated content" under More options.</li>
   </ol>""" if first in PAGES[page]["slugs"] else "")
+    setup = ""
+    if page == 1 and os.path.exists(os.path.join(BRAND, "banner.jpg")):
+        import engine.brand as br
+        e = html.escape
+        setup = f"""<h3>Set up the channel once</h3>
+  <article class="card wide brand">
+    <img class="thumb" src="media/brand/banner.jpg" alt="The Curve: the YouTube banner" loading="lazy">
+    <div class="body">
+      <div class="meta"><span class="chip">BANNER 2560×1440 · PROFILE PICTURE 800×800</span><span>the same picture on TikTok, Instagram and Facebook</span></div>
+      <p class="post">{e(br.ABOUT)}</p>
+      <p class="hook">{e(br.BIO)}</p>
+      <div class="row"><button class="main" type="button" data-copy="post" data-what="About text">Copy About (YouTube)</button>
+        <button class="main" type="button" data-copy="hook" data-what="Bio">Copy bio (TikTok, Instagram)</button>
+        <button type="button" data-save="media/brand/banner.jpg">Save banner</button>
+        <button type="button" data-save="media/brand/avatar.png">Save profile picture</button></div>
+      <p class="note" aria-live="polite"></p>
+    </div>
+  </article>"""
     return f"""<section class="start" aria-label="Start here">
   <span class="eyebrow">Start here</span>
+  {setup}
   {today}
   <h3>Then keep the rhythm</h3>
   <p>One short a day in the order below, the same file on every platform, and pin each Part 1. A new full film every two days:</p>
@@ -319,6 +345,7 @@ nav a:focus-visible{{outline:2px solid var(--accent);outline-offset:2px}}
 .card.wide{{grid-template-rows:auto 1fr}}
 .card.wide video{{aspect-ratio:16/9;max-height:none}}
 .card img.thumb{{width:100%;max-width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}}
+.brand .hook{{font-size:15px;font-weight:600}}
 .day .plus{{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted)}}
 .start{{background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:18px 18px 20px;gap:10px}}
 .start h2{{font-size:17px}}

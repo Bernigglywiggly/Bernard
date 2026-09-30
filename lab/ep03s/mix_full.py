@@ -5,7 +5,7 @@ local stand-in: "get rid of this voice right now".
 
   voice   ElevenLabs George only (lines.json engine "eleven"): build/voice.wav, de-essed, on top. With any other
           engine there is no voice at all (captions carry the words) and the music isn't ducked
-  music   Deep Field re-cut to the floors (ascii_open.score_full; Mainframe until 29 Sep), ducked whenever the voice
+  music   Arena re-cut to the floors (ascii_open.score_full; Mainframe until 29 Sep), ducked whenever the voice
           talks (12.5 dB above 160 Hz, 9 below, so the groove holds) and breathing back up in the gaps; a hard dip
           into every "cut" line (the silence before a reveal)
   detail  the picture's own events (forms, morphs, latches, coins, paper, pops, links, ticks...), tucked 4 dB under

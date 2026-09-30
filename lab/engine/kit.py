@@ -9,6 +9,7 @@ the parts that make the whole film, then its highlights, with a suggested postin
 Two pages because an artifact version holds at most 256 MiB, and the shorts at George's own pace (29 Sep) come to
 more than that together.
 """
+import datetime
 import html
 import json
 import os
@@ -16,13 +17,17 @@ import os
 import engine  # noqa: F401  (paths)
 
 LAB = engine.LAB
-PAGES = {1: dict(title="The Curve Shorts", out=os.path.join(LAB, "shorts", "index.html"), slugs=("ep03", "ep04", "ep05"),
+PAGES = {1: dict(title="The Curve Shorts", out=os.path.join(LAB, "shorts", "index.html"), slugs=("ep05", "ep08", "ep04"),
                  url="https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE"),
-         2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep08"),
+         2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep03"),
                  url=None)}
+# The upload order (30 Sep, "lets just get it done and posted"): EP05 first (Google's Suncatcher launches 1 Oct), then a
+# new film every two days; the shorts run one a day from day 1 in the same order.
+START = datetime.date(2026, 10, 1)
+FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03")
 EPISODES = [
     dict(dir="ep03s", slug="ep03", title="EP03 · The Shovel Sellers", sub="AI, gold rushes and who really gets rich",
-         full="page/media/ep03/ep03_full_720.mp4", thumb="ep03s/build/ep03_thumb.jpg",
+         full="ep03s/build/ep03_full.mp4", thumb="ep03s/build/ep03_thumb.jpg",
          yt=("The Shovel Sellers: Who Really Gets Rich in the AI Gold Rush",
              "May 1848: a shopkeeper walks through San Francisco holding up a bottle of gold. He had already bought every "
              "pan and shovel in town. 178 years later, the AI build-out has its own shovel sellers.\n\nIn this video: what "
@@ -189,7 +194,7 @@ def full_card(ep):
     return f"""<article class="card wide" id="{e(ep['slug'])}-full">
   {pic}
   <div class="body">
-    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE</span><span>{int(d // 60)}:{int(d % 60):02d} · 16:9 · the 1080p file is in the chat</span></div>
+    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE · {film_day(ep['slug']):%a %-d %b}</span><span>{int(d // 60)}:{int(d % 60):02d} · 16:9 · the 1080p file is in the chat</span></div>
     <p class="hook">{e(title)}</p>
     <p class="post">{e(desc)}</p>
     <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
@@ -199,12 +204,35 @@ def full_card(ep):
 </article>"""
 
 
+def fresh(ep):
+    """The shorts were cut after the current voice (so never a cut from an older pace or score)."""
+    b = os.path.join(LAB, ep["dir"], "build")
+    k, v = os.path.join(b, "shorts", "kit.json"), os.path.join(b, "lines.json")
+    return os.path.exists(k) and os.path.exists(v) and os.path.getmtime(k) > os.path.getmtime(v)
+
+
+def day(n):
+    return START + datetime.timedelta(days=n - 1)
+
+
+def film_day(slug):
+    """A new full film every two days, in FILMS order."""
+    return day(1 + 2 * FILMS.index(slug))
+
+
+def first_day(slug):
+    """The shorts' first day: after every earlier film's shorts."""
+    by = {ep["slug"]: ep for ep in EPISODES}
+    return 1 + sum(len(by[s]["schedule"]) for s in FILMS[:FILMS.index(slug)])
+
+
 def episodes(page=1):
+    by = {ep["slug"]: ep for ep in EPISODES}
     out = []
-    for ep in EPISODES:
-        p = os.path.join(LAB, ep["dir"], "build", "shorts", "kit.json")
-        if ep["slug"] in PAGES[page]["slugs"] and os.path.exists(p):
-            out.append(dict(ep, kit={k["name"]: k for k in json.load(open(p))}))
+    for slug in PAGES[page]["slugs"]:
+        ep = by[slug]
+        if fresh(ep):
+            out.append(dict(ep, kit={k["name"]: k for k in json.load(open(os.path.join(LAB, ep["dir"], "build", "shorts", "kit.json")))}))
     return out
 
 
@@ -225,9 +253,10 @@ def section(ep):
     parts = [kit[n] for n in ("part1", "part2", "part3", "part4") if n in kit]
     highs = [k for n, k in kit.items() if not n.startswith("part")]
     name = lambda n: kit[n]["hook"] if n in kit else n
-    plan = "".join(f'<div class="day"><b>{d}</b><span>{html.escape(name(a))}</span>' +
+    d0 = first_day(slug)
+    plan = "".join(f'<div class="day"><b>Day {d0 + i} · {day(d0 + i):%a %-d %b}</b><span>{html.escape(name(a))}</span>' +
                    (f'<span class="plus">{html.escape(name(b))}</span>' if b and b in kit else "") + "</div>"
-                   for d, a, b in ep["schedule"] if a in kit)
+                   for i, (_, a, b) in enumerate(ep["schedule"]) if a in kit)
     return f"""<section id="{slug}" class="ep">
   <div><span class="eyebrow">{html.escape(ep['title'])}</span><h2 class="ep-title">{html.escape(ep['sub'])}</h2></div>
   {full_card(ep) if ep.get("thumb") and os.path.exists(os.path.join(LAB, ep["thumb"])) else ""}
@@ -237,6 +266,33 @@ def section(ep):
   <div class="grid">{''.join(card(k, slug) for k in parts)}</div>
   <h3>Highlights</h3>
   <div class="grid">{''.join(card(k, slug) for k in highs)}</div>
+</section>"""
+
+
+def start(page):
+    """The upload checklist at the top: today's film, then the rhythm."""
+    by = {ep["slug"]: ep for ep in EPISODES}
+    films = "".join(f'<li><b>{film_day(sl):%a %-d %b}</b> {html.escape(by[sl]["title"])}'
+                    f'{"" if sl in PAGES[page]["slugs"] else " <span class=muted>(on the other page)</span>"}</li>' for sl in FILMS)
+    first = FILMS[0]
+    today = (f"""<h2>First: {html.escape(by[first]["title"])} on YouTube</h2>
+  <ol class="steps">
+    <li>Google's Suncatcher satellite is set to launch on 1 Oct, so this one goes up first, while it's news. The 1080p
+      file and the thumbnail are in the chat.</li>
+    <li>YouTube app → Create (+) → Upload a video. Copy the title and description from the film's card below and add the
+      thumbnail (Save thumbnail). Custom thumbnails need the channel verified once: YouTube → Settings → verify by phone.</li>
+    <li>Audience: not made for kids. Altered or synthetic content: tick Yes (the narrator is an AI voice); it only adds a label.</li>
+    <li>Then its Part 1 on TikTok, Instagram Reels, YouTube Shorts and Facebook: Save video, Copy caption, post. On TikTok,
+      switch on "AI-generated content" under More options.</li>
+  </ol>""" if first in PAGES[page]["slugs"] else "")
+    return f"""<section class="start" aria-label="Start here">
+  <span class="eyebrow">Start here</span>
+  {today}
+  <h3>Then keep the rhythm</h3>
+  <p>One short a day in the order below, the same file on every platform, and pin each Part 1. A new full film every two days:</p>
+  <ul class="films">{films}</ul>
+  <p class="muted">Save time: schedule a week in one sitting. YouTube Studio schedules videos and Shorts; TikTok schedules from a
+    computer up to 10 days ahead; Meta Business Suite schedules Reels to Instagram and Facebook together.</p>
 </section>"""
 
 
@@ -264,14 +320,21 @@ nav a:focus-visible{{outline:2px solid var(--accent);outline-offset:2px}}
 .card.wide video{{aspect-ratio:16/9;max-height:none}}
 .card img.thumb{{width:100%;max-width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}}
 .day .plus{{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted)}}
+.start{{background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:18px 18px 20px;gap:10px}}
+.start h2{{font-size:17px}}
+.start ol,.start ul{{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px}}
+.start p{{margin:0;font-size:15px}}
+.muted{{color:var(--muted)}}
+.films b{{font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.06em;color:var(--accent);margin-right:6px}}
 </style>
 <div class="wrap">
 <header>
   <span class="eyebrow">The Curve · posting kit</span>
   <h1>Shorts, ready to post</h1>
-  <p class="lede">{n} vertical cuts from {len(eps)} film{"s" if len(eps) != 1 else ""}, voiced by George, for TikTok, Reels, YouTube Shorts and Facebook. Each film comes as parts that add up to the whole video, plus standalone highlights. Copy the caption, save the video, post. One part and one highlight a day, the same file on every platform, and pin each Part 1.</p>
+  <p class="lede">{n} vertical cuts from {len(eps)} film{"s" if len(eps) != 1 else ""}, voiced by George, for TikTok, Reels, YouTube Shorts and Facebook. Each film comes as parts that add up to the whole video, plus standalone highlights. Copy the caption, save the video, post.</p>
   <nav>{nav}</nav>
 </header>
+{start(page)}
 {''.join(section(ep) for ep in eps)}
 <footer>Every figure in these clips is sourced in its full video's end card. The files were also sent in the chat.</footer>
 </div>

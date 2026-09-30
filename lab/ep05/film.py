@@ -45,4 +45,4 @@ MUSIC = [(0.0, "intro"), ("fridge", "a"), ("why", "break"), ("mill", "a"), ("loo
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP05  ·  FOLLOW THE SUN", music=MUSIC, anchors=("look", "ticket"), clips=CLIPS, tags=TAGS,
-                     bed="deep_field:key=-3")
+                     bed="arena:key=-2", deafen=("why", "imagine"))

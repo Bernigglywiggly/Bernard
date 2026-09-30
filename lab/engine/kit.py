@@ -210,14 +210,19 @@ def full_card(ep):
     tsrc = f"media/{ep['slug']}/{os.path.basename(ep['thumb'])}" if th else ""
     pic = f'<img class="thumb" src="{e(tsrc)}" alt="{e(title)}: the YouTube thumbnail" loading="lazy">' if th else ""
     tbtn = f'\n      <button type="button" data-save="{e(tsrc)}">Save thumbnail</button>' if th else ""
+    import engine.brand as br
+    pin = br.PINNED.get(ep["slug"], "")
+    pinp = f'\n    <p class="pin">{e(pin)}</p>' if pin else ""
+    pinb = '\n      <button type="button" data-copy="pin" data-what="Pinned comment">Copy pinned comment</button>' if pin else ""
     return f"""<article class="card wide" id="{e(ep['slug'])}-full">
   {pic}
   <div class="body">
     <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE · {film_day(ep['slug']):%a %-d %b}</span><span>{int(d // 60)}:{int(d % 60):02d} · 16:9 · the 1080p file is in the chat</span></div>
     <p class="hook">{e(title)}</p>
     <p class="post">{e(desc)}</p>
+{pinp}
     <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
-      <button class="main" type="button" data-copy="post">Copy description</button>{tbtn}</div>
+      <button class="main" type="button" data-copy="post">Copy description</button>{tbtn}{pinb}</div>
     <p class="note" aria-live="polite"></p>
   </div>
 </article>"""
@@ -256,13 +261,15 @@ def episodes(page=1):
 
 
 BRAND = os.path.join(LAB, "out", "brand")
+BRAND_FILES = ("banner.jpg", "avatar.png", "watermark.png", "facebook_cover.jpg", "x_header.jpg", "highlight_films.png",
+               "highlight_space.png", "highlight_robots.png", "highlight_money.png")
 
 
 def files(page=1):
     """The artifact files map: media/<slug>/<file> -> the mp4 on disk (and the channel art on page 1)."""
     out = {}
     if page == 1:
-        for f in ("banner.jpg", "avatar.png"):
+        for f in BRAND_FILES:
             if os.path.exists(os.path.join(BRAND, f)):
                 out[f"media/brand/{f}"] = os.path.join(BRAND, f)
     for ep in episodes(page):
@@ -315,17 +322,23 @@ def start(page):
     if page == 1 and os.path.exists(os.path.join(BRAND, "banner.jpg")):
         import engine.brand as br
         e = html.escape
+        saves = "".join(f'<button type="button" data-save="media/brand/{f}">{n}</button>' for f, n in (
+            ("banner.jpg", "YouTube banner"), ("avatar.png", "Profile picture (all)"), ("watermark.png", "YouTube watermark"),
+            ("facebook_cover.jpg", "Facebook cover"), ("x_header.jpg", "X header"), ("highlight_films.png", "IG highlight: Films"),
+            ("highlight_space.png", "IG highlight: Space"), ("highlight_robots.png", "IG highlight: Robots"),
+            ("highlight_money.png", "IG highlight: Money")))
+        texts = "".join(f"""<div class="txt"><b>{e(k)}</b><p class="t{i}">{e(v)}</p>
+        <button type="button" data-copy="t{i}" data-what="{e(k)}">Copy</button></div>""" for i, (k, v) in enumerate((
+            ("YouTube description", br.ABOUT), ("YouTube keywords", br.KEYWORDS), ("TikTok and Facebook bio", br.BIO),
+            ("Instagram and X bio", br.IG_BIO), ("Instagram name field", "The Curve · AI explained"))))
         setup = f"""<h3>Set up the channel once</h3>
   <article class="card wide brand">
     <img class="thumb" src="media/brand/banner.jpg" alt="The Curve: the YouTube banner" loading="lazy">
     <div class="body">
-      <div class="meta"><span class="chip">BANNER 2560×1440 · PROFILE PICTURE 800×800</span><span>the same picture on TikTok, Instagram and Facebook</span></div>
-      <p class="post">{e(br.ABOUT)}</p>
-      <p class="hook">{e(br.BIO)}</p>
-      <div class="row"><button class="main" type="button" data-copy="post" data-what="About text">Copy About (YouTube)</button>
-        <button class="main" type="button" data-copy="hook" data-what="Bio">Copy bio (TikTok, Instagram)</button>
-        <button type="button" data-save="media/brand/banner.jpg">Save banner</button>
-        <button type="button" data-save="media/brand/avatar.png">Save profile picture</button></div>
+      <div class="meta"><span class="chip">NAME: THE CURVE</span><span>handles to try, in order: @thecurve, @thecurveai, @thecurve.explained, @curveexplains (the same everywhere)</span></div>
+      <div class="row">{saves}</div>
+      {texts}
+      <details><summary>The full set-up guide, platform by platform</summary><p class="post">{e(br.SETUP)}</p></details>
       <p class="note" aria-live="polite"></p>
     </div>
   </article>"""
@@ -365,6 +378,13 @@ nav a:focus-visible{{outline:2px solid var(--accent);outline-offset:2px}}
 .card.wide video{{aspect-ratio:16/9;max-height:none}}
 .card img.thumb{{width:100%;max-width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}}
 .brand .hook{{font-size:15px;font-weight:600}}
+.txt{{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:6px}}
+.txt b{{font:500 12px/1.3 "IBM Plex Mono",monospace;letter-spacing:.06em;color:var(--accent);text-transform:uppercase}}
+.txt p,.pin{{margin:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}}
+.txt button{{justify-self:start}}
+.pin{{border-left:3px solid var(--accent);padding-left:10px}}
+details summary{{cursor:pointer;font-weight:600;color:var(--accent)}}
+details .post{{margin-top:8px}}
 .day .plus{{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted)}}
 .start{{background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:18px 18px 20px;gap:10px}}
 .start h2{{font-size:17px}}

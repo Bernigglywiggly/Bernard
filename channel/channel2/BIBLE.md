@@ -24,6 +24,15 @@ Other names to check for availability: The Fine Print, Where the Money Is, Paid 
 | Unit | Big Macs | **Per person, per card, per seat**: the amount split down to one viewer's share |
 | Structure | Six floors | **THE PRICE → THE MACHINE → THE PROOF → THE MONEY → YOU → WHAT IF → THE CLOSE** |
 
+## The look, v1 (style frames, 1 Oct 2026)
+`lab/ch2/look.py` draws the style frames in `channel/channel2/look/` (`sheet.jpg` shows all six): navy-black ground
+ruled like a ledger with a brass double margin; IBM Plex Serif for titles and figures, IBM Plex Mono for labels
+and the source line under every figure (fonts in `lab/ch2/fonts`, SIL Open Font License). Recurring objects: the
+**receipt** (a figure set in a till receipt, the key line circled in brass ink), the **split bar** (one $10 or one
+£10 cut into who gets what), **accounts boxes** joined by arrows with **coins** for cash and **paper tickets** for
+miles or points. Floors are numbered in roman italics (I · THE PRICE ... VII · THE CLOSE). Next: animate these as
+engine scenes once a film is voiced.
+
 ## The rules (same discipline as The Curve)
 - No jokes. Straight in with the strangest true number. Calm, curious, precise.
 - Every figure dated and sourced on screen and in the description. Say "about"; round to two figures.

@@ -20,11 +20,12 @@ LAB = engine.LAB
 PAGES = {1: dict(title="The Curve Shorts", out=os.path.join(LAB, "shorts", "index.html"), slugs=("ep05", "ep08", "ep04"),
                  url="https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE"),
          2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep03", "ep09", "ep10", "ep11"),
-                 url="https://claude.ai/artifact/M3fLPJ8vZudgPRuicR93p4")}
+                 url="https://claude.ai/artifact/M3fLPJ8vZudgPRuicR93p4"),
+         3: dict(title="The Curve Shorts III", out=os.path.join(LAB, "shorts3", "index.html"), slugs=("ep12",), url="")}
 # The upload order (30 Sep, "lets just get it done and posted"): EP05 first (Google's Suncatcher launches 1 Oct), then a
 # new film every two days; the shorts run one a day from day 1 in the same order.
 START = datetime.date(2026, 10, 1)
-FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03", "ep09", "ep10", "ep11")
+FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03", "ep09", "ep10", "ep11", "ep12")
 EPISODES = [
     dict(dir="ep03s", slug="ep03", title="EP03 · The Shovel Sellers", sub="AI, gold rushes and who really gets rich",
          full="ep03s/build/ep03_full.mp4", thumb="ep03s/build/ep03_thumb.jpg",
@@ -117,6 +118,16 @@ EPISODES = [
              "tokens can't have kept the pages, Shannon's guessing game, why a fact seen once in training is a fact a model "
              "often gets wrong, how tests reward a confident guess, and a labelled what-if: a librarian beside every child."),
          schedule=[("", "part1", "digits"), ("", "part2", "birthday"), ("", "part3", "guess"), ("", "part4", "tutor")]),
+    dict(dir="ep12", slug="ep12", title="EP12 · Sixteen Hours", sub="The time horizon: how long a task AI can finish, and the ruler running out",
+         full="ep12/build/ep12.mp4", thumb="ep12/build/ep12_thumb.jpg",
+         yt=("AI Now Finishes 16-Hour Tasks Half the Time. The Test Can't Go Higher",
+             "This task takes a skilled person about sixteen hours. In March 2026, an AI was measured finishing tasks like it "
+             "about half the time, on its own. Seven years earlier, the best AI could only manage tasks that take you two "
+             "seconds.\n\nIn this video: how METR measures an AI's time horizon, the ladder from two seconds to sixteen hours, "
+             "why the test is running out of ruler (only five of its 228 tasks take a person sixteen hours or more), what half "
+             "the time means (at 80% success it's about three hours), why we think in steps when this grows in folds, and a "
+             "labelled what-if: four more doublings."),
+         schedule=[("", "part1", "ladder"), ("", "part2", "ruler"), ("", "part3", "paper")]),
 ]
 
 CSS = """

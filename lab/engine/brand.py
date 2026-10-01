@@ -35,6 +35,7 @@ PINNED = {
     "ep09": "Which part of your job is the oldest skill you have? Sources are in the description.",
     "ep10": "Who should set the line: a number, or a test? Sources are in the description.",
     "ep11": "When did an AI last tell you something confidently wrong? Every figure is sourced in the description.",
+    "ep12": "What's one task that eats your week that you'd hand over first? Sources are in the description.",
 }
 SETUP = f"""# The Curve: channel set-up (every name, bio and setting)
 
@@ -50,7 +51,7 @@ turquoise (#35D6C6), white. Channel name everywhere: **The Curve**. Handles to t
 - Upload defaults (Settings > Upload defaults): category Education; language English; tags: ai, the curve, explained,
   economics, technology; comments: hold potentially inappropriate ones for review.
 - Playlists: "Every film" (all of them, newest first); "AI and money" (EP03, EP08, EP10); "AI and the physical world"
-  (EP04, EP05, EP09); "AI and people" (EP06, EP07, EP11).
+  (EP04, EP05, EP09); "AI and people" (EP06, EP07, EP11); "How fast is AI moving?" (EP08, EP10, EP12).
 - Each upload: title, description and thumbnail from the kit; not made for kids; altered or synthetic content: Yes (the
   narrator is an AI voice); add it to its playlists; pin the comment below as the first comment.
 - Pinned comments: {"; ".join(f"{k.upper()}: {v}" for k, v in PINNED.items())}

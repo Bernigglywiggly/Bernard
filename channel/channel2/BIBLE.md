@@ -4,6 +4,8 @@
 `channel/CHANNELS.md`: long-form for watch hours, and a format that is clearly not The Curve re-skinned.
 
 Other names to check for availability: The Fine Print, Where the Money Is, Paid For, Unit Economics.
+**Name check (1 Oct 2026): a YouTube channel called "Margins" (@Margins) already makes money and business videos, so
+"The Margin" risks confusion. Pick the final name before launch; on screen it's one constant, `ch2/ledger.py` BRAND.**
 
 ## Why this niche
 - **Money:** business and finance sit near the top of YouTube's RPM ranges, and search for "how X makes money" never

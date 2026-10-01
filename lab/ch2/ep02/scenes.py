@@ -17,6 +17,7 @@ import skia  # noqa: E402
 
 from engine import tl  # noqa: E402
 from ch2 import look as L  # noqa: E402
+from ch2 import ledger  # noqa: E402
 from ch2.kit import (Board, Beat, CX, CY, W, H, PAPER, BRASS, RED, MUTED, INK, number, statement, floor_card, stamp,  # noqa: E402
                      receipt, split, node, arrow, typed, serif, source, coins, person, shop, land, bars, ticks, quote,
                      icon_row, ease, seg, lerp)
@@ -211,7 +212,7 @@ BOARD = Board([
     Beat("then", lambda c, b: number(c, b, "$10.4 billion", "IN RENT · 2025")),
     Beat("close", lambda c, b: (statement(c, b, [("The burgers bring in the customers.", b.t0 + 0.1),
                                                  ("The customers pay the rent.", b.w("close", "customers", 1) - 0.3)], size=70),
-                                typed(c, b, "THE MARGIN", CX, 860, tl.le("close") + 0.6, 30, BRASS, track=0.3))),
+                                typed(c, b, ledger.BRAND, CX, 860, tl.le("close") + 0.6, 30, BRASS, track=0.3))),
 ], tail=4.0)
 
 

@@ -20,7 +20,7 @@ LAB = engine.LAB
 PAGES = {1: dict(title="The Curve Shorts", out=os.path.join(LAB, "shorts", "index.html"), slugs=("ep05", "ep08", "ep04"),
                  url="https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE"),
          2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep03", "ep09", "ep10"),
-                 url=None)}
+                 url="https://claude.ai/artifact/M3fLPJ8vZudgPRuicR93p4")}
 # The upload order (30 Sep, "lets just get it done and posted"): EP05 first (Google's Suncatcher launches 1 Oct), then a
 # new film every two days; the shorts run one a day from day 1 in the same order.
 START = datetime.date(2026, 10, 1)
@@ -361,7 +361,7 @@ def main(page=1):
     nav = "".join(f'<a href="#{ep["slug"]}">{html.escape(ep["title"])}</a>' for ep in eps)
     for k, pg in PAGES.items():                                     # the other page, when it has a link
         if k != page and pg["url"]:
-            others = " – ".join(s.upper() for s in (pg["slugs"][0], pg["slugs"][-1]))
+            others = " · ".join(s.upper() for s in pg["slugs"])
             nav += f'<a href="{html.escape(pg["url"])}" target="_blank" rel="noopener">{others} → {html.escape(pg["title"])}</a>'
     doc = f"""<title>{PAGES[page]["title"]}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">

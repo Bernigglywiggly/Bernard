@@ -291,42 +291,63 @@ STEPS_FILM = [
 ]
 
 
-def season1():
+SEASON_PAGES = {
+    "1": dict(name="The Curve: Season One", films="five", day="the day after the fifth film",
+              titles=["What the AI Headlines Don't Tell You ({mins}-Minute Documentary)",
+                      "5 Hidden Forces Behind the AI Boom | The Curve: Season One",
+                      "Why AI Is Leaving the Planet, and 4 Other Things the Headlines Miss"],
+              pinned="Which of the five surprised you most? Every figure is sourced in the description.",
+              first="Post the five films on their days"),
+    "2": dict(name="The Curve: Season Two", films="four", day="Tue 20 Oct, the day after EP12",
+              titles=["How AI Really Works: 4 Hidden Mechanisms ({mins}-Minute Documentary)",
+                      "Why AI Makes Things Up, and 3 Other Things the Headlines Miss",
+                      "Robots, Rules, Wrong Answers and 16-Hour Tasks | The Curve: Season Two"],
+              pinned="Which of the four changed your mind? Every figure is sourced in the description.",
+              first="Post EP09 to EP12 on their days (13 to 19 Oct)"),
+}
+
+
+def season2():
+    season1("2")
+
+
+def season1(n="1"):
+    os.environ["SEASON"] = n
+    cfg = SEASON_PAGES[n]
     sys.path.insert(0, os.path.join(LAB, "season1"))
     import make as s1
-    out = os.path.join(HERE, "build", "season1")
+    out = os.path.join(HERE, "build", f"season{n}")
     media = os.path.join(out, "media")
     os.makedirs(media, exist_ok=True)
-    meta = json.load(open(os.path.join(s1.BUILD, "season1.json")))
-    v = video_entry(s1.OUT, media, "The_Curve_Season_One_1080p.mp4", "season1")
+    meta = json.load(open(os.path.join(s1.BUILD, f"season{n}.json")))
+    word = {"1": "One", "2": "Two"}[n]
+    v = video_entry(s1.OUT, media, f"The_Curve_Season_{word}_1080p.mp4", f"season{n}")
     thumbs, extra = [], {}
     for k, label in zip("abc", ("A", "B", "C")):
         src = os.path.join(s1.BUILD, f"thumb_{k}.jpg")
         if os.path.exists(src):
             shutil.copy(src, os.path.join(media, f"thumb_{k}.jpg"))
             extra[f"media/thumb_{k}.jpg"] = os.path.join(media, f"thumb_{k}.jpg")
-            thumbs.append(dict(file=f"thumb_{k}.jpg", label=f"Thumbnail {label}", alt=f"Season One thumbnail option {label}",
-                               name=f"The_Curve_Season_One_thumbnail_{label}.jpg"))
+            thumbs.append(dict(file=f"thumb_{k}.jpg", label=f"Thumbnail {label}", alt=f"Season {word} thumbnail option {label}",
+                               name=f"The_Curve_Season_{word}_thumbnail_{label}.jpg"))
     m, s = divmod(int(round(meta["duration"])), 60)
     mins = int(meta["duration"] // 60)                       # "14-minute" for 14:06: a title never rounds up
     item = dict(
-        slug="season-one", eyebrow=f"Long-form · {m}:{s:02d} · 1080p", name="The Curve: Season One",
-        meta="The five finished films as one documentary, with chapters. Long videos earn watch hours and, past 8 minutes, mid-roll ads.",
+        slug=f"season-{word.lower()}", eyebrow=f"Long-form · {m}:{s:02d} · 1080p", name=cfg["name"],
+        meta=f"The {cfg['films']} films as one documentary, with chapters. Long videos earn watch hours and, past 8 minutes, mid-roll ads.",
         video=v, thumbs=thumbs,
-        titles=[f"What the AI Headlines Don't Tell You ({mins}-Minute Documentary)",
-                "5 Hidden Forces Behind the AI Boom | The Curve: Season One",
-                "Why AI Is Leaving the Planet, and 4 Other Things the Headlines Miss"],
+        titles=[t_.format(mins=mins) for t_ in cfg["titles"]],
         description=open(os.path.join(s1.BUILD, "description.txt")).read(),
-        pinned="Which of the five surprised you most? Every figure is sourced in the description.",
+        pinned=cfg["pinned"],
         steps=STEPS_FILM[:2] + ["Playlists: Every film. Category: Education. Chapters come from the timestamps in the description.",
                                 "Monetisation (once the channel is in the Partner Programme): put mid-roll ads at the chapter breaks.",
                                 STEPS_FILM[3], STEPS_FILM[4]],
         shorts=[])
-    lede = (f"Season One is the five finished films in one {mins}-minute documentary, ready to upload: the 1080p file, three "
+    lede = (f"Season {word} is the {cfg['films']} films in one {mins}-minute documentary, ready to upload: the 1080p file, three "
             "thumbnails, titles, a description with chapters and every source, and the settings to tick.")
-    order = [("1", "Post the five films on their days"), ("2", "Then Season One, the day after the fifth film"),
+    order = [("1", cfg["first"]), ("2", f"Then Season {word}, {cfg['day']}"),
              ("3", "Shorts keep running daily, pointing back to the films")]
-    write("season1", "The Curve: Season One", lede, order, [item], extra)
+    write(f"season{n}", cfg["name"], lede, order, [item], extra)
 
 
 ALT_TITLES = {
@@ -398,4 +419,4 @@ def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP
 
 
 if __name__ == "__main__":
-    {"season1": season1, "new": new}[sys.argv[1]]()
+    {"season1": season1, "season2": season2, "new": new}[sys.argv[1]]()

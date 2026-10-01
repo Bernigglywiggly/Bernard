@@ -33,8 +33,9 @@ from engine import tl, look, captions as CAP, mix, kit  # noqa: E402
 from engine.draw import CX, GLOW, WHITE, bignum, lines_in  # noqa: E402
 
 W, H, FPS, SR = 1920, 1080, 24, fx.SR
-BUILD = os.path.join(HERE, "build")
-OUT = os.path.join(BUILD, "the_curve_season1.mp4")
+SEASON = os.environ.get("SEASON", "1")                     # SEASON=2 python3 season1/make.py ... builds Season Two
+BUILD = os.path.join(LAB, f"season{SEASON}", "build")
+OUT = os.path.join(BUILD, f"the_curve_season{SEASON}.mp4")
 # (episode, chapter title, the line under it), in the channel's upload order
 CHAPTERS = [
     ("ep05", "FOLLOW THE SUN", "WHY AI IS LEAVING THE PLANET"),
@@ -50,6 +51,33 @@ LABELS = {  # how each chapter reads in YouTube's chapter list and the descripti
     "ep06": "Who's Human Here? The Turing test and proving you're you",
     "ep07": "The Thirty-Year Delay: why AI hasn't changed productivity (yet)",
 }
+SEASON_TEXT = dict(name="SEASON ONE", sub="FIVE HIDDEN MECHANISMS BEHIND THE AI HEADLINES", segs=None, cold="the five films in five lines",
+                   lead=("Five hidden mechanisms behind the AI headlines, in one film: why the AI industry is trying to leave the "
+                         "planet, why cheaper AI means more data centres, not fewer, who's really inside the robots, why people picked "
+                         "an AI as the human, and why AI hasn't made most companies more productive (yet). Every figure is sourced "
+                         "below, film by film, and every price comes in Big Macs.\n"),
+                   count="five", tags="#ai #artificialintelligence #aiexplained #documentary #technology #economics #robots #datacenter #thecurve")
+if SEASON == "2":
+    CHAPTERS = [
+        ("ep09", "THE LAUNDRY PROBLEM", "WHY THE EASY THINGS ARE HARDEST FOR ROBOTS"),
+        ("ep10", "COUNTING SUMS", "WHY THE LAW COUNTS CALCULATIONS, NOT DANGER"),
+        ("ep11", "THE LIBRARY OF EVERY BOOK", "WHY AI IS FLUENT BY DESIGN, AND RIGHT ONLY BY EFFORT"),
+        ("ep12", "SIXTEEN HOURS", "HOW LONG A TASK AI CAN FINISH ON ITS OWN"),
+    ]
+    LABELS = {
+        "ep09": "The Laundry Problem: why the easy things are hardest for robots",
+        "ep10": "Counting Sums: why AI law counts calculations, not danger",
+        "ep11": "The Library of Every Book: why AI makes things up",
+        "ep12": "Sixteen Hours: how long a task AI can finish on its own",
+    }
+    SEASON_TEXT = dict(name="SEASON TWO", sub="FOUR HIDDEN MECHANISMS BEHIND THE AI HEADLINES",
+                       segs=[("ep09", ["gold", "few"]), ("ep10", ["line"]), ("ep11", ["library"]), ("ep12", ["task"])],
+                       cold="the four films in four lines",
+                       lead=("Four hidden mechanisms behind the AI headlines, in one film: why an AI can win gold at the maths "
+                             "olympiad but a robot still can't fold your shirt, the one number Europe uses to decide which AI gets "
+                             "watched, why AI makes things up, and how long a task AI can now finish on its own. Every figure is "
+                             "sourced below, film by film.\n"),
+                       count="four", tags="#ai #artificialintelligence #aiexplained #documentary #technology #robots #ailaw #thecurve")
 CARD_S, TITLE_S, OUTRO_S = 4.2, 6.5, 15.0
 # the films' own master settings, so every segment joins without re-encoding
 ENC_V = ["-c:v", "libx264", "-preset", "slow", "-crf", "20", "-maxrate", "5000k", "-bufsize", "10000k", "-pix_fmt", "yuv420p"]
@@ -72,8 +100,8 @@ class Title:
         from engine.brand import _curve
         lines_in(c, [_curve(40, 1880, 990, 150, 5.0)], t, 0.1, 1.2, GLOW, 3.0, seed_pt=(40, 990))
         bignum(c, t, "THE CURVE", 150, CX, 540, 0.4)
-        tl.label(c, "SEASON ONE", CX, 645, t, 1.8, 28, GLOW)
-        tl.label(c, "FIVE HIDDEN MECHANISMS BEHIND THE AI HEADLINES", CX, 698, t, 2.6, 22, WHITE)
+        tl.label(c, SEASON_TEXT["name"], CX, 645, t, 1.8, 28, GLOW)
+        tl.label(c, SEASON_TEXT["sub"], CX, 698, t, 2.6, 22, WHITE)
 
 
 def card_size(title):
@@ -159,7 +187,7 @@ def cold_open(tr):
     enc = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}",
                             "-r", str(FPS), "-i", "-"] + ENC_V + [silent], stdin=subprocess.PIPE)
     voice, talk, starts, t_cur = [], [], [], 0.0
-    for ep, ids in tr.SEGS:
+    for ep, ids in (SEASON_TEXT["segs"] or tr.SEGS):
         d = os.path.join(LAB, ep)
         tl.load(d, "")
         t0, t1 = tl.ls(ids[0]) - tr.PRE, tl.le(ids[-1]) + tr.POST
@@ -271,7 +299,7 @@ def stamp(s):
 
 
 def join():
-    segs, marks, t = [os.path.join(BUILD, "seg_00_open.mp4")], [(0.0, "Cold open: the five films in five lines")], 0.0
+    segs, marks, t = [os.path.join(BUILD, "seg_00_open.mp4")], [(0.0, "Cold open: " + SEASON_TEXT["cold"])], 0.0
     t += probe(segs[0])
     for i, (ep, title, sub) in enumerate(CHAPTERS, 1):
         card = os.path.join(BUILD, f"seg_{i:02d}a_card.mp4")
@@ -289,25 +317,22 @@ def join():
     open(os.path.join(BUILD, "chapters.txt"), "w").write(chapters + "\n")
     open(os.path.join(BUILD, "description.txt"), "w").write(description(chapters))
     json.dump(dict(duration=probe(OUT), mb=round(os.path.getsize(OUT) / 1e6, 1), chapters=marks),
-              open(os.path.join(BUILD, "season1.json"), "w"), indent=1)
+              open(os.path.join(BUILD, f"season{SEASON}.json"), "w"), indent=1)
     print(OUT, round(probe(OUT), 1), "s", round(os.path.getsize(OUT) / 1e6, 1), "MB")
     print(chapters)
 
 
 def description(chapters):
     films = {e["slug"]: e for e in kit.EPISODES}
-    parts = ["Five hidden mechanisms behind the AI headlines, in one film: why the AI industry is trying to leave the "
-             "planet, why cheaper AI means more data centres, not fewer, who's really inside the robots, why people picked "
-             "an AI as the human, and why AI hasn't made most companies more productive (yet). Every figure is sourced "
-             "below, film by film, and every price comes in Big Macs.\n",
+    parts = [SEASON_TEXT["lead"],
              "Chapters\n" + chapters + "\n",
-             "The five films, one by one, are on the channel. A new film every two days, shorts daily.\n",
+             f"The {SEASON_TEXT['count']} films, one by one, are on the channel. A new film every two days, shorts daily.\n",
              "Sources, film by film"]
     for i, (ep, title, _) in enumerate(CHAPTERS, 1):
         parts.append(f"\n{i}. {LABELS[ep].split(':')[0].split('?')[0]}{'?' if '?' in LABELS[ep] else ''} ({films[ep]['yt'][0]})")
         parts += ["• " + s for s in kit.sources(films[ep])]
     parts.append("\nThe narrator is an AI voice (ElevenLabs). Labelled what-ifs are imagined, not forecasts.")
-    parts.append("\n#ai #artificialintelligence #aiexplained #documentary #technology #economics #robots #datacenter #thecurve")
+    parts.append("\n" + SEASON_TEXT["tags"])
     return "\n".join(parts) + "\n"
 
 
@@ -316,6 +341,12 @@ THUMBS = [  # (episode feed, seconds, lines, accent line, focus, zoom, place): c
     ("ep08", 100.0, "5 HIDDEN|FORCES|BEHIND AI", 1, (0.5, 0.45), 1.35, 0.74),  # the bulb, right
     ("ep04", 22.5, "THERE'S|A HUMAN|INSIDE", 1, (0.55, 0.47), 1.1, 0.732),  # robot and VR operator, joined by the arc
 ]
+if SEASON == "2":
+    THUMBS = [
+        ("ep11", 21.0, "HOW AI|REALLY|WORKS", 2, (0.54, 0.44), 1.4, 0.75),       # the pages marked WRONG, one THE ANSWER
+        ("ep09", 76.0, "WHAT AI|STILL|CAN'T DO", 2, (0.47, 0.62), 1.6, 0.8),     # the humanoid at the towel rail
+        ("ep12", 66.0, "2 SECONDS|TO|16 HOURS", 2, (0.6, 0.45), 1.2, 0.68),      # the time-horizon ladder
+    ]
 
 
 def thumbs():

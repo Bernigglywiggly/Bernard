@@ -21,7 +21,7 @@ captions are drawn until t1, so the next line's first word flashes too. Fix (sta
 whole lines (t0 >= previous line's end + 0.08 s, t1 <= next line's start - 0.08 s), fade the audio (~40 ms in,
 ~150 ms out), draw captions only until the clip's last line ends. **Done in code (commit ebdf66c,
 `trailer.span()` / `trailer.faded()`): the old tail took in 0.12-0.19 s of the next line in four of five clips.**
-**Rebuilt and republished (10:20 UTC):** checked all nine clips (Season One's five, Season Two's four): each starts
+**Rebuilt and republished (10:15 UTC):** checked all nine clips (Season One's five, Season Two's four): each starts
 after the previous line ends and stops before the next one starts. Season One (14:01) and Season Two (10:57) pages are
 republished at the same links. The fixed **channel trailer** (38 s) was sent to the user in chat; it replaces the one
 on the other account's kit page (or rebuild it there: `cd lab && python3 trailer/make.py`, which needs EP04-EP08's

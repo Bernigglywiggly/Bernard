@@ -21,11 +21,11 @@ PAGES = {1: dict(title="The Curve Shorts", out=os.path.join(LAB, "shorts", "inde
                  url="https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE"),
          2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep03", "ep09", "ep10", "ep11"),
                  url="https://claude.ai/artifact/M3fLPJ8vZudgPRuicR93p4"),
-         3: dict(title="The Curve Shorts III", out=os.path.join(LAB, "shorts3", "index.html"), slugs=("ep12",), url="")}
+         3: dict(title="The Curve Shorts III", out=os.path.join(LAB, "shorts3", "index.html"), slugs=("ep12", "ep13"), url="")}
 # The upload order (30 Sep, "lets just get it done and posted"): EP05 first (Google's Suncatcher launches 1 Oct), then a
 # new film every two days; the shorts run one a day from day 1 in the same order.
 START = datetime.date(2026, 10, 1)
-FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03", "ep09", "ep10", "ep11", "ep12")
+FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03", "ep09", "ep10", "ep11", "ep12", "ep13")
 EPISODES = [
     dict(dir="ep03s", slug="ep03", title="EP03 · The Shovel Sellers", sub="AI, gold rushes and who really gets rich",
          full="ep03s/build/ep03_full.mp4", thumb="ep03s/build/ep03_thumb.jpg",
@@ -128,6 +128,16 @@ EPISODES = [
              "the time means (at 80% success it's about three hours), why we think in steps when this grows in folds, and a "
              "labelled what-if: four more doublings."),
          schedule=[("", "part1", "ladder"), ("", "part2", "ruler"), ("", "part3", "paper")]),
+    dict(dir="ep13", slug="ep13", title="EP13 · The Ninety-Minute War", sub="Why AI prices fall in hours: the Red Queen race",
+         full="ep13/build/ep13.mp4", thumb="ep13/build/ep13_thumb.jpg",
+         yt=("Two AI Labs Cut Prices 90 Minutes Apart. Here's Why",
+             "On 22 September 2026 one AI lab cut the price of its best model by a fifth. About ninety minutes later its "
+             "biggest rival launched two new models at half the price. Why do prices move in hours, not weeks?\n\nIn this "
+             "video: why price is the only thing buyers can read in an afternoon, how the same level of AI went from $60 to "
+             "6 cents a million tokens between 2021 and 2024, what a million tokens is (about eight novels, now under 10p "
+             "to read), the Red Queen (Lewis Carroll, 1871; Leigh Van Valen, 1973), and a labelled what-if: when thinking "
+             "is almost free, what gets expensive?"),
+         schedule=[("", "part1", "novels"), ("", "part2", "queen"), ("", "part3", None), ("", "part4", None)]),
 ]
 
 CSS = """

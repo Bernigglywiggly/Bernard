@@ -17,11 +17,24 @@ from b05809d plus the commits listed here).
   artifact file) that the page streams (hls.js) and joins back into one .mp4 on download (`downloads` capability),
   plus thumbnails, titles, description, pinned comment and the film's shorts.
 - **EP09-EP12**: rendering, shorts and thumbnails in progress on this branch (the other account had stopped at 01:39).
+- **EP13 "The Ninety-Minute War"** (`lab/ep13`): the bank's EP02 rebuilt for 16:9 (as EP12 was from EP01): script with
+  ids and cards (facts re-checked: 22 Sep 2026, Opus 5.5 to $4/$20, GPT-6 Sol and Luna ~90 min later at about half),
+  scenes on the shared engine (a log price ruler, $100 to 1 cent), film.py, shorts clips, kit entry (Wed 21 Oct).
+  **Not voiced**: the 9:16 cut used another speed, so 23 of 24 lines aren't in the George cache at 1.0. A session
+  with the key runs `cd lab/ep13 && python3 film.py voice`, then `parts 4 0 4`, `join 4`, `sound`, `master`, `shorts`.
+  The scenes were checked on an estimated timeline (`python3 tools/est_timeline.py ep13`, `EP_BUILD=build_est`),
+  never on a real voice: look at a few stills after voicing.
+- **EP03** can't be rebuilt here: its cold open needs the Blender frames (`ep03s/build/d24/*.png`) and its lines are
+  cached only at the fast 1.2 speed. It stays with the account that has them (Sun 11 Oct on the calendar).
 - **Channels plan** (`channel/CHANNELS.md`): the Partner Programme bar doubles on 1 Feb 2027 (8,000 h or 20M Shorts
   views for new applicants), and "inauthentic content" removes templated AI channels, so channels 2-5 need their
   own format, look, voice and music. **Channel 2 bible** (`channel/channel2/BIBLE.md`, The Margin: one company's
   money machine per film, 8-10 min, Curve Elder A as narrator) and its **sourced pilot script**
-  (`lab/ch2/ep01/script.py`, "Banks With Wings"; needs the ElevenLabs key to voice: `EL_VOICE=elder`).
+  (`lab/ch2/ep01/script.py`, "Banks With Wings"; needs the ElevenLabs key to voice: `EL_VOICE=elder`). Overnight:
+  the pilot grew to 8 min (v2), plus **film 2 "The Landlord in the Golden Arches"** (McDonald's rent: $10.4B in 2025,
+  more than its net income) and **film 3 "The $65 Membership"** (Costco: fees are half its operating profit), every
+  figure from the latest filings and sourced; ~930-960 words each, ~8 min at Elder A's pace. **The ledger look v1**:
+  style frames in `channel/channel2/look/` (`lab/ch2/look.py`, IBM Plex Serif + Mono, receipts, split bars).
 - Render notes: 4 slices take a 2:45 film ~12 min on 4 cores alone; two films' slices at once double both, and a
   tracked job dies at ~30 min, so run one film's slices at a time. Never edit a shell script while a job runs it.
 

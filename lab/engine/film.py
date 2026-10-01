@@ -25,6 +25,18 @@ def _enc(out, crf=16, extra=()):
                             stdin=subprocess.PIPE)
 
 
+def _frames(path):
+    """Frames in a finished mp4 (-1 if it is missing or was cut off)."""
+    if not os.path.exists(path):
+        return -1
+    r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_packets", "-show_entries", "stream=nb_read_packets",
+                        "-of", "csv=p=0", path], capture_output=True, text=True)
+    try:
+        return int(r.stdout.strip())
+    except ValueError:
+        return -1
+
+
 def sheet(paths, out):
     cols, n = 4, len(paths)
     rows = (n + cols - 1) // cols
@@ -121,6 +133,29 @@ def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainfram
             if (i - i0) % 240 == 0:
                 print(f"chunk {i0}-{i1}: {i / FPS:6.1f}s", flush=True)
         ff.stdin.close(); ff.wait()
+        return
+    if cmd in ("parts", "join"):                                  # the render in resumable waves (cloud jobs die at ~30 min
+        jobs = int(argv[1])                                       # and on container restarts): parts N a b, then join N
+        n = int(dur * FPS)
+        cuts = [round(n * k / jobs) for k in range(jobs + 1)]
+        parts = [os.path.join(build, f"part{k}_of{jobs}.mp4") for k in range(jobs)]
+        done = lambda k: _frames(parts[k]) == cuts[k + 1] - cuts[k]
+        if cmd == "parts":
+            ks = [k for k in range(int(argv[2]), int(argv[3])) if not done(k)]
+            procs = [subprocess.Popen([sys.executable, os.path.abspath(film_file), "chunk", str(cuts[k]), str(cuts[k + 1]), parts[k]])
+                     for k in ks]
+            codes = [p.wait() for p in procs]
+            assert all(c == 0 for c in codes), codes
+            print("parts done", ks, flush=True)
+            return
+        bad = [k for k in range(jobs) if not done(k)]
+        assert not bad, f"parts not finished: {bad}"
+        lst = os.path.join(build, "parts.txt")
+        open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", feed], check=True)
+        for p in parts:
+            os.remove(p)
+        print(feed, flush=True)
         return
     if cmd in ("render", "all"):
         jobs = int(argv[1]) if len(argv) > 1 else 4

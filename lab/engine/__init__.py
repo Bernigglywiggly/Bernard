@@ -9,6 +9,9 @@ new channel) is two files, not a new pipeline. Pulled out of EP03 (lab/ep03s), w
     python3 film.py lines 3 9.5    # quick line-art stills (no characters)
     python3 film.py still 3 9.5    # stills in the finished look + a contact sheet
     python3 film.py render 4       # the caption-free picture in 4 parallel slices (the feed for the shorts too)
+    python3 film.py parts 8 0 4    # or in resumable waves (each its own job, under the cloud's ~30-minute limit):
+    python3 film.py parts 8 4 8    #   slices 0-3, then 4-7 (finished slices are kept), then
+    python3 film.py join 8         #   join them into the feed
     python3 film.py sound          # sound events, the score, the mix
     python3 film.py master         # captions over the picture + the mix -> build/<ep>.mp4
     python3 film.py shorts         # the vertical cuts -> build/shorts/*.mp4 + kit.json

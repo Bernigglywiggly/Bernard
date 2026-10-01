@@ -21,11 +21,12 @@ captions are drawn until t1, so the next line's first word flashes too. Fix (sta
 whole lines (t0 >= previous line's end + 0.08 s, t1 <= next line's start - 0.08 s), fade the audio (~40 ms in,
 ~150 ms out), draw captions only until the clip's last line ends. **Done in code (commit ebdf66c,
 `trailer.span()` / `trailer.faded()`): the old tail took in 0.12-0.19 s of the next line in four of five clips.**
-This account is rebuilding and republishing the trailer and both Seasons with it; if that isn't confirmed below,
-rebuild the **channel trailer**
-(`python3 trailer/make.py`), **Season One** (`python3 season1/make.py open` then `join`) and **Season Two**
-(`SEASON=2 python3 season1/make.py open` then `join`), re-pack (`python3 pack/build.py season1|season2`) and republish
-the pages (same URLs from this account: publish with `url`; from the other account they'd be new pages).
+**Rebuilt and republished (10:20 UTC):** checked all nine clips (Season One's five, Season Two's four): each starts
+after the previous line ends and stops before the next one starts. Season One (14:01) and Season Two (10:57) pages are
+republished at the same links. The fixed **channel trailer** (38 s) was sent to the user in chat; it replaces the one
+on the other account's kit page (or rebuild it there: `cd lab && python3 trailer/make.py`, which needs EP04-EP08's
+`build/voice.wav` and `*_clean_silent.mp4`, i.e. those films rendered first). Season rebuild for reference:
+`python3 season1/make.py open` then `join` (`SEASON=2` for Two), then `python3 pack/build.py season1|season2`.
 **2. Prep the channel** (with the other account's design): name and handle (@thecurve, @thecurveai, ...; check), the
 banner/avatar/watermark (the design page's, or `lab/out/brand/` from `python3 -m engine.brand`), the about text and
 every setting in `lab/out/brand/channel_setup.md` (AI disclosure ticked on every upload, category Education, not made

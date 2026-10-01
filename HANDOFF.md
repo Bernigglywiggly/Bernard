@@ -3,7 +3,7 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 28 Sep 2026 (afternoon), cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
+Updated 1 Oct 2026 (~1am), cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
 
 ## Links (this account)
 - **Curve Lab** (v7 showcase: pilot, 4 visual directions, sound palette, jungle beds, voices, refs, Higgsfield prompts):
@@ -25,7 +25,35 @@ Updated 28 Sep 2026 (afternoon), cloud session on branch `claude/lucid-archimede
 - **Sales**: 85 independent takeaways/cafés (FSA register, Sept 2026) in walking order for Stone, Newcastle-under-Lyme
   and Tamworth. "Here" (the user's home town) is still unknown: ask, then pull its council's FSA file the same way.
 
-## Newest (29 Sep, ~1am): a deep elder narrator (the user asked for "a Morgan Freeman voice variation")
+## Newest (30 Sep – 1 Oct): George + Arena, finished; channel art; the trailer; EP09 and EP10
+- The user's call (30 Sep): "george, lets just get it done and posted, backlog and keep chugging, so far just making
+  stuff no uploads, need to get on that asap". So: **George at speed 1.0 over the Arena bed**, every film finished,
+  uploading made as easy as possible, new episodes keep coming. The elder narrators below are parked.
+- **Finals** (George 1.0 + Arena, -14 LUFS, -1.5 dBTP), all sent in the chat: EP05 2:51, EP08 2:15, EP04 2:51,
+  EP06 2:16, EP07 2:36. Shorts: EP05 10, EP08 7, EP04 11, EP06 8, EP07 8. EP03, EP09 and EP10 in progress.
+- **Posting kit**, two pages (an artifact version holds 256 MiB): page 1 https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE
+  (EP05, EP08, EP04, plus the set-up card: channel art, bios, keywords, the trailer) and page 2
+  https://claude.ai/artifact/M3fLPJ8vZudgPRuicR93p4 (EP06, EP07, EP03, EP09, EP10). `python3 -m engine.kit [1|2]`
+  writes `lab/shorts{,2}/index.html` and prints its files map; an update only needs the new or changed files
+  (64 MB per publish). A film's card appears once its shorts are newer than its `lines.json` (`kit.fresh`).
+- **Calendar** (`engine/kit.py`): a film every two days from Thu 1 Oct, in the order EP05, EP08, EP04, EP06, EP07,
+  EP03, EP09, EP10; each film's shorts start on its upload day.
+- **Channel art** (`python3 -m engine.brand` -> `lab/out/brand/`, committed): banner 2560x1440, avatar 800x800,
+  watermark 150x150 (solid, transparent), Facebook cover, X header, four Instagram highlight covers, `about.txt` and
+  `channel_setup.md` (every name, bio, keyword, setting and pinned comment, platform by platform). Handles to try:
+  @thecurve, @thecurveai, @thecurve.explained, @curveexplains.
+- **Channel trailer** (`python3 trailer/make.py` -> `lab/trailer/build/the_curve_trailer.mp4`, 39 s, sent): George's
+  strongest lines from EP05, EP06, EP08, EP04 and EP07 over their own pictures, one Arena bed, the ears going, then
+  the wordmark and "This is The Curve. The hidden mechanism behind the AI headlines. A new film every two days."
+- **EP09 "The Laundry Problem"** (Moravec's paradox; `lab/ep09`, voiced 2:17, `arena:key=3`) and **EP10 "Counting
+  Sums"** (the 10^25 compute line and Goodhart's law; `lab/ep10`, voiced 1:50, `arena:key=-3`): script, scenes and
+  voice done; `film.py render 4`, `sound`, `master`, then `shorts.py` next.
+- **EP03** at the new pace: `ep03s/render_waves.py` (two waves of four slices, then a captions pass), then
+  `EP03_FULL=1 python3 ascii_open.py sound_full`, then `python3 shorts.py`.
+- **Cloud limits**: a tracked background task is killed at about 30 minutes, so run each step as its own task;
+  nohup'd jobs die when the idle container restarts.
+
+## Earlier (29 Sep, ~1am): a deep elder narrator (the user asked for "a Morgan Freeman voice variation")
 - Not an imitation of him (the user's own rule: no copying real people's voices; he has also objected publicly to AI
   copies of his voice). Instead, three archetypes designed in ElevenLabs from a description (an older American man,
   very deep, warm, slightly gravelly baritone, slow and calm, a veteran documentary narrator) and saved to the

@@ -3,9 +3,14 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 1 Oct 2026 (~1am), cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
+Updated 1 Oct 2026 (~8:30am UTC), cloud session on branch `claude/funny-newton-gd9w8v` (contains all of
+`claude/lucid-archimedes-77tqpt`). **Start with "Overnight 1 Oct" just below: it has every link and the voice queue.**
 
-## Overnight 1 Oct (the other account, branch `claude/funny-newton-gd9w8v`, which contains all of lucid-archimedes)
+## Overnight 1 Oct, into the morning (the other account, branch `claude/funny-newton-gd9w8v`)
+**Ready to upload:** EP05-EP08 (the other account's kit pages, below), **Season One**
+(https://claude.ai/artifact/7aPVnXn8UW6LgBUmki6BqV, Sat 10 Oct) and **EP09-EP12**
+(https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq, 13-19 Oct). **Ready to voice:** EP13, EP14 and Channel 2's three
+films (the voice queue below). **Blocked here:** EP03 (Blender frames).
 Picked up while the user slept; nothing here duplicates the queue below. Merge this branch into yours (it fast-forwards
 from b05809d plus the commits listed here).
 - **Rebuilt the five finished films** from the repo (George from the line cache, Arena, `film.py parts/join/sound/master`):

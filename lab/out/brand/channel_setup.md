@@ -12,10 +12,10 @@ turquoise (#35D6C6), white. Channel name everywhere: **The Curve**. Handles to t
 - Upload defaults (Settings > Upload defaults): category Education; language English; tags: ai, the curve, explained,
   economics, technology; comments: hold potentially inappropriate ones for review.
 - Playlists: "Every film" (all of them, newest first); "AI and money" (EP03, EP08, EP10); "AI and the physical world"
-  (EP04, EP05, EP09); "AI and people" (EP06, EP07).
+  (EP04, EP05, EP09); "AI and people" (EP06, EP07, EP11).
 - Each upload: title, description and thumbnail from the kit; not made for kids; altered or synthetic content: Yes (the
   narrator is an AI voice); add it to its playlists; pin the comment below as the first comment.
-- Pinned comments: EP05: Would you trust a data centre in orbit? Every number in this film is sourced in the description.; EP08: What would you use thinking for if it cost as little as light? Sources are in the description.; EP04: Should a robot ever decide on its own? Every figure is sourced in the description.; EP06: Does your family have a secret word yet? Sources are in the description.; EP07: What would disappear first in an office built from zero around AI? Sources are in the description.; EP03: Who are the shovel sellers of the AI rush? Every number is sourced in the description.; EP09: Which part of your job is the oldest skill you have? Sources are in the description.; EP10: Who should set the line: a number, or a test? Sources are in the description.
+- Pinned comments: EP05: Would you trust a data centre in orbit? Every number in this film is sourced in the description.; EP08: What would you use thinking for if it cost as little as light? Sources are in the description.; EP04: Should a robot ever decide on its own? Every figure is sourced in the description.; EP06: Does your family have a secret word yet? Sources are in the description.; EP07: What would disappear first in an office built from zero around AI? Sources are in the description.; EP03: Who are the shovel sellers of the AI rush? Every number is sourced in the description.; EP09: Which part of your job is the oldest skill you have? Sources are in the description.; EP10: Who should set the line: a number, or a test? Sources are in the description.; EP11: When did an AI last tell you something confidently wrong? Every figure is sourced in the description.
 - Custom thumbnails and videos over 15 minutes need the channel verified once (Settings > Channel > Feature eligibility).
 
 ## TikTok

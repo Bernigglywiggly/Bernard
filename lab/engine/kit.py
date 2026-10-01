@@ -19,12 +19,12 @@ import engine  # noqa: F401  (paths)
 LAB = engine.LAB
 PAGES = {1: dict(title="The Curve Shorts", out=os.path.join(LAB, "shorts", "index.html"), slugs=("ep05", "ep08", "ep04"),
                  url="https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE"),
-         2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep03", "ep09", "ep10"),
+         2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep03", "ep09", "ep10", "ep11"),
                  url="https://claude.ai/artifact/M3fLPJ8vZudgPRuicR93p4")}
 # The upload order (30 Sep, "lets just get it done and posted"): EP05 first (Google's Suncatcher launches 1 Oct), then a
 # new film every two days; the shorts run one a day from day 1 in the same order.
 START = datetime.date(2026, 10, 1)
-FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03", "ep09", "ep10")
+FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03", "ep09", "ep10", "ep11")
 EPISODES = [
     dict(dir="ep03s", slug="ep03", title="EP03 · The Shovel Sellers", sub="AI, gold rushes and who really gets rich",
          full="ep03s/build/ep03_full.mp4", thumb="ep03s/build/ep03_thumb.jpg",
@@ -108,6 +108,15 @@ EPISODES = [
              "California's line ten times higher, why the compute for the same result keeps halving, Goodhart's law, and a "
              "labelled what-if: thinking rationed like carbon."),
          schedule=[("", "part1", "size"), ("", "part2", "dinosaur"), ("", "part3", "halves")]),
+    dict(dir="ep11", slug="ep11", title="EP11 · The Library of Every Book", sub="Why AI is fluent by design, and right only by effort",
+         full="ep11/build/ep11.mp4", thumb="ep11/build/ep11_thumb.jpg",
+         yt=("Why AI Makes Things Up: The Library of Every Book",
+             "In 1941, Jorge Luis Borges imagined a library holding every possible book: the answer to every question you could "
+             "ask, and every wrong answer too. You would never find the right one. Today's AI works the other way round.\n\n"
+             "In this video: how big Borges' library is (a number with 1.8 million digits), why a model that read 15 trillion "
+             "tokens can't have kept the pages, Shannon's guessing game, why a fact seen once in training is a fact a model "
+             "often gets wrong, how tests reward a confident guess, and a labelled what-if: a librarian beside every child."),
+         schedule=[("", "part1", "digits"), ("", "part2", "birthday"), ("", "part3", "guess"), ("", "part4", "tutor")]),
 ]
 
 CSS = """

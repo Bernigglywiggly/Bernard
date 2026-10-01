@@ -18,7 +18,9 @@ from b05809d plus the commits listed here).
 - **Upload pack pages** (`lab/pack/build.py`): each film's 1080p .mp4 cut into fragmented-MP4 pieces (≤15 MB per
   artifact file) that the page streams (hls.js) and joins back into one .mp4 on download (`downloads` capability),
   plus thumbnails, titles, description, pinned comment and the film's shorts.
-- **EP09-EP12**: rendering, shorts and thumbnails in progress on this branch (the other account had stopped at 01:39).
+- **EP09-EP12**: rendered here (EP09 2:23, EP10 1:56, EP11 3:02, EP12 2:21), each with two thumbnails and its shorts.
+  **Upload page: https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq** (films, thumbnails, titles, sourced descriptions,
+  pinned comments, shorts with posting days; EP12 added when its render finished). On the calendar 13-19 Oct.
 - **EP13 "The Ninety-Minute War"** (`lab/ep13`): the bank's EP02 rebuilt for 16:9 (as EP12 was from EP01): script with
   ids and cards (facts re-checked: 22 Sep 2026, Opus 5.5 to $4/$20, GPT-6 Sol and Luna ~90 min later at about half),
   scenes on the shared engine (a log price ruler, $100 to 1 cent), film.py, shorts clips, kit entry (Wed 21 Oct).

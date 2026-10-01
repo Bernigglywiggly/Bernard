@@ -24,9 +24,9 @@ from engine import kit  # noqa: E402
 MAX_SEG = 14_000_000
 
 
-def segment(src, dst_dir, hls_time=8):
+def segment(src, dst_dir, hls_time=30):
     """src -> dst_dir/{init.mp4, seg_###.mp4, index.m3u8}; shortens the target if any piece would pass 14 MB."""
-    for ht in (hls_time, 6, 4, 2):
+    for ht in (hls_time, 15, 8, 4):
         if os.path.isdir(dst_dir):
             shutil.rmtree(dst_dir)
         os.makedirs(dst_dir)

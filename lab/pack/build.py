@@ -420,4 +420,6 @@ def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP
 
 if __name__ == "__main__":
     {"season1": season1, "season2": season2, "new": new,
-     "films": lambda: new(("ep05", "ep08", "ep04", "ep06", "ep07"), "films", "The Curve: EP04 to EP08")}[sys.argv[1]]()
+     # EP04-EP08 with their shorts are ~310 MiB, over one artifact version's 256 MiB: two pages, in upload order
+     "films1": lambda: new(("ep05", "ep08", "ep04"), "films1", "The Curve: EP05, EP08, EP04"),
+     "films2": lambda: new(("ep06", "ep07"), "films2", "The Curve: EP06, EP07")}[sys.argv[1]]()

@@ -21,9 +21,13 @@ Updated 1 Oct 2026 (~3pm UTC), cloud session on branch `claude/funny-newton-gd9w
   line at the first 120 ms of silence after its last letter and drops a stray sound before a silence at the start, with
   short fades; every timing is unchanged, so no picture re-render: `python3 -m engine.voice <ep>`, `film.py sound`,
   `film.py remux` (swaps the new mix into the finished film, no re-encode), `film.py shorts`.
-- **Re-rendered here (scratchpad `night/rollout.sh`):** EP04-EP12 (voice, bed, mix, remux, shorts), the trailer, both
-  Seasons, and the pages: EP09-EP12 and both Seasons at their old links, plus a new page here for EP04-EP08 (the other
-  account's kit pages still carry the old Arena audio: use the new files, keep the kit pages' thumbnails).
+- **Re-rendered and republished here (scratchpad `night/rollout.sh`, 1h50):** EP04-EP12 (voice, bed, mix, remux,
+  shorts), the trailer (sent to the user in chat), both Seasons. Pages: **EP05, EP08, EP04**
+  https://claude.ai/artifact/V2Tz5smkY5w1uzroS85YzB and **EP06, EP07** https://claude.ai/artifact/PvzxoDzvJVvKdoXTD6S6pU
+  (new: EP04-EP08 with shorts are ~310 MiB, over one version's 256 MiB; `pack/build.py films1|films2`; no thumbnails:
+  keep the other account's kit-page thumbnails, whose films still carry the old Arena audio), **EP09-EP12**
+  https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq, **Season One** https://claude.ai/artifact/7aPVnXn8UW6LgBUmki6BqV,
+  **Season Two** https://claude.ai/artifact/8wNVR2gvWLkZUdvNnGiR44 (same links as before).
 - **Female voices, ready to audition:** ElevenLabs premades (nobody's voice copied): `lily` (British, velvety), `alice`
   (British, clear educator), `sarah`, `matilda`, `bella` (American) in `eleven_tts.VOICES`, read with George's settings.
   `python3 tools/voice_audition.py [ep05] [voices...]` reads the film's opening as ONE request per voice (the model

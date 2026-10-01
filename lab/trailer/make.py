@@ -27,6 +27,32 @@ BUILD = os.path.join(HERE, "build")
 SEGS = [("ep05", ["why"]), ("ep06", ["job", "result", "more"]), ("ep08", ["unlock"]), ("ep04", ["pilot"]), ("ep07", ["nothing"])]
 OUTRO = "This is The Curve. The hidden mechanism behind the AI headlines. A new film every two days."
 PRE, POST, FADE = 0.35, 0.55, 0.22
+GAP, A_IN, A_OUT = 0.08, 0.04, 0.15     # a clip never reaches into the line before or after; its audio fades in and out
+
+
+def span(ids):
+    """A montage clip's (t0, t1): the lines with a little air either side, but whole lines only. The user (1 Oct): the
+    clips "cut halfway through the speech": a fixed 0.55 s of tail took in the start of George's next line."""
+    i0, i1 = tl.I(ids[0]), tl.I(ids[-1])
+    t0, t1 = tl.ls(ids[0]) - PRE, tl.le(ids[-1]) + POST
+    if i0 > 0:
+        t0 = max(t0, tl.L[i0 - 1]["end"] + GAP)
+    if i1 + 1 < len(tl.L):
+        t1 = min(t1, tl.L[i1 + 1]["start"] - GAP)
+    return t0, t1
+
+
+def faded(x):
+    """The clip's audio with a short fade in and a gentler fade out, so no edge clicks or clips a word."""
+    x = np.array(x, np.float32, copy=True)
+    a, b = min(len(x), int(A_IN * SR)), min(len(x), int(A_OUT * SR))
+    ramp_in = np.linspace(0.0, 1.0, a, dtype=np.float32)
+    ramp_out = np.linspace(1.0, 0.0, b, dtype=np.float32)
+    if x.ndim == 2:
+        ramp_in, ramp_out = ramp_in[:, None], ramp_out[:, None]
+    x[:a] *= ramp_in
+    x[len(x) - b:] *= ramp_out
+    return x
 
 
 class Outro:
@@ -63,10 +89,10 @@ def main():
     for ep, ids in SEGS:
         d = os.path.join(engine.LAB, ep)
         tl.load(d, "")
-        t0, t1 = tl.ls(ids[0]) - PRE, tl.le(ids[-1]) + POST
+        t0, t1 = span(ids)
         dur = t1 - t0
         v = fx.load(os.path.join(d, "build", "voice.wav"))
-        voice.append((t_cur, v[int(t0 * SR): int(t1 * SR)]))
+        voice.append((t_cur, faded(v[int(t0 * SR): int(t1 * SR)])))
         starts.append(t_cur)
         talk += [(t_cur + tl.ls(i) - t0, t_cur + tl.le(i) - t0) for i in ids]
         n = 0

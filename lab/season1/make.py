@@ -8,6 +8,7 @@ earns watch hours and, past 8 minutes, mid-roll ads. This stitches the films the
 
     cd lab && python3 season1/make.py stills     # one frame of every card, to check the type fits
     cd lab && python3 season1/make.py cards      # -> season1/build/seg_*.mp4 (cold open, title, chapter cards, outro)
+    cd lab && python3 season1/make.py open       # just the cold open again (after a montage change), then join
     cd lab && python3 season1/make.py join       # -> season1/build/the_curve_season1.mp4, chapters.txt, description.txt
     cd lab && python3 season1/make.py thumbs     # thumbnail options -> season1/build/thumb_*.jpg
 Each film needs build/<ep>.mp4 and build/<ep>_clean_silent.mp4 first (film.py voice, parts, join, sound, master).
@@ -190,10 +191,10 @@ def cold_open(tr):
     for ep, ids in (SEASON_TEXT["segs"] or tr.SEGS):
         d = os.path.join(LAB, ep)
         tl.load(d, "")
-        t0, t1 = tl.ls(ids[0]) - tr.PRE, tl.le(ids[-1]) + tr.POST
+        t0, t1 = tr.span(ids)                               # whole lines only, never into the next (trailer.span)
         dur = t1 - t0
         v = fx.load(os.path.join(d, "build", "voice.wav"))
-        voice.append((t_cur, v[int(t0 * SR): int(t1 * SR)]))
+        voice.append((t_cur, tr.faded(v[int(t0 * SR): int(t1 * SR)])))
         starts.append(t_cur)
         talk += [(t_cur + tl.ls(i) - t0, t_cur + tl.le(i) - t0) for i in ids]
         n = 0
@@ -367,5 +368,11 @@ def stills():
         print(p, flush=True)
 
 
+def open_only():
+    """Rebuild just the cold open (seg_00_open.mp4), e.g. after a change to the montage; then run join."""
+    os.makedirs(BUILD, exist_ok=True)
+    cold_open(trailer())
+
+
 if __name__ == "__main__":
-    {"cards": cards, "join": join, "thumbs": thumbs, "stills": stills}[sys.argv[1] if len(sys.argv) > 1 else "stills"]()
+    {"cards": cards, "open": open_only, "join": join, "thumbs": thumbs, "stills": stills}[sys.argv[1] if len(sys.argv) > 1 else "stills"]()

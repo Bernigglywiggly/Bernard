@@ -93,3 +93,13 @@ class _Captions:
 
 
 CAPTIONS = _Captions()
+
+
+def style_shorts():
+    """The vertical shorts in the channel's own dress: THE MARGIN, brass for the live word and the progress line,
+    serif for the hook and captions (engine/shorts.py reads these module values when it draws)."""
+    from engine import shorts
+    shorts.BRAND = "THE MARGIN"
+    shorts.TURQ, shorts.WHITE, shorts.SOFT = L.BRASS, L.PAPER, L.MUTED
+    shorts.F.clear()
+    shorts.F.update(hook=L.font(L.SERIF_M, 66), cap=L.font(L.SERIF_M, 78), tag=L.font(L.MONO_M, 26), end=L.font(L.MONO_M, 32))

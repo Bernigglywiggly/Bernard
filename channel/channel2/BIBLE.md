@@ -43,7 +43,8 @@ engine scenes once a film is voiced.
   `EP_BUILD=build_est python3 film.py still 30 90 ...`): 8:18, 8:36 and 8:23. Once voiced, the same commands render
   the films: `EL_VOICE=elder python3 film.py voice`, `parts 4 0 4`, `join 4`, `sound`, `master`.
 - Music: `chrome_marl` (72 BPM, calm) for now, never Arena; a ledger bed of its own is a later job.
-- Shorts are next: `engine/shorts.py` still brands every short THE CURVE, so `CLIPS = []` until it takes a brand.
+- Shorts: five parts a film (`CLIPS` in each `film.py`), dressed by `ledger.style_shorts()` (THE MARGIN, brass, serif);
+  `python3 film.py shorts` after the master, as for The Curve.
 
 ## The rules (same discipline as The Curve)
 - No jokes. Straight in with the strangest true number. Calm, curious, precise.

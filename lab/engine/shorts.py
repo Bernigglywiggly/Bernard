@@ -131,7 +131,7 @@ def frame(src, t, clip, t0, t1, chs):
             xx += f["cap"].measureText(w + " ")
     if t > dur - 2.2:
         kk = min(1.0, (t - (dur - 2.2)) / 0.3)
-        msg = f"{clip['nxt']} NEXT →" if clip.get("nxt") else "FULL VIDEO · THE CURVE ON YOUTUBE"
+        msg = f"{clip['nxt']} NEXT →" if clip.get("nxt") else f"FULL VIDEO · {BRAND} ON YOUTUBE"
         text_center(c, msg, CAP_Y + 130, f["end"], mg.fill(TURQ, kk))
     return s.makeImageSnapshot()
 

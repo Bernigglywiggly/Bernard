@@ -4,6 +4,7 @@ engine.voice, and word times spread by word length. Writes <ep>/build_est/lines.
 engine="estimate" so nothing mistakes it for a real voice. No audio is made.
 
     python3 tools/est_timeline.py ep13
+    python3 tools/est_timeline.py ch2/ep01 2.1           # Curve Elder A's pace (~125 wpm with pauses: 2.1 words/s)
     EP_BUILD=build_est python3 ep13/film.py lines 12.5 30     # quick line-art stills on the estimate
 """
 import json
@@ -19,14 +20,14 @@ from engine import voice  # noqa: E402
 WPS = 2.55                      # George at speed 1.0: EP05-EP12 run ~140-155 words a minute with their pauses
 
 
-def build(ep_dir):
+def build(ep_dir, wps=WPS):
     lines = voice.script(ep_dir).LINES
     out = os.path.join(ep_dir, "build_est")
     os.makedirs(out, exist_ok=True)
     prev_end, meta = voice.LEAD, []
     for i, ln in enumerate(lines):
         spoken = el.spoken(ln, {}).split()
-        dur = 0.35 + len(spoken) / WPS
+        dur = 0.35 + len(spoken) / wps
         start = max(voice.LEAD, prev_end + voice.gap(ln, 1.0))
         start = math.ceil((start - voice.LEAD) / voice.GRID - 1e-6) * voice.GRID + voice.LEAD
         end = start + dur
@@ -46,4 +47,4 @@ def build(ep_dir):
 
 
 if __name__ == "__main__":
-    build(os.path.join(engine.LAB, sys.argv[1]))
+    build(os.path.join(engine.LAB, sys.argv[1]), float(sys.argv[2]) if len(sys.argv) > 2 else WPS)

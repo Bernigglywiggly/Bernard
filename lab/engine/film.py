@@ -83,8 +83,13 @@ def collect_events(scenes, dur, build):
     print(len(tl.EVENTS), "sound events")
 
 
-def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainframe", extra_sfx=(), deafen=()):
-    """deafen: line ids; just before each, the ears go (engine.mix.deafen) and the line cuts through the muffled room."""
+def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainframe", extra_sfx=(), deafen=(), look_mod=None,
+         cap_mod=None):
+    """deafen: line ids; just before each, the ears go (engine.mix.deafen) and the line cuts through the muffled room.
+    look_mod / cap_mod: another channel's picture and captions (modules with compose(scenes, t, captions) and
+    draw(c, t, until)); The Curve's ASCII look and captions when None."""
+    look_ = look_mod or look
+    cap_ = cap_mod or CAP
     ep_dir = os.path.dirname(os.path.abspath(film_file))
     build = os.path.join(ep_dir, os.environ.get("EP_BUILD", "build"))    # EP_BUILD=build_elder: a variant's own folder
     os.makedirs(build, exist_ok=True)
@@ -120,7 +125,7 @@ def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainfram
         paths = []
         for tt in sorted(map(float, argv[1:])):
             p = os.path.join(build, f"still_{tt:06.2f}.png")
-            look.compose(scenes, tt, lambda c, t: CAP.draw(c, t, dur - 0.6)).save(p, skia.kPNG)
+            look_.compose(scenes, tt, lambda c, t: cap_.draw(c, t, dur - 0.6)).save(p, skia.kPNG)
             paths.append(p)
             print(p, flush=True)
         print(sheet(paths, os.path.join(build, "sheet.jpg")))
@@ -129,7 +134,7 @@ def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainfram
         i0, i1, out = int(argv[1]), int(argv[2]), argv[3]
         ff = _enc(out)
         for i in range(i0, i1):
-            ff.stdin.write(look.compose(scenes, i / FPS).tobytes())
+            ff.stdin.write(look_.compose(scenes, i / FPS).tobytes())
             if (i - i0) % 240 == 0:
                 print(f"chunk {i0}-{i1}: {i / FPS:6.1f}s", flush=True)
         ff.stdin.close(); ff.wait()
@@ -204,7 +209,7 @@ def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainfram
             if any(ln["start"] - 0.05 <= t <= ln["end"] + 0.25 for ln in tl.L):
                 arr = np.frombuffer(buf, np.uint8).reshape(H, W, 4).copy()
                 s = skia.Surface(arr, colorType=skia.ColorType.kBGRA_8888_ColorType)
-                CAP.draw(s.getCanvas(), t, dur - 0.6)
+                cap_.draw(s.getCanvas(), t, dur - 0.6)
                 s.flushAndSubmit()
                 buf = arr.tobytes()
             enc.stdin.write(buf)

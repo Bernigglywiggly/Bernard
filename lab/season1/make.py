@@ -43,6 +43,13 @@ CHAPTERS = [
     ("ep06", "WHO'S HUMAN HERE?", "THE TURING TEST AND PROVING YOU'RE YOU"),
     ("ep07", "THE THIRTY-YEAR DELAY", "WHY AI HASN'T CHANGED PRODUCTIVITY (YET)"),
 ]
+LABELS = {  # how each chapter reads in YouTube's chapter list and the description
+    "ep05": "Follow the Sun: why AI is leaving the planet",
+    "ep08": "Cheaper Makes More: why cheaper AI means more data centres",
+    "ep04": "The Man in the Machine: who's really inside the robots",
+    "ep06": "Who's Human Here? The Turing test and proving you're you",
+    "ep07": "The Thirty-Year Delay: why AI hasn't changed productivity (yet)",
+}
 CARD_S, TITLE_S, OUTRO_S = 4.2, 6.5, 15.0
 # the films' own master settings, so every segment joins without re-encoding
 ENC_V = ["-c:v", "libx264", "-preset", "slow", "-crf", "20", "-maxrate", "5000k", "-bufsize", "10000k", "-pix_fmt", "yuv420p"]
@@ -117,10 +124,11 @@ def render_scene(job):
     return out
 
 
-def sfx(name, gain_db):
+def sfx(name, peak_db):
+    """A palette sound at a peak level (some are shorter than a loudness meter's 400 ms block)."""
     x = mix.load_sfx(name)
     x = x if x.ndim == 2 else np.stack([x, x], 1)
-    return x * fx.db(gain_db - fx.lufs(x))
+    return x / max(1e-6, float(np.abs(x).max())) * fx.db(peak_db)
 
 
 def place(buf, x, at):
@@ -138,9 +146,9 @@ def mux(silent, wav, out):
 def card_audio(dur, out):
     """A chapter card: a low hit as it opens, the formation's glint as the title forms; quiet beside the films."""
     a = np.zeros((int(dur * SR), 2), np.float32)
-    place(a, sfx("thum", -20.0), 0.02)
-    place(a, sfx("form", -27.0), 0.30)
-    place(a, sfx("scan", -30.0), 1.15)
+    place(a, sfx("thum", -9.0), 0.02)
+    place(a, sfx("form", -18.0), 0.30)
+    place(a, sfx("scan", -22.0), 1.15)
     fx.save(out, fx.master(a, target=-21.0, ceiling_db=-3.0), mp3=False)
 
 
@@ -268,7 +276,7 @@ def join():
     for i, (ep, title, sub) in enumerate(CHAPTERS, 1):
         card = os.path.join(BUILD, f"seg_{i:02d}a_card.mp4")
         film = os.path.join(LAB, ep, "build", f"{ep}.mp4")
-        marks.append((t, f"{i}. {title.title()}: {sub[0] + sub[1:].lower()}"))
+        marks.append((t, f"{i}. {LABELS[ep]}"))
         segs += [card, film]
         t += probe(card) + probe(film)
     segs.append(os.path.join(BUILD, "seg_99_outro.mp4"))
@@ -296,7 +304,7 @@ def description(chapters):
              "The five films, one by one, are on the channel. A new film every two days, shorts daily.\n",
              "Sources, film by film"]
     for i, (ep, title, _) in enumerate(CHAPTERS, 1):
-        parts.append(f"\n{i}. {title.title()} ({films[ep]['yt'][0]})")
+        parts.append(f"\n{i}. {LABELS[ep].split(':')[0].split('?')[0]}{'?' if '?' in LABELS[ep] else ''} ({films[ep]['yt'][0]})")
         parts += ["• " + s for s in kit.sources(films[ep])]
     parts.append("\nThe narrator is an AI voice (ElevenLabs). Labelled what-ifs are imagined, not forecasts.")
     parts.append("\n#ai #artificialintelligence #aiexplained #documentary #technology #economics #robots #datacenter #thecurve")

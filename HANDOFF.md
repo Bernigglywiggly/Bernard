@@ -26,6 +26,15 @@ from b05809d plus the commits listed here).
   with the key runs `cd lab/ep13 && python3 film.py voice`, then `parts 4 0 4`, `join 4`, `sound`, `master`, `shorts`.
   The scenes were checked on an estimated timeline (`python3 tools/est_timeline.py ep13`, `EP_BUILD=build_est`),
   never on a real voice: look at a few stills after voicing.
+- **EP14 "The Yes Machine"** (`lab/ep14`): why chatbots flatter (OpenAI's April 2025 rollback; its own words on the
+  thumbs-up signal; Anthropic's 2023 sycophancy study; The Emperor's New Clothes). Script, scenes, film, kit entry
+  (Fri 23 Oct). Not voiced, like EP13.
+- **VOICE QUEUE (for a session with ELEVENLABS_API_KEY)**, about 19,500 characters in all:
+  1. `cd lab/ep13 && python3 film.py voice` (24 lines, ~1,850 chars), then `parts 4 0 4`, `join 4`, `sound`, `master`,
+     `shorts`; the same for `lab/ep14` (24 lines, ~1,840 chars).
+  2. Channel 2, Curve Elder A: `cd lab && EL_VOICE=elder python3 -m engine.voice ch2/ep01` (53 lines, ~5,200 chars),
+     then `ch2/ep02` (54, ~5,500) and `ch2/ep03` (52, ~5,100). That writes each film's `build/voice.wav` and
+     `lines.json`; the ledger-look scenes come next (see `channel/channel2/BIBLE.md`).
 - **EP03** can't be rebuilt here: its cold open needs the Blender frames (`ep03s/build/d24/*.png`) and its lines are
   cached only at the fast 1.2 speed. It stays with the account that has them (Sun 11 Oct on the calendar).
 - **Channels plan** (`channel/CHANNELS.md`): the Partner Programme bar doubles on 1 Feb 2027 (8,000 h or 20M Shorts

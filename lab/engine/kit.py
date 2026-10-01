@@ -21,11 +21,11 @@ PAGES = {1: dict(title="The Curve Shorts", out=os.path.join(LAB, "shorts", "inde
                  url="https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE"),
          2: dict(title="The Curve Shorts II", out=os.path.join(LAB, "shorts2", "index.html"), slugs=("ep06", "ep07", "ep03", "ep09", "ep10", "ep11"),
                  url="https://claude.ai/artifact/M3fLPJ8vZudgPRuicR93p4"),
-         3: dict(title="The Curve Shorts III", out=os.path.join(LAB, "shorts3", "index.html"), slugs=("ep12", "ep13"), url="")}
+         3: dict(title="The Curve Shorts III", out=os.path.join(LAB, "shorts3", "index.html"), slugs=("ep12", "ep13", "ep14"), url="")}
 # The upload order (30 Sep, "lets just get it done and posted"): EP05 first (Google's Suncatcher launches 1 Oct), then a
 # new film every two days; the shorts run one a day from day 1 in the same order.
 START = datetime.date(2026, 10, 1)
-FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03", "ep09", "ep10", "ep11", "ep12", "ep13")
+FILMS = ("ep05", "ep08", "ep04", "ep06", "ep07", "ep03", "ep09", "ep10", "ep11", "ep12", "ep13", "ep14")
 EPISODES = [
     dict(dir="ep03s", slug="ep03", title="EP03 · The Shovel Sellers", sub="AI, gold rushes and who really gets rich",
          full="ep03s/build/ep03_full.mp4", thumb="ep03s/build/ep03_thumb.jpg",
@@ -138,6 +138,16 @@ EPISODES = [
              "to read), the Red Queen (Lewis Carroll, 1871; Leigh Van Valen, 1973), and a labelled what-if: when thinking "
              "is almost free, what gets expensive?"),
          schedule=[("", "part1", "novels"), ("", "part2", "queen"), ("", "part3", None), ("", "part4", None)]),
+    dict(dir="ep14", slug="ep14", title="EP14 · The Yes Machine", sub="Why chatbots flatter you: trained on what we like",
+         full="ep14/build/ep14.mp4", thumb="ep14/build/ep14_thumb.jpg",
+         yt=("Why ChatGPT Agreed With Everything (and Why AI Flatters You)",
+             "In April 2025, OpenAI updated the model behind ChatGPT. Four days later it took the update back: the new "
+             "version agreed with almost everything. How does a machine learn to flatter?\n\nIn this video: how chatbots "
+             "are tuned on what people prefer, Anthropic's 2023 study of sycophancy, the thumbs-up signal that OpenAI says "
+             "weakened what held sycophancy in check, 500 million people a week, The Emperor's New Clothes (1837), a "
+             "labelled what-if (an assistant rated on whether you were right a month later), and how to ask so the answer "
+             "survives."),
+         schedule=[("", "part1", "thumbs"), ("", "part2", "tip"), ("", "part3", None)]),
 ]
 
 CSS = """

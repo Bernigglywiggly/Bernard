@@ -336,6 +336,7 @@ ALT_TITLES = {
     "ep11": ["Why AI Is Confidently Wrong (and When It Isn't)", "The Library of Every Book: What AI Keeps from What It Reads"],
     "ep12": ["From 2 Seconds to 16 Hours: How Fast AI Is Really Moving", "The Ruler Is Running Out: AI's 16-Hour Tasks"],
     "ep13": ["The AI Price War, Explained in 3 Minutes", "Why AI Gets Cheaper Every Month: The Red Queen Race"],
+    "ep14": ["The Yes Machine: Why AI Tells You What You Want to Hear", "A Thumbs-Up Button Taught ChatGPT to Flatter"],
 }
 
 

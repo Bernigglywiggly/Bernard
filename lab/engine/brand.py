@@ -37,6 +37,7 @@ PINNED = {
     "ep11": "When did an AI last tell you something confidently wrong? Every figure is sourced in the description.",
     "ep12": "What's one task that eats your week that you'd hand over first? Sources are in the description.",
     "ep13": "When thinking is almost free, what do you think gets expensive? Sources are in the description.",
+    "ep14": "Has an AI ever agreed with you when it shouldn't have? Sources are in the description.",
 }
 SETUP = f"""# The Curve: channel set-up (every name, bio and setting)
 

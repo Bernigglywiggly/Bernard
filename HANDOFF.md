@@ -5,6 +5,26 @@ This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user wor
 databases on one account can't be read from the other. Push anything the other side needs here.
 Updated 1 Oct 2026 (~1am), cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
 
+## Overnight 1 Oct (the other account, branch `claude/funny-newton-gd9w8v`, which contains all of lucid-archimedes)
+Picked up while the user slept; nothing here duplicates the queue below. Merge this branch into yours (it fast-forwards
+from b05809d plus the commits listed here).
+- **Rebuilt the five finished films** from the repo (George from the line cache, Arena, `film.py parts/join/sound/master`):
+  the 1080p masters live only in this account's container, so the pages below carry them.
+- **Season One** (`lab/season1/make.py`): the five films as one ~13.5-minute film for YouTube (cold open of George's
+  strongest lines, THE CURVE · SEASON ONE, a chapter card per film, the wordmark outro with his cached closing line),
+  chapters + a description with every film's sources, thumbnail options. Long-form = watch hours + mid-rolls.
+- **Upload pack pages** (`lab/pack/build.py`): each film's 1080p .mp4 cut into fragmented-MP4 pieces (≤15 MB per
+  artifact file) that the page streams (hls.js) and joins back into one .mp4 on download (`downloads` capability),
+  plus thumbnails, titles, description, pinned comment and the film's shorts.
+- **EP09-EP12**: rendering, shorts and thumbnails in progress on this branch (the other account had stopped at 01:39).
+- **Channels plan** (`channel/CHANNELS.md`): the Partner Programme bar doubles on 1 Feb 2027 (8,000 h or 20M Shorts
+  views for new applicants), and "inauthentic content" removes templated AI channels, so channels 2-5 need their
+  own format, look, voice and music. **Channel 2 bible** (`channel/channel2/BIBLE.md`, The Margin: one company's
+  money machine per film, 8-10 min, Curve Elder A as narrator) and its **sourced pilot script**
+  (`lab/ch2/ep01/script.py`, "Banks With Wings"; needs the ElevenLabs key to voice: `EL_VOICE=elder`).
+- Render notes: 4 slices take a 2:45 film ~12 min on 4 cores alone; two films' slices at once double both, and a
+  tracked job dies at ~30 min, so run one film's slices at a time. Never edit a shell script while a job runs it.
+
 ## Links (this account)
 - **Curve Lab** (v7 showcase: pilot, 4 visual directions, sound palette, jungle beds, voices, refs, Higgsfield prompts):
   https://claude.ai/artifact/GvXy78rkrDiKJB418rxpsG. The user's picks save to its db, collection `picks`

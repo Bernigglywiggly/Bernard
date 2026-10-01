@@ -10,9 +10,11 @@ Picked up while the user slept; nothing here duplicates the queue below. Merge t
 from b05809d plus the commits listed here).
 - **Rebuilt the five finished films** from the repo (George from the line cache, Arena, `film.py parts/join/sound/master`):
   the 1080p masters live only in this account's container, so the pages below carry them.
-- **Season One** (`lab/season1/make.py`): the five films as one ~13.5-minute film for YouTube (cold open of George's
+- **Season One** (`lab/season1/make.py`): the five films as one **14:02** film for YouTube (cold open of George's
   strongest lines, THE CURVE · SEASON ONE, a chapter card per film, the wordmark outro with his cached closing line),
-  chapters + a description with every film's sources, thumbnail options. Long-form = watch hours + mid-rolls.
+  chapters + a description with every film's sources, three thumbnails (A globe, B bulb, C robot + VR operator).
+  Long-form = watch hours + mid-rolls. **Upload page: https://claude.ai/artifact/7aPVnXn8UW6LgBUmki6BqV** (goes up
+  Sat 10 Oct, the day after EP07).
 - **Upload pack pages** (`lab/pack/build.py`): each film's 1080p .mp4 cut into fragmented-MP4 pieces (≤15 MB per
   artifact file) that the page streams (hls.js) and joins back into one .mp4 on download (`downloads` capability),
   plus thumbnails, titles, description, pinned comment and the film's shorts.

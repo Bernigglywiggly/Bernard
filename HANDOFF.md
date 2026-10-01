@@ -3,8 +3,34 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 1 Oct 2026 (~8:30am UTC), cloud session on branch `claude/funny-newton-gd9w8v` (contains all of
-`claude/lucid-archimedes-77tqpt`). **Start with "Overnight 1 Oct" just below: it has every link and the voice queue.**
+Updated 1 Oct 2026 (~3pm UTC), cloud session on branch `claude/funny-newton-gd9w8v` (contains all of
+`claude/lucid-archimedes-77tqpt`). **Start with "1 Oct afternoon" just below, then "NEXT SESSION, START HERE" and "Overnight 1 Oct" (every link, the voice queue).**
+
+## 1 Oct afternoon: house and garage, the narration glitch fixed, female voices ready (read this first)
+- **Music (the user: "I don't like the background music... house music, or a bit of garage"; on hearing both: "both of
+  them are cool"):** `beds.house` (124 BPM: four-on-the-floor, shuffled 16th hats, an open hat on the off-beat, a
+  rolling bass, minor-9th chord stabs Am9 Fmaj7 Dm9 Em7, a plucked 3-3-2 riff at the peak) and `beds.garage` (the
+  2-step version at 130: the kick on 1 and the and-of-3, heavier swing, organ stabs, gliding subs). Synthesised, no
+  samples. The films alternate in upload order (EP05 house, EP08 garage, EP04 house, EP06 garage, EP07 house, EP09
+  garage, ... EP14 house), each keeping its key; the trailer and Season One are on house, Season Two on garage.
+  Arena is retired. `film.py audition <bed>` lays any bed under a finished film without re-encoding.
+- **The narration glitch (the user: "he'll get to the end of a sentence and there'll be a bit buggy moving onto the next
+  one... we want it floaty, very human-like and natural"):** ElevenLabs, given the neighbouring lines as context,
+  sometimes ends a clip with the first syllable of the next line (after a silence) or starts it with the tail of the
+  one before; `engine/voice.py` kept those and cut them off hard (12 of EP05's 30 lines). `voice.clean()` now ends each
+  line at the first 120 ms of silence after its last letter and drops a stray sound before a silence at the start, with
+  short fades; every timing is unchanged, so no picture re-render: `python3 -m engine.voice <ep>`, `film.py sound`,
+  `film.py remux` (swaps the new mix into the finished film, no re-encode), `film.py shorts`.
+- **Re-rendered here (scratchpad `night/rollout.sh`):** EP04-EP12 (voice, bed, mix, remux, shorts), the trailer, both
+  Seasons, and the pages: EP09-EP12 and both Seasons at their old links, plus a new page here for EP04-EP08 (the other
+  account's kit pages still carry the old Arena audio: use the new files, keep the kit pages' thumbnails).
+- **Female voices, ready to audition:** ElevenLabs premades (nobody's voice copied): `lily` (British, velvety), `alice`
+  (British, clear educator), `sarah`, `matilda`, `bella` (American) in `eleven_tts.VOICES`, read with George's settings.
+  `python3 tools/voice_audition.py [ep05] [voices...]` reads the film's opening as ONE request per voice (the model
+  carries the intonation across sentences, the most natural flow; the films are voiced line by line) over the house
+  bed, -> `lab/out/voice/audition/`. Needs `ELEVENLABS_API_KEY` (in the environment's settings, never in the repo);
+  about 600 characters per voice. If the user picks a female voice (or the one-request flow for George), the films get
+  re-voiced and re-timed: the pictures re-render.
 
 ## NEXT SESSION, START HERE (1 Oct, ~10am UTC): polish, prep the channel, upload
 **The user, after watching:** "I'm not mad at the videos at all. Let's just make sure that they're polished and then

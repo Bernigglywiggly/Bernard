@@ -38,4 +38,4 @@ MUSIC = [(0.0, "intro"), ("job", "a"), ("more", "break"), ("turing", "a"), ("bot
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP06  ·  WHO'S HUMAN HERE?", music=MUSIC, anchors=("turing", "bots"), clips=CLIPS, tags=TAGS,
-                     bed="arena:key=-4", deafen=("more", "imagine"))
+                     bed="garage:key=-4", deafen=("more", "imagine"))

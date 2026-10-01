@@ -50,6 +50,48 @@ def trim(a, thresh=0.004):
     return (a[max(0, idx[0] - 240): idx[-1] + 1800], max(0, idx[0] - 240)) if len(idx) else (a, 0)
 
 
+def clean(y, al, off):
+    """The line's own speech, faded in and out, and where it sits relative to trim()'s cut (so every timing stays put).
+    Given the lines either side as context, ElevenLabs sometimes ends a clip with the first syllable of the next line,
+    after a silence, or starts it with the tail of the line before; trim() kept those and cut them off hard, so the end
+    of a sentence glitched into the next (the user, 1 Oct: "he'll get to the end of a sentence and there'll be a bit
+    buggy moving onto the next one"). The line now ends at the first 120 ms of silence after its last letter, and a
+    short sound before a silence at the very start is dropped."""
+    a = np.abs(y)
+    blk = int(0.005 * fx.SR)
+    nb = len(a) // blk
+    lv = 20 * np.log10(a[: nb * blk].reshape(nb, blk).max(1) / (a.max() + 1e-9) + 1e-9)
+    idx = np.nonzero(a > 0.004)[0]
+    if not len(idx) or not nb:
+        return y, 0
+    b = min(len(a), idx[-1] + 1800)
+    ends = [e for c, e in zip(al["characters"], al["character_end_times_seconds"]) if c.isalnum()] if al else []
+    k = max(0, int(((ends[-1] if ends else b / fx.SR) - 0.03) * fx.SR) // blk)
+    run = 0
+    while k < nb:
+        run = run + 1 if lv[k] < -48 else 0
+        if run * blk >= 0.12 * fx.SR:
+            b = min(b, (k - run + 1) * blk + int(0.04 * fx.SR))
+            break
+        k += 1
+    a0, k0 = off, off // blk
+    lim = min(nb, k0 + int(0.04 * fx.SR) // blk)
+    j = k0
+    while j < lim and lv[j] >= -50:
+        j += 1
+    if j < lim:                                        # a dip within 40 ms of the first sound: a stray tail, or speech?
+        r = j
+        while r < nb and lv[r] < -50:
+            r += 1
+        if r < nb and (r - j) * blk >= 0.04 * fx.SR:
+            a0 = r * blk - int(0.02 * fx.SR)
+    x = y[a0:b].copy()
+    fi, fo = min(len(x), int(0.008 * fx.SR)), min(len(x), int(0.04 * fx.SR))
+    x[:fi] *= np.sin(np.linspace(0, np.pi / 2, fi)) ** 2
+    x[len(x) - fo:] *= np.cos(np.linspace(0, np.pi / 2, fo)) ** 2
+    return x, a0 - off
+
+
 def build(ep_dir, lead=LEAD, speed=SPEED, voice=None):
     """voice: a name in eleven_tts.VOICES (or an id); EL_VOICE, else George. EP_BUILD names the build folder, so a
     variant (EP_BUILD=build_elder EL_VOICE=elder) never touches the main cut."""
@@ -72,12 +114,13 @@ def build(ep_dir, lead=LEAD, speed=SPEED, voice=None):
         (y, sr), al = el.synth(texts[i], key, voice=vid, speed=speed, prev=texts[i - 1] if i else None,
                                nxt=texts[i + 1] if i + 1 < len(texts) else None)
         y = fx.resample(y.astype(np.float32), sr)
-        y, off = trim(y)
+        z, off = trim(y)                                 # the timings, as they always were
+        x, shift = clean(y, al, off)                     # the audio: the line's own speech, faded
         w = el.words_from_alignment(al, texts[i])
         start = max(lead, prev_end + gap(ln, speed))
         start = math.ceil((start - lead) / GRID - 1e-6) * GRID + lead
-        end = start + len(y) / fx.SR
-        clips.append((start, y))
+        end = start + len(z) / fx.SR
+        clips.append((start + shift / fx.SR, x))
         words = [(wd, round(start + a - off / fx.SR, 3), round(start + b - off / fx.SR, 3)) for wd, a, b in w] if w else None
         meta.append(dict(i=i, floor=ln["floor"], text=shown, start=round(start, 3), end=round(end, 3), card=ln.get("card"),
                          id=ln.get("id"), slot=ln.get("slot"), cut=bool(ln.get("cut")), air=ln.get("air", 0), words=words))

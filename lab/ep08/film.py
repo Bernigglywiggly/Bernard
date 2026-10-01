@@ -35,4 +35,4 @@ MUSIC = [(0.0, "intro"), ("engines", "a"), ("ai", "break"), ("mech", "a"), ("cur
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP08  ·  CHEAPER MAKES MORE", music=MUSIC, anchors=("mech", "curve"), clips=CLIPS, tags=TAGS,
-                     bed="arena", deafen=("ai", "imagine"))
+                     bed="garage", deafen=("ai", "imagine"))

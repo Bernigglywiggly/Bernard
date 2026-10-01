@@ -39,4 +39,4 @@ MUSIC = [(0.0, "intro"), ("spring", "a"), ("before", "break"), ("ruler", "a"), (
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP12  ·  SIXTEEN HOURS", music=MUSIC, anchors=("how", "brains"), clips=CLIPS, tags=TAGS,
-                     bed="arena:key=4", deafen=("before", "imagine"))
+                     bed="house:key=4", deafen=("before", "imagine"))

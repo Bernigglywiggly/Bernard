@@ -229,10 +229,11 @@ def cold_open(tr):
         i = int(at * SR)
         j = min(n, i + len(x))
         vo[i:j] += x[: j - i]
-    bar = 2.4                                               # Arena at 100 BPM; the arrival on the robot, as in the trailer
+    bed_fn, bpm = (beds.house, 124.0) if SEASON == "1" else (beds.garage, 130.0)   # house for One, garage for Two (1 Oct)
+    bar = 240.0 / bpm                                       # the peak from the robot, as in the trailer
     t_robot = starts[3]
     plan = [("intro", 1), ("a", max(1, int(round(t_robot / bar)) - 1)), ("b", max(1, int(np.ceil((o0 - t_robot) / bar)))), ("out", 4)]
-    bed = np.asarray(beds.arena(240.0 / bar, plan, 0.0, key=0), np.float32)
+    bed = np.asarray(bed_fn(240.0 / bar, plan, 0.0, key=0), np.float32)
     bed = np.pad(bed, ((0, max(0, n - len(bed))), (0, 0)))[:n]
     bed = bed * fx.db(-19.0 - fx.lufs(bed))
     tk = np.zeros(n, np.float32)
@@ -262,7 +263,8 @@ def outro_audio(tr, out):
     n = int(OUTRO_S * SR)
     vo = np.zeros((n, 2), np.float32)
     place(vo, yv if yv.ndim == 2 else np.stack([yv, yv], 1), 1.2)
-    bed = np.asarray(beds.arena(100.0, [("out", 6)], 0.0, key=0), np.float32)
+    bed = np.asarray((beds.house if SEASON == "1" else beds.garage)(124.0 if SEASON == "1" else 130.0, [("out", 6)], 0.0, key=0),
+                     np.float32)
     bed = np.pad(bed, ((0, max(0, n - len(bed))), (0, 0)))[:n]
     bed = bed * fx.db(-24.0 - fx.lufs(bed))
     fade = np.clip((OUTRO_S - np.arange(n) / SR) / 3.0, 0, 1).astype(np.float32)[:, None]

@@ -38,4 +38,4 @@ MUSIC = [(0.0, "intro"), ("what", "a"), ("why", "break"), ("cant", "a"), ("every
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP10  ·  COUNTING SUMS", music=MUSIC, anchors=("cant", "cal"), clips=CLIPS, tags=TAGS,
-                     bed="arena:key=-3", deafen=("above", "imagine"))
+                     bed="house:key=-3", deafen=("above", "imagine"))

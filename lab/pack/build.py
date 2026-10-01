@@ -412,11 +412,12 @@ def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP
             titles=[title_main] + ALT_TITLES.get(slug, []), description=desc, pinned=br.PINNED.get(slug, ""),
             steps=STEPS_FILM, shorts=shorts))
         order.append((f"{fday:%-d %b}", ep["title"].split(" · ")[1]))
-    lede = ("The next films on the calendar, finished: George at his own pace over Arena, captions burned in, -14 LUFS. "
+    lede = ("The next films on the calendar, finished: George at his own pace over house and garage beds, captions burned in, -14 LUFS. "
             "Each has its 1080p file, thumbnails, titles, a description with every source, the pinned comment, and its "
             "shorts with captions and posting days.")
     write(name, title, lede, order, items, extra)
 
 
 if __name__ == "__main__":
-    {"season1": season1, "season2": season2, "new": new}[sys.argv[1]]()
+    {"season1": season1, "season2": season2, "new": new,
+     "films": lambda: new(("ep05", "ep08", "ep04", "ep06", "ep07"), "films", "The Curve: EP04 to EP08")}[sys.argv[1]]()

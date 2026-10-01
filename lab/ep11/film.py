@@ -47,4 +47,4 @@ MUSIC = [(0.0, "intro"), ("rule", "a"), ("never", "break"), ("opposite", "a"), (
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP11  ·  THE LIBRARY OF EVERY BOOK", music=MUSIC, anchors=("size", "fluent"), clips=CLIPS,
-                     tags=TAGS, bed="arena:key=-1", deafen=("never", "imagine"))
+                     tags=TAGS, bed="garage:key=-1", deafen=("never", "imagine"))

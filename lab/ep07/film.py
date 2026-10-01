@@ -38,4 +38,4 @@ MUSIC = [(0.0, "intro"), ("nothing", "a"), ("before", "break"), ("edison", "a"),
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP07  ·  THE THIRTY-YEAR DELAY", music=MUSIC, anchors=("edison", "solow"), clips=CLIPS, tags=TAGS,
-                     bed="arena:key=1", deafen=("before", "imagine"))
+                     bed="house:key=1", deafen=("before", "imagine"))

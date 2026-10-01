@@ -35,4 +35,4 @@ MUSIC = [(0.0, "intro"), ("agreed", "a"), ("how", "break"), ("pick", "a"), ("thu
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP14  ·  THE YES MACHINE", music=MUSIC, anchors=("pick", "story"), clips=CLIPS,
-                     tags=TAGS, bed="arena:key=-2", deafen=("how", "imagine"))
+                     tags=TAGS, bed="house:key=-2", deafen=("how", "imagine"))

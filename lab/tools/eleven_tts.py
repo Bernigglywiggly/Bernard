@@ -34,13 +34,19 @@ GEORGE = "JBFqnCBsd6RMkjVDRZzb"           # ElevenLabs' premade "George": warm B
 # man, a very deep, warm, slightly gravelly baritone, slow and calm, a veteran documentary narrator), not copies of
 # anyone: the user's rule is no imitating real people's voices.
 VOICES = {"george": GEORGE, "elder": "zCRDVM74mhi1dWed3bbU", "elder_b": "HZMgvLFIGAb1Xo3Q0QT6", "elder_c": "Al2jx16NmIFECTUrK4O7"}
+# Female narrators (1 Oct, the user: "maybe try female too"): ElevenLabs' own premade voices, so nobody's voice is
+# copied: Lily (British, velvety), Alice (British, a clear educator), Sarah (American, mature and reassuring), Matilda
+# (American, knowledgeable), Bella (American, warm and professional). They read with George's settings.
+FEMALE = {"lily": "pFZP5JQG7iQjIQuC4Bku", "alice": "Xb7hH8MSUJpSbSDYk0k2", "sarah": "EXAVITQu4vr4xnSDxMaL",
+          "matilda": "XrExE9yKIg1WjnnlVkGX", "bella": "hpp4J3VqNfWAUOO0d1Us"}
+VOICES.update(FEMALE)
 MODEL = "eleven_multilingual_v2"
 SETTINGS = dict(stability=0.42, similarity_boost=0.8, style=0.18, use_speaker_boost=True)
 CALM = dict(stability=0.5, similarity_boost=0.8, style=0.12, use_speaker_boost=True)     # the elders: steadier
 
 
 def settings(voice):
-    return SETTINGS if voice == GEORGE else CALM
+    return SETTINGS if voice == GEORGE or voice in FEMALE.values() else CALM
 FORMATS = ("pcm_44100", "mp3_44100_192", "mp3_44100_128")   # best first; the API refuses what the plan can't use
 
 

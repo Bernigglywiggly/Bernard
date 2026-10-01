@@ -43,4 +43,4 @@ MUSIC = [(0.0, "intro"), ("few", "a"), ("why", "break"), ("moravec", "a"), ("eye
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP09  ·  THE LAUNDRY PROBLEM", music=MUSIC, anchors=("moravec", "chess"), clips=CLIPS, tags=TAGS,
-                     bed="arena:key=3", deafen=("bust", "imagine"))
+                     bed="garage:key=3", deafen=("bust", "imagine"))

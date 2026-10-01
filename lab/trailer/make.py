@@ -135,13 +135,13 @@ def main():
         x = x if x.ndim == 2 else np.stack([x, x], 1)
         i = int(at * SR); j = min(n, i + len(x))
         vo[i:j] += x[: j - i]
-    # one Arena under it all, the arrival (a braam) on the robot, the ears going before the outro
-    bar = 2.4
+    # one house bed under it all (the user, 1 Oct: house or garage, not Arena), the peak from the robot, the ears going
+    bar = 240.0 / 124
     t_robot = starts[3]
     n_a = max(1, int(round(t_robot / bar)) - 1)
     n_b = max(1, int(np.ceil((o0 - t_robot) / bar)))
     plan = [("intro", 1), ("a", n_a), ("b", n_b), ("out", 4)]
-    bed = np.asarray(beds.arena(240.0 / bar, plan, 0.0, key=0), np.float32)
+    bed = np.asarray(beds.house(240.0 / bar, plan, 0.0, key=0), np.float32)
     bed = np.pad(bed, ((0, max(0, n - len(bed))), (0, 0)))[:n]
     bed = bed * fx.db(-19.0 - fx.lufs(bed))
     tk = np.zeros(n, np.float32)

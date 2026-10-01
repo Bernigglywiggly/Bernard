@@ -39,4 +39,4 @@ MUSIC = [(0.0, "intro"), ("rival", "a"), ("both", "break"), ("actually", "a"), (
 
 if __name__ == "__main__":
     engine.film.main(__file__, title="EP13  ·  THE NINETY-MINUTE WAR", music=MUSIC, anchors=("actually", "name"), clips=CLIPS,
-                     tags=TAGS, bed="arena:key=1", deafen=("both", "imagine"))
+                     tags=TAGS, bed="garage:key=1", deafen=("both", "imagine"))

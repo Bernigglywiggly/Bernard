@@ -93,6 +93,10 @@ class Song:
             x = np.stack([x * lg, x * rg], 1)
         if i < 0:                                   # a note nudged before zero by humanising
             x, i = x[-i:], 0
+        f = min(len(x), int(0.004 * SR))            # a 4 ms fade on every clip's tail: a note cut off mid-decay clicks
+        if f > 1:
+            x = x.copy()
+            x[-f:] *= np.linspace(1.0, 0.0, f, dtype=np.float32)[:, None]
         j = min(self.n, i + len(x))
         buf[i:j] += x[: j - i] * gain
 
@@ -1271,8 +1275,199 @@ def arena(bpm=100, plan=None, lead=0.0, key=0):
     return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
 
 
+# ================================================================ 10 · HOUSE and GARAGE (124 / 130 BPM)
+def organ(m, dur, vel=0.8):
+    """The garage organ stab: drawbar partials (1, 2, 3, 4, 6), a fast percussive third and a key click, decaying like a
+    stab, kept round (nothing above 8 kHz)."""
+    key = ("og", m, round(dur, 3), round(vel, 2))
+    if key in _CACHE:
+        return _CACHE[key]
+    n = int((dur + 0.3) * SR)
+    t = np.arange(n) / SR
+    f = float(hz(m))
+    y = np.zeros(n)
+    for r, a in ((1, 1.0), (2, 0.6), (3, 0.32), (4, 0.2), (6, 0.07)):
+        if f * r < 8000:
+            y += a * np.sin(2 * np.pi * f * r * t + 0.5 * r)
+    if f * 3 < 8000:
+        y += 0.45 * np.sin(2 * np.pi * f * 3 * t) * np.exp(-t / 0.04)
+    y *= np.exp(-t / 0.3) * np.minimum(1, t / 0.003) * np.where(t > dur, np.exp(-(t - dur) / 0.04), 1.0)
+    _CACHE[key] = (y * vel / 2.3).astype(np.float32)
+    return _CACHE[key]
+
+
+def tom(f=220.0, dur=0.22, seed=0):
+    """A soft conga: a sine that drops a little in pitch, with a tap of noise."""
+    t = T(dur)
+    ff = f * (1 + 0.5 * np.exp(-t / 0.012))
+    y = np.sin(2 * np.pi * np.cumsum(ff) / SR) * np.exp(-t / 0.07)
+    y += 0.15 * fx.bq(np.random.default_rng(seed).normal(0, 1, len(t)), "bp", 3000, q=1.0) * np.exp(-t / 0.006)
+    y *= np.minimum(1, t / 0.001) * np.clip((dur - t) / 0.02, 0, 1)
+    return (y / (np.max(np.abs(y)) + 1e-9)).astype(np.float32)
+
+
+def soft(x, ms=1.5):
+    """A hit with a short attack ramp: still a tick, never a click."""
+    x = np.array(x, np.float32)
+    k = min(len(x), int(ms / 1000 * SR))
+    x[:k] *= np.sin(np.linspace(0, np.pi / 2, k)) ** 2
+    return x
+
+
+def house(bpm=124, plan=None, lead=0.0, key=0, garage=False):
+    """UK house with a garage swing (the user, 1 Oct: "I don't like the background music... I think we change it to
+    some house music, or a bit of garage"). A four-on-the-floor kick and a rolling bass are what lock people in; the
+    hats shuffle the garage way; the chords are minor ninths, so it stays grown-up under a voice. Am9 Fmaj7 Dm9 Em7
+    (i VI iv v), two bars each.
+
+      intro   the club next door: a muffled kick, quiet hats, the pad and far stabs behind a closed filter, opening
+      a       the groove: kick, a clap on 2 and 4, shuffled 16th hats with an open hat on every off-beat, the rolling
+              bass, sparse off-beat chord stabs, the pad pumping with the kick
+      b       the peak: busier stabs with the filter open, a shaker and congas, a plucked 3-3-2 riff up high
+      break   no drums: the pad, far stabs, a held sub, a riser back into the peak
+      out     the groove until the last two bars, the filter closing
+    garage=True (the "garage" bed, 130 BPM): the 2-step version: the kick on 1 and the and-of-3 (a beat skipped),
+    heavier swing, organ stabs, gliding sub notes. plan/lead as for terminal(); key moves it by semitones."""
+    plan = plan or [("intro", 4), ("a", 8), ("b", 8), ("break", 4), ("b", 8), ("out", 4)]
+    s = Song(bpm, sum(n for _, n in plan), swing=0.36 if garage else 0.16, seed=124 + key + (7 if garage else 0))
+    rng = s.rng
+    sec = sections(s, plan)
+    A = 45 + key
+    prog = [(A, "m9"), (A - 4, "maj7"), (A - 7, "m9"), (A - 5, "m7")]          # Am9 Fmaj7 Dm9 Em7
+    chord = lambda b: prog[(b // 2) % 4]
+    if garage:
+        STABS = {"a": (3, 6, 14, 19, 22, 30), "b": (2, 3, 6, 10, 14, 18, 19, 22, 26, 30)}
+        BASS = ((0, 0, 5.0, 1.0), (7, 0, 2.0, 0.8), (10, 12, 1.5, 0.7), (13, 0, 2.5, 0.85))     # (step, interval, steps, gain)
+    else:
+        STABS = {"a": (3, 10, 19, 26, 30), "b": (3, 6, 10, 14, 19, 22, 26, 30)}             # steps in the two-bar cycle
+        BASS = ((2, 0, 1.6, 1.0), (6, 0, 1.6, 1.0), (7, 12, 0.7, 0.5), (10, 0, 1.6, 1.0), (13, 0, 0.8, 0.65),
+                (14, 12, 1.0, 0.75))
+    RIFF = (0, 3, 6, 8, 11, 14)                                                 # 3-3-2, twice a bar
+    starts = [b for b in range(s.bars) if b == 0 or sec[b] != sec[b - 1]]
+    for b in range(s.bars):
+        root, q = chord(b)
+        name = sec[b]
+        nxt = sec[b + 1] if b + 1 < s.bars else None
+        groove = name in ("a", "b") or (name == "out" and b < s.bars - 2)
+        # the pad: the chord for two bars, low and wide; it pumps with the kick
+        if b % 2 == 0:
+            for m in voicing(root, q, 47):
+                s.put("pad", supersaw(m, s.bar * 1.97, rng, voices=6, detune=0.11, r=1.6, a=0.25), s.at(b))
+        # the stabs, off the beat; step 30 pushes into the next chord
+        for st in (STABS[name] if name in STABS else (10, 26)):
+            if (b % 2) * 16 <= st < (b % 2 + 1) * 16:
+                r2, q2 = chord(b + 1) if st == 30 else (root, q)
+                vel = (0.9 if st % 8 in (2, 3) else 0.75) * rng.uniform(0.9, 1.0)
+                for k, m in enumerate(voicing(r2, q2, 52)):
+                    v_ = organ(m, s.step * 1.4, vel) if garage else stab(m, s.step * 1.2, rng, vel)
+                    s.put("stabs", v_, s.at(b, st % 16) + 0.003 * k, pan=-0.24 + 0.12 * k)
+        # the bass: a sine for the weight, a short plucked note an octave up so it's heard on a phone
+        bm = low(root, 33)
+        if groove:
+            for st, iv, ln, g in BASS:
+                if b % 2 == 1 and st >= 14:
+                    continue
+                glide = bm + iv - 2 if garage and st == 0 else None
+                s.put("bass", sub(bm + iv, s.step * ln, glide_from=glide, harm=0.3), s.at(b, st), gain=g)
+                s.put("bass_top", pluck(bm + iv + 12, s.step * ln * 0.9, 0.6, 8.0, 10), s.at(b, st), gain=g)
+            if b % 2 == 1:                                                      # a lead-in to the next chord's root
+                nb = low(chord(b + 1)[0], 33)
+                s.put("bass", sub(nb + 12, s.step * 0.8, harm=0.3), s.at(b, 15), gain=0.6)
+                s.put("bass_top", pluck(nb + 24, s.step * 0.8, 0.6, 8.0, 10), s.at(b, 15), gain=0.6)
+        elif name == "break":
+            n_ = int((s.bar * 0.99 + 0.08) * SR)
+            s.put("sub", sub(bm, s.bar * 0.99, harm=0.1) * env(n_, 0.4, s.bar * 0.9, 0.5), s.at(b))
+        # drums
+        if groove:
+            for st in (((0, 10) if b % 2 == 0 else (0, 11)) if garage else (0, 4, 8, 12)):
+                k = kick(46, 150, 0.028, 0.26, 0.12, 0.42, seed=st)
+                k[:96] *= np.sin(np.linspace(0, np.pi / 2, 96)) ** 2           # a knock, not a tick
+                s.put("kick", k, s.at(b, st)); s.kicks.append(s.at(b, st))
+            for st in (4, 12):
+                s.put("clap", clap(seed=b + st), s.at(b, st, 0.002))
+                s.put("snare", snare(210, 0.2, 0.06, 0.04, 0.2, seed=b + st), s.at(b, st, 0.002), gain=0.5)
+                if garage:
+                    s.put("rim", soft(rim()), s.at(b, st, 0.002), pan=0.1, gain=0.6)
+            for st in range(16):
+                if st % 4 == 2:                                                 # the house 'tss' on every off-beat
+                    s.put("ohat", soft(hat(0.16, seed=st + 16 * b, metal=0.5, tone=5500)), s.at(b, st, 0.002), pan=0.2,
+                          gain=rng.uniform(0.85, 1.0))
+                elif garage:
+                    if (st % 2 == 1 and rng.random() < 0.6) or (st % 4 == 0 and rng.random() < 0.3):
+                        s.put("hats", soft(hat(0.05, seed=st + 16 * b, metal=0.55, tone=6500)), s.at(b, st, 0.003), pan=-0.3,
+                              gain=(0.75 if st % 2 else 0.45) * rng.uniform(0.8, 1.0))
+                else:
+                    s.put("hats", soft(hat(0.06, seed=st + 16 * b, metal=0.6, tone=6500)), s.at(b, st, 0.002), pan=-0.25,
+                          gain=(0.7 if st % 2 else 0.4) * rng.uniform(0.85, 1.0))
+            if name == "b":
+                for st in range(1, 16, 2):
+                    s.put("shaker", shaker(seed=st + b), s.at(b, st, 0.003), pan=0.4, gain=0.8)
+                for st, f in (((3, 330), (7, 220), (11, 330), (14, 247)) if b % 2 else ((3, 330), (10, 247), (14, 220))):
+                    s.put("perc", tom(f, 0.2, seed=st + b), s.at(b, st, 0.003), pan=0.35 * (-1) ** st, gain=0.8)
+            if nxt in ("a", "b") and nxt != name:                               # a clap roll into the next section
+                for i, st in enumerate((13, 14, 15)):
+                    s.put("clap", clap(seed=200 + b + st), s.at(b, st, 0.001), gain=0.45 + 0.2 * i)
+        elif name == "intro":
+            for beat in range(4):
+                k = kick(46, 130, 0.03, 0.3, 0.0, 0.45, soft=True, seed=beat)
+                s.put("kick_far", k, s.at(b, beat * 4)); s.kicks.append(s.at(b, beat * 4))
+            for st in range(1, 16, 2):
+                s.put("hats", soft(hat(0.06, seed=st + 16 * b, metal=0.6, tone=6500)), s.at(b, st, 0.002), pan=-0.25, gain=0.35)
+        # the riff: plucked chord tones in 3-3-2, the hook of the peak
+        if name == "b":
+            tones = voicing(root, q, 66)
+            for i, st in enumerate(RIFF):
+                s.put("riff", pluck(tones[(i + 2 * (b % 2)) % len(tones)], s.step * 0.9, 0.9, 9.0, 14), s.at(b, st),
+                      pan=0.3 * np.sin(1.7 * i), gain=1.0 if i % 3 == 0 else 0.7)
+        # a riser out of the intro or a break into the peak, a low boom where it lands
+        if nxt == "b" and name in ("intro", "break"):
+            s.put("fx", riser(s.bar * (2 if b >= 1 else 1), 250, 6500, seed=b), s.at(max(0, b - 1)))
+        if b in starts and name in ("a", "b") and b > 0 and sec[b - 1] in ("intro", "break"):
+            s.put("boom", boom(2.5, seed=b), s.at(b))
+    # filters: everything tonal opens by section (closed in the intro, open at the peak) and breathes over 8 bars
+    lvl = {"intro": 600, "a": 1500, "b": 2600, "break": 750, "out": 900}
+    bt = np.arange(s.bars) * s.bar
+    bc = np.array([lvl.get(n, 1200) for n in sec], float)
+    if sec[0] == "intro":
+        k = [i for i, n in enumerate(sec) if n == "intro"]
+        bc[k] = np.linspace(400, 1100, len(k))
+    base = lambda t: float(np.interp(t, bt + s.bar * 0.5, bc))
+    lfo = lambda t: 1.0 + 0.15 * np.sin(2 * np.pi * t / (8 * s.bar) - 1.2)
+    s.stems["pad"] = reverb(pb(ladder(s.stems["pad"], lambda t: 0.6 * base(t) * lfo(t), 0.2), Chorus(rate_hz=0.3, depth=0.3, mix=0.4)),
+                            0.88, 0.32, 0.5)
+    if "stabs" in s.stems:
+        s.stems["stabs"] = reverb(pingpong(ladder(s.stems["stabs"], lambda t: base(t) * lfo(t), 0.25, 1.1),
+                                           s.step * 3, 0.35, 5, 0.32, 3000), 0.75, 0.25, 0.55)
+    if "riff" in s.stems:
+        s.stems["riff"] = reverb(pingpong(ladder(s.stems["riff"], lambda t: 1.2 * base(t), 0.3, 1.0),
+                                          s.step * 3, 0.38, 5, 0.35, 3800), 0.7, 0.25, 0.5)
+    if "bass_top" in s.stems:
+        s.stems["bass_top"] = ladder(s.stems["bass_top"], lambda t: 500 + 0.2 * base(t), 0.25, 1.4)
+    if "kick_far" in s.stems:
+        s.stems["kick_far"] = fx.bq(fx.bq(s.stems["kick_far"], "lp", 160), "lp", 160)
+    for nm, (size, wet) in {"clap": (0.7, 0.28), "snare": (0.6, 0.2), "rim": (0.6, 0.25), "perc": (0.6, 0.2), "boom": (0.9, 0.4),
+                            "fx": (0.7, 0.3)}.items():
+        if nm in s.stems:
+            s.stems[nm] = reverb(s.stems[nm], size, wet, 0.5)
+    for nm, f in {"hats": 8000, "ohat": 7500, "shaker": 7000, "clap": 6000, "snare": 6000, "perc": 6000, "kick": 7000}.items():
+        if nm in s.stems:                                                       # 24 dB/oct: silky, never fizzy or clicky
+            s.stems[nm] = fx.bq(fx.bq(s.stems[nm], "lp", f), "lp", f)
+    levels = {"pad": -23, "stabs": -22, "riff": -27, "bass": -21, "bass_top": -25, "sub": -24, "kick": -19, "kick_far": -27,
+              "clap": -25, "snare": -30, "rim": -31, "hats": -34, "ohat": -33, "shaker": -37, "perc": -31, "fx": -31, "boom": -27}
+    dyn = {"intro": (-5, -2), "a": 0, "b": 1, "break": -3, "out": (-1, -8)}
+    mix = balance(s, levels, sidechain={"pad": (0.55, 0.2), "stabs": (0.25, 0.14), "bass": (0.35, 0.09), "bass_top": (0.3, 0.09),
+                                        "riff": (0.2, 0.12), "sub": (0.3, 0.2)},
+                  hpf={"pad": 110, "stabs": 170, "riff": 300, "bass_top": 90, "kick_far": 20, "boom": 25, "perc": 120}, dyn=(sec, dyn))
+    return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
+
+
+def garage(bpm=130, plan=None, lead=0.0, key=0):
+    return house(bpm, plan, lead, key, garage=True)
+
+
 BEDS = {"terminal": terminal, "tape_loop": tape_loop, "night_drive": night_drive, "low_orbit": low_orbit,
-        "two_step": two_step, "chrome_marl": chrome_marl, "mainframe": mainframe, "deep_field": deep_field, "arena": arena}
+        "two_step": two_step, "chrome_marl": chrome_marl, "mainframe": mainframe, "deep_field": deep_field, "arena": arena,
+        "house": house, "garage": garage}
 
 
 def main():

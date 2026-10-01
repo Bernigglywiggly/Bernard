@@ -194,6 +194,29 @@ def main(film_file, title, music, anchors=None, clips=(), tags="", bed="mainfram
                         "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", out], check=True)
         print(out)
         return
+    if cmd == "audition":                                         # another bed under the finished film, no re-encode:
+        from engine import score, mix                             # audition house:key=-2 -> build/<ep>_house.mp4 + _720
+        alt = argv[1]
+        tag = alt.partition(":")[0]
+        if not os.path.exists(os.path.join(build, "events.json")):
+            collect_events(scenes, dur, build)
+        marks = [(t_of(m), s) for m, s in music]
+        anc = tuple(t_of(a) for a in anchors) if anchors else None
+        bp = score.build(os.path.join(build, f"bed_{tag}.wav"), marks, dur, anc, alt)
+        wav = mix.build(build, bp, f"mix_{tag}.wav", extra=[(t_of(m), k, p) for m, k, p in extra_sfx], deafen_at=deaf)
+        out = os.path.join(build, f"{name}_{tag}.mp4")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", final, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy",
+                        "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", out], check=True)
+        preview(out, os.path.join(build, f"{name}_{tag}_720.mp4"))
+        print(out)
+        return
+    if cmd == "remux":                                            # after `sound`: the new mix into the finished film, the
+        tmp = final + ".tmp.mp4"                                  # captioned picture copied as it is (no re-encode)
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", final, "-i", mix_wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy",
+                        "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", tmp], check=True)
+        os.replace(tmp, final)
+        print(final, round(os.path.getsize(final) / 1e6, 1), "MB", flush=True)
+        return
     if cmd in ("master", "all"):                                  # captions over the clean picture + the mix, one pass
         dec = subprocess.Popen(["ffmpeg", "-v", "error", "-i", feed, "-f", "rawvideo", "-pix_fmt", "bgra", "-"], stdout=subprocess.PIPE)
         enc = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}", "-r", str(FPS),

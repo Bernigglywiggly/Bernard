@@ -9,7 +9,9 @@ Updated 1 Oct 2026 (~8:30am UTC), cloud session on branch `claude/funny-newton-g
 ## Overnight 1 Oct, into the morning (the other account, branch `claude/funny-newton-gd9w8v`)
 **Ready to upload:** EP05-EP08 (the other account's kit pages, below), **Season One**
 (https://claude.ai/artifact/7aPVnXn8UW6LgBUmki6BqV, Sat 10 Oct) and **EP09-EP12**
-(https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq, 13-19 Oct). **Ready to voice:** EP13, EP14 and Channel 2's three
+(https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq, 13-19 Oct) and **Season Two** (EP09-EP12 as one 10:58 film,
+https://claude.ai/artifact/8wNVR2gvWLkZUdvNnGiR44, Tue 20 Oct; `SEASON=2 python3 season1/make.py cards|join|thumbs`,
+`python3 pack/build.py season2`). **Ready to voice:** EP13, EP14 and Channel 2's three
 films (the voice queue below). **Blocked here:** EP03 (Blender frames).
 Picked up while the user slept; nothing here duplicates the queue below. Merge this branch into yours (it fast-forwards
 from b05809d plus the commits listed here).

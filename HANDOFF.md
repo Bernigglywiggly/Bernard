@@ -6,6 +6,39 @@ databases on one account can't be read from the other. Push anything the other s
 Updated 1 Oct 2026 (~8:30am UTC), cloud session on branch `claude/funny-newton-gd9w8v` (contains all of
 `claude/lucid-archimedes-77tqpt`). **Start with "Overnight 1 Oct" just below: it has every link and the voice queue.**
 
+## NEXT SESSION, START HERE (1 Oct, ~10am UTC): polish, prep the channel, upload
+**The user, after watching:** "I'm not mad at the videos at all. Let's just make sure that they're polished and then
+we'll get them up... the main thing is just getting the videos up, we can change and improve as time goes on."
+The other account has a page for the channel's **design and style**: use it for the channel art and look; don't
+reinvent it here.
+
+**1. Fix first: the cold opens cut mid-speech.** The user: the "time-travel clips at the very start... cut halfway
+through the speech, so it sounds really unrefined, a bit messy". Cause: the montage (`lab/trailer/make.py` main()
+and `lab/season1/make.py` cold_open(), both from `trailer.SEGS`) slices `voice.wav` from `ls(first) - PRE (0.35 s)`
+to `le(last) + POST (0.55 s)` with no audio fade and no clamp to the neighbouring lines, so when George's next line
+starts within 0.55 s, its first syllable is in the clip (and the previous line's tail can be in the pre-roll); the
+captions are drawn until t1, so the next line's first word flashes too. Fix (status below): clamp each clip to
+whole lines (t0 >= previous line's end + 0.08 s, t1 <= next line's start - 0.08 s), fade the audio (~40 ms in,
+~150 ms out), draw captions only until the clip's last line ends. Then rebuild the **channel trailer**
+(`python3 trailer/make.py`), **Season One** (`python3 season1/make.py open` then `join`) and **Season Two**
+(`SEASON=2 python3 season1/make.py open` then `join`), re-pack (`python3 pack/build.py season1|season2`) and republish
+the pages (same URLs from this account: publish with `url`; from the other account they'd be new pages).
+**2. Prep the channel** (with the other account's design): name and handle (@thecurve, @thecurveai, ...; check), the
+banner/avatar/watermark (the design page's, or `lab/out/brand/` from `python3 -m engine.brand`), the about text and
+every setting in `lab/out/brand/channel_setup.md` (AI disclosure ticked on every upload, category Education, not made
+for kids), the trailer as the channel trailer, playlists (Every film; one per topic).
+**3. Upload on the calendar:** EP05 first (it was due Thu 1 Oct), then a film every two days (EP08, EP04, EP06,
+EP07 from the other account's kit pages), Season One Sat 10 Oct, EP03 Sun 11 Oct (other account: Blender frames),
+EP09-EP12 13-19 Oct, Season Two Tue 20 Oct, EP13 Wed 21 Oct and EP14 Fri 23 Oct once voiced. Shorts daily.
+**4. Then:** the voice queue below (EP13, EP14, Channel 2 x3; needs ELEVENLABS_API_KEY); rename Channel 2
+("Margins" exists). **Later polish the user wants to explore:** 3D Blender animation in the films (they'll bring
+references); park it until then.
+**Where the 1080p files are:** this account's pages (links in the next section; the user can download from them).
+The masters live only in this account's container; another session rebuilds them from the repo:
+`cd lab/<ep> && python3 film.py parts 4 0 4 && python3 film.py join 4 && python3 film.py sound && python3 film.py
+master && python3 film.py shorts` (one film at a time; ~6-15 min each on 4 cores; a tracked job dies at ~30 min;
+EP09 needs `pip install matplotlib`).
+
 ## Overnight 1 Oct, into the morning (the other account, branch `claude/funny-newton-gd9w8v`)
 **Ready to upload:** EP05-EP08 (the other account's kit pages, below), **Season One**
 (https://claude.ai/artifact/7aPVnXn8UW6LgBUmki6BqV, Sat 10 Oct) and **EP09-EP12**

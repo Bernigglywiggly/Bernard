@@ -1,8 +1,10 @@
-"""EP03's caption-free picture in two waves of four slices (each wave well under the cloud session's 30-minute job
-limit), then the captioned film from it in one drawing pass instead of a second full render.
+"""EP03's caption-free picture in waves of four slices (each wave about ten minutes, well under the cloud session's
+30-minute job limit; a finished slice is kept, so a wave cut short by a container restart only redoes what's missing),
+then the captioned film from it in one drawing pass instead of a second full render.
 
-    EP03_FULL=1 NO_CAPTIONS=1 python3 render_waves.py wave 0      # slices 0-3
-    EP03_FULL=1 NO_CAPTIONS=1 python3 render_waves.py wave 1      # slices 4-7
+    EP03_FULL=1 NO_CAPTIONS=1 python3 render_waves.py wave 0      # slices 0-3 (the cold open)
+    EP03_FULL=1 NO_CAPTIONS=1 python3 render_waves.py wave 1      # the first halves of slices 4-7
+    EP03_FULL=1 NO_CAPTIONS=1 python3 render_waves.py wave 2      # the second halves
     EP03_FULL=1 NO_CAPTIONS=1 python3 render_waves.py concat      # -> build/ep03_full_clean_silent.mp4
     EP03_FULL=1 python3 render_waves.py captions                  # -> build/ep03_full_silent.mp4 (then ascii_open.py sound_full)
 """
@@ -27,23 +29,44 @@ def cuts():
     return [0] + [int(np.searchsorted(cw, cw[-1] * k / JOBS)) for k in range(1, JOBS)] + [n]
 
 
+def slices():
+    """(name, first frame, end frame): slices 0-3 whole, 4-7 in halves (1 Oct: a restart lost a 14-minute wave)."""
+    c = cuts()
+    out = [(str(k), c[k], c[k + 1]) for k in range(4)]
+    for k in range(4, JOBS):
+        m = (c[k] + c[k + 1]) // 2
+        out += [(f"{k}a", c[k], m), (f"{k}b", m, c[k + 1])]
+    return out
+
+
 def part(k):
     return os.path.join(BUILD, f"full_clean_part{k}.mp4")
 
 
+def frames_in(path):
+    r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_packets", "-show_entries",
+                        "stream=nb_read_packets", "-of", "csv=p=0", path], capture_output=True, text=True)
+    try:
+        return int(r.stdout.strip())
+    except ValueError:
+        return -1
+
+
 def main():
     cmd = sys.argv[1]
-    c = cuts()
+    sl = slices()
     if cmd == "wave":
         w = int(sys.argv[2])
-        ks = range(4 * w, 4 * w + 4)
-        procs = [subprocess.Popen([sys.executable, os.path.join(HERE, "ascii_open.py"), "chunk", str(c[k]), str(c[k + 1]), part(k)]) for k in ks]
+        todo = [x for x in (sl[:4] if w == 0 else sl[4:][w - 1::2]) if frames_in(part(x[0])) != x[2] - x[1]]
+        procs = [subprocess.Popen([sys.executable, os.path.join(HERE, "ascii_open.py"), "chunk", str(a), str(b), part(k)]) for k, a, b in todo]
         codes = [p.wait() for p in procs]
         assert all(x == 0 for x in codes), codes
-        print("wave", w, "done", [c[k] for k in ks])
+        print("wave", w, "done", [k for k, _, _ in todo])
     elif cmd == "concat":
+        bad = [k for k, a, b in sl if frames_in(part(k)) != b - a]
+        assert not bad, f"slices not finished: {bad}"
         lst = os.path.join(BUILD, "full_clean_parts.txt")
-        open(lst, "w").write("".join(f"file '{part(k)}'\n" for k in range(JOBS)))
+        open(lst, "w").write("".join(f"file '{part(k)}'\n" for k, _, _ in sl))
         out = os.path.join(BUILD, "ep03_full_clean_silent.mp4")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", out], check=True)
         print(out)

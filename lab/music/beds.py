@@ -1247,7 +1247,8 @@ def arena(bpm=100, plan=None, lead=0.0, key=0):
         bc[k] = np.linspace(420, 800, len(k))
     base = lambda t: float(np.interp(t, bt + s.bar * 0.5, bc))
     peak = lambda t: 1400.0 if sec[min(s.bars - 1, int(t / s.bar))] == "b" else 800.0
-    s.stems["arp"] = reverb(pingpong(ladder(s.stems["arp"], base, 0.42, 1.3), s.step * 3, 0.35, 5, 0.28, 3500), 0.7, 0.2, 0.55)
+    if "arp" in s.stems:                                      # an "out"-only plan (Season One's outro) has no arp
+        s.stems["arp"] = reverb(pingpong(ladder(s.stems["arp"], base, 0.42, 1.3), s.step * 3, 0.35, 5, 0.28, 3500), 0.7, 0.2, 0.55)
     s.stems["strings"] = fx.bq(reverb(pb(ladder(s.stems["strings"], lambda t: 700 + 0.8 * base(t), 0.1),
                                          Chorus(rate_hz=0.25, depth=0.25, mix=0.35)), 0.92, 0.4, 0.45), "peak", 300, q=0.8, gain_db=-2.5)
     if "brass" in s.stems:

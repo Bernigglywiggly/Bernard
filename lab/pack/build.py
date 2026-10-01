@@ -1,7 +1,7 @@
 """The upload pack: a page per batch with everything needed to post each film, ready on a phone.
 
 An artifact holds 15 MB per file and 256 MiB per version, and films are bigger than a file, so each video is cut into
-fragmented-MP4 pieces (an HLS rendition: init.mp4 + seg_###.mp4 + index.m3u8). The page streams them with hls.js for a
+fragmented-MP4 pieces (an HLS rendition: init.mp4 + seg_###.mp4 + index.txt, the playlist: artifacts don't serve .m3u8). The page streams them with hls.js for a
 preview, and its Download button fetches the pieces in order and saves them as one .mp4 (init + segments joined byte for
 byte is a complete fragmented MP4, which YouTube, TikTok and phones accept).
 
@@ -25,7 +25,8 @@ MAX_SEG = 14_000_000
 
 
 def segment(src, dst_dir, hls_time=30):
-    """src -> dst_dir/{init.mp4, seg_###.mp4, index.m3u8}; shortens the target if any piece would pass 14 MB."""
+    """src -> dst_dir/{init.mp4, seg_###.mp4, index.txt}; shortens the target if any piece would pass 14 MB. The playlist
+    is index.txt because artifacts don't serve .m3u8; hls.js reads it by its contents, not its name."""
     for ht in (hls_time, 15, 8, 4):
         if os.path.isdir(dst_dir):
             shutil.rmtree(dst_dir)
@@ -36,6 +37,7 @@ def segment(src, dst_dir, hls_time=30):
                        check=True)
         segs = sorted(f for f in os.listdir(dst_dir) if f.startswith("seg_"))
         if max(os.path.getsize(os.path.join(dst_dir, f)) for f in segs) <= MAX_SEG:
+            os.replace(os.path.join(dst_dir, "index.m3u8"), os.path.join(dst_dir, "index.txt"))
             return ["init.mp4"] + segs
     raise RuntimeError(f"{src}: a piece stays over {MAX_SEG} bytes")
 
@@ -94,7 +96,7 @@ def film_card(item, media_rel):
   <div class="film-grid">
     <div class="col-media">
       <div class="player"><video controls playsinline preload="none" poster="{esc(media_rel + item['thumbs'][0]['file'])}"
-        data-hls="{esc(media_rel + v['dir'] + '/index.m3u8')}"></video></div>
+        data-hls="{esc(media_rel + v['dir'] + '/index.txt')}"></video></div>
       <div class="dl">
         <button class="btn primary" type="button" data-video="{esc(media_rel + v['dir'] + '/')}" data-files="{esc(json.dumps(v['files']))}"
           data-name="{esc(v['name'])}">Download the 1080p film · {v['mb']:.0f} MB</button>
@@ -264,7 +266,7 @@ def write(name, title, lede, order, items, extra_files):
     open(os.path.join(out, "index.html"), "w").write(page(title, lede, order, items))
     files = {}
     for it in items:
-        for f in it["video"]["files"] + ["index.m3u8"]:
+        for f in it["video"]["files"] + ["index.txt"]:
             files[f"media/{it['video']['dir']}/{f}"] = os.path.join(out, "media", it["video"]["dir"], f)
     files.update(extra_files)
     json.dump(files, open(os.path.join(out, "files.json"), "w"), indent=1)

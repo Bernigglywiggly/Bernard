@@ -406,3 +406,49 @@ def person(c, cx, cy, s, a=1.0, col=PAPER):
     p.moveTo(cx - 0.45 * s, cy + 0.35 * s)
     p.cubicTo(cx - 0.45 * s, cy - 0.25 * s, cx + 0.45 * s, cy - 0.25 * s, cx + 0.45 * s, cy + 0.35 * s)
     c.drawPath(p, L.stroke(col, 2.2, a))
+
+
+# ---------------------------------------------------------------- layouts shared by the films
+def bars(c, b, rows, at, x0=300, y0=360, w=1300, h=90, gap=150, vmax=None):
+    """Horizontal bars to compare amounts: rows = [(label, value, display, colour, time or None)]."""
+    vmax = vmax or max(r[1] for r in rows)
+    for i, (lab, v, disp, colr, ti) in enumerate(rows):
+        t = ti if ti is not None else at + 0.6 * i
+        k = b.k(t, 0.7)
+        y = y0 + i * gap
+        if k > 0:
+            c.drawRect(skia.Rect.MakeXYWH(x0, y, w * v / vmax * k, h), L.fill(colr, 0.9))
+        typed(c, b, lab, x0, y - 18, t, 22, MUTED, "left", 0.1)
+        serif(c, b, disp, x0 + w * v / vmax * k + 24, y + 64, t + 0.4, 54, colr, "left", rise=0)
+
+
+def ticks(c, b, items, at, x=560, y=360, gap=110, size=44):
+    """A list that ticks off: items = [(text, time or None)]."""
+    for i, (txt, ti) in enumerate(items):
+        t = ti if ti is not None else at + 0.5 * i
+        k = b.k(t, 0.4)
+        if k > 0:
+            yy = y + i * gap
+            c.drawLine(x - 70, yy - 14, x - 52, yy + 2, L.stroke(BRASS, 3, k))
+            c.drawLine(x - 52, yy + 2, x - 20, yy - 34, L.stroke(BRASS, 3, k))
+        serif(c, b, txt, x, y + i * gap, t, size, PAPER, "left")
+
+
+def quote(c, b, text_lines, who, at, size=62):
+    for i, ln in enumerate(text_lines):
+        serif(c, b, ln, CX, CY - 40 - (len(text_lines) - 2) * 42 + i * (size + 22), at + 0.3 * i, size, PAPER, face=L.SERIF_I)
+    L.text(c, "“", CX - 760, CY - 60, L.font(L.SERIF_B, 220), L.fill(BRASS, 0.5 * b.k(at, 0.5)), "left")
+    typed(c, b, who, CX, CY + 40 + len(text_lines) * (size + 22) - (len(text_lines) - 2) * 42, at + 0.6, 22, BRASS)
+
+
+def icon_row(c, b, items, at, y=430, gap=None, size=110):
+    """Icons with labels in a row, each landing on its time: items = [(draw(c, x, y, s, a), label, time or None)]."""
+    n = len(items)
+    gap = gap or min(420, 1500 / max(1, n))
+    for i, (fn, lab, ti) in enumerate(items):
+        t = ti if ti is not None else at + 0.4 * i
+        x = CX + (i - (n - 1) / 2) * gap
+        k = b.k(t, 0.45)
+        if k > 0:
+            fn(c, x, y, size, k)
+        typed(c, b, lab, x, y + size + 70, t + 0.2, 22, PAPER)

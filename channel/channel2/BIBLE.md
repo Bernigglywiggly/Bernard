@@ -35,8 +35,8 @@ Other names to check for availability: The Fine Print, Where the Money Is, Paid 
 | # | Film | The hidden mechanism | The hook |
 |---|---|---|---|
 | 1 | **Banks With Wings** (pilot, scripted: `lab/ch2/ep01/script.py`) | Airlines sell miles to banks; the loyalty scheme is worth more than the airline | American Express paid Delta $8.2B in 2025, more than Delta's whole pre-tax profit |
-| 2 | The Landlord in the Golden Arches | McDonald's earns much of its money as a landlord to franchisees | McDonald's sells burgers; it collects rent |
-| 3 | The $60 Membership | Costco's profit is mostly membership fees, so the goods can be sold near cost | The shop barely profits from the shopping |
+| 2 | **The Landlord in the Golden Arches** (scripted: `lab/ch2/ep02/script.py`) | McDonald's earns much of its money as a landlord to franchisees | $10.4B of rent in 2025, more than its whole net income ($8.6B) |
+| 3 | **The $65 Membership** (scripted: `lab/ch2/ep03/script.py`) | Costco's profit is mostly membership fees, so the goods can be sold near cost | The $1.50 hot dog; fees are half of Costco's operating profit |
 | 4 | The Ink Trap | Printers sold at a loss, ink sold at a huge markup (razor and blades) | Printer ink, by the litre, against champagne |
 | 5 | €20 Flights | Ryanair's ancillary revenue: seats, bags, priority, the app | The ticket is the advert |
 | 6 | The Gym Paradox | Memberships that bet on members not coming | The best customer never turns up |
@@ -45,10 +45,14 @@ Other names to check for availability: The Fine Print, Where the Money Is, Paid 
 | 9 | The Meal Deal | UK supermarkets' loss leaders and the basket around them | The cheapest item pays for the rest |
 | 10 | Pay Per Stream | How Spotify's money reaches artists (or doesn't) | A million streams, and what the artist gets |
 
-Every film from 2 on needs its facts checked and sourced the way the pilot's are.
+Films 1-3 are scripted and sourced (1 Oct 2026, figures from the latest filings: Delta FY2025, McDonald's FY2025,
+Costco FY2026). Each runs ~930-960 words: about 8 minutes at Elder A's measured pace (~117 words a minute with the
+engine's pauses; EP08 in Elder A ran 2:31 for 295 words). Mid-roll ads need 8:00, so if a voiced film lands under
+8:00, add a line in THE MONEY or YOU rather than slowing the voice. Films 4-10 still need their facts checked and
+sourced the same way.
 
 ## Before launch
 1. Check the name and handles are free (YouTube, TikTok, Instagram).
-2. Voice the pilot with Elder A (needs the ElevenLabs key: `EL_VOICE=elder`), build its scenes on the engine in the
-   ledger look, then two more films before launch.
+2. Voice films 1-3 with Elder A (needs the ElevenLabs key: `EL_VOICE=elder`; the cloud container has no key), build
+   their scenes on the engine in the ledger look, and launch with all three.
 3. Channel art in the ledger look (`engine/brand.py` as the model).

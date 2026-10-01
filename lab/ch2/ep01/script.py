@@ -1,4 +1,4 @@
-"""CHANNEL 2 · EP01 · BANKS WITH WINGS, v1 (1 Oct 2026): the pilot for The Margin (channel/channel2/BIBLE.md).
+"""CHANNEL 2 · EP01 · BANKS WITH WINGS, v2 (1 Oct 2026; v2 adds 1981, Delta's SkyMiles loan, the 1% of GDP, Delta's 2023 rule change and what a mile is worth, for 8+ minutes): the pilot for The Margin (channel/channel2/BIBLE.md).
 
 The hidden mechanism: an airline's loyalty scheme is a currency it prints. It sells miles to banks for cash up front;
 the banks hand them to cardholders for everyday spending; the airline alone decides what a mile buys, and many are
@@ -26,17 +26,23 @@ LINES = [
     # 1 · THE MACHINE: how a mile is made
     dict(floor=1, id="print", air=1, text="It starts with something that costs an airline almost nothing to make: a mile."),
     dict(floor=1, id="currency", text="A mile is a currency. The airline creates it, sets its value, and runs the only shop that fully accepts it."),
+    dict(floor=1, id="origin", card=("1981", "AADVANTAGE · THE FIRST BIG FREQUENT-FLYER SCHEME"),
+         text="Miles as we know them began in 1981, when American Airlines launched AAdvantage: a reward for flying often.",
+         say="Miles as we know them began in nineteen eighty-one, when American Airlines launched AAdvantage: a reward for flying often."),
+    dict(floor=1, id="copied", text="Within a few years every big airline had one. Then the airlines found out who else wanted to buy their miles."),
     dict(floor=1, id="sell", text="And it doesn't just give miles to people who fly. It sells them, in bulk, to banks."),
     dict(floor=1, id="cards", text="The banks hand those miles to their cardholders, a few for every coffee, every grocery shop, every bill paid on the card."),
     dict(floor=1, id="cash", text="So the airline is paid in cash today, for seats someone might claim years from now."),
     dict(floor=1, id="empty", text="Often for seats that would have flown empty anyway."),
-    dict(floor=1, id="never", cut=True, text="And some miles are never spent at all. They expire, or sit in accounts nobody opens. That money is simply kept."),
+    dict(floor=1, id="never", cut=True, text="And some miles are never spent at all. Some expire. Others sit in accounts nobody opens. That money is simply kept."),
+    dict(floor=1, id="breakage", text="The industry has a word for it: breakage. Every mile that's never used is a sale with nothing left to deliver."),
     # 2 · THE PROOF: the miles worth more than the airline
     dict(floor=2, id="2020", air=2, card=("JUNE 2020", "NO ONE IS FLYING"),
          text="We know what this machine is worth, because in 2020 the airlines had to prove it.",
          say="We know what this machine is worth, because in twenty twenty the airlines had to prove it."),
     dict(floor=2, id="grounded", text="With the planes grounded, United needed to borrow billions. It needed something lenders would trust."),
     dict(floor=2, id="planes", text="Not its planes. Not its airports. Its miles."),
+    dict(floor=2, id="trust", text="Lenders trusted the miles for a simple reason: people keep spending on their cards, whether or not they fly."),
     dict(floor=2, id="valued", card=("$21.9 BILLION", "MILEAGEPLUS, VALUED FOR THE LOAN · JUNE 2020"),
          text="United had its loyalty scheme, MileagePlus, valued at $21.9 billion, and borrowed $6.8 billion against it.",
          say="United had its loyalty scheme, MileagePlus, valued at twenty-one point nine billion dollars, and borrowed six point eight billion against it."),
@@ -44,12 +50,15 @@ LINES = [
          text="At the time, the stock market valued the whole of United, planes and all, at about $10.5 billion.",
          say="At the time, the stock market valued the whole of United, planes and all, at about ten and a half billion dollars."),
     dict(floor=2, id="worth", cut=True, text="The miles were worth about twice as much as the airline."),
+    dict(floor=2, id="delta2020", card=("$26 BILLION", "SKYMILES, VALUED FOR THE LOAN · SEPT 2020"),
+         text="Three months later, Delta did the same. It borrowed $9 billion against SkyMiles, a scheme valued at about $26 billion.",
+         say="Three months later, Delta did the same. It borrowed nine billion dollars against SkyMiles, a scheme valued at about twenty-six billion dollars."),
     dict(floor=2, id="american", card=("$19.5–31.5 BILLION", "AADVANTAGE, APPRAISED · 2021"),
-         text="A year later, American Airlines did the same. Its scheme was appraised at between $19.5 and $31.5 billion. It borrowed $10 billion against it.",
-         say="A year later, American Airlines did the same. Its scheme was appraised at between nineteen and a half and thirty-one and a half billion dollars. It borrowed ten billion against it."),
+         text="In 2021, American Airlines followed. Its scheme was appraised at between $19.5 and $31.5 billion. It borrowed $10 billion against it.",
+         say="In twenty twenty-one, American Airlines followed. Its scheme was appraised at between nineteen and a half and thirty-one and a half billion dollars. It borrowed ten billion against it."),
     dict(floor=2, id="sold", card=("$5.3 BILLION", "MILES UNITED SOLD IN 2019"),
-         text="The filings showed how the machine runs. In 2019, United sold about $5.3 billion of miles.",
-         say="The filings showed how the machine runs. In twenty nineteen, United sold about five point three billion dollars of miles."),
+         text="United's filings showed how the machine runs. In 2019, it sold about $5.3 billion of miles.",
+         say="United's filings showed how the machine runs. In twenty nineteen, it sold about five point three billion dollars of miles."),
     dict(floor=2, id="third", card=("71%", "OF THE SCHEME'S REVENUE CAME FROM PARTNERS · 2019"),
          text="And about 71 percent of the scheme's revenue came not from flyers, but from partners. Mostly credit card companies.",
          say="And about seventy-one percent of the scheme's revenue came not from flyers, but from partners. Mostly credit card companies."),
@@ -66,6 +75,13 @@ LINES = [
     dict(floor=3, id="ten", card=("$10 BILLION", "DELTA'S TARGET FROM AMEX, A YEAR"),
          text="And Delta expects the Amex payments to reach $10 billion a year within a few years.",
          say="And Delta expects the Amex payments to reach ten billion dollars a year within a few years."),
+    dict(floor=3, id="gdp", card=("~1%", "OF THE WHOLE US ECONOMY: SPENDING ON DELTA AMEX CARDS"),
+         text="Delta says spending on its American Express cards is approaching one percent of America's entire economy."),
+    dict(floor=3, id="tenth", text="For American Express, Delta cards are about a tenth of all the spending on its cards worldwide. For Delta, the payments are more than a tenth of its revenue."),
+    dict(floor=3, id="routes", text="Last year, when Delta added flights from Austin and Raleigh, its chief executive explained why: \"these are places we acquire a lot of cards.\""),
+    dict(floor=3, id="fees", card=("$650", "A YEAR · THE TOP DELTA AMEX CARD'S ANNUAL FEE"),
+         text="And the cards charge fees of their own. The top Delta card costs $650 a year.",
+         say="And the cards charge fees of their own. The top Delta card costs six hundred and fifty dollars a year."),
     dict(floor=3, id="everyone", cut=True, text="And the shops paying those fees build them into their prices. Everyone pays for the miles. Only some people collect them."),
     # 4 · YOU: what it means for your wallet
     dict(floor=4, id="you", air=2, text="So what does this mean for you?"),
@@ -75,11 +91,19 @@ LINES = [
     dict(floor=4, id="thinner", text="That's why British cards give far fewer miles than American ones. The money to pay for them isn't there."),
     dict(floor=4, id="interest", text="So in Britain, the banks earn more from interest and fees. A rewards card only pays you if you clear it in full, every month."),
     dict(floor=4, id="devalue", text="Wherever you are, remember who controls the currency. When an airline raises the miles a seat costs, everything you've saved is worth less, overnight."),
+    dict(floor=4, id="rules", card=("SEPT 2023", "DELTA MAKES ELITE STATUS FAR HARDER TO EARN"),
+         text="In 2023, Delta made its elite status much harder to earn. After an outcry, its chief executive said it had probably gone too far, and softened the changes.",
+         say="In twenty twenty-three, Delta made its elite status much harder to earn. After an outcry, its chief executive said it had probably gone too far, and softened the changes."),
+    dict(floor=4, id="novote", text="But the rules still changed. The members had no vote."),
+    dict(floor=4, id="cent", card=("1.2¢", "WHAT A DELTA OR UNITED MILE IS WORTH · NERDWALLET 2026"),
+         text="And know what a mile is worth. NerdWallet puts a Delta or United mile at about 1.2 cents. Fifty thousand miles: about $600.",
+         say="And know what a mile is worth. NerdWallet puts a Delta or United mile at about one point two cents. Fifty thousand miles: about six hundred dollars."),
     dict(floor=4, id="spendit", cut=True, text="Miles are not savings. Earn them, then spend them."),
     # 5 · WHAT IF
     dict(floor=5, id="imagine", air=3, cut=True, text="So imagine one more step."),
     dict(floor=5, id="whatif", air=2, text="Not a forecast. A what-if."),
     dict(floor=5, id="scene", text="An airline whose miles are worth more than its flights, decides the flying is the cost of running the currency. Seats priced to keep you collecting, not to make a profit."),
+    dict(floor=5, id="already", text="It already prints the currency, sets its value, and decides what it buys. The planes are what make people want it."),
     dict(floor=5, id="question", air=1, text="At what point is it a bank that happens to fly?"),
     # 6 · THE CLOSE: mirrored
     dict(floor=6, id="then", air=2, cut=True, text="Last year, American Express paid Delta $8.2 billion.",
@@ -101,5 +125,15 @@ SOURCES = [
     "(Davis Polk; SEC filing)",
     "Average US credit card interchange about 2%; UK and EU cap on consumer credit card interchange 0.3% "
     "(EU Interchange Fee Regulation 2015, retained in UK law)",
+    "American Airlines launched AAdvantage on 1 May 1981, the first big frequent-flyer scheme (American Airlines)",
+    "Delta, Sept 2020: $9.0B of financings secured by SkyMiles (Delta 8-K; Davis Polk), against a programme valued at "
+    "about $26B (Reuters)",
+    "Delta's American Express co-brand spend approaching 1% of US GDP (Ed Bastian; Fast Company, 2023); the Delta card "
+    "is about 10% of Amex's worldwide billings and the partnership over 10% of Delta's revenue (Fortune, 3 Apr 2026)",
+    "Delta's SkyMiles Medallion changes (Sept 2023), Bastian: 'we probably went too far' (CNBC, 28 Sep 2023), scaled "
+    "back on 18 Oct 2023 (Skift)",
+    "Bastian on Austin and Raleigh, Q3 2025 earnings call (Oct 2025): 'these are places we acquire a lot of cards' "
+    "(View from the Wing); Delta SkyMiles Reserve American Express annual fee $650 (American Express; NerdWallet)",
+    "Mile values: Delta SkyMiles and United MileagePlus about 1.2 cents each (NerdWallet, 2026 valuations)",
     "The what-if is labelled as imagined, not a forecast",
 ]

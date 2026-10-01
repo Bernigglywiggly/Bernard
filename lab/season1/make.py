@@ -311,19 +311,19 @@ def description(chapters):
     return "\n".join(parts) + "\n"
 
 
-THUMBS = [  # (episode feed, seconds, lines, accent line, focus, zoom): checked against the contact sheets
-    ("ep05", 40.0, "WHAT THE AI|HEADLINES|DON'T TELL YOU", 2, (0.6, 0.5), 1.3),
-    ("ep04", 30.0, "5 HIDDEN|FORCES|BEHIND AI", 1, (0.6, 0.5), 1.3),
-    ("ep08", 40.0, "AI EXPLAINED|IN 13|MINUTES", 1, (0.6, 0.5), 1.3),
+THUMBS = [  # (episode feed, seconds, lines, accent line, focus, zoom, place): checked against the contact sheets
+    ("ep05", 61.5, "WHAT THE AI|HEADLINES|DON'T TELL YOU", 2, (0.39, 0.52), 1.05, 0.76),  # the globe, right
+    ("ep08", 100.0, "5 HIDDEN|FORCES|BEHIND AI", 1, (0.5, 0.45), 1.35, 0.74),  # the bulb, right
+    ("ep04", 22.5, "THERE'S|A HUMAN|INSIDE", 1, (0.55, 0.47), 1.1, 0.732),  # robot and VR operator, joined by the arc
 ]
 
 
 def thumbs():
     from engine import thumb
     os.makedirs(BUILD, exist_ok=True)
-    for k, (ep, t, lines, acc, focus, zoom) in enumerate(THUMBS):
+    for k, (ep, t, lines, acc, focus, zoom, place) in enumerate(THUMBS):
         out = os.path.join(BUILD, f"thumb_{chr(97 + k)}.jpg")
-        thumb.make(os.path.join(LAB, ep, "build", f"{ep}_clean_silent.mp4"), t, lines.split("|"), out, acc, focus, zoom)
+        thumb.make(os.path.join(LAB, ep, "build", f"{ep}_clean_silent.mp4"), t, lines.split("|"), out, acc, focus, zoom, place)
         print(out)
 
 

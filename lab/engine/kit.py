@@ -245,9 +245,9 @@ def film_day(slug):
 
 
 def first_day(slug):
-    """The shorts' first day: after every earlier film's shorts."""
-    by = {ep["slug"]: ep for ep in EPISODES}
-    return 1 + sum(len(by[s]["schedule"]) for s in FILMS[:FILMS.index(slug)])
+    """The shorts' first day: the day the film goes up, so each film's shorts drive people to it (films two days
+    apart and four to six days of shorts each overlap: two to four shorts a day)."""
+    return 1 + 2 * FILMS.index(slug)
 
 
 def episodes(page=1):
@@ -347,7 +347,8 @@ def start(page):
   {setup}
   {today}
   <h3>Then keep the rhythm</h3>
-  <p>One short a day in the order below, the same file on every platform, and pin each Part 1. A new full film every two days:</p>
+  <p>A new full film every two days. Its shorts start the same day: each day, post what the plans below list for that
+    day (a part and a highlight per film, so two to four shorts a day), the same file on every platform, and pin each Part 1.</p>
   <ul class="films">{films}</ul>
   <p class="muted">Save time: schedule a week in one sitting. YouTube Studio schedules videos and Shorts; TikTok schedules from a
     computer up to 10 days ahead; Meta Business Suite schedules Reels to Instagram and Facebook together.</p>

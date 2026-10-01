@@ -306,11 +306,12 @@ def season1():
             thumbs.append(dict(file=f"thumb_{k}.jpg", label=f"Thumbnail {label}", alt=f"Season One thumbnail option {label}",
                                name=f"The_Curve_Season_One_thumbnail_{label}.jpg"))
     m, s = divmod(int(round(meta["duration"])), 60)
+    mins = int(meta["duration"] // 60)                       # "14-minute" for 14:06: a title never rounds up
     item = dict(
         slug="season-one", eyebrow=f"Long-form · {m}:{s:02d} · 1080p", name="The Curve: Season One",
         meta="The five finished films as one documentary, with chapters. Long videos earn watch hours and, past 8 minutes, mid-roll ads.",
         video=v, thumbs=thumbs,
-        titles=["What the AI Headlines Don't Tell You (13-Minute Documentary)",
+        titles=[f"What the AI Headlines Don't Tell You ({mins}-Minute Documentary)",
                 "5 Hidden Forces Behind the AI Boom | The Curve: Season One",
                 "Why AI Is Leaving the Planet, and 4 Other Things the Headlines Miss"],
         description=open(os.path.join(s1.BUILD, "description.txt")).read(),
@@ -319,7 +320,7 @@ def season1():
                                 "Monetisation (once the channel is in the Partner Programme): put mid-roll ads at the chapter breaks.",
                                 STEPS_FILM[3], STEPS_FILM[4]],
         shorts=[])
-    lede = ("Season One is the five finished films in one 13-minute documentary, ready to upload: the 1080p file, three "
+    lede = (f"Season One is the five finished films in one {mins}-minute documentary, ready to upload: the 1080p file, three "
             "thumbnails, titles, a description with chapters and every source, and the settings to tick.")
     order = [("1", "Post the five films on their days"), ("2", "Then Season One, the day after the fifth film"),
              ("3", "Shorts keep running daily, pointing back to the films")]

@@ -19,7 +19,10 @@ to `le(last) + POST (0.55 s)` with no audio fade and no clamp to the neighbourin
 starts within 0.55 s, its first syllable is in the clip (and the previous line's tail can be in the pre-roll); the
 captions are drawn until t1, so the next line's first word flashes too. Fix (status below): clamp each clip to
 whole lines (t0 >= previous line's end + 0.08 s, t1 <= next line's start - 0.08 s), fade the audio (~40 ms in,
-~150 ms out), draw captions only until the clip's last line ends. Then rebuild the **channel trailer**
+~150 ms out), draw captions only until the clip's last line ends. **Done in code (commit ebdf66c,
+`trailer.span()` / `trailer.faded()`): the old tail took in 0.12-0.19 s of the next line in four of five clips.**
+This account is rebuilding and republishing the trailer and both Seasons with it; if that isn't confirmed below,
+rebuild the **channel trailer**
 (`python3 trailer/make.py`), **Season One** (`python3 season1/make.py open` then `join`) and **Season Two**
 (`SEASON=2 python3 season1/make.py open` then `join`), re-pack (`python3 pack/build.py season1|season2`) and republish
 the pages (same URLs from this account: publish with `url`; from the other account they'd be new pages).

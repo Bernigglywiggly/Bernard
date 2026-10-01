@@ -33,6 +33,18 @@ and the source line under every figure (fonts in `lab/ch2/fonts`, SIL Open Font 
 miles or points. Floors are numbered in roman italics (I · THE PRICE ... VII · THE CLOSE). Next: animate these as
 engine scenes once a film is voiced.
 
+## Production (1 Oct 2026): the films are storyboarded and render on the shared engine
+- `engine.film.main(..., look_mod=ch2.ledger, cap_mod=ch2.ledger.CAPTIONS)` swaps The Curve's ASCII look and captions
+  for the ledger page and serif captions (The Curve is unchanged when these are left out).
+- `lab/ch2/kit.py` is the storyboard kit: a film is a list of `Beat`s, each landing on a line or a word (number cards
+  with their source line, statements, receipts, split bars, accounts and arrows with coins or tickets, stamps, floor
+  cards, quotes, icons). `lab/ch2/ep01-03/scenes.py` are the three storyboards; `film.py` beside each runs them.
+- Checked on an estimated Elder-pace timeline (`python3 tools/est_timeline.py ch2/ep01 2.1`, then
+  `EP_BUILD=build_est python3 film.py still 30 90 ...`): 8:18, 8:36 and 8:23. Once voiced, the same commands render
+  the films: `EL_VOICE=elder python3 film.py voice`, `parts 4 0 4`, `join 4`, `sound`, `master`.
+- Music: `chrome_marl` (72 BPM, calm) for now, never Arena; a ledger bed of its own is a later job.
+- Shorts are next: `engine/shorts.py` still brands every short THE CURVE, so `CLIPS = []` until it takes a brand.
+
 ## The rules (same discipline as The Curve)
 - No jokes. Straight in with the strangest true number. Calm, curious, precise.
 - Every figure dated and sourced on screen and in the description. Say "about"; round to two figures.

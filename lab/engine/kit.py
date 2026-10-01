@@ -263,6 +263,8 @@ def episodes(page=1):
 BRAND = os.path.join(LAB, "out", "brand")
 BRAND_FILES = ("banner.jpg", "avatar.png", "watermark.png", "facebook_cover.jpg", "x_header.jpg", "highlight_films.png",
                "highlight_space.png", "highlight_robots.png", "highlight_money.png")
+TRAILER = os.path.join(LAB, "trailer", "build", "the_curve_trailer.mp4")
+TRAILER_TITLE = "The Curve: the hidden mechanism behind the AI headlines"
 
 
 def files(page=1):
@@ -272,6 +274,8 @@ def files(page=1):
         for f in BRAND_FILES:
             if os.path.exists(os.path.join(BRAND, f)):
                 out[f"media/brand/{f}"] = os.path.join(BRAND, f)
+        if os.path.exists(TRAILER):
+            out["media/brand/the_curve_trailer.mp4"] = TRAILER
     for ep in episodes(page):
         for key in ("thumb",):
             if ep.get(key) and os.path.exists(os.path.join(LAB, ep[key])):
@@ -300,6 +304,30 @@ def section(ep):
   <h3>Highlights</h3>
   <div class="grid">{''.join(card(k, slug) for k in highs)}</div>
 </section>"""
+
+
+def trailer_card():
+    """The channel trailer: what YouTube plays to visitors who haven't subscribed yet."""
+    if not os.path.exists(TRAILER):
+        return ""
+    import subprocess
+    d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", TRAILER],
+                             capture_output=True, text=True, check=True).stdout)
+    how = ("Upload it to YouTube like a film (public; not made for kids; altered or synthetic content: Yes), then YouTube "
+           "Studio → Customisation → Layout → Channel trailer for people who haven't subscribed. It also works as the "
+           "first post on Facebook and X.")
+    return f"""
+  <article class="card wide trailer">
+    <video controls playsinline preload="metadata" src="media/brand/the_curve_trailer.mp4"></video>
+    <div class="body">
+      <div class="meta"><span class="chip">CHANNEL TRAILER</span><span>{d:.0f} s · 16:9 · also in the chat</span></div>
+      <p class="hook">{html.escape(TRAILER_TITLE)}</p>
+      <p class="post">{html.escape(how)}</p>
+      <div class="row"><button class="main" type="button" data-copy="hook" data-what="Title">Copy title</button>
+        <button type="button" data-save="media/brand/the_curve_trailer.mp4">Save trailer</button></div>
+      <p class="note" aria-live="polite"></p>
+    </div>
+  </article>"""
 
 
 def start(page):
@@ -341,7 +369,7 @@ def start(page):
       <details><summary>The full set-up guide, platform by platform</summary><p class="post">{e(br.SETUP)}</p></details>
       <p class="note" aria-live="polite"></p>
     </div>
-  </article>"""
+  </article>{trailer_card()}"""
     return f"""<section class="start" aria-label="Start here">
   <span class="eyebrow">Start here</span>
   {setup}

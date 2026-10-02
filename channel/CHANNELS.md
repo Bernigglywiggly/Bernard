@@ -46,3 +46,22 @@ Written 1 Oct 2026 (overnight cloud session). Goal: five channels at about $1,00
    narrator (an ElevenLabs designed voice, not George) and its own music bed.
 3. **Channels 3-5** only after The Curve or Channel 2 shows traction (click-through above ~4%, average view duration above
    ~40%), so the factory copies what works rather than what doesn't.
+
+## 2 Oct: the five, ranked for money = RPM x views x ease (the user: "not just best RPM but virality... if easy to make even better")
+| # | Channel | RPM (2026 surveys) | Virality | Ease with our engine | Watch out for |
+|---|---|---|---|---|---|
+| 1 | **The Curve** (AI explained) | AI documentary $12-15 | News-driven; the trend desk feeds it | Built | Speed: be first on a story |
+| 2 | **The Margin** (how companies make money) | Business/finance $10-28 | Evergreen search + curiosity titles | Built (3 films storyboarded) | Rename ("Margins" exists) |
+| 3 | **Money crimes** (scams, frauds, heists explained) | Finance advertisers, ~$8-15 | True-crime retention, "the $X billion lie" titles | High: court filings, SEC records, timelines; a case-file look | Defamation: charged/convicted facts only, cite filings |
+| 4 | **Maps & power** (geopolitics/geography, 3D globe) | $5-10 | Very high (this format routinely does millions) | Blender globe + our map kit | War topics get limited ads: lead with the economics |
+| 5 | **What if** (science and scale in 3D) | $4-8 | Highest; best Shorts | Blender (the user wants 3D) | Low RPM: volume and Shorts carry it |
+Bench: AI for small business (highest RPM, needs real tool tests on screen), crime psychology ($7-8), senior health
+(fast-growing, but medical-misinformation risk). Separate: the user's PS5 gameplay-rant channel (their own voice and
+personality: low RPM, but fully authentic and cheap). Each channel its own narrator, look, music and research angle
+(rule 2). Starting now matters: only channels in the Partner Programme before 1 Feb 2027 keep the old bar.
+**Logistics:** a 3-minute film is ~2,700 characters of narration; five channels at a film every other day is ~73 films a
+month, ~200k characters: the ElevenLabs Pro tier (500k). The key is the blocker for anything new. Renders ~10-15 min a
+film here, one at a time. Quality gate before volume: click-through >= 4-5%, average view duration >= 40%, then fill a
+week's backlog per channel. Trend desk: a daily routine writes `channel/trends/<date>.md` and `channel/trends/BOARD.md`.
+Sources: [youtubeniches.com](https://youtubeniches.com/blog/best-faceless-youtube-niches-2026),
+[Fluxnote](https://fluxnote.io/guides/profitable-faceless-youtube-channel-niches).

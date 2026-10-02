@@ -65,3 +65,14 @@ film here, one at a time. Quality gate before volume: click-through >= 4-5%, ave
 week's backlog per channel. Trend desk: a daily routine writes `channel/trends/<date>.md` and `channel/trends/BOARD.md`.
 Sources: [youtubeniches.com](https://youtubeniches.com/blog/best-faceless-youtube-niches-2026),
 [Fluxnote](https://fluxnote.io/guides/profitable-faceless-youtube-channel-niches).
+
+## 2 Oct (night): long-form first, shorts for discovery (the user: "i wanna target long form yt for money, shorts is bonus and discovery")
+- **The product is the long-form film:** 12-15 minutes, 16:9, chapters, mid-roll ads from 8 minutes (2-3 slots), a
+  three-thumbnail Test & Compare, a 20-second end card. Watch time is what YouTube pays and ranks on.
+- **Shorts are trailers:** each film is cut into 3-5 shorts that point to it (related-video link), plus the occasional
+  stand-alone short to test a topic before a film is made about it.
+- **Cost and pace (Higgsfield "plus" plan):** film 01 (Lustig) used about 320 credits (82 stills, 20 Kling clips, the
+  voice); 851 credits are left. At about 180 credits a film (half the clips; more archive and graphics) that is 4-5 films
+  before the plan's credits renew, so the order is: one flagship long-form per channel first, then the channel whose
+  first film does best gets the next ones.
+- **Render:** ~1 hour a film on this machine (`lab/longform/doc.py`, 3 segments at once).

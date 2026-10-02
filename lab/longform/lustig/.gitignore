@@ -1,0 +1,9 @@
+# media is fetched (fetch.py) or rebuilt (vo.py, music.py, doc.py), not stored
+src/ai/
+src/vo_*.wav
+build/*
+!build/chapters.json
+!build/words.json
+!build/sentences.json
+out/*.mp4
+__pycache__/

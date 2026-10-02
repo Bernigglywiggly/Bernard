@@ -1,9 +1,29 @@
 # Channel 3 · Money crimes (scams, frauds, heists, explained)
-**Format:** cinematic AI shorts (9:16, ~60 s) first, then 6-10 min films from the best performers. Period-accurate,
+**Format (2 Oct, the user: "long form yt for money, shorts is bonus and discovery"):** long-form documentaries
+(16:9, 12-15 min, mid-roll ads from 8 min) are the product; every film is cut into 3-5 shorts that point back to it. Period-accurate,
 photoreal reenactments, labelled "AI reenactment" on screen and with YouTube's synthetic-content box ticked.
 **Look:** 35mm film grade, warm tungsten and cool shadows, gold name cards, red rubber-stamp numbers, kinetic captions.
 **Voice:** Imogen (Higgsfield Seed Audio preset), one take per short. **Music:** `beds.caper` (1920s swing, D minor).
 **Facts:** only charged or convicted people; contested stories told as "the story goes"; sources in each `make.py`.
+
+## Long-form
+| # | Title | Status | Files |
+|---|---|---|---|
+| 01 | The Man Who Sold the Eiffel Tower (And Conned Al Capone) · 14:56 | Rendering 2 Oct | `lab/longform/lustig/` (`script.py`, `film.py`, `POST.md`, `out/`) |
+
+## How a long-form film is made (`lab/longform`, about 320 Higgsfield credits for film 01)
+1. Script: ~2,000 words in 11-12 chapters, each ending on a question (`script.py`); facts from Wikipedia plus two other
+   sources, contested parts flagged in the narration ("the story goes").
+2. Voice: Imogen, one Seed Audio take per chapter (`vo.py` joins them, caps TTS pauses at 0.85 s, keeps the Whisper
+   word timings). ~13 credits.
+3. Pictures (`ai_assets.py`): ~80 GPT Image 2.5 stills (medium 1 credit, high 2.75 for close-ups) with the character
+   references, ~20 Kling 3.0 Pro clips; public-domain archive from Wikimedia Commons (`../tools/commons.py`, credits
+   kept in `src/arch/credits.json`); drawn graphics (maps from Natural Earth, documents, counters, timelines).
+4. Score: one synthesised bed per chapter (`music.py`), ducked under the voice.
+5. Edit: `film.py` (shots on the word timings, overlays, sound effects), rendered by `lab/longform/doc.py` in parallel
+   segments (~1 hour here), delivered as a 1080p file under 240 MiB for the downloads page.
+6. `thumb.py` (three thumbnails for Test & Compare) and `POST.md` (title, chapters, sources, credits, AI disclosure).
+Cheaper next time: half the Kling clips (archive and graphics carry more), ~180 credits a film.
 
 ## Shorts
 | # | Title | Status | Files |

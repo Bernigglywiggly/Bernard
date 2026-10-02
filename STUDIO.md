@@ -20,12 +20,15 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 - EP09-EP12: https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq
 - Season One: https://claude.ai/artifact/7aPVnXn8UW6LgBUmki6BqV
 - Season Two: https://claude.ai/artifact/8wNVR2gvWLkZUdvNnGiR44
+- AI shorts (Money crimes 01, What if 01): https://claude.ai/artifact/J5CqJtyMALxMBsxTGb6un6
 
 ## Engines and tools
 | What | Where |
 |---|---|
 | 16:9 film engine (motion graphics, captions, mix, shorts) | `lab/engine` (`film.py` commands: voice, lines, still, parts, join, sound, remux, audition, master, shorts) |
 | 9:16 AI-short engine (AI clips + kinetic captions + stamps + score) | `lab/shorts/reel.py`, one `make.py` per short |
+| 16:9 long-form documentary engine (AI stills/clips, archive prints, maps, documents, counters, chapter cards, parallel render) | `lab/longform/doc.py`, one folder per film (`lustig/`: script, vo, music, film, thumb) |
+| Public-domain archive search and download (Wikimedia Commons, credits recorded) | `lab/longform/tools/commons.py` |
 | Music beds (all synthesised, no samples) | `lab/music/beds.py`: house, garage, caper, arena, deep_field, ...; previews `lab/out/music/new` |
 | Voice | ElevenLabs line cache `lab/voice/cache/eleven` + `lab/tools/eleven_tts.py`, `lab/engine/voice.py`; auditions `lab/tools/voice_audition.py`; Higgsfield Seed Audio for the shorts |
 | Sound effects | `lab/out/sfx` (synthesised), `lab/sfx` |

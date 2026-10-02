@@ -95,17 +95,18 @@ def film_card(item, media_rel):
   </div>
   <div class="film-grid">
     <div class="col-media">
-      <div class="player"><video controls playsinline preload="none" poster="{esc(media_rel + item['thumbs'][0]['file'])}"
+      <div class="player{' tall' if item.get('vertical') else ''}"><video controls playsinline preload="none" poster="{esc(media_rel + item['thumbs'][0]['file'])}"
         data-hls="{esc(media_rel + v['dir'] + '/index.txt')}"></video></div>
       <div class="dl">
         <button class="btn primary" type="button" data-video="{esc(media_rel + v['dir'] + '/')}" data-files="{esc(json.dumps(v['files']))}"
-          data-name="{esc(v['name'])}">Download the 1080p film · {v['mb']:.0f} MB</button>
+          data-name="{esc(v['name'])}">Download the 1080p {'short' if item.get('vertical') else 'film'} · {v['mb']:.0f} MB</button>
         <div class="bar" hidden><div class="fill"></div></div>
         <p class="note" aria-live="polite"></p>
       </div>
       <div class="thumbs">{thumbs}</div>
     </div>
     <div class="col-copy">
+      {copy_block("TikTok / Reels caption", item['caption'], 4) if item.get('caption') else ''}
       {titles}
       {copy_block("Description (with chapters and sources)", item['description'], 9)}
       {copy_block("Pinned comment", item['pinned'])}
@@ -154,6 +155,7 @@ h2{font:400 clamp(20px,3.6vw,28px)/1.2 var(--display);margin:0;text-wrap:balance
 .col-media,.col-copy{display:grid;gap:14px;align-content:start;min-width:0}
 .player{aspect-ratio:16/9;max-width:100%;background:#000;border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .player video{width:100%;height:100%;display:block;background:#000}
+.player.tall{aspect-ratio:9/16;max-width:420px;margin:0 auto}
 .dl{display:grid;gap:8px}
 .btn{font:500 14px/1 var(--body);border-radius:8px;padding:11px 14px;cursor:pointer;border:1px solid var(--line);
   background:transparent;color:var(--ink)}
@@ -361,6 +363,50 @@ ALT_TITLES = {
 }
 
 
+STEPS_SHORT = [
+    "Upload the .mp4 to TikTok, YouTube Shorts and Instagram Reels: the same file works on all three.",
+    "Turn on the AI label everywhere (TikTok: AI-generated content; YouTube: altered or synthetic content: Yes).",
+    "Upload the cover image as the cover, then paste the caption (TikTok, Reels) or the title and description (YouTube).",
+    "YouTube: audience not made for kids.",
+    "Post the pinned comment and pin it.",
+]
+SHORTS = [("lustig", "Money crimes · Short 01"), ("spin", "What if · Short 01")]
+
+
+def post_copy(path):
+    """POST.md -> caption, YouTube title, description, pinned comment."""
+    t = open(path).read()
+    cut = lambda a, b: t.split(a, 1)[1].split(b, 1)[0].strip() if a in t else ""
+    one = lambda x: " ".join(x.split())
+    return dict(caption=cut("**TikTok / Reels caption**", "**YouTube Shorts title:**"),
+                title=one(cut("**YouTube Shorts title:**", "\n")), description=one(cut("**Description:**", "**Pinned comment:**")),
+                pinned=one(t.split("**Pinned comment:**", 1)[1]) if "**Pinned comment:**" in t else "")
+
+
+def shorts_page(name="shorts", title="AI shorts: Money crimes and What if"):
+    """The AI shorts (lab/shorts/<slug>/out): each 1080x1920 master, its cover, caption, YouTube copy and pinned comment."""
+    out = os.path.join(HERE, "build", name)
+    media = os.path.join(out, "media")
+    os.makedirs(media, exist_ok=True)
+    items, extra, order = [], {}, []
+    for slug, channel in SHORTS:
+        d = os.path.join(LAB, "shorts", slug)
+        master = [os.path.join(d, "out", f) for f in sorted(os.listdir(os.path.join(d, "out"))) if f.endswith("_9x16.mp4")][0]
+        pc = post_copy(os.path.join(d, "POST.md"))
+        v = video_entry(master, media, f"{slug}_9x16_1080p.mp4", slug)
+        f = f"{slug}_cover.jpg"
+        shutil.copy(os.path.join(d, "out", "cover.jpg"), os.path.join(media, f))
+        extra[f"media/{f}"] = os.path.join(media, f)
+        items.append(dict(slug=slug, eyebrow=f"{channel} · {int(round(v['dur']))} s · 9:16", name=pc["title"], vertical=True,
+                          meta="Made with AI: GPT Image 2.5 stills, Kling 3.0 and Veo 3.1 motion, a Higgsfield voice; our own edit, score and sound.",
+                          video=v, thumbs=[dict(file=f, label="Cover", alt=pc["title"] + " cover", name=f)], caption=pc["caption"],
+                          titles=[pc["title"]], description=pc["description"], pinned=pc["pinned"], steps=STEPS_SHORT, shorts=[]))
+        order.append((channel.split(" · ")[0], pc["title"]))
+    lede = ("Cinematic AI shorts for TikTok, YouTube Shorts and Reels: photoreal AI scenes, a narrator, kinetic captions, an "
+            "original score. Each has its 1080x1920 file, cover, caption, YouTube copy and pinned comment.")
+    write(name, title, lede, order, items, extra)
+
+
 def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP09 to EP12"):
     """The next four films: each film's 1080p file, two thumbnails, titles, description with sources, pinned comment and
     its shorts with captions and posting days."""
@@ -419,7 +465,7 @@ def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP
 
 
 if __name__ == "__main__":
-    {"season1": season1, "season2": season2, "new": new,
+    {"season1": season1, "season2": season2, "new": new, "shorts": shorts_page,
      # EP04-EP08 with their shorts are ~310 MiB, over one artifact version's 256 MiB: two pages, in upload order
      "films1": lambda: new(("ep05", "ep08", "ep04"), "films1", "The Curve: EP05, EP08, EP04"),
      "films2": lambda: new(("ep06", "ep07"), "films2", "The Curve: EP06, EP07")}[sys.argv[1]]()

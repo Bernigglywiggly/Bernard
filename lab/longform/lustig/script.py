@@ -149,7 +149,7 @@ CHAPTERS = [
         "Springfield, Missouri. The same town where, a quarter of a century earlier, a man calling himself Robert Duval "
         "had walked out of a bank with ten thousand dollars.",
         "Even his death certificate was a disguise. It didn't say Victor Lustig. It said Robert V. Miller. Occupation: "
-        "apprentice salesman.",
+        "apprentice salesman... and counterfeiter.",
         "The greatest salesman of his age. An apprentice.",
     ]),
     dict(id="rules", title="The con man's commandments", paras=[

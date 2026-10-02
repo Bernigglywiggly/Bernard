@@ -57,6 +57,20 @@ def card(cid, k, title, bg):
     return g(CARDS[cid], "card", x=0.5, kicker=f"CHAPTER {NUM[k]}", title=title, bg=A(bg) if bg[0] != "/" else bg)
 
 
+CERT_W, CERT_H = 1532, 1358
+CERT_NAME, CERT_JOB = (0.27, 0.30, 2.1), (0.36, 0.63, 2.1)
+
+
+def cert_box(cam, x0, y0, x1, y1):
+    """A rectangle on the certificate (picture pixels) to screen pixels under a still camera (as doc.draw_cover)."""
+    cx, cy, z = cam
+    sc = max(1920 / CERT_W, 1080 / CERT_H) * z
+    ww, wh = 1920 / sc, 1080 / sc
+    px = min(max(cx * CERT_W, ww / 2), CERT_W - ww / 2) - ww / 2
+    py = min(max(cy * CERT_H, wh / 2), CERT_H - wh / 2) - wh / 2
+    return ((x0 - px) * sc, (y0 - py) * sc, (x1 - x0) * sc, (y1 - y0) * sc)
+
+
 PARIS, VIENNA, HOSTINNE, DRESDEN = (2.35, 48.86), (16.37, 48.21), (15.72, 50.54), (13.74, 51.05)
 EUROPE = [(14.42, 50.08, "PRAGUE"), (16.37, 48.21, "VIENNA"), (13.74, 51.05, "DRESDEN"), (13.40, 52.52, "BERLIN"),
           (11.58, 48.14, "MUNICH"), (19.04, 47.50, "BUDAPEST"), (4.35, 50.85, "BRUSSELS"), (8.68, 50.11, "FRANKFURT")]
@@ -232,15 +246,17 @@ SHOTS = [
     arch(756.5, "lustig_boi_1931.jpg", mode="print", rot=-1.0, credit="VICTOR LUSTIG · U.S. GOVERNMENT, PUBLIC DOMAIN"),
     g(761.6, "map", x=0.4, v0=(-95.0, 38.0, 36.0), v1=(-93.3, 37.4, 12.0), move=2.5, borders="ne_50m_admin_1_states_provinces_lakes",
       pins=[(*SPRINGFIELD, "SPRINGFIELD, MISSOURI", 0.6)]),
-    *([arch(775.6, "death_cert.png", cam=((0.5, 0.45, 1.0), (0.5, 0.4, 1.08))),
-       arch(781.9, "death_cert.png", cam=((0.5, 0.4, 1.08), (0.5, 0.4, 1.15)))]
+    *([arch(775.6, "death_cert.png", mode="print", fit=0.94, rot=-0.6, credit="DEATH CERTIFICATE, 1947 · PUBLIC DOMAIN"),
+       arch(781.9, "death_cert.png", cam=(CERT_NAME, CERT_NAME), quiet=True),
+       arch(w("occupation", 785) - 0.25, "death_cert.png", cam=(CERT_JOB, CERT_JOB), quiet=True)]
       if os.path.exists(R("death_cert.png")) else
       [g(775.6, "record", head="CERTIFICATE OF DEATH · MISSOURI · 1947",
          fields=[("NAME OF DECEASED", "Robert V. Miller", 0.4), ("DATE OF DEATH", "March 11, 1947", 1.2),
-                 ("PLACE OF DEATH", "Federal prison hospital, Springfield", 1.9), ("USUAL OCCUPATION", "Apprentice salesman", 2.6)],
-         hi=[(0, w("Robert", 780) - 775.6), (3, w("apprentice", 784) - 775.6)],
+                 ("PLACE OF DEATH", "Federal prison hospital, Springfield", 1.9),
+                 ("USUAL OCCUPATION", "Apprentice salesman & counterfeiter", 2.6)],
+         hi=[(0, w("Robert", 780) - 775.6), (3, w("apprentice", 785) - 775.6)],
          note="TRANSCRIBED FROM HIS DEATH CERTIFICATE")]),
-    arch(789.0, "lustig_1935.jpg", mode="print", rot=1.0, x=0.5, credit="VICTOR LUSTIG, 1935 · PUBLIC DOMAIN"),
+    arch(w("greatest", 789) - 0.2, "lustig_1935.jpg", mode="print", rot=1.0, x=0.5, credit="VICTOR LUSTIG, 1935 · PUBLIC DOMAIN"),
     # ---- 11 the con man's commandments
     card("rules", 10, "The Con Man's Commandments", "n01"),
     still(795.99, "n01", ((0.5, 0.5, 1.0), (0.5, 0.5, 1.12)), x=0.5),
@@ -334,7 +350,10 @@ OVERLAYS = [
     N(756.8, 761.4, "VICTOR LUSTIG", "DIED 11 MARCH 1947", x=1440, y=900, size=58),
     dict(kind="lines", t0=763.0, t1=775.4, x=200, y=800, gap=70, size=44, font="mono",
          items=[(765.0, "1922 — 'ROBERT DUVAL' WALKS OUT WITH $10,000"), (770.5, "1947 — VICTOR LUSTIG DIES HERE")]),
-    *([dict(kind="credit", t0=775.6, t1=789.0, text="DEATH CERTIFICATE, 1947 · PUBLIC DOMAIN")] if os.path.exists(R("death_cert.png")) else []),
+    *([dict(kind="box", t0=w("Robert", 780), t1=w("occupation", 785) - 0.25, rect=cert_box(CERT_NAME, 266, 388, 560, 434), color=0xFFC8321F),
+       dict(kind="box", t0=w("apprentice", 785.6), t1=w("greatest", 789) - 0.2, rect=cert_box(CERT_JOB, 310, 816, 784, 886), color=0xFFC8321F),
+       dict(kind="credit", t0=782.0, t1=w("greatest", 789) - 0.2, text="DEATH CERTIFICATE, 1947 · PUBLIC DOMAIN")]
+      if os.path.exists(R("death_cert.png")) else []),
     # chapter 11
     L(796.3, 806.0, "THE TEN COMMANDMENTS FOR CON MEN"),
     dict(kind="lines", t0=806.4, t1=821.7, x=300, y=250, gap=96, size=58, font="serif", tick=True,
@@ -374,6 +393,8 @@ for o in OVERLAYS:                                   # a thud for every stamp, a
         SFX.append((o["t0"] + 0.1, "tick_run", -14))
         SFX.append((o["t0"] + o.get("count", 1.4), "coin", -12))
 for sh in SHOTS:                                     # paper for documents and archive prints, air for maps
+    if sh.get("quiet"):
+        continue
     if sh["kind"] == "arch" or (sh["kind"] == "gfx" and sh["fn"] in ("letter", "timeline", "record")):
         SFX.append((sh["t"] + 0.05, "paper", -14))
     elif sh["kind"] == "gfx" and sh["fn"] == "map":

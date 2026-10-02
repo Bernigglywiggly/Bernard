@@ -82,5 +82,12 @@
   "artist": "\nUnknown authorUnknown author or not provided",
   "date": "circa February 1932date QS:P571,+1932-02-00T00:00:00Z/10,P1480,Q5727902",
   "source": "https://commons.wikimedia.org/wiki/File%3ADepression%2C_Breadlines-long_line_of_people_waiting_to_be_fed%2C_New_York_City_-_NARA_-_196499.tif"
+ },
+ "death_cert.png": {
+  "title": "File:Victor Lustig Death Certificate.png",
+  "licence": "Public domain",
+  "artist": "The State Board of Health of Missouri",
+  "date": "1947-03-12",
+  "source": "https://commons.wikimedia.org/wiki/File%3AVictor_Lustig_Death_Certificate.png"
  }
 }

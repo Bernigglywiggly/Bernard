@@ -21,6 +21,10 @@ JOIN = 0.75         # between two takes of one chapter
 CARD = 3.2          # between chapters: the title card's breath
 LEAD = 1.2          # before the first word
 TAIL = 20.0         # the end screen after the last word
+# Re-reads spliced over a take from a word to the end of its chapter: (chapter, the word it starts on, take, its words).
+# 2 Oct: the certificate's occupation field reads "Apprentice Salesman & Counterfeiter"; the first read said only
+# "apprentice salesman".
+PATCHES = [("rock", "Occupation,", "vo_11_fix.wav", "words_11_fix.json")]
 
 
 def squeeze(y, cap=CAP, thresh_db=-42.0):
@@ -94,6 +98,21 @@ def main():
     for s, y in chunks:
         i = int(round(s * SR))
         out[i: i + len(y)] += y
+    for cid, word, take, wfile in PATCHES:
+        ch = next(c for c in chapters if c["id"] == cid)
+        start = next(w[1] for w in words if w[3] == cid and w[0] == word)
+        y, sr = sf.read(os.path.join(HERE, "src", take), dtype="float32")
+        y = y if y.ndim == 1 else y.mean(1)
+        assert sr == SR and start + len(y) / SR <= ch["v1"] + 0.6, (take, start + len(y) / SR, ch["v1"])
+        i0, i1 = int((start - 0.12) * SR), int(ch["v1"] * SR)
+        old = out[i0:i1]
+        y = y * (np.sqrt((old ** 2).mean()) / (np.sqrt((y ** 2).mean()) + 1e-9) if len(old) else 1.0)
+        out[i0:i1] = 0.0
+        j = int(start * SR)
+        out[j: j + len(y)] = y
+        words = [w for w in words if not (w[3] == cid and w[1] >= start - 0.01)]
+        words += [[x[0], round(start + x[1], 3), round(start + x[2], 3), cid] for x in json.load(open(os.path.join(HERE, "src", wfile)))]
+        words.sort(key=lambda w: w[1])
     os.makedirs(os.path.join(HERE, "build"), exist_ok=True)
     sf.write(os.path.join(HERE, "build", "voice.wav"), out, SR, subtype="PCM_24")
     json.dump(words, open(os.path.join(HERE, "build", "words.json"), "w"))

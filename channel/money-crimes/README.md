@@ -1,0 +1,22 @@
+# Channel 3 · Money crimes (scams, frauds, heists, explained)
+**Format:** cinematic AI shorts (9:16, ~60 s) first, then 6-10 min films from the best performers. Period-accurate,
+photoreal reenactments, labelled "AI reenactment" on screen and with YouTube's synthetic-content box ticked.
+**Look:** 35mm film grade, warm tungsten and cool shadows, gold name cards, red rubber-stamp numbers, kinetic captions.
+**Voice:** Imogen (Higgsfield Seed Audio preset), one take per short. **Music:** `beds.caper` (1920s swing, D minor).
+**Facts:** only charged or convicted people; contested stories told as "the story goes"; sources in each `make.py`.
+
+## Shorts
+| # | Title | Status | Files |
+|---|---|---|---|
+| 01 | He sold the Eiffel Tower. Twice. (Victor Lustig, 1925) | Made 2 Oct | `lab/shorts/lustig/` (`make.py`, `src/` stills and voice, `clips/` AI video, `out/`) |
+
+## How a short is made (about 160 credits for the flagship; 60-90 for a standard one)
+1. Script (~150 words) with a hook in the first line; facts checked.
+2. Voice: Higgsfield `generate_audio` (seed_audio, one take, ~1 credit); Whisper word timings (`faster-whisper`).
+3. Two character references, then 15-20 stills: GPT Image 2.5 (high, 2k, ~2.75 credits each) with the references.
+4. Animate: Kling 3.0 Pro (~1.5 credits a second), Veo 3.1 for the opening hook (~4 a second).
+5. Edit: `python3 lab/shorts/<short>/make.py` (the reel engine: grade, grain, captions, stamps, score ducked under the voice, SFX).
+
+## Next ideas
+Madoff (how a Ponzi actually works), Theranos, OneCoin's missing "Crypto Queen" (charged, at large), the Great Salad Oil
+Swindle (1963), Charles Ponzi himself, pig-butchering scam compounds (protective angle). The Trend desk adds fresh cases.

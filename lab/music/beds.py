@@ -1465,9 +1465,114 @@ def garage(bpm=130, plan=None, lead=0.0, key=0):
     return house(bpm, plan, lead, key, garage=True)
 
 
+# ================================================================ 11 · CAPER (1920s swing, 118 BPM, D minor)
+def brush(dur=0.18, seed=0, slap=1.0):
+    """A brush on the snare: a soft slap of filtered noise with a short swish tail."""
+    t = T(dur)
+    rng = np.random.default_rng(seed)
+    nz = fx.bq(fx.bq(rng.normal(0, 1, len(t)), "bp", 2400, q=0.5), "lp", 7000)
+    y = nz * (slap * np.exp(-t / 0.035) + 0.35 * np.exp(-t / 0.12)) * np.minimum(1, t / 0.004)
+    y *= np.clip((dur - t) / 0.02, 0, 1)
+    return (y / (np.max(np.abs(y)) + 1e-9)).astype(np.float32)
+
+
+def ride(dur=0.9, seed=0):
+    """A dark ride cymbal: the bell's ping over a long washy decay."""
+    t = T(dur)
+    rng = np.random.default_rng(seed)
+    sq = sum(np.sign(np.sin(2 * np.pi * f * 1.7 * t + rng.random() * 6)) for f in _HAT_F) / 6
+    y = 0.5 * sq + 0.5 * rng.normal(0, 1, len(t))
+    y = fx.bq(fx.bq(y, "hp", 3500), "lp", 9000) * np.exp(-t / 0.35) * np.minimum(1, t / 0.002)
+    y += 0.25 * np.sin(2 * np.pi * 3150 * t) * np.exp(-t / 0.25)
+    y *= np.clip((dur - t) / 0.03, 0, 1)
+    return (y / (np.max(np.abs(y)) + 1e-9)).astype(np.float32)
+
+
+def upright(m, dur, vel=1.0):
+    """An upright bass note: a round pluck with a woody thump, the fundamental doubled by a soft sine."""
+    x = pluck(m, dur, 0.45, 5.5, 12)
+    n = len(x)
+    t = np.arange(n) / SR
+    body = np.sin(2 * np.pi * float(hz(m)) * t) * np.exp(-t / 0.5) * np.minimum(1, t / 0.004)
+    body *= np.where(t > dur, np.exp(-(t - dur) * 25), 1.0)
+    return ((x + 0.6 * body) * vel).astype(np.float32)
+
+
+def caper(bpm=118, plan=None, lead=0.0, key=0):
+    """A 1920s caper in D minor for the con-artist stories (Money crimes): swung eighths, a walking upright bass,
+    brushes on 2 and 4, a dark ride, piano comping in the Charleston rhythm and, at the peak, a sneaking pizzicato
+    figure. Dm9 Gm9 A7b9 Dm9 (i iv V i), a bar each.
+
+      intro   the bass and the ride, quiet: a curtain going up
+      a       the swing: walking bass, brushes, ride, piano on 1 and the and-of-2
+      b       the scheme: the pizzicato figure creeps over the top
+      break   stop-time: the bass alone on the downbeats, a cymbal swell back in
+      out     two bars of swing, then the last chord, held"""
+    plan = plan or [("intro", 2), ("a", 8), ("b", 8), ("break", 2), ("a", 4), ("out", 4)]
+    s = Song(bpm, sum(n for _, n in plan), swing=1 / 3, seed=1925 + key, grid=8)
+    rng = s.rng
+    sec = sections(s, plan)
+    D = 38 + key
+    prog = [(D, "m9"), (D + 5, "m9"), (D + 7, "7b9"), (D, "m9")]
+    chord = lambda b: prog[b % 4]
+    PIZZ = ((0, 12), (2, 15), (4, 19), (6, 18), (8, 19), (12, 17), (14, 15))     # D F A G# A ... G F: a creeping line
+    for b in range(s.bars):
+        root, q = chord(b)
+        name = sec[b]
+        last = b == s.bars - 1
+        swing_on = name in ("a", "b") or (name == "out" and b < s.bars - 2)
+        # the walking bass: root, a chord tone, a passing tone, and a lead-in to the next root
+        nr = chord(b + 1)[0]
+        tones = [root, root + Q[q][2], root + Q[q][1] if name != "intro" else root + 7, nr - 1 if (nr - root) % 12 else root + 2]
+        if name == "break":
+            s.put("bass", upright(low(root, 33), s.beat * 0.9, 1.0), s.at(b, 0))
+        elif name == "out" and b >= s.bars - 2:
+            if b == s.bars - 2:
+                s.put("bass", upright(low(D, 33), s.bar * 1.8, 1.0), s.at(b, 0))
+        else:
+            for k, m in enumerate(tones):
+                s.put("bass", upright(low(m, 33), s.beat * 0.92, 1.0 if k == 0 else 0.85), s.at(b, 4 * k, 0.004))
+        # the ride: 1, 2 and the swung and-of-2, 3, 4 and the and-of-4
+        if name != "break" or b == s.bars - 1:
+            for st in ((0, 4, 6, 8, 12, 14) if name != "intro" else (0, 4, 8, 12)):
+                s.put("ride", ride(0.9, seed=st + b), s.at(b, st, 0.003), pan=0.35, gain=(1.0 if st % 4 == 0 else 0.6) * rng.uniform(0.85, 1.0))
+        # brushes on 2 and 4, a soft swirl under the rest
+        if swing_on:
+            for st in (4, 12):
+                s.put("brush", brush(0.2, seed=b + st), s.at(b, st, 0.003), pan=-0.15)
+            for st in (0, 2, 6, 8, 10, 14):
+                s.put("brush", brush(0.12, seed=100 + b + st, slap=0.25), s.at(b, st, 0.004), pan=-0.25, gain=0.35)
+        # the piano: Charleston comping, rootless voicings
+        if swing_on or (name == "out" and b == s.bars - 2):
+            hits = (0, 6) if swing_on else (0,)
+            for st in hits:
+                for k, m in enumerate(voicing(root, q, 55)):
+                    s.put("piano", rhodes(m, s.step * (3 if st == 0 else 2) if swing_on else s.bar * 1.8, 0.7), s.at(b, st, 0.003) + 0.006 * k,
+                          pan=-0.2 + 0.1 * k)
+        # the pizzicato figure creeps in over the scheme
+        if name == "b":
+            for st, iv in PIZZ:
+                s.put("pizz", pluck(D + 24 + iv - 12, s.step * 0.8, 0.7, 12.0, 16), s.at(b, st, 0.003), pan=0.4, gain=0.9)
+        # the break: a cymbal swell back into the swing
+        if name == "break" and b + 1 < s.bars and sec[b + 1] != "break":
+            s.put("swell", riser(s.bar, 2000, 9000, seed=b), s.at(b))
+    if "piano" in s.stems:
+        s.stems["piano"] = reverb(fx.bq(s.stems["piano"], "lp", 5000), 0.55, 0.18, 0.5)
+    for nm, (size, wet) in {"pizz": (0.6, 0.22), "brush": (0.35, 0.1), "ride": (0.5, 0.15), "swell": (0.7, 0.3)}.items():
+        if nm in s.stems:
+            s.stems[nm] = reverb(s.stems[nm], size, wet, 0.5)
+    for nm, f in {"ride": 7000, "brush": 6000, "swell": 6000}.items():           # dark on top, like the other beds
+        if nm in s.stems:
+            s.stems[nm] = fx.bq(fx.bq(s.stems[nm], "lp", f), "lp", f)
+    levels = {"bass": -19, "ride": -33, "brush": -31, "piano": -24, "pizz": -25, "swell": -32}
+    dyn = {"intro": (-6, -3), "a": 0, "b": 0.5, "break": -4, "out": (0, -6)}
+    mix = balance(s, levels, glue=True, hpf={"ride": 400, "brush": 300, "piano": 140, "pizz": 200, "swell": 300}, dyn=(sec, dyn))
+    return np.pad(mix, ((int(lead * SR), 0), (0, 0))) if lead else mix
+
+
 BEDS = {"terminal": terminal, "tape_loop": tape_loop, "night_drive": night_drive, "low_orbit": low_orbit,
         "two_step": two_step, "chrome_marl": chrome_marl, "mainframe": mainframe, "deep_field": deep_field, "arena": arena,
-        "house": house, "garage": garage}
+        "house": house, "garage": garage, "caper": caper}
 
 
 def main():

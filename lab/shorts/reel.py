@@ -233,6 +233,7 @@ def mix(voice_path, bed_path, words_, sfx, dur, out_wav, voice_db=-16.0, bed_db=
     v = v if v.ndim == 1 else v.mean(1)
     room = fx.cinema_ir(rt60=1.1, predelay=0.015, seed=5, dark=0.6)
     v = fx.chain_voice(v, room=room, room_wet=-20.0, target=voice_db)
+    v = fx.bq(fx.bq(v, "peak", 6800, q=2.0, gain_db=-3.5), "hshelf", 9000, gain_db=-2.5)   # softer esses, a darker top
     v = v if v.ndim == 2 else np.stack([v, v], 1)
     voice = np.zeros((n, 2), np.float32)
     voice[: min(n, len(v))] = v[: min(n, len(v))]
@@ -276,7 +277,8 @@ def render(spec, build, out_mp4):
             srcs.append(skia.Image.open(s[2]))
     ws = words(spec["WORDS"], fix=spec.get("FIX"))
     caps = chunks(ws)
-    wav = mix(spec["VOICE"], spec["BED"], ws, spec.get("SFX", []), end, os.path.join(build, "mix.wav"))
+    wav = mix(spec["VOICE"], spec["BED"], ws, spec.get("SFX", []), end, os.path.join(build, "mix.wav"),
+              bed_db=spec.get("BED_DB", -21.0), duck_db=spec.get("DUCK_DB", -10.0))
     yy, xx = np.mgrid[0:H, 0:W]
     vig = (1 - 0.38 * (((xx - W / 2) / (W * 0.62)) ** 2 + ((yy - H / 2) / (H * 0.62)) ** 2)).clip(0.45, 1)[:, :, None].astype(np.float32)
     rng = np.random.default_rng(7)

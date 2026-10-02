@@ -32,7 +32,7 @@ His name was Victor Lustig. Before he was finished he had conned Al Capone and l
 
 Sources: Wikipedia, "Victor Lustig" (with its references); History Facts; The Mob Museum. Where accounts differ, this film takes the cautious line: his second attempt to sell the tower failed because the buyer went to the police; the Capone story is a legend no one can prove; the "Ten Commandments for Con Men" are attributed to him.
 
-Archival photographs (public domain, via Wikimedia Commons): Victor Lustig in the Philadelphia Evening Public Ledger, 1935; the U.S. Department of Justice identification record, 1931; the FBI wanted notice and a counterfeit $10 note; Al Capone, 1929; Hôtel de Crillon, c. 1915 (Library of Congress); the Exposition Universelle, 1889; Alcatraz, 1930s (U.S. Navy); Pittsburgh, 1938; New York breadline, 1932 (U.S. National Archives); Lustig's death certificate, 1947. La Sorbonne, c. 1900, by Paul-Joseph-Victor Dargaud (Paris Musées, public domain).
+Archival photographs (public domain, via Wikimedia Commons): Victor Lustig in the Philadelphia Evening Public Ledger, 1935; the U.S. Department of Justice identification record, 1931; his federal mugshot card under the name Robert V. Miller; the FBI wanted notice and a counterfeit $10 note; Al Capone, 1929; Hôtel de Crillon, c. 1915 (Library of Congress); the Exposition Universelle, 1889; Alcatraz, 1930s (U.S. Navy); Pittsburgh, 1938; New York breadline, 1932 (U.S. National Archives); Lustig's death certificate, 1947. La Sorbonne, c. 1900, by Paul-Joseph-Victor Dargaud (Paris Musées, public domain).
 
 Scenes marked AI RECONSTRUCTION are dramatisations made with AI image and video tools, not real footage. Narration: AI voice. Music: an original score.
 

@@ -184,6 +184,9 @@ STILLS = [
     # the thumbnail
     ("th1", f"{L}, smirking at the camera and holding up a large antique brass key, the Eiffel Tower behind him at dusk, "
             "dramatic rim light, a poster-like composition with empty space on the right.", [REF_L], "h"),
+    # added: the Depression, when Commons wouldn't serve the NARA breadline photograph to this machine
+    ("m05", "New York, 1932, the Great Depression: a long breadline of men in worn overcoats and flat caps waiting along a "
+            "brick wall in winter, steam from a soup kitchen door, grey sky. Black-and-white documentary photograph look", [], "m"),
 ]
 
 # clip id -> (still id, motion prompt)

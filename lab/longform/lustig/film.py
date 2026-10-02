@@ -195,7 +195,8 @@ SHOTS = [
               (NYC, (-71.06, 42.36), 0.8, 1.4), (NYC, (-90.07, 29.95), 1.0, 2.6), (NYC, (-84.39, 33.75), 1.3, 2.6),
               (NYC, (-94.58, 39.1), 1.5, 3.0), (NYC, (-77.04, 38.9), 0.5, 1.2)],
       pins=[(*NYC, "NEW YORK", 0.0)]),
-    arch(596.0, "breadline.jpg", cam=((0.5, 0.5, 1.0), (0.55, 0.5, 1.12)), credit="THE DEPRESSION, 1930s · PUBLIC DOMAIN", x=0.4),
+    (arch(596.0, "breadline.jpg", mode="print", rot=1.2, fit=0.88, credit="NEW YORK BREADLINE, 1932 · NATIONAL ARCHIVES", x=0.4)
+     if os.path.exists(R("breadline.jpg")) else still(596.0, "m05", ((0.5, 0.5, 1.0), (0.55, 0.5, 1.12)), x=0.4)),
     arch(601.5, "lustig_note.jpg", mode="print", fit=0.5, rot=-3.0, credit="A 'LUSTIG' $10 NOTE · U.S. GOVERNMENT, PUBLIC DOMAIN"),
     still(610.3, "m04", ((0.5, 0.5, 1.0), (0.5, 0.5, 1.12))),
     arch(613.7, "wanted_1935.jpg", mode="print", rot=1.2, credit="WANTED NOTICE, 1935 · PUBLIC DOMAIN"),
@@ -231,8 +232,14 @@ SHOTS = [
     arch(756.5, "lustig_boi_1931.jpg", mode="print", rot=-1.0, credit="VICTOR LUSTIG · U.S. GOVERNMENT, PUBLIC DOMAIN"),
     g(761.6, "map", x=0.4, v0=(-95.0, 38.0, 36.0), v1=(-93.3, 37.4, 12.0), move=2.5, borders="ne_50m_admin_1_states_provinces_lakes",
       pins=[(*SPRINGFIELD, "SPRINGFIELD, MISSOURI", 0.6)]),
-    arch(775.6, "death_cert.png", cam=((0.5, 0.5, 1.0), (0.5, 0.5, 1.0))),
-    arch(781.9, "death_cert.png", cam=((0.5, 0.5, 1.0), (0.5, 0.5, 1.0))),
+    *([arch(775.6, "death_cert.png", cam=((0.5, 0.45, 1.0), (0.5, 0.4, 1.08))),
+       arch(781.9, "death_cert.png", cam=((0.5, 0.4, 1.08), (0.5, 0.4, 1.15)))]
+      if os.path.exists(R("death_cert.png")) else
+      [g(775.6, "record", head="CERTIFICATE OF DEATH · MISSOURI · 1947",
+         fields=[("NAME OF DECEASED", "Robert V. Miller", 0.4), ("DATE OF DEATH", "March 11, 1947", 1.2),
+                 ("PLACE OF DEATH", "Federal prison hospital, Springfield", 1.9), ("USUAL OCCUPATION", "Apprentice salesman", 2.6)],
+         hi=[(0, w("Robert", 780) - 775.6), (3, w("apprentice", 784) - 775.6)],
+         note="TRANSCRIBED FROM HIS DEATH CERTIFICATE")]),
     arch(789.0, "lustig_1935.jpg", mode="print", rot=1.0, x=0.5, credit="VICTOR LUSTIG, 1935 · PUBLIC DOMAIN"),
     # ---- 11 the con man's commandments
     card("rules", 10, "The Con Man's Commandments", "n01"),
@@ -327,7 +334,7 @@ OVERLAYS = [
     N(756.8, 761.4, "VICTOR LUSTIG", "DIED 11 MARCH 1947", x=1440, y=900, size=58),
     dict(kind="lines", t0=763.0, t1=775.4, x=200, y=800, gap=70, size=44, font="mono",
          items=[(765.0, "1922 — 'ROBERT DUVAL' WALKS OUT WITH $10,000"), (770.5, "1947 — VICTOR LUSTIG DIES HERE")]),
-    dict(kind="credit", t0=775.6, t1=789.0, text="DEATH CERTIFICATE, 1947 · PUBLIC DOMAIN"),
+    *([dict(kind="credit", t0=775.6, t1=789.0, text="DEATH CERTIFICATE, 1947 · PUBLIC DOMAIN")] if os.path.exists(R("death_cert.png")) else []),
     # chapter 11
     L(796.3, 806.0, "THE TEN COMMANDMENTS FOR CON MEN"),
     dict(kind="lines", t0=806.4, t1=821.7, x=300, y=250, gap=96, size=58, font="serif", tick=True,
@@ -367,7 +374,7 @@ for o in OVERLAYS:                                   # a thud for every stamp, a
         SFX.append((o["t0"] + 0.1, "tick_run", -14))
         SFX.append((o["t0"] + o.get("count", 1.4), "coin", -12))
 for sh in SHOTS:                                     # paper for documents and archive prints, air for maps
-    if sh["kind"] == "arch" or (sh["kind"] == "gfx" and sh["fn"] in ("letter", "timeline")):
+    if sh["kind"] == "arch" or (sh["kind"] == "gfx" and sh["fn"] in ("letter", "timeline", "record")):
         SFX.append((sh["t"] + 0.05, "paper", -14))
     elif sh["kind"] == "gfx" and sh["fn"] == "map":
         SFX.append((sh["t"] + 0.05, "whoosh", -16))

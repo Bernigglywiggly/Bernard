@@ -407,6 +407,79 @@ def shorts_page(name="shorts", title="AI shorts: Money crimes and What if"):
     write(name, title, lede, order, items, extra)
 
 
+LONGFORM = {"lustig": ("Money crimes · Long-form 01", "Money_Crimes_01_The_Man_Who_Sold_the_Eiffel_Tower")}
+
+
+def longform_page(slug="lustig"):
+    """A long-form documentary (lab/longform/<slug>/out): the 1080p file, three thumbnails, titles, the description
+    with chapters and credits, the pinned comment and the upload settings, all from its POST.md."""
+    channel, fname = LONGFORM[slug]
+    d = os.path.join(LAB, "longform", slug)
+    post = open(os.path.join(d, "POST.md")).read()
+    sec = lambda h: post.split(f"## {h}\n", 1)[1].split("\n## ", 1)[0].strip()
+    title_block = sec("Title")
+    titles = [title_block.split("**")[1]] + [ln[2:].strip() for ln in title_block.splitlines() if ln.startswith("- ")]
+    out = os.path.join(HERE, "build", slug)
+    media = os.path.join(out, "media")
+    os.makedirs(media, exist_ok=True)
+    v = video_entry(os.path.join(d, "out", f"{slug}_1080p.mp4"), media, f"{fname}_1080p.mp4", slug)
+    thumbs, extra = [], {}
+    for k, label in zip("abc", ("A", "B", "C")):
+        src = os.path.join(d, "out", f"thumb_{k}.jpg")
+        if os.path.exists(src):
+            shutil.copy(src, os.path.join(media, f"thumb_{k}.jpg"))
+            extra[f"media/thumb_{k}.jpg"] = os.path.join(media, f"thumb_{k}.jpg")
+            thumbs.append(dict(file=f"thumb_{k}.jpg", label=f"Thumbnail {label}", alt=f"{titles[0]}: thumbnail {label}",
+                               name=f"{fname}_thumbnail_{label}.jpg"))
+    m, s_ = divmod(int(round(v["dur"])), 60)
+    steps = [ln[2:].replace("**", "") for ln in sec("Upload settings").splitlines() if ln.startswith("- ")]
+    item = dict(slug=slug, eyebrow=f"{channel} · {m}:{s_:02d} · 1080p", name=titles[0],
+                meta="A documentary with chapters: AI reconstructions (labelled on screen), real archive photographs, maps and "
+                     "an original score. Past 8 minutes, YouTube allows mid-roll ads.",
+                video=v, thumbs=thumbs, titles=titles, description=sec("Description"), pinned=sec("Pinned comment"),
+                steps=["Upload the .mp4 and paste the title and description (the chapters come from its timestamps)."] + steps +
+                      ["Put all three thumbnails in Test & Compare.", "Publish, then post the pinned comment and pin it."],
+                shorts=[])
+    lede = (f"The first long-form film, ready to upload: {m}:{s_:02d} at 1080p, three thumbnails to test against each other, "
+            "titles, a description with chapters, sources and archive credits, and the settings to tick.")
+    order = [("1", "Upload this film first: long-form is the money product"),
+             ("2", "Then post the Eiffel Tower short (shorts page) as its trailer, linked to this film"),
+             ("3", "Cut 3-5 more shorts from the film's best moments")]
+    write(slug, titles[0], lede, order, [item], extra)
+
+
+def film_shorts_page(slug="lustig"):
+    """The vertical shorts cut from a long-form film (lab/longform/<slug>/out/short_*_9x16.mp4, copy in its shorts.py)."""
+    import importlib.util
+    d = os.path.join(LAB, "longform", slug)
+    spec = importlib.util.spec_from_file_location("film_shorts", os.path.join(d, "shorts.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    channel = LONGFORM[slug][0].split(" · ")[0]
+    name = f"{slug}_shorts"
+    out = os.path.join(HERE, "build", name)
+    media = os.path.join(out, "media")
+    os.makedirs(media, exist_ok=True)
+    items, order = [], []
+    for key, sp in mod.SHORTS.items():
+        src = os.path.join(d, "out", f"short_{key}_9x16.mp4")
+        if not os.path.exists(src):
+            continue
+        v = video_entry(src, media, f"{slug}_{key}_9x16.mp4", f"{slug}_{key}")
+        items.append(dict(slug=f"{slug}-{key}", eyebrow=f"{channel} · Short from the film · {int(round(v['dur']))} s · 9:16",
+                          name=sp["title"], vertical=True,
+                          meta=f"Cut from the long-form film \"{sp['film']}\": its picture, narration and score, with captions and an end card that sends viewers to the full film.",
+                          video=v, thumbs=[], caption=sp["caption"], titles=[sp["title"]],
+                          description=f"{sp['caption']} Full story: {sp['film']} (linked).", pinned=sp["pinned"],
+                          steps=STEPS_SHORT[:2] + ["YouTube: set the full film as this Short's related video, so viewers can tap through to it.",
+                                                   "TikTok and Reels: pin a comment naming the full film on YouTube."] + STEPS_SHORT[3:],
+                          shorts=[]))
+        order.append(("Short", sp["title"]))
+    lede = ("Shorts cut from the long-form film, for TikTok, YouTube Shorts and Reels: each is a stretch of the film with its "
+            "narration, a headline, live captions and an end card that sends people to the full documentary.")
+    write(name, f"{LONGFORM[slug][0].split(' · ')[0]}: shorts from the film", lede, order, items, {})
+
+
 def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP09 to EP12"):
     """The next four films: each film's 1080p file, two thumbnails, titles, description with sources, pinned comment and
     its shorts with captions and posting days."""
@@ -465,7 +538,8 @@ def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP
 
 
 if __name__ == "__main__":
-    {"season1": season1, "season2": season2, "new": new, "shorts": shorts_page,
+    {"season1": season1, "season2": season2, "new": new, "shorts": shorts_page, "lustig": longform_page,
+     "lustig_shorts": film_shorts_page,
      # EP04-EP08 with their shorts are ~310 MiB, over one artifact version's 256 MiB: two pages, in upload order
      "films1": lambda: new(("ep05", "ep08", "ep04"), "films1", "The Curve: EP05, EP08, EP04"),
      "films2": lambda: new(("ep06", "ep07"), "films2", "The Curve: EP06, EP07")}[sys.argv[1]]()

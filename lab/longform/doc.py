@@ -584,6 +584,40 @@ def letter(c, dt, dur, opt):
 
 
 @gfx
+def record(c, dt, dur, opt):
+    """A typed transcription of a document's key fields on a card, labelled as a transcription (used when the scan
+    itself isn't available): opt.head, opt.fields [(label, value, t)], opt.hi [(field, t)] (boxed in red from t), opt.note."""
+    c.drawRect(skia.Rect.MakeWH(W, H), P(0xFF15110C))
+    z = 1.0 + 0.05 * ease(dt / dur)
+    c.save()
+    c.translate(W / 2, H / 2 + 20)
+    c.scale(z, z)
+    c.rotate(-1.2)
+    pw, ph = 1240, 820
+    r = skia.Rect.MakeXYWH(-pw / 2, -ph / 2, pw, ph)
+    c.drawRect(r.makeOffset(14, 20), shadow(0.8, 28))
+    c.drawRect(r, P(0xFFE9E0C8))
+    ink = 0xFF22262E
+    ft, fl, fv = skia.Font(FONT["mono"], 26), skia.Font(FONT["mono"], 22), skia.Font(FONT["type"], 44)
+    text(c, opt.get("head", "CERTIFICATE OF DEATH"), 0, -ph / 2 + 90, ft, P(ink), align="center", track=8)
+    c.drawLine(-pw / 2 + 80, -ph / 2 + 120, pw / 2 - 80, -ph / 2 + 120, P(ink, 0.6, StrokeWidth=2))
+    y = -ph / 2 + 210
+    for i, (label, value, t0) in enumerate(opt["fields"]):
+        a = ease((dt - t0) / 0.35)
+        text(c, label, -pw / 2 + 90, y, fl, P(ink, 0.7 * a), track=3)
+        text(c, value, -pw / 2 + 90, y + 52, fv, P(0xFF1A2E5A, a))
+        hit = [t for k, t in opt.get("hi", []) if k == i and dt > t]
+        if hit:
+            u = ease((dt - hit[0]) / 0.5)
+            wv = fv.measureText(value)
+            c.drawRect(skia.Rect.MakeXYWH(-pw / 2 + 74, y + 8, (wv + 32) * u, 64), P(RED, 0.9, Style=skia.Paint.kStroke_Style, StrokeWidth=5))
+        y += 132
+    c.restore()
+    f = skia.Font(FONT["mono"], 20)
+    text(c, opt.get("note", "TRANSCRIBED FROM THE RECORD"), W - 70, H - 52, f, P(CREAM, 0.6), align="right", track=2)
+
+
+@gfx
 def boxdiagram(c, dt, dur, opt):
     """How the Rumanian Box 'worked' (opt.reveal=False) and how it really worked (reveal=True)."""
     paper_bg(c)
@@ -755,6 +789,7 @@ def draw_shot(c, sh, t, a, b, readers, i):
 
 
 def frame_at(film, sp, t, readers, fin, f):
+    """One frame at time t. fin=None leaves the grain and vignette to the delivery encode (LOOK)."""
     shots = film.SHOTS
     i = max(k for k, (a, _) in enumerate(sp) if a <= t + 1e-6)
     live = {i}
@@ -768,7 +803,8 @@ def frame_at(film, sp, t, readers, fin, f):
     for j in list(readers):
         if j not in live:
             readers.pop(j).close()
-    arr = fin(arr, f)
+    if fin:
+        arr = fin(arr, f)
     s = skia.Surface(arr, colorType=skia.ColorType.kBGRA_8888_ColorType)
     c = s.getCanvas()
     for o in film.OVERLAYS:
@@ -782,9 +818,9 @@ def render_segment(film_dir, t0, t1, out):
     build = os.path.join(film_dir, "build")
     prepare(film, build)
     sp = spans(film.SHOTS, film.END)
-    fin = Finish(seed=int(t0 * 10) + 7)
+    fin = None                                     # grain and vignette: once, in deliver() (LOOK)
     enc = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}", "-r",
-                            str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "fast", "-crf", "15", "-pix_fmt", "yuv420p",
+                            str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "superfast", "-crf", "16", "-pix_fmt", "yuv420p",
                             out], stdin=subprocess.PIPE)
     readers = {}
     f0, f1 = int(round(t0 * FPS)), int(round(t1 * FPS))
@@ -896,12 +932,15 @@ def render(film_dir, only=None, workers=3):
     return hq
 
 
-def deliver(src, dst, dur, mib=240):
-    """Two-pass to a size: the whole file inside mib MiB (a downloads page holds 256 MiB a version)."""
+LOOK = "vignette=angle=PI/6,noise=c0s=4:c0f=t"      # the film look over every shot: a soft vignette, moving luma grain
+
+
+def deliver(src, dst, dur, mib=246):
+    """Two-pass to a size: the whole file inside mib MiB (a downloads page holds 256 MiB a version), with LOOK."""
     total = mib * 8 * 1024 * 1024 / dur
     v = int(total - 160_000)
     log = dst + ".2pass"
-    base = ["ffmpeg", "-y", "-v", "error", "-i", src, "-c:v", "libx264", "-preset", "slow", "-tune", "film", "-b:v", str(v),
+    base = ["ffmpeg", "-y", "-v", "error", "-i", src, "-vf", LOOK, "-c:v", "libx264", "-preset", "slow", "-tune", "film", "-b:v", str(v),
             "-maxrate", str(int(v * 1.8)), "-bufsize", str(int(v * 3)), "-pix_fmt", "yuv420p", "-passlogfile", log]
     subprocess.run(base + ["-pass", "1", "-an", "-f", "mp4", os.devnull], check=True)
     subprocess.run(base + ["-pass", "2", "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", dst], check=True)

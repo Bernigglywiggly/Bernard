@@ -3,8 +3,28 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 1 Oct 2026 (~3pm UTC), cloud session on branch `claude/funny-newton-gd9w8v` (contains all of
-`claude/lucid-archimedes-77tqpt`). **Start with "1 Oct afternoon" just below, then "NEXT SESSION, START HERE" and "Overnight 1 Oct" (every link, the voice queue).**
+Updated 2 Oct 2026 (~11pm UTC), cloud session on branch `claude/funny-newton-gd9w8v` (contains all of
+`claude/lucid-archimedes-77tqpt`). **Start with "2 Oct" just below (`STUDIO.md` maps everything), then "1 Oct afternoon",
+"NEXT SESSION, START HERE" and "Overnight 1 Oct".**
+
+## 2 Oct: AI video, then long-form first (read this first)
+- **The direction (the user):** "go all in on best possible vids... full creative reign", then "i wanna target long form yt
+  for money, shorts is bonus and discovery". So every channel ships 12-15 minute 16:9 documentaries (mid-rolls from 8
+  minutes) and each film is cut into 3-5 shorts that point back to it. `channel/CHANNELS.md` has the plan and budget.
+- **Tools:** Higgsfield (connected on the cloud account): GPT Image 2.5 stills (medium 2k = 1 credit, high = 2.75),
+  Kling 3.0 Pro clips (5 s, sound off), Seed Audio TTS (narrators Imogen and Zoe; ~1 credit a take). Batch tools take
+  12 at a time and sometimes answer 429: resubmit the failed indices. A "preset recommendation" can block a video job:
+  pass `declined_preset_id: "24bae836-2c4a-48e0-89b6-49fcc0b21612"`. Credits: 1,498 at the start of 2 Oct, **851 now**.
+- **Shorts (`lab/shorts/reel.py`, 9:16):** Money crimes 01 (Victor Lustig, 63 s) and What if 01 (Earth stops spinning,
+  66 s), each with `make.py`, `assets.json` + `fetch.py`, `POST.md`. Page: https://claude.ai/artifact/J5CqJtyMALxMBsxTGb6un6
+- **Long-form (`lab/longform/doc.py`):** the documentary engine (see its docstring and `channel/money-crimes/README.md`
+  for the steps). Film 01 is `lab/longform/lustig`: "The Man Who Sold the Eiffel Tower (And Conned Al Capone)",
+  14:56, 11 chapters, ~320 credits. On a fresh checkout: `python3 fetch.py` (AI media and voice), then
+  `python3 ../doc.py lustig render` (about an hour; `segs N` re-renders one chapter). Needs
+  `pip install opencv-python-headless faster-whisper`. Wikimedia Commons throttles this machine (about one 1 MB image
+  a minute): `tools/commons.py` retries; the film's archive photos are committed in `src/arch` with credits.
+- **Still to do:** the long-form's downloads page (link below when published), shorts cut from it, then film 01 for
+  the other channels (What if, Maps & power, The Margin), about 180 credits each.
 
 ## 1 Oct afternoon: house and garage, the narration glitch fixed, female voices ready (read this first)
 - **Music (the user: "I don't like the background music... house music, or a bit of garage"; on hearing both: "both of

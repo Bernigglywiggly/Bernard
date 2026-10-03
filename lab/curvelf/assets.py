@@ -93,13 +93,44 @@ def fetch(film_dir, resp):
 
 
 def refetch(film_dir):
-    """A fresh checkout: download every recorded result again (assets_ai.json keeps the URLs)."""
+    """A fresh checkout: download every recorded result again (assets_ai.json keeps the picture URLs, assets_vo.json the
+    narration takes), and rebuild archive pictures from src/arch (shots.ARCH_FILES)."""
     ap = os.path.join(film_dir, "assets_ai.json")
-    for k, u in json.load(open(ap)).items():
+    for k, u in (json.load(open(ap)) if os.path.exists(ap) else {}).items():
         dest = os.path.join(film_dir, "src", "ai", k + os.path.splitext(u.split("?")[0])[1])
         if not os.path.exists(dest):
             os.makedirs(os.path.dirname(dest), exist_ok=True)
             open(dest, "wb").write(urllib.request.urlopen(u, timeout=180).read())
+    vp = os.path.join(film_dir, "assets_vo.json")
+    for rel, u in (json.load(open(vp)) if os.path.exists(vp) else {}).items():
+        dest = os.path.join(film_dir, rel)
+        if not os.path.exists(dest):
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            open(dest, "wb").write(urllib.request.urlopen(u, timeout=180).read())
+    join_halves(film_dir)
+    for k, f in getattr(shots(film_dir), "ARCH_FILES", {}).items():
+        dest = os.path.join(film_dir, "src", "ai", k + ".png")
+        if not os.path.exists(dest):
+            import cv2
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            cv2.imwrite(dest, cv2.imread(os.path.join(film_dir, "src", "arch", f)))
+
+
+def join_halves(film_dir, gap=0.5):
+    """A take the voice model kept rejecting, generated in two halves (src/vo_07a.wav + vo_07b.wav): join each pair into
+    the take kit.py reads (src/vo_07.wav), with a short pause between."""
+    import numpy as np
+    import soundfile as sf
+    src = os.path.join(film_dir, "src")
+    for f in sorted(os.listdir(src)) if os.path.isdir(src) else []:
+        if f.startswith("vo_") and f.endswith("a.wav"):
+            a, b, out = os.path.join(src, f), os.path.join(src, f[:-5] + "b.wav"), os.path.join(src, f[:-5] + ".wav")
+            if os.path.exists(b) and not os.path.exists(out):
+                x, sr = sf.read(a)
+                y, _ = sf.read(b)
+                pad = np.zeros((int(gap * sr),) + x.shape[1:])
+                sf.write(out, np.concatenate([x, pad, y]), sr)
+                print("joined", os.path.basename(out))
 
 
 def todo(film_dir):

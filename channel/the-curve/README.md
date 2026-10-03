@@ -14,7 +14,7 @@ this account; if the key is added, the engine can switch back.
 |---|---|---|---|
 | 01 | The AI That Escaped · 13:19 | Made 3 Oct · [film](https://claude.ai/artifact/NC5QdLVBaBEMemcsaHLPYM) · [shorts](https://claude.ai/artifact/SXhZZiVogib4tEhsbR7tNs) | `lab/curvelf/lf01_escape/` |
 | 02 | The Price of Thinking · 10:48 | Made 3 Oct · [film](https://claude.ai/artifact/JgAJPt8FQ45dJivdXQy7f9) · [shorts](https://claude.ai/artifact/4LqUZUotHs9EEvvuj1gr7J) | `lab/curvelf/lf02_price/` |
-| 03 | Too Dangerous to Release (GPT-6.1 Astra, Gemini 4 Argon, Mythos) | Scripted and voiced 3 Oct; pictures next | `lab/curvelf/lf03_held/` |
+| 03 | Too Dangerous to Release (GPT-6.1 Astra, Gemini 4 Argon, Mythos) | Script, voice and pictures done 3 Oct; render next (HANDOFF.md) | `lab/curvelf/lf03_held/` |
 
 ## How a long-form film is made
 1. `script.py`: 11-12 chapters of beats, each beat a spoken line and one visual (img, clip, num, words, quote, list,

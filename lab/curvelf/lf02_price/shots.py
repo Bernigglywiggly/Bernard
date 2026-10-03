@@ -29,6 +29,7 @@ STILLS = [
     ("a03", "A Victorian steam engine with a large flywheel and pistons in a dark engine room, coal glowing in the furnace"),
 ]
 CLIPS = {}
+ARCH_FILES = {"a01": "red_queen.jpg", "a02": "jevons.jpg"}   # src/arch originals, converted by assets.py refetch
 ARCHIVE = {
     "a01": "\"Alice and the Red Queen\", John Tenniel, Through the Looking-Glass (1871), public domain, via Wikimedia Commons",
     "a02": "William Stanley Jevons, 1858, public domain, via Wikimedia Commons",

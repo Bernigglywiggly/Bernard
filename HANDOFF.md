@@ -3,9 +3,72 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 2 Oct 2026 (~11pm UTC), cloud session on branch `claude/funny-newton-gd9w8v` (contains all of
-`claude/lucid-archimedes-77tqpt`). **Start with "2 Oct" just below (`STUDIO.md` maps everything), then "1 Oct afternoon",
-"NEXT SESSION, START HERE" and "Overnight 1 Oct".**
+Updated 3 Oct 2026 (~8:30pm UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "3 Oct evening"
+just below (`STUDIO.md` maps everything), then "3 Oct: jazz", "2 Oct" and the rest.**
+
+## 3 Oct evening: handed over to the other account (START HERE)
+The user (3 Oct, evening): "Save everything for other claude account to pickup". Everything is pushed; this account's
+scheduled check-ins (LF03 continuation, PR #1 hourly) were cancelled so the two accounts don't both work the branch.
+
+**What the user asked for today, in order**
+1. Jazz instead of synth beds for Money crimes / true-story films: done (section below).
+2. "first i need daily uploads from 1st channel ... make 5 day backlog, then we do other channels": the channel is
+   **The Curve** (picked in chat). Five long-form films (12-15 min, 16:9), one a day, each with 3 Shorts, thumbnails,
+   POST.md and upload pages. Then the other channels (What if, Maps & power, The Margin).
+3. Remotion for motion graphics ("do this: it will help alot with vids and motion graphics"): done, `lab/motion`.
+4. Declined (do not revisit): a fake Tesco text-message screenshot (fabricated record), asked twice.
+
+**The Curve long-form backlog** (engine `lab/curvelf/kit.py`; per-film steps in `channel/the-curve/README.md`)
+| # | Film | State |
+|---|---|---|
+| LF01 | The AI That Escaped (13:19) | Finished; pages on the cloud account |
+| LF02 | The Price of Thinking (10:48) | Finished 3 Oct: thumbnails, POST.md, 3 Shorts, pages on the cloud account |
+| LF03 | Too Dangerous to Release (GPT-6.1 Astra cancelled, the UK AISI test, Gemini 4 Argon for defenders only, Mythos, the FTC) | Script, voice (11 takes) and 32 stills done; 2 Kling clips at the end of the session (see below); **next: render** |
+| LF04, LF05 | not started | Candidates: "The Yes Machine" (EP14's sycophancy story at full length), what a one-megawatt AI factory costs and who pays. Bacteriophages are **dropped** (a safety filter stopped the research; don't revisit). |
+
+**Resume LF03 on a fresh checkout** (cloud: 4 CPUs; needs `pip install opencv-python-headless faster-whisper skia-python`)
+```
+cd lab/curvelf
+python3 assets.py lf03_held refetch      # 32 stills + clips (assets_ai.json) and the 11 takes (assets_vo.json; take 7 is
+                                         # two halves the voice model would only accept split, joined automatically)
+python3 kit.py lf03_held vo              # Whisper (small.en) word timings, squeezes silences -> build/voice.wav, words.json
+python3 kit.py lf03_held music           # chapter beds (deep_field / house / garage cycle)
+python3 kit.py lf03_held timeline        # check every beat found its words
+python3 kit.py lf03_held frames 5 60 300 # QC stills -> build/qc/sheet.jpg (look at it)
+python3 kit.py lf03_held render          # ~25 min render + ~15 min encode -> out/lf03_held_1080p.mp4 (<246 MiB, -14 LUFS)
+```
+Run long jobs in the background (run_in_background), not with nohup. Then: a `thumb.py` FILMS entry (three thumbnails;
+ideas: "TOO DANGEROUS TO RELEASE" on the vault, "IT KNEW. IT ATTACKED ANYWAY." on the glass head, "29% WENT ROGUE"),
+`POST.md` and `shorts.py` (copy LF02's; Shorts: the cold open, the AISI test numbers, "it knew"), cut them with
+`python3 ../longform/vertical.py <abs path to lf03_held>`, add `lf03` / `lf03_shorts` to `lab/pack/build.py` LONGFORM and
+the CLI, build, publish (pages over 64 MB go up in batches of about 55 MiB), update `channel/the-curve/README.md` and
+`STUDIO.md`, commit, push. If the two Kling clips (k01 vault door, k02 loop of light) are missing from assets_ai.json,
+either regenerate them (`python3 assets.py lf03_held clips`, then track/fetch) or swap the two `("clip", ...)` beats in
+`script.py` for stills `c01` and `c02`.
+
+**Accounts and tools**
+- Pages (claude.ai artifacts) are private to the account that published them: rebuild with `lab/pack/build.py` and
+  republish on the other account if needed. The finished films are not in git (too big): re-render from the repo.
+- Higgsfield job IDs in `src/jobs.json` / `vo_jobs.json` only resolve on the cloud account, but the result URLs in
+  `assets_ai.json` / `assets_vo.json` are public, so `refetch` works anywhere. Cloud-account credits: 504 at handover.
+- Voice: Higgsfield Seed Audio preset "Harrison" `573e5163-59b3-4926-aab1-951ef2985f81` (wav, 48 kHz), one take per
+  chapter (`kit.parts`). Stills: GPT Image 2.5, medium, 2k, 16:9 (+ `assets.STYLE`). Clips: Kling 3.0 Pro, 5 s, sound off,
+  `declined_preset_id 24bae836-2c4a-48e0-89b6-49fcc0b21612`, start image = the still's job ID. Batches of 6 (429s).
+- The Trend desk routine still runs daily at 05:49 UTC on the cloud account and publishes a private page there; its
+  findings are filed by hand into `channel/trends/<date>.md` and `BOARD.md`.
+- PR bernigglywiggly/bernard#1 (draft, this branch): no CI, no reviews at handover.
+
+**Remotion (`lab/motion`, new 3 Oct)**: Remotion 4.0.532 for code-made motion graphics. Read `lab/motion/AGENTS.md`.
+`npm install`, `npm run dev` (Studio), `npm run new -- Name`, `npm run render:sample`. Fonts and audio are local.
+
+**Standing rules** (from the user, still in force)
+- Pinterest DtWork7 is personal: never touch it. Don't clone or imitate real people's voices.
+- No model identifiers in commits, PRs or anything pushed. Push only to `claude/funny-newton-gd9w8v`.
+- Keep replies concise (the user's preference). Never put the local Kokoro voice in anything published.
+- The ElevenLabs key never goes in the repo; never ask the user to paste a key in chat. Don't send the user's email
+  to services. Don't spend vidIQ credits without asking. Higgsfield credits are fine for creative work.
+- Uploading to YouTube is outward-facing: only with explicit permission. No fabricated records, no impersonating
+  organisations.
 
 ## 3 Oct: jazz for the true-story films
 - **The user (3 Oct):** "scrap the background music replace with jazz or house jazz for these sorts of vids, futuristic bg

@@ -7,6 +7,18 @@ Updated 2 Oct 2026 (~11pm UTC), cloud session on branch `claude/funny-newton-gd9
 `claude/lucid-archimedes-77tqpt`). **Start with "2 Oct" just below (`STUDIO.md` maps everything), then "1 Oct afternoon",
 "NEXT SESSION, START HERE" and "Overnight 1 Oct".**
 
+## 3 Oct: jazz for the true-story films
+- **The user (3 Oct):** "scrap the background music replace with jazz or house jazz for these sorts of vids, futuristic bg
+  music dont match". So Money crimes (and other history/true-story films) are scored with jazz; The Curve keeps its
+  synth beds. Source: Kevin MacLeod's jazz (incompetech.com, CC BY 4.0: free on monetised YouTube with the credit line in
+  the description). `lab/music/jazz/library.py` fetches and cuts it (`section`, `credit_line`); Higgsfield has no music
+  model for this and vidIQ music costs 25 credits a track (21 left on 3 Oct).
+- Lustig film: `lustig/music.py` maps each chapter to a cue (Covert Affair, No Good Layabout, Spy Glass, I Knew a Guy,
+  Dances and Dames, Opportunity Walks, On the Cool Side, Cool Blast, Walking Along, Faster Does It, Night on the Docks -
+  Trumpet, Acid Trumpet ending on the end card); `doc.py lustig mix` then `render` re-delivers without re-rendering the
+  picture. Its shorts get the new sound by re-cutting (`vertical.py lustig`); the Eiffel short by `make.py audio`
+  (`reel.remix`, picture kept). Credits are in both POST.md files and on the pages.
+
 ## 2 Oct: AI video, then long-form first (read this first)
 - **The direction (the user):** "go all in on best possible vids... full creative reign", then "i wanna target long form yt
   for money, shorts is bonus and discovery". So every channel ships 12-15 minute 16:9 documentaries (mid-rolls from 8

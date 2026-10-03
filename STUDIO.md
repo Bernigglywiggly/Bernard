@@ -32,6 +32,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 | 16:9 long-form documentary engine (AI stills/clips, archive prints, maps, documents, counters, chapter cards, parallel render) | `lab/longform/doc.py`, one folder per film (`lustig/`: script, vo, music, film, thumb) |
 | Public-domain archive search and download (Wikimedia Commons, credits recorded) | `lab/longform/tools/commons.py` |
 | Music beds (all synthesised, no samples) | `lab/music/beds.py`: house, garage, caper, arena, deep_field, ...; previews `lab/out/music/new` |
+| Jazz for true-story films (3 Oct) | `lab/music/jazz/library.py`: Kevin MacLeod, CC BY 4.0; `section()` cuts a cue, `credit_line()` for descriptions |
 | Voice | ElevenLabs line cache `lab/voice/cache/eleven` + `lab/tools/eleven_tts.py`, `lab/engine/voice.py`; auditions `lab/tools/voice_audition.py`; Higgsfield Seed Audio for the shorts |
 | Sound effects | `lab/out/sfx` (synthesised), `lab/sfx` |
 | Upload pages | `lab/pack/build.py` (new, films1, films2, season1, season2, shorts, lustig, lustig_shorts) |

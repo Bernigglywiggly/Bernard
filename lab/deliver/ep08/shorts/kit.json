@@ -1,0 +1,65 @@
+[
+ {
+  "name": "part1",
+  "file": "part1.mp4",
+  "start": 0.0,
+  "dur": 46.6,
+  "tag": "CHEAPER MAKES MORE \u00b7 PART 1 OF 3",
+  "hook": "Better engines made Britain burn MORE coal",
+  "post": "1865: steam engines got far more efficient, so Britain should have burned less coal. It burned more. Then light got 3,000x cheaper, and we used 40,000x more. Part 1 of 3. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve"
+ },
+ {
+  "name": "part2",
+  "file": "part2.mp4",
+  "start": 46.56,
+  "dur": 34.8,
+  "tag": "CHEAPER MAKES MORE \u00b7 PART 2 OF 3",
+  "hook": "AI got 1,000x cheaper. Use exploded.",
+  "post": "A million tokens: about $60 in 2021, about 6 cents by 2024. Google now handles 3.2 quadrillion tokens a month, 300x two years earlier. Part 2 of 3. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve"
+ },
+ {
+  "name": "part3",
+  "file": "part3.mp4",
+  "start": 81.85,
+  "dur": 45.2,
+  "tag": "CHEAPER MAKES MORE \u00b7 PART 3 OF 3",
+  "hook": "What if thinking got as cheap as light?",
+  "post": "Efficiency doesn't shrink demand. It unlocks it. That's why cheaper AI means more data centres, more power and more chips. Part 3 of 3. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve"
+ },
+ {
+  "name": "light",
+  "file": "light.mp4",
+  "start": 25.38,
+  "dur": 21.2,
+  "tag": "CHEAPER MAKES MORE",
+  "hook": "Light got 3,000x cheaper. We used 40,000x more.",
+  "post": "Britain, 1800 to 2000: the real price of light fell about 3,000-fold, and total use rose about 40,000-fold (Fouquet & Pearson). Streetlights, shop windows, screens. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve"
+ },
+ {
+  "name": "bigmacs",
+  "file": "bigmacs.mp4",
+  "start": 48.5,
+  "dur": 15.0,
+  "tag": "CHEAPER MAKES MORE",
+  "hook": "A million AI tokens: from 10 Big Macs to 1/100 of one",
+  "post": "A million tokens, about eight novels of text: around $60 in 2021, about six cents by 2024 (a16z). At $6.22 a Big Mac, from about ten to about a hundredth of one. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve"
+ },
+ {
+  "name": "google",
+  "file": "google.mp4",
+  "start": 62.62,
+  "dur": 10.5,
+  "tag": "CHEAPER MAKES MORE",
+  "hook": "Google handles 3.2 quadrillion AI tokens a month",
+  "post": "Google I/O, May 2026: about 3,200 trillion tokens a month, more than 300 times the 9.7 trillion of two years earlier. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve"
+ },
+ {
+  "name": "nadella",
+  "file": "nadella.mp4",
+  "start": 72.32,
+  "dur": 19.9,
+  "tag": "CHEAPER MAKES MORE",
+  "hook": "\"Jevons paradox strikes again\"",
+  "post": "When a cheap Chinese model shook the markets in January 2025, Satya Nadella posted: Jevons paradox strikes again. Cheaper AI means more data centres, not fewer. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve"
+ }
+]

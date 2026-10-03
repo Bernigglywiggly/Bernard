@@ -20,9 +20,9 @@ OUT = os.path.join(engine.LAB, "out", "brand")
 T = 30.0                                                    # long after everything has formed
 ABOUT = ("The Curve explains the hidden mechanisms behind the AI headlines: why cheaper AI means more data centres, why a "
          "robot can pass an exam but can't fold your shirt, who really gets rich in a gold rush. Every figure is sourced on "
-         "screen and in the description, and every price comes in Big Macs. A new film every two days, shorts daily.")
-BIO = "AI's hidden mechanisms, in numbers you can picture. A new film every 2 days."
-IG_BIO = "The hidden mechanism behind the AI headlines. Every number sourced, every price in Big Macs. New film every 2 days."
+         "screen and in the description, and every price comes in Big Macs. New films every week, Shorts every day.")
+BIO = "AI's hidden mechanisms, in numbers you can picture. Every figure sourced."
+IG_BIO = "The hidden mechanism behind the AI headlines. Every number sourced, every price in Big Macs."
 KEYWORDS = ("AI, artificial intelligence, AI explained, technology explained, economics explained, AI news, robots, data "
             "centres, Big Mac index, explainer, documentary, science, The Curve")
 PINNED = {
@@ -91,7 +91,7 @@ class Banner:
         stroke_polys(c, [_curve(40, 1880, 990, 150, 5.0)], GLOW, 3.2, 0.95)          # rises after the wordmark
         bignum(c, t, "THE CURVE", 150, CX, 560, 0.0)
         tl.label(c, "THE HIDDEN MECHANISM BEHIND THE AI HEADLINES", CX, 650, t, 0.0, 24, WHITE)
-        tl.label(c, "A NEW FILM EVERY TWO DAYS · SHORTS DAILY", CX, 700, t, 0.0, 18, GLOW)
+        tl.label(c, "EVERY NUMBER SOURCED · EVERY PRICE IN BIG MACS", CX, 700, t, 0.0, 18, GLOW)
 
 
 class Avatar:

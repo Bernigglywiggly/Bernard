@@ -13,6 +13,14 @@ Updated 3 Oct 2026, cloud session on branch `claude/lucid-archimedes-77tqpt` (bu
   `lab/hq/index.html`). Its db collection `uploads/<id>` holds `{yt, tt, ig, fb, updated}` per film as the user ticks
   uploads; read it with ArtifactData to know what's live. It's on this account only.
 
+- **Auto-posting (3 Oct, the user: "setup yt api key or bring me to the point of my need"):** `UPLOADING.md` has both
+  routes. Route A, Metricool (a claude.ai connector: schedules to YouTube, TikTok, Instagram, Facebook from public
+  media links; free plan ~20 scheduled posts). Route B, `lab/tools/youtube_upload.py` (YouTube Data API: device-code
+  sign-in at google.com/device, resumable upload, schedule, thumbnail, playlist, `containsSyntheticMedia`); it needs
+  `YT_CLIENT_ID`/`YT_CLIENT_SECRET` in the environment and refuses real uploads until `YT_AUDITED=1`, because Google
+  locks every upload from an unaudited project as private for good. The HQ page's db collection `setup/<step>` shows
+  which setup steps the user has ticked (a1-a4, b1-b8). The repo is PUBLIC: never commit keys or tokens.
+
 ## PICK UP HERE (3 Oct 2026): the short-form films on `claude/lucid-archimedes-77tqpt`
 The user asked: "Save everything for other claude account to pickup". Everything is pushed on this branch. The other
 account's own work (long-form LF01-LF03, Remotion in `lab/motion`) is on `claude/funny-newton-gd9w8v`; the two

@@ -61,10 +61,15 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .queue li::before{content:counter(q);font:500 13px/1.6 var(--mono);color:var(--accent)}
 footer{font-size:13px;color:var(--muted)}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+.setup ol{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.setup li label{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;cursor:pointer}
+.setup li input{accent-color:var(--accent);margin-top:4px}
+.setup li.on span{color:var(--muted);text-decoration:line-through}
+.setup .who{font:500 11px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-left:4px}
 </style>
 <div class="wrap">
 <header>
-  <span class="eyebrow">Studio control room · updated 3 Oct 2026</span>
+  <span class="eyebrow">Studio control room · updated 3 Oct 2026, evening</span>
   <h1>The Curve HQ</h1>
   <p class="lede">Everything made so far across both Claude accounts, what's ready to upload, what's being made, and what's missing.
   Tick a box when you upload something: it saves here, and Claude can read it next session to know where you stand.</p>
@@ -90,6 +95,23 @@ footer{font-size:13px;color:var(--muted)}
     <li><b>Money crimes:</b> make the channel and upload "The Man Who Sold the Eiffel Tower" (14:56).</li>
   </ol>
   <p class="note">Links marked "other account" only open when you're signed in to the Claude account that made them.</p>
+</section>
+
+<section aria-label="Auto-posting setup">
+  <div><span class="eyebrow">Auto-posting setup</span><h2>Get Claude posting for you: two routes, tick each step as you do it</h2>
+  <p class="lede">Full instructions with every click: <code>UPLOADING.md</code> in the repo. A plain YouTube API key can't upload; uploading needs a sign-in, which Route B sets up.</p></div>
+  <div class="cols setup">
+    <div class="card sev low">
+      <h3>Route A · Metricool (works today)</h3>
+      <p class="note">Claude schedules Shorts to YouTube, TikTok, Instagram and Facebook in one go. Free plan caps scheduled posts at about 20.</p>
+      <ol id="steps-a"></ol>
+    </div>
+    <div class="card sev mid">
+      <h3>Route B · YouTube's own API (live after Google's audit)</h3>
+      <p class="note">Full uploads with thumbnail, schedule, playlist and the AI label. Until Google audits the project, API uploads are locked private for good, so the uploader waits for step 7.</p>
+      <ol id="steps-b"></ol>
+    </div>
+  </div>
 </section>
 
 <section aria-label="Everything, film by film">
@@ -205,6 +227,36 @@ const ROWS = [
   {id:"wis01", t:"Short 01 · Earth stops spinning", len:"1:06", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/J5CqJtyMALxMBsxTGb6un6"]]},
 ];
 const PLAT = [["yt","YouTube"],["tt","TikTok"],["ig","Instagram"],["fb","Facebook"]];
+const STEPS = {
+  "steps-a": [["a1","Sign up free at metricool.com and make a brand called The Curve","you"],
+              ["a2","Link YouTube, TikTok, Instagram (Creator or Business account) and the Facebook Page in Metricool","you"],
+              ["a3","claude.ai → Settings → Connectors → Metricool Social Media Management → Connect","you"],
+              ["a4","Say \u201cschedule this week's shorts\u201d (from the cloud account, which has the newest files)","claude"]],
+  "steps-b": [["b1","console.cloud.google.com → New project \u201cThe Curve uploader\u201d","you"],
+              ["b2","APIs & Services → Library → YouTube Data API v3 → Enable","you"],
+              ["b3","Google Auth Platform → Get started (External), add yourself as a test user, add the youtube scope","you"],
+              ["b4","Clients → Create client → TVs and Limited Input devices → copy the ID and secret","you"],
+              ["b5","Session title bar → environment → Edit → add YT_CLIENT_ID and YT_CLIENT_SECRET, start a new session","you"],
+              ["b6","Send Google's audit form (answers are written for you in UPLOADING.md)","you"],
+              ["b7","Audit passed: add YT_AUDITED=1 and start a new session","you"],
+              ["b8","Say \u201csign me in to YouTube\u201d, enter the code at google.com/device, then Claude uploads","claude"]]};
+let setup = {};
+function renderSetup(){
+  for(const box in STEPS){
+    const ol = document.getElementById(box); ol.replaceChildren();
+    for(const [id,text,who] of STEPS[box]){
+      const done = !!(setup[id] && setup[id].done);
+      const cb = el("input",{type:"checkbox",id:"s-"+id}); cb.checked = done; cb.disabled = !db || !canWrite;
+      cb.addEventListener("change",()=>tickStep(id,cb.checked));
+      ol.append(el("li",{class:done?"on":""},[el("label",{for:"s-"+id},[cb, el("span",{},[text, el("span",{class:"who",text:who==="you"?"you":"Claude"})])])]));
+    }
+  }
+}
+async function tickStep(id,val){
+  if(!db) return;
+  setup[id] = {done:val, updated:new Date().toISOString()}; renderSetup();
+  try{ await db.doc("setup/"+id).set(setup[id]); }catch(e){ document.getElementById("db-note").textContent = "Couldn't save that tick: try again in a moment."; }
+}
 const LABEL = {ready:"READY", work:"IN PRODUCTION", todo:"TO DO", old:"OLD VERSION"};
 let state = {}; let db = null; let canWrite = true;
 
@@ -243,12 +295,14 @@ async function toggle(id,k,val){
   try{ await db.doc("uploads/"+id).set(next); }
   catch(e){ const n=document.getElementById("db-note"); n.textContent = e && e.code==="invalid_argument" ? "You can view this board but not change it." : "Couldn't save that tick: try again in a moment."; if(e && e.code==="invalid_argument"){canWrite=false; render();} }
 }
-render();
+render(); renderSetup();
 (async()=>{
   try{ db = window.claude && window.claude.use ? await window.claude.use("db") : null; }catch(e){ db = null; }
   const note = document.getElementById("db-note");
-  if(!db){ note.textContent = "Ticks can't be saved in this view; open the page in Claude to log uploads."; render(); return; }
+  if(!db){ note.textContent = "Ticks can't be saved in this view; open the page in Claude to log uploads."; render(); renderSetup(); return; }
   render();
+  renderSetup();
+  db.collection("setup").onSnapshot(snap=>{ const s={}; snap.docs.forEach(d=>{ if(d.exists) s[d.id]=d.data(); }); setup=s; renderSetup(); }, ()=>{});
   db.collection("uploads").onSnapshot(snap=>{ const s={}; snap.docs.forEach(d=>{ if(d.exists) s[d.id]=d.data(); }); state=s; render(); },
     ()=>{ note.textContent = "Lost the connection to saved ticks; reload the page."; });
 })();

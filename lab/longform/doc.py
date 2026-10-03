@@ -935,12 +935,14 @@ def render(film_dir, only=None, workers=3):
 LOOK = "vignette=angle=PI/6,noise=c0s=4:c0f=t"      # the film look over every shot: a soft vignette, moving luma grain
 
 
-def deliver(src, dst, dur, mib=246):
-    """Two-pass to a size: the whole file inside mib MiB (a downloads page holds 256 MiB a version), with LOOK."""
+def deliver(src, dst, dur, mib=246, look=LOOK):
+    """Two-pass to a size: the whole file inside mib MiB (a downloads page holds 256 MiB a version), with LOOK (or
+    another filter, or none: The Curve's films bring their own look)."""
     total = mib * 8 * 1024 * 1024 / dur
     v = int(total - 160_000)
     log = dst + ".2pass"
-    base = ["ffmpeg", "-y", "-v", "error", "-i", src, "-vf", LOOK, "-c:v", "libx264", "-preset", "slow", "-tune", "film", "-b:v", str(v),
+    vf = ["-vf", look] if look else []
+    base = ["ffmpeg", "-y", "-v", "error", "-i", src, *vf, "-c:v", "libx264", "-preset", "slow", "-tune", "film", "-b:v", str(v),
             "-maxrate", str(int(v * 1.8)), "-bufsize", str(int(v * 3)), "-pix_fmt", "yuv420p", "-passlogfile", log]
     subprocess.run(base + ["-pass", "1", "-an", "-f", "mp4", os.devnull], check=True)
     subprocess.run(base + ["-pass", "2", "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", dst], check=True)

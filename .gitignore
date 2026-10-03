@@ -171,3 +171,5 @@ cython_debug/
 .vscode/*
 
 .DS_Store
+# voice auditions sent to the user
+curve_voice_*.mp3

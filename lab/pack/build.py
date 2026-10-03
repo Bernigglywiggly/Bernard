@@ -398,12 +398,12 @@ def shorts_page(name="shorts", title="AI shorts: Money crimes and What if"):
         shutil.copy(os.path.join(d, "out", "cover.jpg"), os.path.join(media, f))
         extra[f"media/{f}"] = os.path.join(media, f)
         items.append(dict(slug=slug, eyebrow=f"{channel} · {int(round(v['dur']))} s · 9:16", name=pc["title"], vertical=True,
-                          meta="Made with AI: GPT Image 2.5 stills, Kling 3.0 and Veo 3.1 motion, a Higgsfield voice; our own edit, score and sound.",
+                          meta="Made with AI: GPT Image 2.5 stills, Kling 3.0 and Veo 3.1 motion, a Higgsfield voice; our own edit and sound (music credits are in the description).",
                           video=v, thumbs=[dict(file=f, label="Cover", alt=pc["title"] + " cover", name=f)], caption=pc["caption"],
                           titles=[pc["title"]], description=pc["description"], pinned=pc["pinned"], steps=STEPS_SHORT, shorts=[]))
         order.append((channel.split(" · ")[0], pc["title"]))
     lede = ("Cinematic AI shorts for TikTok, YouTube Shorts and Reels: photoreal AI scenes, a narrator, kinetic captions, an "
-            "original score. Each has its 1080x1920 file, cover, caption, YouTube copy and pinned comment.")
+            "score. Each has its 1080x1920 file, cover, caption, YouTube copy and pinned comment.")
     write(name, title, lede, order, items, extra)
 
 
@@ -435,7 +435,7 @@ def longform_page(slug="lustig"):
     steps = [ln[2:].replace("**", "") for ln in sec("Upload settings").splitlines() if ln.startswith("- ")]
     item = dict(slug=slug, eyebrow=f"{channel} · {m}:{s_:02d} · 1080p", name=titles[0],
                 meta="A documentary with chapters: AI reconstructions (labelled on screen), real archive photographs, maps and "
-                     "an original score. Past 8 minutes, YouTube allows mid-roll ads.",
+                     "a jazz score. Past 8 minutes, YouTube allows mid-roll ads.",
                 video=v, thumbs=thumbs, titles=titles, description=sec("Description"), pinned=sec("Pinned comment"),
                 steps=["Upload the .mp4 and paste the title and description (the chapters come from its timestamps)."] + steps +
                       ["Put all three thumbnails in Test & Compare.", "Publish, then post the pinned comment and pin it."],
@@ -451,6 +451,8 @@ def longform_page(slug="lustig"):
 def film_shorts_page(slug="lustig"):
     """The vertical shorts cut from a long-form film (lab/longform/<slug>/out/short_*_9x16.mp4, copy in its shorts.py)."""
     import importlib.util
+    sys.path.insert(0, os.path.join(LAB, "music", "jazz"))
+    import library as jazz
     d = os.path.join(LAB, "longform", slug)
     spec = importlib.util.spec_from_file_location("film_shorts", os.path.join(d, "shorts.py"))
     mod = importlib.util.module_from_spec(spec)
@@ -475,7 +477,8 @@ def film_shorts_page(slug="lustig"):
                           meta=f"Cut from the long-form film \"{sp['film']}\": its picture, narration and score, with captions and an end card that sends viewers to the full film.",
                           video=v, thumbs=[dict(file=cover, label="Cover", alt=sp["title"] + " cover", name=cover)],
                           caption=sp["caption"], titles=[sp["title"]],
-                          description=f"{sp['caption']} Full story: {sp['film']} (linked).", pinned=sp["pinned"],
+                          description=f"{sp['caption']} Full story: {sp['film']} (linked)." + (
+                              "\n\n" + jazz.credit_line(sp["music"]) if sp.get("music") else ""), pinned=sp["pinned"],
                           steps=STEPS_SHORT[:2] + ["YouTube: set the full film as this Short's related video, so viewers can tap through to it.",
                                                    "TikTok and Reels: pin a comment naming the full film on YouTube."] + STEPS_SHORT[3:],
                           shorts=[]))

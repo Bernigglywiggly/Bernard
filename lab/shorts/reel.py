@@ -263,6 +263,19 @@ def mix(voice_path, bed_path, words_, sfx, dur, out_wav, voice_db=-16.0, bed_db=
 
 
 # ---------------------------------------------------------------- the render
+def remix(spec, build, mp4):
+    """New sound on a finished short (3 Oct, the jazz re-score): re-mix, then swap the audio track, picture untouched."""
+    ws = words(spec["WORDS"], fix=spec.get("FIX"))
+    wav = mix(spec["VOICE"], spec["BED"], ws, spec.get("SFX", []), spec["END"], os.path.join(build, "mix.wav"),
+              bed_db=spec.get("BED_DB", -21.0), duck_db=spec.get("DUCK_DB", -10.0))
+    tmp = mp4[:-4] + ".remix.mp4"
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", mp4, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac",
+                    "-b:a", "192k", "-shortest", "-movflags", "+faststart", tmp], check=True)
+    os.replace(tmp, mp4)
+    print(mp4, round(os.path.getsize(mp4) / 1e6, 1), "MB (new sound)")
+    return mp4
+
+
 def render(spec, build, out_mp4):
     os.makedirs(build, exist_ok=True)
     shots, end = spec["SHOTS"], spec["END"]

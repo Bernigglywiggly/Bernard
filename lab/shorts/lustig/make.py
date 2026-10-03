@@ -2,10 +2,11 @@
 
 Narration: Higgsfield Seed Audio, preset voice Imogen, read in one take (src/voice.wav), word timings by Whisper
 (src/words.json). Pictures: 17 GPT Image 2.5 stills (src/s*.png, two character references so Lustig and Poisson stay
-the same people) animated by Kling 3.0 Pro and, for the opening, Google Veo 3.1 (clips/c*.mp4). Score: beds.caper
-(src/bed_caper.wav). Facts: Wikipedia, Victor Lustig (the Capone story is told as "the story goes").
+the same people) animated by Kling 3.0 Pro and, for the opening, Google Veo 3.1 (clips/c*.mp4). Score: jazz,
+Kevin MacLeod's "Covert Affair" (CC BY 4.0; src/bed_jazz.wav, cut by lab/music/jazz/library.py; 3 Oct re-score). Facts: Wikipedia, Victor Lustig (the Capone story is told as "the story goes").
 
     python3 shorts/lustig/make.py          -> shorts/lustig/out/lustig_eiffel_9x16.mp4
+    python3 shorts/lustig/make.py audio    -> same file, new sound only
 """
 import os
 import sys
@@ -20,7 +21,7 @@ still = lambda n: os.path.join(S, f"s{n:02d}.png")
 opening = clip(1) if os.path.exists(clip(1)) else None
 
 SPEC = dict(
-    VOICE=os.path.join(S, "voice.wav"), WORDS=os.path.join(S, "words.json"), BED=os.path.join(S, "bed_caper.wav"),
+    VOICE=os.path.join(S, "voice.wav"), WORDS=os.path.join(S, "words.json"), BED=os.path.join(S, "bed_jazz.wav"),
     FIX={"tons": "tonnes", "Andre": "André", "Grand": "grand"},
     END=63.4,
     SHOTS=[
@@ -62,13 +63,17 @@ SPEC = dict(
          (59.68, "sub_drop", -8)],
 )
 
-CAPER_PLAN = [("intro", 2), ("a", 8), ("b", 9), ("break", 2), ("a", 7), ("out", 4)]   # the swing lands on "Then he sold it again"
+JAZZ = "Covert Affair"      # the long film's opening cue, so the short and the film sound like one channel
 
 if __name__ == "__main__":
-    if not os.path.exists(SPEC["BED"]):                       # the score is re-made, not stored (python3 fetch.py gets the rest)
-        sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)), "music"))
-        import beds  # noqa: E402
-        reel.fx.save(SPEC["BED"], beds.caper(118, CAPER_PLAN), mp3=False)
+    if not os.path.exists(SPEC["BED"]):                       # the score is cut from the library, not stored
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(HERE)), "music", "jazz"))
+        import library  # noqa: E402
+        reel.fx.save(SPEC["BED"], library.section(JAZZ, SPEC["END"] + 1.0), mp3=False)
     out = os.path.join(HERE, "out")
     os.makedirs(out, exist_ok=True)
-    reel.render(SPEC, os.path.join(HERE, "build"), os.path.join(out, "lustig_eiffel_9x16.mp4"))
+    mp4 = os.path.join(out, "lustig_eiffel_9x16.mp4")
+    if sys.argv[1:] == ["audio"] and os.path.exists(mp4):     # `make.py audio`: new sound only, picture kept
+        reel.remix(SPEC, os.path.join(HERE, "build"), mp4)
+    else:
+        reel.render(SPEC, os.path.join(HERE, "build"), mp4)

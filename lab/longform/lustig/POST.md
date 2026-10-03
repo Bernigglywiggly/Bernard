@@ -34,7 +34,9 @@ Sources: Wikipedia, "Victor Lustig" (with its references); History Facts; The Mo
 
 Archival photographs (public domain, via Wikimedia Commons): Victor Lustig in the Philadelphia Evening Public Ledger, 1935; the U.S. Department of Justice identification record, 1931; his federal mugshot card under the name Robert V. Miller; the FBI wanted notice and a counterfeit $10 note; Al Capone, 1929; Hôtel de Crillon, c. 1915 (Library of Congress); the Exposition Universelle, 1889; Alcatraz, 1930s (U.S. Navy); New York breadline, 1932 (U.S. National Archives); his death certificate, 1947 (State of Missouri). La Sorbonne, c. 1900, by Paul-Joseph-Victor Dargaud (Paris Musées, public domain).
 
-Scenes marked AI RECONSTRUCTION are dramatisations made with AI image and video tools, not real footage. Narration: AI voice. Music: an original score.
+Scenes marked AI RECONSTRUCTION are dramatisations made with AI image and video tools, not real footage. Narration: AI voice.
+
+Music by Kevin MacLeod (incompetech.com): "Covert Affair", "No Good Layabout", "Spy Glass", "I Knew a Guy", "Dances and Dames", "Opportunity Walks", "On the Cool Side", "Cool Blast", "Walking Along", "Faster Does It", "Night on the Docks - Trumpet", "Acid Trumpet". Licensed under Creative Commons: By Attribution 4.0, http://creativecommons.org/licenses/by/4.0/ (cut and mixed under the narration).
 
 #truecrime #history #conartist #eiffeltower #scams
 

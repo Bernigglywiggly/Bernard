@@ -679,12 +679,12 @@ class Film:
         frame = np.empty((H, W, 4), np.uint8)
         frame[..., :3] = np.clip(screen_fast(rgb, al, subj), 0, 255).astype(np.uint8)
         frame[..., 3] = 255
-        out = skia.Surface(frame)                       # draws straight into the array (BGRA)
+        out = skia.Surface(frame, colorType=skia.ColorType.kBGRA_8888_ColorType)   # straight into the array
         c = out.getCanvas()
         if prev is not None:
             self.crisp(c, prev, t, 1 - k)
         self.crisp(c, cur, t, k if prev is not None else 1.0)
-        if cur["v"][0] not in ("end",):
+        if cur["v"][0] not in ("end",) and not getattr(self, "no_caps", False):
             self.captions(c, t)
         self.furniture(c)
         out.flushAndSubmit()

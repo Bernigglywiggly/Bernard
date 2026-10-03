@@ -460,16 +460,21 @@ def film_shorts_page(slug="lustig"):
     out = os.path.join(HERE, "build", name)
     media = os.path.join(out, "media")
     os.makedirs(media, exist_ok=True)
-    items, order = [], []
+    items, order, extra = [], [], {}
     for key, sp in mod.SHORTS.items():
         src = os.path.join(d, "out", f"short_{key}_9x16.mp4")
         if not os.path.exists(src):
             continue
         v = video_entry(src, media, f"{slug}_{key}_9x16.mp4", f"{slug}_{key}")
+        cover = f"{slug}_{key}_cover.jpg"                    # a frame from the short's opening, as its cover
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", "2.5", "-i", src, "-frames:v", "1", "-q:v", "3",
+                        os.path.join(media, cover)], check=True)
+        extra[f"media/{cover}"] = os.path.join(media, cover)
         items.append(dict(slug=f"{slug}-{key}", eyebrow=f"{channel} · Short from the film · {int(round(v['dur']))} s · 9:16",
                           name=sp["title"], vertical=True,
                           meta=f"Cut from the long-form film \"{sp['film']}\": its picture, narration and score, with captions and an end card that sends viewers to the full film.",
-                          video=v, thumbs=[], caption=sp["caption"], titles=[sp["title"]],
+                          video=v, thumbs=[dict(file=cover, label="Cover", alt=sp["title"] + " cover", name=cover)],
+                          caption=sp["caption"], titles=[sp["title"]],
                           description=f"{sp['caption']} Full story: {sp['film']} (linked).", pinned=sp["pinned"],
                           steps=STEPS_SHORT[:2] + ["YouTube: set the full film as this Short's related video, so viewers can tap through to it.",
                                                    "TikTok and Reels: pin a comment naming the full film on YouTube."] + STEPS_SHORT[3:],
@@ -477,7 +482,7 @@ def film_shorts_page(slug="lustig"):
         order.append(("Short", sp["title"]))
     lede = ("Shorts cut from the long-form film, for TikTok, YouTube Shorts and Reels: each is a stretch of the film with its "
             "narration, a headline, live captions and an end card that sends people to the full documentary.")
-    write(name, f"{LONGFORM[slug][0].split(' · ')[0]}: shorts from the film", lede, order, items, {})
+    write(name, f"{LONGFORM[slug][0].split(' · ')[0]}: shorts from the film", lede, order, items, extra)
 
 
 def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP09 to EP12"):

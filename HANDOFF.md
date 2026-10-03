@@ -26,8 +26,9 @@ Updated 2 Oct 2026 (~11pm UTC), cloud session on branch `claude/funny-newton-gd9
 - **Film 01 page (upload this first):** https://claude.ai/artifact/B4DiPy9qxvVKaZgucpYK3Q (14:56, 1080p, three
   thumbnails, titles, chaptered description with sources and archive credits, upload settings). Its narration quotes the
   real death certificate in full ("apprentice salesman and counterfeiter"; `vo.py` PATCHES splices the re-read).
-- **Still to do:** post the Shorts cut from film 01 (`lab/longform/vertical.py lustig`, page via `pack/build.py
-  lustig_shorts`), then film 01 for the other channels (What if, Maps & power, The Margin), about 180 credits each.
+- **Shorts cut from film 01** (Capone, the escape, the money box; `lab/longform/vertical.py lustig`):
+  https://claude.ai/artifact/2A19evbUw3Lsz8Kftyj2d1
+- **Still to do:** film 01 for the other channels (What if, Maps & power, The Margin), about 180 credits each.
 
 ## 1 Oct afternoon: house and garage, the narration glitch fixed, female voices ready (read this first)
 - **Music (the user: "I don't like the background music... house music, or a bit of garage"; on hearing both: "both of

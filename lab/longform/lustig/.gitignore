@@ -8,3 +8,4 @@ build/*
 out/*.mp4
 __pycache__/
 out/*.2pass*
+out/*_preview_720.mp4

@@ -22,6 +22,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 - Season Two: https://claude.ai/artifact/8wNVR2gvWLkZUdvNnGiR44
 - AI shorts (Money crimes 01, What if 01): https://claude.ai/artifact/J5CqJtyMALxMBsxTGb6un6
 - **Money crimes long-form 01, The Man Who Sold the Eiffel Tower (14:56):** https://claude.ai/artifact/B4DiPy9qxvVKaZgucpYK3Q
+- Shorts cut from it (Capone, the escape, the money box): https://claude.ai/artifact/2A19evbUw3Lsz8Kftyj2d1
 
 ## Engines and tools
 | What | Where |

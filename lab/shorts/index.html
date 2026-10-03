@@ -1,0 +1,567 @@
+<title>The Curve Shorts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter+Tight:wght@400;600&family=Michroma&display=swap">
+<style>
+:root{--ground:#F2F6F5;--surface:#FFFFFF;--ink:#0B1414;--muted:#51625F;--accent:#0B8A7E;--line:#D3E0DD;--chip:#E3F1EE;
+color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ground:#070A0B;--surface:#0E1416;--ink:#E6F0EF;
+--muted:#8EA3A1;--accent:#35D6C6;--line:#1B2729;--chip:#0F2524;color-scheme:dark}}
+:root[data-theme="dark"]{--ground:#070A0B;--surface:#0E1416;--ink:#E6F0EF;--muted:#8EA3A1;--accent:#35D6C6;--line:#1B2729;
+--chip:#0F2524;color-scheme:dark}
+body{background:var(--ground);color:var(--ink);font:16px/1.55 "Inter Tight",system-ui,sans-serif;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:28px 64px}
+.eyebrow{font:500 12px/1.4 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font:400 clamp(28px,6vw,44px)/1.1 Michroma,"Inter Tight",sans-serif;letter-spacing:.02em;margin:.35em 0 .3em;text-wrap:balance}
+h2{font:400 18px/1.3 Michroma,"Inter Tight",sans-serif;letter-spacing:.04em;margin:0;text-wrap:balance}
+.lede{color:var(--muted);max-width:62ch;margin:0}
+section{margin-top:36px;display:grid;gap:16px}
+.plan{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.day{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.day b{font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.1em;color:var(--accent);display:block}
+.day span{font-size:14px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+video{width:100%;aspect-ratio:9/16;max-height:72vh;background:#000;display:block;object-fit:contain}
+.body{padding:14px 16px 16px;display:grid;gap:10px;align-content:start}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font:500 12px/1.3 "IBM Plex Mono",monospace;color:var(--muted)}
+.chip{background:var(--chip);color:var(--accent);border-radius:999px;padding:3px 9px;letter-spacing:.06em}
+.hook{font-weight:600;font-size:17px;line-height:1.35;margin:0;text-wrap:balance}
+.post{font-size:14px;color:var(--muted);margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 14px/1 "Inter Tight",sans-serif;border-radius:10px;padding:11px 14px;border:1px solid var(--line);
+background:var(--ground);color:var(--ink);cursor:pointer}
+button.main{background:var(--accent);border-color:var(--accent);color:var(--ground)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.note{font-size:13px;color:var(--muted);min-height:1.2em;margin:0}
+footer{margin-top:44px;font-size:13px;color:var(--muted);max-width:62ch}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+
+h3{font:600 15px/1.3 "Inter Tight",sans-serif;margin:8px 0 0;color:var(--muted);letter-spacing:.02em}
+.ep{border-top:1px solid var(--line);padding-top:28px}
+.ep-title{margin-top:6px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+nav a{font:500 13px/1 "IBM Plex Mono",monospace;color:var(--accent);text-decoration:none;border:1px solid var(--line);
+border-radius:999px;padding:8px 12px;background:var(--surface)}
+nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.day span{display:block}
+.card.wide{grid-template-rows:auto 1fr}
+.card.wide video{aspect-ratio:16/9;max-height:none}
+.card img.thumb{width:100%;max-width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+.brand .hook{font-size:15px;font-weight:600}
+.txt{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:6px}
+.txt b{font:500 12px/1.3 "IBM Plex Mono",monospace;letter-spacing:.06em;color:var(--accent);text-transform:uppercase}
+.txt p,.pin{margin:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.txt button{justify-self:start}
+.pin{border-left:3px solid var(--accent);padding-left:10px}
+details summary{cursor:pointer;font-weight:600;color:var(--accent)}
+details .post{margin-top:8px}
+.day .plus{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted)}
+.start{background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:18px 18px 20px;gap:10px}
+.start h2{font-size:17px}
+.start ol,.start ul{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px}
+.start p{margin:0;font-size:15px}
+.muted{color:var(--muted)}
+.films b{font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.06em;color:var(--accent);margin-right:6px}
+</style>
+<div class="wrap">
+<header>
+  <span class="eyebrow">The Curve · posting kit</span>
+  <h1>Shorts, ready to post</h1>
+  <p class="lede">28 vertical cuts from 3 films, voiced by George, for TikTok, Reels, YouTube Shorts and Facebook. Each film comes as parts that add up to the whole video, plus standalone highlights. Copy the caption, save the video, post.</p>
+  <nav><a href="#ep05">EP05 · Follow the Sun</a><a href="#ep08">EP08 · Cheaper Makes More</a><a href="#ep04">EP04 · The Man in the Machine</a><a href="https://claude.ai/artifact/M3fLPJ8vZudgPRuicR93p4" target="_blank" rel="noopener">EP06 · EP07 · EP03 · EP09 · EP10 → The Curve Shorts II</a></nav>
+</header>
+<section class="start" aria-label="Start here">
+  <span class="eyebrow">Start here</span>
+  <h3>Set up the channel once</h3>
+  <article class="card wide brand">
+    <img class="thumb" src="media/brand/banner.jpg" alt="The Curve: the YouTube banner" loading="lazy">
+    <div class="body">
+      <div class="meta"><span class="chip">NAME: THE CURVE</span><span>handles to try, in order: @thecurve, @thecurveai, @thecurve.explained, @curveexplains (the same everywhere)</span></div>
+      <div class="row"><button type="button" data-save="media/brand/banner.jpg">YouTube banner</button><button type="button" data-save="media/brand/avatar.png">Profile picture (all)</button><button type="button" data-save="media/brand/watermark.png">YouTube watermark</button><button type="button" data-save="media/brand/facebook_cover.jpg">Facebook cover</button><button type="button" data-save="media/brand/x_header.jpg">X header</button><button type="button" data-save="media/brand/highlight_films.png">IG highlight: Films</button><button type="button" data-save="media/brand/highlight_space.png">IG highlight: Space</button><button type="button" data-save="media/brand/highlight_robots.png">IG highlight: Robots</button><button type="button" data-save="media/brand/highlight_money.png">IG highlight: Money</button></div>
+      <div class="txt"><b>YouTube description</b><p class="t0">The Curve explains the hidden mechanisms behind the AI headlines: why cheaper AI means more data centres, why a robot can pass an exam but can&#x27;t fold your shirt, who really gets rich in a gold rush. Every figure is sourced on screen and in the description, and every price comes in Big Macs. A new film every two days, shorts daily.</p>
+        <button type="button" data-copy="t0" data-what="YouTube description">Copy</button></div><div class="txt"><b>YouTube keywords</b><p class="t1">AI, artificial intelligence, AI explained, technology explained, economics explained, AI news, robots, data centres, Big Mac index, explainer, documentary, science, The Curve</p>
+        <button type="button" data-copy="t1" data-what="YouTube keywords">Copy</button></div><div class="txt"><b>TikTok and Facebook bio</b><p class="t2">AI&#x27;s hidden mechanisms, in numbers you can picture. A new film every 2 days.</p>
+        <button type="button" data-copy="t2" data-what="TikTok and Facebook bio">Copy</button></div><div class="txt"><b>Instagram and X bio</b><p class="t3">The hidden mechanism behind the AI headlines. Every number sourced, every price in Big Macs. New film every 2 days.</p>
+        <button type="button" data-copy="t3" data-what="Instagram and X bio">Copy</button></div><div class="txt"><b>Instagram name field</b><p class="t4">The Curve · AI explained</p>
+        <button type="button" data-copy="t4" data-what="Instagram name field">Copy</button></div>
+      <details><summary>The full set-up guide, platform by platform</summary><p class="post"># The Curve: channel set-up (every name, bio and setting)
+
+All the art is in the kit page&#x27;s &quot;Set up the channel once&quot; card (and in the chat). Same look everywhere: black,
+turquoise (#35D6C6), white. Channel name everywhere: **The Curve**. Handles to try, in order: @thecurve, @thecurveai,
+@thecurve.explained, @curveexplains (keep the same one on every platform).
+
+## YouTube (YouTube Studio &gt; Customisation, on a computer or the Studio app)
+- Profile picture: avatar.png. Banner: banner.jpg. Video watermark (Branding &gt; Video watermark): watermark.png, &quot;entire video&quot;.
+- Description: The Curve explains the hidden mechanisms behind the AI headlines: why cheaper AI means more data centres, why a robot can pass an exam but can&#x27;t fold your shirt, who really gets rich in a gold rush. Every figure is sourced on screen and in the description, and every price comes in Big Macs. A new film every two days, shorts daily.
+- Keywords (Settings &gt; Channel &gt; Basic info): AI, artificial intelligence, AI explained, technology explained, economics explained, AI news, robots, data centres, Big Mac index, explainer, documentary, science, The Curve
+- Links: your TikTok, Instagram and Facebook pages once they exist.
+- Upload defaults (Settings &gt; Upload defaults): category Education; language English; tags: ai, the curve, explained,
+  economics, technology; comments: hold potentially inappropriate ones for review.
+- Playlists: &quot;Every film&quot; (all of them, newest first); &quot;AI and money&quot; (EP03, EP08, EP10); &quot;AI and the physical world&quot;
+  (EP04, EP05, EP09); &quot;AI and people&quot; (EP06, EP07).
+- Each upload: title, description and thumbnail from the kit; not made for kids; altered or synthetic content: Yes (the
+  narrator is an AI voice); add it to its playlists; pin the comment below as the first comment.
+- Pinned comments: EP05: Would you trust a data centre in orbit? Every number in this film is sourced in the description.; EP08: What would you use thinking for if it cost as little as light? Sources are in the description.; EP04: Should a robot ever decide on its own? Every figure is sourced in the description.; EP06: Does your family have a secret word yet? Sources are in the description.; EP07: What would disappear first in an office built from zero around AI? Sources are in the description.; EP03: Who are the shovel sellers of the AI rush? Every number is sourced in the description.; EP09: Which part of your job is the oldest skill you have? Sources are in the description.; EP10: Who should set the line: a number, or a test? Sources are in the description.
+- Custom thumbnails and videos over 15 minutes need the channel verified once (Settings &gt; Channel &gt; Feature eligibility).
+
+## TikTok
+- Name: The Curve. Photo: avatar.png. Bio: AI&#x27;s hidden mechanisms, in numbers you can picture. A new film every 2 days.
+- Every post: switch on &quot;AI-generated content&quot; (More options). Post one short a day in the kit&#x27;s order; pin each Part 1.
+
+## Instagram
+- Name field: The Curve · AI explained (the name field is searchable). Photo: avatar.png.
+- Bio: The hidden mechanism behind the AI headlines. Every number sourced, every price in Big Macs. New film every 2 days.
+- Highlights: FILMS, SPACE, ROBOTS, MONEY with the four highlight covers. Post the same shorts as Reels.
+
+## Facebook Page
+- Name: The Curve. Category: Education website (or Media/news company). Photo: avatar.png. Cover: facebook_cover.jpg.
+- Intro: AI&#x27;s hidden mechanisms, in numbers you can picture. A new film every 2 days.
+- Post the same shorts as Reels; Meta Business Suite can schedule Instagram and Facebook together.
+
+## X (optional)
+- Photo: avatar.png. Header: x_header.jpg. Bio: The hidden mechanism behind the AI headlines. Every number sourced, every price in Big Macs. New film every 2 days.
+</p></details>
+      <p class="note" aria-live="polite"></p>
+    </div>
+  </article>
+  <article class="card wide trailer">
+    <video controls playsinline preload="metadata" src="media/brand/the_curve_trailer.mp4"></video>
+    <div class="body">
+      <div class="meta"><span class="chip">CHANNEL TRAILER</span><span>39 s · 16:9 · also in the chat</span></div>
+      <p class="hook">The Curve: the hidden mechanism behind the AI headlines</p>
+      <p class="post">Upload it to YouTube like a film (public; not made for kids; altered or synthetic content: Yes), then YouTube Studio → Customisation → Layout → Channel trailer for people who haven&#x27;t subscribed. It also works as the first post on Facebook and X.</p>
+      <div class="row"><button class="main" type="button" data-copy="hook" data-what="Title">Copy title</button>
+        <button type="button" data-save="media/brand/the_curve_trailer.mp4">Save trailer</button></div>
+      <p class="note" aria-live="polite"></p>
+    </div>
+  </article>
+  <h2>First: EP05 · Follow the Sun on YouTube</h2>
+  <ol class="steps">
+    <li>Google's Suncatcher satellite is set to launch on 1 Oct, so this one goes up first, while it's news. The 1080p
+      file and the thumbnail are in the chat.</li>
+    <li>YouTube app → Create (+) → Upload a video. Copy the title and description from the film's card below and add the
+      thumbnail (Save thumbnail). Custom thumbnails need the channel verified once: YouTube → Settings → verify by phone.</li>
+    <li>Audience: not made for kids. Altered or synthetic content: tick Yes (the narrator is an AI voice); it only adds a label.</li>
+    <li>Then its Part 1 on TikTok, Instagram Reels, YouTube Shorts and Facebook: Save video, Copy caption, post. On TikTok,
+      switch on "AI-generated content" under More options.</li>
+  </ol>
+  <h3>Then keep the rhythm</h3>
+  <p>A new full film every two days. Its shorts start the same day: each day, post what the plans below list for that
+    day (a part and a highlight per film, so two to four shorts a day), the same file on every platform, and pin each Part 1.</p>
+  <ul class="films"><li><b>Thu 1 Oct</b> EP05 · Follow the Sun</li><li><b>Sat 3 Oct</b> EP08 · Cheaper Makes More</li><li><b>Mon 5 Oct</b> EP04 · The Man in the Machine</li><li><b>Wed 7 Oct</b> EP06 · Who&#x27;s Human Here? <span class=muted>(on the other page)</span></li><li><b>Fri 9 Oct</b> EP07 · The Thirty-Year Delay <span class=muted>(on the other page)</span></li><li><b>Sun 11 Oct</b> EP03 · The Shovel Sellers <span class=muted>(on the other page)</span></li><li><b>Tue 13 Oct</b> EP09 · The Laundry Problem <span class=muted>(on the other page)</span></li><li><b>Thu 15 Oct</b> EP10 · Counting Sums <span class=muted>(on the other page)</span></li></ul>
+  <p class="muted">Save time: schedule a week in one sitting. YouTube Studio schedules videos and Shorts; TikTok schedules from a
+    computer up to 10 days ahead; Meta Business Suite schedules Reels to Instagram and Facebook together.</p>
+</section>
+<section id="ep05" class="ep">
+  <div><span class="eyebrow">EP05 · Follow the Sun</span><h2 class="ep-title">AI data centres, leaving the planet</h2></div>
+  <article class="card wide" id="ep05-full">
+  <img class="thumb" src="media/ep05/ep05_thumb.jpg" alt="Why AI Is Leaving the Planet: the YouTube thumbnail" loading="lazy">
+  <div class="body">
+    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE · Thu 1 Oct</span><span>2:51 · 16:9 · the 1080p file is in the chat</span></div>
+    <p class="hook">Why AI Is Leaving the Planet</p>
+    <p class="post">Google has built a satellite to carry four of its AI chips into orbit. Last December, a satellite the size of a small fridge trained an AI model in space. Why is the AI industry trying to leave Earth?
+
+In this video: why industry always goes to its power (a 1771 mill and its water wheel), data centres heading for as much electricity as Japan, a reactor restarting at Three Mile Island, the orbit where the sun almost never sets, SpaceX&#x27;s filing for up to a million satellites, what it costs to launch one Big Mac, Google&#x27;s own break-even, and a labelled what-if: who owns the sunlight?
+
+Sources:
+• Project Suncatcher: Google&#x27;s prototype with Planet, four Trillium TPUs, Falcon 9 Transporter-18, set for 1 Oct 2026 (SiliconANGLE, 24 Sep 2026; DCD); up to 8x the solar energy in a dawn-dusk orbit; launch below $200/kg by the mid-2030s makes orbit roughly comparable per kW-year (Google Research, Suncatcher paper, Nov 2025)
+• Starcloud-1: first Nvidia H100 in orbit (Nov 2025), trained NanoGPT on Shakespeare (Dec 2025) (CNBC, 10 Dec 2025); FCC filing for 88,000 satellites (Quartz)
+• Cromford Mill, Richard Arkwright, 1771, water-powered (Derwent Valley Mills)
+• Data centres: ~415 TWh in 2024, ~1.5% of world electricity; ~945 TWh by 2030, about Japan&#x27;s consumption today (IEA, Energy and AI, 2025)
+• Microsoft-Constellation deal to restart Three Mile Island Unit 1 (Crane Clean Energy Center), Sep 2024
+• SpaceX FCC application for up to 1,000,000 orbital data-centre satellites, 30 Jan 2026 (SpaceNews; DCD)
+• ~16,500 active satellites, Sep 2026 (CelesTrak-based counts)
+• China&#x27;s Three-Body Computing Constellation: first 12 of a planned 2,800, May 2025 (SpaceNews)
+• SpaceX rideshare to SSO: $350,000 for 50 kg, ~$7,000/kg (2026 pricing); Big Mac 219 g (McDonald&#x27;s US), $6.22 (The Economist, July 2026): 0.219 kg x $7,000 = $1,533 = ~246 Big Macs
+• Outer Space Treaty, 1967: Art. II (no national appropriation), Art. VI (states answer for their national activities, including companies&#x27;)
+• The 2040 section is a labelled what-if, not a forecast</p>
+
+    <p class="pin">Would you trust a data centre in orbit? Every number in this film is sourced in the description.</p>
+    <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
+      <button class="main" type="button" data-copy="post">Copy description</button>
+      <button type="button" data-save="media/ep05/ep05_thumb.jpg">Save thumbnail</button>
+      <button type="button" data-copy="pin" data-what="Pinned comment">Copy pinned comment</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+  <h3>Suggested order</h3>
+  <div class="plan"><div class="day"><b>Day 1 · Thu 1 Oct</b><span>Why is the AI industry trying to leave the planet?</span><span class="plus">Google is putting its AI chips into orbit</span></div><div class="day"><b>Day 2 · Fri 2 Oct</b><span>Mills followed rivers. Computers follow electricity.</span><span class="plus">Sending one Big Mac to space costs about 250 Big Macs</span></div><div class="day"><b>Day 3 · Sat 3 Oct</b><span>SpaceX has asked to launch up to a million satellites</span><span class="plus">SpaceX wants a million satellites. There are 16,500 today.</span></div><div class="day"><b>Day 4 · Sun 4 Oct</b><span>Who owns the sunlight?</span><span class="plus">A satellite trained an AI model in space. On Shakespeare.</span></div><div class="day"><b>Day 5 · Mon 5 Oct</b><span>By 2030, AI&#x27;s data centres could use as much power as Japan</span><span class="plus">What if the biggest computer on Earth wasn&#x27;t on Earth?</span></div></div>
+  <h3>The whole film, in 4 parts</h3>
+  <div class="grid"><article class="card" id="ep05-part1">
+  <video controls playsinline preload="metadata" src="media/ep05/part1.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN · PART 1 OF 4</span><span>24 s · 1080×1920</span></div>
+    <p class="hook">Why is the AI industry trying to leave the planet?</p>
+    <p class="post">Google is sending four of its AI chips into orbit. Last December a satellite the size of a fridge trained an AI model in space. Part 1 of 4. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/part1.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep05-part2">
+  <video controls playsinline preload="metadata" src="media/ep05/part2.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN · PART 2 OF 4</span><span>45 s · 1080×1920</span></div>
+    <p class="hook">Mills followed rivers. Computers follow electricity.</p>
+    <p class="post">Data centres already use about 1.5% of the world&#x27;s electricity, heading for about all of Japan&#x27;s by 2030. In orbit, a panel can collect up to 8x the energy. Part 2 of 4. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/part2.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep05-part3">
+  <video controls playsinline preload="metadata" src="media/ep05/part3.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN · PART 3 OF 4</span><span>49 s · 1080×1920</span></div>
+    <p class="hook">SpaceX has asked to launch up to a million satellites</p>
+    <p class="post">There are about 16,500 working satellites today. The catch is the ticket: about $7,000 a kilo to orbit. Part 3 of 4. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/part3.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep05-part4">
+  <video controls playsinline preload="metadata" src="media/ep05/part4.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN · PART 4 OF 4</span><span>45 s · 1080×1920</span></div>
+    <p class="hook">Who owns the sunlight?</p>
+    <p class="post">Every age builds its machines next to its power: the river, the coal field, the reactor. Now, maybe, the sun. Part 4 of 4. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/part4.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+  <h3>Highlights</h3>
+  <div class="grid"><article class="card" id="ep05-bigmac">
+  <video controls playsinline preload="metadata" src="media/ep05/bigmac.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN</span><span>15 s · 1080×1920</span></div>
+    <p class="hook">Sending one Big Mac to space costs about 250 Big Macs</p>
+    <p class="post">A SpaceX rideshare to orbit costs about $7,000 a kilo. A Big Mac weighs 219 g. So launching one costs about $1,500, or about 250 Big Macs at $6.22. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/bigmac.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep05-million">
+  <video controls playsinline preload="metadata" src="media/ep05/million.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN</span><span>15 s · 1080×1920</span></div>
+    <p class="hook">SpaceX wants a million satellites. There are 16,500 today.</p>
+    <p class="post">Starcloud has filed for 88,000 satellites, SpaceX for up to 1,000,000, all to put AI data centres in orbit. About 16,500 satellites work today, from every country. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/million.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep05-suncatcher">
+  <video controls playsinline preload="metadata" src="media/ep05/suncatcher.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN</span><span>13 s · 1080×1920</span></div>
+    <p class="hook">Google is putting its AI chips into orbit</p>
+    <p class="post">Project Suncatcher: a satellite with four Google TPUs, set to launch on a Falcon 9 on 1 October 2026. The test is simple: do they survive up there? #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/suncatcher.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep05-shakespeare">
+  <video controls playsinline preload="metadata" src="media/ep05/shakespeare.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN</span><span>12 s · 1080×1920</span></div>
+    <p class="hook">A satellite trained an AI model in space. On Shakespeare.</p>
+    <p class="post">December 2025: Starcloud-1, a satellite about the size of a small fridge, trained an AI model in orbit on one Nvidia H100. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/shakespeare.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep05-japan">
+  <video controls playsinline preload="metadata" src="media/ep05/japan.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN</span><span>21 s · 1080×1920</span></div>
+    <p class="hook">By 2030, AI&#x27;s data centres could use as much power as Japan</p>
+    <p class="post">Data centres used about 1.5% of the world&#x27;s electricity in 2024. By 2030 the IEA expects about 945 TWh, roughly Japan&#x27;s whole consumption. Microsoft is restarting a reactor at Three Mile Island. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/japan.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep05-sunlight">
+  <video controls playsinline preload="metadata" src="media/ep05/sunlight.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">FOLLOW THE SUN · A WHAT-IF</span><span>27 s · 1080×1920</span></div>
+    <p class="hook">What if the biggest computer on Earth wasn&#x27;t on Earth?</p>
+    <p class="post">Imagine 2040: a ring of satellites in permanent daylight, in no country. Not a forecast, a what-if. Under the 1967 treaty no one owns space, but every country answers for what it launches. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep05/sunlight.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+</section><section id="ep08" class="ep">
+  <div><span class="eyebrow">EP08 · Cheaper Makes More</span><h2 class="ep-title">The Jevons paradox: why cheaper AI means more of it</h2></div>
+  <article class="card wide" id="ep08-full">
+  <img class="thumb" src="media/ep08/ep08_thumb.jpg" alt="Why Cheaper AI Means MORE Data Centres, Not Fewer: the YouTube thumbnail" loading="lazy">
+  <div class="body">
+    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE · Sat 3 Oct</span><span>2:15 · 16:9 · the 1080p file is in the chat</span></div>
+    <p class="hook">Why Cheaper AI Means MORE Data Centres, Not Fewer</p>
+    <p class="post">In 1865, a British economist noticed something strange: steam engines had become far more efficient, so Britain should have burned less coal. It burned more.
+
+In this video: the Jevons paradox, light in Britain (3,000 times cheaper and 40,000 times more used), a million AI tokens falling from about ten Big Macs to a hundredth of one, Google&#x27;s 3.2 quadrillion tokens a month, and a labelled what-if: what would we use thinking for if it got as cheap as light?
+
+Sources:
+• W. S. Jevons, The Coal Question, 1865: &quot;It is wholly a confusion of ideas to suppose that the economical use of fuel is equivalent to a diminished consumption. The very contrary is the truth.&quot;
+• R. Fouquet &amp; P. Pearson, &quot;Seven Centuries of Energy Services: The Price and Use of Light in the United Kingdom (1300-2000)&quot;, The Energy Journal 27(1), 2006: the real price of light fell ~3,000-fold and total use rose ~40,000-fold, 1800-2000
+• a16z, &quot;Welcome to LLMflation&quot; (Nov 2024): a million tokens at GPT-3-level capability, ~$60 (2021) to ~$0.06 (2024); a million tokens is ~750,000 words, about eight novels
+• Google I/O, May 2026: ~3,200 trillion tokens a month, up from 9.7 trillion two years earlier
+• Satya Nadella on LinkedIn and X, 27 Jan 2025: &quot;Jevons paradox strikes again!&quot;
+• Big Mac $6.22 (The Economist, July 2026): $60 is ~9.6 Big Macs, $0.06 is ~1/100 of one
+• The section on thinking as cheap as light is a labelled what-if, not a forecast</p>
+
+    <p class="pin">What would you use thinking for if it cost as little as light? Sources are in the description.</p>
+    <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
+      <button class="main" type="button" data-copy="post">Copy description</button>
+      <button type="button" data-save="media/ep08/ep08_thumb.jpg">Save thumbnail</button>
+      <button type="button" data-copy="pin" data-what="Pinned comment">Copy pinned comment</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+  <h3>Suggested order</h3>
+  <div class="plan"><div class="day"><b>Day 3 · Sat 3 Oct</b><span>Better engines made Britain burn MORE coal</span><span class="plus">Light got 3,000x cheaper. We used 40,000x more.</span></div><div class="day"><b>Day 4 · Sun 4 Oct</b><span>AI got 1,000x cheaper. Use exploded.</span><span class="plus">A million AI tokens: from 10 Big Macs to 1/100 of one</span></div><div class="day"><b>Day 5 · Mon 5 Oct</b><span>What if thinking got as cheap as light?</span><span class="plus">Google handles 3.2 quadrillion AI tokens a month</span></div><div class="day"><b>Day 6 · Tue 6 Oct</b><span>&quot;Jevons paradox strikes again&quot;</span></div></div>
+  <h3>The whole film, in 3 parts</h3>
+  <div class="grid"><article class="card" id="ep08-part1">
+  <video controls playsinline preload="metadata" src="media/ep08/part1.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">CHEAPER MAKES MORE · PART 1 OF 3</span><span>47 s · 1080×1920</span></div>
+    <p class="hook">Better engines made Britain burn MORE coal</p>
+    <p class="post">1865: steam engines got far more efficient, so Britain should have burned less coal. It burned more. Then light got 3,000x cheaper, and we used 40,000x more. Part 1 of 3. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep08/part1.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep08-part2">
+  <video controls playsinline preload="metadata" src="media/ep08/part2.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">CHEAPER MAKES MORE · PART 2 OF 3</span><span>35 s · 1080×1920</span></div>
+    <p class="hook">AI got 1,000x cheaper. Use exploded.</p>
+    <p class="post">A million tokens: about $60 in 2021, about 6 cents by 2024. Google now handles 3.2 quadrillion tokens a month, 300x two years earlier. Part 2 of 3. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep08/part2.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep08-part3">
+  <video controls playsinline preload="metadata" src="media/ep08/part3.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">CHEAPER MAKES MORE · PART 3 OF 3</span><span>45 s · 1080×1920</span></div>
+    <p class="hook">What if thinking got as cheap as light?</p>
+    <p class="post">Efficiency doesn&#x27;t shrink demand. It unlocks it. That&#x27;s why cheaper AI means more data centres, more power and more chips. Part 3 of 3. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep08/part3.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+  <h3>Highlights</h3>
+  <div class="grid"><article class="card" id="ep08-light">
+  <video controls playsinline preload="metadata" src="media/ep08/light.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">CHEAPER MAKES MORE</span><span>21 s · 1080×1920</span></div>
+    <p class="hook">Light got 3,000x cheaper. We used 40,000x more.</p>
+    <p class="post">Britain, 1800 to 2000: the real price of light fell about 3,000-fold, and total use rose about 40,000-fold (Fouquet &amp; Pearson). Streetlights, shop windows, screens. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep08/light.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep08-bigmacs">
+  <video controls playsinline preload="metadata" src="media/ep08/bigmacs.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">CHEAPER MAKES MORE</span><span>15 s · 1080×1920</span></div>
+    <p class="hook">A million AI tokens: from 10 Big Macs to 1/100 of one</p>
+    <p class="post">A million tokens, about eight novels of text: around $60 in 2021, about six cents by 2024 (a16z). At $6.22 a Big Mac, from about ten to about a hundredth of one. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep08/bigmacs.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep08-google">
+  <video controls playsinline preload="metadata" src="media/ep08/google.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">CHEAPER MAKES MORE</span><span>10 s · 1080×1920</span></div>
+    <p class="hook">Google handles 3.2 quadrillion AI tokens a month</p>
+    <p class="post">Google I/O, May 2026: about 3,200 trillion tokens a month, more than 300 times the 9.7 trillion of two years earlier. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep08/google.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep08-nadella">
+  <video controls playsinline preload="metadata" src="media/ep08/nadella.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">CHEAPER MAKES MORE</span><span>20 s · 1080×1920</span></div>
+    <p class="hook">&quot;Jevons paradox strikes again&quot;</p>
+    <p class="post">When a cheap Chinese model shook the markets in January 2025, Satya Nadella posted: Jevons paradox strikes again. Cheaper AI means more data centres, not fewer. #ai #economics #jevonsparadox #energy #tech #history #google #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep08/nadella.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+</section><section id="ep04" class="ep">
+  <div><span class="eyebrow">EP04 · The Man in the Machine</span><h2 class="ep-title">Robots, war and the person still inside</h2></div>
+  <article class="card wide" id="ep04-full">
+  <img class="thumb" src="media/ep04/ep04_thumb.jpg" alt="Who&#x27;s Really Inside the Robots?: the YouTube thumbnail" loading="lazy">
+  <div class="body">
+    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE · Mon 5 Oct</span><span>2:51 · 16:9 · the 1080p file is in the chat</span></div>
+    <p class="hook">Who&#x27;s Really Inside the Robots?</p>
+    <p class="post">18 September 2026: a man steps into a cage in San Francisco to fight a six-foot humanoid robot. The clips left one thing out: a person backstage in a VR headset was deciding its every move.
+
+In this video: Tesla&#x27;s 2021 robot reveal (a dancer in a bodysuit), China&#x27;s first humanoid robot boxing, what the machines really do on their own, a $13,500 humanoid in Big Macs, a robot dog with a rifle, Ukraine&#x27;s 50,000 ground robots, a $4.2M Patriot against a drone that costs 3,000 to 8,000 Big Macs, and a labelled what-if: who decides when the pilot isn&#x27;t needed?
+
+Sources:
+• Human vs humanoid, San Francisco, 18 Sep 2026: Frankie LaPenna vs EngineAI&#x27;s T800 at Robot Entertainment Kombat; the robot was piloted by a person in a VR headset; the bout was stopped after a hand/wrist injury (Yahoo Tech; IBTimes UK; Gadget Review; Startup Fortune)
+• Tesla AI Day, 19 Aug 2021: the Tesla Bot announced with a dancer in a bodysuit (Fortune; Gizmodo; The Drive)
+• CMG World Robot Competition, Mecha Fighting Series, Hangzhou, 25 May 2025: four Unitree G1s (132 cm, 35 kg), each controlled by a human; balance learned with reinforcement training (Live Science; Global Times; Robotics 24/7)
+• Unitree G1: launched May 2024 at $16,000, $13,500 from late 2025 (The Robot Report; store listings); Big Mac $6.22, The Economist, July 2026, so $13,500 = about 2,170 Big Macs
+• PLA robot dog with a rifle, Golden Dragon 2024 with Cambodia, remote-operated (CNN, 28 May 2024)
+• Ukraine: 50,000 ground robots ordered for 2026 (April); about 112,000 logistics and evacuation missions by early September 2026 (Defense News; United24 Media; The Defense Post)
+• Patriot PAC-3 MSE about $4.2M (US Army FY2025 budget); Shahed $20,000-$50,000 (CSIS); in Big Macs at $6.22: about 680,000, and 3,200-8,000
+• The 2030 section is a labelled what-if, not a forecast</p>
+
+    <p class="pin">Should a robot ever decide on its own? Every figure is sourced in the description.</p>
+    <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
+      <button class="main" type="button" data-copy="post">Copy description</button>
+      <button type="button" data-save="media/ep04/ep04_thumb.jpg">Save thumbnail</button>
+      <button type="button" data-copy="pin" data-what="Pinned comment">Copy pinned comment</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+  <h3>Suggested order</h3>
+  <div class="plan"><div class="day"><b>Day 5 · Mon 5 Oct</b><span>A man fought a six-foot robot. The clips left one thing out.</span><span class="plus">Man vs six-foot robot. Who was really fighting?</span></div><div class="day"><b>Day 6 · Tue 6 Oct</b><span>What the robot does, and what a person still decides</span><span class="plus">The most famous robot in the world was a person</span></div><div class="day"><b>Day 7 · Wed 7 Oct</b><span>The robots that matter most don&#x27;t look like us</span><span class="plus">A $4.2 million missile vs a $20,000 drone</span></div><div class="day"><b>Day 8 · Thu 8 Oct</b><span>The person is still in the loop. The loop keeps getting smaller.</span><span class="plus">Robot boxing: who&#x27;s actually throwing the punches?</span></div><div class="day"><b>Day 9 · Fri 9 Oct</b><span>You can buy a humanoid robot for 2,200 Big Macs</span><span class="plus">Ukraine ordered 50,000 ground robots this year</span></div><div class="day"><b>Day 10 · Sat 10 Oct</b><span>What happens when the pilot isn&#x27;t needed?</span></div></div>
+  <h3>The whole film, in 4 parts</h3>
+  <div class="grid"><article class="card" id="ep04-part1">
+  <video controls playsinline preload="metadata" src="media/ep04/part1.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE · PART 1 OF 4</span><span>33 s · 1080×1920</span></div>
+    <p class="hook">A man fought a six-foot robot. The clips left one thing out.</p>
+    <p class="post">San Francisco, 18 Sep 2026: a man steps into a cage with an 80 kg humanoid robot. It wasn&#x27;t deciding anything. Part 1 of 4. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/part1.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep04-part2">
+  <video controls playsinline preload="metadata" src="media/ep04/part2.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE · PART 2 OF 4</span><span>37 s · 1080×1920</span></div>
+    <p class="hook">What the robot does, and what a person still decides</p>
+    <p class="post">Tesla&#x27;s 2021 robot reveal was a dancer in a bodysuit. China&#x27;s first robot boxers were each steered by a human. Part 2 of 4. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/part2.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep04-part3">
+  <video controls playsinline preload="metadata" src="media/ep04/part3.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE · PART 3 OF 4</span><span>47 s · 1080×1920</span></div>
+    <p class="hook">The robots that matter most don&#x27;t look like us</p>
+    <p class="post">A robot dog with a rifle. 50,000 ground robots ordered by Ukraine. A $4.2M missile fired at a $20,000 drone. Part 3 of 4. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/part3.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep04-part4">
+  <video controls playsinline preload="metadata" src="media/ep04/part4.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE · PART 4 OF 4</span><span>46 s · 1080×1920</span></div>
+    <p class="hook">The person is still in the loop. The loop keeps getting smaller.</p>
+    <p class="post">Every machine in this story still had a person deciding what it did. So what happens when the pilot isn&#x27;t needed? Part 4 of 4. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/part4.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+  <h3>Highlights</h3>
+  <div class="grid"><article class="card" id="ep04-cagefight">
+  <video controls playsinline preload="metadata" src="media/ep04/cagefight.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE</span><span>25 s · 1080×1920</span></div>
+    <p class="hook">Man vs six-foot robot. Who was really fighting?</p>
+    <p class="post">18 Sep 2026, San Francisco: a man vs an 80 kg humanoid robot. The robot wasn&#x27;t deciding anything. A person backstage in a VR headset was. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/cagefight.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep04-tesla">
+  <video controls playsinline preload="metadata" src="media/ep04/tesla.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE</span><span>17 s · 1080×1920</span></div>
+    <p class="hook">The most famous robot in the world was a person</p>
+    <p class="post">August 2021: Tesla announces a humanoid robot. On stage, it&#x27;s a person in a white bodysuit, dancing. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/tesla.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep04-boxing">
+  <video controls playsinline preload="metadata" src="media/ep04/boxing.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE</span><span>21 s · 1080×1920</span></div>
+    <p class="hook">Robot boxing: who&#x27;s actually throwing the punches?</p>
+    <p class="post">May 2025: China&#x27;s first humanoid robot boxing tournament. The machines stay upright on their own. A person decides when to punch. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/boxing.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep04-price">
+  <video controls playsinline preload="metadata" src="media/ep04/price.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE</span><span>18 s · 1080×1920</span></div>
+    <p class="hook">You can buy a humanoid robot for 2,200 Big Macs</p>
+    <p class="post">A Unitree G1 costs $13,500. At $6.22 a Big Mac, that&#x27;s about 2,200 Big Macs. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/price.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep04-patriot">
+  <video controls playsinline preload="metadata" src="media/ep04/patriot.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE</span><span>20 s · 1080×1920</span></div>
+    <p class="hook">A $4.2 million missile vs a $20,000 drone</p>
+    <p class="post">One Patriot interceptor: about $4.2M, or 680,000 Big Macs. The Shahed drone it&#x27;s often fired at: 3,000 to 8,000. Cheap machines, expensive answers. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/patriot.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep04-ukraine">
+  <video controls playsinline preload="metadata" src="media/ep04/ukraine.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE</span><span>16 s · 1080×1920</span></div>
+    <p class="hook">Ukraine ordered 50,000 ground robots this year</p>
+    <p class="post">By September they&#x27;d made about 112,000 supply and evacuation runs. Each one, a trip a soldier didn&#x27;t have to make. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/ukraine.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep04-loop">
+  <video controls playsinline preload="metadata" src="media/ep04/loop.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE MAN IN THE MACHINE · A WHAT-IF</span><span>37 s · 1080×1920</span></div>
+    <p class="hook">What happens when the pilot isn&#x27;t needed?</p>
+    <p class="post">Every robot in this story still had a person deciding. Imagine it&#x27;s 2030 and that&#x27;s gone. Not a forecast, a what-if. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep04/loop.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+</section>
+<footer>Every figure in these clips is sourced in its full video's end card. The files were also sent in the chat.</footer>
+</div>
+<script>
+const note=(el,msg)=>{el.textContent=msg;};
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+  const card=b.closest('.card');const el=card.querySelector('.'+(b.dataset.copy||'post'));const text=el.textContent;const n=card.querySelector('.note');
+  try{await navigator.clipboard.writeText(text);note(n,(b.dataset.what||(b.dataset.copy==='hook'?'Title':b.dataset.copy==='post'&&card.classList.contains('wide')?'Description':'Caption'))+' copied.');}
+  catch(e){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();
+    s.removeAllRanges();s.addRange(r);note(n,'Selected: copy it from the menu.');}
+}));
+let downloads=null;
+const saveButtons=[...document.querySelectorAll('[data-save]')];
+saveButtons.forEach(b=>b.hidden=true);
+(async()=>{try{downloads=window.claude&&window.claude.use?await window.claude.use('downloads'):null;}catch(e){downloads=null;}
+  if(!downloads)return;saveButtons.forEach(b=>b.hidden=false);})();
+saveButtons.forEach(b=>b.addEventListener('click',async()=>{
+  const n=b.closest('.card').querySelector('.note');const file=b.dataset.save;
+  if(!downloads){note(n,'Saving isn\'t available in this view: it was also sent in the chat.');return;}
+  b.disabled=true;note(n,'Getting the video…');
+  try{const blob=await (await fetch(file)).blob();await downloads.save({filename:file.split('/').pop(),data:blob});note(n,'Saved.');}
+  catch(e){const c=e&&e.code;note(n,c==='declined'?'Not saved.':c==='rate_limited'?'One save at a time: try again in a moment.':
+    'Couldn\'t save here: the file is also in the chat.');}
+  finally{b.disabled=false;}
+}));
+</script>

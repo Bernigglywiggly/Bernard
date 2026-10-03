@@ -1,0 +1,601 @@
+<title>Curve Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600&family=Michroma&display=swap">
+<style>
+/* Chrome & Marl: the channel's own system (always dark by the owner's choice) */
+:root{
+  color-scheme:dark;
+  --graphite:#14161A; --slate:#1B1E23; --glass:#23272D; --glass2:#1D2126; --line:#2E343C; --line2:#3B424C;
+  --type:#E9EBEE; --mid:#C9CED6; --soft:#8A919C; --turq:#12B8AC; --glow:#3FE6D8; --emerald:#12A36E;
+  --display:"Michroma","Eurostile","Arial Black",sans-serif; --body:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--graphite);color:var(--type);font-family:var(--body);font-size:16px;line-height:1.55;
+  background-image:radial-gradient(rgba(233,235,238,.035) 1px,transparent 1.2px);background-size:22px 22px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:24px 80px}
+a{color:var(--glow);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:400}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.eyebrow b{color:var(--turq);font-weight:500}
+header{display:grid;gap:14px;padding-block:8px 26px;border-bottom:1px solid var(--line)}
+header h1{font-family:var(--display);font-size:clamp(34px,6vw,64px);line-height:1.02;letter-spacing:.02em}
+header h1 span{color:var(--turq)}
+header p{margin:0;color:var(--mid);max-width:70ch;font-weight:300;font-size:18px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:4;display:flex;gap:6px;overflow-x:auto;padding-block:10px;background:rgba(20,22,26,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);scrollbar-width:none}
+nav a{flex:0 0 auto;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--mid);padding:7px 12px;border:1px solid var(--line);border-radius:999px}
+nav a:hover{border-color:var(--turq);color:var(--type)}
+section{padding-top:44px;display:grid;gap:18px}
+h2{font-family:var(--display);font-size:clamp(22px,3.2vw,30px);letter-spacing:.03em}
+.lede{margin:0;color:var(--mid);max-width:70ch;font-weight:300}
+.glass{background:linear-gradient(180deg,var(--glass),var(--glass2));border:1px solid var(--line);border-top-color:#3a414a;border-radius:16px}
+.player{overflow:hidden}
+.player video{display:block;width:100%;aspect-ratio:16/9;background:#0B0C0E}
+.vwrap{display:grid;grid-template-columns:minmax(0,380px) 1fr;gap:18px;align-items:start}
+.vplayer{overflow:hidden}
+.vplayer video{display:block;width:100%;aspect-ratio:9/16;background:#0B0C0E}
+.floors{width:100%;border-collapse:collapse;font-size:14.5px}
+.floors th,.floors td{text-align:left;padding:9px 10px;border-bottom:1px dashed var(--line);vertical-align:top}
+.floors th{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:400}
+.floors td:first-child{font-family:var(--mono);color:var(--turq);white-space:nowrap}
+.tbox{overflow-x:auto}
+.covers{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 6px}
+.covers img{display:block;height:auto;max-height:280px;max-width:100%;border-radius:12px;border:1px solid var(--line)}
+.eps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ep{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--slate);font-size:14px;color:var(--mid)}
+.ep b{display:block;color:var(--type);font-weight:600;margin-bottom:2px}
+@media (max-width:820px){.vwrap,.eps{grid-template-columns:1fr}}
+.player .cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;padding:12px 16px;border-top:1px solid var(--line)}
+.cap span{font-family:var(--mono);font-size:12.5px;color:var(--soft)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+code{font-family:var(--mono);font-size:.9em;color:var(--glow);background:#101215;border:1px solid var(--line);border-radius:6px;padding:1px 5px;overflow-wrap:anywhere}
+.clip{overflow:hidden;display:grid}
+.clip video{width:100%;aspect-ratio:16/9;display:block;background:#0B0C0E}
+.clip .body{padding:14px 16px;display:grid;gap:8px}
+.clip h3{font-family:var(--display);font-size:16px;letter-spacing:.04em}
+.clip p{margin:0;color:var(--mid);font-size:14.5px}
+.tag{font-family:var(--mono);font-size:11.5px;color:var(--turq);letter-spacing:.06em;text-transform:uppercase}
+.picks{display:flex;flex-wrap:wrap;gap:6px}
+.pick{font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--mid);background:transparent;border:1px solid var(--line2);border-radius:999px;padding:7px 11px;min-height:34px;cursor:pointer}
+.pick[aria-pressed="true"]{background:var(--turq);border-color:var(--turq);color:#061312}
+.pick.love[aria-pressed="true"]{background:var(--emerald);border-color:var(--emerald);color:#04110b}
+.sfx{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.sfx button{font:inherit;text-align:left;display:grid;gap:2px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--slate);color:var(--type);cursor:pointer;min-height:58px}
+.sfx button:hover{border-color:var(--turq)}
+.sfx button[data-playing="true"]{border-color:var(--glow);box-shadow:0 0 0 1px var(--glow) inset}
+.sfx b{font-family:var(--mono);font-weight:500;font-size:13px}
+.sfx small{color:var(--soft);font-size:12px;line-height:1.3}
+.aud{display:grid;gap:8px;padding:14px 16px}
+.aud h3{font-size:16px;font-weight:600}
+.aud p{margin:0;color:var(--mid);font-size:14px}
+audio{width:100%;height:36px;filter:invert(.88) hue-rotate(180deg) saturate(.4)}
+.script{padding:18px 20px;display:grid;gap:10px}
+.line{display:grid;grid-template-columns:62px 1fr;gap:12px;align-items:baseline;border-top:1px dashed var(--line);padding-top:10px}
+.line:first-child{border-top:0;padding-top:0}
+.line time{font-family:var(--mono);font-size:12px;color:var(--soft)}
+.line q{quotes:none;font-size:17px}
+.line em{display:block;font-style:normal;font-family:var(--mono);font-size:11.5px;color:var(--turq);letter-spacing:.04em;margin-top:2px}
+.refs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ref{padding:14px 16px;display:grid;gap:4px}
+.ref b{font-weight:600}
+.ref p{margin:0;color:var(--mid);font-size:14px}
+.rules{counter-reset:r;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rule{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--slate);font-size:14.5px}
+.rule b{font-family:var(--mono);color:var(--turq);font-weight:500;margin-right:6px}
+.prompt{padding:14px 16px;display:grid;gap:8px}
+.prompt .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.prompt h3{font-size:16px;font-weight:600}
+.prompt p{margin:0;font-family:var(--mono);font-size:12.5px;color:var(--mid);white-space:pre-wrap}
+.copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--type);background:transparent;border:1px solid var(--line2);border-radius:8px;padding:6px 10px;cursor:pointer}
+.status{padding:16px 18px;display:grid;gap:10px}
+.status ol{margin:0;padding-left:20px;display:grid;gap:8px;color:var(--mid)}
+.status code,.inline{font-family:var(--mono);font-size:12.5px;background:#0E1013;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--type)}
+pre.cmd{margin:0;overflow-x:auto;background:#0E1013;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:var(--mono);font-size:12px;color:var(--mid)}
+.pickbox{padding:16px 18px;display:grid;gap:14px}
+.pickrow{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:start}
+.pickrow .eyebrow{padding-top:8px}
+textarea{font:inherit;font-size:15px;width:100%;min-height:80px;border-radius:10px;border:1px solid var(--line2);background:#0E1013;color:var(--type);padding:10px}
+.savestate{font-family:var(--mono);font-size:12px;color:var(--soft)}
+.split{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;align-items:start}
+@media (max-width:820px){
+  .grid2,.grid3,.refs,.rules,.split{grid-template-columns:1fr}
+  .pickrow{grid-template-columns:1fr}
+  .pickrow .eyebrow{padding-top:0}
+}
+@media (prefers-reduced-motion:reduce){video{animation:none}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">v10 lab · <b>27 Sep 2026</b> · built in the cloud session</span>
+  <h1>Curve <span>Lab</span></h1>
+  <p><b>New on top: EP03 in full</b>, the whole Shovel Sellers film in the decided look, voiced by George. <b>Then the music box</b>, seven new beds (Mainframe is the newest) and every original, then <b>the decided look</b> (the EP03 opening in ASCII, now with a Big Mac and scored with the new Mainframe bed), <b>the relay</b> and <b>the style shoot-out</b>, the same opening built five different ways (line morph, ASCII, feedback, Blender, Higgsfield prompts). Then the EP03 draft and EP02. Below them, everything from tonight's session, for you to judge: a 105-second pilot in the new renegade voice, four camera-led visual directions, a mechanical sound palette with the stomach-drop vortex, three jungle beds and the voice tests. Tap what you like below. Your picks save, and the next session reads them.</p>
+</header>
+
+<nav aria-label="Sections">
+  <a href="#ep03full">EP03 in full</a><a href="#musicbox">Music box</a><a href="#styles">Style shoot-out</a><a href="#ep03">EP03 · draft</a><a href="#ep02">EP02</a><a href="#ep01">EP01</a><a href="#pilot">Pilot</a><a href="#picks">Your picks</a><a href="#visual">Visuals</a><a href="#sound">Sound</a><a href="#voice">Voice</a><a href="#script">Script</a><a href="#refs">References</a><a href="#rules">Rules</a><a href="#higgs">Higgsfield</a><a href="#status">A01 status</a>
+</nav>
+
+<section id="ep03full">
+  <span class="eyebrow">00 · <b>Newest</b> · the whole film</span>
+  <h2>EP03 · The Shovel Sellers, in full (v2 · George)</h2>
+  <p class="lede">George, the very first British voice (ElevenLabs), now voices the whole film, fast (2:33). Everything re-timed itself to his delivery: the cold open you approved, the census ledger, one prize split across a crowd, a million dollars a day since the Romans invaded Britain, the shovel turning into a chip with Big Macs rolling off it, OpenAI's balance tipping to $1.65, the railway bubble, London to Tokyo, a dotted 2030, a supply chain. No typing sounds; the music (Mainframe) sits well under his voice and lifts in the pauses.</p>
+  <div class="glass clip"><video controls playsinline preload="metadata" src="media/ep03/ep03_full_720.mp4"></video>
+    <div class="body"><span class="tag">EP03 · full · v2 · George · 720p preview</span><h3>The whole film, voiced</h3><p>Sound: George on top, Mainframe about 15 dB under him with a dip before every reveal, and the picture's own effects (forms, morphs, latches, coins, paper, pops, links, ticks) tucked underneath; master -14 LUFS, -1 dBTP. The 1080p file was sent in the chat.</p></div></div>
+</section>
+
+<section id="musicbox">
+  <span class="eyebrow">01 · the music box</span>
+  <h2>Music: seven new beds, and every original</h2>
+  <p class="lede">The jungle bed is scrapped. Here are six new directions, none of them jungle, all made from nothing, so nothing can get a copyright claim. Each runs about 70 seconds and moves (intro, build, main, breakdown), with a darker, smoother top than the jungle had, closer to the A01 bed you liked. Below them is every piece of music made for you so far, oldest first, so you can find the ones you remember. Tap the ones you love.</p>
+  <span class="eyebrow">New</span>
+  <div class="grid3">
+    <div class="glass aud"><h3>Mainframe · newest</h3><p>Dark synth-orchestral, 104 BPM, D minor, after your note that the calm cut felt too light: a rolling 16th-note synth ostinato that opens up section by section, strings, low brass swells, deep booms at the changes, and no drum kit. An original in the spirit of The Son of Flynn, now under EP03.</p><audio controls preload="none" src="media/music/new/mainframe.mp3"></audio></div>
+    <div class="glass aud"><h3>Terminal</h3><p>Glitch / IDM, 96 BPM, D minor. Soft clicks and stutters, a bell arp bouncing left and right, a warm sub. A machine thinking. Made for the ASCII look.</p><audio controls preload="none" src="media/music/new/terminal.mp3"></audio></div>
+    <div class="glass aud"><h3>Tape Loop</h3><p>Lo-fi hip hop, 84 BPM. Dusty swung drums, jazzy Rhodes, a round bass, tape wobble and crackle. For the laid-back talk-throughs, like the robots video.</p><audio controls preload="none" src="media/music/new/tape_loop.mp3"></audio></div>
+    <div class="glass aud"><h3>Night Drive</h3><p>Dark synth pulse, 108 BPM, A minor. An 8th-note bass, gated pads, a plucked arp, a big clap cut short. Tension without the cheese.</p><audio controls preload="none" src="media/music/new/night_drive.mp3"></audio></div>
+    <div class="glass aud"><h3>Low Orbit</h3><p>Cinematic pulse, 120 BPM. A ticking clock, pads that slowly open, a heartbeat kick, a felt-piano motif, a riser into the peak. For the "holy shit" moments.</p><audio controls preload="none" src="media/music/new/low_orbit.mp3"></audio></div>
+    <div class="glass aud"><h3>Two-Step</h3><p>UK future garage, 132 BPM. Shuffled 2-step drums, deep sub, airy pads, "vox" chops made only from filters (no real voice), rain and crackle. Moody, very London.</p><audio controls preload="none" src="media/music/new/two_step.mp3"></audio></div>
+    <div class="glass aud"><h3>Chrome &amp; Marl II</h3><p>The A01 bed you liked, grown into a full minute: Am9 to Cmaj9 pads, the rising felt-piano motifs, a soft sub, a quiet tick, then a gentle pulse.</p><audio controls preload="none" src="media/music/new/chrome_marl.mp3"></audio></div>
+  </div>
+  <span class="eyebrow">The originals, oldest first</span>
+  <div class="grid3">
+    <div class="glass aud"><h3>A01 v5 · the outro pad</h3><p>The very first piece: a slow, warm, hopeful pad (Dbmaj9, Bbm9, Gbmaj9, Ab6/9) with tape wobble and soft plucks. 12 seconds.</p><audio controls preload="none" src="media/music/orig/a01v5_outro_pad.mp3"></audio></div>
+    <div class="glass aud"><h3>A01 v6.2 · Chrome &amp; Marl, as you heard it</h3><p>The soundtrack of the hook you rated best, minus the voice: the calm pad bed plus the felt-piano motifs, chord swells and placed sounds.</p><audio controls preload="none" src="media/music/orig/a01_chrome_marl_soundtrack.mp3"></audio></div>
+    <div class="glass aud"><h3>A01 v6.2 · the bed on its own</h3><p>Just the pads (Am9 into Cmaj9), the sub and the air.</p><audio controls preload="none" src="media/music/orig/a01_chrome_marl_bed.mp3"></audio></div>
+    <div class="glass aud"><h3>Jungle · Liquid</h3><p>Rhodes, pads and a soft 170 BPM break.</p><audio controls preload="none" src="media/music/bed_liquid.mp3"></audio></div>
+    <div class="glass aud"><h3>Jungle · Rollers</h3><p>A tight rolling break with a reese bass.</p><audio controls preload="none" src="media/music/bed_rollers.mp3"></audio></div>
+    <div class="glass aud"><h3>Jungle · Dark</h3><p>Heavier reese, darker pads, a drop in the middle.</p><audio controls preload="none" src="media/music/bed_dark.mp3"></audio></div>
+    <div class="glass aud"><h3>The pilot's bed</h3><p>The jungle arranged to the pilot's voice: half-time open, full ride, the drop, an atmospheric break.</p><audio controls preload="none" src="media/music/pilot_bed.mp3"></audio></div>
+    <div class="glass aud"><h3>EP01 · Sixteen Hours</h3><p>The first episode's bed (first 80 seconds).</p><audio controls preload="none" src="media/music/orig/ep01_bed.mp3"></audio></div>
+    <div class="glass aud"><h3>EP02 · The Ninety-Minute War</h3><p>EP02's bed (first 80 seconds).</p><audio controls preload="none" src="media/music/orig/ep02_bed.mp3"></audio></div>
+    <div class="glass aud"><h3>EP03 · The Shovel Sellers</h3><p>EP03's draft bed (first 80 seconds).</p><audio controls preload="none" src="media/music/orig/ep03_bed.mp3"></audio></div>
+  </div>
+  <div class="glass pickbox">
+    <div class="pickrow"><span class="eyebrow">Love · new</span><div class="picks" data-cat="musicnew" data-mode="many">
+      <button class="pick love" data-v="mainframe">Mainframe</button><button class="pick love" data-v="terminal">Terminal</button><button class="pick love" data-v="tape_loop">Tape Loop</button><button class="pick love" data-v="night_drive">Night Drive</button><button class="pick love" data-v="low_orbit">Low Orbit</button><button class="pick love" data-v="two_step">Two-Step</button><button class="pick love" data-v="chrome_marl">Chrome &amp; Marl II</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Love · originals</span><div class="picks" data-cat="musicorig" data-mode="many">
+      <button class="pick love" data-v="a01v5_outro">A01 outro pad</button><button class="pick love" data-v="a01_soundtrack">Chrome &amp; Marl (as heard)</button><button class="pick love" data-v="a01_bed">Chrome &amp; Marl bed</button><button class="pick love" data-v="liquid">Liquid</button><button class="pick love" data-v="rollers">Rollers</button><button class="pick love" data-v="dark">Dark</button><button class="pick love" data-v="pilot">Pilot bed</button><button class="pick love" data-v="ep01">EP01</button><button class="pick love" data-v="ep02">EP02</button><button class="pick love" data-v="ep03">EP03</button></div></div>
+  </div>
+</section>
+
+<section id="styles">
+  <span class="eyebrow">01 · one opening, five looks, and the relay · <b>decided: ASCII</b></span>
+  <h2>Style shoot-out: the same 35 seconds</h2>
+  <div class="glass pad" style="margin-bottom:14px;border-color:#12B8AC"><h3>Decided</h3><p class="lede" style="margin:0">One focused style: <b>ASCII all the way</b>, a little Blender realism for the big objects, and the other looks only as rare accents. The relay stays as a test.</p></div>
+  <p class="lede">The EP03 opening (1848, the bottle of gold, the rush, the store, $36,000, the shovel, the push into the next part), built five completely different ways from one timeline. Same music and effects on each. The words are captions for now, until ElevenLabs George is connected. Tap the ones you love, and I'll build the channel's look from the winners.</p>
+  <div class="glass clip" id="styleS" style="margin-bottom:14px"><video controls playsinline preload="metadata" src="media/styles/style_S_ascii.mp4"></video>
+    <div class="body"><span class="tag">S · The decided look · v5.1</span><h3>Analogies, said straight, and a darker score</h3><p>v5.1 keeps the v5 picture and changes the music, after your note that it felt too light: it is now scored with Mainframe, a new dark synth-orchestral bed in the spirit of The Son of Flynn (an original, not a copy). Strings and a filtered ostinato under 1848; a boom and the pulse on "Within weeks the town empties"; brass and violins arrive with the Big Mac; the pulse drops out on "He never panned for gold". From v5: "At that markup, a Big Mac would cost four hundred and sixty-six dollars," said flat, while a Big Mac forms in characters and its price runs from $6.22 to $466. Words are captions until ElevenLabs George is connected.</p></div></div>
+  <div class="glass pickbox" style="margin-bottom:14px">
+    <div class="pickrow"><span class="eyebrow">The ASCII look</span><div class="picks" data-cat="asciilook" data-mode="many">
+      <button class="pick love" data-v="yes">Yes, build EP03 like this</button><button class="pick" data-v="more_real">More Blender realism</button><button class="pick" data-v="less_real">Less realism, pure ASCII</button><button class="pick" data-v="no_trails">Drop the trails accent</button><button class="pick" data-v="other_music">Try other music</button></div></div>
+  </div>
+  <div class="glass clip" id="styleR" style="margin-bottom:14px"><video controls playsinline preload="metadata" src="media/styles/style_R_relay.mp4"></video>
+    <div class="body"><span class="tag">R · The relay · a test</span><h3>All four looks in one film</h3><p>Each beat gets the look that suits it, and every hand-off is built so the shapes carry straight through. The chrome 1848 is traced in light. The line bottle is pushed onto the glass one. The burst feeds the feedback loop and becomes the stampede. The trails die away into Sam's calm store, and a scan turns the money into characters. The characters develop into the dunes, and we go through the grip into the prize. One set of captions, label and vignette over all of it, so it plays as one film.</p></div></div>
+  <div class="glass pickbox" style="margin-bottom:14px">
+    <div class="pickrow"><span class="eyebrow">The relay</span><div class="picks" data-cat="relay" data-mode="one">
+      <button class="pick love" data-v="all">Love it, keep all four</button><button class="pick" data-v="fewer">Fewer switches, two or three looks</button><button class="pick" data-v="one">One look is stronger</button></div></div>
+  </div>
+  <div class="grid2">
+    <div class="glass clip"><video controls playsinline preload="metadata" src="media/styles/style_A_line.mp4"></video>
+      <div class="body"><span class="tag">A · Line morph</span><h3>The A01 look</h3><p>Lines form objects with bright tips, then flow into the next shape: 1848 becomes the bottle, the store becomes $36,000, the street becomes one shovel. No axes, one push-through into the next part.</p></div></div>
+    <div class="glass clip"><video controls playsinline preload="metadata" src="media/styles/style_B_ascii.mp4"></video>
+      <div class="body"><span class="tag">B · Heavy ASCII</span><h3>Everything is characters</h3><p>The same shapes, rebuilt from glyphs over a slowly drifting sea of characters. Strokes grow a character thick; chrome becomes dense blocks. Terminal-meets-art-print.</p></div></div>
+    <div class="glass clip"><video controls playsinline preload="metadata" src="media/styles/style_C_feedback.mp4"></video>
+      <div class="body"><span class="tag">C · Feedback trails</span><h3>The TouchDesigner look</h3><p>Every frame is fed back into the next, zoomed and turned a touch, with the colour channels split, so shapes leave echo tunnels and chromatic fringes. Built in code, since TouchDesigner has no Linux version.</p></div></div>
+    <div class="glass clip" id="styleD"><video controls playsinline preload="metadata" src="media/styles/style_D_blender.mp4"></video>
+      <div class="body"><span class="tag">D · Blender 3D</span><h3>Chrome, glass and gold</h3><p>Real objects, rendered in Blender: brushed-chrome 1848, a glass bottle heaped with gold that bursts, the store's steel pans, $36,000 over a model street, one clean shovel planted in empty dunes, then into its grip. A quick draft: rendered small at 12 fps, with real in-between frames for the fast shots, then upscaled. A full-quality render is a few hours of machine time.</p></div></div>
+  </div>
+  <div class="glass pad">
+    <h3>E · Higgsfield (photoreal AI video)</h3>
+    <p class="lede">Blocked from here, so it's a prompt pack: seven shots with camera presets, in <code>lab/ep03s/HIGGSFIELD.md</code>. Generate them on the Mac, drop them in <code>lab/ep03s/plates/</code>, and I'll cut them to the same sound and captions.</p>
+  </div>
+  <div class="glass pickbox">
+    <div class="pickrow"><span class="eyebrow">Love</span><div class="picks" data-cat="stylelove" data-mode="many">
+      <button class="pick love" data-v="A">A · Line morph</button><button class="pick love" data-v="B">B · ASCII</button><button class="pick love" data-v="C">C · Feedback</button><button class="pick love" data-v="D">D · Blender</button><button class="pick love" data-v="E">E · Higgsfield</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Mix</span><div class="picks" data-cat="stylemix" data-mode="many">
+      <button class="pick" data-v="A+B">Line + ASCII</button><button class="pick" data-v="A+D">Line + Blender</button><button class="pick" data-v="B+C">ASCII + Feedback</button><button class="pick" data-v="D+C">Blender + Feedback</button></div></div>
+  </div>
+</section>
+
+<section id="ep03">
+  <span class="eyebrow">02 · <b>EP03 draft</b> · the old engine</span>
+  <h2>EP03 · The Shovel Sellers</h2>
+  <p class="lede">George is back, faster, sharper and swearing where it lands. In 1848 the richest man in the gold rush sold the shovels, the census showed the miners mostly didn't get rich, and the same pattern runs through railway mania and the AI rush. It lands on your walk-in pitch. This draft uses my fallback lines in the seven gaps marked for your punchlines. Fill them in on the plan page and I'll re-voice it.</p>
+  <div class="vwrap">
+    <div class="glass vplayer"><video id="ep03Video" controls playsinline preload="metadata" poster="media/ep03_poster.jpg"></video></div>
+    <div class="glass status">
+      <span class="eyebrow">What changed</span>
+      <ol>
+        <li><b>Voice:</b> George at 1.02 with tighter gaps, in the new register: quick, dry, well read, "not one fucking scoop".</li>
+        <li><b>Your gaps:</b> seven places where your punchline replaces mine, listed on the plan page with the setup line before each.</li>
+        <li><b>Ruler:</b> a timeline with a broken axis, the 1840s on the left and now on the right. The marker jumps the 150-year gap.</li>
+        <li><b>Scenes:</b> the bottle of gold, a 3D shop of pans and shovels, the $36,000 counter, the swarm that splits the prize, the pan gate, the census, a takeaway receipt, the door, railway mania drawing itself, the layers, and 2030 shopfronts.</li>
+        <li><b>Length:</b> 3:35, over the Shorts limit, so it posts as a normal video and to TikTok. A 60-second Short gets cut from the cold open.</li>
+      </ol>
+    </div>
+  </div>
+  <span class="eyebrow">Covers</span>
+  <div class="covers">
+    <img src="media/covers/ep03_cover_a.jpg" alt="EP03 cover A: $36,000 in nine weeks, he never dug for gold" loading="lazy">
+    <img src="media/covers/ep03_cover_b.jpg" alt="EP03 cover B: They saw a gold rush. He saw a supply chain." loading="lazy">
+    <img src="media/covers/ep03_thumb_16x9.jpg" alt="EP03 16:9 thumbnail" loading="lazy">
+  </div>
+  <div class="glass pickbox">
+    <div class="pickrow"><span class="eyebrow">The new voice</span><div class="picks" data-cat="ep03voice" data-mode="one">
+      <button class="pick love" data-v="yes">Yes, this is it</button><button class="pick" data-v="faster">Even faster</button><button class="pick" data-v="calmer">Too much, calm it</button></div></div>
+    <div class="pickrow"><span class="eyebrow">EP03 cover</span><div class="picks" data-cat="ep03cover" data-mode="one">
+      <button class="pick" data-v="a">A · $36,000</button><button class="pick" data-v="b">B · the mirrored line</button></div></div>
+  </div>
+</section>
+
+<section id="ep02">
+  <span class="eyebrow">03 · <b>Episode two</b> · the price war</span>
+  <h2>EP02 · The Ninety-Minute War</h2>
+  <p class="lede">On 22 September one lab cut its flagship's price by a fifth. About ninety minutes later its biggest rival launched two models at half the price. Why price is the only signal everyone can read, what a million tokens is in your units, the Red Queen, and a labelled what-if: when thinking is almost free, what gets expensive? Vertical, 2:47, same Six Floors format.</p>
+  <div class="vwrap">
+    <div class="glass vplayer"><video id="ep02Video" controls playsinline preload="metadata" poster="media/ep02_poster.jpg"></video></div>
+    <div class="glass status">
+      <span class="eyebrow">What's new since EP01</span>
+      <ol>
+        <li><b>The ruler is a price:</b> dollars per million tokens on a log scale, cheaper to the right. Every cut lands as a tag, and 2021 → 2024 ($60 → $0.06) runs as a glowing trail.</li>
+        <li><b>Glass price tags:</b> the old price gets struck through, the new one lands, and the percentage stamps in.</li>
+        <li><b>The Red Queen treadmill:</b> a chessboard rolling towards you, two queens running on the spot.</li>
+        <li><b>A quieter IMAGINE:</b> the drums drop out for the big question, then "your time, your attention, someone who turns up".</li>
+        <li><b>The mirrored close:</b> −20% and −50%, and both labs still running.</li>
+      </ol>
+      <span class="eyebrow">Facts</span>
+      <ol>
+        <li>Both price cuts are from launch-day coverage; the <b>90-minute gap is single-source</b>, and the video says so on screen.</li>
+        <li>$60 → $0.06 is a16z's "LLMflation" analysis (Nov 2024) for the same level of capability.</li>
+        <li>The Red Queen: Carroll (1871), borrowed by Van Valen (1973).</li>
+      </ol>
+    </div>
+  </div>
+  <div class="glass tbox" style="padding:6px 10px">
+    <table class="floors">
+      <thead><tr><th>Floor</th><th>In EP02</th></tr></thead>
+      <tbody>
+        <tr><td>0 · GROUND</td><td>−20% on the flagship, then −50% about ninety minutes later. "Two companies. One afternoon. Both went cheaper."</td></tr>
+        <tr><td>1 · MECHANISM</td><td>How good vs how much: nobody can judge quality in an afternoon, everyone can read a price. $60 → $0.06 in three years.</td></tr>
+        <tr><td>2 · YOU</td><td>A million tokens ≈ 750,000 words ≈ 8 novels, read for under 10p.</td></tr>
+        <tr><td>3 · IDEA</td><td>The Red Queen: all the running you can do, to stay in the same place.</td></tr>
+        <tr><td>4 · IMAGINE</td><td>The best tutor for less than a text message. When thinking is almost free, what gets expensive?</td></tr>
+        <tr><td>5 · SURFACE</td><td>Hand over the job you've been putting off. "One lab cut its price by a fifth. The other cut it in half. And both of them are still running."</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="eyebrow">Covers · 9:16 for TikTok and Shorts, 16:9 for a long upload</span>
+  <div class="covers">
+    <img src="media/covers/ep02_cover_a.jpg" alt="EP02 cover A: −20% and −50%, 90 minutes apart, two queens" loading="lazy">
+    <img src="media/covers/ep02_cover_b.jpg" alt="EP02 cover B: When thinking is free, what gets expensive?" loading="lazy">
+    <img src="media/covers/ep02_thumb_16x9.jpg" alt="EP02 16:9 thumbnail" loading="lazy">
+  </div>
+  <div class="glass pickbox">
+    <div class="pickrow"><span class="eyebrow">EP02 vs EP01</span><div class="picks" data-cat="ep02verdict" data-mode="one">
+      <button class="pick love" data-v="better">EP02 is better</button><button class="pick" data-v="same">About the same</button><button class="pick" data-v="ep01">EP01 is better</button></div></div>
+    <div class="pickrow"><span class="eyebrow">EP02 cover</span><div class="picks" data-cat="ep02cover" data-mode="one">
+      <button class="pick" data-v="a">A · −20% / −50%</button><button class="pick" data-v="b">B · the question</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Post first</span><div class="picks" data-cat="postfirst" data-mode="one">
+      <button class="pick" data-v="ep01">EP01 · Sixteen Hours</button><button class="pick" data-v="ep02">EP02 · The Ninety-Minute War</button><button class="pick" data-v="both">Both, a day apart</button></div></div>
+  </div>
+</section>
+
+<section id="ep01">
+  <span class="eyebrow">04 · <b>Episode one</b> · after the pollar inspo</span>
+  <h2>EP01 · Sixteen Hours</h2>
+  <p class="lede">Your inspo, taken apart and rebuilt one level up. Pollar's rigour (dates, sources, one metric running along the bottom, silence before each reveal, a mirrored close), plus three floors they never go down to: what it means for you, the idea underneath, and a labelled what-if. Vertical, 2:25, for TikTok and Shorts.</p>
+  <div class="vwrap">
+    <div class="glass vplayer"><video id="ep01Video" controls playsinline preload="metadata" poster="media/ep01_poster.jpg"></video></div>
+    <div class="glass status">
+      <span class="eyebrow">What pollar does (measured from the file)</span>
+      <ol>
+        <li><b>One arc:</b> a present-state hook ("PM since 20 July"), a flashback with a number ("176 days earlier"), a chain of dated reversals, the hidden rule (ministers vote with the government, always), the ceiling (95 of 95), then a mirrored close.</li>
+        <li><b>A spine you can see:</b> a day-count timeline that gains a marker at every event.</li>
+        <li><b>Silence as punctuation:</b> 0.1–0.4 s hard drops right before seven reveals.</li>
+        <li><b>A calm narrator:</b> ~146 Hz, ~140 wpm, no adjectives, fragments for the big beats.</li>
+        <li><b>A still, document-like screen:</b> one red accent, highlighted quotes, waffle grids, sources at the end.</li>
+      </ol>
+      <span class="eyebrow">What EP01 adds</span>
+      <ol>
+        <li><b>A depth gauge</b> (left edge): Ground → Mechanism → You → Idea → Imagine, then a climb back up to the Surface.</li>
+        <li><b>A log-time ruler</b> in place of their day count: the horizon marker slides from 2 seconds to 16 hours, collecting a dot for each year.</li>
+        <li><b>The idea made physical:</b> a powers-of-ten zoom as a sheet is folded 42 times, past a book, a person, Everest and the space station, to the Moon.</li>
+        <li><b>IMAGINE:</b> the vortex drop into an ASCII dream layer, dotted "if the trend held" markers, ghost cards, and two questions.</li>
+        <li><b>Motion and sound:</b> 228 task cards in 3D, the success curve, the 50% line, and mechanical cues, all with their silence cuts.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="glass tbox" style="padding:6px 10px">
+    <table class="floors">
+      <thead><tr><th>Floor</th><th>Job</th><th>In EP01</th></tr></thead>
+      <tbody>
+        <tr><td>0 · GROUND</td><td>The event, flat. A present-state hook, then a flashback with a number.</td><td>A 16-hour task; March 2026; "seven years earlier… two seconds"</td></tr>
+        <tr><td>1 · MECHANISM</td><td>The hidden rule, how it actually works.</td><td>METR's 228 tasks, the 50% line, "the time horizon", the ladder 2 s → 16 h</td></tr>
+        <tr><td>2 · YOU</td><td>The number in your units.</td><td>Two working days: an essay, a takeaway's website, the mod</td></tr>
+        <tr><td>3 · IDEA</td><td>The principle underneath.</td><td>Steps vs folds; 42 folds to the Moon; doubling every ~4 months</td></tr>
+        <tr><td>4 · IMAGINE</td><td>A labelled what-if that stretches the mind.</td><td>A working week, then a month; handing over a month; what would you keep?</td></tr>
+        <tr><td>5 · SURFACE</td><td>One thing tonight, then a mirrored close.</td><td>"Six years from two seconds to an hour. One more from an hour to sixteen."</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="glass pickbox">
+    <div class="pickrow"><span class="eyebrow">This format</span><div class="picks" data-cat="format" data-mode="many">
+      <button class="pick love" data-v="six-floors">Keep Six Floors</button><button class="pick love" data-v="depth-gauge">Keep the depth gauge</button><button class="pick love" data-v="log-ruler">Keep the metric ruler</button><button class="pick love" data-v="more-imagine">More IMAGINE</button><button class="pick" data-v="less-imagine">Less IMAGINE</button><button class="pick love" data-v="silence-cuts">Keep the silence cuts</button></div></div>
+    <div class="pickrow"><span class="eyebrow">EP01 voice</span><div class="picks" data-cat="ep01voice" data-mode="one">
+      <button class="pick" data-v="calm-british">This calm British read</button><button class="pick" data-v="george">George (ElevenLabs)</button><button class="pick" data-v="exo">The exo gunslinger</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Next episode</span><div class="picks" data-cat="next" data-mode="one" id="nextPicks"></div></div>
+  </div>
+  <span class="eyebrow">Episode bank · pick the next one above</span>
+  <div class="eps" id="eps"></div>
+</section>
+
+<section id="pilot">
+  <span class="eyebrow">05 · <b>The pilot</b> · archived</span>
+  <h2>The Curve · 1:45</h2>
+  <p class="lede">The first pilot (the chip that talks to you, the ride up the exponential, the vortex, the gold rush) is archived to make room: the direction has moved on, and the page has a size limit. It's in the repo at <code>lab/pilot/build/THE_CURVE_pilot_chat.mp4</code> and was sent in chat.</p>
+</section>
+
+<section id="picks">
+  <span class="eyebrow">06 · <b>Your picks</b></span>
+  <h2>Tap what you like</h2>
+  <p class="lede">These save to this page's tracker. Next session I read them and build in that direction. Change your mind as often as you like.</p>
+  <div class="glass pickbox" id="pickbox">
+    <div class="pickrow"><span class="eyebrow">Pilot</span><div class="picks" data-cat="pilot" data-mode="one">
+      <button class="pick" data-v="post-as-A02">Post it as A02</button><button class="pick" data-v="make-short">Cut it into Shorts</button><button class="pick" data-v="longer">Make it a full video</button><button class="pick" data-v="rework">Rework it</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Visual</span><div class="picks" data-cat="visual" data-mode="many">
+      <button class="pick love" data-v="A-exploded">A · Exploded orbit</button><button class="pick love" data-v="B-rail">B · Type rail</button><button class="pick love" data-v="C-ascii">C · ASCII sculpture</button><button class="pick love" data-v="D-ride">D · Curve ride + vortex</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Voice</span><div class="picks" data-cat="voice" data-mode="one">
+      <button class="pick" data-v="exo-A-cinema">Exo A, cinema</button><button class="pick" data-v="exo-B-cinema">Exo B, cinema</button><button class="pick" data-v="clean-cinema">Clean, cinema</button><button class="pick" data-v="exo-heavy">Exo heavy</button><button class="pick" data-v="george">George for everything</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Jungle</span><div class="picks" data-cat="bed" data-mode="one">
+      <button class="pick" data-v="liquid">Liquid</button><button class="pick" data-v="rollers">Rollers</button><button class="pick" data-v="dark">Dark</button><button class="pick" data-v="pilot-bed">The pilot's bed</button><button class="pick" data-v="none">No jungle</button></div></div>
+    <div class="pickrow"><span class="eyebrow">Sounds to keep</span><div class="picks" data-cat="sfx" data-mode="many" id="sfxPicks"></div></div>
+    <div class="pickrow"><span class="eyebrow">Notes</span><div><textarea id="pickNotes" placeholder="Anything: what hit, what felt tacky, what to push further"></textarea><div class="savestate" id="pickState">Picks save on this device until the tracker connects.</div></div></div>
+  </div>
+</section>
+
+<section id="visual">
+  <span class="eyebrow">07 · <b>Visual directions</b></span>
+  <h2>Where the ASCII look started</h2>
+  <p class="lede">The first of four camera tests from the first night, and the root of the look you picked. The other three (exploded orbit, type rail, curve ride) are archived to make room; the code is in <code>lab/visual/clips.py</code>.</p>
+  <div class="grid2">
+    
+    
+    <article class="glass clip"><video src="media/C_ascii.mp4" muted loop playsinline controls preload="none" poster="media/C_poster.jpg"></video><div class="body"><span class="tag">C · ASCII sculpture</span><h3>A solid shaded in characters</h3><p>A torus knot, lit and z-buffered into 14,400 characters a frame. It decodes in from noise and turns slowly. After donut.c, play.core and Acerola's ASCII shader.</p></div></article>
+    
+  </div>
+</section>
+
+<section id="sound">
+  <span class="eyebrow">08 · <b>Sound palette</b></span>
+  <h2>Mechanical, not magical</h2>
+  <p class="lede">23 sounds, all synthesised, with no samples, so nothing can be claimed. The keys are modelled on thocky, creamy switches (the "banana" ones are most likely Keychron's poppy Banana tactiles or the smoother C³×TKC Banana Splits). The stomach-drop family follows the research: a moment of silence, a descending Shepard–Risset fall, then a short sub drop that resolves.</p>
+  <div class="glass aud"><h3>The whole palette, announced</h3><audio controls preload="none" src="media/sfx/palette_reel.mp3"></audio></div>
+  <div class="sfx" id="sfxGrid"></div>
+</section>
+
+<section id="voice">
+  <span class="eyebrow">09 · <b>Voice tests</b></span>
+  <h2>The exo gunslinger</h2>
+  <p class="lede">You asked for as close to Cayde-6 as possible. I didn't clone the actor. This is an original character with the same traits: a laid-back, wry American voice, a hint of machine in the chest, and a big cinema room that stays out of the words (the reverb ducks while he talks and blooms in the gaps). Built from two stock voices blended, all local.</p>
+  <div class="grid2">
+    <div class="glass aud"><h3>Exo A · cinema</h3><p>Warm and playful blend. The one used in the pilot.</p><audio controls preload="none" src="media/voice/michael_puck_exo_cinema.mp3"></audio></div>
+    <div class="glass aud"><h3>Exo B · cinema</h3><p>Brighter, more energetic blend.</p><audio controls preload="none" src="media/voice/fenrir_puck_exo_cinema.mp3"></audio></div>
+    <div class="glass aud"><h3>Exo A · heavy</h3><p>More chassis: comb resonance, ring-mod and a crushed layer.</p><audio controls preload="none" src="media/voice/michael_puck_exo_heavy_cinema.mp3"></audio></div>
+    <div class="glass aud"><h3>Exo A · dry</h3><p>No room, no machine. The raw read.</p><audio controls preload="none" src="media/voice/michael_puck_dry.mp3"></audio></div>
+    <div class="glass aud"><h3>All 11 candidates</h3><p>michael, puck, fenrir, eric, liam, onyx, echo, michael+puck, fenrir+puck, michael+onyx, eric+fenrir</p><audio controls preload="none" src="media/voice/audition_reel.mp3"></audio></div>
+  </div>
+</section>
+
+<section id="script">
+  <span class="eyebrow">10 · <b>Script</b></span>
+  <h2>How the pilot is written</h2>
+  <div class="split">
+    <div class="glass script" id="scriptBox"></div>
+    <div class="glass status">
+      <span class="eyebrow">Techniques borrowed (structure, not content)</span>
+      <ol>
+        <li><b>Flat-premise cold open.</b> "Hard being a chip in 2026." Stated as fact, no setup.</li>
+        <li><b>"You" by line two.</b> The viewer is inside the system.</li>
+        <li><b>Micro-antithesis.</b> "That's not a trend line. That's a launch ramp."</li>
+        <li><b>Escalation ladder.</b> "Decades. Years. Months."</li>
+        <li><b>Borrowed-domain chiasmus.</b> "They saw a gold rush. He saw a supply chain."</li>
+        <li><b>Aphorism.</b> "The shovel isn't the model."</li>
+        <li><b>Deadpan callback.</b> "From one chip to another."</li>
+      </ol>
+      <p class="lede" style="font-size:14px">From the santeluca breakdown: about 2 s per shot in his edits, cuts on every clause, sincerity applied to absurdity. We keep the principle but move the camera instead of hard-cutting, which keeps it calm. His shock humour stays out.</p>
+    </div>
+  </div>
+</section>
+
+<section id="refs">
+  <span class="eyebrow">11 · <b>References</b></span>
+  <h2>What to steal (techniques, not looks)</h2>
+  <div class="refs" id="refsList"></div>
+</section>
+
+<section id="rules">
+  <span class="eyebrow">12 · <b>The brain rules</b></span>
+  <h2>Why things feel satisfying</h2>
+  <p class="lede">From the perception research (processing fluency, curiosity gaps, audio-visual sync, the physiology of bass). Everything in the pilot follows these.</p>
+  <div class="rules" id="rulesBox"></div>
+</section>
+
+<section id="higgs">
+  <span class="eyebrow">13 · <b>Higgsfield pack</b></span>
+  <h2>Ten prompts in house style</h2>
+  <p class="lede">Higgsfield is blocked from the cloud session (and needs an API key there), so run these from your Mac or phone and drop the clips into the repo. Make keyframes as stills first, then image-to-video with a named camera preset at low-to-medium strength. Put all type and numbers in post.</p>
+  <div class="glass prompt"><div class="top"><h3>Style suffix (append to every prompt)</h3><button class="copy" data-copy="suffix">Copy</button></div><p id="suffix">Dark graphite void, matte slate floor with a faint turquoise (#12B8AC) grid fading into fog, thin single-weight turquoise holographic line work, chrome and brushed-metal materials, soft top light with crisp rim light, subtle scanlines and fine ASCII glyph dust, calm precise motion, only turquoise as accent color, no neon rainbow, no lens-flare spam, no readable text, cinematic 2.39:1, fine film grain.</p></div>
+  <div class="grid2" id="prompts"></div>
+</section>
+
+<section id="status">
+  <span class="eyebrow">14 · <b>A01 status</b></span>
+  <h2>Getting A01 up</h2>
+  <div class="glass status">
+    <ol>
+      <li>The finished A01 pieces (the full George voice, <span class="inline">full.py</span>, <span class="inline">sfx_mech.py</span>, the jungle bed) are only on your Mac. The two accounts share nothing except the GitHub repo.</li>
+      <li><b>Quickest:</b> on the Mac, sign Claude Code into this account and resume the paused session. It only needs the sound pass and the render.</li>
+      <li><b>Or</b> push the folder so the cloud can finish it:</li>
+    </ol>
+    <pre class="cmd">rm -rf /tmp/bern &amp;&amp; git clone -q https://github.com/Bernigglywiggly/Bernard.git /tmp/bern &amp;&amp; cd /tmp/bern &amp;&amp; git checkout -qb mac-sync &amp;&amp; mkdir -p mac &amp;&amp; rsync -a --max-size=90m --exclude='*.mp4' --exclude='*.mov' --exclude='*.png' --exclude='*.jpg' ~/youtube/a01_v6/ mac/a01_v6/ &amp;&amp; cp ~/RESUME_HERE_2026-09-26.md mac/ ; git add -A &amp;&amp; git commit -qm "Mac sync" &amp;&amp; git push -u origin mac-sync</pre>
+    <p class="lede" style="font-size:14px">Blocked from the cloud session by its network policy: chatgpt.com (paste the GPT output text instead), Higgsfield, ElevenLabs, TikTok, YouTube, Hugging Face. Allowing them in the environment's Network access, plus API keys as environment secrets, would let the cloud generate George and Higgsfield clips directly.</p>
+  </div>
+</section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.20/dist/hls.min.js"></script>
+<script>
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// ---------- EP01 (vertical): same HLS approach as the pilot
+(function(){
+  const v = document.getElementById("ep01Video"), src = "media/ep01/ep01_playlist.txt";
+  if (window.Hls && window.Hls.isSupported()) { const hls = new Hls({maxBufferLength: 30}); hls.loadSource(src); hls.attachMedia(v); }
+  else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
+})();
+// ---------- EP03 (vertical)
+(function(){
+  const v = document.getElementById("ep03Video"), src = "media/ep03/ep03_playlist.txt";
+  if (window.Hls && window.Hls.isSupported()) { const hls = new Hls({maxBufferLength: 30}); hls.loadSource(src); hls.attachMedia(v); }
+  else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
+})();
+// ---------- EP02 (vertical)
+(function(){
+  const v = document.getElementById("ep02Video"), src = "media/ep02/ep02_playlist.txt";
+  if (window.Hls && window.Hls.isSupported()) { const hls = new Hls({maxBufferLength: 30}); hls.loadSource(src); hls.attachMedia(v); }
+  else if (v.canPlayType("application/vnd.apple.mpegurl")) { v.src = src; }
+})();
+const EPS = [
+  ["EP04 · The Number That Decides What Gets Watched","Europe counts training arithmetic: 10²⁵. Goodhart's law. Imagine compute rationed like carbon."],
+  ["EP05 · The Exam and the Shirt","Moravec's paradox: why the easy things are hard. Imagine the first robot that moves like a toddler."],
+  ["EP06 · The Thirty-Year Delay","Electric motors took decades to pay off until factories were redesigned. Imagine an office built from zero around AI."],
+  ["EP07 · The Library of Every Book","Borges' infinite library, and models as compression. Imagine a librarian beside every child."],
+  ["EP08 · Cheaper Makes More","Jevons: efficiency increases total use. Name three jobs that exist only because thinking got cheap."],
+  ["EP09 · Who's Human Here?","People picked the AI as the human. Turing's real question. Imagine every voice might be synthetic."],
+  ["EP10 · Data Centres in Orbit","Computation follows energy, like mills followed rivers. Imagine a thinking ring around the Earth."],
+];
+document.getElementById("eps").innerHTML = EPS.map(([t, d]) => `<div class="ep"><b>${esc(t)}</b>${esc(d)}</div>`).join("");
+document.getElementById("nextPicks").innerHTML = EPS.map(([t]) => `<button class="pick" data-v="${esc(t.split(" · ")[0])}">${esc(t.split(" · ")[0])}</button>`).join("");
+
+// ---------- sound palette
+const SFX = [
+  ["thock","creamy switch bottoming out"],["thock_set","six thocks, varied"],["clack","brighter, marbly key"],["typing","a run of keys + space bar"],
+  ["relay","electromechanical contact"],["latch","magnetic snap"],["dock","card locks into place"],["servo","small motor, gear grain"],
+  ["hydraulic","pressure release"],["tick_run","dry HUD ticks"],["chatter","data chatter for ASCII"],["confirm","dull two-tone confirm"],
+  ["scan","a line sweeping across"],["form","a line energising"],["power_up","systems waking"],["whoosh","camera pass-by"],
+  ["sub_drop","the floor drops out"],["thum","deep impact"],["vortex","hang → endless fall → landing"],["vortex_endless","the fall, no landing"],
+  ["riser","tension, Shepard up"],["glitch","digital stutter"],["swell","F-minor air swell"]
+];
+const player = new Audio();
+let playingBtn = null;
+$("#sfxGrid").innerHTML = SFX.map(([k, d]) => `<button data-k="${k}"><b>${k.replace("_"," ")}</b><small>${esc(d)}</small></button>`).join("");
+$("#sfxGrid").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (playingBtn) playingBtn.dataset.playing = "false";
+  player.src = "media/sfx/" + b.dataset.k + ".mp3";
+  player.play().catch(() => {});
+  playingBtn = b; b.dataset.playing = "true";
+});
+player.addEventListener("ended", () => { if (playingBtn) playingBtn.dataset.playing = "false"; });
+$("#sfxPicks").innerHTML = SFX.map(([k]) => `<button class="pick love" data-v="${k}">${k.replace("_"," ")}</button>`).join("");
+
+// ---------- script
+const LINES = __LINES__;
+$("#scriptBox").innerHTML = LINES.map(l => `<div class="line"><time>${Math.floor(l.start/60)}:${String(Math.floor(l.start%60)).padStart(2,"0")}</time><div><q>${esc(l.text)}</q>${l.card ? `<em>${esc(l.card[0])} · ${esc(l.card[1])}</em>` : ""}</div></div>`).join("");
+
+// ---------- references
+const REFS = [
+  ["GMUNK · TRON: Legacy titles","Light lines travel a strict grid, lighting grid points for parallax, synced to the voiceover. The reference for gliding along line work.","https://gmunk.com/TRON-Opening-Titles"],
+  ["GMUNK · TRON: Legacy holograms","Line growth from real 3D meshes: branching light streamers grown from geometry.","https://gmunk.com/TRON-Legacy"],
+  ["Territory Studio · Blade Runner 2049","A limited palette plus designed decay (ghosting, screen-burn) used sparingly on clean icons.","https://territorystudio.com/project/blade-runner-2049/"],
+  ["Jayse Hansen · Iron Man HUDs","Widgets researched from real avionics and designed to read from the front, back and side. Essential when the camera orbits a hologram.","https://jayse.tv/v2/?portfolio=hud-2-2"],
+  ["Cantina Creative · Avengers","HUD elements that cast light on the scene. Our turquoise should light the graphite floor.","https://www.artofvfx.com/avengers-infinity-war-endgame-reel-by-cantina-creative/"],
+  ["Perception · Black Panther","Every interface follows one physical rule. Give our UI one physics: tokens behave like iron filings.","http://experienceperception.com/black-panther-fui.html"],
+  ["Daniel Simon · Light Cycle","Design hero objects as clean line silhouettes first; exploded callouts follow the silhouette.","https://danielsimon.com/film-design/tron-legacy/"],
+  ["Branch Education","Exploded assemblies hand-keyed to the VO. Parts separate on the word that names them.","https://www.youtube.com/@BranchEducation/videos"],
+  ["Bartosz Ciechanowski","Progressive assembly: one new component per beat.","https://ciechanow.ski/"],
+  ["Andreas Gysin · play.core","Math drives the ASCII field directly (noise, distance fields), rather than converting images.","https://github.com/ertdfgcvb/play.core"],
+  ["Acerola · ASCII shader","Edge-aware glyphs so / \\ | _ follow contours, plus a 'being printed' transition.","https://x.com/Acerola_t/status/1803039624677527926"],
+  ["Ryoji Ikeda · datamatics","Data as barcodes and binary patterns, locked frame-accurately to sound. In small doses (flicker risk).","https://www.ryojiikeda.com/project/datamatics/"],
+  ["Andreas Wannerstedt","Perfect loops built to trigger and release satisfaction: hypnotic and calm.","https://designwanted.com/andreas-wannerstedt-interview/"],
+  ["3Blue1Brown · Manim","Universal transformation: morph word → token → vector instead of cutting.","https://github.com/3b1b/manim"],
+  ["Saul Bass","Type and shape act as characters; reduction does the work.","https://www.artofthetitle.com/designer/saul-bass/"],
+  ["Stranger Things titles","Hollow letterforms drift and assemble through a void. Swap the red for turquoise on graphite.","https://www.artofthetitle.com/title/stranger-things/"],
+  ["DeepMind · Visualising AI","A calibration set for AI imagery that isn't robots and brains.","https://www.deepmind.com/visualising-ai"],
+  ["Tron: Ares (2025)","UI designed from story analysis, so every element carries a beat. Sharper, angular grids.","https://www.ilm.com/inside-the-ilm-art-department-tron-ares/"],
+];
+$("#refsList").innerHTML = REFS.map(([t, d, u]) => `<article class="glass ref"><b>${esc(t)}</b><p>${esc(d)}</p><a href="${u}" target="_blank" rel="noopener">${esc(new URL(u).hostname)} ↗</a></article>`).join("");
+
+// ---------- rules
+const RULES = [
+  "Make every frame instantly readable: ease of processing is felt as beauty.","Prime before you reveal.","Move like a hand: minimum-jerk easing.","A predictable grid, one surprise per phrase.",
+  "Medium complexity wins (the inverted U).","Design for closure, and close loudly.","Size the curiosity gap: the viewer should almost know.","Teach inside the curiosity window.",
+  "Open loops drive continuation, so close them.","Sync sound to visual transients: synchrony makes things pop.","Land sound 0–20 ms after the visual event, never early.","The first 30 seconds are their own product.",
+  "Pattern interrupts, within working-memory limits.","Silence resets the body: drop out before big reveals.","Tempo sets arousal: run jungle at two speeds at once.","Very low bass is felt: use it briefly, for the stomach drop.",
+  "The falling feeling: a descending Shepard–Risset glide, then resolve.","Tactile UI sounds signal quality: short, dry, never mouthy."
+];
+$("#rulesBox").innerHTML = RULES.map((r, i) => `<div class="rule"><b>R${i+1}</b>${esc(r)}</div>`).join("");
+
+// ---------- Higgsfield prompts
+const PROMPTS = [
+  ["Exploded GPU","360 Orbit","A graphics card floats in the void and separates into a clean exploded view along one axis: aluminum heatsink fins, copper heat pipes, green-black PCB, silicon die, memory chips. Every part drifts apart with equal spacing and stops precisely, each outlined by a thin turquoise holographic contour, with tiny ASCII part labels flickering on beside them. 360 Orbit, slow and constant."],
+  ["Token light-cycle","FPV Drone","A small glowing capsule labelled only by light races across an infinite graphite grid, leaving a razor-thin turquoise light-wall that folds into crisp right-angle turns. Chrome reflections streak on the floor. FPV Drone following low behind, smooth banking, no shake."],
+  ["Attention threads","Arc Left","Twelve frosted-glass word cards hover in a row above a slate table. Fine turquoise threads connect every card to every other, brighter where the connection is stronger, and ASCII digits ripple along the threads like current. Arc Left, a slow semicircle revealing the depth of the web."],
+  ["Line-work typography glide","Super Dolly In","Monumental hollow letterforms built from single turquoise light strokes stand on a dark slate plane like architecture. The camera glides at letter-height along the strokes, past corners and counters. ASCII dust drifts through the beams. Super Dolly In, steady, minimum-jerk ease."],
+  ["Embedding galaxy","Dolly Zoom In","A vast cloud of tiny chrome points hangs in the graphite void, loosely clustered. A turquoise wireframe sphere highlights one cluster while faint ASCII tags orbit it. Dolly Zoom In, a vertigo pull that makes the cluster swell while the background stretches away."],
+  ["Server blade, frozen","Bullet Time","A server blade sliding out of a monolithic graphite rack is frozen mid-motion. Its components hang in an exploded arrangement with turquoise callout lines and ASCII part numbers, and dust motes are frozen in the air. Bullet Time, an arc around the frozen instant."],
+  ["Switch teardown macro","Robo Arm","Extreme macro on a slate surface: a mechanical keyboard switch separates into top housing, translucent stem, steel spring and bottom housing, each part rimmed by a turquoise contour. The spring compresses and releases once. Robo Arm, a precise motion-control pass sweeping close past each part."],
+  ["Neural city reveal","Crane Up","A neural network rendered as a night city of graphite monoliths joined by turquoise light-roads; signal pulses travel the roads as packets of light. Crane Up rising from street level to reveal the full layered grid."],
+  ["Model-weights crystal","Lazy Susan","A faceted chrome crystal on a slate plinth rotates as if on a turntable. Inside, layers of turquoise wireframe planes are stacked like a transformer's layers, and ASCII noise shimmers across the facets. Lazy Susan, slow, perfectly smooth, seamless loop."],
+  ["Vortex drop","Through Object In","Concentric rings of turquoise line work form a spiral tunnel descending into darkness, with ASCII characters streaming along the tunnel walls. The camera slips through the first ring and falls down the center, accelerating then easing to a stop above a faint grid. Through Object In."],
+];
+$("#prompts").innerHTML = PROMPTS.map(([t, p, x], i) => `<article class="glass prompt"><div class="top"><h3>${i+1} · ${esc(t)}</h3><span class="tag">${esc(p)}</span></div><p id="pr${i}">${esc(x)}</p><button class="copy" data-copy="pr${i}">Copy prompt + suffix</button></article>`).join("");
+document.addEventListener("click", async e => {
+  const b = e.target.closest(".copy"); if (!b) return;
+  const el = $("#" + b.dataset.copy); const text = el.textContent + (b.dataset.copy === "suffix" ? "" : " " + $("#suffix").textContent);
+  try { await navigator.clipboard.writeText(text); b.textContent = "Copied"; }
+  catch(err){ const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Selected, press copy"; }
+  setTimeout(() => { b.textContent = b.dataset.copy === "suffix" ? "Copy" : "Copy prompt + suffix"; }, 1800);
+});
+
+// ---------- picks: local first, then the shared tracker (db) so the next session can read them
+let db = null;
+const picks = (() => { try { return JSON.parse(localStorage.getItem("cl-picks") || "{}"); } catch(e){ return {}; } })();
+function paint(){
+  document.querySelectorAll(".picks").forEach(g => {
+    const cur = picks[g.dataset.cat] || [];
+    g.querySelectorAll(".pick").forEach(b => b.setAttribute("aria-pressed", cur.includes(b.dataset.v)));
+  });
+  if (document.activeElement !== $("#pickNotes")) $("#pickNotes").value = picks.notes || "";
+}
+async function persist(cat){
+  try { localStorage.setItem("cl-picks", JSON.stringify(picks)); } catch(e){}
+  if (!db) return;
+  try { await db.doc("picks/" + cat).set({value: picks[cat] ?? null, updated: new Date().toISOString()}); $("#pickState").textContent = "Saved. The next session will read these."; }
+  catch(e){ $("#pickState").textContent = "Saved on this device (the tracker said " + (e && e.code || "no") + ")."; }
+}
+$("#pickbox").addEventListener("click", e => {
+  const b = e.target.closest(".pick"); if (!b) return;
+  const g = b.closest(".picks"), cat = g.dataset.cat, v = b.dataset.v;
+  let cur = picks[cat] || [];
+  if (g.dataset.mode === "one") cur = cur.includes(v) ? [] : [v];
+  else cur = cur.includes(v) ? cur.filter(x => x !== v) : cur.concat(v);
+  picks[cat] = cur; paint(); persist(cat);
+});
+let noteTimer = null;
+$("#pickNotes").addEventListener("input", e => { picks.notes = e.target.value; clearTimeout(noteTimer); noteTimer = setTimeout(() => persist("notes"), 900); });
+paint();
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch(e){ db = null; }
+  if (!db) return;
+  $("#pickState").textContent = "Connected. Your picks save for the next session.";
+  db.collection("picks").onSnapshot(snap => {
+    snap.docs.forEach(d => { const x = d.data(); if (x) picks[d.id] = x.value; });
+    paint();
+  }, () => {});
+})();
+</script>

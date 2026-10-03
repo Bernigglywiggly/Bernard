@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+build_est/
 develop-eggs/
 dist/
 downloads/
@@ -170,3 +171,5 @@ cython_debug/
 .vscode/*
 
 .DS_Store
+# voice auditions sent to the user
+curve_voice_*.mp3

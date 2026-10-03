@@ -1,0 +1,342 @@
+{
+ "total": 167.335,
+ "bpm": 170.0,
+ "half_bar": 0.7058823529411765,
+ "lead_in": 2.823529411764706,
+ "voice": "bm_george",
+ "lines": [
+  {
+   "i": 0,
+   "floor": 0,
+   "text": "On the twenty-second of September, one AI lab cut the price of its best model by a fifth.",
+   "start": 2.824,
+   "end": 9.235,
+   "card": [
+    "\u221220%",
+    "22 SEP 2026 \u00b7 $5 \u2192 $4 PER MILLION INPUT TOKENS"
+   ],
+   "mark": 4.0,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 1,
+   "floor": 0,
+   "text": "About ninety minutes later, its biggest rival launched two new models, at half the price.",
+   "start": 9.882,
+   "end": 15.706,
+   "card": [
+    "\u221250%",
+    "~90 MIN LATER \u00b7 THE GAP IS SINGLE-SOURCE"
+   ],
+   "mark": 2.0,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 2,
+   "floor": 0,
+   "text": "Two companies. One afternoon. Both went cheaper.",
+   "start": 16.941,
+   "end": 20.652,
+   "card": null,
+   "mark": null,
+   "cut": true,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 3,
+   "floor": 1,
+   "text": "Here's what's actually going on.",
+   "start": 22.588,
+   "end": 24.714,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 4,
+   "floor": 1,
+   "text": "When a product gets better every few months, customers really compare two things. How good. And how much.",
+   "start": 25.412,
+   "end": 32.31,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 5,
+   "floor": 1,
+   "text": "Nobody can tell how good in an afternoon. Everyone can see the price.",
+   "start": 33.176,
+   "end": 37.981,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 6,
+   "floor": 1,
+   "text": "So price is the signal. And once one lab moves, the other has hours, not weeks.",
+   "start": 38.824,
+   "end": 44.577,
+   "card": null,
+   "mark": null,
+   "cut": true,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 7,
+   "floor": 1,
+   "text": "Between 2021 and 2024, the same level of AI went from sixty dollars a million tokens, to six cents.",
+   "start": 45.176,
+   "end": 55.001,
+   "card": [
+    "1,000\u00d7",
+    "$60 \u2192 $0.06 PER MILLION TOKENS \u00b7 2021 \u2192 2024 \u00b7 a16z"
+   ],
+   "mark": 0.06,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 8,
+   "floor": 2,
+   "text": "A million tokens is about seven hundred and fifty thousand words. Roughly eight novels.",
+   "start": 56.471,
+   "end": 62.906,
+   "card": [
+    "\u2248 8 NOVELS",
+    "1 TOKEN \u2248 \u00be OF A WORD"
+   ],
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 9,
+   "floor": 2,
+   "text": "At the new cheapest price, a machine can read all eight for less than ten pence.",
+   "start": 63.529,
+   "end": 68.517,
+   "card": [
+    "< 10P",
+    "$0.10 PER MILLION INPUT TOKENS"
+   ],
+   "mark": 0.1,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 10,
+   "floor": 2,
+   "text": "Your whole reading list. Every review a takeaway has ever had. A year of your emails.",
+   "start": 69.176,
+   "end": 75.048,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 11,
+   "floor": 3,
+   "text": "Biologists have a name for this.",
+   "start": 77.647,
+   "end": 80.12,
+   "card": null,
+   "mark": null,
+   "cut": true,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 12,
+   "floor": 3,
+   "text": "In Through the Looking-Glass, the Red Queen tells Alice: it takes all the running you can do, to keep in the same place.",
+   "start": 80.471,
+   "end": 87.916,
+   "card": [
+    "THE RED QUEEN",
+    "LEWIS CARROLL \u00b7 1871"
+   ],
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 13,
+   "floor": 3,
+   "text": "In 1973, a biologist called Leigh Van Valen borrowed her, to explain why species never get ahead. Their rivals keep evolving too.",
+   "start": 88.235,
+   "end": 98.865,
+   "card": [
+    "VAN VALEN",
+    "\"A NEW EVOLUTIONARY LAW\" \u00b7 1973"
+   ],
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 14,
+   "floor": 3,
+   "text": "Two labs, running as fast as they can, to stay exactly where they are. And every step they take, you get it cheaper.",
+   "start": 99.529,
+   "end": 107.44,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 15,
+   "floor": 4,
+   "text": "So imagine the running never stops.",
+   "start": 110.824,
+   "end": 113.746,
+   "card": null,
+   "mark": null,
+   "cut": true,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 16,
+   "floor": 4,
+   "text": "Not a forecast. A what-if.",
+   "start": 119.294,
+   "end": 121.562,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": true,
+   "quiet": false
+  },
+  {
+   "i": 17,
+   "floor": 4,
+   "text": "Imagine the best tutor on Earth costs less than a text message.",
+   "start": 122.118,
+   "end": 126.712,
+   "card": null,
+   "mark": -0.001,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 18,
+   "floor": 4,
+   "text": "Then the best coder. The best translator. The best second opinion.",
+   "start": 127.059,
+   "end": 131.601,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 19,
+   "floor": 4,
+   "text": "When thinking is almost free, what gets expensive?",
+   "start": 132.706,
+   "end": 136.057,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": true
+  },
+  {
+   "i": 20,
+   "floor": 4,
+   "text": "Maybe the things a machine can't send you. Your time. Your attention. Someone who turns up.",
+   "start": 137.647,
+   "end": 143.763,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 21,
+   "floor": 5,
+   "text": "Tonight's version: find the one job you've been putting off because it means hours of reading, and hand it over for pennies.",
+   "start": 146.118,
+   "end": 154.16,
+   "card": null,
+   "mark": null,
+   "cut": false,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 22,
+   "floor": 5,
+   "text": "One lab cut its price by a fifth. The other cut it in half.",
+   "start": 156.0,
+   "end": 160.184,
+   "card": null,
+   "mark": null,
+   "cut": true,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  },
+  {
+   "i": 23,
+   "floor": 5,
+   "text": "And both of them are still running.",
+   "start": 160.941,
+   "end": 163.335,
+   "card": null,
+   "mark": null,
+   "cut": true,
+   "ladder": false,
+   "drop": false,
+   "quiet": false
+  }
+ ]
+}

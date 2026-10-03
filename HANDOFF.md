@@ -6,6 +6,16 @@ databases on one account can't be read from the other. Push anything the other s
 Updated 3 Oct 2026 (~8:30pm UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "3 Oct evening"
 just below (`STUDIO.md` maps everything), then "3 Oct: jazz", "2 Oct" and the rest.**
 
+## 3 Oct, near midnight: the What if POV format (read `channel/what-if/README.md`)
+- The user sent nine TikToks that were "popping off" (the @pov.what.if0 "What if...?" POV films) and asked for ours
+  with "way more surreal 4k, unreal engine visuals", the same layout, and "very advanced sound design... deep bass,
+  like fireforce bass moments, tastefully". They'll often put their own TikTok sound on top.
+- Film 01, "What if Earth fell into a black hole?" (70 s): 8 GPT Image keyframes + 7 chained Kling 3.0 clips (start and
+  end frames), real-physics readout (distance, tides x the Moon's), the reusable Remotion template
+  `lab/motion/src/whatif/WhatIfPov.tsx`, sound by `lab/whatif/sound_blackhole.py`. Media URLs in
+  `lab/motion/public/whatif/blackhole/jobs.json` (`python3 lab/whatif/fetch.py blackhole` restores them). Post copy:
+  `lab/whatif/blackhole_POST.md`. About 130 credits.
+
 ## 3 Oct late: launch three channels (read `channel/LAUNCH.md` and `MONEY.md`)
 - The user: set up the YouTube channels with every asset, schedule a week of posts that can be tweaked, review and adjust;
   three channels at a high standard first (The Curve, Money Crimes, How They Profit), ten live by 31 October, every

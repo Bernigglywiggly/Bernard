@@ -9,10 +9,12 @@ const FONTS = [
   { family: "Inter Tight", file: "fonts/InterTight-600.ttf", weight: "600" },
   { family: "IBM Plex Mono", file: "fonts/IBMPlexMono-400.ttf", weight: "400" },
   { family: "IBM Plex Mono", file: "fonts/IBMPlexMono-500.ttf", weight: "500" },
+  { family: "IBM Plex Serif", file: "fonts/IBMPlexSerif-500.ttf", weight: "500" },
+  { family: "IBM Plex Serif", file: "fonts/IBMPlexSerif-400i.ttf", weight: "400", style: "italic" },
 ];
 
 for (const font of FONTS) {
-  loadFont({ family: font.family, url: staticFile(font.file), weight: font.weight });
+  loadFont({ family: font.family, url: staticFile(font.file), weight: font.weight, style: font.style ?? "normal" });
 }
 
 // The Curve's house look: black, turquoise accent, gold labels.
@@ -29,5 +31,6 @@ export const theme = {
     display: '"Michroma", sans-serif',
     body: '"Inter Tight", sans-serif',
     mono: '"IBM Plex Mono", monospace',
+    serif: '"IBM Plex Serif", serif',
   },
 } as const;

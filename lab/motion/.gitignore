@@ -8,3 +8,10 @@ out
 
 # The repo root ignores every lib/ (Python packaging); this one is source.
 !src/lib/
+
+# What if films: AI media and rendered sound stay out of git (public/whatif/<film>/jobs.json keeps their URLs;
+# python3 lab/whatif/fetch.py <film> downloads them again and rebuilds the sound)
+public/whatif/*/c*.mp4
+public/whatif/*/keys/
+public/whatif/*/sound*.wav
+public/whatif/*/sound*.mp3

@@ -12,6 +12,7 @@ import { IntroScene } from "./scenes/IntroScene";
 import { OutroScene } from "./scenes/OutroScene";
 import { ShapesScene } from "./scenes/ShapesScene";
 import { StatScene } from "./scenes/StatScene";
+import { WhatIfPov } from "./whatif/WhatIfPov";
 // @new-composition-imports (npm run new adds imports above this line)
 
 export const RemotionRoot: React.FC = () => {
@@ -118,6 +119,17 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           durationInFrames={60}
           defaultProps={{ children: "Your Name", detail: "WHO THEY ARE" }}
+        />
+      </Folder>
+      <Folder name="WhatIf">
+        <Composition
+          id="WhatIf-BlackHole"
+          component={WhatIfPov}
+          width={1080}
+          height={1920}
+          fps={30}
+          durationInFrames={2100}
+          defaultProps={{ film: "blackhole" }}
         />
       </Folder>
       {/* @new-composition-registrations (npm run new adds compositions above this line) */}

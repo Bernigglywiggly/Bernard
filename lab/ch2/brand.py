@@ -52,8 +52,8 @@ def avatar(size=800, small=False):
     c = s.getCanvas()
     ruled(c, size, size, step=size // 16)
     c.drawCircle(size / 2, size / 2, size * 0.38, L.stroke(L.BRASS, size * 0.012, 0.95))
-    initials = "".join(wd[0] for wd in ledger.BRAND.split() if wd not in ("THE", "A", "OF"))[:2] or ledger.BRAND[:1]
-    f = L.font(L.SERIF_B, size * (0.42 if len(initials) == 1 else 0.3))
+    initials = "".join(wd[0] for wd in ledger.BRAND.split() if wd not in ("THE", "A", "OF"))[:3] or ledger.BRAND[:1]
+    f = L.font(L.SERIF_B, size * {1: 0.42, 2: 0.3}.get(len(initials), 0.22))
     L.text(c, initials, size / 2, size / 2 + f.getSize() * 0.36, f, L.fill(L.PAPER), "center")
     if not small:
         c.drawLine(size * 0.3, size * 0.68, size * 0.7, size * 0.68, L.stroke(L.BRASS, size * 0.006, 0.8))

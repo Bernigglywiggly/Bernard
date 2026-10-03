@@ -6,6 +6,18 @@ databases on one account can't be read from the other. Push anything the other s
 Updated 3 Oct 2026 (~8:30pm UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "3 Oct evening"
 just below (`STUDIO.md` maps everything), then "3 Oct: jazz", "2 Oct" and the rest.**
 
+## 3 Oct late: launch three channels (read `channel/LAUNCH.md` and `MONEY.md`)
+- The user: set up the YouTube channels with every asset, schedule a week of posts that can be tweaked, review and adjust;
+  three channels at a high standard first (The Curve, Money Crimes, How They Profit), ten live by 31 October, every
+  platform; then the AI influencer, affiliates and our own products. "We steam roll to making money."
+- Kits (profile picture, banner, watermark, X/Facebook covers, `SETUP.md` with names, handles, bios, keywords, defaults):
+  `channel/the-curve/brand/`, `channel/money-crimes/brand/` (new, `lab/brand/money_crimes.py`),
+  `channel/channel2/brand/` (The Margin renamed **How They Profit** in `lab/ch2/ledger.py`; "Margins" was taken).
+- `channel/LAUNCH.md`: one-time set-up steps, the week-1 schedule (5-11 Oct) per channel and platform, the review rules,
+  the path to ten channels. `MONEY.md`: every avenue ranked by how soon it pays (services first).
+- LF03: word timings, voice and music built on 3 Oct night; render next (`python3 kit.py lf03_held render`). Note the
+  new first step on a fresh checkout: `python3 ../longform/tools/words.py lf03_held/src/vo_[0-9][0-9].wav`.
+
 ## 3 Oct night: the goal is now 50 channels by 1 Feb 2027, fully automated (read `AUTOMATION.md`)
 - The user: set up every API, MCP and connector to automate creation, analysis, critique, upload and review, and have 50
   channels live by the February rule change. `AUTOMATION.md` has the limits (factory networks get terminated; one phone

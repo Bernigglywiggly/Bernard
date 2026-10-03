@@ -16,7 +16,7 @@ from engine import tl  # noqa: E402
 from ch2 import look as L  # noqa: E402
 
 W, H, FPS = tl.W, tl.H, tl.FPS
-BRAND = "THE MARGIN"                # the channel's name on screen: change it here (working name; see BIBLE.md)
+BRAND = "HOW THEY PROFIT"                # the channel's name on screen: change it here (working name; see BIBLE.md)
 FLOORS = []
 ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
 _BG = {}

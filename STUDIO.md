@@ -39,6 +39,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 | Jazz for true-story films (3 Oct) | `lab/music/jazz/library.py`: Kevin MacLeod, CC BY 4.0; `section()` cuts a cue, `credit_line()` for descriptions |
 | Voice | ElevenLabs line cache `lab/voice/cache/eleven` + `lab/tools/eleven_tts.py`, `lab/engine/voice.py`; auditions `lab/tools/voice_audition.py`; Higgsfield Seed Audio for the shorts |
 | Sound effects | `lab/out/sfx` (synthesised), `lab/sfx` |
+| Automation and scale plan (3 Oct): limits, route to 50 channels, every stage's tool and status | `AUTOMATION.md`; uploading: `UPLOADING.md`, `lab/tools/youtube_upload.py` |
 | Upload pages | `lab/pack/build.py` (new, films1, films2, season1, season2, shorts, lustig, lustig_shorts) |
 | Thumbnails and channel art | `lab/engine/thumb.py`, `lab/engine/brand.py`, `lab/ch2/thumbs.py`, `lab/ch2/brand.py` |
 | Checks | `lab/music/analyse.py` (tonal balance, clicks), `lab/qa_audio.py` |

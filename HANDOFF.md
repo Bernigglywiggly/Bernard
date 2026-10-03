@@ -6,6 +6,17 @@ databases on one account can't be read from the other. Push anything the other s
 Updated 3 Oct 2026 (~8:30pm UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "3 Oct evening"
 just below (`STUDIO.md` maps everything), then "3 Oct: jazz", "2 Oct" and the rest.**
 
+## 3 Oct night: the goal is now 50 channels by 1 Feb 2027, fully automated (read `AUTOMATION.md`)
+- The user: set up every API, MCP and connector to automate creation, analysis, critique, upload and review, and have 50
+  channels live by the February rule change. `AUTOMATION.md` has the limits (factory networks get terminated; one phone
+  number verifies two channels a year; uploads by API need Google's audit), the route (5 proven formats, then
+  translations, then new formats, about 8-10 formats x 5-6 languages), every stage's tool and status, and the steps only
+  the user can do (channels, Zapier YouTube, vidIQ channels, Metricool, Google Cloud project).
+- The other account's work (branch `claude/lucid-archimedes-77tqpt`) is merged here except its superseded `lab/deliver`
+  video copies: `UPLOADING.md`, `lab/tools/youtube_upload.py`, the HQ status board (`lab/hq`, published on that account:
+  https://claude.ai/artifact/K9nGAFNLCWCuroi2Mwg8He), the brand kit (`lab/brandkit`), the screening room
+  (`lab/screening`), and the bios/banner without a posting-rhythm promise.
+
 ## 3 Oct evening: handed over to the other account (START HERE)
 The user (3 Oct, evening): "Save everything for other claude account to pickup". Everything is pushed; this account's
 scheduled check-ins (LF03 continuation, PR #1 hourly) were cancelled so the two accounts don't both work the branch.

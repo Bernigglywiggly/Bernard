@@ -173,3 +173,5 @@ cython_debug/
 .DS_Store
 # voice auditions sent to the user
 curve_voice_*.mp3
+# a browsable copy of the finished videos (too big for git)
+/VIDEOS/

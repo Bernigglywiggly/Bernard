@@ -5,6 +5,14 @@ This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user wor
 databases on one account can't be read from the other. Push anything the other side needs here.
 Updated 3 Oct 2026, cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
 
+## 3 Oct (evening): the hub is `claude/funny-newton-gd9w8v`; status board
+- The cloud account's branch already contains this branch up to `b05809d` and has moved on (house/garage beds, the
+  clean-narration fix, EP09-EP12 finished, long-form LF01/LF02, Money crimes, five channels, `STUDIO.md`). Work there.
+  `lab/deliver/` here holds the older Arena cuts: superseded (see its README).
+- **The Curve HQ** (status board + upload tracker): https://claude.ai/artifact/K9nGAFNLCWCuroi2Mwg8He (source
+  `lab/hq/index.html`). Its db collection `uploads/<id>` holds `{yt, tt, ig, fb, updated}` per film as the user ticks
+  uploads; read it with ArtifactData to know what's live. It's on this account only.
+
 ## PICK UP HERE (3 Oct 2026): the short-form films on `claude/lucid-archimedes-77tqpt`
 The user asked: "Save everything for other claude account to pickup". Everything is pushed on this branch. The other
 account's own work (long-form LF01-LF03, Remotion in `lab/motion`) is on `claude/funny-newton-gd9w8v`; the two

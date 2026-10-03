@@ -1,0 +1,255 @@
+<title>The Curve HQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one column control room. Summary strip, today, the board (rows = films, state pills, upload ticks), queue, gaps. */
+:root{
+  --bg:#05090A; --surface:#0C1415; --line:#1D2C2D; --fg:#E6F1EF; --muted:#8FA6A3; --accent:#35D6C6; --gold:#F2D9A0;
+  --ok:#35D6C6; --warn:#F2B35A; --bad:#F07167; --chip:#10201F;
+  --display:"Michroma",ui-sans-serif,system-ui,sans-serif; --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#F1F6F5; --surface:#FFFFFF; --line:#D2E1DE; --fg:#0A1616; --muted:#4D615E; --accent:#0B8A7E; --gold:#8A6A1E;
+  --ok:#0B8A7E; --warn:#A8650E; --bad:#B8322A; --chip:#E3F1EE; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#F1F6F5; --surface:#FFFFFF; --line:#D2E1DE; --fg:#0A1616; --muted:#4D615E; --accent:#0B8A7E; --gold:#8A6A1E;
+  --ok:#0B8A7E; --warn:#A8650E; --bad:#B8322A; --chip:#E3F1EE; color-scheme:light}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--body)}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:grid;gap:34px}
+h1{font:400 clamp(22px,4vw,34px)/1.15 var(--display);letter-spacing:.04em;margin:0;text-wrap:balance}
+h2{font:600 19px/1.3 var(--body);margin:0 0 4px;text-wrap:balance}
+.eyebrow{font:500 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+p{margin:0}
+.muted{color:var(--muted)}
+.lede{color:var(--muted);max-width:68ch;margin-top:8px}
+section{display:grid;gap:12px}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:2px}
+.stat b{font:400 26px/1.1 var(--display);color:var(--accent);font-variant-numeric:tabular-nums}
+.stat.warn b{color:var(--warn)}
+.stat span{font-size:13px;color:var(--muted)}
+.today{border:1px solid var(--accent);border-radius:12px;padding:16px 18px;background:var(--surface);display:grid;gap:8px}
+.today ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.table{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font:500 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--chip)}
+tr:last-child td{border-bottom:0}
+td.t b{display:block;font-weight:600}
+td.t small{color:var(--muted)}
+.group td{background:var(--chip);font:500 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.pill{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.05em;padding:5px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.ready{color:var(--ok)} .pill.work{color:var(--warn)} .pill.todo{color:var(--muted)} .pill.old{color:var(--bad)}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ticks{display:flex;gap:6px;flex-wrap:wrap}
+.ticks label{display:inline-flex;align-items:center;gap:4px;font:500 11px/1 var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:5px 6px;cursor:pointer}
+.ticks input{accent-color:var(--accent);margin:0}
+.ticks label.on{color:var(--fg);border-color:var(--accent)}
+.note{font-size:13px;color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.card h3{margin:0;font:600 15px/1.3 var(--body)}
+.card ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.sev{border-left:3px solid var(--line);padding-left:12px}
+.sev.high{border-color:var(--bad)} .sev.mid{border-color:var(--warn)} .sev.low{border-color:var(--ok)}
+.need{font:500 11px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
+.queue{counter-reset:q;display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.queue li{counter-increment:q;display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start}
+.queue li::before{content:counter(q);font:500 13px/1.6 var(--mono);color:var(--accent)}
+footer{font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+<div class="wrap">
+<header>
+  <span class="eyebrow">Studio control room · updated 3 Oct 2026</span>
+  <h1>The Curve HQ</h1>
+  <p class="lede">Everything made so far across both Claude accounts, what's ready to upload, what's being made, and what's missing.
+  Tick a box when you upload something: it saves here, and Claude can read it next session to know where you stand.</p>
+</header>
+
+<section aria-label="Where you stand">
+  <div class="strip">
+    <div class="stat warn"><b id="s-up">0</b><span>uploads ticked off so far</span></div>
+    <div class="stat"><b>3</b><span>long-form films ready (11-15 min, the money ones)</span></div>
+    <div class="stat"><b>9</b><span>short films ready (EP04-EP12) + 2 Seasons + trailer</span></div>
+    <div class="stat"><b>60+</b><span>vertical shorts ready for TikTok / Reels / Shorts</span></div>
+    <div class="stat"><b>13</b><span>days of The Curve backlog at one upload a day</span></div>
+    <div class="stat warn"><b>~33 h</b><span>watch time a day needed to monetise before the bar doubles on 1 Feb 2027</span></div>
+  </div>
+</section>
+
+<section class="today" aria-label="Today">
+  <span class="eyebrow">Do this today</span>
+  <ol>
+    <li><b>Set up The Curve on YouTube</b> (name, handle, banner, avatar, About): the art and the copy are on the other account's style page, and in the repo at <code>lab/out/brand/</code>.</li>
+    <li><b>Upload LF01 "The AI That Escaped" (13:19)</b> from its page on the other account, and pin its first Short.</li>
+    <li><b>Schedule the next 4 days</b> in YouTube Studio (one sitting): LF02, Season One, EP05, EP08. Then tick them below.</li>
+    <li><b>Money crimes:</b> make the channel and upload "The Man Who Sold the Eiffel Tower" (14:56).</li>
+  </ol>
+  <p class="note">Links marked "other account" only open when you're signed in to the Claude account that made them.</p>
+</section>
+
+<section aria-label="Everything, film by film">
+  <div><span class="eyebrow">The board</span><h2>Every film, its state, and where it's been posted</h2></div>
+  <div class="table">
+  <table>
+    <thead><tr><th>Film</th><th>Length</th><th>State</th><th>Files</th><th>Posted on</th></tr></thead>
+    <tbody id="board"></tbody>
+  </table>
+  </div>
+  <p class="note" id="db-note">Ticks are saved for everyone who can edit this page.</p>
+</section>
+
+<section aria-label="What's next">
+  <div><span class="eyebrow">Claude's queue</span><h2>What gets made next, in order</h2></div>
+  <ol class="queue">
+    <li><span><b>Finish The Curve LF03 "Too Dangerous to Release"</b>: scripted and voiced; its 32 pictures are generating on the other account. Then its 3 Shorts.</span></li>
+    <li><span><b>The Curve LF04 from the Trend desk</b>: "1,200 AI agents escaped their sandbox" (score 22). One long-form film every 2-3 days keeps the daily slot fed with Shorts and short films between.</span></li>
+    <li><span><b>Voice EP13 "The Ninety-Minute War" and EP14 "The Yes Machine"</b> (scripted). Needs the ElevenLabs key on the cloud account, or a re-voice with Harrison.</span></li>
+    <li><span><b>Money crimes film 02</b>: "First Brands: the missing $2.3 billion" or "Why pre-IPO scams keep working" (both on the Trend board).</span></li>
+    <li><span><b>The Margin (channel 2)</b>: pick a new name, voice its 3 storyboarded films, launch with all three.</span></li>
+    <li><span><b>What if</b> long-form 01 ("What if AI used all the electricity?") once The Curve shows traction.</span></li>
+  </ol>
+</section>
+
+<section aria-label="What's missing">
+  <div><span class="eyebrow">Gaps</span><h2>What's lacking, what needs improving, and what a tool would fix</h2></div>
+  <div class="cols">
+    <div class="card sev high">
+      <h3>Nothing is live yet</h3>
+      <p>Every film so far is finished but unposted. Uploads are the only thing between the work and any money or feedback.</p>
+      <span class="need">Tool that fixes it</span>
+      <p>YouTube Studio's scheduler (do a week in one sitting), plus one scheduler for the rest (Metricool or Buffer post to TikTok, Instagram and Facebook from your phone). If you want Claude to upload for you: a YouTube Data API key with OAuth, saved in the environment's secrets.</p>
+    </div>
+    <div class="card sev high">
+      <h3>Two accounts, two branches</h3>
+      <p>The cloud account's branch (<code>claude/funny-newton-gd9w8v</code>) is the live hub: house/garage music, the clean narration fix, long-form, five channels. This account's films use the retired Arena score, so its kit pages and <code>lab/deliver/</code> are older versions. Don't upload those.</p>
+      <span class="need">Fix</span>
+      <p>Work from the cloud account from now on. Merging the branches from here was blocked by a safety check, so that's your call.</p>
+    </div>
+    <div class="card sev mid">
+      <h3>The narrator isn't consistent</h3>
+      <p>Short films use George (ElevenLabs); the long-form films use Harrison (Higgsfield) because the ElevenLabs key isn't on the cloud account.</p>
+      <span class="need">Tool that fixes it</span>
+      <p>Add <code>ELEVENLABS_API_KEY</code> to the cloud environment's secrets (and rotate the old key), or pick Harrison for everything.</p>
+    </div>
+    <div class="card sev mid">
+      <h3>No feedback loop yet</h3>
+      <p>Click-through and retention decide what to make more of. There's no way for Claude to see them yet.</p>
+      <span class="need">Tool that fixes it</span>
+      <p>Once videos are up: a YouTube Analytics connection, or a weekly screenshot of Studio's Analytics tab. Use Studio's "Test & compare" for the three thumbnails each long film already has.</p>
+    </div>
+    <div class="card sev mid">
+      <h3>Credits and compute</h3>
+      <p>Higgsfield: 851 credits left on 2 Oct (about 30 a Curve film, 180-320 a Money crimes film). The cloud machine has 4 cores, kills jobs after ~30 minutes and restarts when idle, so long renders run in resumable slices.</p>
+      <span class="need">Tool that fixes it</span>
+      <p>A credit top-up when Money crimes ramps up; a bigger render machine only if daily long-form becomes the norm.</p>
+    </div>
+    <div class="card sev low">
+      <h3>Policy guard rails</h3>
+      <p>YouTube removes "inauthentic" mass-produced AI channels. Each channel keeps its own look, narrator, music and research, every figure is sourced, and the AI disclosure box gets ticked on every upload.</p>
+      <span class="need">Your part</span>
+      <p>Tick "altered or synthetic content" on each upload; keep real people to charged or convicted facts.</p>
+    </div>
+  </div>
+</section>
+
+<section aria-label="Channels">
+  <div><span class="eyebrow">Channels</span><h2>The five channels, and where each one is</h2></div>
+  <div class="cols">
+    <div class="card"><h3>1 · The Curve (AI explained)</h3><p>Long-form LF01, LF02 ready; LF03 in pictures. Short films EP04-EP12, two Seasons and the trailer ready. EP13-EP14 scripted.</p><span class="pill ready">READY TO LAUNCH</span></div>
+    <div class="card"><h3>3 · Money crimes</h3><p>Long-form 01 (Victor Lustig, 14:56) with jazz score, plus its Shorts and an AI Short.</p><span class="pill ready">READY TO LAUNCH</span></div>
+    <div class="card"><h3>2 · The Margin (rename it)</h3><p>Three films scripted and storyboarded; need a voice and a new name ("Margins" is taken).</p><span class="pill work">IN PRODUCTION</span></div>
+    <div class="card"><h3>5 · What if</h3><p>Short 01 (Earth stops spinning) ready; long-form next after traction.</p><span class="pill work">ONE SHORT READY</span></div>
+    <div class="card"><h3>4 · Maps &amp; power</h3><p>Planned: 3D globe, lead with the economics (war topics limit ads).</p><span class="pill todo">PLANNED</span></div>
+    <div class="card"><h3>Gameplay rants (your voice)</h3><p>Planned; setup notes in <code>channel/gameplay/</code>.</p><span class="pill todo">PLANNED</span></div>
+  </div>
+</section>
+
+<footer>
+  Repo map: <code>STUDIO.md</code> on <code>claude/funny-newton-gd9w8v</code>. Short-form notes: <code>HANDOFF.md</code>.
+  The calendar idea: The Curve posts once a day (long-form every 2-3 days, a short film or a Season between), 2-4 Shorts a day.
+</footer>
+</div>
+<script>
+const OTHER = " (other account)";
+const ROWS = [
+  {g:"The Curve · long-form (the money)"},
+  {id:"lf01", t:"LF01 · The AI That Escaped", len:"13:19", st:"ready", files:[["Film page"+OTHER,"https://claude.ai/artifact/NC5QdLVBaBEMemcsaHLPYM"],["Shorts"+OTHER,"https://claude.ai/artifact/SXhZZiVogib4tEhsbR7tNs"]]},
+  {id:"lf02", t:"LF02 · The Price of Thinking", len:"10:48", st:"ready", files:[["Film page"+OTHER,"https://claude.ai/artifact/JgAJPt8FQ45dJivdXQy7f9"],["Shorts"+OTHER,"https://claude.ai/artifact/4LqUZUotHs9EEvvuj1gr7J"]]},
+  {id:"lf03", t:"LF03 · Too Dangerous to Release", len:"~12:00", st:"work", note:"voiced; pictures generating"},
+  {g:"The Curve · compilations and trailer"},
+  {id:"s1", t:"Season One", len:"~13:00", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/7aPVnXn8UW6LgBUmki6BqV"]]},
+  {id:"s2", t:"Season Two", len:"-", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/8wNVR2gvWLkZUdvNnGiR44"]]},
+  {id:"trailer", t:"Channel trailer", len:"0:39", st:"ready", note:"set as the channel trailer in Studio > Customisation"},
+  {g:"The Curve · short films (house/garage versions)"},
+  {id:"ep05", t:"EP05 · Follow the Sun", len:"2:51", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/V2Tz5smkY5w1uzroS85YzB"]]},
+  {id:"ep08", t:"EP08 · Cheaper Makes More", len:"2:15", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/V2Tz5smkY5w1uzroS85YzB"]]},
+  {id:"ep04", t:"EP04 · The Man in the Machine", len:"2:51", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/V2Tz5smkY5w1uzroS85YzB"]]},
+  {id:"ep06", t:"EP06 · Who's Human Here?", len:"2:16", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/PvzxoDzvJVvKdoXTD6S6pU"]]},
+  {id:"ep07", t:"EP07 · The Thirty-Year Delay", len:"2:36", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/PvzxoDzvJVvKdoXTD6S6pU"]]},
+  {id:"ep09", t:"EP09 · The Laundry Problem", len:"2:14", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq"]]},
+  {id:"ep10", t:"EP10 · Counting Sums", len:"1:47", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq"]]},
+  {id:"ep11", t:"EP11 · The Library of Every Book", len:"2:56", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq"]]},
+  {id:"ep12", t:"EP12 · Sixteen Hours", len:"2:21", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq"]]},
+  {id:"ep13", t:"EP13 · The Ninety-Minute War", len:"-", st:"todo", note:"scripted; needs voice"},
+  {id:"ep14", t:"EP14 · The Yes Machine", len:"-", st:"todo", note:"scripted; needs voice"},
+  {id:"ep03", t:"EP03 · The Shovel Sellers", len:"~3:00", st:"old", note:"only an Arena-score version exists (this account); needs the house/garage pass"},
+  {g:"Money crimes"},
+  {id:"mc01", t:"The Man Who Sold the Eiffel Tower", len:"14:56", st:"ready", files:[["Film page"+OTHER,"https://claude.ai/artifact/B4DiPy9qxvVKaZgucpYK3Q"],["Shorts"+OTHER,"https://claude.ai/artifact/2A19evbUw3Lsz8Kftyj2d1"]]},
+  {id:"mcs01", t:"Short 01 · Victor Lustig (AI video)", len:"1:03", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/J5CqJtyMALxMBsxTGb6un6"]]},
+  {g:"What if"},
+  {id:"wis01", t:"Short 01 · Earth stops spinning", len:"1:06", st:"ready", files:[["Page"+OTHER,"https://claude.ai/artifact/J5CqJtyMALxMBsxTGb6un6"]]},
+];
+const PLAT = [["yt","YouTube"],["tt","TikTok"],["ig","Instagram"],["fb","Facebook"]];
+const LABEL = {ready:"READY", work:"IN PRODUCTION", todo:"TO DO", old:"OLD VERSION"};
+let state = {}; let db = null; let canWrite = true;
+
+function el(tag, attrs, kids){const e=document.createElement(tag); for(const k in (attrs||{})){ if(k==="text") e.textContent=attrs[k]; else e.setAttribute(k,attrs[k]); } (kids||[]).forEach(c=>e.append(c)); return e;}
+function render(){
+  const tb = document.getElementById("board"); tb.replaceChildren();
+  let ups = 0;
+  for(const r of ROWS){
+    if(r.g){ tb.append(el("tr",{class:"group"},[el("td",{colspan:"5",text:r.g})])); continue; }
+    const s = state[r.id] || {};
+    const files = el("td"); (r.files||[]).forEach((f,i)=>{ if(i) files.append(" · "); files.append(el("a",{href:f[1],target:"_blank",rel:"noopener",text:f[0]})); });
+    if(r.note) files.append(el("small",{class:"muted",text:(r.files?" · ":"")+r.note}));
+    const ticks = el("div",{class:"ticks"});
+    if(r.st==="ready"){
+      for(const [k,name] of PLAT){
+        if(s[k]) ups++;
+        const id = `t-${r.id}-${k}`;
+        const cb = el("input",{type:"checkbox",id}); cb.checked = !!s[k]; cb.disabled = !db || !canWrite;
+        cb.addEventListener("change",()=>toggle(r.id,k,cb.checked));
+        const lab = el("label",{for:id,class:s[k]?"on":""},[cb, name]);
+        ticks.append(lab);
+      }
+    } else ticks.append(el("span",{class:"note",text:"not ready yet"}));
+    tb.append(el("tr",{},[
+      el("td",{class:"t"},[el("b",{text:r.t})]),
+      el("td",{text:r.len}),
+      el("td",{},[el("span",{class:"pill "+r.st,text:LABEL[r.st]})]),
+      files, el("td",{},[ticks])]));
+  }
+  document.getElementById("s-up").textContent = ups;
+}
+async function toggle(id,k,val){
+  if(!db) return;
+  const next = Object.assign({}, state[id]||{}, {[k]:val, updated:new Date().toISOString()});
+  state[id] = next; render();
+  try{ await db.doc("uploads/"+id).set(next); }
+  catch(e){ const n=document.getElementById("db-note"); n.textContent = e && e.code==="invalid_argument" ? "You can view this board but not change it." : "Couldn't save that tick: try again in a moment."; if(e && e.code==="invalid_argument"){canWrite=false; render();} }
+}
+render();
+(async()=>{
+  try{ db = window.claude && window.claude.use ? await window.claude.use("db") : null; }catch(e){ db = null; }
+  const note = document.getElementById("db-note");
+  if(!db){ note.textContent = "Ticks can't be saved in this view; open the page in Claude to log uploads."; render(); return; }
+  render();
+  db.collection("uploads").onSnapshot(snap=>{ const s={}; snap.docs.forEach(d=>{ if(d.exists) s[d.id]=d.data(); }); state=s; render(); },
+    ()=>{ note.textContent = "Lost the connection to saved ticks; reload the page."; });
+})();
+</script>

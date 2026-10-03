@@ -23,7 +23,7 @@ scheduled check-ins (LF03 continuation, PR #1 hourly) were cancelled so the two 
 |---|---|---|
 | LF01 | The AI That Escaped (13:19) | Finished; pages on the cloud account |
 | LF02 | The Price of Thinking (10:48) | Finished 3 Oct: thumbnails, POST.md, 3 Shorts, pages on the cloud account |
-| LF03 | Too Dangerous to Release (GPT-6.1 Astra cancelled, the UK AISI test, Gemini 4 Argon for defenders only, Mythos, the FTC) | Script, voice (11 takes) and 32 stills done; 2 Kling clips at the end of the session (see below); **next: render** |
+| LF03 | Too Dangerous to Release (GPT-6.1 Astra cancelled, the UK AISI test, Gemini 4 Argon for defenders only, Mythos, the FTC) | Script, voice (11 takes), 32 stills and both Kling clips done; **next: render** |
 | LF04, LF05 | not started | Candidates: "The Yes Machine" (EP14's sycophancy story at full length), what a one-megawatt AI factory costs and who pays. Bacteriophages are **dropped** (a safety filter stopped the research; don't revisit). |
 
 **Resume LF03 on a fresh checkout** (cloud: 4 CPUs; needs `pip install opencv-python-headless faster-whisper skia-python`)
@@ -42,9 +42,8 @@ ideas: "TOO DANGEROUS TO RELEASE" on the vault, "IT KNEW. IT ATTACKED ANYWAY." o
 `POST.md` and `shorts.py` (copy LF02's; Shorts: the cold open, the AISI test numbers, "it knew"), cut them with
 `python3 ../longform/vertical.py <abs path to lf03_held>`, add `lf03` / `lf03_shorts` to `lab/pack/build.py` LONGFORM and
 the CLI, build, publish (pages over 64 MB go up in batches of about 55 MiB), update `channel/the-curve/README.md` and
-`STUDIO.md`, commit, push. If the two Kling clips (k01 vault door, k02 loop of light) are missing from assets_ai.json,
-either regenerate them (`python3 assets.py lf03_held clips`, then track/fetch) or swap the two `("clip", ...)` beats in
-`script.py` for stills `c01` and `c02`.
+`STUDIO.md`, commit, push. All media is recorded: `assets_ai.json` has the 32 stills and both clips (k01 vault door,
+k02 loop of light).
 
 **Accounts and tools**
 - Pages (claude.ai artifacts) are private to the account that published them: rebuild with `lab/pack/build.py` and

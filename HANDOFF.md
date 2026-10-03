@@ -3,7 +3,47 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 1 Oct 2026 (~1am), cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
+Updated 3 Oct 2026, cloud session on branch `claude/lucid-archimedes-77tqpt` (built on `claude/funny-newton-gd9w8v`).
+
+## PICK UP HERE (3 Oct 2026): the short-form films on `claude/lucid-archimedes-77tqpt`
+The user asked: "Save everything for other claude account to pickup". Everything is pushed on this branch. The other
+account's own work (long-form LF01-LF03, Remotion in `lab/motion`) is on `claude/funny-newton-gd9w8v`; the two
+branches don't conflict (this one only adds `lab/ep09`-`lab/ep12`, `lab/engine`, `lab/trailer`, `lab/deliver`).
+
+**Finished, ready to upload** (`lab/deliver/`, committed because renders are gitignored):
+| Film | File | Shorts |
+|---|---|---|
+| EP05 Follow the Sun (2:51) | `deliver/ep05/ep05.mp4` + thumb | `deliver/ep05/shorts/` (10) |
+| EP08 Cheaper Makes More (2:15) | `deliver/ep08/ep08.mp4` + thumb | 7 |
+| EP04 The Man in the Machine (2:51) | `deliver/ep04/ep04.mp4` + thumb | 11 |
+| EP06 Who's Human Here? (2:16) | `deliver/ep06/ep06.mp4` + thumb | 8 |
+| EP07 The Thirty-Year Delay (2:36) | `deliver/ep07/ep07.mp4` + thumb | 8 |
+| EP03 The Shovel Sellers | `deliver/ep03/ep03.mp4` + thumb | **stale: rebuild** (`cd lab/ep03s && python3 shorts.py`) |
+| Channel trailer (39 s) | `deliver/the_curve_trailer.mp4` | |
+Each `shorts/kit.json` has every short's hook, caption and hashtags. Titles, descriptions, sources and pinned
+comments for each film are in `lab/engine/kit.py` (EPISODES) and `lab/engine/brand.py` (PINNED). Channel art and the
+platform-by-platform set-up guide: `lab/out/brand/` (`channel_setup.md`). Upload calendar: a film every two days from
+Thu 1 Oct in the order EP05, EP08, EP04, EP06, EP07, EP03, EP09, EP10, EP11, EP12 (nothing uploaded yet as of 3 Oct;
+the user does uploads by hand, so shift the dates to the real start).
+
+**In progress** (all scripted, fact-checked, voiced by George at speed 1.0 from the committed line cache, so no
+ElevenLabs credits are needed to rebuild; scenes drawn and checked on stills):
+- EP09 The Laundry Problem (2:14): picture slices 0-5 of 9 rendered on this container only. Next, from `lab/ep09`:
+  `python3 film.py parts 9 0 9` (redoes missing slices), `python3 film.py join 9`, `sound`, `master`, `shorts`.
+- EP10 Counting Sums (1:47), EP11 The Library of Every Book (2:56), EP12 Sixteen Hours (2:21; the bank's EP01 rebuilt
+  16:9): same steps, e.g. `parts 8 0 4`, `parts 8 4 8`, `join 8`, `sound`, `master`, `shorts` (each as its own job:
+  cloud jobs die at ~30 min). Then a thumbnail: `python3 -m engine.thumb build/<ep>_clean_silent.mp4 <sec>
+  "LINE|LINE|LINE" build/<ep>_thumb.jpg 1`, and copy the film, thumb and shorts into `lab/deliver/<ep>/`.
+- Next ideas, researched: EP13 on the printing press and the scribes (Trithemius' "In Praise of Scribes", 1492, was
+  itself printed in 1494; de Strata's petition to the Doge, 1473-74; Buringh & van Zanden's book counts still need a
+  check) and EP14 on the Luddites (`lab/research/script_facts.md` 3d, 3e). Avoid making films about the user's own AI
+  vendors' launches as news.
+- Posting kit pages (this account only): page 1 https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE, page 2
+  https://claude.ai/artifact/M3fLPJ8vZudgPRuicR93p4; page 3 (EP12) not published yet. The other account can't open
+  them: rebuild with `python3 -m engine.kit 1|2|3` and publish its own copy.
+
+**Secrets**: the ElevenLabs key was only ever in this container's scratchpad (never committed). The other account
+needs its own key in its environment settings (`ELEVENLABS_API_KEY`) only to voice new lines.
 
 ## Links (this account)
 - **Curve Lab** (v7 showcase: pilot, 4 visual directions, sound palette, jungle beds, voices, refs, Higgsfield prompts):

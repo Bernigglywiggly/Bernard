@@ -1,0 +1,101 @@
+[
+ {
+  "name": "part1",
+  "file": "part1.mp4",
+  "start": 0.0,
+  "dur": 33.4,
+  "tag": "THE MAN IN THE MACHINE \u00b7 PART 1 OF 4",
+  "hook": "A man fought a six-foot robot. The clips left one thing out.",
+  "post": "San Francisco, 18 Sep 2026: a man steps into a cage with an 80 kg humanoid robot. It wasn't deciding anything. Part 1 of 4. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "part2",
+  "file": "part2.mp4",
+  "start": 32.44,
+  "dur": 36.7,
+  "tag": "THE MAN IN THE MACHINE \u00b7 PART 2 OF 4",
+  "hook": "What the robot does, and what a person still decides",
+  "post": "Tesla's 2021 robot reveal was a dancer in a bodysuit. China's first robot boxers were each steered by a human. Part 2 of 4. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "part3",
+  "file": "part3.mp4",
+  "start": 68.79,
+  "dur": 46.6,
+  "tag": "THE MAN IN THE MACHINE \u00b7 PART 3 OF 4",
+  "hook": "The robots that matter most don't look like us",
+  "post": "A robot dog with a rifle. 50,000 ground robots ordered by Ukraine. A $4.2M missile fired at a $20,000 drone. Part 3 of 4. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "part4",
+  "file": "part4.mp4",
+  "start": 115.91,
+  "dur": 46.2,
+  "tag": "THE MAN IN THE MACHINE \u00b7 PART 4 OF 4",
+  "hook": "The person is still in the loop. The loop keeps getting smaller.",
+  "post": "Every machine in this story still had a person deciding what it did. So what happens when the pilot isn't needed? Part 4 of 4. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "cagefight",
+  "file": "cagefight.mp4",
+  "start": 0.0,
+  "dur": 25.4,
+  "tag": "THE MAN IN THE MACHINE",
+  "hook": "Man vs six-foot robot. Who was really fighting?",
+  "post": "18 Sep 2026, San Francisco: a man vs an 80 kg humanoid robot. The robot wasn't deciding anything. A person backstage in a VR headset was. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "tesla",
+  "file": "tesla.mp4",
+  "start": 24.5,
+  "dur": 17.4,
+  "tag": "THE MAN IN THE MACHINE",
+  "hook": "The most famous robot in the world was a person",
+  "post": "August 2021: Tesla announces a humanoid robot. On stage, it's a person in a white bodysuit, dancing. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "boxing",
+  "file": "boxing.mp4",
+  "start": 40.91,
+  "dur": 21.2,
+  "tag": "THE MAN IN THE MACHINE",
+  "hook": "Robot boxing: who's actually throwing the punches?",
+  "post": "May 2025: China's first humanoid robot boxing tournament. The machines stay upright on their own. A person decides when to punch. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "price",
+  "file": "price.mp4",
+  "start": 50.97,
+  "dur": 18.2,
+  "tag": "THE MAN IN THE MACHINE",
+  "hook": "You can buy a humanoid robot for 2,200 Big Macs",
+  "post": "A Unitree G1 costs $13,500. At $6.22 a Big Mac, that's about 2,200 Big Macs. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "patriot",
+  "file": "patriot.mp4",
+  "start": 95.79,
+  "dur": 19.6,
+  "tag": "THE MAN IN THE MACHINE",
+  "hook": "A $4.2 million missile vs a $20,000 drone",
+  "post": "One Patriot interceptor: about $4.2M, or 680,000 Big Macs. The Shahed drone it's often fired at: 3,000 to 8,000. Cheap machines, expensive answers. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "ukraine",
+  "file": "ukraine.mp4",
+  "start": 80.62,
+  "dur": 16.1,
+  "tag": "THE MAN IN THE MACHINE",
+  "hook": "Ukraine ordered 50,000 ground robots this year",
+  "post": "By September they'd made about 112,000 supply and evacuation runs. Each one, a trip a soldier didn't have to make. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ },
+ {
+  "name": "loop",
+  "file": "loop.mp4",
+  "start": 115.91,
+  "dur": 36.8,
+  "tag": "THE MAN IN THE MACHINE \u00b7 A WHAT-IF",
+  "hook": "What happens when the pilot isn't needed?",
+  "post": "Every robot in this story still had a person deciding. Imagine it's 2030 and that's gone. Not a forecast, a what-if. #robots #ai #humanoid #tesla #military #ukraine #drones #tech #bigmac #thecurve"
+ }
+]

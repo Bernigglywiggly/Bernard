@@ -16,6 +16,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 
 ## Upload pages (claude.ai, private to the user)
 - The Curve LF01 The AI That Escaped: https://claude.ai/artifact/NC5QdLVBaBEMemcsaHLPYM (shorts: https://claude.ai/artifact/SXhZZiVogib4tEhsbR7tNs)
+- The Curve LF02 The Price of Thinking: https://claude.ai/artifact/JgAJPt8FQ45dJivdXQy7f9 (shorts: https://claude.ai/artifact/4LqUZUotHs9EEvvuj1gr7J)
 - EP05, EP08, EP04: https://claude.ai/artifact/V2Tz5smkY5w1uzroS85YzB
 - EP06, EP07: https://claude.ai/artifact/PvzxoDzvJVvKdoXTD6S6pU
 - EP09-EP12: https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq
@@ -33,6 +34,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 | 16:9 long-form documentary engine (AI stills/clips, archive prints, maps, documents, counters, chapter cards, parallel render) | `lab/longform/doc.py`, one folder per film (`lustig/`: script, vo, music, film, thumb) |
 | Public-domain archive search and download (Wikimedia Commons, credits recorded) | `lab/longform/tools/commons.py` |
 | The Curve long-form (3 Oct) | `lab/curvelf/kit.py`: script of beats -> the character look at 11-14 min; `assets.py` pictures, `thumb.py` thumbnails |
+| Motion graphics in code (3 Oct): Remotion 4, React, Studio preview, agent instructions | `lab/motion` (`npm run dev`, `npm run new -- Name`, `npm run render:sample`; read `lab/motion/AGENTS.md`) |
 | Music beds (all synthesised, no samples) | `lab/music/beds.py`: house, garage, caper, arena, deep_field, ...; previews `lab/out/music/new` |
 | Jazz for true-story films (3 Oct) | `lab/music/jazz/library.py`: Kevin MacLeod, CC BY 4.0; `section()` cuts a cue, `credit_line()` for descriptions |
 | Voice | ElevenLabs line cache `lab/voice/cache/eleven` + `lab/tools/eleven_tts.py`, `lab/engine/voice.py`; auditions `lab/tools/voice_audition.py`; Higgsfield Seed Audio for the shorts |

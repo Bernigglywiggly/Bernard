@@ -13,7 +13,8 @@ this account; if the key is added, the engine can switch back.
 | # | Title | Status | Files |
 |---|---|---|---|
 | 01 | The AI That Escaped · 13:19 | Made 3 Oct · [film](https://claude.ai/artifact/NC5QdLVBaBEMemcsaHLPYM) · [shorts](https://claude.ai/artifact/SXhZZiVogib4tEhsbR7tNs) | `lab/curvelf/lf01_escape/` |
-| 02 | The Price of Thinking · 10:48 | Rendering 3 Oct | `lab/curvelf/lf02_price/` |
+| 02 | The Price of Thinking · 10:48 | Made 3 Oct · [film](https://claude.ai/artifact/JgAJPt8FQ45dJivdXQy7f9) · [shorts](https://claude.ai/artifact/4LqUZUotHs9EEvvuj1gr7J) | `lab/curvelf/lf02_price/` |
+| 03 | Too Dangerous to Release (GPT-6.1 Astra, Gemini 4 Argon, Mythos) | Scripted and voiced 3 Oct; pictures next | `lab/curvelf/lf03_held/` |
 
 ## How a long-form film is made
 1. `script.py`: 11-12 chapters of beats, each beat a spoken line and one visual (img, clip, num, words, quote, list,
@@ -27,7 +28,7 @@ this account; if the key is added, the engine can switch back.
    then the mix, the join and a 1080p delivery under 246 MiB.
 6. `thumb.py <film>` (three thumbnails from the film's own frames) and `POST.md` (title, chapters, sources, settings).
 7. Shorts: `python3 lab/longform/vertical.py <abs path to film>` cuts the stretches named in `shorts.py`.
-8. Pages: `cd lab && python3 pack/build.py lf01 | lf01_shorts`.
+8. Pages: `cd lab && python3 pack/build.py lf01 | lf01_shorts | lf02 | lf02_shorts`.
 
 ## Back catalogue (2-3 min, `lab/epNN`)
 - **Ready to upload** (pages in `STUDIO.md`): EP05, EP08, EP04, EP06, EP07, Season One, EP09-EP12, Season Two.

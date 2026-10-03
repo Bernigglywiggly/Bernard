@@ -83,6 +83,11 @@ FILMS = {
         ("b", 33.5, ["1,200 AI AGENTS", "BROKE OUT"], 96, 108, "AND HACKED A REAL COMPANY", 0.6, TURQ),
         ("c", 152.0, ["HACKED IN", "13 HOURS"], 118, 128, "NOBODY TOLD IT TO", 0.55, TURQ),
     ],
+    "lf02_price": [
+        ("a", 21.0, ["AI GOT 1,000×", "CHEAPER"], 104, 118, "SO WHY IS THE BILL $1 TRILLION?", 0.95, TURQ),
+        ("b", 199.0, ["500 NOVELS", "FOR 1 BIG MAC"], 104, 118, "WHAT AI REALLY COSTS NOW", 0.85, TURQ),
+        ("c", 345.0, ["CHEAPER AI,", "BIGGER BILL"], 112, 124, "THE JEVONS PARADOX · 1865", 0.75, TURQ),
+    ],
 }
 
 if __name__ == "__main__":

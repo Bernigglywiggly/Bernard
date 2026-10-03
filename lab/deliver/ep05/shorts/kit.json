@@ -1,0 +1,92 @@
+[
+ {
+  "name": "part1",
+  "file": "part1.mp4",
+  "start": 0.0,
+  "dur": 23.9,
+  "tag": "FOLLOW THE SUN \u00b7 PART 1 OF 4",
+  "hook": "Why is the AI industry trying to leave the planet?",
+  "post": "Google is sending four of its AI chips into orbit. Last December a satellite the size of a fridge trained an AI model in space. Part 1 of 4. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ },
+ {
+  "name": "part2",
+  "file": "part2.mp4",
+  "start": 23.08,
+  "dur": 44.7,
+  "tag": "FOLLOW THE SUN \u00b7 PART 2 OF 4",
+  "hook": "Mills followed rivers. Computers follow electricity.",
+  "post": "Data centres already use about 1.5% of the world's electricity, heading for about all of Japan's by 2030. In orbit, a panel can collect up to 8x the energy. Part 2 of 4. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ },
+ {
+  "name": "part3",
+  "file": "part3.mp4",
+  "start": 67.38,
+  "dur": 49.1,
+  "tag": "FOLLOW THE SUN \u00b7 PART 3 OF 4",
+  "hook": "SpaceX has asked to launch up to a million satellites",
+  "post": "There are about 16,500 working satellites today. The catch is the ticket: about $7,000 a kilo to orbit. Part 3 of 4. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ },
+ {
+  "name": "part4",
+  "file": "part4.mp4",
+  "start": 116.97,
+  "dur": 45.2,
+  "tag": "FOLLOW THE SUN \u00b7 PART 4 OF 4",
+  "hook": "Who owns the sunlight?",
+  "post": "Every age builds its machines next to its power: the river, the coal field, the reactor. Now, maybe, the sun. Part 4 of 4. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ },
+ {
+  "name": "bigmac",
+  "file": "bigmac.mp4",
+  "start": 88.91,
+  "dur": 14.8,
+  "tag": "FOLLOW THE SUN",
+  "hook": "Sending one Big Mac to space costs about 250 Big Macs",
+  "post": "A SpaceX rideshare to orbit costs about $7,000 a kilo. A Big Mac weighs 219 g. So launching one costs about $1,500, or about 250 Big Macs at $6.22. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ },
+ {
+  "name": "million",
+  "file": "million.mp4",
+  "start": 67.38,
+  "dur": 15.2,
+  "tag": "FOLLOW THE SUN",
+  "hook": "SpaceX wants a million satellites. There are 16,500 today.",
+  "post": "Starcloud has filed for 88,000 satellites, SpaceX for up to 1,000,000, all to put AI data centres in orbit. About 16,500 satellites work today, from every country. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ },
+ {
+  "name": "suncatcher",
+  "file": "suncatcher.mp4",
+  "start": 0.0,
+  "dur": 13.1,
+  "tag": "FOLLOW THE SUN",
+  "hook": "Google is putting its AI chips into orbit",
+  "post": "Project Suncatcher: a satellite with four Google TPUs, set to launch on a Falcon 9 on 1 October 2026. The test is simple: do they survive up there? #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ },
+ {
+  "name": "shakespeare",
+  "file": "shakespeare.mp4",
+  "start": 12.14,
+  "dur": 11.8,
+  "tag": "FOLLOW THE SUN",
+  "hook": "A satellite trained an AI model in space. On Shakespeare.",
+  "post": "December 2025: Starcloud-1, a satellite about the size of a small fridge, trained an AI model in orbit on one Nvidia H100. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ },
+ {
+  "name": "japan",
+  "file": "japan.mp4",
+  "start": 37.38,
+  "dur": 20.6,
+  "tag": "FOLLOW THE SUN",
+  "hook": "By 2030, AI's data centres could use as much power as Japan",
+  "post": "Data centres used about 1.5% of the world's electricity in 2024. By 2030 the IEA expects about 945 TWh, roughly Japan's whole consumption. Microsoft is restarting a reactor at Three Mile Island. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ },
+ {
+  "name": "sunlight",
+  "file": "sunlight.mp4",
+  "start": 126.85,
+  "dur": 26.9,
+  "tag": "FOLLOW THE SUN \u00b7 A WHAT-IF",
+  "hook": "What if the biggest computer on Earth wasn't on Earth?",
+  "post": "Imagine 2040: a ring of satellites in permanent daylight, in no country. Not a forecast, a what-if. Under the 1967 treaty no one owns space, but every country answers for what it launches. #ai #space #google #spacex #datacenter #satellites #energy #tech #bigmac #thecurve"
+ }
+]

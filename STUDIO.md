@@ -12,7 +12,7 @@ folders point at it. The DeepSeek-V3 files at the repo root are unrelated. Lates
 | 4 | **Maps & power**: geopolitics in 3D | Planned | `channel/maps-and-power/` | - |
 | 5 | **What if**: science and scale in 3D | Planned | `channel/what-if/` | - |
 | - | **Gameplay rants** (PS5, the user's own voice) | Planned; setup notes | `channel/gameplay/` | - |
-The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `channel/trends/` (the Trend desk routine).
+The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `channel/trends/` (the Trend desk routine publishes a private page each morning; this session files it as `<date>.md` and updates `BOARD.md`).
 
 ## Upload pages (claude.ai, private to the user)
 - EP05, EP08, EP04: https://claude.ai/artifact/V2Tz5smkY5w1uzroS85YzB

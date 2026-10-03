@@ -4,6 +4,7 @@ engine's kinetic captions below (the spoken word lit in gold). The sound is the 
 faded in and out. Each short ends on a card that sends viewers to the full film.
 
     python3 vertical.py lustig capone        -> lustig/out/short_capone_9x16.mp4   (SHORTS in the film's folder)
+    python3 vertical.py lustig audio         -> every short, new sound from build/mix.wav, picture kept
 """
 import importlib.util
 import json
@@ -42,6 +43,30 @@ def wrap(text, font, width):
     return lines + ([cur] if cur else [])
 
 
+def sound(src, t0, t1, end_card, wav):
+    """The film's own mix for the stretch, faded in and out, then silence under the end card."""
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{t0:.3f}", "-t", f"{t1 - t0:.3f}", "-i", src, "-vn",
+                    "-af", f"afade=t=in:d=0.3,afade=t=out:st={t1 - t0 - 0.6:.3f}:d=0.6,apad=pad_dur={end_card}",
+                    "-ar", "48000", "-ac", "2", wav], check=True)
+    return wav
+
+
+def resound(film_dir, key):
+    """New sound on a finished short (3 Oct, the jazz re-score): cut from the film's master mix (build/mix.wav), swapped
+    in without touching the picture."""
+    sp = spec(film_dir).SHORTS[key]
+    out = os.path.join(film_dir, "out", f"short_{key}_9x16.mp4")
+    build = os.path.join(film_dir, "build", f"short_{key}")
+    os.makedirs(build, exist_ok=True)
+    wav = sound(os.path.join(film_dir, "build", "mix.wav"), sp["t0"], sp["t1"], sp.get("end", 2.5), os.path.join(build, "audio.wav"))
+    tmp = out[:-4] + ".resound.mp4"
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", out, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac",
+                    "-b:a", "192k", "-shortest", "-movflags", "+faststart", tmp], check=True)
+    os.replace(tmp, out)
+    print(out, "new sound")
+    return out
+
+
 def make(film_dir, key):
     sp = spec(film_dir).SHORTS[key]
     t0, t1 = sp["t0"], sp["t1"]
@@ -54,10 +79,7 @@ def make(film_dir, key):
     dur = (t1 - t0) + end_card
     build = os.path.join(film_dir, "build", f"short_{key}")
     os.makedirs(build, exist_ok=True)
-    wav = os.path.join(build, "audio.wav")
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{t0:.3f}", "-t", f"{t1 - t0:.3f}", "-i", src, "-vn",
-                    "-af", f"afade=t=in:d=0.3,afade=t=out:st={t1 - t0 - 0.6:.3f}:d=0.6,apad=pad_dur={end_card}",
-                    "-ar", "48000", "-ac", "2", wav], check=True)
+    wav = sound(src, t0, t1, end_card, os.path.join(build, "audio.wav"))
     rd = subprocess.Popen(["ffmpeg", "-v", "error", "-ss", f"{t0:.3f}", "-t", f"{t1 - t0:.3f}", "-i", src, "-f", "rawvideo",
                            "-pix_fmt", "bgra", "-"], stdout=subprocess.PIPE)
     enc = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{VW}x{VH}", "-r", str(FPS),
@@ -115,5 +137,9 @@ def make(film_dir, key):
 
 if __name__ == "__main__":
     d = os.path.join(HERE, sys.argv[1])
-    for k in sys.argv[2:] or spec(d).SHORTS:
-        make(d, k)
+    if sys.argv[2:3] == ["audio"]:                          # vertical.py lustig audio [keys]: new sound, picture kept
+        for k in sys.argv[3:] or spec(d).SHORTS:
+            resound(d, k)
+    else:
+        for k in sys.argv[2:] or spec(d).SHORTS:
+            make(d, k)

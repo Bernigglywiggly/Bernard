@@ -23,8 +23,11 @@ Updated 2 Oct 2026 (~11pm UTC), cloud session on branch `claude/funny-newton-gd9
   `python3 ../doc.py lustig render` (about an hour; `segs N` re-renders one chapter). Needs
   `pip install opencv-python-headless faster-whisper`. Wikimedia Commons throttles this machine (about one 1 MB image
   a minute): `tools/commons.py` retries; the film's archive photos are committed in `src/arch` with credits.
-- **Still to do:** the long-form's downloads page (link below when published), shorts cut from it, then film 01 for
-  the other channels (What if, Maps & power, The Margin), about 180 credits each.
+- **Film 01 page (upload this first):** https://claude.ai/artifact/B4DiPy9qxvVKaZgucpYK3Q (14:56, 1080p, three
+  thumbnails, titles, chaptered description with sources and archive credits, upload settings). Its narration quotes the
+  real death certificate in full ("apprentice salesman and counterfeiter"; `vo.py` PATCHES splices the re-read).
+- **Still to do:** post the Shorts cut from film 01 (`lab/longform/vertical.py lustig`, page via `pack/build.py
+  lustig_shorts`), then film 01 for the other channels (What if, Maps & power, The Margin), about 180 credits each.
 
 ## 1 Oct afternoon: house and garage, the narration glitch fixed, female voices ready (read this first)
 - **Music (the user: "I don't like the background music... house music, or a bit of garage"; on hearing both: "both of

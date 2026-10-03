@@ -21,6 +21,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 - Season One: https://claude.ai/artifact/7aPVnXn8UW6LgBUmki6BqV
 - Season Two: https://claude.ai/artifact/8wNVR2gvWLkZUdvNnGiR44
 - AI shorts (Money crimes 01, What if 01): https://claude.ai/artifact/J5CqJtyMALxMBsxTGb6un6
+- **Money crimes long-form 01, The Man Who Sold the Eiffel Tower (14:56):** https://claude.ai/artifact/B4DiPy9qxvVKaZgucpYK3Q
 
 ## Engines and tools
 | What | Where |
@@ -32,7 +33,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 | Music beds (all synthesised, no samples) | `lab/music/beds.py`: house, garage, caper, arena, deep_field, ...; previews `lab/out/music/new` |
 | Voice | ElevenLabs line cache `lab/voice/cache/eleven` + `lab/tools/eleven_tts.py`, `lab/engine/voice.py`; auditions `lab/tools/voice_audition.py`; Higgsfield Seed Audio for the shorts |
 | Sound effects | `lab/out/sfx` (synthesised), `lab/sfx` |
-| Upload pages | `lab/pack/build.py` (new, films1, films2, season1, season2) |
+| Upload pages | `lab/pack/build.py` (new, films1, films2, season1, season2, shorts, lustig, lustig_shorts) |
 | Thumbnails and channel art | `lab/engine/thumb.py`, `lab/engine/brand.py`, `lab/ch2/thumbs.py`, `lab/ch2/brand.py` |
 | Checks | `lab/music/analyse.py` (tonal balance, clicks), `lab/qa_audio.py` |
 

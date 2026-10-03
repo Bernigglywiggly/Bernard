@@ -407,14 +407,25 @@ def shorts_page(name="shorts", title="AI shorts: Money crimes and What if"):
     write(name, title, lede, order, items, extra)
 
 
-LONGFORM = {"lustig": ("Money crimes · Long-form 01", "Money_Crimes_01_The_Man_Who_Sold_the_Eiffel_Tower")}
+LONGFORM = {
+    "lustig": ("Money crimes · Long-form 01", "Money_Crimes_01_The_Man_Who_Sold_the_Eiffel_Tower"),
+    "lf01_escape": ("The Curve · Long-form 01", "The_Curve_01_The_AI_That_Escaped", "curvelf",
+                    "The channel's look at full length: AI pictures and big numbers turned into characters, typed labels, "
+                    "live captions and a house score. Past 8 minutes, YouTube allows mid-roll ads.",
+                    "The Curve's first long-form film, ready to upload"),
+    "lf02_price": ("The Curve · Long-form 02", "The_Curve_02_The_Price_of_Thinking", "curvelf",
+                   "The channel's look at full length: AI pictures and big numbers turned into characters, typed labels, "
+                   "live captions and a house score. Past 8 minutes, YouTube allows mid-roll ads.",
+                   "The Curve's second long-form film, ready to upload"),
+}
 
 
 def longform_page(slug="lustig"):
-    """A long-form documentary (lab/longform/<slug>/out): the 1080p file, three thumbnails, titles, the description
-    with chapters and credits, the pinned comment and the upload settings, all from its POST.md."""
-    channel, fname = LONGFORM[slug]
-    d = os.path.join(LAB, "longform", slug)
+    """A long-form film (lab/longform/<slug> or lab/curvelf/<slug>): the 1080p file, three thumbnails, titles, the
+    description with chapters and credits, the pinned comment and the upload settings, all from its POST.md."""
+    channel, fname = LONGFORM[slug][:2]
+    where, meta, lede_1 = (LONGFORM[slug] + (None,) * 3)[2:5]
+    d = os.path.join(LAB, where or "longform", slug)
     post = open(os.path.join(d, "POST.md")).read()
     sec = lambda h: post.split(f"## {h}\n", 1)[1].split("\n## ", 1)[0].strip()
     title_block = sec("Title")
@@ -423,6 +434,8 @@ def longform_page(slug="lustig"):
     media = os.path.join(out, "media")
     os.makedirs(media, exist_ok=True)
     v = video_entry(os.path.join(d, "out", f"{slug}_1080p.mp4"), media, f"{fname}_1080p.mp4", slug)
+    DEF_META = ("A documentary with chapters: AI reconstructions (labelled on screen), real archive photographs, maps and "
+                "a jazz score. Past 8 minutes, YouTube allows mid-roll ads.")
     thumbs, extra = [], {}
     for k, label in zip("abc", ("A", "B", "C")):
         src = os.path.join(d, "out", f"thumb_{k}.jpg")
@@ -434,17 +447,17 @@ def longform_page(slug="lustig"):
     m, s_ = divmod(int(round(v["dur"])), 60)
     steps = [ln[2:].replace("**", "") for ln in sec("Upload settings").splitlines() if ln.startswith("- ")]
     item = dict(slug=slug, eyebrow=f"{channel} · {m}:{s_:02d} · 1080p", name=titles[0],
-                meta="A documentary with chapters: AI reconstructions (labelled on screen), real archive photographs, maps and "
-                     "a jazz score. Past 8 minutes, YouTube allows mid-roll ads.",
+                meta=meta or DEF_META,
                 video=v, thumbs=thumbs, titles=titles, description=sec("Description"), pinned=sec("Pinned comment"),
                 steps=["Upload the .mp4 and paste the title and description (the chapters come from its timestamps)."] + steps +
                       ["Put all three thumbnails in Test & Compare.", "Publish, then post the pinned comment and pin it."],
                 shorts=[])
-    lede = (f"The first long-form film, ready to upload: {m}:{s_:02d} at 1080p, three thumbnails to test against each other, "
-            "titles, a description with chapters, sources and archive credits, and the settings to tick.")
-    order = [("1", "Upload this film first: long-form is the money product"),
-             ("2", "Then post the Eiffel Tower short (shorts page) as its trailer, linked to this film"),
-             ("3", "Cut 3-5 more shorts from the film's best moments")]
+    lede = (lede_1 or "The first long-form film, ready to upload") + (
+        f": {m}:{s_:02d} at 1080p, three thumbnails to test against each other, titles, a description with chapters, "
+        "sources and credits, and the settings to tick.")
+    order = [("1", "Upload this film: long-form is the money product"),
+             ("2", "Then post its shorts (shorts page) as trailers, each linked to this film"),
+             ("3", "Pin the comment, and add the end screen")]
     write(slug, titles[0], lede, order, [item], extra)
 
 
@@ -453,7 +466,7 @@ def film_shorts_page(slug="lustig"):
     import importlib.util
     sys.path.insert(0, os.path.join(LAB, "music", "jazz"))
     import library as jazz
-    d = os.path.join(LAB, "longform", slug)
+    d = os.path.join(LAB, (LONGFORM[slug] + (None,) * 3)[2] or "longform", slug)
     spec = importlib.util.spec_from_file_location("film_shorts", os.path.join(d, "shorts.py"))
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
@@ -548,6 +561,8 @@ def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP
 if __name__ == "__main__":
     {"season1": season1, "season2": season2, "new": new, "shorts": shorts_page, "lustig": longform_page,
      "lustig_shorts": film_shorts_page,
+     "lf01": lambda: longform_page("lf01_escape"), "lf01_shorts": lambda: film_shorts_page("lf01_escape"),
+     "lf02": lambda: longform_page("lf02_price"),
      # EP04-EP08 with their shorts are ~310 MiB, over one artifact version's 256 MiB: two pages, in upload order
      "films1": lambda: new(("ep05", "ep08", "ep04"), "films1", "The Curve: EP05, EP08, EP04"),
      "films2": lambda: new(("ep06", "ep07"), "films2", "The Curve: EP06, EP07")}[sys.argv[1]]()

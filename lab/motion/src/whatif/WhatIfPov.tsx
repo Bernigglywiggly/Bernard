@@ -102,6 +102,8 @@ export const WhatIfPov: React.FC<WhatIfPovProps> = ({ film }) => {
             left: 110 * u,
             right: 110 * u,
             top: height * 0.665,
+            padding: `${18 * u}px ${24 * u}px`,
+            background: "radial-gradient(closest-side, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0))",
             fontFamily: theme.fonts.serif,
             fontStyle: "italic",
             fontSize: 54 * u,

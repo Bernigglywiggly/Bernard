@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(HERE), "shorts"))
 import reel  # noqa: E402
 
 VW, VH, FPS = 1080, 1920, 30
+CURVE_FONT = os.path.join(os.path.dirname(os.path.dirname(HERE)), "a01_v6", "fonts", "Michroma-400.ttf")
 SW, SH = 1920, 1080
 
 
@@ -70,7 +71,8 @@ def resound(film_dir, key):
 def make(film_dir, key):
     sp = spec(film_dir).SHORTS[key]
     t0, t1 = sp["t0"], sp["t1"]
-    src = os.path.join(film_dir, "out", sp.get("src", os.path.basename(film_dir) + "_1080p.mp4"))
+    name = getattr(spec(film_dir), "NAME", None) or os.path.basename(film_dir)
+    src = os.path.join(film_dir, "out", sp.get("src", name + "_1080p.mp4"))
     out = os.path.join(film_dir, "out", f"short_{key}_9x16.mp4")
     words = [w for w in json.load(open(os.path.join(film_dir, "build", "words.json"))) if t0 <= w[1] < t1]
     ws = [(w[0], w[1] - t0, w[2] - t0) for w in words]
@@ -88,7 +90,10 @@ def make(film_dir, key):
                             "-movflags", "+faststart", out], stdin=subprocess.PIPE)
     fh = int(VW * SH / SW)                                   # the film's picture: 1080 x 608, a little above centre
     fy = 640
-    head = skia.Font(reel.FONT["serif"], 84)
+    curve = getattr(spec(film_dir), "THEME", "") == "curve"  # The Curve: its display face, turquoise not gold
+    accent = 0xFF3FE6D8 if curve else reel.GOLD
+    reel.GOLD = accent
+    head = skia.Font(skia.Typeface.MakeFromFile(CURVE_FONT), 62) if curve else skia.Font(reel.FONT["serif"], 84)
     small = skia.Font(reel.FONT["cap"], 40)
     lines = wrap(sp["headline"].upper(), head, VW - 120)
     last = np.zeros((SH, SW, 4), np.uint8)
@@ -113,7 +118,7 @@ def make(film_dir, key):
             w = head.measureText(ln)
             c.drawString(ln, VW / 2 - w / 2 + 3, y + 5, head, reel.P(0xCC000000, 1.0,
                          MaskFilter=skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 10)))
-            c.drawString(ln, VW / 2 - w / 2, y, head, reel.P(reel.GOLD if i == len(lines) - 1 else reel.WHITE))
+            c.drawString(ln, VW / 2 - w / 2, y, head, reel.P(accent if i == len(lines) - 1 else reel.WHITE))
         for cap in caps:                                     # kinetic captions under the picture
             reel.draw_caption(c, cap, t, y=fy + fh + 190)
         if t >= t1 - t0:                                    # the end card: the full film
@@ -121,7 +126,7 @@ def make(film_dir, key):
             c.drawRect(skia.Rect.MakeWH(VW, VH), reel.P(0xFF000000, 0.75 * a))
             for i, ln in enumerate(wrap(sp.get("cta", "FULL STORY ON THE CHANNEL"), small, VW - 160)):
                 w = small.measureText(ln)
-                c.drawString(ln, VW / 2 - w / 2, 900 + i * 56, small, reel.P(reel.GOLD, a))
+                c.drawString(ln, VW / 2 - w / 2, 900 + i * 56, small, reel.P(accent, a))
             for i, ln in enumerate(wrap(sp["film"].upper(), head, VW - 140)):
                 w = head.measureText(ln)
                 c.drawString(ln, VW / 2 - w / 2, 1060 + i * 96, head, reel.P(reel.WHITE, a))
@@ -136,7 +141,7 @@ def make(film_dir, key):
 
 
 if __name__ == "__main__":
-    d = os.path.join(HERE, sys.argv[1])
+    d = sys.argv[1] if os.path.isabs(sys.argv[1]) else os.path.join(HERE, sys.argv[1])
     if sys.argv[2:3] == ["audio"]:                          # vertical.py lustig audio [keys]: new sound, picture kept
         for k in sys.argv[3:] or spec(d).SHORTS:
             resound(d, k)

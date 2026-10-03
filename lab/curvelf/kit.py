@@ -343,6 +343,72 @@ def words_reveal(f, lines, y0, lh, u):
             n += 1
 
 
+# ---------------------------------------------------------------- the house look, fast (3 Oct)
+# engine.look's chars() and screen() rebuilt on cv2 and numpy: the same picture (checked against them on LF01's frames)
+# at about a third of the cost; skia's CPU blurs were most of a frame's time.
+from scipy.ndimage import distance_transform_edt, maximum_filter  # noqa: E402
+
+G = look.G
+ATLAS8 = (G.atlas * 255).astype(np.uint8)
+BG = np.array((11, 9, 8), np.float32)                          # BGR, as look.screen's clear colour
+LO, HI = np.array((90, 96, 16), np.float32), np.array((245, 246, 236), np.float32)
+_VIG = []
+
+
+def vignette():
+    if not _VIG:
+        yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+        r = np.hypot(xx - W / 2, yy - H / 2) / 1180.0
+        a = np.clip((r - 0.55) / 0.45, 0, 1) * (120 / 255.0)
+        _VIG.append((1 - a)[..., None].astype(np.float32))
+    return _VIG[0]
+
+
+def chars_fast(fe, t, sea_amt=1.0):
+    """look.chars: the character layer (BGR, premultiplied, float32), its coverage (0..1) and the subject field."""
+    fld, edge = fe
+    fld = np.maximum(fld, maximum_filter(fld, size=3) * 0.28)
+    subj = fld.copy()
+    if sea_amt > 0:
+        mask = fld > 0.14
+        d = distance_transform_edt(~mask) if mask.any() else np.full(fld.shape, 99.0)
+        fld = np.maximum(fld, look.sea(t, G.cols, G.rows) ** 1.6 * 0.13 * sea_amt * np.clip((d - 2) / 10, 0, 1))
+    fld = np.where(subj < 0.2, np.minimum(fld, np.maximum(subj - 0.12, 0) + (fld - subj).clip(0)), fld)
+    idx = np.clip((fld * (G.n_ramp - 1)).round().astype(int), 0, G.n_ramp - 1)
+    stroke = (edge >= 0) & (subj > 0.12)
+    idx = np.where(stroke, G.n_ramp + np.maximum(edge, 0), idx)
+    fld = np.where(stroke, np.maximum(fld, 0.9), fld)
+    cov = ATLAS8[idx].transpose(0, 2, 1, 3).reshape(G.rows * G.ch, G.cols * G.cw)
+    k = (np.clip(fld * 1.15, 0, 1) ** 1.1)[..., None]
+    col = (LO * (1 - k) + HI * k).astype(np.float32)                                    # per cell
+    colf = cv2.resize(col, (G.cols * G.cw, G.rows * G.ch), interpolation=cv2.INTER_NEAREST)
+    a = cov.astype(np.float32) * (1 / 255.0)
+    rgb = np.zeros((H, W, 3), np.float32)
+    al = np.zeros((H, W), np.float32)
+    rgb[: colf.shape[0], : colf.shape[1]] = colf * (a * a)[..., None]        # skia drew it unpremultiplied: colour x cover x cover
+    al[: a.shape[0], : a.shape[1]] = a
+    return rgb, al, subj
+
+
+def screen_fast(rgb, al, subj):
+    """look.screen + the vignette: a soft light behind the subject, the characters, a tight glow."""
+    out = np.empty((H, W, 3), np.float32)
+    out[:] = BG
+    if subj is not None and np.any(subj > 0.14):
+        g = (np.clip(subj, 0, 1) ** 1.5 * 255).astype(np.float32)
+        g2 = g * g / 255.0                                                               # unpremultiplied, as in look.screen
+        small = np.stack([g2 * 0.74, g2 * 0.78, g2 * 0.22], -1)                          # BGR of (0.22, 0.78, 0.74)
+        q = cv2.resize(small, (W // 4, H // 4), interpolation=cv2.INTER_LINEAR)
+        q = cv2.GaussianBlur(q, (0, 0), 3)
+        out += 0.32 * cv2.resize(q, (W, H), interpolation=cv2.INTER_LINEAR)
+    out = rgb + out * (1 - al[..., None])
+    h = cv2.resize(rgb, (W // 2, H // 2), interpolation=cv2.INTER_AREA)
+    h = cv2.GaussianBlur(h, (0, 0), 1.75)
+    out += 0.35 * cv2.resize(h, (W, H), interpolation=cv2.INTER_LINEAR)
+    out *= vignette()
+    return out
+
+
 class Film:
     def __init__(self, d):
         self.d = d
@@ -609,18 +675,20 @@ class Film:
         arr[..., 3] = 255
         fe = look.cells(arr)
         sea = 0.5 if cur["v"][0] in ("img", "clip") else 1.0
-        img, subj = look.chars(fe, t, sea_amt=sea)
-        out = skia.Surface(W, H)
+        rgb, al, subj = chars_fast(fe, t, sea_amt=sea)
+        frame = np.empty((H, W, 4), np.uint8)
+        frame[..., :3] = np.clip(screen_fast(rgb, al, subj), 0, 255).astype(np.uint8)
+        frame[..., 3] = 255
+        out = skia.Surface(frame)                       # draws straight into the array (BGRA)
         c = out.getCanvas()
-        c.drawImage(look.screen(img, subj), 0, 0)
-        c.drawRect(skia.Rect.MakeWH(W, H), look.VIGNETTE)
         if prev is not None:
             self.crisp(c, prev, t, 1 - k)
         self.crisp(c, cur, t, k if prev is not None else 1.0)
         if cur["v"][0] not in ("end",):
             self.captions(c, t)
         self.furniture(c)
-        return out.makeImageSnapshot().toarray()
+        out.flushAndSubmit()
+        return frame
 
 
 # ---------------------------------------------------------------- sound
@@ -688,6 +756,7 @@ def segments(film):
 
 
 def render_segment(d, t0, t1, out):
+    cv2.setNumThreads(1)                                     # four workers on four cores: no thread pile-up inside each
     film = Film(d)
     tmp = out + ".part.mp4"
     enc = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",

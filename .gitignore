@@ -170,3 +170,5 @@ cython_debug/
 .vscode/*
 
 .DS_Store
+# a browsable copy of the finished videos (rebuilt from lab/deliver; too big for git)
+/VIDEOS/

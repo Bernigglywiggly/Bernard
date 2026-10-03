@@ -1,0 +1,74 @@
+[
+ {
+  "name": "part1",
+  "file": "part1.mp4",
+  "start": 0.0,
+  "dur": 21.2,
+  "tag": "WHO'S HUMAN HERE? \u00b7 PART 1 OF 3",
+  "hook": "284 people had to pick the human. They picked the AI.",
+  "post": "Two chats at once, five minutes, one person and one AI. People picked the AI as the human 73% of the time, more often than the real person. Part 1 of 3. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve"
+ },
+ {
+  "name": "part2",
+  "file": "part2.mp4",
+  "start": 20.26,
+  "dur": 33.4,
+  "tag": "WHO'S HUMAN HERE? \u00b7 PART 2 OF 3",
+  "hook": "How the AI passed the Turing test",
+  "post": "Turing's 1950 bar: fool people 30% of the time by 2000. In 2025 an AI hit 73%, and the trick wasn't knowing more. Part 2 of 3. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve"
+ },
+ {
+  "name": "part3",
+  "file": "part3.mp4",
+  "start": 53.26,
+  "dur": 74.1,
+  "tag": "WHO'S HUMAN HERE? \u00b7 PART 3 OF 3",
+  "hook": "Can you prove you're human?",
+  "post": "53% of web traffic in 2025 was automated. An AI agent clicked \"verify you are human\". The FBI says: agree a secret word with your family. Part 3 of 3. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve"
+ },
+ {
+  "name": "picked",
+  "file": "picked.mp4",
+  "start": 0.0,
+  "dur": 19.2,
+  "tag": "WHO'S HUMAN HERE?",
+  "hook": "They picked the AI as the human 73% of the time",
+  "post": "A 2025 UC San Diego study: 284 people chatted with a person and an AI at the same time for five minutes. GPT-4.5 with a persona was picked as the human 73% of the time. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve"
+ },
+ {
+  "name": "persona",
+  "file": "persona.mp4",
+  "start": 38.97,
+  "dur": 14.7,
+  "tag": "WHO'S HUMAN HERE?",
+  "hook": "The trick that made an AI pass as human",
+  "post": "Without a persona the AI was picked as human 36% of the time. Told to act like an introverted young person into internet culture: 73%. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve"
+ },
+ {
+  "name": "captcha",
+  "file": "captcha.mp4",
+  "start": 64.38,
+  "dur": 12.2,
+  "tag": "WHO'S HUMAN HERE?",
+  "hook": "An AI clicked \"I'm not a robot\"",
+  "post": "July 2025: an AI agent clicked Cloudflare's \"Verify you are human\" box. Its own note: \"This step is necessary to prove I'm not a bot.\" #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve"
+ },
+ {
+  "name": "secretword",
+  "file": "secretword.mp4",
+  "start": 75.67,
+  "dur": 22.0,
+  "tag": "WHO'S HUMAN HERE?",
+  "hook": "The FBI's advice for AI voice scams is one word",
+  "post": "Voices can be copied now. The FBI's advice (Dec 2024) is low-tech: agree a secret word or phrase with your family. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve"
+ },
+ {
+  "name": "bots",
+  "file": "bots.mp4",
+  "start": 53.26,
+  "dur": 12.1,
+  "tag": "WHO'S HUMAN HERE?",
+  "hook": "Most of the internet isn't people any more",
+  "post": "In 2025, 53% of all web traffic was automated (Imperva). Out of every 100 visits to a website, 53 weren't people. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve"
+ }
+]

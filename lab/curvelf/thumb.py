@@ -69,8 +69,11 @@ def build(slug, shots):
     film = kit.Film(d)
     film.no_caps = True                                  # the film's own captions never belong in a thumbnail
     out = os.path.join(d, "out")
-    for name, t, rows, size, lh, chip_text, dark, accent in shots:
-        surf, c, arr = canvas(frame(film, t, dark))
+    for name, t, rows, size, lh, chip_text, dark, accent, *opt in shots:
+        o = opt[0] if opt else {}                        # {"flip": True} mirrors a picture whose subject sits left
+        film.no_furniture = bool(o.get("flip"))          # (the channel tag would come out mirrored)
+        bgr = frame(film, t, dark, o.get("zoom", 1.0))
+        surf, c, arr = canvas(cv2.flip(bgr, 1) if o.get("flip") else bgr)
         lines(c, rows, 70, 300, size, lh, accent=accent)
         if chip_text:
             chip(c, chip_text, 74, 640)
@@ -87,6 +90,12 @@ FILMS = {
         ("a", 21.0, ["AI GOT 1,000×", "CHEAPER"], 104, 118, "SO WHY IS THE BILL $1 TRILLION?", 0.95, TURQ),
         ("b", 199.0, ["500 NOVELS", "FOR 1 BIG MAC"], 104, 118, "WHAT AI REALLY COSTS NOW", 0.85, TURQ),
         ("c", 345.0, ["CHEAPER AI,", "BIGGER BILL"], 112, 124, "THE JEVONS PARADOX · 1865", 0.75, TURQ),
+    ],
+    "lf03_held": [
+        ("a", 49.0, ["TOO DANGEROUS", "TO RELEASE"], 84, 104, "OPENAI CANCELLED GPT-6.1 ASTRA", 0.8, TURQ),
+        ("b", 208.0, ["IT KNEW.", "IT ATTACKED", "ANYWAY."], 100, 114, "UK AI SECURITY INSTITUTE · GPT-6 ASTRA", 0.8, TURQ,
+         {"flip": True}),
+        ("c", 104.0, ["IT INVENTED", "FAKE PEOPLE"], 104, 118, "TO GET ITS CODE APPROVED · UK GOVERNMENT TEST", 0.6, TURQ),
     ],
 }
 

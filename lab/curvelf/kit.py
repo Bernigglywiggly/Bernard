@@ -597,12 +597,12 @@ class Film:
 
     # -- captions: the spoken words, word by word
     def _words(self):
-        """Whisper's words, tidied for the screen: '18' ',000' -> '18,000', 'GPT' '-5' '.6' -> 'GPT-5.6', and the
-        film's FIX spellings (one word or two)."""
+        """Whisper's words, tidied for the screen: '18' ',000' -> '18,000', 'GPT' '-5' '.6' -> 'GPT-5.6', '99' '%' -> '99%',
+        'open' '-source' -> 'open-source', and the film's FIX spellings (one word or two)."""
         ws = []
         for w in self.words:
             w = list(w)
-            if ws and re.match(r"^[-.,]\d", w[0]) and w[3] == ws[-1][3]:
+            if ws and re.match(r"^([-.,]\d|%|-[A-Za-z])", w[0]) and w[3] == ws[-1][3]:
                 ws[-1][0] += w[0]
                 ws[-1][2] = w[2]
                 continue
@@ -686,7 +686,8 @@ class Film:
         self.crisp(c, cur, t, k if prev is not None else 1.0)
         if cur["v"][0] not in ("end",) and not getattr(self, "no_caps", False):
             self.captions(c, t)
-        self.furniture(c)
+        if not getattr(self, "no_furniture", False):
+            self.furniture(c)
         out.flushAndSubmit()
         return frame
 

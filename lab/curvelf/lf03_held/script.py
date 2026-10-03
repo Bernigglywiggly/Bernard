@@ -24,7 +24,11 @@ TITLE = "TOO DANGEROUS TO RELEASE"
 TAG = "THE CURVE  ·  TOO DANGEROUS TO RELEASE"
 NAME = "lf03_held"
 FIX = {"GPT -6.1": "GPT-6.1", "GPT -6": "GPT-6", "GPT -5.6": "GPT-5.6", "GPT -5.5": "GPT-5.5", "Mithos": "Mythos",
-       "Open BSD": "OpenBSD", "Sachi": "Saachi"}
+       "Open BSD": "OpenBSD", "Sachi": "Saachi", "mythos": "Mythos", "GPT 6.1": "GPT-6.1", "Jane,": "Jain,",
+       "websites used": "websites use", "your human.": "you're human.", "GPT-5.6-SAL,": "GPT-5.6 Sol,",
+       "planer.": "plainer:", "one. one.": "one.", "monetorability.": "monitorability.", "cues.": "queues.",
+       "Amode,": "Amodei,", "we must": "We Must", "pace": "Pace", "the frontier.": "the Frontier.",
+       "Kruger,": "Krueger,", "Fairwind program,": "Fairwind Program,", "better, not": "Better. Not"}
 
 CHAPTERS = [
     dict(id="open", title="", beats=[

@@ -59,7 +59,7 @@ def ep01_a(c):
 
 def ep01_b(c):
     ground(c)
-    headline(c, ["THE MILES", "ARE WORTH", "MORE THAN", "THE AIRLINE"], y0=290, size=130, cols=[PAPER, PAPER, BRASS, BRASS])
+    headline(c, ["THE MILES", "WERE WORTH", "MORE THAN", "THE AIRLINE"], y0=290, size=130, cols=[PAPER, PAPER, BRASS, BRASS])
     kit.receipt(c, B, 1290, 150, 520, "UNITED · JUNE 2020", "MILEAGEPLUS",
                 [("", ""), ("VALUED", "$21.9B"), ("WHOLE AIRLINE", "$10.5B"), ("", "")], circle=1)
 

@@ -1,0 +1,74 @@
+[
+ {
+  "name": "part1",
+  "file": "part1.mp4",
+  "start": 0.0,
+  "dur": 39.3,
+  "tag": "THE THIRTY-YEAR DELAY \u00b7 PART 1 OF 3",
+  "hook": "6,000 bosses were asked what AI did for them",
+  "post": "Nearly nine in ten said: nothing. No change in productivity, no change in jobs (NBER, Feb 2026). This has happened before. Part 1 of 3. #ai #productivity #economics #history #electricity #business #work #tech #thecurve"
+ },
+ {
+  "name": "part2",
+  "file": "part2.mp4",
+  "start": 38.44,
+  "dur": 38.4,
+  "tag": "THE THIRTY-YEAR DELAY \u00b7 PART 2 OF 3",
+  "hook": "Why electricity took decades to pay off",
+  "post": "Factories swapped the steam engine for one big electric motor and changed nothing else. The gains came when they rebuilt around the motor. Part 2 of 3. #ai #productivity #economics #history #electricity #business #work #tech #thecurve"
+ },
+ {
+  "name": "part3",
+  "file": "part3.mp4",
+  "start": 76.38,
+  "dur": 71.1,
+  "tag": "THE THIRTY-YEAR DELAY \u00b7 PART 3 OF 3",
+  "hook": "AI is stuck at the one-big-motor stage",
+  "post": "\"You can see the computer age everywhere but in the productivity statistics\" (Solow, 1987). 95% of company AI pilots made no measurable return (MIT, 2025). Part 3 of 3. #ai #productivity #economics #history #electricity #business #work #tech #thecurve"
+ },
+ {
+  "name": "nothing",
+  "file": "nothing.mp4",
+  "start": 0.0,
+  "dur": 21.8,
+  "tag": "THE THIRTY-YEAR DELAY",
+  "hook": "AI changed nothing for 9 in 10 companies. So far.",
+  "post": "An NBER survey of about 6,000 executives in the US, UK, Germany and Australia (Feb 2026): nearly 90% saw no change in productivity or jobs from AI. The bosses who used it averaged 1.5 hours a week. #ai #productivity #economics #history #electricity #business #work #tech #thecurve"
+ },
+ {
+  "name": "shaft",
+  "file": "shaft.mp4",
+  "start": 44.44,
+  "dur": 18.1,
+  "tag": "THE THIRTY-YEAR DELAY",
+  "hook": "The mistake every factory made with electricity",
+  "post": "Old factories ran on one steam engine turning one long shaft, with belts to every machine. Owners swapped in one big electric motor and changed nothing else. Same shaft, same belts, small savings. #ai #productivity #economics #history #electricity #business #work #tech #thecurve"
+ },
+ {
+  "name": "redesign",
+  "file": "redesign.mp4",
+  "start": 61.91,
+  "dur": 14.9,
+  "tag": "THE THIRTY-YEAR DELAY",
+  "hook": "The redesign that finally made electricity pay",
+  "post": "A small motor in every machine, laid out along the flow of the work. By 1920 half of US factory power was electric, and productivity surged (Paul David, 1990). #ai #productivity #economics #history #electricity #business #work #tech #thecurve"
+ },
+ {
+  "name": "pilots",
+  "file": "pilots.mp4",
+  "start": 89.79,
+  "dur": 22.1,
+  "tag": "THE THIRTY-YEAR DELAY",
+  "hook": "Why 95% of company AI pilots don't pay",
+  "post": "MIT's 2025 study: 95% of company AI pilots made no measurable return. Mostly bolted onto the old routine. The tool is rarely the bottleneck. The layout is. #ai #productivity #economics #history #electricity #business #work #tech #thecurve"
+ },
+ {
+  "name": "office",
+  "file": "office.mp4",
+  "start": 112.91,
+  "dur": 24.8,
+  "tag": "THE THIRTY-YEAR DELAY \u00b7 A WHAT-IF",
+  "hook": "What an office built from zero around AI loses first",
+  "post": "Not a forecast, a what-if: the weekly status meeting, the inbox, the jobs that only move information from one place to another. #ai #productivity #economics #history #electricity #business #work #tech #thecurve"
+ }
+]

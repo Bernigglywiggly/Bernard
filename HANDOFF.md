@@ -25,6 +25,10 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
   The Curve, a new account for Money Crimes (`bernardinio555+crimes@gmail.com`, Gmail plus-alias). **Never touch
   thegoldenplate (it's for the user's food project) or passdaboof2.** Connect for posting via Higgsfield's TikTok tools
   once renamed.
+- **TikTok is connected in Higgsfield** (connectors: tiktok-howtheyprofit, tiktok-thecurve, tiktok-moneycrimes), but every
+  post needs the user to submit TikTok's form in a widget-capable Claude client, and the API can't schedule. So TikTok
+  runs from the **TikTok Queue page** https://claude.ai/artifact/2wDDNCdD65rqGrmLyQCTSW (27 Shorts for 5-14 Oct, 18:00 UK,
+  compressed under 15 MB each): the user schedules them weekly in TikTok Studio (web). Make the next page for 15-24 Oct.
 - **Only the user can:** rename "MoneyCrimesFiles" to Money Crimes and "HowTheyProfitHQ" to How They Profit (the API
   ignores titles), profile pictures, phone verification.
 

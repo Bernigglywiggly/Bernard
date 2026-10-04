@@ -29,6 +29,18 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
   post needs the user to submit TikTok's form in a widget-capable Claude client, and the API can't schedule. So TikTok
   runs from the **TikTok Queue page** https://claude.ai/artifact/2wDDNCdD65rqGrmLyQCTSW (27 Shorts for 5-14 Oct, 18:00 UK,
   compressed under 15 MB each): the user schedules them weekly in TikTok Studio (web). Make the next page for 15-24 Oct.
+- **5 Oct, 00:00 UTC, blockers and progress:**
+  - **Zapier hit its monthly task limit.** Every YouTube call fails ("reached its task limit for the current billing
+    period"), so the remaining 29 uploads (22, 23, 26, 29, 32, 33, 35-37, 39-58) and the banners are blocked until the
+    user upgrades Zapier or the period resets. vidIQ can't upload to YouTube (its upload tool only feeds its own editor);
+    it can set thumbnails (5 credits each) once channels are connected and verified, and can publish Instagram Reels.
+    Channel check before the limit: The Curve has name, avatar and banner; Money Crimes and How They Profit have avatars
+    but still the old names (MoneyCrimesFiles, HowTheyProfitHQ) and no banners; all three `longUploadsStatus: eligible`
+    (not yet phone-verified).
+  - **TikTok Queue page 2** (15-24 Oct, 21 Shorts): https://claude.ai/artifact/XH21v2cnsnRv9oVCUoB1rM
+  - **HTP film 05 (PayPal) v0**: `lab/ch2/ep05/script.py` (new "follow one $100" structure per CRAFT §1) and
+    `FACTS.md` (FY2025 10-K/8-K; fee rates and Venmo revenue marked TO VERIFY). Next: scenes.py (the $100 note as the
+    persistent object), voice (~36 Higgsfield credits; about 27 left), render, film-critic.
 - **Research → upgrades (4 Oct, night):** the user's X account is new, so `lab/research/x_notes.md` is a public-X sweep
   (about 25 searches; full X Articles read through `api.fxtwitter.com/<user>/status/<id>`, which X itself hides behind
   a login). Distilled into **`CRAFT.md`** (house rules every session reads; CLAUDE.md points to it) and the

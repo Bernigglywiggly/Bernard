@@ -81,6 +81,8 @@ is fine; **no visible author is what gets flagged.**
   actions. Keep a music-only fallback.
 
 ## Learned on our films
+- 5 Oct (PayPal stills): a bar slice under ~220 px can't hold its label; put it in a callout under the bar
+  (`cut_bar` in ep05/scenes.py). Check node titles fit their boxes at 40 px.
 - 4 Oct: `motion_report.py` on finished films: How They Profit (Amazon) is near-still 70% of the time (frozen 54%,
   in short bursts; 5 stretches of 2.5-3.6 s); The Curve LF03 moves throughout except its 17 s end card; Money Crimes
   (Ponzi) is the liveliest. HTP needs continuous camera drift and object motion inside each beat, not move-then-hold.

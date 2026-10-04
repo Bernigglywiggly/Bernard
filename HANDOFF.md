@@ -39,8 +39,11 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
     (not yet phone-verified).
   - **TikTok Queue page 2** (15-24 Oct, 21 Shorts): https://claude.ai/artifact/XH21v2cnsnRv9oVCUoB1rM
   - **HTP film 05 (PayPal) v0**: `lab/ch2/ep05/script.py` (new "follow one $100" structure per CRAFT §1) and
-    `FACTS.md` (FY2025 10-K/8-K; fee rates and Venmo revenue marked TO VERIFY). Next: scenes.py (the $100 note as the
-    persistent object), voice (~36 Higgsfield credits; about 27 left), render, film-critic.
+    `FACTS.md` (FY2025 10-K/8-K; fee rates checked 5 Oct; Venmo revenue as reported), `POST.md` (titles, description,
+    5 Shorts with different shapes), `scenes.py` (the $100 note as the persistent object; the $1.85 sliver grows into
+    the next bar) and `film.py` (CLIPS, MUSIC). Stills checked on an estimated timeline (`build_est`, ~6:03 at 2.1 w/s;
+    `EP_BUILD=build_est python3 film.py still ...`). Next: voice (~36 Higgsfield credits; about 27 left), render,
+    film-critic, endcard (now single AAC encode).
 - **Research → upgrades (4 Oct, night):** the user's X account is new, so `lab/research/x_notes.md` is a public-X sweep
   (about 25 searches; full X Articles read through `api.fxtwitter.com/<user>/status/<id>`, which X itself hides behind
   a login). Distilled into **`CRAFT.md`** (house rules every session reads; CLAUDE.md points to it) and the

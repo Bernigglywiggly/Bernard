@@ -90,3 +90,21 @@ LINES = [
          say="If you sell online, compare the two prices. A standard card payment through PayPal costs a shop two point nine nine percent plus forty-nine cents, so the extra half a percent is what you pay for the shoppers the button brings."),
     dict(floor=7, id="close", text="And if you keep money sitting in a balance, someone is earning interest on it. It's worth checking that the someone is you."),
 ]
+
+FLOORS = ["ONE HUNDRED DOLLARS", "THE TOLL", "THE AVERAGE", "WHO ELSE GETS PAID", "THIRTY-FOUR CENTS",
+          "MONEY THAT SITS STILL", "TWO PAYPALS", "THE BUTTON'S PROBLEM"]
+
+SOURCES = [
+    "PayPal Holdings, Form 10-K for 2025 (SEC EDGAR): net revenues $33,172M (transaction revenues $29,798M; revenues "
+    "from other value added services $3,374M); transaction expense rate 0.89% of TPV; transaction and credit loss rate "
+    "0.10%; branded checkout 'reduce[s] cart abandonment'; Braintree TPV grew while its transactions fell, 'our "
+    "strategic shift as we focus on profitable growth'",
+    "PayPal fourth quarter and full year 2025 results (8-K, Exhibit 99.1, 3 Feb 2026): TPV $1.79T; transaction margin "
+    "dollars $15.5B ($14.2B excluding interest on customer balances); GAAP operating income $6.1B; 439M active "
+    "accounts; 25.4B payment transactions, 16.1B excluding PSP; 'our execution has not been where it needs to be, "
+    "particularly in branded checkout'; Enrique Lores appointed President and CEO",
+    "PayPal US business fees page (checked 5 Oct 2026): PayPal Checkout 3.49% + fixed fee; standard credit and debit "
+    "card payments 2.99% + fixed fee; USD fixed fee $0.49",
+    "Per-$100 figures are worked out from the totals above: revenue $33.2B / TPV $1.79T = $1.85; 89¢ and 10¢ from the "
+    "two rates; 86¢ left; operating income $6.1B / $1.79T = 34¢; interest on balances about $1.3B = $15.5B - $14.2B",
+]

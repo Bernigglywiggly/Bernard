@@ -409,6 +409,8 @@ def shorts_page(name="shorts", title="AI shorts: Money crimes and What if"):
 
 LONGFORM = {
     "lustig": ("Money crimes · Long-form 01", "Money_Crimes_01_The_Man_Who_Sold_the_Eiffel_Tower"),
+    "ponzi": ("Money crimes · Long-form 02", "Money_Crimes_02_The_Original_Ponzi_Scheme", None, None,
+              "Money Crimes' second long-form film, ready to upload"),
     "lf01_escape": ("The Curve · Long-form 01", "The_Curve_01_The_AI_That_Escaped", "curvelf",
                     "The channel's look at full length: AI pictures and big numbers turned into characters, typed labels, "
                     "live captions and a house score. Past 8 minutes, YouTube allows mid-roll ads.",
@@ -573,6 +575,7 @@ if __name__ == "__main__":
      "lf02": lambda: longform_page("lf02_price"), "lf02_shorts": lambda: film_shorts_page("lf02_price"),
      "lf03": lambda: longform_page("lf03_held"), "lf03_shorts": lambda: film_shorts_page("lf03_held"),
      "htp01": lambda: longform_page("ep01"),
+     "ponzi": lambda: longform_page("ponzi"), "ponzi_shorts": lambda: film_shorts_page("ponzi"),
      # EP04-EP08 with their shorts are ~310 MiB, over one artifact version's 256 MiB: two pages, in upload order
      "films1": lambda: new(("ep05", "ep08", "ep04"), "films1", "The Curve: EP05, EP08, EP04"),
      "films2": lambda: new(("ep06", "ep07"), "films2", "The Curve: EP06, EP07")}[sys.argv[1]]()

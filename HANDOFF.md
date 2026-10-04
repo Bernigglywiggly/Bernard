@@ -3,8 +3,29 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 3 Oct 2026 (~8:30pm UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "3 Oct evening"
-just below (`STUDIO.md` maps everything), then "3 Oct: jazz", "2 Oct" and the rest.**
+Updated 4 Oct 2026 (early morning UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "4 Oct"
+just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "2 Oct" and the rest.**
+
+## 4 Oct, early hours: LF03 shipped, How They Profit film 01 shipped, Money Crimes film 02 (Ponzi) rendering
+- **The Curve LF03** (Too Dangerous to Release, 11:57): re-rendered after fixing 15 caption errors (names like Amodei,
+  Krueger, Jain; "99 %" and "open -source" now merge in `curvelf/kit.py`); 3 thumbnails, POST.md, 3 Shorts; pages:
+  film https://claude.ai/artifact/8sMGypbJ7BnKu8Zvkxqikr, Shorts https://claude.ai/artifact/ErxxqE9BmuSbxpFZgJbzBy.
+  `longform/vertical.py` now draws only the newest caption group (two used to overlap for a frame at hand-overs; Shorts
+  cut before 4 Oct have that blip).
+- **How They Profit film 01** (Banks With Wings, 7:40): there's no ElevenLabs key, so the voice is Higgsfield Seed Audio
+  preset **Sterling** (`dc382508-c8bd-443c-8cb2-46e57b8d2e6f`, speech_rate -10), one take per floor, cut back into
+  lines at real silences by the new `lab/engine/voice_hf.py` (takes in `lab/ch2/ep01/hf_voice.json`).
+  `engine/mix.py` accepts engine="higgsfield" (the guard still keeps the local stand-in voice out). New
+  `lab/ch2/endcard.py` adds a 15 s end card. Page: https://claude.ai/artifact/FDHDmXNLLTdKuFpbVmMrbp. Its Shorts
+  (`film.py shorts`, the 5 CLIPS parts) are not cut yet. Films 02-03 (McDonald's, Costco) voice the same way.
+- **Money Crimes film 02** (`lab/longform/ponzi`, The Original Ponzi Scheme, 13:27): sourced script (Wikipedia,
+  Smithsonian, Boston.com), Imogen voice (12 takes; take 10 re-voiced, take 11 in halves `vo_11a/b` joined by
+  `fetch.py`), 55 stills + 6 clips (Ponzi never drawn face-on; his face is the real 1920 photographs in `src/arch`),
+  jazz score, `film.py` timeline, 3 thumbnails, POST.md, `shorts.py` (line, machine, run, today). Rendering:
+  `python3 ../doc.py ponzi render`; then `python3 ../vertical.py <abs path to ponzi>` and
+  `cd lab && python3 pack/build.py ponzi | ponzi_shorts`, publish in ≤55 MiB batches.
+- Credits: about 135 Higgsfield credits left after the Ponzi pictures (4 Oct). LF04/LF05 need about 130 each.
+- Still open with the user: the AI influencer persona, the services offer, and whether LF03's topic is OK.
 
 ## 3 Oct, near midnight: the What if POV format (read `channel/what-if/README.md`)
 - The user sent nine TikToks that were "popping off" (the @pov.what.if0 "What if...?" POV films) and asked for ours

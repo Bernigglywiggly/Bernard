@@ -1,0 +1,1 @@
+Vendored from https://github.com/echris6/motion-video-kit (MIT), 4 Oct 2026.

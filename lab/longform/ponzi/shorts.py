@@ -21,6 +21,23 @@ SHORTS = {
                 caption="A newspaper asked where the money came from. Ponzi opened the doors, paid everyone, and "
                         "handed out doughnuts. " + TAGS,
                 pinned="He survived the run but not the arithmetic. Full story: The Original Ponzi Scheme, on the channel."),
+    "zarossi": dict(t0=131.0, t1=174.4, headline="Where he learned the trick", film=FILM, music=["Hard Boiled"],
+                    title="Ponzi Learned His Scheme Working at a Bank",
+                    caption="Montreal, 1907: a bank paying 6%, twice the going rate. Ponzi was its assistant manager, and "
+                            "he saw where the interest really came from. " + TAGS,
+                    pinned="Robbing Peter to pay Paul, thirteen years before Boston. Full story: The Original Ponzi "
+                           "Scheme, on the channel."),
+    "barron": dict(t0=431.7, t1=479.4, headline="160 million needed. 27,000 existed.", film=FILM, music=["I Knew a Guy"],
+                   title="160 Million Coupons Needed. Only 27,000 Existed.",
+                   caption="July 1920: the most respected financial journalist in America did the arithmetic on Ponzi's "
+                           "promise, and noticed where Ponzi kept his own money. " + TAGS,
+                   pinned="The oldest check still works: could the thing they say they do really pay this much? Full "
+                          "story on the channel."),
+    "end": dict(t0=683.9, t1=727.4, headline="How it ended for Ponzi", film=FILM, music=["Night on the Docks - Trumpet"],
+                title="Charles Ponzi Died With $75",
+                caption="Rio de Janeiro, 1949: the man who took millions from Boston died in a charity ward. His last "
+                        "line was still a sales pitch. " + TAGS,
+                pinned="'Worth fifteen million bucks to watch me put the thing over.' Full story on the channel."),
     "today": dict(t0=727.6, t1=787.4, headline="The question that beats every Ponzi scheme", film=FILM,
                   music=["Night on the Docks - Trumpet"],
                   title="The One Question That Exposes Every Ponzi Scheme",

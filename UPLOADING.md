@@ -14,6 +14,28 @@ what Route B sets up.
 
 ---
 
+## Route Z: Zapier's YouTube connection (4 Oct: the main route)
+Zapier's YouTube app is already verified by Google, so videos uploaded through it can go public or scheduled, with no
+Google Cloud project and no audit. Set-up for the user: open the Zapier connect link on the go-live page
+(https://claude.ai/artifact/SGW5GGULhWhdNZxaBtMNSm), sign in with Google, pick the channel, repeat per channel.
+
+How Claude uploads (the files never have to be public):
+1. `python3 lab/tools/plan_uploads.py` writes `channel/uploads.json` (every slot: file, title, description, tags,
+   thumbnail, playlist name, publish time in UTC, the AI label) and lists anything missing.
+2. `python3 lab/tools/youtube_upload.py zapier-init channel/uploads.json N` prints the request that opens a resumable
+   upload session (metadata, privacy private + publishAt, containsSyntheticMedia, not made for kids).
+3. Claude sends it with Zapier's YouTube "API request" action (`_zap_raw_request`, the channel's connection) and takes
+   the session URL from the reply's `Location` header.
+4. `python3 lab/tools/youtube_upload.py put "<session URL>" <file> --manifest channel/uploads.json` streams the file
+   from the session, resuming after drops, and records the video id in `channel/uploads.done.json`.
+5. Thumbnail: `zapier-thumb VIDEO_ID thumb.jpg`, the same two steps. Playlist: Zapier's "Add video to playlist".
+Untested until a channel is connected (4 Oct): if Zapier's reply doesn't carry the `Location` header, the fallback is
+Zapier's own "Upload video" action with a public link, which works for files under 100 MB (the Shorts and the How They
+Profit films) pushed briefly to a branch of the public repo; the five 247 MB films then go up in YouTube Studio.
+Zapier's free plan has 100 tasks a month; each upload is a few, so daily Shorts on three channels need its paid plan.
+
+---
+
 ## Route A: Metricool, about 15 minutes, on your phone
 1. Go to **metricool.com**, sign up (free), and make a brand called **The Curve**.
 2. In that brand, connect: **YouTube** (the channel's Google account), **TikTok**, **Instagram** (it has to be a

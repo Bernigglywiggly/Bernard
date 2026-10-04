@@ -16,6 +16,11 @@ appeal, whatever privacy is asked for. So `upload` refuses to send anything unti
         [--publish-at 2026-10-05T17:00:00Z] [--thumbnail t.jpg] [--playlist PLxxxx] [--category 27] [--dry-run]
     python3 lab/tools/youtube_upload.py plan uploads.json [--dry-run]   # many at once (format below)
 
+The Zapier route (no Google Cloud project or audit needed; Zapier's YouTube app is already verified): Claude prints the
+request with `zapier-init uploads.json N`, sends it through Zapier's YouTube "API request" action (the user's own
+channel connection), takes the session URL from the reply's Location header, then `put SESSION FILE --manifest
+uploads.json` streams the file from here. `zapier-thumb VIDEO_ID thumb.jpg` does the same for the thumbnail.
+
 uploads.json: a list of {"file", "title", "description" or "description_file", "tags": [...], "publish_at",
 "thumbnail", "playlist", "category", "made_for_kids": false, "synthetic": true}. Paths are relative to the JSON file.
 Each finished upload is recorded in uploads.done.json beside it, so a re-run skips what's already up.
@@ -155,14 +160,21 @@ def upload_file(path, body):
                       data=json.dumps(body), timeout=60)
     if r.status_code != 200:
         raise Fail(f"YouTube refused the upload: {r.status_code} {r.text[:400]}")
-    session, sent, tries = r.headers["Location"], 0, 0
+    return put_session(r.headers["Location"], path, auth())
+
+
+def put_session(session, path, headers=None):
+    """Send the file to a resumable upload session, resuming after drops. The session URL is its own authority, so a
+    session opened elsewhere (Zapier's YouTube connection, the `zapier` route in UPLOADING.md) works with no headers."""
+    headers = headers or {}
+    size, sent, tries = os.path.getsize(path), 0, 0
     with open(path, "rb") as f:
         while sent < size:
             f.seek(sent)
             chunk = f.read(CHUNK)
             end = sent + len(chunk) - 1
             try:
-                p = requests.put(session, headers={**auth(), "Content-Length": str(len(chunk)),
+                p = requests.put(session, headers={**headers, "Content-Length": str(len(chunk)),
                                                    "Content-Range": f"bytes {sent}-{end}/{size}"}, data=chunk, timeout=300)
             except requests.RequestException:
                 p = None
@@ -179,7 +191,7 @@ def upload_file(path, body):
                 raise Fail(f"Upload failed: {p.status_code if p is not None else 'no response'} "
                            f"{p.text[:400] if p is not None else ''}")
             time.sleep(min(60, 2 ** tries))
-            q = requests.put(session, headers={**auth(), "Content-Range": f"bytes */{size}"}, timeout=60)
+            q = requests.put(session, headers={**headers, "Content-Range": f"bytes */{size}"}, timeout=60)
             if q.status_code in (200, 201):
                 return q.json()
             rng = q.headers.get("Range")
@@ -269,6 +281,16 @@ def main():
     p.add_argument("manifest")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--test", action="store_true")
+    z = sub.add_parser("zapier-init", help="the request that opens an upload session through Zapier's YouTube connection")
+    z.add_argument("manifest")
+    z.add_argument("index", type=int)
+    zt = sub.add_parser("zapier-thumb", help="the request that opens a thumbnail session for an uploaded video")
+    zt.add_argument("video_id")
+    zt.add_argument("image")
+    pu = sub.add_parser("put", help="send a file into an open session (from zapier-init or zapier-thumb)")
+    pu.add_argument("session")
+    pu.add_argument("file")
+    pu.add_argument("--manifest", help="record the video in <manifest>.done.json")
     a = ap.parse_args()
     try:
         if a.cmd == "signin":
@@ -295,6 +317,30 @@ def main():
                 if vid:
                     done[key] = vid
                     json.dump(done, open(done_path, "w"), indent=1)
+        elif a.cmd == "zapier-init":
+            base = os.path.dirname(os.path.abspath(a.manifest))
+            e = entry_from(json.load(open(a.manifest))[a.index], base)
+            print(json.dumps({"method": "POST", "url": f"{UPLOAD}/videos?uploadType=resumable&part=snippet,status",
+                              "headers": {"Content-Type": "application/json; charset=UTF-8",
+                                          "X-Upload-Content-Length": str(os.path.getsize(e["file"])),
+                                          "X-Upload-Content-Type": mimetypes.guess_type(e["file"])[0] or "video/mp4"},
+                              "body": json.dumps(body_for(e)), "file": e["file"],
+                              "thumbnail": e.get("thumbnail"), "playlist": e.get("playlist")}, indent=1))
+        elif a.cmd == "zapier-thumb":
+            print(json.dumps({"method": "POST", "url": f"{UPLOAD}/thumbnails/set?videoId={a.video_id}&uploadType=resumable",
+                              "headers": {"X-Upload-Content-Length": str(os.path.getsize(a.image)),
+                                          "X-Upload-Content-Type": mimetypes.guess_type(a.image)[0] or "image/jpeg"},
+                              "body": ""}, indent=1))
+        elif a.cmd == "put":
+            v = put_session(a.session, a.file)
+            print(json.dumps(v)[:600])
+            if a.manifest and v.get("kind") == "youtube#video":
+                base = os.path.dirname(os.path.abspath(a.manifest))
+                done_path = os.path.splitext(a.manifest)[0] + ".done.json"
+                done = json.load(open(done_path)) if os.path.exists(done_path) else {}
+                done[os.path.relpath(os.path.abspath(a.file), base)] = v["id"]
+                json.dump(done, open(done_path, "w"), indent=1)
+                print(f"uploaded: https://youtu.be/{v['id']}")
     except requests.HTTPError as err:
         raise Fail(f"YouTube said: {err.response.status_code} {err.response.text[:400]}")
 

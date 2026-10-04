@@ -8,8 +8,8 @@ of them on every social platform with content made for each.
 | Channel | What | Ready now | Kit |
 |---|---|---|---|
 | **The Curve** | The hidden mechanism behind AI headlines | LF01, LF02, LF03, Season One and Two; 9 Shorts + EP Shorts | `channel/the-curve/brand/` |
-| **Money Crimes** | The greatest cons, frauds and heists | Film 01 (Lustig, 14:56) + 4 Shorts | `channel/money-crimes/brand/` |
-| **How They Profit** (was The Margin) | How big companies really make money | Film 01 (Delta's miles, 7:40) finished 4 Oct; films 02-03 scripted | `channel/channel2/brand/` |
+| **Money Crimes** | The greatest cons, frauds and heists | Film 01 (Lustig, 14:56), film 02 (Ponzi, 13:27); 14 Shorts | `channel/money-crimes/brand/` |
+| **How They Profit** (was The Margin) | How big companies really make money | Films 01 (Delta's miles, 7:40), 02 (McDonald's, 8:01), 03 (Costco) made 4 Oct; 5 Shorts each | `channel/channel2/brand/` |
 Each `brand/` folder has the profile picture, YouTube banner, watermark, X and Facebook covers and `SETUP.md` (names,
 handles, descriptions, bios for every platform, keywords, upload defaults, playlists).
 
@@ -21,26 +21,28 @@ handles, descriptions, bios for every platform, keywords, upload defaults, playl
    for three channels. Verification unlocks custom thumbnails and videos over 15 minutes.
 3. **TikTok, Instagram (switch to a Creator account), Facebook Page, X** for each channel: same name, handle, picture
    and bio from `SETUP.md`. Link the Instagram account to its Facebook Page (needed for scheduling).
-4. **Connect for automation** (any order): Zapier > YouTube (each channel); vidIQ > each channel; Metricool connector
-   in claude.ai, if you want me to schedule across TikTok/Instagram/Facebook. Until then the free schedulers do it:
+4. **Connect for automation** (any order): Zapier > YouTube (each channel; this is how Claude uploads, see the Zapier
+   route in `UPLOADING.md`); vidIQ > each channel; Metricool connector in claude.ai, if you want me to schedule across
+   TikTok/Instagram/Facebook. Until then the free schedulers do it:
    YouTube Studio (schedule on upload), TikTok's desktop scheduler (up to 10 days ahead), Meta Business Suite
    (Instagram + Facebook).
 
-## Week 1 (times UK; 17:00 UK = noon New York, where the higher-paying audience is)
-Long films go on YouTube at 17:00. Each Short goes on YouTube Shorts, TikTok, Instagram Reels and Facebook Reels the same
-day at 13:00 (YouTube) and 19:00 (the others), with the platform's own caption and the AI label switched on.
-| Day | The Curve | Money Crimes | How They Profit |
-|---|---|---|---|
-| Mon 5 | **Long:** LF01 The AI That Escaped. Short: "escape" | Short: the Eiffel Tower (teaser) | (channel set up, no posts) |
-| Tue 6 | Short: "board" | **Long:** The Man Who Sold the Eiffel Tower. Short: "capone" | |
-| Wed 7 | **Long:** LF02 The Price of Thinking. Short: "war" | Short: new cut from the film | |
-| Thu 8 | Short: "cheat" | Short: "escape" | |
-| Fri 9 | **Long:** LF03 Too Dangerous to Release. Short: "bigmac" | Short: new cut | **Long:** Film 01 (airline miles), if it passes review |
-| Sat 10 | Short: "jevons" | Short: "box" | Short from film 01 |
-| Sun 11 | **Long:** Season One (14 min). Short: LF03 cold open | Short: new cut | Short from film 01 |
-Files and copy (titles, descriptions, thumbnails, pinned comments, Short captions): each film's `POST.md` and
-`shorts.py`, and the upload pages listed in `STUDIO.md`. Nothing is locked: a scheduled YouTube video can be edited or
-moved until it goes live, and every row above is independent.
+## The first two weeks (5-18 Oct; times UK)
+Go-live page (set-up steps, every channel's art and copy, the running order with links):
+https://claude.ai/artifact/SGW5GGULhWhdNZxaBtMNSm. The machine-readable plan is `channel/uploads.json`, written by
+`python3 lab/tools/plan_uploads.py` (its SLOTS list is the running order; edit it there and re-run).
+- Films at 17:00 UK (noon New York), Shorts at 13:00, a second Short at 20:00 while two How They Profit films' parts
+  overlap. British Summer Time ends 25 Oct; the plan converts every slot to UTC.
+- **The Curve:** LF01 Mon 5, LF02 Wed 7, LF03 Fri 9, Season One Sun 11, Season Two Wed 14 (the EPs go out only inside the
+  seasons, so no near-duplicates); a Short a day: the nine LF Shorts, then standalone EP Shorts (toddler, dinosaur,
+  birthday, paper, japan).
+- **Money Crimes:** Lustig Tue 6, Ponzi Tue 13; a Short a day: the Eiffel teaser, the six Lustig cuts, the seven Ponzi
+  cuts (zarossi, barron and end added 4 Oct).
+- **How They Profit:** Banks With Wings Fri 9, The Landlord in the Golden Arches Tue 13, The $65 Membership Fri 16; each
+  film's five parts on consecutive days.
+Every upload goes up scheduled (private with a publish time), not made for kids, altered or synthetic content: Yes, with
+its title, description, tags, thumbnail and playlist. Nothing is locked: anything can be moved in YouTube Studio
+before its slot, and if set-up slips the whole block moves together (change the dates in SLOTS).
 
 ## Review (what we watch, and what changes it)
 - **48 hours after each long film:** click-through rate (aim 4%+; below 3% means swap the title or thumbnail; the three

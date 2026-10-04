@@ -1,7 +1,8 @@
-"""THE MARGIN · EP03 · THE $65 MEMBERSHIP: the film, on the shared engine with the ledger look (ch2/ledger.py).
-Voice: Curve Elder A, so every command runs with EL_VOICE=elder (the voice step needs ELEVENLABS_API_KEY):
+"""HOW THEY PROFIT (was The Margin) · EP03 · THE $65 MEMBERSHIP: the film, on the shared engine with the ledger look (ch2/ledger.py).
+Voice: Higgsfield Seed Audio "Sterling" (there's no ElevenLabs key), one take per floor cut back into lines:
 
-    EL_VOICE=elder python3 film.py voice      then  parts 4 0 4 · join 4 · sound · master
+    cd lab && python3 -m engine.voice_hf ch2/ep03 fetch && python3 -m engine.voice_hf ch2/ep03 build   (takes: hf_voice.json)
+    then  python3 film.py parts 4 0 4 · join 4 · sound · master
 """
 import os
 import sys
@@ -13,7 +14,7 @@ from script import FLOORS  # noqa: E402
 
 ledger.FLOORS[:] = FLOORS
 ledger.style_shorts()
-TAGS = "#money #costco #membership #retail #business #explained #themargin"
+TAGS = "#money #costco #membership #retail #business #explained #howtheyprofit"
 CLIPS = [
     dict(name="part1", a="hotdog", b="card", tag="THE $65 MEMBERSHIP · PART 1 OF 5", nxt="PART 2",
          hook="A $1.50 hot dog and a $9.2 billion profit",
@@ -41,5 +42,5 @@ MUSIC = [(0.0, "intro"), ("door", "a"), ("year", "b"), ("why", "a"), ("you", "b"
 
 if __name__ == "__main__":
     os.environ.setdefault("EL_VOICE", "elder")
-    engine.film.main(__file__, title="THE MARGIN  ·  THE $65 MEMBERSHIP", music=MUSIC, anchors=("door", "why"),
+    engine.film.main(__file__, title="HOW THEY PROFIT  ·  THE $65 MEMBERSHIP", music=MUSIC, anchors=("door", "why"),
                      clips=CLIPS, tags=TAGS, bed="chrome_marl", look_mod=ledger, cap_mod=ledger.CAPTIONS)

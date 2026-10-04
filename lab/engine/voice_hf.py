@@ -133,14 +133,56 @@ def cut_take(y, words, texts):
         a = max(0, idx[0] - int(0.03 * fx.SR)) if len(idx) else 0
         b = min(len(seg), idx[-1] + int(0.12 * fx.SR)) if len(idx) else len(seg)
         x = seg[a:b].copy()
-        fi, fo = min(len(x), int(0.008 * fx.SR)), min(len(x), int(0.04 * fx.SR))
-        x[:fi] *= np.sin(np.linspace(0, np.pi / 2, fi)) ** 2
-        x[len(x) - fo:] *= np.cos(np.linspace(0, np.pi / 2, fo)) ** 2
         t0 = (s0 + a) / fx.SR
         ws = [(w[0], round(max(0.0, w[1] - t0), 3), round(w[2] - t0, 3)) for w in words
               if cuts[i] <= (w[1] + w[2]) / 2 < cuts[i + 1]]
+        x, ws = _squeeze(x, ws, np.abs(y).max() + 1e-9)
+        fi, fo = min(len(x), int(0.008 * fx.SR)), min(len(x), int(0.04 * fx.SR))
+        x[:fi] *= np.sin(np.linspace(0, np.pi / 2, fi)) ** 2
+        x[len(x) - fo:] *= np.cos(np.linspace(0, np.pi / 2, fo)) ** 2
         out.append((x, ws))
     return out
+
+
+def _squeeze(x, ws, peak, longest=1.3, keep=0.8, db=-40.0, hop=0.01):
+    """Shorten every quiet stretch inside a line that runs past `longest` seconds to `keep` (Seed Audio sometimes stops
+    for 8 s mid-line, 4 Oct). Only audio under db from the take's peak is removed, so no word is ever cut; the words'
+    times move with it."""
+    h = int(hop * fx.SR)
+    n = len(x) // h
+    if n < 3:
+        return x, ws
+    lv = np.sqrt(np.mean(x[:n * h].reshape(n, h) ** 2, axis=1) + 1e-12)
+    q = 20 * np.log10(lv / peak) < db
+    gaps, k = [], 0
+    while k < n:
+        if q[k]:
+            j = k
+            while j < n and q[j]:
+                j += 1
+            if k > 0 and j < n and (j - k) * hop > longest:
+                gaps.append((k * h + int(keep / 2 * fx.SR), j * h - int(keep / 2 * fx.SR)))
+            k = j
+        else:
+            k += 1
+    if not gaps:
+        return x, ws
+    f = int(0.005 * fx.SR)
+    parts, at = [], 0
+    for c0, c1 in gaps:
+        a = x[at:c0].copy()
+        a[len(a) - f:] *= np.cos(np.linspace(0, np.pi / 2, f)) ** 2
+        parts.append(a)
+        at = c1
+    b = x[at:].copy()
+    b[:f] *= np.sin(np.linspace(0, np.pi / 2, f)) ** 2
+    parts.append(b)
+
+    def moved(t):
+        s = t * fx.SR
+        cut = sum(c1 - c0 for c0, c1 in gaps if c1 <= s) + sum(s - c0 for c0, c1 in gaps if c0 < s < c1)
+        return round((s - cut) / fx.SR, 3)
+    return np.concatenate(parts), [(w, moved(a), moved(b)) for w, a, b in ws]
 
 
 def build(ep_dir, lead=LEAD):

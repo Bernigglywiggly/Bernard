@@ -3,8 +3,27 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 4 Oct 2026 (early morning UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "4 Oct"
+Updated 4 Oct 2026 (afternoon UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "4 Oct"
 just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "2 Oct" and the rest.**
+
+## 4 Oct, afternoon: "we go full in with yt" (the user, at work: do everything possible, list what only they can do)
+- **Go-live page** (the user's checklist, on their phone): https://claude.ai/artifact/SGW5GGULhWhdNZxaBtMNSm. Four steps
+  only the user can do: make the three channels (youtube.com/channel_switcher), dress them (art and copy in the page),
+  verify by phone, connect YouTube in Zapier (one connection per channel). Then Claude uploads everything.
+- **Nothing was connected on 4 Oct:** vidIQ is signed in (to a different Google account from the user's Claude email)
+  with no channel; Zapier had no YouTube connection (its YouTube actions are now enabled: find_video, get_report,
+  add_video_to_playlist, upload_video, upload_video_thumbnail, _zap_raw_request); Higgsfield has no TikTok account.
+- **Upload plan:** `channel/uploads.json` from `lab/tools/plan_uploads.py` (SLOTS = the 5-18 Oct running order: 10 films,
+  41 Shorts; every slot checked against YouTube's limits; the season descriptions are cut to fit 5,000 bytes and no
+  longer claim the single episodes are on the channel). Route: `UPLOADING.md`, "Route Z" (Zapier opens a resumable
+  session, `youtube_upload.py put` streams the file from here). GitHub releases are refused in this session type, so
+  public hosting of the 247 MB films isn't available; googleapis.com is reachable for the direct stream.
+- **How They Profit films 02 and 03** voiced with Sterling (about 36 credits each): McDonald's 8:01 (page
+  https://claude.ai/artifact/XBJfqmdXyYQvA9syVe35YZ), Costco rendering. `engine/voice_hf.py` now squeezes any quiet
+  stretch inside a line over 1.3 s down to 0.8 s (Seed Audio paused 8 s mid-line in McDonald's take 4);
+  `ch2/endcard.py` stretches the card up to 20 s when that carries a film past 8:00 (mid-rolls).
+- **Money Crimes:** three more Ponzi Shorts (zarossi, barron, end) for 16-18 Oct.
+- Credits: about 62 Higgsfield left (4 Oct afternoon). vidIQ: 21 (resets 5 Oct to 150).
 
 ## 4 Oct, early hours: LF03 shipped, How They Profit film 01 shipped, Money Crimes film 02 (Ponzi) rendering
 - **The Curve LF03** (Too Dangerous to Release, 11:57): re-rendered after fixing 15 caption errors (names like Amodei,

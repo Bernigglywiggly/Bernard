@@ -427,6 +427,14 @@ LONGFORM = {
              "The channel's ledger look: every figure on screen with its source, a calm narrator and an original score. "
              "The last 15 seconds are the end card, clear for YouTube's end-screen elements.",
              "How They Profit's first film, ready to upload"),
+    "ep02": ("How They Profit · Film 02", "How_They_Profit_02_The_Landlord_in_the_Golden_Arches", "ch2",
+             "The channel's ledger look: every figure on screen with its source, a calm narrator and an original score. "
+             "The closing seconds are the end card, clear for YouTube's end-screen elements.",
+             "How They Profit's second film, ready to upload"),
+    "ep03": ("How They Profit · Film 03", "How_They_Profit_03_The_65_Dollar_Membership", "ch2",
+             "The channel's ledger look: every figure on screen with its source, a calm narrator and an original score. "
+             "The closing seconds are the end card, clear for YouTube's end-screen elements.",
+             "How They Profit's third film, ready to upload"),
 }
 
 
@@ -460,10 +468,11 @@ def longform_page(slug="lustig"):
                 meta=meta or DEF_META,
                 video=v, thumbs=thumbs, titles=titles, description=sec("Description"), pinned=sec("Pinned comment"),
                 steps=["Upload the .mp4 and paste the title and description (the chapters come from its timestamps)."] + steps +
-                      ["Put all three thumbnails in Test & Compare.", "Publish, then post the pinned comment and pin it."],
+                      [f"Put all {['', 'the', 'both', 'three'][len(thumbs)]} thumbnail{'s' if len(thumbs) > 1 else ''} in Test & Compare.",
+                       "Publish, then post the pinned comment and pin it."],
                 shorts=[])
     lede = (lede_1 or "The first long-form film, ready to upload") + (
-        f": {m}:{s_:02d} at 1080p, three thumbnails to test against each other, titles, a description with chapters, "
+        f": {m}:{s_:02d} at 1080p, {['no', 'one', 'two', 'three'][len(thumbs)]} thumbnails to test against each other, titles, a description with chapters, "
         "sources and credits, and the settings to tick.")
     order = [("1", "Upload this film: long-form is the money product"),
              ("2", "Then post its shorts (shorts page) as trailers, each linked to this film"),
@@ -511,7 +520,7 @@ def film_shorts_page(slug="lustig"):
     write(name, f"{LONGFORM[slug][0].split(' · ')[0]}: shorts from the film", lede, order, items, extra)
 
 
-def ch2_shorts_page(ep="ep01", film="Banks With Wings"):
+def ch2_shorts_page(ep="ep01", film="Banks With Wings", title="How They Profit: Shorts"):
     """How They Profit's shorts (lab/ch2/<ep>/build/shorts: the engine's parts, copy in kit.json)."""
     d = os.path.join(LAB, "ch2", ep, "build", "shorts")
     name = f"htp_{ep}_shorts"
@@ -541,7 +550,7 @@ def ch2_shorts_page(ep="ep01", film="Banks With Wings"):
         order.append((part, k["hook"]))
     lede = (f"The five parts of \"{film}\" as vertical shorts for TikTok, YouTube Shorts and Reels, posted in order: each "
             "ends on a card naming the next part, and every caption carries its source.")
-    write(name, "How They Profit: Shorts", lede, order, items, extra)
+    write(name, title, lede, order, items, extra)
 
 
 def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP09 to EP12"):
@@ -608,6 +617,9 @@ if __name__ == "__main__":
      "lf02": lambda: longform_page("lf02_price"), "lf02_shorts": lambda: film_shorts_page("lf02_price"),
      "lf03": lambda: longform_page("lf03_held"), "lf03_shorts": lambda: film_shorts_page("lf03_held"),
      "htp01": lambda: longform_page("ep01"), "htp01_shorts": lambda: ch2_shorts_page("ep01"),
+     "htp02": lambda: longform_page("ep02"),
+     "htp02_shorts": lambda: ch2_shorts_page("ep02", "The Landlord in the Golden Arches", "Golden Arches: Shorts"),
+     "htp03": lambda: longform_page("ep03"), "htp03_shorts": lambda: ch2_shorts_page("ep03", "The $65 Membership", "Costco Membership: Shorts"),
      "ponzi": lambda: longform_page("ponzi"), "ponzi_shorts": lambda: film_shorts_page("ponzi"),
      # EP04-EP08 with their shorts are ~310 MiB, over one artifact version's 256 MiB: two pages, in upload order
      "films1": lambda: new(("ep05", "ep08", "ep04"), "films1", "The Curve: EP05, EP08, EP04"),

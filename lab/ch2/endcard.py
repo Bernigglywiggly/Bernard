@@ -1,4 +1,4 @@
-"""The end card for a How They Profit film: 15 seconds of the ledger look with the channel's name at the top and the
+"""The end card for a How They Profit film: 15 seconds (up to 20 to carry a film past 8:00) of the ledger look with the channel's name at the top and the
 lower two thirds left clear for YouTube's end-screen elements (two videos and Subscribe), over the opening of the
 film's own score, faded. Appended to the master -> <ep>/out/<ep>_1080p.mp4.
 
@@ -19,6 +19,13 @@ from ch2 import look as L  # noqa: E402
 from ch2 import ledger  # noqa: E402
 
 DUR, FPS = 15.0, 24
+MIDROLL = 481.0     # a film that lands just under 8:00 gets a longer card (YouTube end screens run up to 20 s): mid-rolls
+
+
+def card_len(film_mp4):
+    d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", film_mp4],
+                             capture_output=True, text=True, check=True).stdout)
+    return min(20.0, MIDROLL - d) if DUR < MIDROLL - d <= 20.0 else DUR
 
 
 def card_png(path):
@@ -44,7 +51,8 @@ def main(ep):
     os.makedirs(out, exist_ok=True)
     png, wav, mp4 = os.path.join(b, "endcard.png"), os.path.join(b, "endcard.wav"), os.path.join(b, "endcard.mp4")
     card_png(png)
-    bed = fx.load(os.path.join(b, "bed.wav"))[: int(DUR * fx.SR)]
+    dur = card_len(os.path.join(b, f"{ep}.mp4"))
+    bed = fx.load(os.path.join(b, "bed.wav"))[: int(dur * fx.SR)]
     bed = bed * fx.db(-18.0 - fx.lufs(bed))
     n = len(bed)
     env = np.ones(n, np.float32)
@@ -52,7 +60,7 @@ def main(ep):
     env[:fi] = np.linspace(0, 1, fi)
     env[n - fo:] = np.cos(np.linspace(0, np.pi / 2, fo)) ** 2
     fx.save(wav, bed * env[:, None], mp3=False)
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-loop", "1", "-framerate", str(FPS), "-t", str(DUR), "-i", png, "-i", wav,
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-loop", "1", "-framerate", str(FPS), "-t", f"{dur:.2f}", "-i", png, "-i", wav,
                     "-vf", "fade=t=in:st=0:d=0.6", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
                     "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", mp4], check=True)
     final = os.path.join(out, f"{ep}_1080p.mp4")

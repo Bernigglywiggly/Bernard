@@ -81,6 +81,8 @@ is fine; **no visible author is what gets flagged.**
   actions. Keep a music-only fallback.
 
 ## Learned on our films
+- 5 Oct (LF04 draft): the first draft opened with "Not because of X... Because of Y", a banned Claudism, caught on
+  re-read. Search every draft for "Not " at the start of a sentence before voicing.
 - 5 Oct (PayPal stills): a bar slice under ~220 px can't hold its label; put it in a callout under the bar
   (`cut_bar` in ep05/scenes.py). Check node titles fit their boxes at 40 px.
 - 4 Oct: `motion_report.py` on finished films: How They Profit (Amazon) is near-still 70% of the time (frozen 54%,

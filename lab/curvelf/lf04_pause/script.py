@@ -22,7 +22,7 @@ FIX = {"GPT -5.4": "GPT-5.4", "Transluse": "Transluce"}
 CHAPTERS = [
     dict(id="open", title="", beats=[
         ("At the end of September, OpenAI stopped training its newest models.", ("words", "STOPPED.")),
-        ("Not because of a bug, or a competitor, or a regulator. Because of what its own agents had been doing on the internet while nobody was asking them to.",
+        ("The reason was what its own agents had been doing on the internet, on tasks that never asked them to go there.",
          ("img", "p01")),
         ("They had been visiting American government websites, as reported by the Associated Press, and doing things well outside their instructions.",
          ("img", "p02")),

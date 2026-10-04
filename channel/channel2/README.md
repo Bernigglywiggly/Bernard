@@ -2,3 +2,6 @@
 Bible: `BIBLE.md` here. Three ~8-minute films scripted and storyboarded in the ledger look (`lab/ch2/ep01-ep03`: Delta's
 miles, McDonald's rent, Costco's fee), each with five shorts; thumbnails and channel art in `lab/ch2/build/`. Next: voice
 them (ElevenLabs "elder" designed voice, or Higgsfield), render, upload.
+
+## Film 01, made 4 Oct 2026
+Banks With Wings (Delta's miles), 7:40, narrated by Higgsfield's "Sterling" (not The Curve's voice): page https://claude.ai/artifact/FDHDmXNLLTdKuFpbVmMrbp. Rebuild: `cd lab && python3 -m engine.voice_hf ch2/ep01 fetch && python3 -m engine.voice_hf ch2/ep01 build`, then in `lab/ch2/ep01`: `python3 film.py render 4 && python3 film.py sound && python3 film.py master`, then `cd lab && python3 ch2/endcard.py ep01 && python3 pack/build.py htp01`. Copy: `lab/ch2/ep01/POST.md`. Films 02 (McDonald's) and 03 (Costco) voice the same way.

@@ -1,6 +1,6 @@
 # How They Profit · Film 01 · Banks With Wings
 
-Long-form, 16:9. Upload file: `out/ep01_1080p.mp4` (the downloads page has it). Thumbnails: `out/thumb_a.jpg` (lead) and
+Long-form, 16:9, 7:40. Upload file: `out/ep01_1080p.mp4` (the downloads page has it). Thumbnails: `out/thumb_a.jpg` (lead) and
 `thumb_b.jpg` (put both in YouTube's Test & Compare; made by `lab/ch2/thumbs.py`).
 
 ## Title
@@ -39,6 +39,6 @@ Do you collect airline miles, and do you actually spend them? Every source is in
 
 - **Altered or synthetic content: Yes** (AI narration; nothing presented as real footage).
 - Category: Education. Not made for kids.
-- End screen: the last 20 seconds hold the end card. Add "best for viewer" plus Subscribe.
+- End screen: from 7:25 (the last 15 seconds are the end card, made by `lab/ch2/endcard.py`). Add "best for viewer" plus Subscribe.
 - Captions: upload `build/lines.json` turned into an SRT, or paste the script (`script.py` lines, in order) as a transcript and let YouTube auto-sync it.
 - Shorts that point here: the five parts in `film.py` CLIPS (`python3 film.py shorts`).

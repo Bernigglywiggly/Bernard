@@ -421,6 +421,10 @@ LONGFORM = {
                   "The channel's look at full length: AI pictures and big numbers turned into characters, typed labels, "
                   "live captions and a house score. Past 8 minutes, YouTube allows mid-roll ads.",
                   "The Curve's third long-form film, ready to upload"),
+    "ep01": ("How They Profit · Film 01", "How_They_Profit_01_Banks_With_Wings", "ch2",
+             "The channel's ledger look: every figure on screen with its source, a calm narrator and an original score. "
+             "The last 15 seconds are the end card, clear for YouTube's end-screen elements.",
+             "How They Profit's first film, ready to upload"),
 }
 
 
@@ -568,6 +572,7 @@ if __name__ == "__main__":
      "lf01": lambda: longform_page("lf01_escape"), "lf01_shorts": lambda: film_shorts_page("lf01_escape"),
      "lf02": lambda: longform_page("lf02_price"), "lf02_shorts": lambda: film_shorts_page("lf02_price"),
      "lf03": lambda: longform_page("lf03_held"), "lf03_shorts": lambda: film_shorts_page("lf03_held"),
+     "htp01": lambda: longform_page("ep01"),
      # EP04-EP08 with their shorts are ~310 MiB, over one artifact version's 256 MiB: two pages, in upload order
      "films1": lambda: new(("ep05", "ep08", "ep04"), "films1", "The Curve: EP05, EP08, EP04"),
      "films2": lambda: new(("ep06", "ep07"), "films2", "The Curve: EP06, EP07")}[sys.argv[1]]()

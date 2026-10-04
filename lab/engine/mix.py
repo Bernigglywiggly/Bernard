@@ -136,7 +136,7 @@ def build(build_dir, bed_path, out_name="mix.wav", extra=(), deafen_at=(), music
     ev = json.load(open(os.path.join(build_dir, "events.json")))
     n = int(ev["dur"] * SR)
     fit = lambda y: np.pad(y, ((0, max(0, n - len(y))), (0, 0)))[:n]
-    george = meta.get("engine") == "eleven"
+    george = meta.get("engine") in ("eleven", "higgsfield")      # a real narrator; never the local stand-in voice
     voice = fit(deess(fx.load(os.path.join(build_dir, "voice.wav")))) if george else np.zeros((n, 2), np.float32)
     music = fit(fx.load(bed_path))
     music = music * fx.db(-19.0 - fx.lufs(music)) * (1.0 if music_on else 0.0)

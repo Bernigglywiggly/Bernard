@@ -3,8 +3,26 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 4 Oct 2026 (afternoon UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "4 Oct"
+Updated 4 Oct 2026 (evening UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "4 Oct"
 just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "2 Oct" and the rest.**
+
+## 4 Oct, evening: 30 of 59 uploads live and scheduled (Route Z works)
+- **Zapier YouTube connections** (one per channel; pass as `connection_id`): The Curve `02f9e902-69d2-8a12-af4b-b4f4cd146eeb`
+  (@thecurve.explained), Money Crimes `02ce9a67-dbe7-8998-8da5-26da5fc35e26` (@moneycrimesfiles), How They Profit
+  `02d0de21-a222-85ea-aea9-5b0920dd34b0` (@howtheyprofithq). `02587cb2-...` is the personal account with no channel: ignore.
+- **Done:** indices 0-21, 24, 25, 27, 28, 30, 31, 34, 38 of `channel/uploads.json` (ids in `channel/uploads.done.json`), all
+  private with `publishAt`, synthetic-media flag on, not for kids. Channel descriptions, keywords, language and country set
+  via `channels.update`.
+- **Daily cap:** each channel refuses new uploads after about 10 a day (`uploadLimitExceeded`) until it is phone-verified.
+  **Left (29):** 22, 23, 26, 29, 32, 33, 35-37, 39-58 (earliest publishes 11 Oct). Re-run on 5 Oct after ~21:10 UTC: open
+  sessions with the Zapier raw request (body from `zp.py`-style `yu.body_for(yu.entry_from(plan[i], "channel"))`), then
+  `youtube_upload.py put SESSION FILE --manifest channel/uploads.json`. How They Profit has 14 left, so it needs two days
+  unless verified.
+- **Thumbnails** fail with "doesn't have permissions to upload and set custom video thumbnails" until each channel is
+  verified by phone (www.youtube.com/verify). Then: `youtube_upload.py zapier-thumb VIDEO_ID thumb.jpg`, open it through
+  Zapier, `put` the image.
+- **Only the user can:** rename "MoneyCrimesFiles" to Money Crimes and "HowTheyProfitHQ" to How They Profit (the API
+  ignores titles), profile pictures, phone verification.
 
 ## 4 Oct, afternoon: "we go full in with yt" (the user, at work: do everything possible, list what only they can do)
 - **Go-live page** (the user's checklist, on their phone): https://claude.ai/artifact/SGW5GGULhWhdNZxaBtMNSm. Four steps

@@ -1,141 +1,206 @@
-# X notes: Claude Code, motion design and AI video (public X, 4 Oct 2026)
+# X research: Claude Code, motion design, AI video, YouTube growth (4 Oct 2026)
 
-**Scope.** This pass covers **public X posts only**, read through the vxtwitter mirror from the cloud session. The
-user's own bookmarks and likes need their logged-in Chrome (a local `claude --chrome` session; X redirects to login
-from the cloud), so they aren't here yet. X Articles (long posts) only show their preview without a login; where the
-full text matters, its linked repo or gist was read instead. Builds on `motion_playbook.md` (public web research); this
-file adds what's new from X. Like counts are as of 4 Oct.
+**How this was made.** The user's X account is new, so this is a search of public X rather than their bookmarks:
+about 25 searches of x.com through web search, then the full text of each post, its thread and its X Article read through
+the fxtwitter/vxtwitter mirrors (`api.fxtwitter.com/<user>/status/<id>` returns long X Articles in full, which X itself
+hides behind a login). Repos and gists linked from the posts were read directly. Like and view counts are as of 4 Oct.
+The rules distilled from this live in `CRAFT.md` (repo root); the review process is the `film-critic` skill. Public
+web research is in `motion_playbook.md`.
 
-## 1. The workflows the best results share
+## 1. How the viral "one prompt" Opus 5.5 videos were really made
 
-**Reference → style guide → layout library → scenes** (the setup that fixes "out of the box isn't good enough"):
-> "Each project you work on gets a new folder. Within each folder, create a folder for reference frames... tell Claude
-> to reference those images, and build out your style guide... I normally have 10-15 different layouts per brand.
-> These are reusable scenes... 'Create a scene that references this part of the script "..." and use the "x" scene
-> layout.'" — @JJEnglert, 16 Apr 2026, https://x.com/JJEnglert/status/2044889694949826821
+Opus 5.5 shipped 22 Sep 2026; within days the feed filled with code-rendered showreels, launch films and history films.
+The consensus after people reverse-engineered them: **the prompt is 10% of the video, the harness is 90%.**
 
-**Dump context, storyboard, animate** (HyperFrames; "20M+ views from videos made using HyperFrames"): storyboard as one
-still per scene in a contact-sheet grid before any motion; then edit conversationally (one intro took 20 minutes and 26
-prompts) rather than regenerating. Lint and validate before rendering: `npx hyperframes lint`, `npx hyperframes
-validate` (missing assets, runtime errors, contrast). — @jake11moran, 23 Sep 2026,
-https://x.com/jake11moran/status/2102878602316652828; @petergyang (generate a `frame.md`, storyboards), 20 Jun 2026,
-https://x.com/petergyang/status/2068333151186022460
+- **@0xMovez, "How to build a motion design studio with Opus 5.5 (full course)"** (7.6k likes, 1.8M views):
+  https://x.com/0xMovez/status/2104216919033192746
+  - Opus writes a program, not a video: one `window.seek(t)` function paints any frame; headless Chromium screenshots
+    it and ffmpeg encodes. Deterministic: no timers, no CSS transitions, seeded noise (mulberry32), never Math.random.
+  - The one-liner ("make a dynamic 15-second motion graphics video that shows what an incredible motion designer you
+    are, like it's your showreel for a résumé. go all out.") works because "showreel" is a genre with known rules.
+    But hundreds of identical prompts made reels that rhyme ("brief contagion"). It tests the engine, never the idea.
+  - **Reference beats description.** Without one, Opus defaults to: centred text, gradient background, everything
+    fading in. Feed a frame, a video (ask it to extract frames and describe pacing shot by shot first) or a library
+    (have it write `style_guide.md` from your images).
+  - **Write the state list, not the vibe.** The most-bookmarked prompt of the week was an XML spec: `<inputs>`,
+    `<direction>` (with a Banned list), `<structure>` (beat by beat on a 120 BPM grid), `<build>`, `<gotchas>`, `<start>`.
+  - **Closed-form springs** keep motion a pure function of time. When a value changes target several times, add one
+    spring per change (`track(t, keys)`), don't restart it. Tab indicators: leading edge stiffer than trailing.
+  - **Motion blur**: render 4 subframes per frame and blend with ffmpeg `tmix`; 8 for anything moving over 15 px a frame.
+  - **Sound**: measure a supplied track with librosa (beats → state changes, downbeats → big moments, onset peaks →
+    SFX), or synthesise score and SFX in code on the same timeline.
+  - **Critique loop**: "Open contact.png, strip.png and phone.png. Be a harsh motion director, not a proud author. Score
+    1-10: hook in first 2s, readability at phone size, motion quality, variety, composition, brand accuracy, sound sync.
+    List the 3 biggest problems with timestamps... Fix them, re-render only the affected seconds." Repeat until all 8+.
+  - QA commands: contact sheet `fps=2,scale=270:-1,tile=6x5`; a 12-frame strip around fast moments; a phone test at
+    360 px; a loop check with `-stream_loop 1`; a determinism check (render frame 300 twice, compare hashes).
+  - **Director's brief for long pieces** (Donald's 9,500-character brief became a 142-second music video with 2.1M views
+    after a 12-hour unattended run): logline, references, tools and keys, character bible, beat sheet with a payoff every
+    3-5 s, on-screen text rules, workflow gates (plan → rig → stills → animatic → full pass → polish → audio →
+    render), critique loop, deliverables. Have Opus write `ANIMATION_GUIDE.md` first so parallel subagents code in one
+    style (John Heibel's PDoom repo, 1.1k stars).
+  - Generate-then-trace: Seedance renders base shots with real physics, then Opus redraws the whole film in code on top.
+  - Repos: JohnHeibel/PDoomVideo, JohnHeibel/ClaudeAnimationBase, buildwithhanif/claude-animation-skill,
+    WinterArc21/Battle-of-Austerlitz-Film, guanmo-ai/awesome-ai-motion (464 works, 69 public prompts),
+    athemeroy/awesome-opus-5-5-videos (1,500-post dataset with production paths).
+- **@rexan_wong, the six steps behind the good ones** (6.8k likes): https://x.com/rexan_wong/status/2103707054108299437
+  1) 1-2 reference videos (whatships.com), name the style; 2) install HyperFrames or Remotion; 3) real UI components
+  (21st.dev) instead of invented ones; 4) dump brand, real screenshots, reference and a braindump, and ask for **3
+  storyboard variants**; 5) one still per scene before anything moves; 6) director notes in camera words ("slow every
+  zoom to 0.7x", "hard cut here", "push in on the button"). "Everyone has the same model. The context you give it is
+  what makes it look pro."
+- **@neil_xbt, marketing version** (cost reality: a 12-hour run cost one builder $2,175 of tokens; a gated 26-second
+  trailer cost about $1.18): https://x.com/neil_xbt/status/2103862582041874854. Effort: medium for storyboard and
+  stills, max only for the final pass. Banned list: centred headline over gradient, everything fading in, particle
+  bursts, glows, lens flares, stock 3D blobs, italic accent words, numbered 01/02/03 labels, dead time over 0.5 s,
+  any claim not in the facts list. Vertical cuts: nothing under 28 px, terminal lines under 46 columns, keep clear of
+  platform UI top and bottom.
+- **@RoundtableSpace / @everestchris6, "the only prompt you need"** (2.2k likes) and its kit **motion-video-kit**
+  (vendored here as `.claude/skills/business-motion-film`, MIT): https://x.com/RoundtableSpace/status/2105209785335373948.
+  The prompt runs unattended ("i'm away and won't answer questions"), with a facts file as "the only source for any
+  number, name or claim", eight motion principles, a storyboard of 12-15 compositions per 30 s, a critic loop where
+  "the builder never judges its own work", and a measured quality bar. The 8 principles: foreground becomes the
+  transition; one object carries the story; one lead move with layered smaller ones; speed always changes; cuts only
+  when size, direction and subject match; every action produces a visible result; type is motion; vary the scale.
+- **Remotion's own prompt history** for its launch animation: about 30 tiny prompts, one change each, with exact
+  numbers ("rotate Y from 20 to -20 degrees", "one line every 50ms", "fast spring, but no bounce").
+  https://gist.github.com/JonnyBurger/5b801182176f1b76447901fbeb5a84ac
+- **@deedydas, Opus video workflow** (2k likes): https://x.com/deedydas/status/2104957026199900220. Use Claude Code,
+  not the app; animatic before the full video; a critic skill that screenshots and transcribes; **"Explicitly tell it
+  to avoid Claudisms like short punchy sentences and a lot of numbers. 'Narrate like a university professor.'"**
 
-**Why most Opus motion videos look the same:** "centered text on a gradient, everything fading in, a logo at the end.
-They don't give it a reference..." (7.6k likes; full article behind login). — @0xMovez, 27 Sep 2026,
-https://x.com/0xMovez/status/2104216919033192746
+## 2. Remotion or HyperFrames
 
-**Remotion's own prompt history** (how their viral launch animation was made; read in full from the gist): many tiny
-plain-English steps, each one change: "make a new composition 1280x1000px of a macos terminal window... light theme" →
-"remove the background and the font size needs to be a lot bigger" → "add a typewriter animation" → "refactor the
-cursor into its own component; keep it blinking while there is no typing" → "make a master composition and add the
-current one as a sequence" → "add a 3d rotation, like 20 degrees of x and y" → "add the transform to the sequence, not
-the terminal itself" → "over the total length, slowly rotate Y from 20 to -20 degrees" → "run the command yourself, look
-at the output and add it as terminal content" → "stagger the lines, one every 50ms" → "make the terminal jump in from
-the bottom using a fast spring animation, but no bounce" → "add a scale animation, ease-out, half a second" → "scale
-only from 0.9 to 1" → "the rotation is a bit much, only 10 to -10" → "flip the terminal towards the camera by rotating
-the X axis" → "render it". Lesson: exact numbers, one change per prompt, use real output as content. — @Remotion,
-20 Jan 2026 (3.6k likes), https://x.com/Remotion/status/2013628043105890779,
-https://gist.github.com/JonnyBurger/5b801182176f1b76447901fbeb5a84ac
+- **@mvanhorn's /last30days verdict** (Reddit, X, YouTube, TikTok corpus): https://x.com/mvanhorn/status/2063624356484501832.
+  Both win, for different jobs. HyperFrames for one-off launch reels, captioned clips and explainers (agents write
+  HTML natively); Remotion for templated series, 100 variants and code-reviewed work. One-shot is a myth on both:
+  "~100 prompts, not 1. the first few iterations all looked like a powerpoint." The AI tell is pacing: "They only know
+  constant easing, no tension relief, no sharp cuts, no short fades."
+  - Remotion moves: install skills first; first prompt is structure (5-scene script) not visuals; numbers not
+    adjectives (80px, not "large"); budget 3-100 prompts; **constants-first code** (every string, colour and timing
+    at the top); state the rhythm (where the sharp cut goes, which beat holds).
+  - HyperFrames moves: warm-start with material (URL, PDF, CSV, changelog); pacing dialect (fast 0.2 s energy, medium
+    0.4 s professional, slow 0.6 s luxury, very slow 1-2 s cinematic); edit like a conversation; **templatise or burn
+    tokens** (build once, swap variables); `npx hyperframes lint` and `validate` before rendering; pin fonts (Inter,
+    JetBrains Mono).
+- **@jake11moran (20M+ views from HyperFrames videos)**: https://x.com/jake11moran/status/2102878602316652828. Context
+  dump → ask for 5 story angles → scene table → contact sheet of stills → animate. Real UI only (`npx hyperframes
+  capture <url>`), rebuild just the part the story touches about 1.8x bigger. 380+ catalog blocks; library of launch
+  videos at github.com/heygen-com/hyperframes-launches.
+- **@JJEnglert**: per brand, a reference-frames folder → style guide → 10-15 reusable scene layouts, then "create a
+  scene for this script line using layout X". https://x.com/JJEnglert/status/2044889694949826821
 
-**The one-line showreel prompt** (4k likes; shows how far the model goes with an open brief):
-> "make a dynamic 15-second motion graphics video that shows what an incredible motion designer you are, like it's
-> your showreel for a résumé. go all out." — @ajith_io, 25 Sep 2026, https://x.com/ajith_io/status/2103449416325890146
+## 3. Long-form history and explainer films in code (closest to Money Crimes and The Curve)
 
-## 2. The full pipeline posts (most useful for us)
+- **Battle of Austerlitz (5:01)**, every frame WebGL, every sound synthesised, narration offline (Kokoro TTS):
+  https://github.com/WinterArc21/Battle-of-Austerlitz-Film. Real terrain (SRTM tiles), the real sun azimuth, campaign
+  map from Natural Earth data, **sound cues derived from the picture** (each gun heard late by distance, panned),
+  narration timed beat by beat, painterly Kuwahara filter, canvas weave, grain, 2.35:1 letterbox.
+- **History films reportedly made with Fable 5.5 or Opus 5.5** (creator reports, unverified; see the dataset's
+  3 Oct update): human progress as one day; 40,000 years of art with one cat; the atomic bomb in 3D (custom renderer,
+  synthesised score); the Titanic in one HTML file (Fable 5.1 selected); a Zheng He voyage film from a reused "film
+  skill" (55 minutes, 220k output tokens, 2:05). Recurring devices: **one persistent character carried through eras;
+  one continuous camera move as the spine.**
+  https://github.com/athemeroy/awesome-opus-5-5-videos/blob/main/docs/claude55-update-2026-10-03.md
+- **@Mrooo03, a week of Claude video** (Chinese; the most honest field report):
+  https://x.com/Mrooo03/status/2105195950142566783
+  - Pixel style, flat cut-out and science explainers: 1-2 hours each, publishable. 2D characters: rigging looks like
+    puppets; better to have Claude make a motion reference and let Kling's motion control animate the drawing. 3D
+    realistic people: 40+ hours for 20 seconds, not worth starting with.
+  - Explainer recipe: fix the narration first (15 lines), voice it line by line, trim silences, build a millisecond
+    timeline, then animate to it. The first version "looked empty: things small, lots of white space, like a set of
+    diagrams". The redo added **foreground, mid and background layers and camera moves in every scene, kept characters
+    in the same screen position across transitions, and made big words appear when the narrator hits the keyword.**
+  - Check frames from the exported MP4, not the preview (a `visibility: visible` bug only showed in the render).
+    Frame 0 was black, so the auto thumbnail was black: start with a designed frame.
+  - Music made separately, mixed with automatic ducking under the voice, so changing music needs no re-render.
 
-**Opus 5.5 video workflow after 10+ hours of testing** (2k likes):
-- Use Claude Code, not the app. One OpenRouter key for image, video and audio models.
-- Make a TTS skill that puts emotion into the voice. Motion graphics with Manim, HyperFrames or Motion Canvas.
-- Keyframes with an image model, then Veo 3.1 / Seedance 2.5 for motion ("Seedance does better with motion shots").
-  Reference images for consistency; **generate an animatic before the full video**.
-- A script-planning skill; assemble with OpenTimelineIO; ffmpeg for the rest.
-- **"Explicitly tell it to avoid Claudisms like short punchy sentences and a lot of numbers. 'Narrate like a university
-  professor.'"**
-- yt-dlp search to pull Creative Commons clips; ElevenLabs music; a caption skill with word-level timing from ASR.
-- **A critic skill that takes screenshots and uses transcription to validate audio and video.**
-- Prompt = what you want + aspect ratio + length + style.
-— @deedydas, 29 Sep 2026, https://x.com/deedydas/status/2104957026199900220
+## 4. Editing and pipelines
 
-**"The only prompt you need for high-end motion graphics"** (2.2k likes): studies reference videos frame by frame,
-storyboards first, builds in GSAP + Three.js, renders and critiques every section, checks motion, contrast, audio and
-transitions, iterates to a quality bar. It points to **motion-video-kit** (MIT), now vendored in this repo as the skill
-`.claude/skills/business-motion-film` (see section 4). — @RoundtableSpace, 30 Sep 2026,
-https://x.com/RoundtableSpace/status/2105209785335373948
+- **video-use** (browser-use, open source): the LLM never watches the video, it reads it. Word-level transcript
+  (ElevenLabs Scribe) packed into about 12 KB of text, plus a filmstrip-plus-waveform image only at decision points.
+  Cuts on word boundaries, 30 ms audio fades at every cut, self-evaluates every cut boundary of the render, max 3
+  fix rounds. https://github.com/browser-use/video-use
+- **@shivsakhuja, a 45-second explainer ad in 30 minutes** with a skill per step: /plan concept brief → /prepare
+  moodboard (character refs, voice samples, storyboard grid) → /generate keyframes → /animate (2-4 preview scenes
+  first, then all) → /stitch (ffmpeg, music, SFX, captions, sync to VO) → /watch (review as an editor and as the target
+  viewer) → **/learn (extract learnings and update the skills: "a closed loop system")**.
+  https://x.com/shivsakhuja/status/2059086745506046329
+- Thariq (Claude Code team): Remotion for UI-style videos, Manim for maths and science; his Remotion CLAUDE.md:
+  https://gist.github.com/ThariqS/3d446e7c7aa9eb94f468194deb73028f
 
-**Automated editing skill:** understand the video → split into scenes → use supplied assets or propose motion graphics
-per scene → **wait for approval** → generate → assemble. — @ayushunleashed, 6 Mar 2026,
-https://x.com/ayushunleashed/status/2029747545132486985
+## 5. AI pictures and clips (Higgsfield, Veo, Seedance, Kling)
 
-**Voice and music in Remotion:** `npx skills add resemble-ai/remotion-resemble-skill`, then "Create a promo video for
-[site] with voice over and background music. Make it in the style of [style]." — @obaid, 26 Jan 2026,
-https://x.com/obaid/status/2015708306996883612
+- **Veo 3.1** (@AllaAisling): shot type and subject, one main action, one camera move, named light sources ("amber fire
+  glow", "red emergency strobes"), and **end with the exact final pose** so the next shot starts there. Repeat
+  character details every 2-3 prompts. 60-90 words (under 40 is vague, over 120 confuses priorities). 1-2 actions per
+  8-second clip. https://x.com/AllaAisling/status/1980012830507291110
+- **Seedance 2.0 film workflow** (@PJaccetturo's breakdown of a 20-minute Higgsfield film made in a 4-day sprint):
+  character sheets (front, back, close-ups, props, emotional states); one master location image spun into five angles
+  with Nano Banana Pro as the spatial reference, plus "destroyed" and "night" variants; low-poly Blender blocking with
+  coloured shapes, then **Claude writes the Seedance prompts from the spatial maps**; context-first prompting
+  (establish environment, then close-ups); keep 3-4 of every 20 generations; **one sentence describing each voice in
+  every prompt** for voice consistency; pauses between dialogue lines (crowded dialogue speeds up and looks like
+  slop); grain, halation and glow in the grade. https://x.com/PJaccetturo/status/2045180152121098407
+- Seedance prompt layout (@maarcoofdezz): a [VISUAL] block (camera body, lens, grade, grain, "no CGI"), the action as
+  a camera-directed sequence, an [AUDIO] block. https://x.com/maarcoofdezz/status/2078162454744346803
+- Nano Banana Pro "cinematic grid" (@techhalla, 1.75M views): generate a grid of angles from one image, then "extract
+  the still x.y". https://x.com/techhalla/status/1994541592729063699
+- Kling: in image-to-video keep the prompt short; start and end frames do the work. Kling's motion control animates
+  a drawing from a reference video.
 
-**HyperFrames install:** `npx skills add heygen-com/hyperframes` (HeyGen built its launch video with it in Claude
-Code; 8.3k likes). Sonnet was enough for a simple PDF-to-video. — @heygen, 16 Apr 2026,
-https://x.com/heygen/status/2044827454460871072; @omixam, https://x.com/omixam/status/2045395315197432133
+## 6. YouTube
 
-**A sceptical counterpoint:** a week of Claude video across pixel MVs, flat animation, science shorts, 2D and 3D
-characters: strong for small promos and explainers, overhyped elsewhere, and no substitute for Seedance-style
-generated animation. — @Mrooo03, 30 Sep 2026, https://x.com/Mrooo03/status/2105195950142566783
+- **"Inauthentic content"** (formerly "repetitious content", renamed July 2025): mass-produced template videos,
+  slideshows with AI narration, interchangeable faceless uploads. A 588k-subscriber channel making $30k a month was
+  demonetised in early 2026 with its reach intact. "YouTube is not banning AI. They are banning the absence of a
+  creator." Real creators are also being caught by automated enforcement. https://x.com/natecurtiss_yt/status/2056778156808528063
+- **Titles**: across 300k viral videos, 6 words or fewer win; about 30 characters gave median views around 65k, about
+  70 characters around 40k. Let the thumbnail carry the context. https://x.com/Richard_YTS/status/1997702737056674171
+- **Thumbnail text**: 3 words ideal, never over 6; complement the title, don't repeat it; maximum contrast, black
+  outline on busy backgrounds, sans serif. https://x.com/theJosephBlaze/status/1716141371747107071
+- CTR naturally falls as impressions grow (YouTube Liaison). Spend longer on title and thumbnail (MagnatesMedia).
+- **Shorts**: the decision happens in about 1 s; the first frame is the hook; cut any logo or name card from the first
+  2-3 s (a 10-20 point gain in average view duration); end feeding back into the start so it loops; 70-85% retention is
+  strong.
+- Outlier research: find small channels with views far above their subscriber count, then study structure, not
+  content (our vidIQ outliers tool does this).
 
-## 3. AI video prompts (Higgsfield / Seedance)
+## 7. Claude Code itself
 
-A strong Seedance 2.0 structure (tagged sections, one continuous shot, audio spelled out). Excerpt:
-> "[VISUAL] Shot on ARRI Alexa 35 with anamorphic lenses, cinematic film look, rich color science, organic highlight
-> rolloff, subtle halation, fine film grain, practical in-camera lighting only, real haze, atmospheric particles,
-> natural lens flares, no CGI. ... handheld camera following from behind at hip height with a slight Dutch angle. ...
-> The camera arcs around into a low-angle medium close-up ... pushes past his shoulder to reveal ... tracks forward ...
-> tilts up to his face ... Slow-motion emphasizes the reveal ... before returning to real time.
-> [AUDIO] No music. SFX only. Distant city ambience, warm wind, footsteps, breathing, a faint harmonic hum ..."
-— @maarcoofdezz, 17 Jul 2026, https://x.com/maarcoofdezz/status/2078162454744346803
+- Skills load about 100 tokens each until needed, so dozens can be installed. "The best skill you'll ever install is
+  one you build yourself: if you keep re-explaining a workflow, that's a skill waiting to be made" (@om_patel5).
+- Worth having (@nateherk, 400 hours with clients): skill-creator (`/plugin install skill-creator@claude-plugins-official`),
+  Superpowers (plan, test, two-stage self-review), GSD (a fresh subagent per task against context rot), /review,
+  Context Mode (keeps raw tool output out of context; rebuilds state after compaction).
+  https://x.com/nateherk/status/2050941624578920535
+- Subagents: one orchestrator owns a written plan; scope each subagent to one job; cap concurrency
+  (`CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`, default 20; `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`, up to 3); flagship
+  model on lead and reviewer, cheaper models on volume work. https://x.com/PrajwalTomar_/status/2084959382341837042
+- **Dynamic Workflows** (shipped 28 May 2026; trigger word `ultracode` or "make a workflow that..."): Claude writes a
+  JavaScript harness with agent(), parallel() and pipeline(). It fixes three failure modes: agentic laziness, self-
+  preferential bias (a builder judging its own work) and goal drift. The pattern for us is **adversarial
+  verification**: every factual claim gets its own verifier that knows only the rubric and the source.
+  https://x.com/0xCodez/status/2062127385923776831
+- Effort: Opus 5.5 defaults to medium (matching Opus 5 at high); xhigh for new films; max for a flagship's final pass.
 
-Pattern: a [VISUAL] look block (camera body, lens, grade, grain, "no CGI"), then the action as a camera-directed
-sequence, then an [AUDIO] block. Reference-image prompts add "preserve facial features, hairstyle, clothing, body
-proportions... throughout" for consistency (@HaniaAi12, https://x.com/HaniaAi12/status/2105845066514436402).
+## 8. What changed in this repo because of this
 
-## 4. Vendored: motion-video-kit (`.claude/skills/business-motion-film`)
+- `CRAFT.md`: house rules every session reads (authorship against the inauthentic-content policy, narration without
+  Claudisms, banned looks, process gates, facts checking, packaging, AI-video prompting, sound). It ends with a
+  "Learned on our films" log, and CLAUDE.md points to it.
+- `.claude/skills/film-critic`: measure (motion_report.py, loudness, sheets, strips, phone test, frame 0), then a
+  fresh critic subagent scores seven areas, and a new critic verifies the fixes. First measurements on our films are
+  logged in CRAFT.md.
+- `.claude/skills/business-motion-film`: the vendored motion-video-kit (critic prompts, motion grammar, quality bar,
+  scripts).
 
-Made from 28 professional launch films and dozens of critique rounds. Built for business commercials, but its core
-transfers to our explainers:
-- **The Gauntlet:** the builder never grades its own work; a fresh critic sees only the render; the next critic checks
-  the last list item by item (FIXED / PARTLY / STILL PRESENT). Ready-made critic prompts are in
-  `references/critic-prompts.md`.
-- **Six motion rules:** the foreground becomes the transition; one persistent actor across shots; density from a
-  hierarchy of moves; change speed (land, then exit fast); hard cuts are fine when scale and direction match;
-  show cause → effect.
-- **Pacing numbers:** frame 0 is a finished composition; no motionless stretch over about 0.6 s; the lead subject fills
-  60–85% of the frame; 12–15 compositions per 30 s; slow 3–5% push on reading holds.
-- **Measured bar:** `scripts/frozen-time.sh` (frozen stretches), `scripts/loudness.sh` (−14 LUFS punchy, about −16
-  calm, true peak ≤ −1 dBFS), and contact sheets.
-- **Real client rejections:** "too basic: image, then video, then text"; "so much space is being wasted"; "some parts
-  linger too long"; "the first image looks too dark".
+## 9. Still to try
 
-## 5. Channel growth claims (treat with care)
-
-- "Claude runs 12 YouTube channels... $100,000 a month" (@woody_research) and "replaced a $4,000/month payroll with
-  Claude Code + Higgsfield" (@zeuuss_01): engagement-bait. There's no evidence in the posts, so they're not useful as plans.
-- The useful part of the faceless-channel posts: one operator can run script, edit, motion and thumbnails in one
-  agent session. That's already our setup.
-- Resource list: Refero Styles and awesome-design-md (DESIGN.md files for 74 brands, MIT) give Claude a written style
-  to follow. — @Voxyz_ai, https://x.com/Voxyz_ai/status/2104284941437784139
-
-## 6. What to try in this studio (new beyond motion_playbook.md)
-
-1. **Critic pass on every film before upload.** Run the vendored full-film critic prompt as a fresh subagent on the
-   render plus contact sheets, and add `frozen-time.sh` to the QA. Our engines measure loudness already; frozen time
-   they don't.
-2. **"Narrate like a university professor" against Claudisms** in all three channels' script prompts: fewer
-   staccato lines and fewer stacked numbers per sentence. Check against our current HTP scripts.
-3. **Per-channel layout library** (JJ Englert): 10–15 named scene layouts per brand in `lab/motion` (stat slam, versus
-   split, map route, timeline, document zoom, quote card). Then "use layout X for this script line".
-4. **Animatic first** for anything Higgsfield-generated: keyframes plus timing as a rough cut before spending video credits.
-5. **Seedance prompts in [VISUAL]/[AUDIO] blocks** for Money Crimes reconstructions (period look, handheld, SFX only).
-6. **Foreground fly-through transitions** (a stat or headline scales through the camera into the next scene) to
-   replace the plain cuts between HTP chapters.
-7. **Test HyperFrames** (`npx skills add heygen-com/hyperframes`) on one Curve cold open against the Remotion version.
-
-## Still to do (needs the user's Chrome)
-
-Bookmarks, likes and followed accounts: run locally with `claude --chrome` (Claude in Chrome extension, logged into
-X), read-only, and append to this file under "From your bookmarks".
+1. Run film-critic on the next How They Profit film and fix its stillness (continuous drift and object motion
+   inside each beat).
+2. Vary HTP's structure from film 05 (PayPal) onwards: no fixed seven chapters.
+3. A remotion-maps or Austerlitz-style terrain map sequence for a Money Crimes film.
+4. Test HyperFrames (`npx skills add heygen-com/hyperframes`) on a Curve cold open against our Pillow engine.
+5. Add a -1 dBFS true-peak limiter to the master step of all three engines.
+6. A "/learn" step after each film: critic findings go into CRAFT.md (now a standing rule).

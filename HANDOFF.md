@@ -29,11 +29,14 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
   post needs the user to submit TikTok's form in a widget-capable Claude client, and the API can't schedule. So TikTok
   runs from the **TikTok Queue page** https://claude.ai/artifact/2wDDNCdD65rqGrmLyQCTSW (27 Shorts for 5-14 Oct, 18:00 UK,
   compressed under 15 MB each): the user schedules them weekly in TikTok Studio (web). Make the next page for 15-24 Oct.
-- **Motion research:** `lab/research/motion_playbook.md` (Claude Code + Remotion/HyperFrames techniques, spring presets,
-  prompt templates, AI-video camera prompts, retention rules, next experiments). `lab/research/x_notes.md`: public X pass done
-  (full Remotion prompt history, Opus video pipeline tips, Seedance prompt structure); the user's bookmarks/likes still need
-  a local `claude --chrome` run. Vendored skill `.claude/skills/business-motion-film` (motion-video-kit, MIT): critic loop,
-  motion rules, frozen-time and loudness scripts.
+- **Research → upgrades (4 Oct, night):** the user's X account is new, so `lab/research/x_notes.md` is a public-X sweep
+  (about 25 searches; full X Articles read through `api.fxtwitter.com/<user>/status/<id>`, which X itself hides behind
+  a login). Distilled into **`CRAFT.md`** (house rules every session reads; CLAUDE.md points to it) and the
+  **`film-critic` skill** (`.claude/skills/film-critic`: motion_report.py + loudness + sheets, then a fresh critic
+  subagent, then a verifying critic). First findings: HTP Amazon is near-still 70% of the time; masters peak at -0.2 dBTP
+  (target -1). The biggest strategic risk found: YouTube's "inauthentic content" demonetisations of templated AI
+  channels, so vary HTP's fixed seven-chapter structure from film 05. `.claude/skills/business-motion-film` is the
+  vendored motion-video-kit (MIT). `lab/research/motion_playbook.md` is the public-web pass.
 - **Only the user can:** rename "MoneyCrimesFiles" to Money Crimes and "HowTheyProfitHQ" to How They Profit (the API
   ignores titles), profile pictures, phone verification.
 

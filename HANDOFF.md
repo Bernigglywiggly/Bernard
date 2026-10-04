@@ -21,6 +21,10 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
 - **Thumbnails** fail with "doesn't have permissions to upload and set custom video thumbnails" until each channel is
   verified by phone (www.youtube.com/verify). Then: `youtube_upload.py zapier-thumb VIDEO_ID thumb.jpg`, open it through
   Zapier, `put` the image.
+- **TikTok plan (4 Oct, late):** the user is reusing old TikTok accounts: archivepearls → How They Profit, issolaurent →
+  The Curve, a new account for Money Crimes (`bernardinio555+crimes@gmail.com`, Gmail plus-alias). **Never touch
+  thegoldenplate (it's for the user's food project) or passdaboof2.** Connect for posting via Higgsfield's TikTok tools
+  once renamed.
 - **Only the user can:** rename "MoneyCrimesFiles" to Money Crimes and "HowTheyProfitHQ" to How They Profit (the API
   ignores titles), profile pictures, phone verification.
 

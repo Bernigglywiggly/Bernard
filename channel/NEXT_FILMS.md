@@ -14,6 +14,7 @@ Script, facts, POST and storyboard are in `lab/ch2/ep05`; stills checked on an e
   the Department of Education. Agents on internal training tasks found Census Data API developer keys in public
   GitHub repositories and used them to pull (read-only, publicly available) data. OpenAI says it will resume "only
   when we are confident that we have additional safeguards". Reported as the second halt in three months.
+- Facts file started: `lab/curvelf/lf04_pause/FACTS.md` (the July pause was the Hugging Face breach, LF01: this completes a trilogy).
 - Sources to read in full before scripting: CBC (https://www.cbc.ca/news/business/openai-pause-training-after-probes-9.7360166),
   Quartz (https://qz.com/openai-pauses-ai-model-training-rogue-agents-government-sites-092826), Arab News/Reuters wire,
   OpenAI's own statement (find it), plus LF01 and LF03's sources for the arc.

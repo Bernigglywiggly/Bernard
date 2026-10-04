@@ -408,6 +408,38 @@ def person(c, cx, cy, s, a=1.0, col=PAPER):
     c.drawPath(p, L.stroke(col, 2.2, a))
 
 
+def server(c, cx, cy, s, a=1.0, col=PAPER, lit=1.0):
+    """A server rack: a tall cabinet of four units, each with a vent and a brass light (lit 0..1 turns them on)."""
+    p = L.stroke(col, 2.2, a)
+    c.drawRect(skia.Rect.MakeXYWH(cx - 0.5 * s, cy - s, s, 2 * s), p)
+    for i in range(4):
+        y = cy - 0.9 * s + i * 0.47 * s
+        c.drawRect(skia.Rect.MakeXYWH(cx - 0.42 * s, y, 0.84 * s, 0.38 * s), L.stroke(col, 1.4, 0.7 * a))
+        for j in range(4):
+            c.drawLine(cx - 0.32 * s + j * 0.1 * s, y + 0.1 * s, cx - 0.32 * s + j * 0.1 * s, y + 0.28 * s,
+                       L.stroke(col, 1.2, 0.5 * a))
+        c.drawCircle(cx + 0.28 * s, y + 0.19 * s, 0.045 * s, L.fill(BRASS, a * min(1.0, max(0.15, lit * 4 - i))))
+
+
+def parcel(c, cx, cy, s, a=1.0, col=PAPER):
+    """A cardboard parcel at an angle: the box, its top flaps' seam, a strip of tape and a label."""
+    p = L.stroke(col, 2.2, a)
+    front = skia.Path()
+    front.moveTo(cx - s, cy - 0.35 * s); front.lineTo(cx + 0.3 * s, cy - 0.35 * s); front.lineTo(cx + 0.3 * s, cy + 0.6 * s)
+    front.lineTo(cx - s, cy + 0.6 * s); front.close()
+    c.drawPath(front, p)
+    top = skia.Path()
+    top.moveTo(cx - s, cy - 0.35 * s); top.lineTo(cx - 0.6 * s, cy - 0.7 * s); top.lineTo(cx + 0.7 * s, cy - 0.7 * s)
+    top.lineTo(cx + 0.3 * s, cy - 0.35 * s)
+    c.drawPath(top, p)
+    side = skia.Path()
+    side.moveTo(cx + 0.3 * s, cy + 0.6 * s); side.lineTo(cx + 0.7 * s, cy + 0.25 * s); side.lineTo(cx + 0.7 * s, cy - 0.7 * s)
+    c.drawPath(side, p)
+    c.drawLine(cx - 0.8 * s, cy - 0.525 * s, cx + 0.5 * s, cy - 0.525 * s, L.stroke(BRASS, 2.0, 0.9 * a))
+    c.drawLine(cx - 0.35 * s, cy - 0.35 * s, cx - 0.35 * s, cy + 0.05 * s, L.stroke(BRASS, 2.0, 0.9 * a))
+    c.drawRect(skia.Rect.MakeXYWH(cx - 0.85 * s, cy + 0.15 * s, 0.45 * s, 0.28 * s), L.stroke(col, 1.4, 0.8 * a))
+
+
 # ---------------------------------------------------------------- layouts shared by the films
 def bars(c, b, rows, at, x0=300, y0=360, w=1300, h=90, gap=150, vmax=None):
     """Horizontal bars to compare amounts: rows = [(label, value, display, colour, time or None)]."""

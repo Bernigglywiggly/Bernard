@@ -435,6 +435,10 @@ LONGFORM = {
              "The channel's ledger look: every figure on screen with its source, a calm narrator and an original score. "
              "The closing seconds are the end card, clear for YouTube's end-screen elements.",
              "How They Profit's third film, ready to upload"),
+    "ep04": ("How They Profit · Film 04", "How_They_Profit_04_The_Cloud_Behind_the_Cart", "ch2",
+             "The channel's ledger look: every figure on screen with its source, a calm narrator and an original score. "
+             "The closing seconds are the end card, clear for YouTube's end-screen elements.",
+             "How They Profit's fourth film, ready to upload"),
 }
 
 
@@ -619,6 +623,8 @@ if __name__ == "__main__":
      "htp01": lambda: longform_page("ep01"), "htp01_shorts": lambda: ch2_shorts_page("ep01"),
      "htp02": lambda: longform_page("ep02"),
      "htp02_shorts": lambda: ch2_shorts_page("ep02", "The Landlord in the Golden Arches", "Golden Arches: Shorts"),
+     "htp04": lambda: longform_page("ep04"),
+     "htp04_shorts": lambda: ch2_shorts_page("ep04", "The Cloud Behind the Cart", "Cloud Behind the Cart: Shorts"),
      "htp03": lambda: longform_page("ep03"), "htp03_shorts": lambda: ch2_shorts_page("ep03", "The $65 Membership", "Costco Membership: Shorts"),
      "ponzi": lambda: longform_page("ponzi"), "ponzi_shorts": lambda: film_shorts_page("ponzi"),
      # EP04-EP08 with their shorts are ~310 MiB, over one artifact version's 256 MiB: two pages, in upload order

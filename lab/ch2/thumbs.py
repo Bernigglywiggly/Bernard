@@ -92,7 +92,24 @@ def ep03_b(c):
     headline(c, ["THE CARD", "IS THE", "PRODUCT"], y0=330, size=160, cols=[PAPER, PAPER, BRASS])
 
 
-FILMS = [("ep01_a", ep01_a), ("ep01_b", ep01_b), ("ep02_a", ep02_a), ("ep02_b", ep02_b), ("ep03_a", ep03_a), ("ep03_b", ep03_b)]
+def ep04_a(c):
+    ground(c)
+    headline(c, ["AMAZON'S"], y0=290, size=110, cols=[PAPER])
+    headline(c, ["57%", "OF PROFIT ISN'T", "THE SHOP"], y0=470, size=150, cols=[BRASS, PAPER, PAPER])
+    for i in range(3):
+        kit.server(c, 1420 + i * 170, 600, 150, 1.0, PAPER, 1.0)
+
+
+def ep04_b(c):
+    ground(c)
+    headline(c, ["THE SHOPS: 6¢", "THE CLOUD: 35¢"], y0=380, size=150, cols=[PAPER, BRASS])
+    L.text(c, "OPERATING PROFIT ON EVERY $1 OF SALES · AMAZON · 2025", 84, 700, L.font(L.MONO_M, 34), L.fill(MUTED), track=0.14)
+    kit.parcel(c, 1560, 330, 130, 1.0)
+    kit.server(c, 1600, 700, 150, 1.0, BRASS, 1.0)
+
+
+FILMS = [("ep01_a", ep01_a), ("ep01_b", ep01_b), ("ep02_a", ep02_a), ("ep02_b", ep02_b), ("ep03_a", ep03_a), ("ep03_b", ep03_b),
+         ("ep04_a", ep04_a), ("ep04_b", ep04_b)]
 
 
 def main():
@@ -104,7 +121,7 @@ def main():
         p = os.path.join(OUT, name + ".jpg")
         s.makeImageSnapshot().save(p, skia.kJPEG, 92)
         paths.append(p)
-    sheet = skia.Surface(W, H * 3 // 2)
+    sheet = skia.Surface(W, H // 2 * ((len(paths) + 1) // 2))
     sc = sheet.getCanvas()
     sc.clear(L.col("#000000"))
     for i, p in enumerate(paths):

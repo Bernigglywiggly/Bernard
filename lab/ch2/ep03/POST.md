@@ -1,6 +1,6 @@
 # How They Profit · Film 03 · The $65 Membership
 
-Long-form, 16:9, LENGTH. Upload file: `out/ep03_1080p.mp4` (the downloads page has it). Thumbnails: `out/thumb_a.jpg` (lead)
+Long-form, 16:9, 7:20. Upload file: `out/ep03_1080p.mp4` (the downloads page has it). Thumbnails: `out/thumb_a.jpg` (lead)
 and `thumb_b.jpg` (put both in YouTube's Test & Compare; made by `lab/ch2/thumbs.py`).
 
 ## Title
@@ -39,6 +39,6 @@ Is your membership worth it, or do you go for the hot dog? Every source is in th
 
 - **Altered or synthetic content: Yes** (AI narration; nothing presented as real footage).
 - Category: Education. Not made for kids.
-- End screen: from ENDSCREEN (the last CARD seconds are the end card, made by `lab/ch2/endcard.py`). Add "best for viewer" plus Subscribe.
+- End screen: from 7:05 (the last 15 seconds are the end card, made by `lab/ch2/endcard.py`). Add "best for viewer" plus Subscribe.
 - Captions: upload `build/lines.json` turned into an SRT, or paste the script (`script.py` lines, in order) as a transcript and let YouTube auto-sync it.
 - Shorts that point here: the five parts in `film.py` CLIPS (`python3 film.py shorts`).

@@ -13,8 +13,8 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
 - **Nothing was connected on 4 Oct:** vidIQ is signed in (to a different Google account from the user's Claude email)
   with no channel; Zapier had no YouTube connection (its YouTube actions are now enabled: find_video, get_report,
   add_video_to_playlist, upload_video, upload_video_thumbnail, _zap_raw_request); Higgsfield has no TikTok account.
-- **Upload plan:** `channel/uploads.json` from `lab/tools/plan_uploads.py` (SLOTS = the 5-18 Oct running order: 10 films,
-  41 Shorts; every slot checked against YouTube's limits; the season descriptions are cut to fit 5,000 bytes and no
+- **Upload plan:** `channel/uploads.json` from `lab/tools/plan_uploads.py` (SLOTS = the 5-24 Oct running order: 11 films,
+  48 Shorts; every slot checked against YouTube's limits; the season descriptions are cut to fit 5,000 bytes and no
   longer claim the single episodes are on the channel). Route: `UPLOADING.md`, "Route Z" (Zapier opens a resumable
   session, `youtube_upload.py put` streams the file from here). GitHub releases are refused in this session type, so
   public hosting of the 247 MB films isn't available; googleapis.com is reachable for the direct stream.
@@ -22,7 +22,7 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
   https://claude.ai/artifact/XBJfqmdXyYQvA9syVe35YZ, Shorts https://claude.ai/artifact/PwxaSffr73rhXBtRf7qdNH), Costco
   7:20 (page https://claude.ai/artifact/CRxtMNF8YCwFzcrqz7rWQQ, Shorts https://claude.ai/artifact/PktR2P3q7bUJ9kenGWn4cX). **Film 04, The Cloud Behind the Cart** (Amazon: AWS 18%
   of 2025 sales, 57% of operating profit; sourced from the FY2025 8-K) written, storyboarded (`kit.server`, `kit.parcel`),
-  voiced and rendered the same day (7:15, page https://claude.ai/artifact/Ci2aP8aP3TuBbnNuN1TLva), for Tue 20 Oct. Next HTP topics: the trend board (Canada's tariff, PayPal). `engine/voice_hf.py` now squeezes any quiet
+  voiced and rendered the same day (7:15, page https://claude.ai/artifact/Ci2aP8aP3TuBbnNuN1TLva, Shorts https://claude.ai/artifact/HbiwF8JbBuYzAcKVowLLEV), for Tue 20 Oct. Next HTP topics: the trend board (Canada's tariff, PayPal). `engine/voice_hf.py` now squeezes any quiet
   stretch inside a line over 1.3 s down to 0.8 s (Seed Audio paused 8 s mid-line in McDonald's take 4);
   `ch2/endcard.py` stretches the card up to 20 s when that carries a film past 8:00 (mid-rolls).
 - **Money Crimes:** three more Ponzi Shorts (zarossi, barron, end) for 16-18 Oct; the Ponzi Shorts page has all 7.

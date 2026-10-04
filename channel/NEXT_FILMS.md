@@ -25,6 +25,7 @@ Script, facts, POST and storyboard are in `lab/ch2/ep05`; stills checked on an e
   the API → the alarm), then zoom out.
 
 ## Money Crimes 03 · "The Salad Oil Swindle" (1963)
+Facts file started: `lab/longform/saladoil/FACTS.md` (secondary sources; get Miller's book and the primary records first).
 - The story: Tino De Angelis's Allied Crude Vegetable Oil borrowed against salad oil it didn't have. Tanks were mostly
   water with oil floating on top (oil floats); hidden compartments; the same oil moved between connected tanks to be
   counted twice; finally forged warehouse receipts. American Express Field Warehousing certified the inventory but kept

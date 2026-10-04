@@ -38,6 +38,11 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
     but still the old names (MoneyCrimesFiles, HowTheyProfitHQ) and no banners; all three `longUploadsStatus: eligible`
     (not yet phone-verified).
   - **TikTok Queue page 2** (15-24 Oct, 21 Shorts): https://claude.ai/artifact/XH21v2cnsnRv9oVCUoB1rM
+  - **Next films, briefed** (`channel/NEXT_FILMS.md`): The Curve LF04 "The Pause" (script v0 + FACTS in
+    `lab/curvelf/lf04_pause`; OpenAI's second training pause, the first being LF01's Hugging Face breach: a trilogy),
+    Money Crimes 03 "The Salad Oil Swindle" (`lab/longform/saladoil/FACTS.md`), HTP 06 Visa (`lab/ch2/ep06/FACTS.md`).
+  - **Audio fix**: finals peaked at -0.2 dBTP. `ch2/endcard.py` now encodes AAC once; `longform/doc.py` and
+    `shorts/reel.py` master at -1.5 dBTP. Applies to new renders only (the scheduled uploads keep the old masters).
   - **HTP film 05 (PayPal) v0**: `lab/ch2/ep05/script.py` (new "follow one $100" structure per CRAFT §1) and
     `FACTS.md` (FY2025 10-K/8-K; fee rates checked 5 Oct; Venmo revenue as reported), `POST.md` (titles, description,
     5 Shorts with different shapes), `scenes.py` (the $100 note as the persistent object; the $1.85 sliver grows into

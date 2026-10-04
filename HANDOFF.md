@@ -21,9 +21,12 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
 - **Money Crimes film 02** (`lab/longform/ponzi`, The Original Ponzi Scheme, 13:27): sourced script (Wikipedia,
   Smithsonian, Boston.com), Imogen voice (12 takes; take 10 re-voiced, take 11 in halves `vo_11a/b` joined by
   `fetch.py`), 55 stills + 6 clips (Ponzi never drawn face-on; his face is the real 1920 photographs in `src/arch`),
-  jazz score, `film.py` timeline, 3 thumbnails, POST.md, `shorts.py` (line, machine, run, today). Rendering:
-  `python3 ../doc.py ponzi render`; then `python3 ../vertical.py <abs path to ponzi>` and
-  `cd lab && python3 pack/build.py ponzi | ponzi_shorts`, publish in ≤55 MiB batches.
+  jazz score, `film.py` timeline, 3 thumbnails, POST.md, `shorts.py` (line, machine, run, today). Done 4 Oct: film
+  https://claude.ai/artifact/XaV9wVSnvrJzPA2HEV7Ngj, Shorts https://claude.ai/artifact/3dQC4krr7X2cssm2o6CcJK. Three
+  more Lustig Shorts (bribe, certificate, rules) were added to https://claude.ai/artifact/2A19evbUw3Lsz8Kftyj2d1.
+- Disk: the session's write allowance filled up mid-render on 4 Oct (the render died with ENOSPC). Rebuildable scraps
+  were deleted (published page copies in `lab/pack/build`, render segments and HQ masters of finished films); keep an
+  eye on `df -h /home/user` before long renders, and delete `lab/pack/build/<page>` once a page is published.
 - Credits: about 135 Higgsfield credits left after the Ponzi pictures (4 Oct). LF04/LF05 need about 130 each.
 - Still open with the user: the AI influencer persona, the services offer, and whether LF03's topic is OK.
 

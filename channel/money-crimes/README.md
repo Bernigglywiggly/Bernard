@@ -10,7 +10,7 @@ photoreal reenactments, labelled "AI reenactment" on screen and with YouTube's s
 | # | Title | Status | Files |
 |---|---|---|---|
 | 01 | The Man Who Sold the Eiffel Tower (And Conned Al Capone) · 14:56 | Made 3 Oct · [page](https://claude.ai/artifact/B4DiPy9qxvVKaZgucpYK3Q) | `lab/longform/lustig/` (`script.py`, `film.py`, `POST.md`, `out/`) |
-| 02 | The Original Ponzi Scheme · 13:27 | Voiced, pictured and scored 4 Oct; rendering (pages next) | `lab/longform/ponzi/` (about 200 credits: 55 stills, 6 clips, 12 takes) |
+| 02 | The Original Ponzi Scheme · 13:27 | Made 4 Oct · [page](https://claude.ai/artifact/XaV9wVSnvrJzPA2HEV7Ngj) · [4 Shorts](https://claude.ai/artifact/3dQC4krr7X2cssm2o6CcJK) | `lab/longform/ponzi/` (about 200 credits: 55 stills, 6 clips, 12 takes) |
 
 ## How a long-form film is made (`lab/longform`, about 320 Higgsfield credits for film 01)
 1. Script: ~2,000 words in 11-12 chapters, each ending on a question (`script.py`); facts from Wikipedia plus two other

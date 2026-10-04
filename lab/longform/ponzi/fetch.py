@@ -15,3 +15,17 @@ for manifest, folder in (("assets_ai.json", os.path.join("src", "ai")), ("assets
             os.makedirs(os.path.dirname(dest), exist_ok=True)
             open(dest, "wb").write(urllib.request.urlopen(url, timeout=300).read())
             print(dest)
+
+# A take the voice model would only read in two halves (vo_XXa + vo_XXb) is joined into vo_XX.wav, half a second apart.
+import glob  # noqa: E402
+
+import numpy as np  # noqa: E402
+import soundfile as sf  # noqa: E402
+
+for a in sorted(glob.glob(os.path.join(HERE, "src", "vo_[0-9][0-9]a.wav"))):
+    b, out = a[:-5] + "b.wav", a[:-5] + ".wav"
+    if os.path.exists(b) and not os.path.exists(out):
+        ya, sr = sf.read(a, dtype="float32", always_2d=True)
+        yb, _ = sf.read(b, dtype="float32", always_2d=True)
+        sf.write(out, np.concatenate([ya, np.zeros((int(0.5 * sr), ya.shape[1]), np.float32), yb]), sr)
+        print(out, "joined")

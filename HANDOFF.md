@@ -20,7 +20,7 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
   public hosting of the 247 MB films isn't available; googleapis.com is reachable for the direct stream.
 - **How They Profit films 02 and 03** voiced with Sterling (about 36 credits each): McDonald's 8:01 (page
   https://claude.ai/artifact/XBJfqmdXyYQvA9syVe35YZ, Shorts https://claude.ai/artifact/PwxaSffr73rhXBtRf7qdNH), Costco
-  7:20 (page https://claude.ai/artifact/CRxtMNF8YCwFzcrqz7rWQQ). **Film 04, The Cloud Behind the Cart** (Amazon: AWS 18%
+  7:20 (page https://claude.ai/artifact/CRxtMNF8YCwFzcrqz7rWQQ, Shorts https://claude.ai/artifact/PktR2P3q7bUJ9kenGWn4cX). **Film 04, The Cloud Behind the Cart** (Amazon: AWS 18%
   of 2025 sales, 57% of operating profit; sourced from the FY2025 8-K) written, storyboarded (`kit.server`, `kit.parcel`),
   voiced and rendered the same day, for Tue 20 Oct. Next HTP topics: the trend board (Canada's tariff, PayPal). `engine/voice_hf.py` now squeezes any quiet
   stretch inside a line over 1.3 s down to 0.8 s (Seed Audio paused 8 s mid-line in McDonald's take 4);

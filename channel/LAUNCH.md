@@ -7,9 +7,9 @@ of them on every social platform with content made for each.
 ## The three
 | Channel | What | Ready now | Kit |
 |---|---|---|---|
-| **The Curve** | The hidden mechanism behind AI headlines | LF01, LF02, Season One and Two; LF03 rendering; 6 Shorts + EP Shorts | `channel/the-curve/brand/` |
+| **The Curve** | The hidden mechanism behind AI headlines | LF01, LF02, LF03, Season One and Two; 9 Shorts + EP Shorts | `channel/the-curve/brand/` |
 | **Money Crimes** | The greatest cons, frauds and heists | Film 01 (Lustig, 14:56) + 4 Shorts | `channel/money-crimes/brand/` |
-| **How They Profit** (was The Margin) | How big companies really make money | 3 films scripted and storyboarded; film 01 in production this week | `channel/channel2/brand/` |
+| **How They Profit** (was The Margin) | How big companies really make money | Film 01 (Delta's miles) voiced 3 Oct (Sterling) and rendering; films 02-03 scripted | `channel/channel2/brand/` |
 Each `brand/` folder has the profile picture, YouTube banner, watermark, X and Facebook covers and `SETUP.md` (names,
 handles, descriptions, bios for every platform, keywords, upload defaults, playlists).
 

@@ -17,6 +17,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 ## Upload pages (claude.ai, private to the user)
 - The Curve LF01 The AI That Escaped: https://claude.ai/artifact/NC5QdLVBaBEMemcsaHLPYM (shorts: https://claude.ai/artifact/SXhZZiVogib4tEhsbR7tNs)
 - The Curve LF02 The Price of Thinking: https://claude.ai/artifact/JgAJPt8FQ45dJivdXQy7f9 (shorts: https://claude.ai/artifact/4LqUZUotHs9EEvvuj1gr7J)
+- The Curve LF03 Too Dangerous to Release: https://claude.ai/artifact/8sMGypbJ7BnKu8Zvkxqikr (shorts: https://claude.ai/artifact/ErxxqE9BmuSbxpFZgJbzBy)
 - EP05, EP08, EP04: https://claude.ai/artifact/V2Tz5smkY5w1uzroS85YzB
 - EP06, EP07: https://claude.ai/artifact/PvzxoDzvJVvKdoXTD6S6pU
 - EP09-EP12: https://claude.ai/artifact/XuGVGPichLJ6oR9TnUS1sq

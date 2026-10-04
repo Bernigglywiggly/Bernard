@@ -119,8 +119,9 @@ def make(film_dir, key):
             c.drawString(ln, VW / 2 - w / 2 + 3, y + 5, head, reel.P(0xCC000000, 1.0,
                          MaskFilter=skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 10)))
             c.drawString(ln, VW / 2 - w / 2, y, head, reel.P(accent if i == len(lines) - 1 else reel.WHITE))
-        for cap in caps:                                     # kinetic captions under the picture
-            reel.draw_caption(c, cap, t, y=fy + fh + 190)
+        live = [cap for cap in caps if cap["t0"] <= t < cap["t1"]]   # kinetic captions under the picture: only the
+        if live:                                                        # newest group (two overlapped for a frame)
+            reel.draw_caption(c, live[-1], t, y=fy + fh + 190)
         if t >= t1 - t0:                                    # the end card: the full film
             a = reel.ease((t - (t1 - t0)) / 0.4)
             c.drawRect(skia.Rect.MakeWH(VW, VH), reel.P(0xFF000000, 0.75 * a))

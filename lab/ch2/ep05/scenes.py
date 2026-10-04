@@ -127,9 +127,9 @@ def tap(c, b):
     k = b.k(b.t0, 0.5)
     press = ease(seg(b.t, b.w("tap", "tapping") - 0.1, b.w("tap", "tapping") + 0.15)) * (
         1 - ease(seg(b.t, b.w("tap", "tapping") + 0.3, b.w("tap", "tapping") + 0.6)))
-    button(c, CX, 420, 520, k, press)
-    person(c, CX - 420, 470, 130, b.k(b.t0 + 0.2, 0.5))
-    typed(c, b, "$100", CX, 640, b.w("tap", "hundred") - 0.3, 40, PAPER)
+    L.text(c, "$100", CX, 300, L.font(L.SERIF_B, 150), L.fill(PAPER, k), "center")      # frame 0 is the hook: the sum
+    button(c, CX, 520, 900, k, press)                                                    # and the button, big
+    typed(c, b, "ONE TAP", CX, 720, b.w("tap", "tapping") - 0.2, 28, BRASS)
 
 
 def trail(c, b):
@@ -211,7 +211,7 @@ def close(c, b):
 
 BOARD = Board([
     # 0 · ONE HUNDRED DOLLARS
-    Beat("tap", tap),
+    Beat(-0.6, tap),                    # from frame 0: the first frame is the hook and the fallback thumbnail (CRAFT §3)
     Beat("trail", trail),
     Beat("scale", lambda c, b: number(c, b, "$1.79 trillion", "PAID THROUGH PAYPAL · 2025", src=FY)),
     Beat("small", lambda c, b: statement(c, b, ["What it keeps from each payment is tiny.",

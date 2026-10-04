@@ -22,6 +22,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 - How They Profit film 01 Banks With Wings (7:40): https://claude.ai/artifact/FDHDmXNLLTdKuFpbVmMrbp (5 Shorts: https://claude.ai/artifact/NjP42S3wuphcMSXHhi2BqQ)
 - How They Profit film 02 The Landlord in the Golden Arches (8:01): https://claude.ai/artifact/XBJfqmdXyYQvA9syVe35YZ (5 Shorts: https://claude.ai/artifact/PwxaSffr73rhXBtRf7qdNH)
 - How They Profit film 03 The $65 Membership (7:20): https://claude.ai/artifact/CRxtMNF8YCwFzcrqz7rWQQ (5 Shorts: https://claude.ai/artifact/PktR2P3q7bUJ9kenGWn4cX)
+- How They Profit film 04 The Cloud Behind the Cart (Amazon, 7:15): https://claude.ai/artifact/Ci2aP8aP3TuBbnNuN1TLva
 - Money Crimes film 02 The Original Ponzi Scheme (13:27): https://claude.ai/artifact/XaV9wVSnvrJzPA2HEV7Ngj (7 Shorts: https://claude.ai/artifact/3dQC4krr7X2cssm2o6CcJK)
 - Money Crimes film 01 Shorts (now 6: Capone, escape, money box, bribe, death certificate, commandments): https://claude.ai/artifact/2A19evbUw3Lsz8Kftyj2d1
 - EP05, EP08, EP04: https://claude.ai/artifact/V2Tz5smkY5w1uzroS85YzB

@@ -29,6 +29,9 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
   post needs the user to submit TikTok's form in a widget-capable Claude client, and the API can't schedule. So TikTok
   runs from the **TikTok Queue page** https://claude.ai/artifact/2wDDNCdD65rqGrmLyQCTSW (27 Shorts for 5-14 Oct, 18:00 UK,
   compressed under 15 MB each): the user schedules them weekly in TikTok Studio (web). Make the next page for 15-24 Oct.
+- **Motion research:** `lab/research/motion_playbook.md` (Claude Code + Remotion/HyperFrames techniques, spring presets,
+  prompt templates, AI-video camera prompts, retention rules, next experiments). The user's X likes/bookmarks pass runs
+  locally with Claude in Chrome and lands in `lab/research/x_notes.md`.
 - **Only the user can:** rename "MoneyCrimesFiles" to Money Crimes and "HowTheyProfitHQ" to How They Profit (the API
   ignores titles), profile pictures, phone verification.
 

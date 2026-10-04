@@ -19,11 +19,18 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
   session, `youtube_upload.py put` streams the file from here). GitHub releases are refused in this session type, so
   public hosting of the 247 MB films isn't available; googleapis.com is reachable for the direct stream.
 - **How They Profit films 02 and 03** voiced with Sterling (about 36 credits each): McDonald's 8:01 (page
-  https://claude.ai/artifact/XBJfqmdXyYQvA9syVe35YZ), Costco rendering. `engine/voice_hf.py` now squeezes any quiet
+  https://claude.ai/artifact/XBJfqmdXyYQvA9syVe35YZ, Shorts https://claude.ai/artifact/PwxaSffr73rhXBtRf7qdNH), Costco
+  7:20 (page https://claude.ai/artifact/CRxtMNF8YCwFzcrqz7rWQQ). **Film 04, The Cloud Behind the Cart** (Amazon: AWS 18%
+  of 2025 sales, 57% of operating profit; sourced from the FY2025 8-K) written, storyboarded (`kit.server`, `kit.parcel`),
+  voiced and rendered the same day, for Tue 20 Oct. Next HTP topics: the trend board (Canada's tariff, PayPal). `engine/voice_hf.py` now squeezes any quiet
   stretch inside a line over 1.3 s down to 0.8 s (Seed Audio paused 8 s mid-line in McDonald's take 4);
   `ch2/endcard.py` stretches the card up to 20 s when that carries a film past 8:00 (mid-rolls).
-- **Money Crimes:** three more Ponzi Shorts (zarossi, barron, end) for 16-18 Oct.
-- Credits: about 62 Higgsfield left (4 Oct afternoon). vidIQ: 21 (resets 5 Oct to 150).
+- **Money Crimes:** three more Ponzi Shorts (zarossi, barron, end) for 16-18 Oct; the Ponzi Shorts page has all 7.
+- **Season pages** republished: their descriptions were over YouTube's 5,000-byte limit (now ~4.5 KB, via
+  `pack/build.py season_description()`), and they now follow the go-live plan (the EPs go out only inside the seasons).
+- Credits: about 27 Higgsfield left after film 04 (keep for retakes). Week 3+ for The Curve and Money Crimes needs a
+  top-up: a Curve long film is ~130 credits, a Money Crimes film ~200, a How They Profit film ~36. vidIQ: 21 (resets 5 Oct
+  to 150; title scoring costs 5 a title, so score the week's titles then).
 
 ## 4 Oct, early hours: LF03 shipped, How They Profit film 01 shipped, Money Crimes film 02 (Ponzi) rendering
 - **The Curve LF03** (Too Dangerous to Release, 11:57): re-rendered after fixing 15 caption errors (names like Amodei,

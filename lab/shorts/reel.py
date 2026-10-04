@@ -257,7 +257,7 @@ def mix(voice_path, bed_path, words_, sfx, dur, out_wav, voice_db=-16.0, bed_db=
         if j > i:
             fxs[i:j] += x[: j - i] * fx.db(g - 20.0)
     fade = np.clip((dur - np.arange(n) / fx.SR) / 0.6, 0, 1)[:, None]
-    out = fx.master((voice + bed + fxs) * fade, target=-14.0, ceiling_db=-1.0)
+    out = fx.master((voice + bed + fxs) * fade, target=-14.0, ceiling_db=-1.5)   # -1.5 dBTP: room for the AAC encode
     fx.save(out_wav, out, mp3=False)
     return out_wav
 

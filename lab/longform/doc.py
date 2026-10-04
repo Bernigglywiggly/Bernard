@@ -892,7 +892,7 @@ def mix(film, out_wav, voice_db=-16.0, bed_db=-25.0, duck_db=-9.0):
         if j > i:
             fxs[i:j] += x[: j - i] * fx.db(g - 20.0)
     end = np.clip((film.END - np.arange(n) / fx.SR) / 2.0, 0, 1)[:, None]
-    out = fx.master((voice + bed + fxs) * end, target=-14.0, ceiling_db=-1.0)
+    out = fx.master((voice + bed + fxs) * end, target=-14.0, ceiling_db=-1.5)   # -1.5 dBTP: AAC adds ~0.8 dB (finals were -0.2)
     fx.save(out_wav, out, mp3=False)
     return out_wav
 

@@ -75,8 +75,18 @@ SLOTS = [
     ("2026-10-18", "13:00", "curve", "ep_short", "ep05:japan"),
     ("2026-10-18", "13:00", "crimes", "short", "longform/ponzi:end"),
     ("2026-10-18", "13:00", "profit", "htp_short", "ch2/ep03:part3"),
+    # week 3 so far: How They Profit only (the other channels need new films: see HANDOFF.md, credits)
+    ("2026-10-19", "13:00", "profit", "htp_short", "ch2/ep03:part4"),
+    ("2026-10-20", "13:00", "profit", "htp_short", "ch2/ep03:part5"),
+    ("2026-10-20", "17:00", "profit", "film", "ch2/ep04"),
+    ("2026-10-20", "20:00", "profit", "htp_short", "ch2/ep04:part1"),
+    ("2026-10-21", "13:00", "profit", "htp_short", "ch2/ep04:part2"),
+    ("2026-10-22", "13:00", "profit", "htp_short", "ch2/ep04:part3"),
+    ("2026-10-23", "13:00", "profit", "htp_short", "ch2/ep04:part4"),
+    ("2026-10-24", "13:00", "profit", "htp_short", "ch2/ep04:part5"),
 ]
-HTP_FILMS = {"ep01": "Banks With Wings", "ep02": "The Landlord in the Golden Arches", "ep03": "The $65 Membership"}
+HTP_FILMS = {"ep01": "Banks With Wings", "ep02": "The Landlord in the Golden Arches", "ep03": "The $65 Membership",
+             "ep04": "The Cloud Behind the Cart"}
 
 
 def utc(day, hhmm):
@@ -114,29 +124,6 @@ def film(src, ch):
                 pinned=section(post, "Pinned comment"))
 
 
-def compact(desc, limit=4900):
-    """A season description inside YouTube's 5,000 bytes: the intro and chapters as they are, each source bullet cut
-    to a short lead plus its citation (the full lists stay in the repo's description.txt)."""
-    if len(desc.encode()) <= limit:
-        return desc
-    head, sep, rest = desc.partition("Sources, film by film")
-    for width in (150, 120, 100, 80, 60):
-        out = []
-        for ln in rest.splitlines():
-            m = re.search(r"\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*$", ln) if ln.startswith("• ") else None
-            if ln.startswith("• ") and len(ln) > width:
-                cite = f" ({m.group(1)})" if m else ""
-                body = ln[2:m.start() if m else len(ln)].strip()
-                keep = max(24, width - len(cite))
-                body = body if len(body) <= keep else body[:keep].rsplit(" ", 1)[0].rstrip(",;:") + "…"
-                ln = "• " + body + cite
-            out.append(ln)
-        d = head + sep + "\n".join(out)
-        if len(d.encode()) <= limit:
-            return d
-    return d
-
-
 def season(src, ch):
     n = src.split(":")[1]
     os.environ["SEASON"] = n
@@ -146,10 +133,7 @@ def season(src, ch):
     import build as pk
     cfg = pk.SEASON_PAGES[n]
     meta = json.load(open(os.path.join(b, f"season{n}.json")))
-    desc = open(os.path.join(b, "description.txt")).read().strip()
-    desc = re.sub(r"The (five|four) films, one by one, are on the channel\. A new film every two days, shorts daily\.",
-                  "New films every week, Shorts every day.", desc)          # the episodes go out as the seasons only
-    desc = compact(desc)
+    desc = pk.season_description(open(os.path.join(b, "description.txt")).read())
     return dict(file=rel(os.path.join(b, f"the_curve_season{n}.mp4")),
                 title=cfg["titles"][0].format(mins=int(meta["duration"] // 60)), description=desc,
                 tags=CHANNEL_TAGS[ch] + ["documentary", "ai explained"], thumbnail=rel(os.path.join(b, "thumb_a.jpg")),

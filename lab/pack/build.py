@@ -12,6 +12,7 @@ Publish: the Artifact tool with file_path=<dir>/index.html and files from files.
 import html
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -299,14 +300,45 @@ SEASON_PAGES = {
                       "5 Hidden Forces Behind the AI Boom | The Curve: Season One",
                       "Why AI Is Leaving the Planet, and 4 Other Things the Headlines Miss"],
               pinned="Which of the five surprised you most? Every figure is sourced in the description.",
-              first="Post the five films on their days"),
+              first="Post the five films on their days", when="Sun 11 Oct, 17:00 UK"),
     "2": dict(name="The Curve: Season Two", films="four", day="Tue 20 Oct, the day after EP12",
               titles=["How AI Really Works: 4 Hidden Mechanisms ({mins}-Minute Documentary)",
                       "Why AI Makes Things Up, and 3 Other Things the Headlines Miss",
                       "Robots, Rules, Wrong Answers and 16-Hour Tasks | The Curve: Season Two"],
               pinned="Which of the four changed your mind? Every figure is sourced in the description.",
-              first="Post EP09 to EP12 on their days (13 to 19 Oct)"),
+              first="Post EP09 to EP12 on their days (13 to 19 Oct)", when="Wed 14 Oct, 17:00 UK"),
 }
+
+
+def compact(desc, limit=4900):
+    """A season description inside YouTube's 5,000 bytes: the intro and chapters as they are, each source bullet cut
+    to a short lead plus its citation (the full lists stay in the repo's description.txt)."""
+    if len(desc.encode()) <= limit:
+        return desc
+    head, sep, rest = desc.partition("Sources, film by film")
+    for width in (150, 120, 100, 80, 60):
+        out = []
+        for ln in rest.splitlines():
+            m = re.search(r"\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*$", ln) if ln.startswith("• ") else None
+            if ln.startswith("• ") and len(ln) > width:
+                cite = f" ({m.group(1)})" if m else ""
+                body = ln[2:m.start() if m else len(ln)].strip()
+                keep = max(24, width - len(cite))
+                body = body if len(body) <= keep else body[:keep].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+                ln = "• " + body + cite
+            out.append(ln)
+        d = head + sep + "\n".join(out)
+        if len(d.encode()) <= limit:
+            return d
+    return d
+
+
+def season_description(text):
+    """A season's description as it goes on YouTube: the episodes go out only inside the seasons, and the whole text
+    fits YouTube's 5,000 bytes."""
+    text = re.sub(r"The (five|four) films, one by one, are on the channel\. A new film every two days, shorts daily\.",
+                  "New films every week, Shorts every day.", text.strip())
+    return compact(text)
 
 
 def season2():
@@ -339,7 +371,7 @@ def season1(n="1"):
         meta=f"The {cfg['films']} films as one documentary, with chapters. Long videos earn watch hours and, past 8 minutes, mid-roll ads.",
         video=v, thumbs=thumbs,
         titles=[t_.format(mins=mins) for t_ in cfg["titles"]],
-        description=open(os.path.join(s1.BUILD, "description.txt")).read(),
+        description=season_description(open(os.path.join(s1.BUILD, "description.txt")).read()),
         pinned=cfg["pinned"],
         steps=STEPS_FILM[:2] + ["Playlists: Every film. Category: Education. Chapters come from the timestamps in the description.",
                                 "Monetisation (once the channel is in the Partner Programme): put mid-roll ads at the chapter breaks.",
@@ -347,8 +379,9 @@ def season1(n="1"):
         shorts=[])
     lede = (f"Season {word} is the {cfg['films']} films in one {mins}-minute documentary, ready to upload: the 1080p file, three "
             "thumbnails, titles, a description with chapters and every source, and the settings to tick.")
-    order = [("1", cfg["first"]), ("2", f"Then Season {word}, {cfg['day']}"),
-             ("3", "Shorts keep running daily, pointing back to the films")]
+    order = [("1", f"Upload Season {word} on {cfg['when']}: the episodes go out only inside it (go-live plan)"),
+             ("2", "The episodes' standalone Shorts run daily around it"),
+             ("3", "Pin the comment, and add the end screen")]
     write(f"season{n}", cfg["name"], lede, order, [item], extra)
 
 

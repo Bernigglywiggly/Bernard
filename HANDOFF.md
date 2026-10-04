@@ -16,8 +16,8 @@ just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "
   preset **Sterling** (`dc382508-c8bd-443c-8cb2-46e57b8d2e6f`, speech_rate -10), one take per floor, cut back into
   lines at real silences by the new `lab/engine/voice_hf.py` (takes in `lab/ch2/ep01/hf_voice.json`).
   `engine/mix.py` accepts engine="higgsfield" (the guard still keeps the local stand-in voice out). New
-  `lab/ch2/endcard.py` adds a 15 s end card. Page: https://claude.ai/artifact/FDHDmXNLLTdKuFpbVmMrbp. Its Shorts
-  (`film.py shorts`, the 5 CLIPS parts) are not cut yet. Films 02-03 (McDonald's, Costco) voice the same way.
+  `lab/ch2/endcard.py` adds a 15 s end card. Page: https://claude.ai/artifact/FDHDmXNLLTdKuFpbVmMrbp; its 5 Shorts:
+  https://claude.ai/artifact/NjP42S3wuphcMSXHhi2BqQ. Films 02-03 (McDonald's, Costco) voice the same way.
 - **Money Crimes film 02** (`lab/longform/ponzi`, The Original Ponzi Scheme, 13:27): sourced script (Wikipedia,
   Smithsonian, Boston.com), Imogen voice (12 takes; take 10 re-voiced, take 11 in halves `vo_11a/b` joined by
   `fetch.py`), 55 stills + 6 clips (Ponzi never drawn face-on; his face is the real 1920 photographs in `src/arch`),

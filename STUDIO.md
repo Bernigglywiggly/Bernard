@@ -18,7 +18,7 @@ The plan, the rules and the money: `channel/CHANNELS.md`. Daily trend ideas: `ch
 - The Curve LF01 The AI That Escaped: https://claude.ai/artifact/NC5QdLVBaBEMemcsaHLPYM (shorts: https://claude.ai/artifact/SXhZZiVogib4tEhsbR7tNs)
 - The Curve LF02 The Price of Thinking: https://claude.ai/artifact/JgAJPt8FQ45dJivdXQy7f9 (shorts: https://claude.ai/artifact/4LqUZUotHs9EEvvuj1gr7J)
 - The Curve LF03 Too Dangerous to Release: https://claude.ai/artifact/8sMGypbJ7BnKu8Zvkxqikr (shorts: https://claude.ai/artifact/ErxxqE9BmuSbxpFZgJbzBy)
-- How They Profit film 01 Banks With Wings (7:40): https://claude.ai/artifact/FDHDmXNLLTdKuFpbVmMrbp
+- How They Profit film 01 Banks With Wings (7:40): https://claude.ai/artifact/FDHDmXNLLTdKuFpbVmMrbp (5 Shorts: https://claude.ai/artifact/NjP42S3wuphcMSXHhi2BqQ)
 - Money Crimes film 02 The Original Ponzi Scheme (13:27): https://claude.ai/artifact/XaV9wVSnvrJzPA2HEV7Ngj (Shorts: https://claude.ai/artifact/3dQC4krr7X2cssm2o6CcJK)
 - Money Crimes film 01 Shorts (now 6: Capone, escape, money box, bribe, death certificate, commandments): https://claude.ai/artifact/2A19evbUw3Lsz8Kftyj2d1
 - EP05, EP08, EP04: https://claude.ai/artifact/V2Tz5smkY5w1uzroS85YzB

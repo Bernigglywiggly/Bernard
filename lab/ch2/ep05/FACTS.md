@@ -28,11 +28,11 @@ voicing.
 | 439 MILLION | Active accounts (+1.1%) | 8-K |
 | 25.4 BILLION | Payment transactions (−4%); 16.1B excluding payment service provider (PSP) transactions (+6%) | 8-K |
 | 9.3 BILLION | PSP (unbranded processing, mostly Braintree) transactions = 25.4 − 16.1 | derived |
-| 3.49% + 49¢ | US PayPal Checkout rate for a standard merchant; on $100 the fee is $3.98 | PayPal fees page (TO VERIFY on the day: rates change) |
-| 2.99% + 49¢ | US standard card payments via PayPal | PayPal fees page (TO VERIFY) |
+| 3.49% + 49¢ | US PayPal Checkout rate for a standard merchant; on $100 the fee is $3.98 | PayPal fees page (checked 5 Oct 2026: "PayPal Checkout 3.49% + fixed fee", USD fixed fee 0.49) |
+| 2.99% + 49¢ | US standard card payments via PayPal | PayPal fees page (checked 5 Oct 2026: "Standard Credit and Debit Card Payments 2.99% + fixed fee") |
 | QUOTE | "our execution has not been where it needs to be, particularly in branded checkout" (with the appointment of Enrique Lores as President and CEO; Jamie Miller interim CEO) | 8-K, 3 Feb 2026 |
 | BRAINTREE | Braintree TPV grew while its transactions fell: "our strategic shift as we focus on profitable growth" | 10-K |
-| ABOUT $1.7 BILLION | Venmo revenue 2025, about +20% | Q4 2025 results as reported (TradingView/earnings call): TO VERIFY against the Q4 presentation |
+| ABOUT $1.7 BILLION | Venmo revenue 2025, about +20% | Q4 2025 earnings call, as reported (GuruFocus/Yahoo Finance, 3 Feb 2026): Venmo revenue +20% to $1.7B, 100M+ active accounts |
 
 ## Claims that need care
 - "$1.85 per $100" is an average across all of PayPal's volume, from tiny sellers paying the posted rate to huge

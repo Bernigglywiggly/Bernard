@@ -84,4 +84,6 @@ is fine; **no visible author is what gets flagged.**
 - 4 Oct: `motion_report.py` on finished films: How They Profit (Amazon) is near-still 70% of the time (frozen 54%,
   in short bursts; 5 stretches of 2.5-3.6 s); The Curve LF03 moves throughout except its 17 s end card; Money Crimes
   (Ponzi) is the liveliest. HTP needs continuous camera drift and object motion inside each beat, not move-then-hold.
-- 4 Oct: our masters peak at -0.2 dBFS; the target is -1 dBFS true peak. Add a limiter at -1 in the master step.
+- 4 Oct: our finished films peaked at -0.2 dBTP (target -1). Cause: the mix is mastered to -1.5 dBTP, but the end-card
+  step re-encoded the film's AAC track a second time. `ch2/endcard.py` now joins the WAVs and encodes once (EP04 test:
+  -1.1 dBTP, -14.2 LUFS). The Curve and Money Crimes finals show the same -0.2: check their last steps the same way.

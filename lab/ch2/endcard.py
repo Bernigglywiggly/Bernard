@@ -64,8 +64,16 @@ def main(ep):
                     "-vf", "fade=t=in:st=0:d=0.6", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
                     "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", mp4], check=True)
     final = os.path.join(out, f"{ep}_1080p.mp4")
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", os.path.join(b, f"{ep}.mp4"), "-i", mp4, "-filter_complex",
-                    "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]", "-map", "[v]", "-map", "[a]", "-c:v", "libx264",
+    # Audio is joined from the WAVs and encoded to AAC once: re-encoding the film's AAC track raised the true peak from
+    # -1.1 to -0.2 dBTP (EP04). The film's mix is trimmed to its video length so the card starts on the cut.
+    film_len = float(subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=duration",
+                                     "-of", "csv=p=0", os.path.join(b, f"{ep}.mp4")],
+                                    capture_output=True, text=True, check=True).stdout)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", os.path.join(b, f"{ep}.mp4"), "-i", mp4,
+                    "-i", os.path.join(b, "mix.wav"), "-i", wav, "-filter_complex",
+                    f"[2:a]aresample=48000,atrim=0:{film_len:.3f},asetpts=PTS-STARTPTS[fa];"
+                    "[3:a]aresample=48000,asetpts=PTS-STARTPTS[ca];"
+                    "[0:v][fa][1:v][ca]concat=n=2:v=1:a=1[v][a]", "-map", "[v]", "-map", "[a]", "-c:v", "libx264",
                     "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-r", str(FPS), "-c:a", "aac", "-b:a", "192k",
                     "-movflags", "+faststart", final], check=True)
     print(final, round(os.path.getsize(final) / 2**20, 1), "MiB")

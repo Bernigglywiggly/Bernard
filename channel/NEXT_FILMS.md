@@ -43,6 +43,6 @@ Script, facts, POST and storyboard are in `lab/ch2/ep05`; stills checked on an e
 - Structure idea: open on the inspector's dipstick coming up "oil" (the con working), then rewind.
 
 ## How They Profit 06-07 candidates (pick by the vidIQ outliers once credits reset)
-- Visa and Mastercard: the toll road under every card payment (pairs with PayPal's 89¢ to the networks).
+- **Visa (Film 06, facts file started: `lab/ch2/ep06/FACTS.md`)**: $40.0B revenue, $20.1B profit, half of revenue kept; pairs with PayPal's 89¢ to the networks.
 - Ryanair: the airline that makes money from everything except the seat.
 - Apple's App Store: the 30% and what the courts changed.

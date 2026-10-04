@@ -6,6 +6,11 @@ Pick long-form topics from the top; anything about real people stays at charged/
 
 | Since | Idea | Channel | Score | Status |
 |---|---|---|---|---|
+| 04 Oct | One strait the insurers closed (Hormuz) | Maps & power | 22 | open |
+| 04 Oct | The car lender that sold the same cars twice (Tricolor, alleged) | Money crimes | 21 | open: strong film 03 candidate |
+| 04 Oct | Canada's 50% tariff: who actually pays | How They Profit | 20 | open |
+| 04 Oct | Nvidia lent OpenAI the money to buy Nvidia's chips | The Curve | 19 | open: LF04 candidate |
+| 04 Oct | What if you plugged in 10 gigawatts? | What if | 19 | open |
 | 03 Oct | The model OpenAI was too scared to ship | The Curve | 22 | open |
 | 03 Oct | 1,200 AI agents escaped their sandbox; OpenAI sued | The Curve | 22 | open |
 | 03 Oct | First Brands: the missing $2.3 billion / the loan trick | Money crimes / The Margin | 20 | open (pick one channel) |
@@ -15,4 +20,4 @@ Pick long-form topics from the top; anything about real people stays at charged/
 | 03 Oct | What if AI used all the electricity? | What if | 20 | open |
 | 03 Oct | Sony is killing discs | Gameplay | 20 | open (user's own channel) |
 
-Daily reports: [2026-10-03](2026-10-03.md)
+Daily reports: [2026-10-04](2026-10-04.md), [2026-10-03](2026-10-03.md)

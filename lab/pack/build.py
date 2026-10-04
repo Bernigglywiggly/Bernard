@@ -511,6 +511,39 @@ def film_shorts_page(slug="lustig"):
     write(name, f"{LONGFORM[slug][0].split(' · ')[0]}: shorts from the film", lede, order, items, extra)
 
 
+def ch2_shorts_page(ep="ep01", film="Banks With Wings"):
+    """How They Profit's shorts (lab/ch2/<ep>/build/shorts: the engine's parts, copy in kit.json)."""
+    d = os.path.join(LAB, "ch2", ep, "build", "shorts")
+    name = f"htp_{ep}_shorts"
+    out = os.path.join(HERE, "build", name)
+    media = os.path.join(out, "media")
+    os.makedirs(media, exist_ok=True)
+    items, order, extra = [], [], {}
+    for k in json.load(open(os.path.join(d, "kit.json"))):
+        src = os.path.join(d, k["file"])
+        key = f"htp_{ep}_{k['name']}"
+        v = video_entry(src, media, f"{key}_9x16.mp4", key)
+        cover = f"{key}_cover.jpg"
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", "2.5", "-i", src, "-frames:v", "1", "-q:v", "3",
+                        os.path.join(media, cover)], check=True)
+        extra[f"media/{cover}"] = os.path.join(media, cover)
+        part = k["tag"].split(" · ")[-1].title()
+        items.append(dict(slug=key.replace("_", "-"), eyebrow=f"How They Profit · {part} · {int(round(v['dur']))} s · 9:16",
+                          name=k["hook"], vertical=True,
+                          meta=f"A part of the film \"{film}\": its picture, narration and score, with big captions and a "
+                               "card naming the next part.",
+                          video=v, thumbs=[dict(file=cover, label="Cover", alt=k["hook"] + " cover", name=cover)],
+                          caption=k["post"], titles=[k["hook"]],
+                          description=f"{k['post']} Full film: {film} (linked).", pinned=f"{part}. Full film: {film}, on the channel.",
+                          steps=STEPS_SHORT[:2] + ["YouTube: set the full film as this Short's related video, so viewers can tap through to it.",
+                                                   "TikTok and Reels: pin a comment naming the full film on YouTube."] + STEPS_SHORT[3:],
+                          shorts=[]))
+        order.append((part, k["hook"]))
+    lede = (f"The five parts of \"{film}\" as vertical shorts for TikTok, YouTube Shorts and Reels, posted in order: each "
+            "ends on a card naming the next part, and every caption carries its source.")
+    write(name, "How They Profit: Shorts", lede, order, items, extra)
+
+
 def new(slugs=("ep09", "ep10", "ep11", "ep12"), name="new", title="The Curve: EP09 to EP12"):
     """The next four films: each film's 1080p file, two thumbnails, titles, description with sources, pinned comment and
     its shorts with captions and posting days."""
@@ -574,7 +607,7 @@ if __name__ == "__main__":
      "lf01": lambda: longform_page("lf01_escape"), "lf01_shorts": lambda: film_shorts_page("lf01_escape"),
      "lf02": lambda: longform_page("lf02_price"), "lf02_shorts": lambda: film_shorts_page("lf02_price"),
      "lf03": lambda: longform_page("lf03_held"), "lf03_shorts": lambda: film_shorts_page("lf03_held"),
-     "htp01": lambda: longform_page("ep01"),
+     "htp01": lambda: longform_page("ep01"), "htp01_shorts": lambda: ch2_shorts_page("ep01"),
      "ponzi": lambda: longform_page("ponzi"), "ponzi_shorts": lambda: film_shorts_page("ponzi"),
      # EP04-EP08 with their shorts are ~310 MiB, over one artifact version's 256 MiB: two pages, in upload order
      "films1": lambda: new(("ep05", "ep08", "ep04"), "films1", "The Curve: EP05, EP08, EP04"),

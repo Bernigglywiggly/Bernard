@@ -13,6 +13,10 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   `sales/reels/index.html` with `capabilities {"downloads": true}` and the files from `page.py --files <Town>`, in
   batches under 64 MB (52 Reels ≈ 200 MB, ~85 s each, run 2-3 at a time). Or the user shares the old page
   (https://claude.ai/artifact/LzxsswDEPP1441T5sUibSb) to the other account from its Share menu.
+- **Saved for the switch (5 Oct, late):** the 29 finished videos still to upload are in `media/2026-10-05_youtube/`
+  (the only copies; big ones split into `.partNN`, join with the command in `media/README.md`), each channel with an
+  `UPLOAD_SHEET.md`. Scratchpad sources (TikTok queue generators, X research, fact sources, upload scripts) are in
+  `lab/_saved_scratch/`. Delete `media/` in a commit before the PR is merged.
 - **Waiting on the user (ask first thing):** (1) the Reels pack price (suggested £79/mo for 4); (2) which extra
   service to lead with, from `sales/OPTIONS.md` (Claude recommends #1, the photo shoot + delivery-app glow-up);
   (3) their home town; (4) Zapier upgrade + YouTube phone verification.

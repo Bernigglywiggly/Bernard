@@ -1,0 +1,358 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Reel Send Sheet</title>
+<style>
+:root{--bg:#F6F4EF;--card:#fff;--ink:#1C1D20;--ink2:#5A5E64;--line:#DDD8CC;--acc:#1E7445;--warn:#8A5A00;--warnbg:#FFF4D6}
+@media (prefers-color-scheme:dark){:root{--bg:#15171A;--card:#1E2125;--ink:#E9EBEE;--ink2:#A3A8AF;--line:#33373D;--acc:#4CC38A;--warn:#F0C36A;--warnbg:#3A2F12}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,sans-serif}
+main{max-width:860px;margin:0 auto;padding:16px}h1{font-size:22px;margin:8px 0}
+.bar{position:sticky;top:0;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;align-items:center;z-index:2}
+.bar input[type=text]{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;width:150px}
+.bar button,.copy{padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.bar button.on{background:var(--acc);color:#fff;border-color:var(--acc)}#count{margin-left:auto;font-weight:600}
+.shop{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.shop.done{opacity:.5}.shop header{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.meta{color:var(--ink2);font-size:13px}.chs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.ch{font-size:14px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--ink);text-decoration:none}
+.ch.best{border-color:var(--acc);color:var(--acc);font-weight:600}.ch.none{color:var(--warn)}
+.msg{margin:8px 0;padding:10px;border-left:3px solid var(--line);color:var(--ink2);font-size:15px}
+.act{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.reel{font:13px ui-monospace,monospace;color:var(--acc);word-break:break-all}
+.reel.missing{color:var(--warn)}.note{background:var(--warnbg);color:var(--warn);font-size:13px;padding:8px 10px;border-radius:8px;margin:10px 0 0}
+.reply{width:100%;margin-top:10px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);font:inherit}
+h2{font-size:17px;margin:22px 0 0}
+</style></head><body><main>
+<h1>Reel send sheet</h1>
+<div class="bar"><input type="text" id="me" placeholder="Your first name">
+<button data-f="all" class="on">All</button><button data-f="remote">Can message</button><button data-f="todo">Not sent</button>
+<span id="count"></span></div>
+<h2>Stone (16)</h2><article class="shop" data-id="1195796" data-town="Stone" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>Crown Of India</b></label>
+<span class="meta">Batch 1 · Stone · #1 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01785814911" target="_blank" rel="noopener">Phone: 01785 814911</a></div>
+<p class="msg" data-shop="Crown Of India"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto01_crown_of_india.mp4" target="_blank">sto01_crown_of_india.mp4</a></div><p class="note">No FB/IG found. facebook.com/thecrownofindia.info is a same-name restaurant in Leicester - do NOT use. Website blocked automated fetch (403).</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1196000" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Arcadia Tea Shop</b></label>
+<span class="meta">Batch 1 · Stone · #2 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/p/Arcadia-Cafe-Stone-100063607893439/" target="_blank" rel="noopener">Facebook</a></div>
+<p class="msg" data-shop="Arcadia Tea Shop"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto02_arcadia_tea_shop.mp4" target="_blank">sto02_arcadia_tea_shop.mp4</a></div><p class="note">FB page is named &#x27;Arcadia Cafe Stone&#x27; and gives &#x27;Somerfield Arcade&#x27; as location; FSA name is Arcadia Tea Shop, High Street Arcade - likely same shop, not fully confirmed. No phone found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195901" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Little Seeds Bar &amp; Kitchen</b></label>
+<span class="meta">Batch 1 · Stone · #7 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/littleseedsstone/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/littleseedsstone/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="mailto:littleseedsstone@outlook.com" target="_blank" rel="noopener">Email: littleseedsstone@outlook.com</a><a class="ch" href="tel:01785818925" target="_blank" rel="noopener">Phone: 01785 818925</a></div>
+<p class="msg" data-shop="Little Seeds Bar &amp; Kitchen"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto07_little_seeds_bar_kitchen.mp4" target="_blank">sto07_little_seeds_bar_kitchen.mp4</a></div><p class="note">Michelin-Guide-listed restaurant; site says email is the best way to reach them; closed Sun/Mon.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195891" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Stonefield Fish Bar</b></label>
+<span class="meta">Batch 1 · Stone · #10 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/StonefieldFishBar/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01785815030" target="_blank" rel="noopener">Phone: 01785 815030</a></div>
+<p class="msg" data-shop="Stonefield Fish Bar"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto10_stonefield_fish_bar.mp4" target="_blank">sto10_stonefield_fish_bar.mp4</a></div><p class="note">FB approx 1.2k followers. No Instagram found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195685" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Proven Pizzeria</b></label>
+<span class="meta">Batch 1 · Stone · #11 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/ProvenPizzeria/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/provenpizzeriastone/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="mailto:dough@provenpizzeria.co.uk" target="_blank" rel="noopener">Email: dough@provenpizzeria.co.uk</a><a class="ch" href="tel:01785817007" target="_blank" rel="noopener">Phone: 01785 817007</a></div>
+<p class="msg" data-shop="Proven Pizzeria"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto11_proven_pizzeria.mp4" target="_blank">sto11_proven_pizzeria.mp4</a></div>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195166" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>The Secret Tea Room</b></label>
+<span class="meta">Batch 1 · Stone · #12 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/secrettearoomstone/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="mailto:secrettearoom@hotmail.com" target="_blank" rel="noopener">Email: secrettearoom@hotmail.com</a><a class="ch" href="tel:01785747110" target="_blank" rel="noopener">Phone: 01785 747110</a></div>
+<p class="msg" data-shop="The Secret Tea Room"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto12_the_secret_tea_room.mp4" target="_blank">sto12_the_secret_tea_room.mp4</a></div><p class="note">FB approx 3.8k likes. Email seen via listing snippet, not re-verified on the FB page itself. No Instagram found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195735" data-town="Stone" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>Stone Kebab House</b></label>
+<span class="meta">Batch 1 · Stone · #17 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01785812499" target="_blank" rel="noopener">Phone: 01785 812499</a></div>
+<p class="msg" data-shop="Stone Kebab House"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto17_stone_kebab_house.mp4" target="_blank">sto17_stone_kebab_house.mp4</a></div><p class="note">Only FB presence found is an unofficial auto-generated page (facebook.com/104088916329558) - not owner-managed, so not recorded as a channel. Website is an ordering page only.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195941" data-town="Stone" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>Valleys Fast Food</b></label>
+<span class="meta">Batch 1 · Stone · #18 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01785812929" target="_blank" rel="noopener">Phone: 01785 812929</a></div>
+<p class="msg" data-shop="Valleys Fast Food"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto18_valleys_fast_food.mp4" target="_blank">sto18_valleys_fast_food.mp4</a></div><p class="note">Has X/Twitter @ValleysFastFood. An FB page &#x27;Valleys fast food&#x27; (p/100077880812581) was found but not confirmed as Stone - a same-name takeaway exists in Congleton. No IG found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195498" data-town="Stone" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>Cavalli</b></label>
+<span class="meta">Batch 1 · Stone · #21 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01785816161" target="_blank" rel="noopener">Phone: 01785 816161</a></div>
+<p class="msg" data-shop="Cavalli"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto21_cavalli.mp4" target="_blank">sto21_cavalli.mp4</a></div><p class="note">Trades as Cavalli Indian Cuisine. Local review said FB/IG &#x27;coming soon&#x27;; none found. Website is ordering page only.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1196193" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Piccolo&#x27;s Pizza &amp; Kebab Land</b></label>
+<span class="meta">Batch 1 · Stone · #22 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/people/Piccolos-Pizzas/100063786660843/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01785819555" target="_blank" rel="noopener">Phone: 01785 819555</a></div>
+<p class="msg" data-shop="Piccolo&#x27;s Pizza &amp; Kebab Land"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto22_piccolo_s_pizza_kebab_land.mp4" target="_blank">sto22_piccolo_s_pizza_kebab_land.mp4</a></div><p class="note">FB page &#x27;Piccolos Pizzas&#x27; is listed as Stone but street address not confirmed. Several unrelated Piccolo&#x27;s pages exist (Stoke, etc).</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1196110" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Walton Fish Bar</b></label>
+<span class="meta">Batch 1 · Stone · #23 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/TheWaltonFishBar/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01785811553" target="_blank" rel="noopener">Phone: 01785 811553</a></div>
+<p class="msg" data-shop="Walton Fish Bar"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto23_walton_fish_bar.mp4" target="_blank">sto23_walton_fish_bar.mp4</a></div><p class="note">A second, unofficial auto-generated FB page also exists (facebook.com/124479964288843) - ignore it.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1557000" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>The Roll in Stone</b></label>
+<span class="meta">Batch 1 · Stone · #25 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/p/The-Roll-in-Stone-100086428778656/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:07883180072" target="_blank" rel="noopener">Phone: 07883 180072</a></div>
+<p class="msg" data-shop="The Roll in Stone"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto25_the_roll_in_stone.mp4" target="_blank">sto25_the_roll_in_stone.mp4</a></div><p class="note">Family-run cafe on industrial estate; FB approx 1k likes. Phone is a mobile from a directory listing.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195354" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Bear Coffee Company Ltd</b></label>
+<span class="meta">Batch 2 · Stone · #3 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/bemoreSTONE/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/bemorebear/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="tel:01785819053" target="_blank" rel="noopener">Phone: 01785 819053</a></div>
+<p class="msg" data-shop="Bear Coffee Company Ltd"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto03_bear_coffee_company_ltd.mp4" target="_blank">sto03_bear_coffee_company_ltd.mp4</a></div><p class="note">Trades as BEAR Stone. Part of a multi-site BEAR group; Instagram and facebook.com/bemorebear are brand-wide, bemoreSTONE is the Stone page. Marketing probably handled centrally.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195552" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>The Ovilash Restaurant</b></label>
+<span class="meta">Batch 2 · Stone · #8 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/p/Ovilash-Indian-Restaurant-100068353368967/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="mailto:ovilashtandoori@gmail.com" target="_blank" rel="noopener">Email: ovilashtandoori@gmail.com</a><a class="ch" href="tel:01785813137" target="_blank" rel="noopener">Phone: 01785 813137</a></div>
+<p class="msg" data-shop="The Ovilash Restaurant"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto08_the_ovilash_restaurant.mp4" target="_blank">sto08_the_ovilash_restaurant.mp4</a></div><p class="note">Three Ovilash FB pages exist (also p/Ovilash-100083424572891 and p/The-ovilash-100066940133564); which is actively managed not verified. Email appears with the restaurant&#x27;s own listing.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1195940" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Pasta Di Piazza</b></label>
+<span class="meta">Batch 3 · Stone · #13 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/pastadipiazza1/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/pastadipiazzastaffs/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="mailto:contact@pastadipiazza-italiana.co.uk" target="_blank" rel="noopener">Email: contact@pastadipiazza-italiana.co.uk</a><a class="ch" href="tel:01785813214" target="_blank" rel="noopener">Phone: 01785 813214</a></div>
+<p class="msg" data-shop="Pasta Di Piazza"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto13_pasta_di_piazza.mp4" target="_blank">sto13_pasta_di_piazza.mp4</a></div><p class="note">Small group (Stone + Newcastle-under-Lyme); Instagram covers both sites.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1889467" data-town="Stone" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Heaven Restaurant Bar &amp; Grill</b></label>
+<span class="meta">Batch 4 · Stone · #16 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/profile.php?id=61579361854877" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/heaven_bar_grill/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="mailto:akay@heavenbarandgrill.com" target="_blank" rel="noopener">Email: akay@heavenbarandgrill.com</a><a class="ch" href="tel:01785847097" target="_blank" rel="noopener">Phone: 01785 847097</a></div>
+<p class="msg" data-shop="Heaven Restaurant Bar &amp; Grill"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/sto16_heaven_restaurant_bar_grill.mp4" target="_blank">sto16_heaven_restaurant_bar_grill.mp4</a></div><p class="note">New family-run Turkish restaurant (opened 2025). All channels linked from own website. @heavenyyc is an unrelated Canadian business.</p>
+<input class="reply" placeholder="Reply / notes"></article>
+<h2>Newcastle-under-Lyme (19)</h2><article class="shop" data-id="85714" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>PIZZARAMA</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #1 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/Pizzarama-185104241525285/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01782711997" target="_blank" rel="noopener">Phone: 01782 711997</a></div>
+<p class="msg" data-shop="PIZZARAMA"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new01_pizzarama.mp4" target="_blank">new01_pizzarama.mp4</a></div><p class="note">FB link taken from the shop&#x27;s own website. No Instagram found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1799173" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>FRESCO CAFE &amp; EATERY</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #2 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/fresco.cafe.eatery/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/frescocafeandeatery/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="tel:07595037945" target="_blank" rel="noopener">Phone: 07595 037945</a></div>
+<p class="msg" data-shop="FRESCO CAFE &amp; EATERY"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new02_fresco_cafe_eatery.mp4" target="_blank">new02_fresco_cafe_eatery.mp4</a></div><p class="note">Family-run, opened late 2024. Phone is a mobile from listings.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1578883" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>MADO CAFE</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #4 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.instagram.com/madocafeuk/" target="_blank" rel="noopener">Instagram</a></div>
+<p class="msg" data-shop="MADO CAFE"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new04_mado_cafe.mp4" target="_blank">new04_mado_cafe.mp4</a></div><p class="note">Instagram is tiny (approx 33 followers) and mentions a Facebook group, URL not found. No phone found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1889228" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>THE MIDWAY CAFE</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #6 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/people/The-Midway-Cafe/61582987493263/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/themidway.cafe/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="tel:01782291599" target="_blank" rel="noopener">Phone: 01782 291599</a></div>
+<p class="msg" data-shop="THE MIDWAY CAFE"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new06_the_midway_cafe.mp4" target="_blank">new06_the_midway_cafe.mp4</a></div><p class="note">All links taken from own website. Also TikTok @the.midway.cafe.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="701262" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>THE FOYER</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #11 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/thefoyerbar" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/thefoyernewcastle/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="mailto:thefoyernewcastle@yahoo.co.uk" target="_blank" rel="noopener">Email: thefoyernewcastle@yahoo.co.uk</a><a class="ch" href="tel:01782461171" target="_blank" rel="noopener">Phone: 01782 461171</a></div>
+<p class="msg" data-shop="THE FOYER"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new11_the_foyer.mp4" target="_blank">new11_the_foyer.mp4</a></div><p class="note">This is a late-night bar/nightclub, not a cafe or takeaway; own site gives postcode ST5 1AD. A food promo Reel may not fit this venue.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1722944" data-town="Newcastle-under-Lyme" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>NEL</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #12 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:07756296496" target="_blank" rel="noopener">Phone: 07756 296496</a></div>
+<p class="msg" data-shop="NEL"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new12_nel.mp4" target="_blank">new12_nel.mp4</a></div><p class="note">Trades as &#x27;Freshly Homemade By Nel&#x27; (Italian). No FB/IG matched; @nel_homecooked_meals is not confirmed as this business. Phone is a mobile from Tripadvisor.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1776097" data-town="Newcastle-under-Lyme" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>CUISINE CART</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #13 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01782354955" target="_blank" rel="noopener">Phone: 01782 354955</a></div>
+<p class="msg" data-shop="CUISINE CART"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new13_cuisine_cart.mp4" target="_blank">new13_cuisine_cart.mp4</a></div><p class="note">Second number listed: 07721 299222. No FB/IG found. Website blocked automated fetch.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1749342" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>DANCING OCTOPUS</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #15 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/p/Dancing-Octopus-100057337874749/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01782614947" target="_blank" rel="noopener">Phone: 01782 614947</a></div>
+<p class="msg" data-shop="DANCING OCTOPUS"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new15_dancing_octopus.mp4" target="_blank">new15_dancing_octopus.mp4</a></div><p class="note">Long-established chippy. No Instagram found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1353828" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>TASTY WOK</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #17 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/chinesetakeawayst5/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="mailto:tastywokst5@gmail.com" target="_blank" rel="noopener">Email: tastywokst5@gmail.com</a><a class="ch" href="tel:01782611009" target="_blank" rel="noopener">Phone: 01782 611009</a></div>
+<p class="msg" data-shop="TASTY WOK"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new17_tasty_wok.mp4" target="_blank">new17_tasty_wok.mp4</a></div><p class="note">Email and FB published on own contact page. FB approx 3.7k followers.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="85327" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>CASTLE OATCAKES</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #19 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/castleoatcakes/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01782662494" target="_blank" rel="noopener">Phone: 01782 662494</a></div>
+<p class="msg" data-shop="CASTLE OATCAKES"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new19_castle_oatcakes.mp4" target="_blank">new19_castle_oatcakes.mp4</a></div><p class="note">Open Thu-Sun mornings only. No Instagram found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1828058" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>NEWCASTLE KEBAB HOUSE</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #22 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.instagram.com/newcastlekebabpizzahouse/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="tel:01782613046" target="_blank" rel="noopener">Phone: 01782 613046</a></div>
+<p class="msg" data-shop="NEWCASTLE KEBAB HOUSE"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new22_newcastle_kebab_house.mp4" target="_blank">new22_newcastle_kebab_house.mp4</a></div><p class="note">Instagram bio links to the shop&#x27;s site. No FB matched (&#x27;Family Kebab House&#x27; is a different business).</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1877918" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>FAVOURITE CHINESE TAKEAWAY</b></label>
+<span class="meta">Batch 1 · Newcastle-under-Lyme · #28 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/Favourite1987/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01782631414" target="_blank" rel="noopener">Phone: 01782 631414</a></div>
+<p class="msg" data-shop="FAVOURITE CHINESE TAKEAWAY"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new28_favourite_chinese_takeaway.mp4" target="_blank">new28_favourite_chinese_takeaway.mp4</a></div><p class="note">Social links on its website belong to the ordering platform (AllEat), not the shop.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1822945" data-town="Newcastle-under-Lyme" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>PIZZA BAR</b></label>
+<span class="meta">Batch 2 · Newcastle-under-Lyme · #3 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:07538679220" target="_blank" rel="noopener">Phone: 07538 679220</a></div>
+<p class="msg" data-shop="PIZZA BAR"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new03_pizza_bar.mp4" target="_blank">new03_pizza_bar.mp4</a></div><p class="note">No FB/IG found. Website is ordering page only. Phone is a mobile from a listing.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="83640" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>SHAWS</b></label>
+<span class="meta">Batch 2 · Newcastle-under-Lyme · #10 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/100069832689667/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01782617048" target="_blank" rel="noopener">Phone: 01782 617048</a></div>
+<p class="msg" data-shop="SHAWS"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new10_shaws.mp4" target="_blank">new10_shaws.mp4</a></div><p class="note">Trades as Shaws Fish &amp; Chips (est. 1921). Second page &#x27;Shaws Chippy&#x27; also exists (p/Shaws-Chippy-100066493220545); which is the active one not verified.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1870542" data-town="Newcastle-under-Lyme" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>CHEESIOUS PIZZA/PERI PERI HOUSE</b></label>
+<span class="meta">Batch 2 · Newcastle-under-Lyme · #14 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01782870267" target="_blank" rel="noopener">Phone: 01782 870267</a></div>
+<p class="msg" data-shop="CHEESIOUS PIZZA/PERI PERI HOUSE"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new14_cheesious_pizza_peri_peri_house.mp4" target="_blank">new14_cheesious_pizza_peri_peri_house.mp4</a></div><p class="note">Local 3-branch chain (Newcastle, Burslem, Meir). facebook.com/cheesioustakeaway exists but branch not confirmed, so not recorded.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1832506" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>MO&#x27;S KITCHEN</b></label>
+<span class="meta">Batch 2 · Newcastle-under-Lyme · #16 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/Moskitchenchinese/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01782717761" target="_blank" rel="noopener">Phone: 01782 717761</a></div>
+<p class="msg" data-shop="MO&#x27;S KITCHEN"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new16_mo_s_kitchen.mp4" target="_blank">new16_mo_s_kitchen.mp4</a></div><p class="note">Instagram candidates (@mos_kitchen1, @motoristkitchen) not confirmed as this shop - not recorded.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1722943" data-town="Newcastle-under-Lyme" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>THE ONE</b></label>
+<span class="meta">Batch 2 · Newcastle-under-Lyme · #25 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/Theonenoodlebar/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01782612849" target="_blank" rel="noopener">Phone: 01782 612849</a></div>
+<p class="msg" data-shop="THE ONE"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new25_the_one.mp4" target="_blank">new25_the_one.mp4</a></div><p class="note">FB page is &#x27;The One Dim Sum &amp; Noodle Bar&#x27;, Newcastle-under-Lyme, family-run; street address not confirmed in snippet.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1004870" data-town="Newcastle-under-Lyme" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>GOLDEN WOK</b></label>
+<span class="meta">Batch 3 · Newcastle-under-Lyme · #30 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01782719668" target="_blank" rel="noopener">Phone: 01782 719668</a></div>
+<p class="msg" data-shop="GOLDEN WOK"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new30_golden_wok.mp4" target="_blank">new30_golden_wok.mp4</a></div><p class="note">No FB/IG matched - many same-name Golden Wok pages in other towns.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1050314" data-town="Newcastle-under-Lyme" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>CHILLI JACKS</b></label>
+<span class="meta">Batch 4 · Newcastle-under-Lyme · #31 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01782628188" target="_blank" rel="noopener">Phone: 01782 628188</a></div>
+<p class="msg" data-shop="CHILLI JACKS"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/new31_chilli_jacks.mp4" target="_blank">new31_chilli_jacks.mp4</a></div><p class="note">Only FB found is facebook.com/chillijacks.meir (Meir branch), not this shop. Multi-branch brand.</p>
+<input class="reply" placeholder="Reply / notes"></article>
+<h2>Tamworth (17)</h2><article class="shop" data-id="1908321" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Brew</b></label>
+<span class="meta">Batch 1 · Tamworth · #2 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.instagram.com/brew__uk/" target="_blank" rel="noopener">Instagram</a></div>
+<p class="msg" data-shop="Brew"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam02_brew.mp4" target="_blank">tam02_brew.mp4</a></div><p class="note">Handle @brew__uk quoted in Daily Focus article (Sep 2026), profile not opened. Brew is MOVING to a bigger unit opposite the Town Hall later in 2026, so the address/footage may date quickly. No phone found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1692952" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Phat Bites</b></label>
+<span class="meta">Batch 1 · Tamworth · #4 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/p/Phat-Bites-100083328071754/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/phat_bites/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="mailto:Phatbitesuk@gmail.com" target="_blank" rel="noopener">Email: Phatbitesuk@gmail.com</a><a class="ch" href="tel:0182760880" target="_blank" rel="noopener">Phone: 01827 60880</a></div>
+<p class="msg" data-shop="Phat Bites"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam04_phat_bites.mp4" target="_blank">tam04_phat_bites.mp4</a></div><p class="note">Email shown on its FB page. FB approx 310 likes, IG approx 530 followers.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1899172" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Jeffrey’s Fine Sandwiches</b></label>
+<span class="meta">Batch 1 · Tamworth · #9 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/p/Jeffreys-Fine-Sandwiches-100063565244177/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/jeffreysfine/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="tel:01827767747" target="_blank" rel="noopener">Phone: 01827 767747</a></div>
+<p class="msg" data-shop="Jeffrey’s Fine Sandwiches"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam09_jeffrey_s_fine_sandwiches.mp4" target="_blank">tam09_jeffrey_s_fine_sandwiches.mp4</a></div><p class="note">IG approx 1.1k followers; FB 95 reviews.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1557638" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Swallow Cantonese Take Away</b></label>
+<span class="meta">Batch 1 · Tamworth · #13 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/1438536689719815" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:0182755557" target="_blank" rel="noopener">Phone: 01827 55557</a></div>
+<p class="msg" data-shop="Swallow Cantonese Take Away"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam13_swallow_cantonese_take_away.mp4" target="_blank">tam13_swallow_cantonese_take_away.mp4</a></div><p class="note">FB page has only approx 42 followers (created 2014) - looks dormant. Closed Mon/Tue.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1904493" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Papudom 4U</b></label>
+<span class="meta">Batch 1 · Tamworth · #14 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/Papadom-4-U-Tamworth-103693454923942/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01827315115" target="_blank" rel="noopener">Phone: 01827 315115</a></div>
+<p class="msg" data-shop="Papudom 4U"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam14_papudom_4u.mp4" target="_blank">tam14_papudom_4u.mp4</a></div><p class="note">Business spells itself &#x27;Papadom 4 U&#x27;. FSA shows an older record under that name at the same address - possible recent change of operator.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1620292" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Steves Fish Bar</b></label>
+<span class="meta">Batch 1 · Tamworth · #16 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/stevesfishbar1" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:0182762931" target="_blank" rel="noopener">Phone: 01827 62931</a></div>
+<p class="msg" data-shop="Steves Fish Bar"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam16_steves_fish_bar.mp4" target="_blank">tam16_steves_fish_bar.mp4</a></div><p class="note">Trades as Steve&#x27;s Fish &amp; Chips.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1957914" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Shake &amp; Take Tamworth</b></label>
+<span class="meta">Batch 1 · Tamworth · #18 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.instagram.com/shakeandtaketamworth/" target="_blank" rel="noopener">Instagram</a></div>
+<p class="msg" data-shop="Shake &amp; Take Tamworth"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam18_shake_take_tamworth.mp4" target="_blank">tam18_shake_take_tamworth.mp4</a></div><p class="note">New business; Instagram found, street address not confirmed in snippet. No FB or phone found.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1799468" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Mr. Chips</b></label>
+<span class="meta">Batch 1 · Tamworth · #19 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/MrChipsTamworth2020/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:0182766919" target="_blank" rel="noopener">Phone: 01827 66919</a></div>
+<p class="msg" data-shop="Mr. Chips"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam19_mr_chips.mp4" target="_blank">tam19_mr_chips.mp4</a></div><p class="note">A directory lists a personal-looking yahoo address; not recorded because it is not clearly published by the business.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1923797" data-town="Tamworth" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>Between the Buns</b></label>
+<span class="meta">Batch 1 · Tamworth · #22 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01827908325" target="_blank" rel="noopener">Phone: 01827 908325</a></div>
+<p class="msg" data-shop="Between the Buns"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam22_between_the_buns.mp4" target="_blank">tam22_between_the_buns.mp4</a></div><p class="note">Also uses btbburgers.co.uk. No FB/IG matched - many unrelated &#x27;Between the Buns&#x27; pages worldwide. Delivery/collection only.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1688068" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Eat Well</b></label>
+<span class="meta">Batch 1 · Tamworth · #23 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/p/Eat-Well-Tamworth-Chinese-Takeway-100063456793600/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:0182757036" target="_blank" rel="noopener">Phone: 01827 57036</a></div>
+<p class="msg" data-shop="Eat Well"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam23_eat_well.mp4" target="_blank">tam23_eat_well.mp4</a></div><p class="note">FB approx 640 likes.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1937050" data-town="Tamworth" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>The Tamworth Tandoor</b></label>
+<span class="meta">Batch 1 · Tamworth · #24 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01827954599" target="_blank" rel="noopener">Phone: 01827 954599</a></div>
+<p class="msg" data-shop="The Tamworth Tandoor"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam24_the_tamworth_tandoor.mp4" target="_blank">tam24_the_tamworth_tandoor.mp4</a></div><p class="note">No FB/IG found. Website is ordering page only.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1923798" data-town="Tamworth" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>Fu House Chinese Takeaway</b></label>
+<span class="meta">Batch 1 · Tamworth · #99 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01827260666" target="_blank" rel="noopener">Phone: 01827 260666</a></div>
+<p class="msg" data-shop="Fu House Chinese Takeaway"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam99_fu_house_chinese_takeaway.mp4" target="_blank">tam99_fu_house_chinese_takeaway.mp4</a></div><p class="note">No FB/IG/website found. Cash-only shop. FSA shows an older &#x27;Fu House&#x27; record at same address - possible change of operator.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1589615" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>China Aroma</b></label>
+<span class="meta">Batch 2 · Tamworth · #6 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/chinaaromatamworth/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:0182764295" target="_blank" rel="noopener">Phone: 01827 64295</a></div>
+<p class="msg" data-shop="China Aroma"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam06_china_aroma.mp4" target="_blank">tam06_china_aroma.mp4</a></div><p class="note">Address listed as 68-69 Church Street.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1785915" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Pizza Boss</b></label>
+<span class="meta">Batch 2 · Tamworth · #15 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/tuktuktam/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:01827912141" target="_blank" rel="noopener">Phone: 01827 912141</a></div>
+<p class="msg" data-shop="Pizza Boss"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam15_pizza_boss.mp4" target="_blank">tam15_pizza_boss.mp4</a></div><p class="note">FB page is titled &#x27;Pizza Boss Tamworth&#x27; but its URL slug is &#x27;tuktuktam&#x27; (looks like a renamed Tuk Tuk page, possibly same owner as Rayu). @bosspizzauk on Instagram is a different business.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1901935" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Rayu Pan Asian</b></label>
+<span class="meta">Batch 2 · Tamworth · #17 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/Rayupanasian" target="_blank" rel="noopener">Facebook</a><a class="ch" href="https://www.instagram.com/rayupanasian/" target="_blank" rel="noopener">Instagram</a><a class="ch" href="tel:0182768123" target="_blank" rel="noopener">Phone: 01827 68123</a></div>
+<p class="msg" data-shop="Rayu Pan Asian"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam17_rayu_pan_asian.mp4" target="_blank">tam17_rayu_pan_asian.mp4</a></div><p class="note">Links from own website (Rayu &amp; Tuk Tuk Pan Asian). Also TikTok @rayupanasian.</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1676090" data-town="Tamworth" data-remote="0">
+<header><label><input type="checkbox" class="sent"> <b>2 Gates Grill</b></label>
+<span class="meta">Batch 2 · Tamworth · #26 · medium confidence</span></header>
+<div class="chs"><a class="ch best" href="tel:01827288171" target="_blank" rel="noopener">Phone: 01827 288171</a></div>
+<p class="msg" data-shop="2 Gates Grill"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam26_2_gates_grill.mp4" target="_blank">tam26_2_gates_grill.mp4</a></div><p class="note">No FB/IG found. Also twogatesgrill.com (did not load).</p>
+<input class="reply" placeholder="Reply / notes"></article><article class="shop" data-id="1589630" data-town="Tamworth" data-remote="1">
+<header><label><input type="checkbox" class="sent"> <b>Tamworth Spice / Kiko Sushi</b></label>
+<span class="meta">Batch 3 · Tamworth · #7 · high confidence</span></header>
+<div class="chs"><a class="ch best" href="https://www.facebook.com/Tamworthspice/" target="_blank" rel="noopener">Facebook</a><a class="ch" href="tel:0182750555" target="_blank" rel="noopener">Phone: 01827 50555</a></div>
+<p class="msg" data-shop="Tamworth Spice / Kiko Sushi"></p>
+<div class="act"><button class="copy">Copy message</button><a class="reel" href="build/reels/tam07_tamworth_spice_kiko_sushi.mp4" target="_blank">tam07_tamworth_spice_kiko_sushi.mp4</a></div><p class="note">Same premises also trades as Kiko Sushi (kikosushitamworth.co.uk), same phone.</p>
+<input class="reply" placeholder="Reply / notes"></article>
+</main><script>
+const MSG="Hi, I'm {me}, I'm local and I make short videos for food places. I made this one for {shop} after seeing your 5 hygiene rating. It's yours to post, no catch. If you'd like more like it, just reply.";
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const state=store.get("reel_send")||{};const me=document.getElementById("me");me.value=store.get("reel_me")||"";
+function fill(){document.querySelectorAll(".msg").forEach(p=>{p.textContent=MSG.replace("{me}",me.value.trim()||"[your name]").replace("{shop}",p.dataset.shop)})}
+function count(){const all=[...document.querySelectorAll(".shop")];const n=all.filter(a=>a.querySelector(".sent").checked).length;document.getElementById("count").textContent=n+" / "+all.length+" sent"}
+me.addEventListener("input",()=>{store.set("reel_me",me.value);fill()});
+document.querySelectorAll(".shop").forEach(a=>{const s=state[a.dataset.id]||{};const cb=a.querySelector(".sent"),rp=a.querySelector(".reply");
+cb.checked=!!s.sent;rp.value=s.reply||"";a.classList.toggle("done",cb.checked);
+const save=()=>{state[a.dataset.id]={sent:cb.checked,reply:rp.value};store.set("reel_send",state);a.classList.toggle("done",cb.checked);count()};
+cb.addEventListener("change",save);rp.addEventListener("input",save);
+a.querySelector(".copy").addEventListener("click",ev=>{const t=a.querySelector(".msg").textContent;const b=ev.target;
+(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{b.textContent="Copied"},()=>{b.textContent="Select the text and copy"});setTimeout(()=>{b.textContent="Copy message"},1500)})});
+document.querySelectorAll(".bar button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".bar button").forEach(x=>x.classList.toggle("on",x===b));const f=b.dataset.f;
+document.querySelectorAll(".shop").forEach(a=>{const show=f==="all"||(f==="remote"&&a.dataset.remote==="1")||(f==="todo"&&!a.querySelector(".sent").checked);a.style.display=show?"":"none"})}));
+fill();count();
+</script></body></html>

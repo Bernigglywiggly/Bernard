@@ -12,10 +12,10 @@ the American Express investment).
 | Oil actually there | about 55,000 short tons | Wikipedia: verify |
 | Fraudulent loans | about $180M (≈$1.89B in 2025 dollars), 51 institutions | Wikipedia; MoneyWeek/others say ~$175M: settle on one with a source |
 | Investigation | Commodity Exchange Authority, from 15 Nov 1963 | Wikipedia: verify |
-| Bankruptcy | Allied Crude Vegetable Oil Refining, 18 Nov 1963 (the week of the Kennedy assassination, 22 Nov) | Wikipedia: verify |
-| AmEx Field Warehousing | $210M of claims against $130,000 of assets; American Express settled for $60M | Wikipedia: verify |
+| Bankruptcy | Allied Crude Vegetable Oil Refining, 19 Nov 1963 (the week of the Kennedy assassination, 22 Nov) | Wikipedia: verify |
+| American Express Warehousing, Ltd. | $210M of claims against $130,000 of assets; American Express settled for $60M | Wikipedia: verify |
 | AmEx stock | fell by more than a third (some accounts: about half) | conflicting: use "by more than a third" unless a primary says otherwise |
-| Ira Haupt & Co. | insolvent; the NYSE provided about $36M to protect customers | Wikipedia: verify |
+| Ira Haupt & Co. | insolvent; the NYSE pledged up to $12M (advanced ~$9.5M) to protect customers; banks deferred ~$24M | Wikipedia: verify |
 | De Angelis | pleaded guilty to four charges; sentenced 1965 to 20 years; released 1972 | Wikipedia: verify |
 
 ## How the fraud worked (Wikipedia; TodayIFoundOut; MoneyWeek)
@@ -23,7 +23,7 @@ the American Express investment).
   the top came up oil.
 - Hidden compartments inside tanks; the same oil pumped between connected tanks so it was counted more than once.
 - Later, forged warehouse receipts.
-- American Express Field Warehousing kept Allied's own staff as custodians, men tied to De Angelis.
+- American Express Warehousing kept Allied's own staff as custodians, men tied to De Angelis.
 - Reported claims exceeded the US Department of Agriculture's figures for the whole country's stock (TodayIFoundOut:
   verify against Miller before using).
 
@@ -55,8 +55,8 @@ business (labelled as his reasoning, from his letters).
   script's "more than 150 million dollars" holds either way.
 - Allied "was supposed to have $150 million in vegetable oil as collateral, but only had $6 million" (Shortform summary):
   not used; check against Miller.
-- Claimed stocks larger than the USDA's national inventory: also in The Reformed Broker and Shortform (still secondary).
-- Ira Haupt insolvent; NYSE about $36M to protect customers: also in Shortform's summary.
+- Claimed stocks as large as the Census Bureau's national count (not USDA): also in The Reformed Broker and Shortform (still secondary).
+- Ira Haupt insolvent; NYSE up to $12M to protect customers (the $36M in summaries adds the banks' deferred $24M): also in Shortform's summary.
 - Buffett: by June 1964 about $3M in AmEx, 17% of the partnership, its largest holding (Yahoo Finance); later accounts
   say about 40% of the fund (First Principles Investing, Substack). Script's "a large part" fits both. His reasoning
   that Wall Street punished AmEx while Main Street kept using it (Yahoo Finance): matches the script's framing.
@@ -64,3 +64,10 @@ business (labelled as his reasoning, from his letters).
 - Sources: https://finance.yahoo.com/news/warren-buffett-great-salad-oil-151804700.html ;
   https://firstprinciplesinvesting.substack.com/p/amex-why-warren-buffett-put-40-of ;
   https://www.shortform.com/blog/salad-oil-scandal/ ; https://thereformedbroker.com/2013/11/20/warren-buffett-vs-the-salad-oil-swindler-november-1963/
+
+
+## Corrections applied 6 Oct 2026 (see VERIFY.md)
+- Bankruptcy 19 Nov 1963 (not 18); Kennedy three days later.
+- NYSE pledged up to $12M (advanced ~$9.5M); Haupt's banks deferred ~$24M. Never "$36M from the NYSE".
+- The receipt issuer was American Express Warehousing, Ltd.; Field Warehousing was the sister unit sold May 1963.
+- Still to do before voicing: re-read court quotes, check Miller directly.

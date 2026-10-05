@@ -31,7 +31,7 @@ CHAPTERS = [
         "loan goes bad it can be sold quickly.",
         "So the arrangement looked sound. Allied's oil went into storage, an independent warehouse company counted it "
         "and issued receipts, and those receipts went to the lenders as collateral.",
-        "The warehouse company was a subsidiary of American Express, called American Express Field Warehousing. A "
+        "The warehouse company was a subsidiary of American Express, called American Express Warehousing. A "
         "receipt with that name on it was treated almost like cash.",
     ]),
     dict(id="trick", title="Oil floats", paras=[
@@ -49,27 +49,27 @@ CHAPTERS = [
     dict(id="paper", title="Paper oil", paras=[
         "Receipts became loans, and the loans paid for more receipts. By the usual account, Allied claimed about 900,000 "
         "tons of oil as collateral.",
-        "The tanks held something closer to 55,000 tons.",
-        "It was later reported that at one point Allied's claimed stocks were larger than the government's own figures "
-        "for all the salad oil in the United States.",
+        "The tanks held perhaps 60,000 tons, and not all of that was oil.",
+        "It was later reported that at one point Allied's claimed stocks were as large as the government's own count "
+        "of all the soybean and cottonseed oil in the United States.",
         "No one added that up while the money was flowing. Each lender saw its own receipts, and each receipt looked "
         "fine on its own.",
         "In the end, 51 banks and firms had lent against them.",
     ]),
     dict(id="fall", title="November 1963", paras=[
-        "By 1963 De Angelis was also betting heavily on the price of soybean oil, buying futures contracts through Wall "
+        "By 1963 De Angelis was also betting heavily on the price of soybean and cottonseed oil, buying futures contracts through Wall "
         "Street brokers in the belief that prices would keep rising.",
         "Then the price fell. Allied could not meet its brokers' demands for cash, and in November the whole structure "
         "gave way in a matter of days.",
-        "Allied filed for bankruptcy on the 18th of November, 1963.",
-        "Four days later, President Kennedy was shot in Dallas, and the country's attention went somewhere else entirely.",
+        "Allied filed for bankruptcy on the 19th of November, 1963.",
+        "Three days later, President Kennedy was shot in Dallas, and the country's attention went somewhere else entirely.",
         "Underneath the headlines, a Wall Street brokerage, Ira Haupt and Company, had collapsed. It had financed De "
         "Angelis's trading, and the receipts it held were worthless.",
-        "To protect Haupt's ordinary customers, the New York Stock Exchange stepped in with about 36 million dollars.",
+        "To protect Haupt's ordinary customers, the New York Stock Exchange stepped in with up to 12 million dollars of its members' money, and Haupt's banks agreed to wait for theirs.",
     ]),
     dict(id="checked", title="Who checked?", paras=[
         "When investigators finally opened the tanks and looked all the way down, they found water.",
-        "American Express Field Warehousing faced about 210 million dollars of claims.",
+        "American Express Warehousing faced about 210 million dollars of claims.",
         "It had about 130,000 dollars of assets to meet them.",
         "The parent company's whole business, from charge cards to travellers' cheques, depended on people trusting its "
         "name. American Express eventually settled the claims for about 60 million dollars.",

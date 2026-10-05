@@ -13,6 +13,7 @@ stamp, pen, pin, service bell, room tone); no music, so the owner can add a tren
     python3 sales/reels/make_reels.py render --town Tamworth
     python3 sales/reels/make_reels.py render --sample special   # a sample of the monthly product (SAMPLES)
 """
+import datetime
 import json
 import math
 import os
@@ -118,6 +119,7 @@ def clean_name(name):
 def fit_name(name, maxw=TW - 2 * PX, max_size=300.0, max_h=600.0):
     """Split the name over 1-3 lines and pick the biggest type; avoid lines that end on 'OF', 'THE', '&'."""
     f100 = anton(100)
+    name = re.sub(r"\s*/\s*", " / ", name)              # "PIZZA/PERI PERI HOUSE" is two names too
     if " / " in name:                                   # two names in one shop: one per line, the slash kept on the first
         parts = [x.strip() for x in name.split(" / ")]
         lines = [x + " /" for x in parts[:-1]] + parts[-1:]
@@ -170,8 +172,12 @@ def split_address(shop):
     return ", ".join(parts[:k]).upper(), parts[k].upper(), " · ".join(local + [town.upper()]) + f"  {pc}"
 
 
-def inspected(d):
+def inspected(d, today=None):
+    """The inspection month, unless it is over 18 months old: an old date undersells a rating that still stands."""
     y, m, _ = d.split("-")
+    t = today or datetime.date.today()
+    if (t.year - int(y)) * 12 + t.month - int(m) > 18:
+        return "THE HIGHEST RATING THERE IS"
     return f"INSPECTED {MONTHS[int(m) - 1]} {y}"
 
 

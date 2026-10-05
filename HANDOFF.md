@@ -6,6 +6,36 @@ databases on one account can't be read from the other. Push anything the other s
 Updated 5 Oct 2026 (evening UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "5 Oct, evening: SWITCHING ACCOUNTS"
 just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct: jazz", "2 Oct" and the rest.**
 
+## 6 Oct, early hours: Mac desktop session on the second account (start here)
+- **Direction change (user, 6 Oct):** "is this something places will buy... I want really high quality, impressive
+  products so I can feel confident walking in... like the Google review cards". Claude's answer: the hygiene Reel is NOT
+  the product (templated, no food, owners don't post Reels); it becomes a free extra. **Lead product = the Google
+  review stand** (NFC + QR, the shop's name printed on it), £35 (£49 personalised), then "review care" £25/mo. Prices
+  are Claude's suggestion, NOT approved. Next build: a print-ready stand insert generator (per-shop name, QR fallback),
+  one demo stand, inserts for the first 10 doors. The user must order blanks (sales/research.md A1-A3); not ordered yet.
+- **Alignment agent (6 Oct):** messaging the free Reel then visiting warm replies = about £150-400 in 14 days; £79 is
+  under market (suggested £99 list, first 10 shops £49 first month then £79); at £79 it takes 25 shops for £2k, not 20;
+  pause AI influencer, music packs, channels 4-10, websites, weekly TikTok, paying for Zapier; a Christmas bookings
+  pack for pubs/restaurants (£149-199) is the best alternative. He has built kits three times and walked into 0 shops.
+- **Built tonight:** `sales/reels/contacts.csv` (public Facebook/Instagram/email/phone for the 52 shops: 38 can be
+  messaged, 14 phone or walk-in only; pages were not opened, matches rest on search results) ·
+  `sales/reels/send_sheet.py` -> `send_sheet.html` (per shop: contact link, first-touch message with no price, Reel
+  file, sent tick, notes; batches keep same-street neighbours apart) · `sales/reels/QC_REPORT.md` (two independent
+  passes on the real frames) · `make_reels.py`: names with an unspaced "/" split as two names, and an inspection date
+  over 18 months old is replaced by "THE HIGHEST RATING THERE IS" (11 shops). All 52 Reels are rendered on the Mac in
+  `sales/reels/build/reels/` (gitignored). Nothing has been sent to any shop; the user approves every message.
+- **Money Crimes 03:** `lab/longform/saladoil/VERIFY.md` (44 claims: 34 confirmed, 4 wrong, 4 softened, 2
+  unverifiable). Script and FACTS corrected: bankruptcy 19 Nov 1963 (Kennedy three days later), NYSE up to $12M (not
+  $36M), "American Express Warehousing" (not Field Warehousing), 60,000 tons, soybean and cottonseed. Before voicing:
+  re-read the court quotes and check Miller directly (the file's last section).
+- **This account's connections:** GitHub (gh, Bernigglywiggly, push works), Zapier (same account, the 4 YouTube
+  connections are there, still at the task limit: reads fail too), vidIQ, Notion, Gmail, Canva, Metricool; Higgsfield
+  CLI is signed in on the Mac. Python with skia: `~/youtube/.venv/bin/python` (system python3 has no skia).
+- **Gotchas:** in zsh an unquoted `$IDS` is ONE argument, so `render $IDS` silently rendered Stone instead: pass ids
+  literally and check file times. Terminal `claude` in ~/Bernard was on API billing (cash): use the desktop app.
+- **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends
+  messages; "Tandoor" or "Tandoori" on The Tamworth Tandoor's sign; Zapier reset date (billing page).
+
 ## 5 Oct, evening: SWITCHING ACCOUNTS (weekly limit). Other account: start here
 - **Artifacts live on the old account and the other account can't open them.** Everything is rebuildable from this
   repo. Walk-in Reels: `python3 sales/reels/make_reels.py render --town Stone` (then `--town Newcastle-under-Lyme`,

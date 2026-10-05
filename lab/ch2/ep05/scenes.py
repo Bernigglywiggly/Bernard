@@ -14,6 +14,8 @@ the note returns at the close so the film loops back to its opening tap.
   6 TWO PAYPALS          the button and the pipes; Braintree's "profitable growth"
   7 THE BUTTON'S PROBLEM the February quote; Enrique Lores; one-tap rivals; the verdict; 2.99% vs 3.49%; the note again
 """
+import math
+
 import engine  # noqa: F401  (paths)
 import skia  # noqa: E402
 
@@ -50,7 +52,18 @@ def note(c, b, a=1.0, cut=0.0, cut_label="", glow=0.0, x0=None, y0=None, w=None,
     x0, y0, w, h = x0 or nx, y0 or ny, w or nw, h or nh
     if a <= 0:
         return
+    # the note is never quite still (CRAFT §3): a slow float, and light catching it every few seconds
+    y0 += 5 * math.sin(2 * math.pi * b.t / 4.2)
     c.drawRect(skia.Rect.MakeXYWH(x0, y0, w, h), L.fill("#121A27", 0.95 * a))
+    sweep = (b.t % 3.4) / 0.9
+    if sweep < 1:
+        c.save()
+        c.clipRect(skia.Rect.MakeXYWH(x0, y0, w, h))
+        sx = x0 - 220 + (w + 440) * sweep
+        band = skia.Paint(Shader=skia.GradientShader.MakeLinear([(sx - 110, y0), (sx + 110, y0 + h * 0.4)],
+                                                                [L.col(PAPER, 0), L.col(PAPER, 0.09 * a), L.col(PAPER, 0)]))
+        c.drawRect(skia.Rect.MakeXYWH(x0, y0, w, h), band)
+        c.restore()
     c.drawRect(skia.Rect.MakeXYWH(x0, y0, w, h), L.stroke(PAPER, 2.2, a))
     c.drawRect(skia.Rect.MakeXYWH(x0 + 14, y0 + 14, w - 28, h - 28), L.stroke(BRASS, 1.2, 0.55 * a))
     L.text(c, "$100", x0 + 60, y0 + h * 0.62, L.font(L.SERIF_B, int(h * 0.42)), L.fill(PAPER, a), "left")

@@ -22,8 +22,8 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
 - **Not approved yet (ask, don't assume):** the Reels pack price (suggested £79/mo for 4 Reels), and the older offer
   ladder. The page shows the price as "not set yet". Still unknown: the user's home town ("Here").
 - **How They Profit motion:** `ch2/kit.py` `DRIFT` gives every beat a 3.5% push and a side drift, and `ch2/ledger.py`
-  lets the ruled ground breathe. EP05's first 120 s (estimated timeline): frozen 69% -> 12%, near-still 88% -> 60%. The
-  rest is in-beat object motion, per scene. `DRIFT["push"] = 0` restores the old behaviour for a re-render of EP01-04.
+  lets the ruled ground breathe. EP05's first 120 s (estimated timeline): frozen 69% -> 12%, near-still 88% -> 60%; with the $100
+  note's float and light sweep (`ep05/scenes.py` note()) frozen 9%, near-still 47%. More in-beat motion is per scene. `DRIFT["push"] = 0` restores the old behaviour for a re-render of EP01-04.
 - **Gotcha:** a job list fed to `while read` loses its last line without a trailing newline: 5 of 16 Reels silently
   never rendered. Count the outputs against the list.
 

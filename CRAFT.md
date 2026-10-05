@@ -81,6 +81,11 @@ is fine; **no visible author is what gets flagged.**
   actions. Keep a music-only fallback.
 
 ## Learned on our films
+- 5 Oct (HTP engine): move-then-hold beats measured frozen 69% of EP05's first two minutes. A 3.5% push with a side
+  drift through every beat (`ch2/kit.py` DRIFT) took it to 12%. A slow push still counts as near-still, so each scene
+  also needs something moving inside the beat.
+- 5 Oct (walk-in Reels): a stamp's "coming down" shadow lasted 7 frames and read as a grey disc. An impact lands in 3-4
+  frames; the anticipation should be felt, not seen.
 - 5 Oct: `script_lint.py` (film-critic skill) on our scripts: Amazon (EP04, before CRAFT) 16 flags (number stacks,
   staccato, colon reveals); PayPal (EP05, written to CRAFT) 1; LF04 draft 4. All fixed. Lint every script before voicing.
 - 5 Oct (LF04 draft): the first draft opened with "Not because of X... Because of Y", a banned Claudism, caught on

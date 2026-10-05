@@ -25,6 +25,9 @@ W, H = tl.W, tl.H
 CX, CY = W / 2, 470                                   # the page's centre, above the captions
 ease, seg, lerp, clamp = mg.ease, mg.seg, mg.lerp, mg.clamp
 PAPER, BRASS, RED, MUTED, INK, NAVY = L.PAPER, L.BRASS, L.RED, L.MUTED, L.INK, L.NAVY
+# Every beat's slow camera (CRAFT.md §3: no frozen holds; reading holds get a 3-5% push). EP04 measured near-still 70%
+# of the time with move-then-hold beats. push 0 turns it off for an old episode's re-render.
+DRIFT = dict(push=0.035, side=14.0, rise=8.0)
 
 
 # ---------------------------------------------------------------- beats
@@ -63,7 +66,7 @@ class Board:
     def frame(self, c, t):
         if not self._ready:
             self._resolve()
-        for b in self.beats:
+        for i, b in enumerate(self.beats):
             if b.t0 - 0.05 <= t <= b.t1 + 0.4:
                 a = ease(seg(t, b.t0 - 0.05, b.t0 + 0.3)) * (1 - ease(seg(t, b.t1 - 0.05, b.t1 + 0.35)))
                 if a <= 0.001:
@@ -73,8 +76,19 @@ class Board:
                     c.saveLayerAlpha(None, int(255 * a))
                 else:
                     c.save()
+                self._camera(c, i, b, t)
                 b.draw_fn(c, b)
                 c.restore()
+
+    def _camera(self, c, i, b, t):
+        """A slow push and side drift through the whole beat, alternating sides beat to beat."""
+        if not DRIFT["push"]:
+            return
+        e = 0.5 - 0.5 * math.cos(math.pi * clamp((t - b.t0) / max(1.0, b.t1 - b.t0)))
+        s = 1 + DRIFT["push"] * e
+        c.translate(CX + DRIFT["side"] * (e - 0.5) * (1 if i % 2 else -1), CY - DRIFT["rise"] * e)
+        c.scale(s, s)
+        c.translate(-CX, -CY)
 
     def end(self):
         if not self._ready:

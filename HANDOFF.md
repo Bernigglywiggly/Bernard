@@ -3,8 +3,28 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 4 Oct 2026 (evening UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "4 Oct"
-just below (`STUDIO.md` maps everything), then "3 Oct evening", "3 Oct: jazz", "2 Oct" and the rest.**
+Updated 5 Oct 2026 (afternoon UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "5 Oct, afternoon"
+just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct: jazz", "2 Oct" and the rest.**
+
+## 5 Oct, afternoon: the plan to December, walk-in Reels, HTP drift
+- **The honest plan** (now in Notion QUIT HQ, section "Plan to 31 December"): income is £27/mo (KDP). The quit rule
+  (£2k/mo for 3 months + 3 months saved) can't be met by 31 Dec; December can be the first £2k month (about 20 shops on
+  a £79/mo Reels pack + 1-2 website builds), so quit day is about March-April 2027. That needs ~30 shops walked a week at
+  1 in 10; at 20 a week and 1 in 15 it slips to February. YouTube: £0 before 2027, runs on Claude's time. The user's
+  hours go to walking. QUIT HQ's Ventures rows (walk-in, Kitchen Pass, YouTube) and four Action Plan rows were updated.
+- **Walk-in Reels** (`sales/reels/make_reels.py`, page `sales/reels/page.py` -> `sales/reels/index.html`): an 8 s 9:16
+  Reel per shop rated 5, built from its FSA record: a kitchen ticket on the pass rail under a heat lamp, the name at
+  frame 0, a green "5" rubber stamp at 1.1 s, a pen circle, "find us" with a map pin, the service bell. Synthesised
+  sound, no music, no AI food photos, our own stamp (never the FSA badge). `render [ids] [--town T]` then `manifest`;
+  ~85 s a Reel alone. Stone's 16 are on the **Walk-in Reels** page (link in the next bullet once published). Next towns:
+  `render --town Newcastle-under-Lyme`, `--town Tamworth` (36 more shops rated 5).
+- **Not approved yet (ask, don't assume):** the Reels pack price (suggested £79/mo for 4 Reels), and the older offer
+  ladder. The page shows the price as "not set yet". Still unknown: the user's home town ("Here").
+- **How They Profit motion:** `ch2/kit.py` `DRIFT` gives every beat a 3.5% push and a side drift, and `ch2/ledger.py`
+  lets the ruled ground breathe. EP05's first 120 s (estimated timeline): frozen 69% -> 12%, near-still 88% -> 60%. The
+  rest is in-beat object motion, per scene. `DRIFT["push"] = 0` restores the old behaviour for a re-render of EP01-04.
+- **Gotcha:** a job list fed to `while read` loses its last line without a trailing newline: 5 of 16 Reels silently
+  never rendered. Count the outputs against the list.
 
 ## 4 Oct, evening: 30 of 59 uploads live and scheduled (Route Z works)
 - **Zapier YouTube connections** (one per channel; pass as `connection_id`): The Curve `02f9e902-69d2-8a12-af4b-b4f4cd146eeb`

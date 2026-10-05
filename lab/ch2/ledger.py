@@ -47,7 +47,16 @@ def compose(scenes, t, captions=None):
     """One finished frame: the ruled page, the scene, the furniture, and (optionally) the captions."""
     s = skia.Surface(W, H)
     c = s.getCanvas()
+    # the ruled page breathes very slowly under the scene (about 60 s a cycle), so even a reading hold isn't a still;
+    # off with kit.DRIFT["push"] = 0, like the beats' own drift
+    from ch2 import kit
+    c.save()
+    if kit.DRIFT["push"]:
+        c.translate(W / 2 + 9 * np.sin(t * 0.105), H / 2 + 5 * np.sin(t * 0.083 + 1.0))
+        c.scale(1.012, 1.012)
+        c.translate(-W / 2, -H / 2)
     c.drawImage(background(), 0, 0)
+    c.restore()
     tl.LABELS["mode"] = "draw"
     scenes.frame(c, t)
     furniture(c, t)

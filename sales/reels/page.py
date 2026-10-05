@@ -82,6 +82,7 @@ h1 span {{ color: var(--green); }}
 .ticket q {{ font-family: var(--body); font-size: 15.5px; }}
 .ticket .price {{ color: var(--red); }}
 .list {{ display: grid; gap: 14px; }}
+.wrap > *, .list > * {{ min-width: 0; }}
 .shop {{ background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
         display: grid; grid-template-columns: minmax(0, 9fr) minmax(0, 11fr); gap: 14px; align-items: start; }}
 .shop video {{ width: 100%; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 8px; background: #0F1215; display: block; }}

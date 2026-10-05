@@ -16,7 +16,8 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   Reel per shop rated 5, built from its FSA record: a kitchen ticket on the pass rail under a heat lamp, the name at
   frame 0, a green "5" rubber stamp at 1.1 s, a pen circle, "find us" with a map pin, the service bell. Synthesised
   sound, no music, no AI food photos, our own stamp (never the FSA badge). `render [ids] [--town T]` then `manifest`;
-  ~85 s a Reel alone. Stone's 16 are on the **Walk-in Reels** page (link in the next bullet once published). Next towns:
+  ~85 s a Reel alone. Stone's 16 are on the **Walk-in Reels** page https://claude.ai/artifact/LzxsswDEPP1441T5sUibSb
+  (`downloads` capability; published in two halves under the 64 MB cap; source `sales/reels/index.html`). Next towns:
   `render --town Newcastle-under-Lyme`, `--town Tamworth` (36 more shops rated 5).
 - **Not approved yet (ask, don't assume):** the Reels pack price (suggested £79/mo for 4 Reels), and the older offer
   ladder. The page shows the price as "not set yet". Still unknown: the user's home town ("Here").

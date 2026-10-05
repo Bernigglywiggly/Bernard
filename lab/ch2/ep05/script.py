@@ -47,8 +47,8 @@ LINES = [
     dict(floor=2, id="third", air=1, text="That's more than a third of every payment PayPal handled."),
     # 3 · WHO ELSE GETS PAID: the $100 is cut up
     dict(floor=3, id="networks", cut=True, card=("89¢", "PER $100 · PAID ON TO CARD NETWORKS AND BANKS"),
-         text="From that average, PayPal pays the card networks and banks that actually move the money: about 89 cents of every hundred dollars.",
-         say="From that average, PayPal pays the card networks and banks that actually move the money, about eighty-nine cents of every hundred dollars."),
+         text="From that average, PayPal pays about 89 cents of every hundred dollars to the card networks and banks that actually move the money.",
+         say="From that average, PayPal pays about eighty-nine cents of every hundred dollars to the card networks and banks that actually move the money."),
     dict(floor=3, id="losses", card=("10¢", "PER $100 · LOST TO FRAUD AND UNPAID LOANS"),
          text="About 10 more cents is lost to fraud, to sellers who never deliver, and to loans that aren't repaid.",
          say="About ten more cents is lost to fraud, to sellers who never deliver, and to loans that aren't repaid."),

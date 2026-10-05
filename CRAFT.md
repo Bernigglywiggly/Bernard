@@ -81,6 +81,8 @@ is fine; **no visible author is what gets flagged.**
   actions. Keep a music-only fallback.
 
 ## Learned on our films
+- 5 Oct: `script_lint.py` (film-critic skill) on our scripts: Amazon (EP04, before CRAFT) 16 flags (number stacks,
+  staccato, colon reveals); PayPal (EP05, written to CRAFT) 1; LF04 draft 4. All fixed. Lint every script before voicing.
 - 5 Oct (LF04 draft): the first draft opened with "Not because of X... Because of Y", a banned Claudism, caught on
   re-read. Search every draft for "Not " at the start of a sentence before voicing.
 - 5 Oct (PayPal stills): a bar slice under ~220 px can't hold its label; put it in a callout under the bar

@@ -8,6 +8,12 @@ description: Independent quality gate for this studio's films and Shorts (The Cu
 The builder never grades its own film. This skill measures the render, then hands it to a **fresh** critic. The
 rules it judges against are in `CRAFT.md` at the repo root.
 
+## 0. Before voicing: lint the script
+
+`python3 .claude/skills/film-critic/script_lint.py <script.py>` flags the narration habits CRAFT.md §2 bans ("Not X."
+openers, colon reveals, staccato runs, three numbers in a sentence, stock phrases). Fix every flag or justify it in
+one line; voicing credits are spent after this, not before.
+
 ## 1. Measure (2-3 minutes; save everything under `<film dir>/out/critic/`)
 
 ```bash

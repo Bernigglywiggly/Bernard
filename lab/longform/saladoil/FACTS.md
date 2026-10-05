@@ -48,3 +48,19 @@ business (labelled as his reasoning, from his letters).
 | checked | American Express settled for about $60M (table) and the business depended on trust in the name (framing, ours) | AmEx history; Miller |
 | buyer | Buffett's reasoning (the balance sheet was hit, the customers stayed) "as he and his biographers later told it" | Buffett partnership letters 1964-66; Schroeder, *The Snowball* |
 | buyer | He put "a large part" of the partnership's money into AmEx and it became one of his best early investments | same |
+
+## Secondary checks, 5 Oct (web; still not primary)
+- Bayonne, New Jersey: Yahoo Finance ("Warren Buffett and the Great Salad Oil Swindle") and others. Script now says Bayonne.
+- Loss figure: sources still split ($175M "from 51 investors" in one summary of Wikipedia; $180M elsewhere). The
+  script's "more than 150 million dollars" holds either way.
+- Allied "was supposed to have $150 million in vegetable oil as collateral, but only had $6 million" (Shortform summary):
+  not used; check against Miller.
+- Claimed stocks larger than the USDA's national inventory: also in The Reformed Broker and Shortform (still secondary).
+- Ira Haupt insolvent; NYSE about $36M to protect customers: also in Shortform's summary.
+- Buffett: by June 1964 about $3M in AmEx, 17% of the partnership, its largest holding (Yahoo Finance); later accounts
+  say about 40% of the fund (First Principles Investing, Substack). Script's "a large part" fits both. His reasoning
+  that Wall Street punished AmEx while Main Street kept using it (Yahoo Finance): matches the script's framing.
+- AmEx shares: "dropped 50%" (Yahoo Finance) vs "more than a third" (our table): script keeps "more than a third".
+- Sources: https://finance.yahoo.com/news/warren-buffett-great-salad-oil-151804700.html ;
+  https://firstprinciplesinvesting.substack.com/p/amex-why-warren-buffett-put-40-of ;
+  https://www.shortform.com/blog/salad-oil-scandal/ ; https://thereformedbroker.com/2013/11/20/warren-buffett-vs-the-salad-oil-swindler-november-1963/

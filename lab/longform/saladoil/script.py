@@ -13,7 +13,7 @@ pointed where it was told to look. Narration: professor's pace, one number per s
 """
 CHAPTERS = [
     dict(id="open", title="The top of the tank", paras=[
-        "New Jersey, in the early 1960s. An inspector climbs a ladder on the side of a storage tank the size of a house, "
+        "Bayonne, New Jersey, in the early 1960s. An inspector climbs a ladder on the side of a storage tank the size of a house, "
         "opens the hatch at the top, and lowers a sampling tube into the dark.",
         "What comes back up is vegetable oil, thick and golden, exactly what the paperwork says should be there. He "
         "writes it down, signs the form, and walks over to the next tank.",

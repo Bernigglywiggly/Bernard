@@ -20,8 +20,9 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   files directly. If it still fails, Save works through the `downloads` capability.
 - **Connectors the other account needs** (same user accounts behind them): Zapier (YouTube connection ids below),
   Higgsfield (voice; TikTok publishing), Notion (QUIT HQ), GitHub.
-- **Scheduled upload retry** `trig_019aN3CvKVUt2nuTjs94xCQu` (5 Oct 21:20 UTC) belongs to the old account's session.
-  Don't assume it ran: compare `channel/uploads.done.json` with `channel/uploads.json` and upload what's missing.
+- **Scheduled upload retry** `trig_019aN3CvKVUt2nuTjs94xCQu` ran at 5 Oct 21:20 UTC: Zapier still answers "reached its
+  task limit for the current billing period", so nothing uploaded (29 left). Once the user upgrades Zapier, compare
+  `channel/uploads.done.json` with `channel/uploads.json` and upload what's missing (about 10 a channel a day).
 - **Next work, in order:** build the kit for whichever service the user picks; voice HTP 05 PayPal when Higgsfield
   renews (needs ~36 credits, had 26.72); verify Money Crimes 03 against primary sources (`lab/longform/saladoil/`),
   then voice; The Curve LF04.

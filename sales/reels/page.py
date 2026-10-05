@@ -3,6 +3,7 @@
 
     python3 sales/reels/page.py                 # every town with rendered Reels, plus the monthly sample
     python3 sales/reels/page.py --files Stone   # print only that town's files (publishes are capped at 64 MB)
+    python3 sales/reels/page.py --towns Stone,Tamworth   # list only these towns (one still rendering stays off)
 """
 import html
 import json
@@ -50,15 +51,15 @@ def card(r):
 </article>"""
 
 
-def load():
+def load(only=None):
     rows = json.load(open(os.path.join(HERE, "build", "reels", "manifest.json")))
-    towns = [t for t in TOWNS if any(r["town"] == t for r in rows)]
+    towns = [t for t in TOWNS if any(r["town"] == t for r in rows) and (not only or t in only)]
     sample = next((r for r in rows if r["town"] == "Sample"), None)
     return rows, towns, sample
 
 
-def build():
-    rows, towns, sample = load()
+def build(only=None):
+    rows, towns, sample = load(only)
     n = sum(1 for r in rows if r["town"] in towns)
     nav = "".join(f'<a href="#{anchor(t)}">{e(t.split("-")[0])} <b>{sum(r["town"] == t for r in rows)}</b></a>' for t in towns)
     sections = "".join(f"""
@@ -250,11 +251,12 @@ def files_for(rows, keep):
 
 
 if __name__ == "__main__":
-    rows, towns, sample = build()
+    only = sys.argv[sys.argv.index("--towns") + 1].split(",") if "--towns" in sys.argv else None
+    rows, towns, sample = build(only)
     print(os.path.join(HERE, "index.html"), sum(r["town"] in towns for r in rows), "Reels in", ", ".join(towns),
           "+ sample" if sample else "")
     if "--files" in sys.argv:
-        want = sys.argv[sys.argv.index("--files") + 1:]
+        want = [a for a in sys.argv[sys.argv.index("--files") + 1:] if not a.startswith("--")][:2]
         fs = files_for(rows, lambda r: r["town"] in want)
         print(round(sum(os.path.getsize(p) for p in fs.values()) / 1e6, 1), "MB")
         print(json.dumps(fs))

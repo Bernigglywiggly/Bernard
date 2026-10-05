@@ -142,12 +142,26 @@ def fit_name(name, maxw=TW - 2 * PX, max_size=300.0, max_h=600.0):
     return best[1], best[2]
 
 
+UNIT = re.compile(r"^(unit|units|shop|flat|suite)\b", re.I)
+
+
 def split_address(shop):
+    """(line above the street, the street, locality + town + postcode). The register spells towns several ways
+    ("Newcastle Under Lyme"), may lead with the business's own name, and may add a locality after the street."""
     pc, town = shop["postcode"], shop["town"]
-    drop = {pc.lower(), town.lower(), "staffordshire", "staffs", shop["name"].lower()}
-    rest = [p.strip() for p in shop["address"].split(",") if p.strip() and p.strip().lower() not in drop]
-    street = rest[-1] if rest else town
-    return ", ".join(rest[:-1]).upper(), street.upper(), f"{town.upper()}  {pc}"
+    norm = lambda x: re.sub(r"[^a-z]", "", x.lower())  # noqa: E731
+    drop = {norm(pc), norm(town), "staffordshire", "staffs"}
+    parts = [p.strip() for p in shop["address"].split(",") if p.strip() and norm(p) not in drop]
+    words = lambda x: {w for w in re.findall(r"[a-z]+", x.lower()) if len(w) > 3}  # noqa: E731
+    if len(parts) > 1 and not re.search(r"\d", parts[0]) and words(parts[0]) & words(shop["name"]):
+        parts = parts[1:]                                  # "Walton Fish Bar, 5 Eccleshall Road"
+    if not parts:
+        return "", town.upper(), f"{town.upper()}  {pc}"
+    num = [i for i, p in enumerate(parts) if re.search(r"\d", p) and not UNIT.match(p)]
+    unit = [i for i, p in enumerate(parts) if UNIT.match(p)]
+    k = num[-1] if num else (unit[-1] + 1 if unit and unit[-1] + 1 < len(parts) else len(parts) - 1)
+    local = [p.upper() for p in parts[k + 1:]]
+    return ", ".join(parts[:k]).upper(), parts[k].upper(), " · ".join(local + [town.upper()]) + f"  {pc}"
 
 
 def inspected(d):

@@ -24,8 +24,10 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
 - **How They Profit motion:** `ch2/kit.py` `DRIFT` gives every beat a 3.5% push and a side drift, and `ch2/ledger.py`
   lets the ruled ground breathe. EP05's first 120 s (estimated timeline): frozen 69% -> 12%, near-still 88% -> 60%; with the $100
   note's float and light sweep (`ep05/scenes.py` note()) frozen 9%, near-still 47%. More in-beat motion is per scene. `DRIFT["push"] = 0` restores the old behaviour for a re-render of EP01-04.
-- **Gotcha:** a job list fed to `while read` loses its last line without a trailing newline: 5 of 16 Reels silently
-  never rendered. Count the outputs against the list.
+- **Gotchas:** a job list fed to `while read` loses its last line without a trailing newline: 5 of 16 Reels silently
+  never rendered. Count the outputs against the list. The FSA register spells towns its own way ("Newcastle Under
+  Lyme"), leads some addresses with the business name and adds localities ("Kettlebrook"): `split_address` handles these
+  now, but look at a contact sheet of every new town's "find us" frame (t=4.3 s) before publishing.
 
 ## 4 Oct, evening: 30 of 59 uploads live and scheduled (Route Z works)
 - **Zapier YouTube connections** (one per channel; pass as `connection_id`): The Curve `02f9e902-69d2-8a12-af4b-b4f4cd146eeb`

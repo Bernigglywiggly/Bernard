@@ -33,8 +33,9 @@ def card(r):
            f"this with your own dishes, just reply here.")
     return f"""
 <article class="shop" id="r{r['id']}" data-id="{r['id']}">
-  <video controls playsinline preload="none" poster="reels/{e(r['poster'])}" src="reels/{e(r['file'])}"
+  <div class="vid"><video playsinline preload="none" poster="reels/{e(r['poster'])}" data-src="reels/{e(r['file'])}"
          aria-label="Demo Reel for {e(r['name'])}"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for {e(r['name'])}">&#9654;</button></div>
   <div class="info">
     <p class="stub">{f"No. {r['order']} on the route" if r['order'] < 90 else "Off the main route"}</p>
     <h3>{e(r['name'])}</h3>
@@ -70,8 +71,9 @@ def build(only=None):
   </section>""" for t in towns)
     monthly = "" if not sample else f"""
   <section class="sample" aria-labelledby="h-monthly">
-    <video controls playsinline preload="none" poster="reels/{e(sample['poster'])}" src="reels/{e(sample['file'])}"
+    <div class="vid"><video playsinline preload="none" poster="reels/{e(sample['poster'])}" data-src="reels/{e(sample['file'])}"
            aria-label="Sample of a monthly Reel"></video>
+      <button type="button" class="play" data-play aria-label="Play the sample Reel">&#9654;</button></div>
     <div class="info">
       <p class="stub">Sample · not a real shop</p>
       <h2 id="h-monthly">What the monthly ones look like</h2>
@@ -132,6 +134,10 @@ details.ticket dd {{ margin: 2px 0 0; font-family: var(--body); font-size: 15px;
 .shop, .sample {{ background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
         display: grid; grid-template-columns: minmax(0, 9fr) minmax(0, 11fr); gap: 14px; align-items: start; }}
 .shop video, .sample video {{ width: 100%; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 8px; background: #0F1215; display: block; }}
+.vid {{ position: relative; min-width: 0; }}
+.vid .play {{ position: absolute; inset: 0; margin: auto; width: 68px; height: 68px; min-height: 0; padding: 0; border-radius: 50%;
+             background: rgba(15, 18, 21, .62); border: 2px solid #FFFFFF; color: #FFFFFF; font-size: 26px; line-height: 1; }}
+.vid.on .play {{ display: none; }}
 .sample h2 {{ font-size: clamp(24px, 6vw, 32px); }}
 .sample p {{ margin: 0; font-size: 15px; }}
 .info {{ display: grid; gap: 8px; min-width: 0; }}
@@ -214,6 +220,24 @@ a {{ color: var(--green); text-underline-offset: 3px; }}
 </div>
 <script>
 const dlp = (window.claude && window.claude.use) ? window.claude.use("downloads") : Promise.resolve(null);
+// Phones (the iPhone app especially) may refuse to stream a video file straight from the page, so the first tap
+// fetches the whole Reel (3-4 MB) and plays it from memory; if that fails it falls back to the file itself.
+async function play(btn) {{
+  const box = btn.closest(".vid"), v = box.querySelector("video");
+  const out = box.parentElement.querySelector(".note");
+  if (v.dataset.ready) {{ v.play().catch(() => {{}}); return; }}
+  btn.textContent = "…"; btn.disabled = true;
+  try {{
+    const r = await fetch(v.dataset.src); if (!r.ok) throw new Error(r.status);
+    v.src = URL.createObjectURL(await r.blob());
+  }} catch (e) {{ v.src = v.dataset.src; }}
+  v.dataset.ready = "1"; v.controls = true; box.classList.add("on");
+  v.addEventListener("error", () => {{
+    if (v.src.startsWith("blob:")) {{ v.src = v.dataset.src; v.play().catch(() => {{}}); }}
+    else say(out, "This phone won't play it here. Tap Save and watch it in Photos.");
+  }});
+  try {{ await v.play(); }} catch (e) {{ say(out, "Ready: tap the video to play it."); }}
+}}
 const say = (el, s) => {{ if (el) el.textContent = s; }};
 const me = document.getElementById("me");
 try {{ me.value = localStorage.getItem("wr-me") || ""; }} catch (e) {{}}
@@ -221,6 +245,7 @@ me.addEventListener("input", () => {{ try {{ localStorage.setItem("wr-me", me.va
 const text = id => document.getElementById("m" + id).dataset.tpl.replace("{{me}}", me.value.trim() || "me");
 document.addEventListener("click", async ev => {{
   const b = ev.target.closest("button"); if (!b) return;
+  if (b.dataset.play !== undefined) {{ play(b); return; }}
   const out = b.closest(".shop")?.querySelector(".note");
   if (b.dataset.copy) {{
     const s = text(b.dataset.copy);

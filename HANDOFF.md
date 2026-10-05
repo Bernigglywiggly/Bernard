@@ -3,8 +3,28 @@
 This repo is a scratch space (the DeepSeek-V3 files are unrelated). The user works across **two Claude accounts**
 (a Mac desktop session and cloud sessions). They share **nothing but this GitHub repo**: artifacts, Notion and
 databases on one account can't be read from the other. Push anything the other side needs here.
-Updated 5 Oct 2026 (afternoon UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "5 Oct, afternoon"
+Updated 5 Oct 2026 (evening UTC), cloud session on branch `claude/funny-newton-gd9w8v`. **Start with "5 Oct, evening: SWITCHING ACCOUNTS"
 just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct: jazz", "2 Oct" and the rest.**
+
+## 5 Oct, evening: SWITCHING ACCOUNTS (weekly limit). Other account: start here
+- **Artifacts live on the old account and the other account can't open them.** Everything is rebuildable from this
+  repo. Walk-in Reels: `python3 sales/reels/make_reels.py render --town Stone` (then `--town Newcastle-under-Lyme`,
+  `--town Tamworth`, `--sample special`), `manifest`, `python3 sales/reels/page.py`, then publish
+  `sales/reels/index.html` with `capabilities {"downloads": true}` and the files from `page.py --files <Town>`, in
+  batches under 64 MB (52 Reels ≈ 200 MB, ~85 s each, run 2-3 at a time). Or the user shares the old page
+  (https://claude.ai/artifact/LzxsswDEPP1441T5sUibSb) to the other account from its Share menu.
+- **Waiting on the user (ask first thing):** (1) the Reels pack price (suggested £79/mo for 4); (2) which extra
+  service to lead with, from `sales/OPTIONS.md` (Claude recommends #1, the photo shoot + delivery-app glow-up);
+  (3) their home town; (4) Zapier upgrade + YouTube phone verification.
+- **Phone playback:** the page now loads each Reel on tap (fetch -> blob) because the iPhone app wouldn't play the
+  files directly. If it still fails, Save works through the `downloads` capability.
+- **Connectors the other account needs** (same user accounts behind them): Zapier (YouTube connection ids below),
+  Higgsfield (voice; TikTok publishing), Notion (QUIT HQ), GitHub.
+- **Scheduled upload retry** `trig_019aN3CvKVUt2nuTjs94xCQu` (5 Oct 21:20 UTC) belongs to the old account's session.
+  Don't assume it ran: compare `channel/uploads.done.json` with `channel/uploads.json` and upload what's missing.
+- **Next work, in order:** build the kit for whichever service the user picks; voice HTP 05 PayPal when Higgsfield
+  renews (needs ~36 credits, had 26.72); verify Money Crimes 03 against primary sources (`lab/longform/saladoil/`),
+  then voice; The Curve LF04.
 
 ## 5 Oct, afternoon: the plan to December, walk-in Reels, HTP drift
 - **The honest plan** (now in Notion QUIT HQ, section "Plan to 31 December"): income is £27/mo (KDP). The quit rule

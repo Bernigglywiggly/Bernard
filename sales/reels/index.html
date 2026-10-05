@@ -50,6 +50,10 @@ details.ticket dd { margin: 2px 0 0; font-family: var(--body); font-size: 15px; 
 .shop, .sample { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
         display: grid; grid-template-columns: minmax(0, 9fr) minmax(0, 11fr); gap: 14px; align-items: start; }
 .shop video, .sample video { width: 100%; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 8px; background: #0F1215; display: block; }
+.vid { position: relative; min-width: 0; }
+.vid .play { position: absolute; inset: 0; margin: auto; width: 68px; height: 68px; min-height: 0; padding: 0; border-radius: 50%;
+             background: rgba(15, 18, 21, .62); border: 2px solid #FFFFFF; color: #FFFFFF; font-size: 26px; line-height: 1; }
+.vid.on .play { display: none; }
 .sample h2 { font-size: clamp(24px, 6vw, 32px); }
 .sample p { margin: 0; font-size: 15px; }
 .info { display: grid; gap: 8px; min-width: 0; }
@@ -126,8 +130,9 @@ a { color: var(--green); text-underline-offset: 3px; }
     </ul>
   </section>
   <section class="sample" aria-labelledby="h-monthly">
-    <video controls playsinline preload="none" poster="reels/sam00_your_takeaway.jpg" src="reels/sam00_your_takeaway.mp4"
+    <div class="vid"><video playsinline preload="none" poster="reels/sam00_your_takeaway.jpg" data-src="reels/sam00_your_takeaway.mp4"
            aria-label="Sample of a monthly Reel"></video>
+      <button type="button" class="play" data-play aria-label="Play the sample Reel">&#9654;</button></div>
     <div class="info">
       <p class="stub">Sample · not a real shop</p>
       <h2 id="h-monthly">What the monthly ones look like</h2>
@@ -140,8 +145,9 @@ a { color: var(--green); text-underline-offset: 3px; }
     <h2 id="h-stone">Stone</h2>
     <div class="list">
 <article class="shop" id="r1195796" data-id="1195796">
-  <video controls playsinline preload="none" poster="reels/sto01_crown_of_india.jpg" src="reels/sto01_crown_of_india.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto01_crown_of_india.jpg" data-src="reels/sto01_crown_of_india.mp4"
          aria-label="Demo Reel for Crown Of India"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Crown Of India">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 1 on the route</p>
     <h3>Crown Of India</h3>
@@ -157,8 +163,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1196000" data-id="1196000">
-  <video controls playsinline preload="none" poster="reels/sto02_arcadia_tea_shop.jpg" src="reels/sto02_arcadia_tea_shop.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto02_arcadia_tea_shop.jpg" data-src="reels/sto02_arcadia_tea_shop.mp4"
          aria-label="Demo Reel for Arcadia Tea Shop"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Arcadia Tea Shop">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 2 on the route</p>
     <h3>Arcadia Tea Shop</h3>
@@ -174,8 +181,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195354" data-id="1195354">
-  <video controls playsinline preload="none" poster="reels/sto03_bear_coffee_company_ltd.jpg" src="reels/sto03_bear_coffee_company_ltd.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto03_bear_coffee_company_ltd.jpg" data-src="reels/sto03_bear_coffee_company_ltd.mp4"
          aria-label="Demo Reel for Bear Coffee Company Ltd"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Bear Coffee Company Ltd">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 3 on the route</p>
     <h3>Bear Coffee Company Ltd</h3>
@@ -191,8 +199,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195901" data-id="1195901">
-  <video controls playsinline preload="none" poster="reels/sto07_little_seeds_bar_kitchen.jpg" src="reels/sto07_little_seeds_bar_kitchen.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto07_little_seeds_bar_kitchen.jpg" data-src="reels/sto07_little_seeds_bar_kitchen.mp4"
          aria-label="Demo Reel for Little Seeds Bar &amp; Kitchen"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Little Seeds Bar &amp; Kitchen">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 7 on the route</p>
     <h3>Little Seeds Bar &amp; Kitchen</h3>
@@ -208,8 +217,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195552" data-id="1195552">
-  <video controls playsinline preload="none" poster="reels/sto08_the_ovilash_restaurant.jpg" src="reels/sto08_the_ovilash_restaurant.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto08_the_ovilash_restaurant.jpg" data-src="reels/sto08_the_ovilash_restaurant.mp4"
          aria-label="Demo Reel for The Ovilash Restaurant"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for The Ovilash Restaurant">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 8 on the route</p>
     <h3>The Ovilash Restaurant</h3>
@@ -225,8 +235,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195891" data-id="1195891">
-  <video controls playsinline preload="none" poster="reels/sto10_stonefield_fish_bar.jpg" src="reels/sto10_stonefield_fish_bar.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto10_stonefield_fish_bar.jpg" data-src="reels/sto10_stonefield_fish_bar.mp4"
          aria-label="Demo Reel for Stonefield Fish Bar"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Stonefield Fish Bar">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 10 on the route</p>
     <h3>Stonefield Fish Bar</h3>
@@ -242,8 +253,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195685" data-id="1195685">
-  <video controls playsinline preload="none" poster="reels/sto11_proven_pizzeria.jpg" src="reels/sto11_proven_pizzeria.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto11_proven_pizzeria.jpg" data-src="reels/sto11_proven_pizzeria.mp4"
          aria-label="Demo Reel for Proven Pizzeria"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Proven Pizzeria">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 11 on the route</p>
     <h3>Proven Pizzeria</h3>
@@ -259,8 +271,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195166" data-id="1195166">
-  <video controls playsinline preload="none" poster="reels/sto12_the_secret_tea_room.jpg" src="reels/sto12_the_secret_tea_room.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto12_the_secret_tea_room.jpg" data-src="reels/sto12_the_secret_tea_room.mp4"
          aria-label="Demo Reel for The Secret Tea Room"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for The Secret Tea Room">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 12 on the route</p>
     <h3>The Secret Tea Room</h3>
@@ -276,8 +289,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195940" data-id="1195940">
-  <video controls playsinline preload="none" poster="reels/sto13_pasta_di_piazza.jpg" src="reels/sto13_pasta_di_piazza.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto13_pasta_di_piazza.jpg" data-src="reels/sto13_pasta_di_piazza.mp4"
          aria-label="Demo Reel for Pasta Di Piazza"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Pasta Di Piazza">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 13 on the route</p>
     <h3>Pasta Di Piazza</h3>
@@ -293,8 +307,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1889467" data-id="1889467">
-  <video controls playsinline preload="none" poster="reels/sto16_heaven_restaurant_bar_grill.jpg" src="reels/sto16_heaven_restaurant_bar_grill.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto16_heaven_restaurant_bar_grill.jpg" data-src="reels/sto16_heaven_restaurant_bar_grill.mp4"
          aria-label="Demo Reel for Heaven Restaurant Bar &amp; Grill"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Heaven Restaurant Bar &amp; Grill">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 16 on the route</p>
     <h3>Heaven Restaurant Bar &amp; Grill</h3>
@@ -310,8 +325,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195735" data-id="1195735">
-  <video controls playsinline preload="none" poster="reels/sto17_stone_kebab_house.jpg" src="reels/sto17_stone_kebab_house.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto17_stone_kebab_house.jpg" data-src="reels/sto17_stone_kebab_house.mp4"
          aria-label="Demo Reel for Stone Kebab House"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Stone Kebab House">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 17 on the route</p>
     <h3>Stone Kebab House</h3>
@@ -327,8 +343,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195941" data-id="1195941">
-  <video controls playsinline preload="none" poster="reels/sto18_valleys_fast_food.jpg" src="reels/sto18_valleys_fast_food.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto18_valleys_fast_food.jpg" data-src="reels/sto18_valleys_fast_food.mp4"
          aria-label="Demo Reel for Valleys Fast Food"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Valleys Fast Food">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 18 on the route</p>
     <h3>Valleys Fast Food</h3>
@@ -344,8 +361,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1195498" data-id="1195498">
-  <video controls playsinline preload="none" poster="reels/sto21_cavalli.jpg" src="reels/sto21_cavalli.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto21_cavalli.jpg" data-src="reels/sto21_cavalli.mp4"
          aria-label="Demo Reel for Cavalli"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Cavalli">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 21 on the route</p>
     <h3>Cavalli</h3>
@@ -361,8 +379,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1196193" data-id="1196193">
-  <video controls playsinline preload="none" poster="reels/sto22_piccolo_s_pizza_kebab_land.jpg" src="reels/sto22_piccolo_s_pizza_kebab_land.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto22_piccolo_s_pizza_kebab_land.jpg" data-src="reels/sto22_piccolo_s_pizza_kebab_land.mp4"
          aria-label="Demo Reel for Piccolo&#x27;s Pizza &amp; Kebab Land"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Piccolo&#x27;s Pizza &amp; Kebab Land">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 22 on the route</p>
     <h3>Piccolo&#x27;s Pizza &amp; Kebab Land</h3>
@@ -378,8 +397,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1196110" data-id="1196110">
-  <video controls playsinline preload="none" poster="reels/sto23_walton_fish_bar.jpg" src="reels/sto23_walton_fish_bar.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto23_walton_fish_bar.jpg" data-src="reels/sto23_walton_fish_bar.mp4"
          aria-label="Demo Reel for Walton Fish Bar"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Walton Fish Bar">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 23 on the route</p>
     <h3>Walton Fish Bar</h3>
@@ -395,8 +415,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1557000" data-id="1557000">
-  <video controls playsinline preload="none" poster="reels/sto25_the_roll_in_stone.jpg" src="reels/sto25_the_roll_in_stone.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/sto25_the_roll_in_stone.jpg" data-src="reels/sto25_the_roll_in_stone.mp4"
          aria-label="Demo Reel for The Roll in Stone"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for The Roll in Stone">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 25 on the route</p>
     <h3>The Roll in Stone</h3>
@@ -417,8 +438,9 @@ a { color: var(--green); text-underline-offset: 3px; }
     <h2 id="h-newcastle">Newcastle-under-Lyme</h2>
     <div class="list">
 <article class="shop" id="r85714" data-id="85714">
-  <video controls playsinline preload="none" poster="reels/new01_pizzarama.jpg" src="reels/new01_pizzarama.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new01_pizzarama.jpg" data-src="reels/new01_pizzarama.mp4"
          aria-label="Demo Reel for PIZZARAMA"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for PIZZARAMA">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 1 on the route</p>
     <h3>PIZZARAMA</h3>
@@ -434,8 +456,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1799173" data-id="1799173">
-  <video controls playsinline preload="none" poster="reels/new02_fresco_cafe_eatery.jpg" src="reels/new02_fresco_cafe_eatery.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new02_fresco_cafe_eatery.jpg" data-src="reels/new02_fresco_cafe_eatery.mp4"
          aria-label="Demo Reel for FRESCO CAFE &amp; EATERY"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for FRESCO CAFE &amp; EATERY">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 2 on the route</p>
     <h3>FRESCO CAFE &amp; EATERY</h3>
@@ -451,8 +474,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1822945" data-id="1822945">
-  <video controls playsinline preload="none" poster="reels/new03_pizza_bar.jpg" src="reels/new03_pizza_bar.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new03_pizza_bar.jpg" data-src="reels/new03_pizza_bar.mp4"
          aria-label="Demo Reel for PIZZA BAR"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for PIZZA BAR">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 3 on the route</p>
     <h3>PIZZA BAR</h3>
@@ -468,8 +492,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1578883" data-id="1578883">
-  <video controls playsinline preload="none" poster="reels/new04_mado_cafe.jpg" src="reels/new04_mado_cafe.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new04_mado_cafe.jpg" data-src="reels/new04_mado_cafe.mp4"
          aria-label="Demo Reel for MADO CAFE"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for MADO CAFE">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 4 on the route</p>
     <h3>MADO CAFE</h3>
@@ -485,8 +510,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1889228" data-id="1889228">
-  <video controls playsinline preload="none" poster="reels/new06_the_midway_cafe.jpg" src="reels/new06_the_midway_cafe.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new06_the_midway_cafe.jpg" data-src="reels/new06_the_midway_cafe.mp4"
          aria-label="Demo Reel for THE MIDWAY CAFE"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for THE MIDWAY CAFE">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 6 on the route</p>
     <h3>THE MIDWAY CAFE</h3>
@@ -502,8 +528,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r83640" data-id="83640">
-  <video controls playsinline preload="none" poster="reels/new10_shaws.jpg" src="reels/new10_shaws.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new10_shaws.jpg" data-src="reels/new10_shaws.mp4"
          aria-label="Demo Reel for SHAWS"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for SHAWS">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 10 on the route</p>
     <h3>SHAWS</h3>
@@ -519,8 +546,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r701262" data-id="701262">
-  <video controls playsinline preload="none" poster="reels/new11_the_foyer.jpg" src="reels/new11_the_foyer.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new11_the_foyer.jpg" data-src="reels/new11_the_foyer.mp4"
          aria-label="Demo Reel for THE FOYER"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for THE FOYER">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 11 on the route</p>
     <h3>THE FOYER</h3>
@@ -536,8 +564,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1722944" data-id="1722944">
-  <video controls playsinline preload="none" poster="reels/new12_nel.jpg" src="reels/new12_nel.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new12_nel.jpg" data-src="reels/new12_nel.mp4"
          aria-label="Demo Reel for NEL"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for NEL">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 12 on the route</p>
     <h3>NEL</h3>
@@ -553,8 +582,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1776097" data-id="1776097">
-  <video controls playsinline preload="none" poster="reels/new13_cuisine_cart.jpg" src="reels/new13_cuisine_cart.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new13_cuisine_cart.jpg" data-src="reels/new13_cuisine_cart.mp4"
          aria-label="Demo Reel for CUISINE CART"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for CUISINE CART">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 13 on the route</p>
     <h3>CUISINE CART</h3>
@@ -570,8 +600,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1870542" data-id="1870542">
-  <video controls playsinline preload="none" poster="reels/new14_cheesious_pizza_peri_peri_house.jpg" src="reels/new14_cheesious_pizza_peri_peri_house.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new14_cheesious_pizza_peri_peri_house.jpg" data-src="reels/new14_cheesious_pizza_peri_peri_house.mp4"
          aria-label="Demo Reel for CHEESIOUS PIZZA/PERI PERI HOUSE"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for CHEESIOUS PIZZA/PERI PERI HOUSE">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 14 on the route</p>
     <h3>CHEESIOUS PIZZA/PERI PERI HOUSE</h3>
@@ -587,8 +618,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1749342" data-id="1749342">
-  <video controls playsinline preload="none" poster="reels/new15_dancing_octopus.jpg" src="reels/new15_dancing_octopus.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new15_dancing_octopus.jpg" data-src="reels/new15_dancing_octopus.mp4"
          aria-label="Demo Reel for DANCING OCTOPUS"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for DANCING OCTOPUS">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 15 on the route</p>
     <h3>DANCING OCTOPUS</h3>
@@ -604,8 +636,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1832506" data-id="1832506">
-  <video controls playsinline preload="none" poster="reels/new16_mo_s_kitchen.jpg" src="reels/new16_mo_s_kitchen.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new16_mo_s_kitchen.jpg" data-src="reels/new16_mo_s_kitchen.mp4"
          aria-label="Demo Reel for MO&#x27;S KITCHEN"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for MO&#x27;S KITCHEN">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 16 on the route</p>
     <h3>MO&#x27;S KITCHEN</h3>
@@ -621,8 +654,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1353828" data-id="1353828">
-  <video controls playsinline preload="none" poster="reels/new17_tasty_wok.jpg" src="reels/new17_tasty_wok.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new17_tasty_wok.jpg" data-src="reels/new17_tasty_wok.mp4"
          aria-label="Demo Reel for TASTY WOK"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for TASTY WOK">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 17 on the route</p>
     <h3>TASTY WOK</h3>
@@ -638,8 +672,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r85327" data-id="85327">
-  <video controls playsinline preload="none" poster="reels/new19_castle_oatcakes.jpg" src="reels/new19_castle_oatcakes.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new19_castle_oatcakes.jpg" data-src="reels/new19_castle_oatcakes.mp4"
          aria-label="Demo Reel for CASTLE OATCAKES"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for CASTLE OATCAKES">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 19 on the route</p>
     <h3>CASTLE OATCAKES</h3>
@@ -655,8 +690,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1828058" data-id="1828058">
-  <video controls playsinline preload="none" poster="reels/new22_newcastle_kebab_house.jpg" src="reels/new22_newcastle_kebab_house.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new22_newcastle_kebab_house.jpg" data-src="reels/new22_newcastle_kebab_house.mp4"
          aria-label="Demo Reel for NEWCASTLE KEBAB HOUSE"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for NEWCASTLE KEBAB HOUSE">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 22 on the route</p>
     <h3>NEWCASTLE KEBAB HOUSE</h3>
@@ -672,8 +708,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1722943" data-id="1722943">
-  <video controls playsinline preload="none" poster="reels/new25_the_one.jpg" src="reels/new25_the_one.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new25_the_one.jpg" data-src="reels/new25_the_one.mp4"
          aria-label="Demo Reel for THE ONE"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for THE ONE">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 25 on the route</p>
     <h3>THE ONE</h3>
@@ -689,8 +726,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1877918" data-id="1877918">
-  <video controls playsinline preload="none" poster="reels/new28_favourite_chinese_takeaway.jpg" src="reels/new28_favourite_chinese_takeaway.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new28_favourite_chinese_takeaway.jpg" data-src="reels/new28_favourite_chinese_takeaway.mp4"
          aria-label="Demo Reel for FAVOURITE CHINESE TAKEAWAY"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for FAVOURITE CHINESE TAKEAWAY">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 28 on the route</p>
     <h3>FAVOURITE CHINESE TAKEAWAY</h3>
@@ -706,8 +744,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1004870" data-id="1004870">
-  <video controls playsinline preload="none" poster="reels/new30_golden_wok.jpg" src="reels/new30_golden_wok.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new30_golden_wok.jpg" data-src="reels/new30_golden_wok.mp4"
          aria-label="Demo Reel for GOLDEN WOK"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for GOLDEN WOK">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 30 on the route</p>
     <h3>GOLDEN WOK</h3>
@@ -723,8 +762,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1050314" data-id="1050314">
-  <video controls playsinline preload="none" poster="reels/new31_chilli_jacks.jpg" src="reels/new31_chilli_jacks.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/new31_chilli_jacks.jpg" data-src="reels/new31_chilli_jacks.mp4"
          aria-label="Demo Reel for CHILLI JACKS"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for CHILLI JACKS">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 31 on the route</p>
     <h3>CHILLI JACKS</h3>
@@ -745,8 +785,9 @@ a { color: var(--green); text-underline-offset: 3px; }
     <h2 id="h-tamworth">Tamworth</h2>
     <div class="list">
 <article class="shop" id="r1908321" data-id="1908321">
-  <video controls playsinline preload="none" poster="reels/tam02_brew.jpg" src="reels/tam02_brew.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam02_brew.jpg" data-src="reels/tam02_brew.mp4"
          aria-label="Demo Reel for Brew"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Brew">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 2 on the route</p>
     <h3>Brew</h3>
@@ -762,8 +803,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1692952" data-id="1692952">
-  <video controls playsinline preload="none" poster="reels/tam04_phat_bites.jpg" src="reels/tam04_phat_bites.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam04_phat_bites.jpg" data-src="reels/tam04_phat_bites.mp4"
          aria-label="Demo Reel for Phat Bites"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Phat Bites">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 4 on the route</p>
     <h3>Phat Bites</h3>
@@ -779,8 +821,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1589615" data-id="1589615">
-  <video controls playsinline preload="none" poster="reels/tam06_china_aroma.jpg" src="reels/tam06_china_aroma.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam06_china_aroma.jpg" data-src="reels/tam06_china_aroma.mp4"
          aria-label="Demo Reel for China Aroma"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for China Aroma">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 6 on the route</p>
     <h3>China Aroma</h3>
@@ -796,8 +839,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1589630" data-id="1589630">
-  <video controls playsinline preload="none" poster="reels/tam07_tamworth_spice_kiko_sushi.jpg" src="reels/tam07_tamworth_spice_kiko_sushi.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam07_tamworth_spice_kiko_sushi.jpg" data-src="reels/tam07_tamworth_spice_kiko_sushi.mp4"
          aria-label="Demo Reel for Tamworth Spice / Kiko Sushi"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Tamworth Spice / Kiko Sushi">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 7 on the route</p>
     <h3>Tamworth Spice / Kiko Sushi</h3>
@@ -813,8 +857,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1899172" data-id="1899172">
-  <video controls playsinline preload="none" poster="reels/tam09_jeffrey_s_fine_sandwiches.jpg" src="reels/tam09_jeffrey_s_fine_sandwiches.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam09_jeffrey_s_fine_sandwiches.jpg" data-src="reels/tam09_jeffrey_s_fine_sandwiches.mp4"
          aria-label="Demo Reel for Jeffrey’s Fine Sandwiches"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Jeffrey’s Fine Sandwiches">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 9 on the route</p>
     <h3>Jeffrey’s Fine Sandwiches</h3>
@@ -830,8 +875,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1557638" data-id="1557638">
-  <video controls playsinline preload="none" poster="reels/tam13_swallow_cantonese_take_away.jpg" src="reels/tam13_swallow_cantonese_take_away.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam13_swallow_cantonese_take_away.jpg" data-src="reels/tam13_swallow_cantonese_take_away.mp4"
          aria-label="Demo Reel for Swallow Cantonese Take Away"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Swallow Cantonese Take Away">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 13 on the route</p>
     <h3>Swallow Cantonese Take Away</h3>
@@ -847,8 +893,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1904493" data-id="1904493">
-  <video controls playsinline preload="none" poster="reels/tam14_papudom_4u.jpg" src="reels/tam14_papudom_4u.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam14_papudom_4u.jpg" data-src="reels/tam14_papudom_4u.mp4"
          aria-label="Demo Reel for Papudom 4U"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Papudom 4U">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 14 on the route</p>
     <h3>Papudom 4U</h3>
@@ -864,8 +911,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1785915" data-id="1785915">
-  <video controls playsinline preload="none" poster="reels/tam15_pizza_boss.jpg" src="reels/tam15_pizza_boss.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam15_pizza_boss.jpg" data-src="reels/tam15_pizza_boss.mp4"
          aria-label="Demo Reel for Pizza Boss"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Pizza Boss">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 15 on the route</p>
     <h3>Pizza Boss</h3>
@@ -881,8 +929,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1620292" data-id="1620292">
-  <video controls playsinline preload="none" poster="reels/tam16_steves_fish_bar.jpg" src="reels/tam16_steves_fish_bar.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam16_steves_fish_bar.jpg" data-src="reels/tam16_steves_fish_bar.mp4"
          aria-label="Demo Reel for Steves Fish Bar"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Steves Fish Bar">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 16 on the route</p>
     <h3>Steves Fish Bar</h3>
@@ -898,8 +947,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1901935" data-id="1901935">
-  <video controls playsinline preload="none" poster="reels/tam17_rayu_pan_asian.jpg" src="reels/tam17_rayu_pan_asian.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam17_rayu_pan_asian.jpg" data-src="reels/tam17_rayu_pan_asian.mp4"
          aria-label="Demo Reel for Rayu Pan Asian"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Rayu Pan Asian">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 17 on the route</p>
     <h3>Rayu Pan Asian</h3>
@@ -915,8 +965,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1957914" data-id="1957914">
-  <video controls playsinline preload="none" poster="reels/tam18_shake_take_tamworth.jpg" src="reels/tam18_shake_take_tamworth.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam18_shake_take_tamworth.jpg" data-src="reels/tam18_shake_take_tamworth.mp4"
          aria-label="Demo Reel for Shake &amp; Take Tamworth"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Shake &amp; Take Tamworth">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 18 on the route</p>
     <h3>Shake &amp; Take Tamworth</h3>
@@ -932,8 +983,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1799468" data-id="1799468">
-  <video controls playsinline preload="none" poster="reels/tam19_mr_chips.jpg" src="reels/tam19_mr_chips.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam19_mr_chips.jpg" data-src="reels/tam19_mr_chips.mp4"
          aria-label="Demo Reel for Mr. Chips"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Mr. Chips">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 19 on the route</p>
     <h3>Mr. Chips</h3>
@@ -949,8 +1001,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1923797" data-id="1923797">
-  <video controls playsinline preload="none" poster="reels/tam22_between_the_buns.jpg" src="reels/tam22_between_the_buns.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam22_between_the_buns.jpg" data-src="reels/tam22_between_the_buns.mp4"
          aria-label="Demo Reel for Between the Buns"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Between the Buns">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 22 on the route</p>
     <h3>Between the Buns</h3>
@@ -966,8 +1019,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1688068" data-id="1688068">
-  <video controls playsinline preload="none" poster="reels/tam23_eat_well.jpg" src="reels/tam23_eat_well.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam23_eat_well.jpg" data-src="reels/tam23_eat_well.mp4"
          aria-label="Demo Reel for Eat Well"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Eat Well">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 23 on the route</p>
     <h3>Eat Well</h3>
@@ -983,8 +1037,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1937050" data-id="1937050">
-  <video controls playsinline preload="none" poster="reels/tam24_the_tamworth_tandoor.jpg" src="reels/tam24_the_tamworth_tandoor.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam24_the_tamworth_tandoor.jpg" data-src="reels/tam24_the_tamworth_tandoor.mp4"
          aria-label="Demo Reel for The Tamworth Tandoor"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for The Tamworth Tandoor">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 24 on the route</p>
     <h3>The Tamworth Tandoor</h3>
@@ -1000,8 +1055,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1676090" data-id="1676090">
-  <video controls playsinline preload="none" poster="reels/tam26_2_gates_grill.jpg" src="reels/tam26_2_gates_grill.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam26_2_gates_grill.jpg" data-src="reels/tam26_2_gates_grill.mp4"
          aria-label="Demo Reel for 2 Gates Grill"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for 2 Gates Grill">&#9654;</button></div>
   <div class="info">
     <p class="stub">No. 26 on the route</p>
     <h3>2 Gates Grill</h3>
@@ -1017,8 +1073,9 @@ a { color: var(--green); text-underline-offset: 3px; }
   </div>
 </article>
 <article class="shop" id="r1923798" data-id="1923798">
-  <video controls playsinline preload="none" poster="reels/tam99_fu_house_chinese_takeaway.jpg" src="reels/tam99_fu_house_chinese_takeaway.mp4"
+  <div class="vid"><video playsinline preload="none" poster="reels/tam99_fu_house_chinese_takeaway.jpg" data-src="reels/tam99_fu_house_chinese_takeaway.mp4"
          aria-label="Demo Reel for Fu House Chinese Takeaway"></video>
+    <button type="button" class="play" data-play aria-label="Play the Reel for Fu House Chinese Takeaway">&#9654;</button></div>
   <div class="info">
     <p class="stub">Off the main route</p>
     <h3>Fu House Chinese Takeaway</h3>
@@ -1042,6 +1099,24 @@ a { color: var(--green); text-underline-offset: 3px; }
 </div>
 <script>
 const dlp = (window.claude && window.claude.use) ? window.claude.use("downloads") : Promise.resolve(null);
+// Phones (the iPhone app especially) may refuse to stream a video file straight from the page, so the first tap
+// fetches the whole Reel (3-4 MB) and plays it from memory; if that fails it falls back to the file itself.
+async function play(btn) {
+  const box = btn.closest(".vid"), v = box.querySelector("video");
+  const out = box.parentElement.querySelector(".note");
+  if (v.dataset.ready) { v.play().catch(() => {}); return; }
+  btn.textContent = "…"; btn.disabled = true;
+  try {
+    const r = await fetch(v.dataset.src); if (!r.ok) throw new Error(r.status);
+    v.src = URL.createObjectURL(await r.blob());
+  } catch (e) { v.src = v.dataset.src; }
+  v.dataset.ready = "1"; v.controls = true; box.classList.add("on");
+  v.addEventListener("error", () => {
+    if (v.src.startsWith("blob:")) { v.src = v.dataset.src; v.play().catch(() => {}); }
+    else say(out, "This phone won't play it here. Tap Save and watch it in Photos.");
+  });
+  try { await v.play(); } catch (e) { say(out, "Ready: tap the video to play it."); }
+}
 const say = (el, s) => { if (el) el.textContent = s; };
 const me = document.getElementById("me");
 try { me.value = localStorage.getItem("wr-me") || ""; } catch (e) {}
@@ -1049,6 +1124,7 @@ me.addEventListener("input", () => { try { localStorage.setItem("wr-me", me.valu
 const text = id => document.getElementById("m" + id).dataset.tpl.replace("{me}", me.value.trim() || "me");
 document.addEventListener("click", async ev => {
   const b = ev.target.closest("button"); if (!b) return;
+  if (b.dataset.play !== undefined) { play(b); return; }
   const out = b.closest(".shop")?.querySelector(".note");
   if (b.dataset.copy) {
     const s = text(b.dataset.copy);

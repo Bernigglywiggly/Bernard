@@ -16,8 +16,11 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
 - **Waiting on the user (ask first thing):** (1) the Reels pack price (suggested £79/mo for 4); (2) which extra
   service to lead with, from `sales/OPTIONS.md` (Claude recommends #1, the photo shoot + delivery-app glow-up);
   (3) their home town; (4) Zapier upgrade + YouTube phone verification.
-- **Phone playback:** the page now loads each Reel on tap (fetch -> blob) because the iPhone app wouldn't play the
-  files directly. If it still fails, Save works through the `downloads` capability.
+- **Phone playback:** the iPhone app loaded none of the page's own files (no posters, no video, Save failed), so every
+  Reel and poster was also uploaded to the artifact's **asset store** (`capabilities {"downloads": true, "assets": {}}`;
+  ids in `sales/reels/assets_LzxsswDEPP1441T5sUibSb.tsv`; `page.py` uses `/_blob/<id>`, which serves in every view).
+  A rebuilt page on another artifact needs its own uploads: Artifact publish with `url`, `asset: true`, `file_paths`
+  (25 per call), then write that artifact's tsv.
 - **Connectors the other account needs** (same user accounts behind them): Zapier (YouTube connection ids below),
   Higgsfield (voice; TikTok publishing), Notion (QUIT HQ), GitHub.
 - **Scheduled upload retry** `trig_019aN3CvKVUt2nuTjs94xCQu` ran at 5 Oct 21:20 UTC: Zapier still answers "reached its

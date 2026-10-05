@@ -15,6 +15,15 @@ MONTHS = "January February March April May June July August September October No
 TRACKER = "https://claude.ai/artifact/2f7kucmy3ptWePJ4UPgNUU"
 TOWNS = ["Stone", "Newcastle-under-Lyme", "Tamworth"]           # the walking order of the towns
 e = html.escape
+# The iPhone app wouldn't load the page's own files (reels/...), so every Reel and poster also lives in the artifact's
+# asset store, which serves in every view. assets_<artifact id>.tsv maps file name -> asset id; files without an id
+# fall back to the published path.
+_ASSETS = os.path.join(HERE, "assets_LzxsswDEPP1441T5sUibSb.tsv")
+ASSET = dict(l.rstrip("\n").split("\t") for l in open(_ASSETS)) if os.path.exists(_ASSETS) else {}
+
+
+def src(name):
+    return "/_blob/" + ASSET[name] if name in ASSET else "reels/" + name
 
 
 def month(d):
@@ -33,7 +42,7 @@ def card(r):
            f"this with your own dishes, just reply here.")
     return f"""
 <article class="shop" id="r{r['id']}" data-id="{r['id']}">
-  <div class="vid"><video playsinline preload="none" poster="reels/{e(r['poster'])}" data-src="reels/{e(r['file'])}"
+  <div class="vid"><video playsinline preload="none" poster="{src(r['poster'])}" data-src="{src(r['file'])}"
          aria-label="Demo Reel for {e(r['name'])}"></video>
     <button type="button" class="play" data-play aria-label="Play the Reel for {e(r['name'])}">&#9654;</button></div>
   <div class="info">
@@ -42,7 +51,7 @@ def card(r):
     <p class="addr">{e(street)}</p>
     <p class="chip">Food hygiene 5 · inspected {month(r['fsaDate'])}</p>
     <div class="acts">
-      <button type="button" data-save="reels/{e(r['file'])}" data-name="{e(r['file'])}">Save video</button>
+      <button type="button" data-save="{src(r['file'])}" data-name="{e(r['file'])}">Save video</button>
       <button type="button" class="ghost" data-copy="{r['id']}">Copy message</button>
     </div>
     <p class="msg" id="m{r['id']}" data-tpl="{e(msg)}"></p>
@@ -71,7 +80,7 @@ def build(only=None):
   </section>""" for t in towns)
     monthly = "" if not sample else f"""
   <section class="sample" aria-labelledby="h-monthly">
-    <div class="vid"><video playsinline preload="none" poster="reels/{e(sample['poster'])}" data-src="reels/{e(sample['file'])}"
+    <div class="vid"><video playsinline preload="none" poster="{src(sample['poster'])}" data-src="{src(sample['file'])}"
            aria-label="Sample of a monthly Reel"></video>
       <button type="button" class="play" data-play aria-label="Play the sample Reel">&#9654;</button></div>
     <div class="info">
@@ -226,15 +235,12 @@ async function play(btn) {{
   const box = btn.closest(".vid"), v = box.querySelector("video");
   const out = box.parentElement.querySelector(".note");
   if (v.dataset.ready) {{ v.play().catch(() => {{}}); return; }}
-  btn.textContent = "…"; btn.disabled = true;
-  try {{
-    const r = await fetch(v.dataset.src); if (!r.ok) throw new Error(r.status);
-    v.src = URL.createObjectURL(await r.blob());
-  }} catch (e) {{ v.src = v.dataset.src; }}
-  v.dataset.ready = "1"; v.controls = true; box.classList.add("on");
-  v.addEventListener("error", () => {{
-    if (v.src.startsWith("blob:")) {{ v.src = v.dataset.src; v.play().catch(() => {{}}); }}
-    else say(out, "This phone won't play it here. Tap Save and watch it in Photos.");
+  v.src = v.dataset.src; v.dataset.ready = "1"; v.controls = true; box.classList.add("on");
+  v.addEventListener("error", async () => {{
+    if (v.dataset.tried) {{ say(out, "This phone won't play it here. Tap Save and watch it in Photos."); return; }}
+    v.dataset.tried = "1";
+    try {{ const r = await fetch(v.dataset.src); if (!r.ok) throw new Error(r.status); v.src = URL.createObjectURL(await r.blob()); }}
+    catch (e) {{ say(out, "This phone won't play it here. Tap Save and watch it in Photos."); }}
   }});
   try {{ await v.play(); }} catch (e) {{ say(out, "Ready: tap the video to play it."); }}
 }}

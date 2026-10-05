@@ -1,9 +1,9 @@
-<title>Walk-in Reels · Stone</title>
+<title>Walk-in Reels</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* One column you can thumb through on a doorstep: the visit script on a ticket, then one card per shop in walking order. */
+/* One column you can thumb through on a doorstep: the visit script on a ticket, then each town's shops in walking order. */
 :root {
   --bg: #EDF0EE; --card: #FFFFFF; --paper: #F7F4EC; --ink: #17191C; --ink2: #4C5258; --line: #D3D9D6;
   --green: #1E7445; --green-soft: #DDEFE3; --red: #B5372A; --on-ink: #FFFFFF;
@@ -19,27 +19,42 @@
   --green: #5CC98C; --green-soft: #15291E; --red: #FF8273; --on-ink: #121518; color-scheme: dark; }
 body { background: var(--bg); color: var(--ink); font: 16px/1.5 var(--body); margin: 0; }
 .wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 18px 40px; display: grid; gap: 18px; }
+.wrap > *, .list > * { min-width: 0; }
 h1 { font-family: var(--display); font-weight: 400; font-size: clamp(42px, 11vw, 72px); line-height: .9; margin: 0;
      text-transform: uppercase; letter-spacing: .01em; text-wrap: balance; }
 h1 span { color: var(--green); }
 .lede { margin: 0; color: var(--ink2); max-width: 60ch; }
+nav.towns { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); display: flex; gap: 8px;
+            overflow-x: auto; padding-block: 8px; border-bottom: 1px solid var(--line); scrollbar-width: none; }
+nav.towns a { flex: 0 0 auto; text-decoration: none; color: var(--ink); font-weight: 700; font-size: 15px; padding: 7px 14px;
+              border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+nav.towns b { font-family: var(--mono); font-weight: 500; color: var(--green); margin-left: 4px; }
 .me { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 15px; }
 .me input { font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 8px;
             padding: 8px 10px; min-height: 40px; width: 12em; max-width: 100%; }
 .ticket { background: var(--paper); border: 1px dashed var(--line); border-radius: 4px; padding: 14px 16px;
           font-family: var(--mono); font-size: 14px; display: grid; gap: 10px; }
 .ticket h2 { font-family: var(--mono); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; margin: 0; color: var(--ink2); }
-.ticket ol { margin: 0; padding-left: 1.4em; display: grid; gap: 8px; }
+.ticket ol, .ticket ul { margin: 0; padding-left: 1.4em; display: grid; gap: 8px; }
 .ticket q { font-family: var(--body); font-size: 15.5px; }
-.ticket .price { color: var(--red); }
+.price { color: var(--red); }
+details.ticket summary { cursor: pointer; font-family: var(--mono); font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+                         color: var(--ink2); }
+details.ticket dl { margin: 0; display: grid; gap: 10px; }
+details.ticket dt { font-family: var(--body); font-weight: 700; font-size: 15px; }
+details.ticket dd { margin: 2px 0 0; font-family: var(--body); font-size: 15px; color: var(--ink2); }
+.town { display: grid; gap: 12px; scroll-margin-top: 64px; }
+.town h2, .sample h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; margin: 0; line-height: 1; }
+.town h2 { font-size: clamp(30px, 8vw, 44px); }
 .list { display: grid; gap: 14px; }
-.wrap > *, .list > * { min-width: 0; }
-.shop { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
+.shop, .sample { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
         display: grid; grid-template-columns: minmax(0, 9fr) minmax(0, 11fr); gap: 14px; align-items: start; }
-.shop video { width: 100%; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 8px; background: #0F1215; display: block; }
+.shop video, .sample video { width: 100%; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 8px; background: #0F1215; display: block; }
+.sample h2 { font-size: clamp(24px, 6vw, 32px); }
+.sample p { margin: 0; font-size: 15px; }
 .info { display: grid; gap: 8px; min-width: 0; }
 .stub { margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
-.shop h2 { font-family: var(--display); font-weight: 400; font-size: clamp(24px, 6vw, 34px); line-height: 1; margin: 0;
+.shop h3 { font-family: var(--display); font-weight: 400; font-size: clamp(24px, 6vw, 34px); line-height: 1; margin: 0;
            text-transform: uppercase; text-wrap: balance; overflow-wrap: anywhere; }
 .addr { margin: 0; font-size: 14.5px; color: var(--ink2); }
 .chip { margin: 0; justify-self: start; font-family: var(--mono); font-size: 12px; padding: 3px 9px; border-radius: 999px;
@@ -49,7 +64,7 @@ button { font: inherit; font-weight: 700; font-size: 14.5px; min-height: 42px; p
          border: 1px solid var(--ink); background: var(--ink); color: var(--on-ink); }
 button.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
 button:disabled { opacity: .6; cursor: progress; }
-button:focus-visible, input:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+button:focus-visible, input:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 .msg { display: none; }
 .done { font-size: 14px; color: var(--ink2); display: flex; gap: 8px; align-items: center; }
 .done input { width: 20px; height: 20px; accent-color: var(--green); }
@@ -58,15 +73,17 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--green); out
 footer { font-size: 13.5px; color: var(--ink2); display: grid; gap: 6px; }
 footer p { margin: 0; max-width: 64ch; }
 a { color: var(--green); text-underline-offset: 3px; }
-@media (max-width: 380px) { .shop { grid-template-columns: 1fr; } .shop video { max-width: 260px; } }
+@media (max-width: 380px) { .shop, .sample { grid-template-columns: 1fr; } .shop video, .sample video { max-width: 260px; } }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
 </style>
 <div class="wrap">
   <header>
-    <h1>Walk-in Reels · <span>Stone</span></h1>
+    <h1>Walk-in <span>Reels</span></h1>
   </header>
-  <p class="lede">16 places in Stone rated 5 for food hygiene, in walking order. Each one has an 8-second Reel
-    made from its own public record: its name, its rating and its street. You walk in with something already made for them.</p>
+  <p class="lede">52 takeaways and cafés rated 5 for food hygiene, town by town in walking order. Each one has an
+    8-second Reel made from its own public record: its name, its rating and its street. You walk in with something
+    already made for them.</p>
+  <nav class="towns" aria-label="Towns"><a href="#stone">Stone <b>16</b></a><a href="#newcastle">Newcastle <b>19</b></a><a href="#tamworth">Tamworth <b>17</b></a></nav>
   <div class="me"><label for="me">Your first name, for the messages</label><input id="me" autocomplete="given-name" placeholder="e.g. Sam"></div>
   <section class="ticket" aria-labelledby="how">
     <h2 id="how">The visit, about two minutes</h2>
@@ -78,13 +95,56 @@ a { color: var(--green); text-underline-offset: 3px; }
       <li>Log it in the <a href="https://claude.ai/artifact/2f7kucmy3ptWePJ4UPgNUU">Takeaway Round tracker</a>: visited, pitched, later or sold.</li>
     </ol>
   </section>
-  <div class="list">
+  <details class="ticket">
+    <summary>If they say…</summary>
+    <dl>
+      <div><dt>"How much?"</dt><dd>Say the monthly price once you've set it, then: "The first one's free whatever you decide."</dd></div>
+      <div><dt>"I don't really do social media."</dt><dd>"Most of your customers do. I send them ready to post, so it's ten seconds a week. It works on your WhatsApp status too."</dd></div>
+      <div><dt>"My son (or nephew) does our Instagram."</dt><dd>"Great, send it to him. If he'd like four a month done for him, he's got my number."</dd></div>
+      <div><dt>"Is that real? How did you make it?"</dt><dd>"From your food hygiene rating. It's public on the Food Standards Agency site. I only make them for places rated 5."</dd></div>
+      <div><dt>"Leave me your number."</dt><dd>Send the Reel and the message now, so your number arrives with it. Mark them "later" and drop back in three or four days.</dd></div>
+      <div><dt>"Not interested."</dt><dd>"No problem, keep the video anyway." Say thanks and go. Mark them "visited".</dd></div>
+    </dl>
+  </details>
+  <section class="ticket" aria-labelledby="yes">
+    <h2 id="yes">When they say yes</h2>
+    <ol>
+      <li>Take the first month there and then on the Square reader, and set up a monthly Square invoice for the rest.</li>
+      <li>Get their WhatsApp number and the handles of the accounts they post on (Instagram, Facebook, TikTok).</li>
+      <li>Ask for three dishes they're proud of, with prices, and take the photos yourself if they're happy for you to.</li>
+      <li>Note their opening hours and anything coming up: a special, a new dish, Christmas.</li>
+      <li>Promise the first Reel within 48 hours, and send everything to Claude in the next session.</li>
+    </ol>
+  </section>
+  <section class="ticket" aria-labelledby="before">
+    <h2 id="before">Before you go</h2>
+    <ul>
+      <li>Save the next three or four Reels to Photos first: signal inside shops is often poor.</li>
+      <li>Volume up. The stamp and the bell sell it.</li>
+      <li>Check the hygiene sticker in the window matches the Reel before you play it.</li>
+      <li>Cafés are best mid-afternoon. Takeaways that open at 4 or 5 are best just after opening, before the first rush.</li>
+    </ul>
+  </section>
+  <section class="sample" aria-labelledby="h-monthly">
+    <video controls playsinline preload="none" poster="reels/sam00_your_takeaway.jpg" src="reels/sam00_your_takeaway.mp4"
+           aria-label="Sample of a monthly Reel"></video>
+    <div class="info">
+      <p class="stub">Sample · not a real shop</p>
+      <h2 id="h-monthly">What the monthly ones look like</h2>
+      <p>Same kitchen ticket, their content: tonight's special, a new dish, opening hours, the Christmas menu. They send
+        a photo or the details by WhatsApp; the Reel comes back ready to post, with the caption written.</p>
+      <p class="price">Suggested: £79 a month for four, one a week, cancel any time. Not set until you decide.</p>
+    </div>
+  </section>
+  <section class="town" id="stone" aria-labelledby="h-stone">
+    <h2 id="h-stone">Stone</h2>
+    <div class="list">
 <article class="shop" id="r1195796" data-id="1195796">
   <video controls playsinline preload="none" poster="reels/sto01_crown_of_india.jpg" src="reels/sto01_crown_of_india.mp4"
          aria-label="Demo Reel for Crown Of India"></video>
   <div class="info">
     <p class="stub">No. 1 on the route</p>
-    <h2>Crown Of India</h2>
+    <h3>Crown Of India</h3>
     <p class="addr">40 High Street, Stone, ST15 8AU</p>
     <p class="chip">Food hygiene 5 · inspected May 2026</p>
     <div class="acts">
@@ -96,13 +156,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1196000" data-id="1196000">
   <video controls playsinline preload="none" poster="reels/sto02_arcadia_tea_shop.jpg" src="reels/sto02_arcadia_tea_shop.mp4"
          aria-label="Demo Reel for Arcadia Tea Shop"></video>
   <div class="info">
     <p class="stub">No. 2 on the route</p>
-    <h2>Arcadia Tea Shop</h2>
+    <h3>Arcadia Tea Shop</h3>
     <p class="addr">Unit 4 And 5, High Street Arcade, Stone, ST15 8AU</p>
     <p class="chip">Food hygiene 5 · inspected April 2026</p>
     <div class="acts">
@@ -114,13 +173,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195354" data-id="1195354">
   <video controls playsinline preload="none" poster="reels/sto03_bear_coffee_company_ltd.jpg" src="reels/sto03_bear_coffee_company_ltd.mp4"
          aria-label="Demo Reel for Bear Coffee Company Ltd"></video>
   <div class="info">
     <p class="stub">No. 3 on the route</p>
-    <h2>Bear Coffee Company Ltd</h2>
+    <h3>Bear Coffee Company Ltd</h3>
     <p class="addr">57 High Street, Stone, ST15 8AD</p>
     <p class="chip">Food hygiene 5 · inspected March 2026</p>
     <div class="acts">
@@ -132,13 +190,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195901" data-id="1195901">
   <video controls playsinline preload="none" poster="reels/sto07_little_seeds_bar_kitchen.jpg" src="reels/sto07_little_seeds_bar_kitchen.mp4"
          aria-label="Demo Reel for Little Seeds Bar &amp; Kitchen"></video>
   <div class="info">
     <p class="stub">No. 7 on the route</p>
-    <h2>Little Seeds Bar &amp; Kitchen</h2>
+    <h3>Little Seeds Bar &amp; Kitchen</h3>
     <p class="addr">16-18 Radford Street, Stone, ST15 8DA</p>
     <p class="chip">Food hygiene 5 · inspected March 2026</p>
     <div class="acts">
@@ -150,13 +207,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195552" data-id="1195552">
   <video controls playsinline preload="none" poster="reels/sto08_the_ovilash_restaurant.jpg" src="reels/sto08_the_ovilash_restaurant.mp4"
          aria-label="Demo Reel for The Ovilash Restaurant"></video>
   <div class="info">
     <p class="stub">No. 8 on the route</p>
-    <h2>The Ovilash Restaurant</h2>
+    <h3>The Ovilash Restaurant</h3>
     <p class="addr">36 Radford Street, Stone, ST15 8DA</p>
     <p class="chip">Food hygiene 5 · inspected December 2024</p>
     <div class="acts">
@@ -168,13 +224,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195891" data-id="1195891">
   <video controls playsinline preload="none" poster="reels/sto10_stonefield_fish_bar.jpg" src="reels/sto10_stonefield_fish_bar.mp4"
          aria-label="Demo Reel for Stonefield Fish Bar"></video>
   <div class="info">
     <p class="stub">No. 10 on the route</p>
-    <h2>Stonefield Fish Bar</h2>
+    <h3>Stonefield Fish Bar</h3>
     <p class="addr">19 Old Road, Stone, ST15 8JE</p>
     <p class="chip">Food hygiene 5 · inspected March 2026</p>
     <div class="acts">
@@ -186,13 +241,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195685" data-id="1195685">
   <video controls playsinline preload="none" poster="reels/sto11_proven_pizzeria.jpg" src="reels/sto11_proven_pizzeria.mp4"
          aria-label="Demo Reel for Proven Pizzeria"></video>
   <div class="info">
     <p class="stub">No. 11 on the route</p>
-    <h2>Proven Pizzeria</h2>
+    <h3>Proven Pizzeria</h3>
     <p class="addr">56 Newcastle Road, Stone, ST15 8LB</p>
     <p class="chip">Food hygiene 5 · inspected July 2025</p>
     <div class="acts">
@@ -204,13 +258,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195166" data-id="1195166">
   <video controls playsinline preload="none" poster="reels/sto12_the_secret_tea_room.jpg" src="reels/sto12_the_secret_tea_room.mp4"
          aria-label="Demo Reel for The Secret Tea Room"></video>
   <div class="info">
     <p class="stub">No. 12 on the route</p>
-    <h2>The Secret Tea Room</h2>
+    <h3>The Secret Tea Room</h3>
     <p class="addr">Unit 2, Adies Alley, Stone, ST15 8YQ</p>
     <p class="chip">Food hygiene 5 · inspected January 2026</p>
     <div class="acts">
@@ -222,13 +275,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195940" data-id="1195940">
   <video controls playsinline preload="none" poster="reels/sto13_pasta_di_piazza.jpg" src="reels/sto13_pasta_di_piazza.mp4"
          aria-label="Demo Reel for Pasta Di Piazza"></video>
   <div class="info">
     <p class="stub">No. 13 on the route</p>
-    <h2>Pasta Di Piazza</h2>
+    <h3>Pasta Di Piazza</h3>
     <p class="addr">12 High Street, Stone, ST15 8AW</p>
     <p class="chip">Food hygiene 5 · inspected February 2026</p>
     <div class="acts">
@@ -240,13 +292,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1889467" data-id="1889467">
   <video controls playsinline preload="none" poster="reels/sto16_heaven_restaurant_bar_grill.jpg" src="reels/sto16_heaven_restaurant_bar_grill.mp4"
          aria-label="Demo Reel for Heaven Restaurant Bar &amp; Grill"></video>
   <div class="info">
     <p class="stub">No. 16 on the route</p>
-    <h2>Heaven Restaurant Bar &amp; Grill</h2>
+    <h3>Heaven Restaurant Bar &amp; Grill</h3>
     <p class="addr">11 High Street, Stone, ST15 8AJ</p>
     <p class="chip">Food hygiene 5 · inspected April 2026</p>
     <div class="acts">
@@ -258,13 +309,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195735" data-id="1195735">
   <video controls playsinline preload="none" poster="reels/sto17_stone_kebab_house.jpg" src="reels/sto17_stone_kebab_house.mp4"
          aria-label="Demo Reel for Stone Kebab House"></video>
   <div class="info">
     <p class="stub">No. 17 on the route</p>
-    <h2>Stone Kebab House</h2>
+    <h3>Stone Kebab House</h3>
     <p class="addr">10 Church Street, Stone, ST15 8BD</p>
     <p class="chip">Food hygiene 5 · inspected March 2026</p>
     <div class="acts">
@@ -276,13 +326,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195941" data-id="1195941">
   <video controls playsinline preload="none" poster="reels/sto18_valleys_fast_food.jpg" src="reels/sto18_valleys_fast_food.mp4"
          aria-label="Demo Reel for Valleys Fast Food"></video>
   <div class="info">
     <p class="stub">No. 18 on the route</p>
-    <h2>Valleys Fast Food</h2>
+    <h3>Valleys Fast Food</h3>
     <p class="addr">2a Lichfield Street, Stone, ST15 8BB</p>
     <p class="chip">Food hygiene 5 · inspected April 2026</p>
     <div class="acts">
@@ -294,13 +343,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1195498" data-id="1195498">
   <video controls playsinline preload="none" poster="reels/sto21_cavalli.jpg" src="reels/sto21_cavalli.mp4"
          aria-label="Demo Reel for Cavalli"></video>
   <div class="info">
     <p class="stub">No. 21 on the route</p>
-    <h2>Cavalli</h2>
+    <h3>Cavalli</h3>
     <p class="addr">3 Lichfield Street, Stone, ST15 8NA</p>
     <p class="chip">Food hygiene 5 · inspected May 2026</p>
     <div class="acts">
@@ -312,13 +360,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1196193" data-id="1196193">
   <video controls playsinline preload="none" poster="reels/sto22_piccolo_s_pizza_kebab_land.jpg" src="reels/sto22_piccolo_s_pizza_kebab_land.mp4"
          aria-label="Demo Reel for Piccolo&#x27;s Pizza &amp; Kebab Land"></video>
   <div class="info">
     <p class="stub">No. 22 on the route</p>
-    <h2>Piccolo&#x27;s Pizza &amp; Kebab Land</h2>
+    <h3>Piccolo&#x27;s Pizza &amp; Kebab Land</h3>
     <p class="addr">14-16 Stafford Street, Stone, ST15 8QW</p>
     <p class="chip">Food hygiene 5 · inspected April 2026</p>
     <div class="acts">
@@ -330,13 +377,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1196110" data-id="1196110">
   <video controls playsinline preload="none" poster="reels/sto23_walton_fish_bar.jpg" src="reels/sto23_walton_fish_bar.mp4"
          aria-label="Demo Reel for Walton Fish Bar"></video>
   <div class="info">
     <p class="stub">No. 23 on the route</p>
-    <h2>Walton Fish Bar</h2>
+    <h3>Walton Fish Bar</h3>
     <p class="addr">Walton Fish Bar, 5 Eccleshall Road, Stone, ST15 0HJ</p>
     <p class="chip">Food hygiene 5 · inspected April 2026</p>
     <div class="acts">
@@ -348,13 +394,12 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
-
 <article class="shop" id="r1557000" data-id="1557000">
   <video controls playsinline preload="none" poster="reels/sto25_the_roll_in_stone.jpg" src="reels/sto25_the_roll_in_stone.mp4"
          aria-label="Demo Reel for The Roll in Stone"></video>
   <div class="info">
     <p class="stub">No. 25 on the route</p>
-    <h2>The Roll in Stone</h2>
+    <h3>The Roll in Stone</h3>
     <p class="addr">Unit 24A Whitebridge Estate, Whitebridge Lane, Stone, ST15 8LQ</p>
     <p class="chip">Food hygiene 5 · inspected February 2026</p>
     <div class="acts">
@@ -366,9 +411,632 @@ a { color: var(--green); text-underline-offset: 3px; }
     <p class="note" aria-live="polite"></p>
   </div>
 </article>
+    </div>
+  </section>
+  <section class="town" id="newcastle" aria-labelledby="h-newcastle">
+    <h2 id="h-newcastle">Newcastle-under-Lyme</h2>
+    <div class="list">
+<article class="shop" id="r85714" data-id="85714">
+  <video controls playsinline preload="none" poster="reels/new01_pizzarama.jpg" src="reels/new01_pizzarama.mp4"
+         aria-label="Demo Reel for PIZZARAMA"></video>
+  <div class="info">
+    <p class="stub">No. 1 on the route</p>
+    <h3>PIZZARAMA</h3>
+    <p class="addr">8 Ryecroft, Newcastle Under Lyme, ST5 1RW</p>
+    <p class="chip">Food hygiene 5 · inspected May 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new01_pizzarama.mp4" data-name="new01_pizzarama.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="85714">Copy message</button>
+    </div>
+    <p class="msg" id="m85714" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for PIZZARAMA. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from May 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v85714"> Visited</label>
+    <p class="note" aria-live="polite"></p>
   </div>
+</article>
+<article class="shop" id="r1799173" data-id="1799173">
+  <video controls playsinline preload="none" poster="reels/new02_fresco_cafe_eatery.jpg" src="reels/new02_fresco_cafe_eatery.mp4"
+         aria-label="Demo Reel for FRESCO CAFE &amp; EATERY"></video>
+  <div class="info">
+    <p class="stub">No. 2 on the route</p>
+    <h3>FRESCO CAFE &amp; EATERY</h3>
+    <p class="addr">39-41 Merrial Street, Newcastle Under Lyme, ST5 2AE</p>
+    <p class="chip">Food hygiene 5 · inspected March 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new02_fresco_cafe_eatery.mp4" data-name="new02_fresco_cafe_eatery.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1799173">Copy message</button>
+    </div>
+    <p class="msg" id="m1799173" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for FRESCO CAFE &amp; EATERY. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from March 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1799173"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1822945" data-id="1822945">
+  <video controls playsinline preload="none" poster="reels/new03_pizza_bar.jpg" src="reels/new03_pizza_bar.mp4"
+         aria-label="Demo Reel for PIZZA BAR"></video>
+  <div class="info">
+    <p class="stub">No. 3 on the route</p>
+    <h3>PIZZA BAR</h3>
+    <p class="addr">15 Merrial Street, Newcastle Under Lyme, ST5 2AE</p>
+    <p class="chip">Food hygiene 5 · inspected July 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new03_pizza_bar.mp4" data-name="new03_pizza_bar.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1822945">Copy message</button>
+    </div>
+    <p class="msg" id="m1822945" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for PIZZA BAR. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from July 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1822945"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1578883" data-id="1578883">
+  <video controls playsinline preload="none" poster="reels/new04_mado_cafe.jpg" src="reels/new04_mado_cafe.mp4"
+         aria-label="Demo Reel for MADO CAFE"></video>
+  <div class="info">
+    <p class="stub">No. 4 on the route</p>
+    <h3>MADO CAFE</h3>
+    <p class="addr">40 High Street, Newcastle Under Lyme, ST5 1QL</p>
+    <p class="chip">Food hygiene 5 · inspected March 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new04_mado_cafe.mp4" data-name="new04_mado_cafe.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1578883">Copy message</button>
+    </div>
+    <p class="msg" id="m1578883" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for MADO CAFE. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from March 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1578883"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1889228" data-id="1889228">
+  <video controls playsinline preload="none" poster="reels/new06_the_midway_cafe.jpg" src="reels/new06_the_midway_cafe.mp4"
+         aria-label="Demo Reel for THE MIDWAY CAFE"></video>
+  <div class="info">
+    <p class="stub">No. 6 on the route</p>
+    <h3>THE MIDWAY CAFE</h3>
+    <p class="addr">12 The Midway, Newcastle Under Lyme, ST5 1QG</p>
+    <p class="chip">Food hygiene 5 · inspected January 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new06_the_midway_cafe.mp4" data-name="new06_the_midway_cafe.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1889228">Copy message</button>
+    </div>
+    <p class="msg" id="m1889228" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for THE MIDWAY CAFE. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from January 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1889228"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r83640" data-id="83640">
+  <video controls playsinline preload="none" poster="reels/new10_shaws.jpg" src="reels/new10_shaws.mp4"
+         aria-label="Demo Reel for SHAWS"></video>
+  <div class="info">
+    <p class="stub">No. 10 on the route</p>
+    <h3>SHAWS</h3>
+    <p class="addr">103 High Street, Newcastle Under Lyme, ST5 1PS</p>
+    <p class="chip">Food hygiene 5 · inspected March 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new10_shaws.mp4" data-name="new10_shaws.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="83640">Copy message</button>
+    </div>
+    <p class="msg" id="m83640" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for SHAWS. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from March 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v83640"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r701262" data-id="701262">
+  <video controls playsinline preload="none" poster="reels/new11_the_foyer.jpg" src="reels/new11_the_foyer.mp4"
+         aria-label="Demo Reel for THE FOYER"></video>
+  <div class="info">
+    <p class="stub">No. 11 on the route</p>
+    <h3>THE FOYER</h3>
+    <p class="addr">3 Hassell Street, Newcastle under Lyme, ST5 1AH</p>
+    <p class="chip">Food hygiene 5 · inspected November 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new11_the_foyer.mp4" data-name="new11_the_foyer.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="701262">Copy message</button>
+    </div>
+    <p class="msg" id="m701262" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for THE FOYER. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from November 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v701262"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1722944" data-id="1722944">
+  <video controls playsinline preload="none" poster="reels/new12_nel.jpg" src="reels/new12_nel.mp4"
+         aria-label="Demo Reel for NEL"></video>
+  <div class="info">
+    <p class="stub">No. 12 on the route</p>
+    <h3>NEL</h3>
+    <p class="addr">25 Bridge Street, Newcastle Under Lyme, ST5 2RY</p>
+    <p class="chip">Food hygiene 5 · inspected October 2024</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new12_nel.mp4" data-name="new12_nel.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1722944">Copy message</button>
+    </div>
+    <p class="msg" id="m1722944" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for NEL. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from October 2024. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1722944"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1776097" data-id="1776097">
+  <video controls playsinline preload="none" poster="reels/new13_cuisine_cart.jpg" src="reels/new13_cuisine_cart.mp4"
+         aria-label="Demo Reel for CUISINE CART"></video>
+  <div class="info">
+    <p class="stub">No. 13 on the route</p>
+    <h3>CUISINE CART</h3>
+    <p class="addr">64 Liverpool Road, Newcastle Under Lyme, ST5 2AX</p>
+    <p class="chip">Food hygiene 5 · inspected February 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new13_cuisine_cart.mp4" data-name="new13_cuisine_cart.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1776097">Copy message</button>
+    </div>
+    <p class="msg" id="m1776097" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for CUISINE CART. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from February 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1776097"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1870542" data-id="1870542">
+  <video controls playsinline preload="none" poster="reels/new14_cheesious_pizza_peri_peri_house.jpg" src="reels/new14_cheesious_pizza_peri_peri_house.mp4"
+         aria-label="Demo Reel for CHEESIOUS PIZZA/PERI PERI HOUSE"></video>
+  <div class="info">
+    <p class="stub">No. 14 on the route</p>
+    <h3>CHEESIOUS PIZZA/PERI PERI HOUSE</h3>
+    <p class="addr">54 Liverpool Road, Newcastle Under Lyme, ST5 2AX</p>
+    <p class="chip">Food hygiene 5 · inspected September 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new14_cheesious_pizza_peri_peri_house.mp4" data-name="new14_cheesious_pizza_peri_peri_house.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1870542">Copy message</button>
+    </div>
+    <p class="msg" id="m1870542" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for CHEESIOUS PIZZA/PERI PERI HOUSE. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from September 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1870542"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1749342" data-id="1749342">
+  <video controls playsinline preload="none" poster="reels/new15_dancing_octopus.jpg" src="reels/new15_dancing_octopus.mp4"
+         aria-label="Demo Reel for DANCING OCTOPUS"></video>
+  <div class="info">
+    <p class="stub">No. 15 on the route</p>
+    <h3>DANCING OCTOPUS</h3>
+    <p class="addr">12 Pool Dam, Newcastle Under Lyme, ST5 2RR</p>
+    <p class="chip">Food hygiene 5 · inspected August 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new15_dancing_octopus.mp4" data-name="new15_dancing_octopus.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1749342">Copy message</button>
+    </div>
+    <p class="msg" id="m1749342" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for DANCING OCTOPUS. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from August 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1749342"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1832506" data-id="1832506">
+  <video controls playsinline preload="none" poster="reels/new16_mo_s_kitchen.jpg" src="reels/new16_mo_s_kitchen.mp4"
+         aria-label="Demo Reel for MO&#x27;S KITCHEN"></video>
+  <div class="info">
+    <p class="stub">No. 16 on the route</p>
+    <h3>MO&#x27;S KITCHEN</h3>
+    <p class="addr">10 Pool Dam, Newcastle Under Lyme, ST5 2RR</p>
+    <p class="chip">Food hygiene 5 · inspected July 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new16_mo_s_kitchen.mp4" data-name="new16_mo_s_kitchen.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1832506">Copy message</button>
+    </div>
+    <p class="msg" id="m1832506" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for MO&#x27;S KITCHEN. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from July 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1832506"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1353828" data-id="1353828">
+  <video controls playsinline preload="none" poster="reels/new17_tasty_wok.jpg" src="reels/new17_tasty_wok.mp4"
+         aria-label="Demo Reel for TASTY WOK"></video>
+  <div class="info">
+    <p class="stub">No. 17 on the route</p>
+    <h3>TASTY WOK</h3>
+    <p class="addr">18 Drayton Street, Newcastle Under Lyme, ST5 2TW</p>
+    <p class="chip">Food hygiene 5 · inspected March 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new17_tasty_wok.mp4" data-name="new17_tasty_wok.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1353828">Copy message</button>
+    </div>
+    <p class="msg" id="m1353828" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for TASTY WOK. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from March 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1353828"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r85327" data-id="85327">
+  <video controls playsinline preload="none" poster="reels/new19_castle_oatcakes.jpg" src="reels/new19_castle_oatcakes.mp4"
+         aria-label="Demo Reel for CASTLE OATCAKES"></video>
+  <div class="info">
+    <p class="stub">No. 19 on the route</p>
+    <h3>CASTLE OATCAKES</h3>
+    <p class="addr">Castle Oatcakes, 78 London Road, Newcastle Under Lyme, ST5 1LZ</p>
+    <p class="chip">Food hygiene 5 · inspected February 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new19_castle_oatcakes.mp4" data-name="new19_castle_oatcakes.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="85327">Copy message</button>
+    </div>
+    <p class="msg" id="m85327" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for CASTLE OATCAKES. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from February 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v85327"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1828058" data-id="1828058">
+  <video controls playsinline preload="none" poster="reels/new22_newcastle_kebab_house.jpg" src="reels/new22_newcastle_kebab_house.mp4"
+         aria-label="Demo Reel for NEWCASTLE KEBAB HOUSE"></video>
+  <div class="info">
+    <p class="stub">No. 22 on the route</p>
+    <h3>NEWCASTLE KEBAB HOUSE</h3>
+    <p class="addr">7 George Street, Newcastle Under Lyme, ST5 1JX</p>
+    <p class="chip">Food hygiene 5 · inspected February 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new22_newcastle_kebab_house.mp4" data-name="new22_newcastle_kebab_house.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1828058">Copy message</button>
+    </div>
+    <p class="msg" id="m1828058" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for NEWCASTLE KEBAB HOUSE. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from February 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1828058"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1722943" data-id="1722943">
+  <video controls playsinline preload="none" poster="reels/new25_the_one.jpg" src="reels/new25_the_one.mp4"
+         aria-label="Demo Reel for THE ONE"></video>
+  <div class="info">
+    <p class="stub">No. 25 on the route</p>
+    <h3>THE ONE</h3>
+    <p class="addr">1 George Street, Newcastle Under Lyme, ST5 1JX</p>
+    <p class="chip">Food hygiene 5 · inspected August 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new25_the_one.mp4" data-name="new25_the_one.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1722943">Copy message</button>
+    </div>
+    <p class="msg" id="m1722943" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for THE ONE. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from August 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1722943"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1877918" data-id="1877918">
+  <video controls playsinline preload="none" poster="reels/new28_favourite_chinese_takeaway.jpg" src="reels/new28_favourite_chinese_takeaway.mp4"
+         aria-label="Demo Reel for FAVOURITE CHINESE TAKEAWAY"></video>
+  <div class="info">
+    <p class="stub">No. 28 on the route</p>
+    <h3>FAVOURITE CHINESE TAKEAWAY</h3>
+    <p class="addr">14 Brunswick Street, Newcastle Under Lyme, ST5 1HL</p>
+    <p class="chip">Food hygiene 5 · inspected September 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new28_favourite_chinese_takeaway.mp4" data-name="new28_favourite_chinese_takeaway.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1877918">Copy message</button>
+    </div>
+    <p class="msg" id="m1877918" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for FAVOURITE CHINESE TAKEAWAY. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from September 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1877918"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1004870" data-id="1004870">
+  <video controls playsinline preload="none" poster="reels/new30_golden_wok.jpg" src="reels/new30_golden_wok.mp4"
+         aria-label="Demo Reel for GOLDEN WOK"></video>
+  <div class="info">
+    <p class="stub">No. 30 on the route</p>
+    <h3>GOLDEN WOK</h3>
+    <p class="addr">43 George Street, Newcastle Under Lyme, ST5 1JU</p>
+    <p class="chip">Food hygiene 5 · inspected February 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new30_golden_wok.mp4" data-name="new30_golden_wok.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1004870">Copy message</button>
+    </div>
+    <p class="msg" id="m1004870" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for GOLDEN WOK. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from February 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1004870"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1050314" data-id="1050314">
+  <video controls playsinline preload="none" poster="reels/new31_chilli_jacks.jpg" src="reels/new31_chilli_jacks.mp4"
+         aria-label="Demo Reel for CHILLI JACKS"></video>
+  <div class="info">
+    <p class="stub">No. 31 on the route</p>
+    <h3>CHILLI JACKS</h3>
+    <p class="addr">45-47 George Street, Newcastle Under Lyme, ST5 1JU</p>
+    <p class="chip">Food hygiene 5 · inspected November 2024</p>
+    <div class="acts">
+      <button type="button" data-save="reels/new31_chilli_jacks.mp4" data-name="new31_chilli_jacks.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1050314">Copy message</button>
+    </div>
+    <p class="msg" id="m1050314" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for CHILLI JACKS. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from November 2024. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1050314"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+    </div>
+  </section>
+  <section class="town" id="tamworth" aria-labelledby="h-tamworth">
+    <h2 id="h-tamworth">Tamworth</h2>
+    <div class="list">
+<article class="shop" id="r1908321" data-id="1908321">
+  <video controls playsinline preload="none" poster="reels/tam02_brew.jpg" src="reels/tam02_brew.mp4"
+         aria-label="Demo Reel for Brew"></video>
+  <div class="info">
+    <p class="stub">No. 2 on the route</p>
+    <h3>Brew</h3>
+    <p class="addr">Unit 7 Town Hall Place, Market Street, Tamworth, B79 7FJ</p>
+    <p class="chip">Food hygiene 5 · inspected February 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam02_brew.mp4" data-name="tam02_brew.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1908321">Copy message</button>
+    </div>
+    <p class="msg" id="m1908321" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Brew. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from February 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1908321"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1692952" data-id="1692952">
+  <video controls playsinline preload="none" poster="reels/tam04_phat_bites.jpg" src="reels/tam04_phat_bites.mp4"
+         aria-label="Demo Reel for Phat Bites"></video>
+  <div class="info">
+    <p class="stub">No. 4 on the route</p>
+    <h3>Phat Bites</h3>
+    <p class="addr">64 CHURCH STREET, Tamworth, B79 7DF</p>
+    <p class="chip">Food hygiene 5 · inspected February 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam04_phat_bites.mp4" data-name="tam04_phat_bites.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1692952">Copy message</button>
+    </div>
+    <p class="msg" id="m1692952" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Phat Bites. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from February 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1692952"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1589615" data-id="1589615">
+  <video controls playsinline preload="none" poster="reels/tam06_china_aroma.jpg" src="reels/tam06_china_aroma.mp4"
+         aria-label="Demo Reel for China Aroma"></video>
+  <div class="info">
+    <p class="stub">No. 6 on the route</p>
+    <h3>China Aroma</h3>
+    <p class="addr">68 CHURCH STREET, Tamworth, B79 7DQ</p>
+    <p class="chip">Food hygiene 5 · inspected November 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam06_china_aroma.mp4" data-name="tam06_china_aroma.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1589615">Copy message</button>
+    </div>
+    <p class="msg" id="m1589615" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for China Aroma. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from November 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1589615"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1589630" data-id="1589630">
+  <video controls playsinline preload="none" poster="reels/tam07_tamworth_spice_kiko_sushi.jpg" src="reels/tam07_tamworth_spice_kiko_sushi.mp4"
+         aria-label="Demo Reel for Tamworth Spice / Kiko Sushi"></video>
+  <div class="info">
+    <p class="stub">No. 7 on the route</p>
+    <h3>Tamworth Spice / Kiko Sushi</h3>
+    <p class="addr">72 Church Street, Tamworth, B79 7DQ</p>
+    <p class="chip">Food hygiene 5 · inspected May 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam07_tamworth_spice_kiko_sushi.mp4" data-name="tam07_tamworth_spice_kiko_sushi.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1589630">Copy message</button>
+    </div>
+    <p class="msg" id="m1589630" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Tamworth Spice / Kiko Sushi. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from May 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1589630"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1899172" data-id="1899172">
+  <video controls playsinline preload="none" poster="reels/tam09_jeffrey_s_fine_sandwiches.jpg" src="reels/tam09_jeffrey_s_fine_sandwiches.mp4"
+         aria-label="Demo Reel for Jeffrey’s Fine Sandwiches"></video>
+  <div class="info">
+    <p class="stub">No. 9 on the route</p>
+    <h3>Jeffrey’s Fine Sandwiches</h3>
+    <p class="addr">12A Silver Street, Tamworth, B79 7NH</p>
+    <p class="chip">Food hygiene 5 · inspected February 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam09_jeffrey_s_fine_sandwiches.mp4" data-name="tam09_jeffrey_s_fine_sandwiches.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1899172">Copy message</button>
+    </div>
+    <p class="msg" id="m1899172" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Jeffrey’s Fine Sandwiches. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from February 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1899172"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1557638" data-id="1557638">
+  <video controls playsinline preload="none" poster="reels/tam13_swallow_cantonese_take_away.jpg" src="reels/tam13_swallow_cantonese_take_away.mp4"
+         aria-label="Demo Reel for Swallow Cantonese Take Away"></video>
+  <div class="info">
+    <p class="stub">No. 13 on the route</p>
+    <h3>Swallow Cantonese Take Away</h3>
+    <p class="addr">Swallow Chinese Takeaway, 39A Aldergate, Tamworth, B79 7DD</p>
+    <p class="chip">Food hygiene 5 · inspected May 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam13_swallow_cantonese_take_away.mp4" data-name="tam13_swallow_cantonese_take_away.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1557638">Copy message</button>
+    </div>
+    <p class="msg" id="m1557638" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Swallow Cantonese Take Away. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from May 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1557638"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1904493" data-id="1904493">
+  <video controls playsinline preload="none" poster="reels/tam14_papudom_4u.jpg" src="reels/tam14_papudom_4u.mp4"
+         aria-label="Demo Reel for Papudom 4U"></video>
+  <div class="info">
+    <p class="stub">No. 14 on the route</p>
+    <h3>Papudom 4U</h3>
+    <p class="addr">39 Aldergate, Tamworth, B79 7DD</p>
+    <p class="chip">Food hygiene 5 · inspected February 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam14_papudom_4u.mp4" data-name="tam14_papudom_4u.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1904493">Copy message</button>
+    </div>
+    <p class="msg" id="m1904493" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Papudom 4U. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from February 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1904493"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1785915" data-id="1785915">
+  <video controls playsinline preload="none" poster="reels/tam15_pizza_boss.jpg" src="reels/tam15_pizza_boss.mp4"
+         aria-label="Demo Reel for Pizza Boss"></video>
+  <div class="info">
+    <p class="stub">No. 15 on the route</p>
+    <h3>Pizza Boss</h3>
+    <p class="addr">36 ALDERGATE, Tamworth, B79 7DX</p>
+    <p class="chip">Food hygiene 5 · inspected March 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam15_pizza_boss.mp4" data-name="tam15_pizza_boss.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1785915">Copy message</button>
+    </div>
+    <p class="msg" id="m1785915" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Pizza Boss. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from March 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1785915"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1620292" data-id="1620292">
+  <video controls playsinline preload="none" poster="reels/tam16_steves_fish_bar.jpg" src="reels/tam16_steves_fish_bar.mp4"
+         aria-label="Demo Reel for Steves Fish Bar"></video>
+  <div class="info">
+    <p class="stub">No. 16 on the route</p>
+    <h3>Steves Fish Bar</h3>
+    <p class="addr">35 Lower Gungate, Tamworth, B79 7AT</p>
+    <p class="chip">Food hygiene 5 · inspected October 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam16_steves_fish_bar.mp4" data-name="tam16_steves_fish_bar.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1620292">Copy message</button>
+    </div>
+    <p class="msg" id="m1620292" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Steves Fish Bar. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from October 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1620292"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1901935" data-id="1901935">
+  <video controls playsinline preload="none" poster="reels/tam17_rayu_pan_asian.jpg" src="reels/tam17_rayu_pan_asian.mp4"
+         aria-label="Demo Reel for Rayu Pan Asian"></video>
+  <div class="info">
+    <p class="stub">No. 17 on the route</p>
+    <h3>Rayu Pan Asian</h3>
+    <p class="addr">29 Lower Gungate, Tamworth, B79 7AT</p>
+    <p class="chip">Food hygiene 5 · inspected October 2025</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam17_rayu_pan_asian.mp4" data-name="tam17_rayu_pan_asian.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1901935">Copy message</button>
+    </div>
+    <p class="msg" id="m1901935" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Rayu Pan Asian. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from October 2025. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1901935"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1957914" data-id="1957914">
+  <video controls playsinline preload="none" poster="reels/tam18_shake_take_tamworth.jpg" src="reels/tam18_shake_take_tamworth.mp4"
+         aria-label="Demo Reel for Shake &amp; Take Tamworth"></video>
+  <div class="info">
+    <p class="stub">No. 18 on the route</p>
+    <h3>Shake &amp; Take Tamworth</h3>
+    <p class="addr">1A Little Church Lane, Tamworth, B79 7AX</p>
+    <p class="chip">Food hygiene 5 · inspected July 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam18_shake_take_tamworth.mp4" data-name="tam18_shake_take_tamworth.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1957914">Copy message</button>
+    </div>
+    <p class="msg" id="m1957914" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Shake &amp; Take Tamworth. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from July 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1957914"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1799468" data-id="1799468">
+  <video controls playsinline preload="none" poster="reels/tam19_mr_chips.jpg" src="reels/tam19_mr_chips.mp4"
+         aria-label="Demo Reel for Mr. Chips"></video>
+  <div class="info">
+    <p class="stub">No. 19 on the route</p>
+    <h3>Mr. Chips</h3>
+    <p class="addr">5C VICTORIA ROAD, Tamworth, B79 7HL</p>
+    <p class="chip">Food hygiene 5 · inspected January 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam19_mr_chips.mp4" data-name="tam19_mr_chips.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1799468">Copy message</button>
+    </div>
+    <p class="msg" id="m1799468" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Mr. Chips. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from January 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1799468"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1923797" data-id="1923797">
+  <video controls playsinline preload="none" poster="reels/tam22_between_the_buns.jpg" src="reels/tam22_between_the_buns.mp4"
+         aria-label="Demo Reel for Between the Buns"></video>
+  <div class="info">
+    <p class="stub">No. 22 on the route</p>
+    <h3>Between the Buns</h3>
+    <p class="addr">64 Albert Road, Tamworth, B79 7JN</p>
+    <p class="chip">Food hygiene 5 · inspected July 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam22_between_the_buns.mp4" data-name="tam22_between_the_buns.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1923797">Copy message</button>
+    </div>
+    <p class="msg" id="m1923797" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Between the Buns. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from July 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1923797"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1688068" data-id="1688068">
+  <video controls playsinline preload="none" poster="reels/tam23_eat_well.jpg" src="reels/tam23_eat_well.mp4"
+         aria-label="Demo Reel for Eat Well"></video>
+  <div class="info">
+    <p class="stub">No. 23 on the route</p>
+    <h3>Eat Well</h3>
+    <p class="addr">156 Kettlebrook Road, Kettlebrook, Tamworth, B77 1AF</p>
+    <p class="chip">Food hygiene 5 · inspected May 2024</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam23_eat_well.mp4" data-name="tam23_eat_well.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1688068">Copy message</button>
+    </div>
+    <p class="msg" id="m1688068" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Eat Well. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from May 2024. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1688068"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1937050" data-id="1937050">
+  <video controls playsinline preload="none" poster="reels/tam24_the_tamworth_tandoor.jpg" src="reels/tam24_the_tamworth_tandoor.mp4"
+         aria-label="Demo Reel for The Tamworth Tandoor"></video>
+  <div class="info">
+    <p class="stub">No. 24 on the route</p>
+    <h3>The Tamworth Tandoor</h3>
+    <p class="addr">332 Tamworth Road, Kettlebrook, Tamworth, B77 1DH</p>
+    <p class="chip">Food hygiene 5 · inspected June 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam24_the_tamworth_tandoor.mp4" data-name="tam24_the_tamworth_tandoor.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1937050">Copy message</button>
+    </div>
+    <p class="msg" id="m1937050" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for The Tamworth Tandoor. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from June 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1937050"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1676090" data-id="1676090">
+  <video controls playsinline preload="none" poster="reels/tam26_2_gates_grill.jpg" src="reels/tam26_2_gates_grill.mp4"
+         aria-label="Demo Reel for 2 Gates Grill"></video>
+  <div class="info">
+    <p class="stub">No. 26 on the route</p>
+    <h3>2 Gates Grill</h3>
+    <p class="addr">Unit 2 St Catherine&#x27;s Court, 104 Tamworth Road, Two Gates, Tamworth, B77 1EG</p>
+    <p class="chip">Food hygiene 5 · inspected January 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam26_2_gates_grill.mp4" data-name="tam26_2_gates_grill.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1676090">Copy message</button>
+    </div>
+    <p class="msg" id="m1676090" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for 2 Gates Grill. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from January 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1676090"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+<article class="shop" id="r1923798" data-id="1923798">
+  <video controls playsinline preload="none" poster="reels/tam99_fu_house_chinese_takeaway.jpg" src="reels/tam99_fu_house_chinese_takeaway.mp4"
+         aria-label="Demo Reel for Fu House Chinese Takeaway"></video>
+  <div class="info">
+    <p class="stub">Off the main route</p>
+    <h3>Fu House Chinese Takeaway</h3>
+    <p class="addr">1-3 Springfield Road, TWO GATES, Tamworth, B77 1EB</p>
+    <p class="chip">Food hygiene 5 · inspected July 2026</p>
+    <div class="acts">
+      <button type="button" data-save="reels/tam99_fu_house_chinese_takeaway.mp4" data-name="tam99_fu_house_chinese_takeaway.mp4">Save video</button>
+      <button type="button" class="ghost" data-copy="1923798">Copy message</button>
+    </div>
+    <p class="msg" id="m1923798" data-tpl="Hi, it&#x27;s {me}. Here&#x27;s the Reel I made for Fu House Chinese Takeaway. It&#x27;s yours to post on Instagram, Facebook or TikTok, and it shows your 5 for food hygiene from July 2026. If you&#x27;d like four a month like this with your own dishes, just reply here."></p>
+    <label class="done"><input type="checkbox" id="v1923798"> Visited</label>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+    </div>
+  </section>
   <footer>
-    <p>Ratings come from the Food Standards Agency register (pulled September 2026, Open Government Licence). Check the sticker in their window matches before you play it.</p>
+    <p>Ratings come from the Food Standards Agency register (pulled September 2026, Open Government Licence).</p>
     <p>These Reels are for the owners to post. Don't post them on our own accounts.</p>
   </footer>
 </div>
@@ -378,10 +1046,7 @@ const say = (el, s) => { if (el) el.textContent = s; };
 const me = document.getElementById("me");
 try { me.value = localStorage.getItem("wr-me") || ""; } catch (e) {}
 me.addEventListener("input", () => { try { localStorage.setItem("wr-me", me.value.trim()); } catch (e) {} });
-const text = id => {
-  const t = document.getElementById("m" + id).dataset.tpl;
-  return t.replace("{me}", me.value.trim() || "me");
-};
+const text = id => document.getElementById("m" + id).dataset.tpl.replace("{me}", me.value.trim() || "me");
 document.addEventListener("click", async ev => {
   const b = ev.target.closest("button"); if (!b) return;
   const out = b.closest(".shop")?.querySelector(".note");

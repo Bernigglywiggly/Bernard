@@ -36,7 +36,7 @@ def card(r):
   <video controls playsinline preload="none" poster="reels/{e(r['poster'])}" src="reels/{e(r['file'])}"
          aria-label="Demo Reel for {e(r['name'])}"></video>
   <div class="info">
-    <p class="stub">No. {r['order']} on the route</p>
+    <p class="stub">{f"No. {r['order']} on the route" if r['order'] < 90 else "Off the main route"}</p>
     <h3>{e(r['name'])}</h3>
     <p class="addr">{e(street)}</p>
     <p class="chip">Food hygiene 5 · inspected {month(r['fsaDate'])}</p>
@@ -188,6 +188,16 @@ a {{ color: var(--green); text-underline-offset: 3px; }}
       <div><dt>"Not interested."</dt><dd>"No problem, keep the video anyway." Say thanks and go. Mark them "visited".</dd></div>
     </dl>
   </details>
+  <section class="ticket" aria-labelledby="yes">
+    <h2 id="yes">When they say yes</h2>
+    <ol>
+      <li>Take the first month there and then on the Square reader, and set up a monthly Square invoice for the rest.</li>
+      <li>Get their WhatsApp number and the handles of the accounts they post on (Instagram, Facebook, TikTok).</li>
+      <li>Ask for three dishes they're proud of, with prices, and take the photos yourself if they're happy for you to.</li>
+      <li>Note their opening hours and anything coming up: a special, a new dish, Christmas.</li>
+      <li>Promise the first Reel within 48 hours, and send everything to Claude in the next session.</li>
+    </ol>
+  </section>
   <section class="ticket" aria-labelledby="before">
     <h2 id="before">Before you go</h2>
     <ul>

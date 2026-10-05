@@ -117,8 +117,14 @@ def clean_name(name):
 
 def fit_name(name, maxw=TW - 2 * PX, max_size=300.0, max_h=600.0):
     """Split the name over 1-3 lines and pick the biggest type; avoid lines that end on 'OF', 'THE', '&'."""
-    words = name.replace(" / ", " /").split()
     f100 = anton(100)
+    if " / " in name:                                   # two names in one shop: one per line, the slash kept on the first
+        parts = [x.strip() for x in name.split(" / ")]
+        lines = [x + " /" for x in parts[:-1]] + parts[-1:]
+        size = min(max_size, maxw / (max(f100.measureText(ln) for ln in lines) / 100))
+        block = len(lines) * 0.859 * size + (len(lines) - 1) * 0.16 * size
+        return (size * min(1.0, max_h / block)), lines
+    words = name.split()
     best = None
     for n in range(1, min(3, len(words)) + 1):
         cuts = [()]

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Build the Walk-in Reels page (sales/reels/index.html) from build/reels/manifest.json and print the files map.
 
-    python3 sales/reels/page.py [town]      # default Stone
+    python3 sales/reels/page.py                 # every town with rendered Reels, plus the monthly sample
+    python3 sales/reels/page.py --files Stone   # print only that town's files (publishes are capped at 64 MB)
 """
 import html
 import json
@@ -11,6 +12,8 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 MONTHS = "January February March April May June July August September October November December".split()
 TRACKER = "https://claude.ai/artifact/2f7kucmy3ptWePJ4UPgNUU"
+TOWNS = ["Stone", "Newcastle-under-Lyme", "Tamworth"]           # the walking order of the towns
+e = html.escape
 
 
 def month(d):
@@ -18,8 +21,11 @@ def month(d):
     return f"{MONTHS[int(m) - 1]} {y}"
 
 
+def anchor(town):
+    return town.split("-")[0].lower()
+
+
 def card(r):
-    e = html.escape
     street = ", ".join(p.strip() for p in r["address"].split(",") if p.strip().lower() not in ("staffordshire",))
     msg = (f"Hi, it's {{me}}. Here's the Reel I made for {r['name']}. It's yours to post on Instagram, Facebook or "
            f"TikTok, and it shows your 5 for food hygiene from {month(r['fsaDate'])}. If you'd like four a month like "
@@ -30,7 +36,7 @@ def card(r):
          aria-label="Demo Reel for {e(r['name'])}"></video>
   <div class="info">
     <p class="stub">No. {r['order']} on the route</p>
-    <h2>{e(r['name'])}</h2>
+    <h3>{e(r['name'])}</h3>
     <p class="addr">{e(street)}</p>
     <p class="chip">Food hygiene 5 · inspected {month(r['fsaDate'])}</p>
     <div class="acts">
@@ -44,15 +50,41 @@ def card(r):
 </article>"""
 
 
-def build(town="Stone"):
-    rows = [r for r in json.load(open(os.path.join(HERE, "build", "reels", "manifest.json"))) if r["town"] == town]
-    cards = "\n".join(card(r) for r in rows)
-    page = f"""<title>Walk-in Reels · {town}</title>
+def load():
+    rows = json.load(open(os.path.join(HERE, "build", "reels", "manifest.json")))
+    towns = [t for t in TOWNS if any(r["town"] == t for r in rows)]
+    sample = next((r for r in rows if r["town"] == "Sample"), None)
+    return rows, towns, sample
+
+
+def build():
+    rows, towns, sample = load()
+    n = sum(1 for r in rows if r["town"] in towns)
+    nav = "".join(f'<a href="#{anchor(t)}">{e(t.split("-")[0])} <b>{sum(r["town"] == t for r in rows)}</b></a>' for t in towns)
+    sections = "".join(f"""
+  <section class="town" id="{anchor(t)}" aria-labelledby="h-{anchor(t)}">
+    <h2 id="h-{anchor(t)}">{e(t)}</h2>
+    <div class="list">{"".join(card(r) for r in rows if r["town"] == t)}
+    </div>
+  </section>""" for t in towns)
+    monthly = "" if not sample else f"""
+  <section class="sample" aria-labelledby="h-monthly">
+    <video controls playsinline preload="none" poster="reels/{e(sample['poster'])}" src="reels/{e(sample['file'])}"
+           aria-label="Sample of a monthly Reel"></video>
+    <div class="info">
+      <p class="stub">Sample · not a real shop</p>
+      <h2 id="h-monthly">What the monthly ones look like</h2>
+      <p>Same kitchen ticket, their content: tonight's special, a new dish, opening hours, the Christmas menu. They send
+        a photo or the details by WhatsApp; the Reel comes back ready to post, with the caption written.</p>
+      <p class="price">Suggested: £79 a month for four, one a week, cancel any time. Not set until you decide.</p>
+    </div>
+  </section>"""
+    page = f"""<title>Walk-in Reels</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* One column you can thumb through on a doorstep: the visit script on a ticket, then one card per shop in walking order. */
+/* One column you can thumb through on a doorstep: the visit script on a ticket, then each town's shops in walking order. */
 :root {{
   --bg: #EDF0EE; --card: #FFFFFF; --paper: #F7F4EC; --ink: #17191C; --ink2: #4C5258; --line: #D3D9D6;
   --green: #1E7445; --green-soft: #DDEFE3; --red: #B5372A; --on-ink: #FFFFFF;
@@ -68,27 +100,42 @@ def build(town="Stone"):
   --green: #5CC98C; --green-soft: #15291E; --red: #FF8273; --on-ink: #121518; color-scheme: dark; }}
 body {{ background: var(--bg); color: var(--ink); font: 16px/1.5 var(--body); margin: 0; }}
 .wrap {{ max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 18px 40px; display: grid; gap: 18px; }}
+.wrap > *, .list > * {{ min-width: 0; }}
 h1 {{ font-family: var(--display); font-weight: 400; font-size: clamp(42px, 11vw, 72px); line-height: .9; margin: 0;
      text-transform: uppercase; letter-spacing: .01em; text-wrap: balance; }}
 h1 span {{ color: var(--green); }}
 .lede {{ margin: 0; color: var(--ink2); max-width: 60ch; }}
+nav.towns {{ position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); display: flex; gap: 8px;
+            overflow-x: auto; padding-block: 8px; border-bottom: 1px solid var(--line); scrollbar-width: none; }}
+nav.towns a {{ flex: 0 0 auto; text-decoration: none; color: var(--ink); font-weight: 700; font-size: 15px; padding: 7px 14px;
+              border-radius: 999px; border: 1px solid var(--line); background: var(--card); }}
+nav.towns b {{ font-family: var(--mono); font-weight: 500; color: var(--green); margin-left: 4px; }}
 .me {{ display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 15px; }}
 .me input {{ font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 8px;
             padding: 8px 10px; min-height: 40px; width: 12em; max-width: 100%; }}
 .ticket {{ background: var(--paper); border: 1px dashed var(--line); border-radius: 4px; padding: 14px 16px;
           font-family: var(--mono); font-size: 14px; display: grid; gap: 10px; }}
 .ticket h2 {{ font-family: var(--mono); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; margin: 0; color: var(--ink2); }}
-.ticket ol {{ margin: 0; padding-left: 1.4em; display: grid; gap: 8px; }}
+.ticket ol, .ticket ul {{ margin: 0; padding-left: 1.4em; display: grid; gap: 8px; }}
 .ticket q {{ font-family: var(--body); font-size: 15.5px; }}
-.ticket .price {{ color: var(--red); }}
+.price {{ color: var(--red); }}
+details.ticket summary {{ cursor: pointer; font-family: var(--mono); font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+                         color: var(--ink2); }}
+details.ticket dl {{ margin: 0; display: grid; gap: 10px; }}
+details.ticket dt {{ font-family: var(--body); font-weight: 700; font-size: 15px; }}
+details.ticket dd {{ margin: 2px 0 0; font-family: var(--body); font-size: 15px; color: var(--ink2); }}
+.town {{ display: grid; gap: 12px; scroll-margin-top: 64px; }}
+.town h2, .sample h2 {{ font-family: var(--display); font-weight: 400; text-transform: uppercase; margin: 0; line-height: 1; }}
+.town h2 {{ font-size: clamp(30px, 8vw, 44px); }}
 .list {{ display: grid; gap: 14px; }}
-.wrap > *, .list > * {{ min-width: 0; }}
-.shop {{ background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
+.shop, .sample {{ background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
         display: grid; grid-template-columns: minmax(0, 9fr) minmax(0, 11fr); gap: 14px; align-items: start; }}
-.shop video {{ width: 100%; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 8px; background: #0F1215; display: block; }}
+.shop video, .sample video {{ width: 100%; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 8px; background: #0F1215; display: block; }}
+.sample h2 {{ font-size: clamp(24px, 6vw, 32px); }}
+.sample p {{ margin: 0; font-size: 15px; }}
 .info {{ display: grid; gap: 8px; min-width: 0; }}
 .stub {{ margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }}
-.shop h2 {{ font-family: var(--display); font-weight: 400; font-size: clamp(24px, 6vw, 34px); line-height: 1; margin: 0;
+.shop h3 {{ font-family: var(--display); font-weight: 400; font-size: clamp(24px, 6vw, 34px); line-height: 1; margin: 0;
            text-transform: uppercase; text-wrap: balance; overflow-wrap: anywhere; }}
 .addr {{ margin: 0; font-size: 14.5px; color: var(--ink2); }}
 .chip {{ margin: 0; justify-self: start; font-family: var(--mono); font-size: 12px; padding: 3px 9px; border-radius: 999px;
@@ -98,7 +145,7 @@ button {{ font: inherit; font-weight: 700; font-size: 14.5px; min-height: 42px; 
          border: 1px solid var(--ink); background: var(--ink); color: var(--on-ink); }}
 button.ghost {{ background: transparent; color: var(--ink); border-color: var(--line); }}
 button:disabled {{ opacity: .6; cursor: progress; }}
-button:focus-visible, input:focus-visible {{ outline: 2px solid var(--green); outline-offset: 2px; }}
+button:focus-visible, input:focus-visible, a:focus-visible, summary:focus-visible {{ outline: 2px solid var(--green); outline-offset: 2px; }}
 .msg {{ display: none; }}
 .done {{ font-size: 14px; color: var(--ink2); display: flex; gap: 8px; align-items: center; }}
 .done input {{ width: 20px; height: 20px; accent-color: var(--green); }}
@@ -107,15 +154,17 @@ button:focus-visible, input:focus-visible {{ outline: 2px solid var(--green); ou
 footer {{ font-size: 13.5px; color: var(--ink2); display: grid; gap: 6px; }}
 footer p {{ margin: 0; max-width: 64ch; }}
 a {{ color: var(--green); text-underline-offset: 3px; }}
-@media (max-width: 380px) {{ .shop {{ grid-template-columns: 1fr; }} .shop video {{ max-width: 260px; }} }}
+@media (max-width: 380px) {{ .shop, .sample {{ grid-template-columns: 1fr; }} .shop video, .sample video {{ max-width: 260px; }} }}
 @media (prefers-reduced-motion: reduce) {{ * {{ scroll-behavior: auto; }} }}
 </style>
 <div class="wrap">
   <header>
-    <h1>Walk-in Reels · <span>{town}</span></h1>
+    <h1>Walk-in <span>Reels</span></h1>
   </header>
-  <p class="lede">{len(rows)} places in {town} rated 5 for food hygiene, in walking order. Each one has an 8-second Reel
-    made from its own public record: its name, its rating and its street. You walk in with something already made for them.</p>
+  <p class="lede">{n} takeaways and cafés rated 5 for food hygiene, town by town in walking order. Each one has an
+    8-second Reel made from its own public record: its name, its rating and its street. You walk in with something
+    already made for them.</p>
+  <nav class="towns" aria-label="Towns">{nav}</nav>
   <div class="me"><label for="me">Your first name, for the messages</label><input id="me" autocomplete="given-name" placeholder="e.g. Sam"></div>
   <section class="ticket" aria-labelledby="how">
     <h2 id="how">The visit, about two minutes</h2>
@@ -127,10 +176,28 @@ a {{ color: var(--green); text-underline-offset: 3px; }}
       <li>Log it in the <a href="{TRACKER}">Takeaway Round tracker</a>: visited, pitched, later or sold.</li>
     </ol>
   </section>
-  <div class="list">{cards}
-  </div>
+  <details class="ticket">
+    <summary>If they say…</summary>
+    <dl>
+      <div><dt>"How much?"</dt><dd>Say the monthly price once you've set it, then: "The first one's free whatever you decide."</dd></div>
+      <div><dt>"I don't really do social media."</dt><dd>"Most of your customers do. I send them ready to post, so it's ten seconds a week. It works on your WhatsApp status too."</dd></div>
+      <div><dt>"My son (or nephew) does our Instagram."</dt><dd>"Great, send it to him. If he'd like four a month done for him, he's got my number."</dd></div>
+      <div><dt>"Is that real? How did you make it?"</dt><dd>"From your food hygiene rating. It's public on the Food Standards Agency site. I only make them for places rated 5."</dd></div>
+      <div><dt>"Leave me your number."</dt><dd>Send the Reel and the message now, so your number arrives with it. Mark them "later" and drop back in three or four days.</dd></div>
+      <div><dt>"Not interested."</dt><dd>"No problem, keep the video anyway." Say thanks and go. Mark them "visited".</dd></div>
+    </dl>
+  </details>
+  <section class="ticket" aria-labelledby="before">
+    <h2 id="before">Before you go</h2>
+    <ul>
+      <li>Save the next three or four Reels to Photos first: signal inside shops is often poor.</li>
+      <li>Volume up. The stamp and the bell sell it.</li>
+      <li>Check the hygiene sticker in the window matches the Reel before you play it.</li>
+      <li>Cafés are best mid-afternoon. Takeaways that open at 4 or 5 are best just after opening, before the first rush.</li>
+    </ul>
+  </section>{monthly}{sections}
   <footer>
-    <p>Ratings come from the Food Standards Agency register (pulled September 2026, Open Government Licence). Check the sticker in their window matches before you play it.</p>
+    <p>Ratings come from the Food Standards Agency register (pulled September 2026, Open Government Licence).</p>
     <p>These Reels are for the owners to post. Don't post them on our own accounts.</p>
   </footer>
 </div>
@@ -140,10 +207,7 @@ const say = (el, s) => {{ if (el) el.textContent = s; }};
 const me = document.getElementById("me");
 try {{ me.value = localStorage.getItem("wr-me") || ""; }} catch (e) {{}}
 me.addEventListener("input", () => {{ try {{ localStorage.setItem("wr-me", me.value.trim()); }} catch (e) {{}} }});
-const text = id => {{
-  const t = document.getElementById("m" + id).dataset.tpl;
-  return t.replace("{{me}}", me.value.trim() || "me");
-}};
+const text = id => document.getElementById("m" + id).dataset.tpl.replace("{{me}}", me.value.trim() || "me");
 document.addEventListener("click", async ev => {{
   const b = ev.target.closest("button"); if (!b) return;
   const out = b.closest(".shop")?.querySelector(".note");
@@ -172,16 +236,25 @@ document.querySelectorAll(".done input").forEach(c => {{
 }});
 </script>
 """
-    out = os.path.join(HERE, "index.html")
-    open(out, "w").write(page)
-    files = {}
+    open(os.path.join(HERE, "index.html"), "w").write(page)
+    return rows, towns, sample
+
+
+def files_for(rows, keep):
+    out = {}
     for r in rows:
-        files[f"reels/{r['file']}"] = os.path.relpath(os.path.join(HERE, "build", "reels", r["file"]), os.getcwd())
-        files[f"reels/{r['poster']}"] = os.path.relpath(os.path.join(HERE, "build", "reels", r["poster"]), os.getcwd())
-    total = sum(os.path.getsize(os.path.join(os.getcwd(), p)) for p in files.values()) / 1e6
-    print(out, len(rows), "Reels,", round(total, 1), "MB")
-    print(json.dumps(files))
+        if keep(r):
+            for k in ("file", "poster"):
+                out[f"reels/{r[k]}"] = os.path.relpath(os.path.join(HERE, "build", "reels", r[k]), os.getcwd())
+    return out
 
 
 if __name__ == "__main__":
-    build(*(sys.argv[1:2] or ["Stone"]))
+    rows, towns, sample = build()
+    print(os.path.join(HERE, "index.html"), sum(r["town"] in towns for r in rows), "Reels in", ", ".join(towns),
+          "+ sample" if sample else "")
+    if "--files" in sys.argv:
+        want = sys.argv[sys.argv.index("--files") + 1:]
+        fs = files_for(rows, lambda r: r["town"] in want)
+        print(round(sum(os.path.getsize(p) for p in fs.values()) / 1e6, 1), "MB")
+        print(json.dumps(fs))

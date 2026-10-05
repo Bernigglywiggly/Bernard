@@ -3,7 +3,7 @@
 
 Usage: python3 script_lint.py lab/ch2/ep05/script.py [more scripts...]
 
-Reads LINES (How They Profit) or CHAPTERS (The Curve) and flags:
+Reads LINES (How They Profit) or CHAPTERS (The Curve's beats, Money Crimes' paras) and flags:
   NOT-X     a sentence starting "Not ..." (the "Not X. Y." device)
   COLON     a colon reveal inside narration ("...: the answer")
   STACCATO  three or more sentences of 5 words or fewer in a row
@@ -28,6 +28,7 @@ def narration(path):
         out.append((d.get("id", "?"), d.get("text", "")))
     for ch in mod.get("CHAPTERS", []):
         out += [(ch.get("id", "?"), beat[0]) for beat in ch.get("beats", [])]
+        out += [(ch.get("id", "?"), para) for para in ch.get("paras", [])]
     return out
 
 

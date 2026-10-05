@@ -11,6 +11,7 @@ stamp, pen, pin, service bell, room tone); no music, so the owner can add a tren
     python3 sales/reels/make_reels.py stills [ids...]      # key frames per shop -> build/stills/<order>_<slug>.jpg
     python3 sales/reels/make_reels.py render [ids...]      # default: every FSA-5 shop in Stone, in walking order
     python3 sales/reels/make_reels.py render --town Tamworth
+    python3 sales/reels/make_reels.py render --sample special   # a sample of the monthly product (SAMPLES)
 """
 import json
 import math
@@ -154,19 +155,39 @@ def inspected(d):
     return f"INSPECTED {MONTHS[int(m) - 1]} {y}"
 
 
+def rating_spec(shop):
+    """The walk-in gift: the shop's own name, its 5 for food hygiene and its street, all from the FSA record."""
+    pre, street, townpc = split_address(shop)
+    return dict(header="ORDER UP", big=clean_name(shop["name"]), line=("1 x FOOD HYGIENE RATING", "5/5"),
+                sub=("  TOP RATING  ·  VERY GOOD", "  " + inspected(shop["fsaDate"])),
+                stamp=("5", "FOOD HYGIENE RATING  ·  VERY GOOD  ·  "), find="FIND US", pre=pre, street=street,
+                townpc=townpc, src=("RATING: FOOD STANDARDS AGENCY", "RATINGS.FOOD.GOV.UK"))
+
+
+# Samples of the monthly product (the owner's own specials). Shown as a format sample, never as a real shop.
+SAMPLES = {
+    "special": (dict(id="900001", order=0, town="Sample", name="Your Takeaway", address="", postcode="", fsaDate="2026-10-01"),
+                dict(header="TONIGHT", big="CHICKEN TIKKA MASALA", line=("1 x TONIGHT'S SPECIAL", "£8.95"),
+                     sub=("  WITH PILAU RICE AND A NAAN", "  WHILE IT LASTS"),
+                     stamp=("£8.95", "TONIGHT'S SPECIAL  ·  TONIGHT ONLY  ·  "), find="ORDER", pre="CALL OR WALK IN",
+                     street="YOUR TAKEAWAY", townpc="12 HIGH STREET", src=("", ""))),
+}
+
+
 class Ticket:
     """Every element on the ticket in world coordinates (x 0..TW, y down from the rail), with its print time."""
 
-    def __init__(self, shop):
+    def __init__(self, shop, spec=None):
         self.shop = shop
+        sp = self.spec = spec or rating_spec(shop)
         self.els = []
         y = 0.0
         y += 86
-        self.text("*  *  *   ORDER UP   *  *  *", mono(30), TW / 2, y, INK, -1, align="center")
+        self.text(f"*  *  *   {sp['header']}   *  *  *", mono(30), TW / 2, y, INK, -1, align="center")
         y += 44
         self.rule(y, -1)
         # the name, as big as it will go
-        size, lines = fit_name(clean_name(shop["name"]))
+        size, lines = fit_name(sp["big"])
         cap = 0.859 * size
         y += 40
         top = y
@@ -180,7 +201,7 @@ class Ticket:
         # the rating, as order lines
         y += 76
         f = mono(34)
-        left, right = "1 x FOOD HYGIENE RATING", "5/5"
+        left, right = sp["line"]
         self.text(left, f, PX, y, INK, T_RATE1)
         rx = TW - PX
         self.text(right, mono(40), rx, y + 2, INK, T_RATE1, align="right")
@@ -189,9 +210,9 @@ class Ticket:
         self.text("." * max(0, dots), f, PX + lw + 10, y, INK3, T_RATE1)
         self.five = (rx - rw, y - 0.70 * 40, rx, y + 2)
         y += 52
-        self.text("  TOP RATING  ·  VERY GOOD", mono(28), PX, y, INK2, T_RATE2)
+        self.text(sp["sub"][0], mono(28), PX, y, INK2, T_RATE2)
         y += 44
-        self.text("  " + inspected(shop["fsaDate"]), mono(28), PX, y, INK2, T_RATE3)
+        self.text(sp["sub"][1], mono(28), PX, y, INK2, T_RATE3)
         self.rate_box = (self.five[1] - 30, y)
         # the stamp
         y += 40
@@ -200,10 +221,10 @@ class Ticket:
         self.rule(y, T_RULE3)
         # find us
         y += 74
-        self.text("FIND US", mono(34), PX, y, INK, T_FIND)
-        self.pin_at = (PX + mono(34).measureText("FIND US") + 44, y - 12)
+        self.text(sp["find"], mono(34), PX, y, INK, T_FIND)
+        self.pin_at = (PX + mono(34).measureText(sp["find"]) + 44, y - 12)
         find_top = y - 30
-        pre, street, townpc = split_address(shop)
+        pre, street, townpc = sp["pre"], sp["street"], sp["townpc"]
         if pre:
             y += 52
             self.text(pre, mono(30), PX, y, INK2, T_PRE)
@@ -215,10 +236,11 @@ class Ticket:
         self.find_box = (find_top, y)
         y += 46
         self.rule(y, T_RULE4)
-        y += 52
-        self.text("RATING: FOOD STANDARDS AGENCY", mono(22), PX, y, INK3, T_SRC1)
-        y += 32
-        self.text("RATINGS.FOOD.GOV.UK", mono(22), PX, y, INK3, T_SRC2)
+        if sp["src"][0]:
+            y += 52
+            self.text(sp["src"][0], mono(22), PX, y, INK3, T_SRC1)
+            y += 32
+            self.text(sp["src"][1], mono(22), PX, y, INK3, T_SRC2)
         y += 82
         self.text("*  *  *   THANK YOU   *  *  *", mono(30), TW / 2, y, INK, T_THANKS, align="center")
         y += 70
@@ -369,7 +391,7 @@ def draw_stamp(c, T, t):
     ink = fill(GREEN, 0.92)
     c.drawCircle(0, 0, R, stroke(GREEN, 13, 0.92))
     c.drawCircle(0, 0, R - 64, stroke(GREEN, 4, 0.92))
-    ring = "FOOD HYGIENE RATING  ·  VERY GOOD  ·  "
+    ring = T.spec["stamp"][1]
     f = mono(29)
     step = 360.0 / len(ring)
     for i, ch in enumerate(ring):
@@ -377,8 +399,10 @@ def draw_stamp(c, T, t):
         c.rotate(i * step)
         c.drawString(ch, -f.measureText(ch) / 2, -(R - 52), f, ink)
         c.restore()
-    big = anton(250)
-    c.drawString("5", -big.measureText("5") / 2, 0.859 * 250 / 2, big, ink)
+    word = T.spec["stamp"][0]
+    size = min(250.0, 2 * (R - 92) / (anton(100).measureText(word) / 100))
+    big = anton(size)
+    c.drawString(word, -big.measureText(word) / 2, 0.859 * size / 2, big, ink)
     er = skia.Paint(AntiAlias=True)
     er.setBlendMode(skia.BlendMode.kDstOut)
     c.drawImageRect(T.ink, skia.Rect.MakeLTRB(-R - 24, -R - 24, R + 24, R + 24), skia.SamplingOptions(skia.FilterMode.kLinear), er)
@@ -587,9 +611,9 @@ def sound(T):
             x += amp * np.sin(2 * np.pi * fr * u) * np.exp(-u / dec)
         return x + AX.bq(noise(sec), "hp", 4000) * np.exp(-u / 0.004) * 0.6
 
-    pre = split_address(T.shop)[0]
-    for at in (T_RULE, T_RATE1, T_RATE2, T_RATE3, T_RULE3, T_FIND, T_PRE if pre else -1, T_STREET, T_TOWN, T_RULE4, T_SRC1,
-               T_SRC2, T_THANKS):
+    sp = T.spec
+    for at in (T_RULE, T_RATE1, T_RATE2, T_RATE3, T_RULE3, T_FIND, T_PRE if sp["pre"] else -1, T_STREET, T_TOWN, T_RULE4,
+               T_SRC1 if sp["src"][0] else -1, T_SRC2 if sp["src"][0] else -1, T_THANKS):
         if at >= 0:
             add(printer(), at, -27, pan=rng.uniform(-0.2, 0.2))
     hs = holds(T)
@@ -629,8 +653,8 @@ def stills(sel):
     d = os.path.join(BUILD, "stills")
     os.makedirs(d, exist_ok=True)
     times = [0.0, 0.7, 1.13, 1.6, 2.45, 3.6, 4.7, 6.0, 7.9]
-    for s in sel:
-        T = Ticket(s)
+    for s, spec in sel:
+        T = Ticket(s, spec)
         hs = holds(T)
         tiles = []
         for t in times:
@@ -649,8 +673,8 @@ def render(sel):
     d = os.path.join(BUILD, "reels")
     os.makedirs(d, exist_ok=True)
     made = []
-    for s in sel:
-        T = Ticket(s)
+    for s, spec in sel:
+        T = Ticket(s, spec)
         hs = holds(T)
         base = os.path.join(d, name_of(s))
         wav = base + ".wav"
@@ -686,4 +710,8 @@ def manifest(_sel=None):
 
 if __name__ == "__main__":
     mode, rest = (sys.argv[1] if len(sys.argv) > 1 else "stills"), sys.argv[2:]
-    {"stills": stills, "render": render, "manifest": manifest}[mode](shops(rest))
+    if "--sample" in rest:                            # e.g. render --sample special: the monthly product's format
+        sel = [SAMPLES[n] for n in rest[rest.index("--sample") + 1:]] or list(SAMPLES.values())
+    else:
+        sel = [(s, None) for s in shops(rest)]
+    {"stills": stills, "render": render, "manifest": manifest}[mode](sel)

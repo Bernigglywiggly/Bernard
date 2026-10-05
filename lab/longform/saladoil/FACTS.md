@@ -37,3 +37,14 @@ the American Express investment).
 The inspectors checked exactly what they were shown: the top of the tank. Every safeguard was real and pointed at the
 wrong place. Close on Buffett buying American Express in the slump: the scandal hurt the balance sheet, not the
 business (labelled as his reasoning, from his letters).
+
+## Script v0 claims not in the table yet (TO VERIFY before voicing, 5 Oct)
+| Line (chapter) | Claim | Check against |
+|---|---|---|
+| open | Allied's tanks were in New Jersey (widely given as Bayonne) | Miller; contemporary reports |
+| open, paper | "more than 150 million dollars" lent (covers the $175M and $180M counts) | Miller; settle one figure |
+| fall | De Angelis bought soybean-oil futures through Wall Street brokers, expecting prices to rise, and couldn't meet margin calls when they fell | Miller; NYT Nov 1963 |
+| fall | Ira Haupt & Co. had financed his trading and held the receipts | Miller; SEC/NYSE records |
+| checked | American Express settled for about $60M (table) and the business depended on trust in the name (framing, ours) | AmEx history; Miller |
+| buyer | Buffett's reasoning (the balance sheet was hit, the customers stayed) "as he and his biographers later told it" | Buffett partnership letters 1964-66; Schroeder, *The Snowball* |
+| buyer | He put "a large part" of the partnership's money into AmEx and it became one of his best early investments | same |

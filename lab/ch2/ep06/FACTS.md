@@ -52,3 +52,12 @@ issuer), with each hop's cut.
   merchants have been suing (the script says "for years").
 - The Lisbon cafe and the Ohio bank are an illustration: label it on screen.
 - **Fiscal 2026 results are due in late October 2026. Re-run this check and swap every figure before voicing.**
+
+## Open after the critic pass (6 Oct, CRITIC_v1.md)
+- STILL UNVERIFIED AND STILL SPOKEN: "for most shops it is a large part of what accepting a card costs" (line
+  `interchange`) and "most of what a card payment costs you goes to banks" (line `shop`). A search summary says
+  interchange is "70% to 90%" of what most merchants pay "by some estimates" (pointing at CRS In Focus IF11893,
+  "Merchant Discount, Interchange, and Other Transaction Fees", and Richmond Fed EB 11-05), but neither was opened.
+  Read one of them and cite it in SOURCES, or re-voice both lines softer, BEFORE upload. The on-screen text for the
+  shop line now says only what the 10-K supports: "interchange goes to the banks, not to Visa".
+- "Last year" is spoken six times for fiscal 2025; fiscal 2026 reports in late October 2026.

@@ -263,7 +263,7 @@ def main(build, picture, out):
           "[vw][2:a]afir=dry=0:wet=1[rev];"
           "[v][rev]amix=inputs=2:weights='1 0.09':normalize=0[vox];"
           "[1:a]volume=0.72[bed];[bed][vk]sidechaincompress=threshold=0.05:ratio=3:attack=20:release=260[duck];"
-          "[vox][duck][4:a]amix=inputs=3:normalize=0,alimiter=limit=0.84,loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000[a]")
+          f"[vox][duck][4:a]amix=inputs=3:normalize=0,alimiter=limit=0.84,loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000,afade=t=out:st={dur - 3.0:.2f}:d=3.0[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", dry, "-i", os.path.join(build, "garage.wav"), "-i", os.path.join(build, "plate.wav"),
                     "-i", picture, "-i", os.path.join(build, "sfx.wav"), "-filter_complex", fc, "-map", "3:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k",
                     "-shortest", out], check=True)

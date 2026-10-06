@@ -61,3 +61,17 @@ issuer), with each hop's cut.
   Read one of them and cite it in SOURCES, or re-voice both lines softer, BEFORE upload. The on-screen text for the
   shop line now says only what the 10-K supports: "interchange goes to the banks, not to Visa".
 - "Last year" is spoken six times for fiscal 2025; fiscal 2026 reports in late October 2026.
+
+## Verified 6 Oct 2026 (afternoon): interchange is the largest of a shop's card fees
+- Federal Reserve Bank of Richmond, Economic Brief No. 11-05 (May 2011), "The Role of Interchange Fees on Debit and
+  Credit Card Transactions in the Payments System", read on richmondfed.org:
+  "merchants are assessed fees for processing the transactions, the largest of which is called an 'interchange' fee";
+  "The largest of those fees is the 'interchange' fee, which is set by the card network that processes the transaction
+  and is ultimately paid to the bank that issued the card"; "Merchants pay what is known as a merchant discount fee,
+  which includes the interchange fee paid to the card-issuing bank, the network assessment fee paid to the card
+  network, and the acquiring fee paid to the acquirer."
+- This supports the two spoken lines ("for most shops it is a large part of what accepting a card costs"; "most of
+  what a card payment costs you goes to banks": the largest fee goes to the issuing bank and the acquiring fee to the
+  shop's own bank; only the assessment goes to the network). Limits: a US source from 2011; it gives no percentage, so
+  none goes on screen. The "70% to 90%" figure from a search summary was NOT verified and is not used.
+- congress.gov (CRS IF11893) sits behind a bot check and was not read.

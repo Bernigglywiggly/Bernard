@@ -247,6 +247,8 @@ def route(c, t, z):
     box_label(c, "interchange", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 19.5, sm(t, L("interchange") + 0.3, L("interchange") + 0.9) * (1.0 if gone6 > 0.5 else 0.0), 2.0, "center")
     text(c, "paid by the shop's bank to the cardholder's bank", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 22.6, mono(1.35), K["dim"],
          sm(t, L("interchange") + 1.2, L("interchange") + 1.9) * min(1.0, gone6), 0.05, "center")
+    text(c, "the largest of the fees a shop pays on a card  ·  Federal Reserve Bank of Richmond, Economic Brief 11-05", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 25.4,
+         mono(1.25), K["dim"], sm(t, W_("interchange", "large", -0.3), W_("interchange", "large", 0.4)) * min(1.0, gone6), 0.03, "center")
     ks = sm(t, tl.word("sets", "writes") - 0.2, tl.word("sets", "writes") + 0.5)
     c.drawRect(skia.Rect.MakeXYWH(NX[2] - 13, NY + NODE_H / 2 + 1.2, 26, 5.2), skia.Paint(Color=col(K["bg"], 0.92 * ks)))
     text(c, "sets the default rates", NX[2], NY + NODE_H / 2 + 3.0, mono(1.45), K["acc"], ks * (1 - sm(t, L("fee") - 9, L("fee") - 8)), 0.05, "center")
@@ -585,11 +587,13 @@ def main(a):
         sp = os.path.join(HERE, "flow_sheet.png")
         sh.makeImageSnapshot().save(sp, skia.kPNG)
         print(sp)
-    elif a and a[0] == "clip":
+    elif a and a[0] in ("clip", "master"):                              # clip = 720p preview; master = 1080p
         t0, t1 = float(a[1]), float(a[2])
-        p = os.path.join(HERE, f"flow_{int(t0):03d}_{int(t1):03d}.mp4")
-        ff = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-                               "-vf", "scale=1280:720", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", p], stdin=subprocess.PIPE)
+        full = a[0] == "master"
+        p = os.path.join(HERE, f"{'master' if full else 'flow'}_{int(t0):03d}_{int(t1):03d}.mp4")
+        ff = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-"]
+                              + ([] if full else ["-vf", "scale=1280:720"])
+                              + ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "16" if full else "20", "-preset", "slow" if full else "medium", p], stdin=subprocess.PIPE)
         for i in range(int((t1 - t0) * FPS)):
             ff.stdin.write(frame(surf, t0 + i / FPS).toarray(colorType=skia.kRGBA_8888_ColorType).tobytes())
         ff.stdin.close()

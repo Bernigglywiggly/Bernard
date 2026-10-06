@@ -120,5 +120,8 @@ SOURCES = [
     "jurisdictions have reviewed or are reviewing these fees, rules and practices'",
     "Worked out from the totals above: $40.0B / $17T = about 24 cents per $100; $20.1B / $40.0B = 50%; 257.5 billion / "
     "365 = about 705 million transactions a day; the four revenue lines total $55.8B, less $15.8B of incentives = $40.0B",
+    "Federal Reserve Bank of Richmond, Economic Brief No. 11-05 (May 2011), 'The Role of Interchange Fees on Debit and "
+    "Credit Card Transactions in the Payments System': the interchange fee is the largest of the fees a merchant is "
+    "assessed on a card transaction, is set by the card network and is paid to the bank that issued the card",
     "The Lisbon café and the Ohio bank are an illustration of a cross-border payment, not a real transaction",
 ]

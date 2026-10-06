@@ -135,6 +135,10 @@ def ocean(c, t, z=1.0, far=1.0, near=0.0):
 
 
 # ---------------------------------------------------------------- scale 12: the four parties on the wire
+def lerp_(a, b, u):
+    return a + (b - a) * u
+
+
 def lod(z, a, b):
     """Detail that only exists once the camera is close enough to read it."""
     return sm(z, a, b)
@@ -212,14 +216,20 @@ def route(c, t, z):
     k = lod(z, 1.6, 3.2)
     if k <= 0:
         return
-    c.drawLine(NX[0] - 60, NY, NX[3] + NODE_W / 2 + 22, NY, skia.Paint(Color=col(K["acc"], 0.9 * k), AntiAlias=True, StrokeWidth=0.18))
-    text(c, "one card payment  ·  four parties", NX[0] - NODE_W / 2, NY - 17, mono(1.7), K["dim"], k * sm(t, L("four"), L("four") + 0.8), 0.05)
-    c.drawLine(NX[0] - NODE_W / 2, NY - 15, NX[3] + NODE_W / 2, NY - 15, hair(0.35 * k, 0.1))
-    party(c, 0, k * sm(t, L("four") + 1.2, L("four") + 1.9), t)
+    c6_ = sm(t, L("weak") + 1.5, L("weak") + 2.6) if "weak" in tl.IDS else 0.0
+    c.drawLine(lerp_(NX[0] - 60, NX[1] - NODE_W / 2 - 6, c6_), NY, NX[3] + NODE_W / 2 + 10, NY, skia.Paint(Color=col(K["acc"], 0.9 * k), AntiAlias=True, StrokeWidth=0.18))
+    text(c, "one card payment  ·  four parties", NX[0] - NODE_W / 2, NY - 17, mono(1.7), K["dim"], k * sm(t, L("four"), L("four") + 0.8) * (1 - c6_), 0.05)
+    c.drawLine(lerp_(NX[0] - NODE_W / 2, NX[1] - NODE_W / 2, c6_), NY - 15, NX[3] + NODE_W / 2, NY - 15, hair(0.35 * k, 0.1))
+    c6 = sm(t, L("weak") + 1.5, L("weak") + 2.6) if "weak" in tl.IDS else 0.0     # the last chapter frames the three right-hand parties
+    for i in range(4):                                               # the four places, sketched before they are named
+        r = skia.Rect.MakeXYWH(NX[i] - NODE_W / 2, NY - NODE_H / 2, NODE_W, NODE_H)
+        c.drawRect(r, skia.Paint(Color=col(K["bg"], 0.9 * k)))
+        c.drawRect(r, hair(0.2 * k * sm(t, L("four") + 0.6 + 0.2 * i, L("four") + 1.2 + 0.2 * i) * (1 - c6 if i == 0 else 1), 0.1))
+    party(c, 0, k * sm(t, L("four") + 1.2, L("four") + 1.9) * (1 - c6), t)
     party(c, 1, k * sm(t, L("shopbank") + 0.2, L("shopbank") + 0.9), t)
     party(c, 3, k * sm(t, L("yourbank") + 0.2, L("yourbank") + 0.9), t)
     party(c, 2, k * sm(t, L("quote") + 0.2, L("quote") + 0.9), t, hot=True)
-    wire_packets(c, t, k * sm(t, L("quote") + 1.0, L("quote") + 1.6))
+    wire_packets(c, t, k * sm(t, L("quote") + 1.0, L("quote") + 1.6) * (1 - c6))
     # the annual report, set above the network
     kq = sm(t, tl.word("quote", "plain") - 0.2, tl.word("quote", "plain") + 0.5)
     if kq > 0:
@@ -233,9 +243,10 @@ def route(c, t, z):
     # interchange
     ki = sm(t, L("fee") + 0.4, L("fee") + 2.2)
     interchange(c, t, ki)
-    box_label(c, "interchange", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 19.5, sm(t, L("interchange") + 0.3, L("interchange") + 0.9), 2.0, "center")
+    gone6 = 1.0 - (sm(t, L("meters") + 0.2, L("meters") + 1.0) if "meters" in tl.IDS else 0.0) + (sm(t, L("weak") + 2.5, L("weak") + 3.5) if "weak" in tl.IDS else 0.0)
+    box_label(c, "interchange", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 19.5, sm(t, L("interchange") + 0.3, L("interchange") + 0.9) * (1.0 if gone6 > 0.5 else 0.0), 2.0, "center")
     text(c, "paid by the shop's bank to the cardholder's bank", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 22.6, mono(1.35), K["dim"],
-         sm(t, L("interchange") + 1.2, L("interchange") + 1.9), 0.05, "center")
+         sm(t, L("interchange") + 1.2, L("interchange") + 1.9) * min(1.0, gone6), 0.05, "center")
     ks = sm(t, tl.word("sets", "writes") - 0.2, tl.word("sets", "writes") + 0.5)
     c.drawRect(skia.Rect.MakeXYWH(NX[2] - 13, NY + NODE_H / 2 + 1.2, 26, 5.2), skia.Paint(Color=col(K["bg"], 0.92 * ks)))
     text(c, "sets the default rates", NX[2], NY + NODE_H / 2 + 3.0, mono(1.45), K["acc"], ks * (1 - sm(t, L("fee") - 9, L("fee") - 8)), 0.05, "center")
@@ -297,10 +308,12 @@ def _meters(c, t, k0):
     c.drawLine(X0, MT + 5.2, X0 + 150 * k0, MT + 5.2, hair(0.3, 0.1))
     for i, (lid, lab, v, disp, wl, ww) in enumerate(METERS):
         y = MT + 12 + i * 13.0
-        ka = sm(t, L(lid) + 0.2, L(lid) + 0.8) if lid != "processing" else sm(t, L("count") + 0.2, L("count") + 0.8)
+        ka = sm(t, L("meters") + 0.7 + 0.25 * i, L("meters") + 1.3 + 0.25 * i)
         if ka <= 0:
             continue
-        text(c, lab, X0, y - 1.4, mono(1.5), K["dim"], ka, 0.05)
+        on = sm(t, L(lid) + 0.2, L(lid) + 0.8) if lid != "processing" else sm(t, L("count") + 0.2, L("count") + 0.8)
+        text(c, lab, X0, y - 1.4, mono(1.5), K["light"] if on > 0.5 else K["dim"], ka, 0.05)
+        c.drawRect(skia.Rect.MakeXYWH(X0, y, 100, 4.4), hair(0.22 * ka, 0.1))            # the empty track
         tv = W_(wl, ww, -0.5)
         kb = sm(t, tv, tv + 1.2)
         hot = lid == "processing"
@@ -314,7 +327,7 @@ def _meters(c, t, k0):
     if kc > 0:
         for j in range(7):
             u = (t * 0.22 + j / 7) % 1.0
-            c.drawRect(skia.Rect.MakeXYWH(X0 + 100 * u, yc - 3.4, 1.1, 0.7), skia.Paint(Color=col(K["acc"], kc * (1 - abs(2 * u - 1)) ** 0.5), AntiAlias=True))
+            c.drawRect(skia.Rect.MakeXYWH(X0 + 100 * u, yc + 5.6, 1.1, 0.7), skia.Paint(Color=col(K["acc"], kc * (1 - abs(2 * u - 1)) ** 0.5), AntiAlias=True))
 
 
 def _handed(c, t):
@@ -392,21 +405,28 @@ def rulebook(c, t, z):
     g.setStrokeWidth(0.9)
     c.drawPath(p, g)
     c.drawPath(p, skia.Paint(Color=col(RED, kr), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=0.32))
-    text(c, "Shops have been taking Visa to court over this fee for years.", RX, NY - 13, sans(3.5), K["light"], sm(t, L("sued") + 0.2, L("sued") + 0.9))
+    ksu = sm(t, L("sued") + 0.2, L("sued") + 0.9)
+    text(c, "Shops have taken Visa to court", RX, NY - 16, sans(3.9), K["light"], ksu)
+    text(c, "over this fee for years.", RX, NY - 11.2, sans(3.9), K["light"], ksu)
     ks = sm(t, W_("suits", "set", -0.3), W_("suits", "set", 0.5))
-    text(c, "$2.5 billion", RX, NY + 1.5, sans(10.5), K["light"], ks)
-    text(c, "set aside for the interchange litigation and other legal matters  ·  fiscal 2025", RX, NY + 6.4, mono(1.75), K["dim"], ks, 0.05)
+    text(c, "$2.5 billion", RX, NY + 3.5, sans(12.0), K["light"], ks)
+    text(c, "set aside for the interchange litigation", RX, NY + 8.6, mono(2.0), K["dim"], ks, 0.05)
+    text(c, "and other legal matters  ·  fiscal 2025", RX, NY + 11.6, mono(2.0), K["dim"], ks, 0.05)
     kg = sm(t, L("regulators") + 0.6, L("regulators") + 1.4)
-    text(c, "“Regulatory authorities and central banks in a number of jurisdictions", RX, NY + 16, sans(3.1), K["light"], kg)
-    text(c, "have reviewed or are reviewing these fees, rules and practices.”", RX, NY + 20.4, sans(3.1), K["light"], kg)
-    text(c, "Visa Form 10-K  ·  fiscal 2025", RX, NY + 24.0, mono(1.6), K["dim"], kg, 0.05)
+    for i, ln in enumerate(("“Regulatory authorities and central banks", "in a number of jurisdictions have reviewed",
+                            "or are reviewing these fees, rules and practices.”")):
+        text(c, ln, RX, NY + 21 + i * 4.5, sans(3.3), K["light"], kg)
+    text(c, "Visa Form 10-K  ·  fiscal 2025", RX, NY + 34.0, mono(1.9), K["dim"], kg, 0.05)
     kv = sm(t, W_("verdict", "product", -0.4), W_("verdict", "product", 0.4))
-    text(c, "Visa's real product is the rulebook", RX, NY + 37, sans(5.0), K["light"], kv)
-    text(c, "that lets a café in Lisbon trust a bank in Ohio.", RX, NY + 43.2, sans(5.0), K["acc"], sm(t, W_("verdict", "lets", -0.3), W_("verdict", "lets", 0.5)))
-    text(c, "The wires only deliver it.", RX, NY + 48.4, mono(2.1), K["dim"], sm(t, W_("verdict", "wires", -0.3), W_("verdict", "wires", 0.5)), 0.05)
-    kshop = sm(t, W_("shop", "rate", -0.4), W_("shop", "rate", 0.4))
-    text(c, "If you run a shop: interchange goes to the banks, not to Visa.", RX, NY + 58, sans(3.3), K["light"], sm(t, L("shop") + 0.3, L("shop") + 1.0))
-    box_label(c, "the rate your own bank quotes is the part to negotiate", RX + 0.9, NY + 63.4, kshop, 2.2)
+    kv2 = sm(t, W_("verdict", "lets", -0.3), W_("verdict", "lets", 0.5))
+    text(c, "Visa's real product is the rulebook", RX, NY + 46, sans(5.6), K["light"], kv)
+    text(c, "that lets a café in Lisbon", RX, NY + 53, sans(5.6), K["acc"], kv2)
+    text(c, "trust a bank in Ohio.", RX, NY + 60, sans(5.6), K["acc"], kv2)
+    text(c, "The wires only deliver it.", RX, NY + 65.2, mono(2.2), K["dim"], sm(t, W_("verdict", "wires", -0.3), W_("verdict", "wires", 0.5)), 0.05)
+    ksh = sm(t, L("shop") + 0.3, L("shop") + 1.0)
+    text(c, "If you run a shop: interchange goes", RX, NY + 75, sans(3.6), K["light"], ksh)
+    text(c, "to the banks, not to Visa.", RX, NY + 79.6, sans(3.6), K["light"], ksh)
+    box_label(c, "the rate your bank quotes is the part to negotiate", RX + 0.9, NY + 85.4, sm(t, W_("shop", "rate", -0.4), W_("shop", "rate", 0.4)), 2.3)
 
 
 def last_crossing(c, t):
@@ -434,24 +454,23 @@ def keys2():
     lx, ly = R.LIT
     CELL = R.CELL
     rc = ((NX[1] + NX[3]) / 2, NY + 11)
-    wk = (X0 + 156, NY + 8)                                             # the last chapter: the route and its column in one frame
-    return [(L("meters") + 2.2, (X0 + 80, MT + 30, 8.4)), (E("service"), (X0 + 80, MT + 30, 8.8)),
-            (L("count") + 2.0, (X0 + 86, MT + 31, 8.9)), (E("processing"), (X0 + 88, MT + 32, 9.2)),
+    wk = (X0 + 163, NY + 8)                                             # the last chapter: the route and its column in one frame
+    return [(L("meters") + 2.2, (X0 + 80, MT + 34, 8.4)), (E("service"), (X0 + 80, MT + 34, 8.8)),
+            (L("count") + 2.0, (X0 + 86, MT + 34, 8.9)), (E("processing"), (X0 + 88, MT + 35, 9.2)),
             (L("border") + 2.4, (X0 + 80, MT + 36, 9.0)), (E("other"), (X0 + 78, MT + 38, 9.3)),
             (L("back") + 2.2, (X0 + 70, HT + 12, 9.2)), (E("incentives"), (X0 + 74, HT + 15, 9.6)),
             (E("net"), (X0 + 58, HT + 13, 10.6)),
-            (L("cents") + 2.6, (960, 800, 0.62)), (W_("cents", "kept", 0.4), (R.LITC[0] + 40, R.LITC[1] + 26, 6.4)),
+            (L("cents") + 2.6, (960, 880, 0.60)), (W_("cents", "kept", 0.4), (R.LITC[0] + 40, R.LITC[1] + 26, 6.4)),
             (E("cents"), (R.LITC[0] + 44, R.LITC[1] + 26, 6.9)),
             (L("thin") + 2.6, (lx + CELL / 2 + 6, ly + CELL * 0.72, 17.0)), (E("costs"), (lx + CELL / 2 + 4, ly + CELL * 0.76, 19.0)),
             (E("half"), (lx + CELL / 2, ly + CELL * 0.8, 21.0)),
-            (L("why") + 2.6, (lx + CELL + 44, ly + 8, 11.5)), (E("why"), (lx + CELL + 48, ly + 9, 12.0)),
+            (L("why") + 2.6, (lx + CELL + 34, ly + 8, 11.0)), (E("why"), (lx + CELL + 36, ly + 9, 11.3)),
             (L("returned") + 2.2, (lx + CELL / 2 + 36, ly + 10, 11.4)), (E("returned"), (lx + CELL / 2 + 36, ly + 9, 11.8)),
-            (L("weak") + 1.5, (960, 800, 0.62)),
-            (L("weak") + 3.8, (wk[0] - 30, wk[1], 7.6)), (E("weak"), (wk[0] - 22, wk[1], 7.4)),
-            (L("sued") + 2.2, (wk[0], wk[1], 6.4)), (E("suits"), (wk[0] + 2, wk[1] + 1, 6.6)),
-            (E("regulators"), (wk[0] + 4, wk[1] + 6, 6.6)),
-            (L("verdict") + 2.6, (wk[0] + 6, wk[1] + 16, 6.5)), (E("verdict"), (wk[0] + 6, wk[1] + 18, 6.7)),
-            (L("shop") + 2.0, (wk[0] + 6, wk[1] + 22, 6.6)), (E("shop"), (wk[0] + 6, wk[1] + 23, 6.8)),
+            (L("weak") + 1.5, (960, 880, 0.60)),
+            (L("weak") + 3.8, (wk[0], wk[1], 7.7)), (E("suits"), (wk[0], wk[1] + 2, 7.8)),
+            (E("regulators"), (wk[0], wk[1] + 10, 7.8)),
+            (L("verdict") + 2.6, (wk[0], wk[1] + 30, 7.7)), (E("verdict"), (wk[0], wk[1] + 33, 7.8)),
+            (L("shop") + 2.0, (wk[0], wk[1] + 46, 7.7)), (E("shop"), (wk[0], wk[1] + 47, 7.8)),
             (L("close") + 1.6, (960, 440, 1.0)), (E("close") + 3.0, (960, 436, 1.04))]
 
 
@@ -466,8 +485,8 @@ def camera(t):
             (E("ocean"), (960, 520, 1.0)), (L("scale") - 0.3, (960, 560, 1.0)), (L("scale") + 1.6, (960, 1400, 1.02)),
             (L("never") - 0.5, (960, 1404, 1.06)), (L("never") + 5.5, (R.LITC[0] - 60, R.LITC[1] + 20, 4.6)),
             (E("never") - 0.2, (R.LITC[0] - 30, R.LITC[1] + 24, 5.2)),
-            (L("four") + 1.5, (960, 800, 0.62)),                        # the whole page, on the way to the wire
-            (L("four") + 4.4, (NX[0] + 12, NY + 2, 11.0)), (L("shopbank") + 1.0, (NX[0] + 22, NY + 2, 11.5)),
+            (L("four") + 1.5, (960, 880, 0.60)),                        # the whole page, on the way to the wire
+            (L("four") + 4.4, (NX[0] + 34, NY + 2, 8.6)), (L("shopbank") + 1.0, (NX[0] + 40, NY + 2, 9.0)),
             (L("yourbank") + 1.5, (rc[0] + 10, rc[1], 9.6)), (L("quote") - 0.3, (rc[0], rc[1], 9.4)),
             (L("quote") + 2.2, (NX[2], NY - 12, 11.5)), (E("quote"), (NX[2], NY - 13, 12.2)),
             (L("risk") + 2.2, ((NX[2] + NX[3]) / 2 + 2, NY - 9, 10.4)), (E("risk"), ((NX[2] + NX[3]) / 2 + 3, NY - 8, 10.9)),
@@ -478,8 +497,13 @@ def camera(t):
     for (ta, a), (tb, b) in zip(keys, keys[1:]):
         if t <= tb:
             u = sm(t, ta, tb)
-            return (a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u,
-                    math.exp(math.log(a[2]) + (math.log(b[2]) - math.log(a[2])) * u))
+            up = uz = u
+            if b[2] > a[2] * 1.6:                                    # zooming in: get over the target, then close in
+                up, uz = 1 - (1 - u) ** 3.2, u ** 1.7
+            elif b[2] < a[2] / 1.6:                                  # zooming out: open up, then travel
+                up, uz = u ** 2.4, 1 - (1 - u) ** 2.6
+            return (a[0] + (b[0] - a[0]) * up, a[1] + (b[1] - a[1]) * up,
+                    math.exp(math.log(a[2]) + (math.log(b[2]) - math.log(a[2])) * uz))
     return keys[-1][1]
 
 
@@ -495,8 +519,8 @@ def wrap(s, n=54):
     return out + [cur]
 
 
-def screen(c, t, z):
-    a = 1.0 if t < L("scale") - 0.5 else 1.0 - sm(z, 1.15, 1.6)
+def screen(c, t, z, cy=0.0):
+    a = (1.0 if t < L("scale") - 0.5 else 1.0 - sm(z, 1.15, 1.6)) * (1.0 - sm(cy, 620, 820)) * sm(z, 0.8, 0.98)
     if a > 0:
         c.drawRect(skia.Rect.MakeXYWH(70, 52, 1420, 84), skia.Paint(Color=col(K["bg"], 0.94 * a)))
         text(c, "How They Profit  ·  06", 90, 84, mono(22), K["dim"], a, 0.5)
@@ -538,7 +562,7 @@ def frame(surf, t):
     if "close" in tl.IDS:
         last_crossing(c, t)
     c.restore()
-    screen(c, t, z)
+    screen(c, t, z, cy)
     return surf.makeImageSnapshot()
 
 

@@ -134,6 +134,15 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   with notes (type clipped at the left edge during drift, two pictures unreadable, whip-fast hops, too dim); v3 fixes
   those: `on_screen()` fades any block near a frame edge or the caption band, hops take 1.5 s, s12 and s15 replace s02
   and s03, levels raised. v3 was checked on stills by its maker only, not by a second agent. Next: the user's verdict, then convert LF01 in full.
+- **7 Oct, 01:15: THE CURVE LF01 IS BEING CONVERTED IN FULL** (user: "go"). Engine `lab/curvelf/flow.py <film> est|lay|
+  still|seg|lines|times`: every beat of `script.py` is a place in one world; img/clip/num/words/split are characters,
+  quote/list/tl are crisp type on plates; chapter names ride the long crossings; thread over the top of each place.
+  Pictures re-fetched to `lf01_escape/src/ai/` (gitignored); work files in `lf01_escape/flow/` (gitignored). Running
+  on ESTIMATED timings (12:31) until the voice exists. NOT YET VOICED on purpose: a fact-check agent is writing
+  `lf01_escape/VERIFY.md` first (the script names models and events from after July 2026; a sibling script had a wrong
+  premise). After VERIFY: fix the script, voice all 88 lines with George into `flow/takes/NNN_<id>/` (ids from
+  `flow.py lf01_escape lines`, about 10,500 characters), `lay`, render segs in parallel, concat, mix (adapt
+  `flow_trial/mix_trial.py`: bed sections per chapter), critic pass, then show the user. Trial v3 passed its checks.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

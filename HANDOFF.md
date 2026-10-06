@@ -63,6 +63,18 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   push into the arc where the four-party route lives -> interchange under the network -> meters -> back out to the lit
   cell. The serif storyboard (`scenes.py`, `storyboard_v0.jpg`) is the OLD look, kept for its content and timings.
   Whether the other channels and the 59 finished videos change look is NOT decided: ask before converting anything.
+- **6 Oct, 03:00: SOUND APPROVED BY THE USER ("yes").** Voice = **George** (ElevenLabs premade
+  `JBFqnCBsd6RMkjVDRZzb`, eleven_multilingual_v2, defaults, speed 1.0), NOT Sterling ("same american guy... tacky, get
+  rid"). He also liked Rob (`2ajXGJNYBR0iNHpS4VZb`): Claude suggested Rob for Money Crimes, not decided. Music = a
+  2-step **garage** bed synthesised in code (132 BPM, F minor) so we own it; vocal chain = high-pass, mud cut,
+  presence, air, de-ess, compression, a 9% bright plate; the bed side-chains under the voice; -14 LUFS. All in
+  `lab/ch2/ep06/mix_pre.py <build> <picture.mp4> <out.mp4>`. Voice pipeline without an API key: the ElevenLabs
+  connector saves one mp3 per line into `<build>/takes/NN_<line id>/` (the folder must exist first), then
+  `lay_takes.py <build>` writes lines.json + voice_dry.wav (word times from faster-whisper), then
+  `EP_BUILD=<build> flow.py clip 0 <secs>` and `mix_pre.py`. Approved preview: `HTP06_preview_george.mp4` (chapters
+  0-2, 1:34; build dir `build_george`). ElevenLabs had about 160k characters left (resets about 16 Oct); Higgsfield
+  16.12 credits (10.6 went on Sterling takes that are now unused). Claude cannot hear: the user is the only check on
+  pronunciation and on whether the bed sounds good. NEXT: chapters 3-6 drawn, voiced in George, sound effects, critic.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

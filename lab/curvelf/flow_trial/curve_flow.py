@@ -59,16 +59,16 @@ def word(i, w, d=0.0):
 # ------------------------------------------------------------------ the places: (picture, world x, y, world width)
 PLACES = dict(
     k01=("k01.mp4", 0, 0, 2500),
-    s02=("s02.png", 3300, -760, 2300),
+    s02=("s12.png", 3300, -760, 2300),
     s20=("s20.png", 5900, 420, 1900),
-    s03=("s03.png", 8000, -900, 2700),
+    s03=("s15.png", 8000, -900, 2500),
     s06=("s06.png", 10150, 500, 1250),
     s23=("s23.png", 12300, -520, 2100),
     s10=("s10.png", 14900, 520, 2700),
     s04=("s04.png", 17300, -380, 1700),
 )
 ORDER = ["k01", "s02", "s20", "s03", "s06", "s23", "s10", "s04"]
-CAM_OFF = dict(s06=0.2)                       # the camera sits this far right of a place (in its widths) to leave room for type
+CAM_OFF = dict(s06=(0.2, 0.07), s23=(-0.2, 0.0), s02=(-0.12, 0.0), s03=(-0.2, 0.0))                        # the camera sits this far right of a place (in its widths) to leave room for type
 LINE_OF = dict(k01="date", s02="site", s20="thirteen", s03="expert", s06="wanted", s23="person", s10="agents", s04="box")
 
 
@@ -78,7 +78,7 @@ def grey(im):
     lo, hi = np.percentile(g, 3), np.percentile(g, 99.6)
     g = np.clip((g - lo) / max(1e-3, hi - lo), 0, 1)
     m = float(g.mean())
-    g = g ** float(np.clip(math.log(0.3) / math.log(max(1e-3, m)), 1.0, 2.6))
+    g = g ** float(np.clip(math.log(0.36) / math.log(max(1e-3, m)), 1.0, 2.6))
     g = np.clip(g + 0.7 * (g - cv2.GaussianBlur(g, (0, 0), 3)), 0, 1)
     return np.clip(g - 0.04, 0, 1) / 0.96
 
@@ -162,11 +162,11 @@ def keys():
     k = []
     for n, p in enumerate(ORDER):
         _, x, y, ww = PLACES[p]
-        x += ww * CAM_OFF.get(p, 0.0)
+        x, y = x + ww * CAM_OFF.get(p, (0, 0))[0], y + ww * CAM_OFF.get(p, (0, 0))[1]
         ln = LINE_OF[p]
         z = W / ww * 0.92
-        a, b = S(ln) + (0.0 if n == 0 else 0.4), (S(LINE_OF[ORDER[n + 1]]) - 0.5 if n + 1 < len(ORDER) else TOTAL)
-        dx = ww * 0.05 * (1 if n % 2 else -1)
+        a, b = S(ln) + (0.0 if n == 0 else 0.6), (S(LINE_OF[ORDER[n + 1]]) - 0.9 if n + 1 < len(ORDER) else TOTAL)   # a hop takes 1.5 s: a glide, not a whip
+        dx = ww * 0.03 * (1 if n % 2 else -1)
         if n == 0:
             k.append((0.0, (x - 40, y + 20, z * 2.3)))
             k.append((a + 2.6, (x + dx * 0.2, y, z * 1.05)))
@@ -237,14 +237,14 @@ def chars(t, cx, cy, z):
     idx = np.where(stroke, len(RAMP) + eidx, idx)
     lum = np.where(stroke, np.maximum(fld, 0.72), fld)
     cov = ATLAS[idx].transpose(0, 2, 1, 3).reshape(ROWS * CH, COLS * CW)
-    k = np.clip(lum * 1.5, 0, 1)[..., None]
+    k = np.clip(lum * 1.75, 0, 1)[..., None]
     c = np.where(k < 0.7, LO + (MID - LO) * (k / 0.7), MID + (HI - MID) * ((k - 0.7) / 0.3))
     c = cv2.resize(c.astype(np.float32), (W, H), interpolation=cv2.INTER_NEAREST)
     img = c * cov[..., None]
     back = cv2.resize(cv2.GaussianBlur(cv2.resize(subj, (FW // 2, FH // 2)), (0, 0), 9), (W, H), interpolation=cv2.INTER_LINEAR)
-    out = np.float32([4, 5, 6]) / 255.0 + back[..., None] ** 1.4 * MID * 0.17 + img
+    out = np.float32([4, 5, 6]) / 255.0 + back[..., None] ** 1.4 * MID * 0.24 + img
     h = cv2.GaussianBlur(cv2.resize(img, (W // 2, H // 2), interpolation=cv2.INTER_AREA), (0, 0), 2.2)
-    out += 0.5 * cv2.resize(h, (W, H), interpolation=cv2.INTER_LINEAR)
+    out += 0.62 * cv2.resize(h, (W, H), interpolation=cv2.INTER_LINEAR)
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
     out *= (1 - 0.5 * np.clip((np.hypot(xx - W / 2, yy - H / 2) / 1100.0 - 0.55) / 0.45, 0, 1))[..., None]
     return np.clip(out, 0, 1)
@@ -260,7 +260,7 @@ def mono(sz):
 
 
 def plate(c, x, y, w, h, a):
-    c.drawRect(skia.Rect.MakeXYWH(x, y, w, h), skia.Paint(Color=col(BG, 0.9 * a)))
+    c.drawRect(skia.Rect.MakeXYWH(x, y, w, h), skia.Paint(Color=col(BG, 0.94 * a)))
 
 
 def typed(s, t, t0, cps=30.0):
@@ -299,13 +299,25 @@ def thread(c, t, z):
         c.drawString(f"{i + 1:02d}", x + 12 / z, y - 12 / z, f, skia.Paint(Color=col(DIM, 0.8), AntiAlias=True))
 
 
+CAM = [0.0, 0.0, 1.0]                         # the frame's camera, for type that must know where it is on screen
+
+
+def on_screen(x0, x1, y1):
+    """1 when a block is wholly inside the frame and above the caption band, falling to 0 as it nears an edge."""
+    cx, cy, z = CAM
+    l, r, bot = (x0 - cx) * z + W / 2, (x1 - cx) * z + W / 2, (y1 - cy) * z + H / 2
+    return sm(l, 14, 70) * (1 - sm(r, W - 70, W - 14)) * (1 - sm(bot, H - 205, H - 165))
+
+
 def label(c, k, t, big, note, dx, dy, size, t0=None, colr=INK, align="left", t1=None):
     """Big type and a typed note anchored to a place, on a plate so the characters never run under the words."""
     _, x, y, ww = PLACES[k]
     ln = LINE_OF[k]
     t0 = S(ln) + 0.5 if t0 is None else t0
-    t0 = max(t0, S(ln) + 0.45)                                        # never before the camera has arrived
-    a = sm(t, t0, t0 + 0.35) * (1 - sm(t, (t1 or E(ln)) - 0.4, (t1 or E(ln)) - 0.08))   # and gone before it leaves
+    t0 = max(t0, S(ln) + 0.65)                                        # never before the camera has arrived
+    nxt = [x["start"] for x in TL["lines"] if x["start"] > S(ln)]
+    te = t1 or (nxt[0] + 0.1 if nxt else E(ln))                       # held until the camera is leaving; on_screen() fades it at the frame's edge
+    a = sm(t, t0, t0 + 0.35) * (1 - sm(t, te - 0.75, te - 0.45))      # and gone before it leaves
     if a <= 0:
         return
     s = ww / 2300.0
@@ -313,33 +325,38 @@ def label(c, k, t, big, note, dx, dy, size, t0=None, colr=INK, align="left", t1=
     f, fm = sans(size * s), mono(30 * s)
     wb = max([f.measureText(b) for b in big.split("\n")] + [fm.measureText(note)])
     nb = len(big.split("\n"))
+    drop = max(52.0, size * 0.27) * s                                 # the note sits clear of commas and descenders
     x0 = X - (wb if align == "right" else 0)
-    plate(c, x0 - 36 * s, Y - size * s * 0.98, wb + 72 * s, size * s * (nb * 1.02) + 86 * s, a)
+    top, hgt = Y - size * s * 0.98, size * s * ((nb - 1) * 1.02 + 0.98) + drop + 34 * s
+    a *= on_screen(x0 - 36 * s, x0 + wb + 36 * s, top + hgt)
+    if a <= 0:
+        return
+    plate(c, x0 - 36 * s, top, wb + 72 * s, hgt, a)
     for i, b in enumerate(big.split("\n")):
         text(c, b, x0, Y + i * size * s * 1.02, f, colr, a, halo=(14 * s if colr != INK else 0))
-    text(c, typed(note, t, t0 + 0.25), x0 + 4 * s, Y + (nb - 1) * size * s * 1.02 + 52 * s, fm, CYAN if colr == INK else INK, a, 0.5 * s)
+    text(c, typed(note, t, t0 + 0.25), x0 + 4 * s, Y + (nb - 1) * size * s * 1.02 + drop, fm, CYAN if colr == INK else INK, a, 0.5 * s)
 
 
 def world_type(c, t):
     # every block ends above the caption band (the bottom fifth of the screen) at every point of the camera's drift
-    label(c, "k01", t, "11 JULY 2026", "HUGGING FACE  ·  BREACH DETECTED", -1060, 270, 150, t0=S("date") + 0.4)
-    label(c, "s02", t, "1,000,000+", "MODELS SHARED  ·  AND THE DATA THEY LEARN FROM", -1040, 270, 170, t0=word("site", "over", -0.1))
-    label(c, "s20", t, "< 13 HOURS", "ONE DATASET MACHINE  →  ADMIN OF SEVERAL CLUSTERS", -1060, 280, 190, t0=word("thirteen", "under", -0.1))
-    label(c, "s03", t, "LIKE NO ATTACKER\nTHEY HAD SEEN", "EXPERT MOVES  ·  STRANGE GOALS", -1040, 150, 120, t0=word("expert", "but", -0.1))
+    label(c, "k01", t, "11 JULY 2026", "HUGGING FACE  ·  BREACH DETECTED", -1000, 250, 150, t0=S("date") + 0.4)
+    label(c, "s02", t, "1,000,000+", "MODELS SHARED  ·  AND THE DATA THEY LEARN FROM", -1230, 200, 170, t0=word("site", "over", -0.1))
+    label(c, "s20", t, "< 13 HOURS", "ONE DATASET MACHINE  →  ADMIN OF SEVERAL CLUSTERS", -1000, 250, 190, t0=word("thirteen", "under", -0.1))
+    label(c, "s03", t, "LIKE NO ATTACKER\nTHEY HAD SEEN", "EXPERT MOVES  ·  STRANGE GOALS", -1440, 120, 100, t0=word("expert", "but", -0.1))
     _, x, y, ww = PLACES["s06"]
     u = ww / 2300.0
     for i, (s_, w_) in enumerate((("NO CUSTOMER DATA TAKEN", "take"), ("NO RANSOM NOTE", "ask"), ("IT WANTED TEST DATA", "looking"))):
         t0 = word("wanted", w_, -0.15)
-        a = sm(t, t0, t0 + 0.3) * (1 - sm(t, E("wanted") - 0.4, E("wanted") - 0.08))
+        a = sm(t, t0, t0 + 0.3) * (1 - sm(t, E("wanted") - 0.75, E("wanted") - 0.45))
         if a > 0:
             f = sans(76 * u)
             X, Y = x + 450 * u, y + (-250 + i * 170) * u
             plate(c, X - 60 * u, Y - 84 * u, f.measureText(s_) + 90 * u, 118 * u, a)
             text(c, s_, X, Y, f, RED if i == 2 else INK, a, halo=(12 * u if i == 2 else 0))
             c.drawRect(skia.Rect.MakeXYWH(X - 44 * u, Y - 62 * u, 10 * u, 64 * u), skia.Paint(Color=col(RED if i == 2 else CYAN, a)))
-    label(c, "s23", t, "IT WASN'T\nA PERSON.", "IDENTIFIED ONE WEEK LATER", -930, 20, 185, t0=word("person", "it", -0.05), colr=RED)
-    label(c, "s10", t, "1,200", "AI AGENTS  ·  ONE TEST  ·  STILL RUNNING", -1120, 280, 300, t0=word("agents", "twelve", -0.1))
-    label(c, "s04", t, "CAN THEY KEEP\nTHEM IN THE BOX?", "THE CURVE  ·  THE AI THAT ESCAPED", -1060, 130, 84, t0=word("box", "whether", -0.1), t1=TOTAL + 9)
+    label(c, "s23", t, "IT WASN'T\nA PERSON.", "IDENTIFIED ONE WEEK LATER", -1330, 0, 178, t0=word("person", "it", -0.05), colr=RED, t1=S("agents") + 0.55)
+    label(c, "s10", t, "1,200", "AI AGENTS  ·  ONE TEST  ·  STILL RUNNING", -1040, 230, 300, t0=word("agents", "twelve", -0.1))
+    label(c, "s04", t, "CAN THEY KEEP\nTHEM IN THE BOX?", "THE CURVE  ·  THE AI THAT ESCAPED", -960, 40, 84, t0=word("box", "whether", -0.1), t1=TOTAL + 9)
 
 
 def wrap(s, f, maxw):
@@ -382,6 +399,7 @@ def screen(c, t, cx, cy, z):
 
 def frame(t):
     cx, cy, z = camera(t)
+    CAM[:] = [cx, cy, z]
     px = (chars(t, cx, cy, z) * 255).astype(np.uint8)
     rgba = np.dstack([px, np.full((H, W), 255, np.uint8)])
     surf = skia.Surface(W, H)

@@ -1,4 +1,5 @@
-"""HOW THEY PROFIT · EP06 · THE COMPANY THAT NEVER TOUCHES YOUR MONEY (Visa), v0 draft (6 Oct 2026, before scenes and voice).
+"""HOW THEY PROFIT · EP06 · VISA LENDS NOTHING AND KEEPS HALF (working title until 6 Oct: "the company that never touches
+your money", dropped because Visa does settle payments: see FACTS.md "Settlement"), v0 draft (6 Oct 2026, before scenes and voice).
 
 Structure (CRAFT.md §1: a different shape from EP05's "follow one $100"): ONE CARD TAP, traced on a map. The film
 opens in the middle of the tap (a cafe in Lisbon, a card from a bank in Ohio: an ILLUSTRATION, labelled on screen),
@@ -26,7 +27,7 @@ LINES = [
          text="Last year, $17 trillion of payments and cash moved across Visa's network like this.",
          say="Last year, seventeen trillion dollars of payments and cash moved across Visa's network like this."),
     dict(floor=0, id="never", air=1,
-         text="The company in the middle of that route never held any of the money, and that turns out to be the reason it is so profitable."),
+         text="The company in the middle of that route lends none of that money and keeps almost none of it, and that turns out to be the reason it is so profitable."),
     # 1 · FOUR PARTIES: who is actually in the tap
     dict(floor=1, id="four", text="Four parties take part in a card payment, and it helps to meet them in the order the message does."),
     dict(floor=1, id="shopbank", text="The café has a bank that collects card payments on its behalf, and the message goes there first."),
@@ -100,7 +101,7 @@ LINES = [
     dict(floor=6, id="shop",
          text="If you run a shop, most of what a card payment costs you goes to banks, so the rate your own bank quotes you is the part worth negotiating."),
     dict(floor=6, id="close",
-         text="And the next time a reader says approved, the money will have moved between two banks, on terms written by a company that was never holding it."),
+         text="And the next time a reader says approved, the money will have moved between two banks, on terms written by a company that lent none of it."),
 ]
 
 FLOORS = ["ONE SECOND", "FOUR PARTIES", "THE FEE IT DOESN'T KEEP", "THREE METERS", "THE MONEY IT HANDS BACK", "HALF",
@@ -123,5 +124,9 @@ SOURCES = [
     "Federal Reserve Bank of Richmond, Economic Brief No. 11-05 (May 2011), 'The Role of Interchange Fees on Debit and "
     "Credit Card Transactions in the Payments System': the interchange fee is the largest of the fees a merchant is "
     "assessed on a card transaction, is set by the card network and is paid to the bank that issued the card",
+    "Visa Form 10-K, fiscal 2025, on settlement: Visa operates the systems that settle payments; most US dollar "
+    "settlements are same-day, other currencies are outstanding one to two business days (settlement receivable $4.2B, "
+    "payable $4.6B at 30 Sep 2025); it indemnifies issuers and acquirers for settlement losses. The film therefore "
+    "says Visa lends none of the money, never that it does not handle it",
     "The Lisbon café and the Ohio bank are an illustration of a cross-border payment, not a real transaction",
 ]

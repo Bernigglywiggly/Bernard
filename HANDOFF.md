@@ -101,6 +101,19 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   hops are quick; small grey notes are small. CONTENT, BLOCKS UPLOAD: two spoken lines about interchange being most of
   a card's cost are unsourced (FACTS.md "Open after the critic pass"); "last year" x6 with fiscal 2026 due late Oct.
   Do not run more critic passes before the user has watched: each costs about 230k tokens and he hit a session limit.
+- **6 Oct, 23:45: HTP 06 MASTER IS v7** (`lab/ch2/ep06/HTP06_MASTER_v7.mp4`, 1920x1080, 4:19; phone copy
+  `HTP06_v7_phone.mp4`; `flow.py master 0 259.4` then `mix_pre.py`). The user said "v5 looks good". The pre-upload
+  critic on v6 (`CRITIC_v6.md`) gave PASS / PASS WITH NOTES on all four gates and "UPLOAD after edits", and its one
+  check found a REAL ERROR: **Visa does settle payments and guarantees settlement** (10-K: settlement receivable $4.2B,
+  payable $4.6B; non-dollar settlements outstanding 1-2 business days; it indemnifies banks for settlement losses). So
+  "never touches / never held your money" was FALSE. Fixed in v7: lines `never` and `close` re-voiced ("lends none of
+  that money and keeps almost none of it"; "a company that lent none of it"), the old title dropped (new options in
+  `POST.md`), FACTS.md section "Settlement". NEVER reuse the phrase "never touches your money" for Visa.
+  Also in v7: no wire-scene boxes over the opening, the cost block in proportion (50/40/10), the headline back for the
+  hop to the cell, sources larger; the interchange lines are sourced (Richmond Fed EB 11-05, FACTS.md).
+  **v7 has not been through a critic** (v6 had; v7 = v6 plus those changes). NOT DONE: thumbnail, end card, Shorts.
+  WAITING ON THE USER: a title; upload now or hold for fiscal 2026 (late Oct; "last year" is said six times); the
+  upload itself is by hand in YouTube Studio while Zapier is at its task limit.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

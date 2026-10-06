@@ -75,3 +75,21 @@ issuer), with each hop's cut.
   shop's own bank; only the assessment goes to the network). Limits: a US source from 2011; it gives no percentage, so
   none goes on screen. The "70% to 90%" figure from a search summary was NOT verified and is not used.
 - congress.gov (CRS IF11893) sits behind a bot check and was not read.
+
+## Settlement: why the film no longer says "never touches" or "never held" (checked 6 Oct 2026, 10-K read on sec.gov)
+The pre-upload critic (CRITIC_v6.md) questioned the title claim, and the 10-K bears it out:
+- "The Company operates systems for authorizing, clearing and settling payment transactions worldwide. Most U.S. dollar
+  settlements with the Company's financial institution clients are settled within the same day and do not result in a
+  receivable or payable balance. Settlements in currencies other than the U.S. dollar generally remain outstanding for
+  one to two business days, resulting in amounts due from and to clients."
+- Balance sheet, 30 Sep 2025: settlement receivable $4,191M; settlement payable $4,568M; customer collateral $3,625M.
+- "We indemnify issuers and acquirers for settlement losses they may suffer due to the failure of another issuer or
+  acquirer to honor its settlement obligations".
+So Visa DOES stand in the settlement flow and carries settlement risk. What the 10-K supports is narrower: it does not
+issue cards, extend credit, or bear credit risk on cardholders. Changed on 6 Oct: line `never` now says "lends none of
+that money and keeps almost none of it"; line `close` says "a company that lent none of it"; the title is no longer
+"The Company That Never Touches Your Money". "Collects none of it" (of interchange) stays: it is true.
+- "For years" (lines `sued`, on screen): supported by the same 10-K's legal note (the 2012 Settlement Agreement in the
+  interchange multidistrict litigation; individual merchant actions "since May 2013").
+- "The fee pays banks to issue the cards" is our reading, labelled as such on screen, of the 10-K's statement that
+  these fees are "an important determinant of the volume of transactions we process".

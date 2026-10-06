@@ -81,6 +81,12 @@ is fine; **no visible author is what gets flagged.**
   actions. Keep a music-only fallback.
 
 ## Learned on our films
+- 6 Oct (HTP 06 Visa, five critic passes): (1) the working TITLE was a factual claim nobody had checked ("never touches
+  your money"): Visa settles payments and guarantees settlement, per its own 10-K. Put the title and the thesis line in
+  FACTS.md with a source before scripting. (2) In a one-camera film, patching overlaps one at a time failed three
+  times; what worked was structural: each block fades out when its chapter ends, the camera gets over its target
+  before closing in, far moves are single hops, the last chapter is one held frame. (3) The builder's "fixed" was
+  wrong twice: measure (lit-pixel share, black frames) and let a fresh critic mark each item before saying so.
 - 5 Oct (HTP engine): move-then-hold beats measured frozen 69% of EP05's first two minutes. A 3.5% push with a side
   drift through every beat (`ch2/kit.py` DRIFT) took it to 12%. A slow push still counts as near-still, so each scene
   also needs something moving inside the beat: a slow float and a light sweep on the recurring $100 note took

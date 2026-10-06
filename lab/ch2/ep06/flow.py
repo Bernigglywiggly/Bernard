@@ -106,7 +106,8 @@ def ocean(c, t, z=1.0, far=1.0, near=0.0):
     kf = sm(t, ev["fig"], ev["fig"] + 0.6)
     FIG, GX, GY, CELL, GAP = R.FIG, R.GX, R.GY, R.CELL, R.GAP
     if kf > 0:
-        figa = kf * (1.0 - sm(z, 7.0, 10.0)) * (1.0 - sm(t, L("four") + 0.2, L("four") + 1.2))   # the headline belongs to its own scene
+        back = sm(t, L("cents") + 0.2, L("cents") + 1.0) * (1.0 - sm(t, L("thin") - 0.5, L("thin") + 0.5)) if "cents" in tl.IDS else 0.0
+        figa = kf * (1.0 - sm(z, 7.0, 10.0)) * max(1.0 - sm(t, L("four") + 0.2, L("four") + 1.2), back)   # the headline belongs to its own scenes
         grid_a = 1.0 - sm(z, 1.15, 1.9) * near                          # the matrix is not part of the dive into the wire
         figa *= grid_a
         text(c, "$17 trillion", FIG[0], FIG[1] + 14 * (1 - kf), font("InterTight-600", 150), K["light"], figa)
@@ -213,7 +214,7 @@ def box_label(c, s, x, y, k, size=1.7, align="left"):
 
 
 def route(c, t, z):
-    k = lod(z, 1.35, 2.3)
+    k = lod(z, 1.35, 2.3) * sm(t, L("four") - 0.2, L("four") + 0.5)
     if k <= 0:
         return
     c6_ = sm(t, L("weak") + 1.5, L("weak") + 2.6) if "weak" in tl.IDS else 0.0
@@ -247,8 +248,8 @@ def route(c, t, z):
     box_label(c, "interchange", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 19.5, sm(t, L("interchange") + 0.3, L("interchange") + 0.9) * (1.0 if gone6 > 0.5 else 0.0), 2.0, "center")
     text(c, "paid by the shop's bank to the cardholder's bank", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 22.6, mono(1.35), K["dim"],
          sm(t, L("interchange") + 1.2, L("interchange") + 1.9) * min(1.0, gone6), 0.05, "center")
-    text(c, "the largest of the fees a shop pays on a card  ·  Federal Reserve Bank of Richmond, Economic Brief 11-05", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 25.4,
-         mono(1.25), K["dim"], sm(t, W_("interchange", "large", -0.3), W_("interchange", "large", 0.4)) * min(1.0, gone6), 0.03, "center")
+    text(c, "the largest of the fees a shop pays on a card  ·  Federal Reserve Bank of Richmond, 2011 (US)", (NX[1] + NX[3]) / 2, NY + NODE_H / 2 + 25.6,
+         mono(1.6), K["light"], sm(t, W_("interchange", "large", -0.3), W_("interchange", "large", 0.4)) * min(1.0, gone6), 0.03, "center")
     ks = sm(t, tl.word("sets", "writes") - 0.2, tl.word("sets", "writes") + 0.5)
     c.drawRect(skia.Rect.MakeXYWH(NX[2] - 13, NY + NODE_H / 2 + 1.2, 26, 5.2), skia.Paint(Color=col(K["bg"], 0.92 * ks)))
     text(c, "sets the default rates", NX[2], NY + NODE_H / 2 + 3.0, mono(1.45), K["acc"], ks * (1 - sm(t, L("fee") - 9, L("fee") - 8)), 0.05, "center")
@@ -256,6 +257,8 @@ def route(c, t, z):
     gone = 1.0 - (sm(t, L("meters") + 0.3, L("meters") + 1.3) if "meters" in tl.IDS else 0.0)   # the why leaves with its chapter
     kw = sm(t, L("whyset") + 1.0, L("whyset") + 1.8) * gone
     text(c, "The fee pays banks to issue the cards.", NX[2], NY + 38, sans(3.0), K["light"], kw, align="center")
+    text(c, "our reading of the 10-K: the fees are “an important determinant of the volume of transactions we process”", NX[2], NY + 46.0, mono(1.4), K["dim"],
+         sm(t, tl.word("whyset", "every") + 0.6, tl.word("whyset", "every") + 1.4) * gone, 0.03, "center")
     text(c, "Every card sends more messages down the wire.", NX[2], NY + 42.4, sans(3.0), K["acc"],
          sm(t, tl.word("whyset", "every") - 0.2, tl.word("whyset", "every") + 0.6) * gone, align="center")
 
@@ -366,10 +369,11 @@ def cell_story(c, t, z):
     ko = sm(t, W_("costs", "cost", -0.3), W_("costs", "cost", 0.5))
     kp = sm(t, W_("profit", "profit", -0.3), W_("profit", "profit", 0.6))
     kf = sm(t, W_("half", "fifty", -0.3), W_("half", "fifty", 0.5))
-    if ko > 0:                                                          # the right half dims: what it costs to run, and tax
-        c.drawRect(skia.Rect.MakeXYWH(lx + CELL / 2, sy, CELL / 2, shh), skia.Paint(Color=col(K["bg"], 0.62 * ko)))
-        text(c, "$16.0B to run", lx + CELL / 2 + 1.0, sy + 4.0, mono(1.35), K["light"], ko, 0.03)
-        text(c, "then tax", lx + CELL / 2 + 1.0, sy + 6.4, mono(1.35), K["light"], ko * kp, 0.03)
+    if ko > 0:                                                          # 40% to run the company, then 10% tax, in proportion
+        c.drawRect(skia.Rect.MakeXYWH(lx + CELL * 0.5, sy, CELL * 0.4, shh), skia.Paint(Color=col(K["bg"], 0.55 * ko)))
+        c.drawRect(skia.Rect.MakeXYWH(lx + CELL * 0.9, sy, CELL * 0.1, shh), skia.Paint(Color=col(K["bg"], 0.8 * ko * kp)))
+        text(c, "$16.0B to run", lx + CELL * 0.5 + 1.0, sy + 4.0, mono(1.35), K["light"], ko, 0.03)
+        text(c, "tax", lx + CELL * 0.95, sy + 4.0, mono(1.1), K["light"], ko * kp, 0.0, "center")
     if kp > 0:
         c.drawLine(lx + CELL / 2, sy, lx + CELL / 2, sy + shh * kp, skia.Paint(Color=col(K["bg"]), AntiAlias=True, StrokeWidth=0.3))
         text(c, "$20.1B", lx + 1.0, sy + 6.0, sans(4.0), K["bg"], kp)

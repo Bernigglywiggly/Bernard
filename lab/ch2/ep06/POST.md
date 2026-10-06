@@ -3,15 +3,14 @@
 File: `HTP06_MASTER_v7.mp4` (1920x1080, 4:18, George, garage bed). Channel: How They Profit (@howtheyprofithq).
 NOT uploaded. Before upload: the user's go-ahead, (critic gate: CRITIC_v6.md said UPLOAD after edits; v7 = those edits plus two re-voiced lines).
 
-## Title (pick one; 6 words or fewer, 30-50 characters, CRAFT §6)
-1. Visa Lends Nothing and Keeps Half
-2. How Visa Profits Without Lending Money
-3. Visa Keeps 24 Cents per $100
-("The Company That Never Touches Your Money" was DROPPED on 6 Oct: Visa settles payments and guarantees settlement,
-so it is not true. See FACTS.md "Settlement".)
+## Title (researched 6 Oct: RESEARCH_TITLE_THUMB.md)
+1. **Visa Isn't a Credit Card Company**  (recommended: vidIQ 90, 6 words, names the card so it avoids immigration-visa traffic)
+2. Visa Makes $20 Billion Without Lending a Cent  (vidIQ 91, but 8 words)
+3. What Really Happens When You Tap Your Card  (vidIQ 87, widest audience)
+NEVER: "The Company That Never Touches Your Money" (false: Visa settles payments, FACTS.md "Settlement").
 
-## Thumbnail text (3 words; complements the title, never repeats it)
-- "24¢ PER $100"  ·  or  ·  "HALF IS PROFIT"
+## Thumbnail (thumbs.py; use all three in Test & Compare)
+- A `thumb_A.png` "24¢ OF EVERY $100" (recommended main)  ·  B `thumb_B.png` "LENDS $0 / KEEPS HALF"  ·  C `thumb_C.png` "$17 TRILLION / NOT ITS MONEY"
 
 ## Description
 Every time a card is tapped, a message crosses Visa's network, and the money moves between two banks. Visa lends none

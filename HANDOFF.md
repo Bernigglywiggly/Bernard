@@ -51,6 +51,20 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
     open and the "why" chapter around the DNS incident (OpenAI published its timestamps) before anything else.
   - **Voice is the bottleneck:** Higgsfield has 26.72 credits (HTP 05 needs about 36, The Curve about 130, Money
     Crimes about 200). There is no ElevenLabs key in the environment. Uploads are still blocked by Zapier's task limit.
+- **6 Oct, 02:10: NEW LOOK, CHOSEN BY THE USER ("B. 1 million percent holy shit that looks good").** He dislikes the
+  serif ledger look. References: eight pollar.news TikToks (black, white hairlines, tiny mono notes, a heavy grotesque
+  sans, ONE accent as highlight boxes, charts made of small squares, wireframe schematics, and NO CUTS: one drawing,
+  one continuous camera). His own taste on top: ASCII art, a slight futuristic edge, ethereal light (Tron Legacy,
+  Titanfall 2, Destiny's Fallen colourways). What he approved: `lab/ch2/ep06/rend_test.py` rendition B ("flow"): the
+  map set in type (# + % * coast, dots for land), one glowing line, Inter Tight 600 + IBM Plex Mono 400, accent ether
+  cyan #5FF0E4 (violet #A98BFF and red #FF6A4D were offered; he has not picked, cyan is the working default), nested
+  zoom levels (ocean -> figure -> one lit cell). `look_test.py` = the still study. Do not copy pollar's yellow.
+  NEXT: rebuild HTP 06 as one page with one camera (`lab/ch2/ep06/flow.py`, in progress): ocean -> $17T matrix ->
+  push into the arc where the four-party route lives -> interchange under the network -> meters -> back out to the lit
+  cell. The serif storyboard (`scenes.py`, `storyboard_v0.jpg`) is the OLD look, kept for its content and timings.
+  Whether the other channels and the 59 finished videos change look is NOT decided: ask before converting anything.
+- **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
+  on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends
   messages; "Tandoor" or "Tandoori" on The Tamworth Tandoor's sign; Zapier reset date (billing page).
 

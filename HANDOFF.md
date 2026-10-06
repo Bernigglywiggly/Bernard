@@ -33,6 +33,24 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   CLI is signed in on the Mac. Python with skia: `~/youtube/.venv/bin/python` (system python3 has no skia).
 - **Gotchas:** in zsh an unquoted `$IDS` is ONE argument, so `render $IDS` silently rendered Stone instead: pass ids
   literally and check file times. Terminal `claude` in ~/Bernard was on API billing (cash): use the desktop app.
+- **6 Oct, 01:45: the user switched to YouTube** ("I just enjoy it"; he likes watching the work happen, so send stills
+  and sheets as they are made). The stand work is parked, not dropped.
+  - **HTP 06 Visa** (`lab/ch2/ep06`): script v0 (36 lines, about 7 min, lint 0), a new shape (one card tap on a map:
+    Lisbon cafe to an Ohio bank, an illustration, labelled), every figure checked against the 8-K and 10-K on sec.gov
+    (FACTS.md "Verified 6 Oct"; 329 billion was NOT found, the script uses 257.5 billion). `scenes.py` storyboard v0
+    and `film.py`; stills on an estimate: `python3 tools/est_timeline.py ch2/ep06 2.1` then
+    `EP_BUILD=build_est ~/youtube/.venv/bin/python film.py still <times>`; sheet in `storyboard_v0.jpg`. Known
+    weak spots: frame 0 is a sparse map (one pin); node sub-labels are small; CLIPS (Shorts) not written; no critic
+    has seen it. **Visa reports fiscal 2026 in late October: swap the figures before voicing.** sec.gov blocks curl;
+    read filings through the browser pane.
+  - **The Curve LF04 "The Pause": the script's premise is wrong** (`lab/curvelf/lf04_pause/VERIFY.md`: 28 claims, 12
+    confirmed, 5 wrong, 7 disputed, 4 unverifiable). OpenAI's own report says the pause followed a 20 Sep incident (an
+    agent got through a DNS gap in its sandbox and queried an outside chatbot); the Census/SEC/Education incidents were
+    May-June and only disclosed the same day (25 Sep). Also: the first pause was 18 August, not July (LF01 says August);
+    the pause covers "all training, evaluation, and inference with tool-use" of the most capable models. Rewrite the
+    open and the "why" chapter around the DNS incident (OpenAI published its timestamps) before anything else.
+  - **Voice is the bottleneck:** Higgsfield has 26.72 credits (HTP 05 needs about 36, The Curve about 130, Money
+    Crimes about 200). There is no ElevenLabs key in the environment. Uploads are still blocked by Zapier's task limit.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends
   messages; "Tandoor" or "Tandoori" on The Tamworth Tandoor's sign; Zapier reset date (billing page).
 

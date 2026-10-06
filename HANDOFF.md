@@ -121,6 +121,17 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   were rebuilt with the fixes and the rebuilt D has not been re-reviewed. Hold back E (repeats the title) and G
   (misreads as half your spend). Detail in `lab/ch2/ep06/POST.md`. Still owed before upload: critic pass on v7, end
   card, Shorts; upload is by hand in YouTube Studio (Zapier at its task limit).
+- **7 Oct, 00:45: THE CURVE IN THE ONE-CAMERA LOOK: TRIAL MADE** (user: "this is what I wanted to do in the first
+  place with the curve ... trial run"; keep the Curve's detailed pictures as moving ASCII, add the constant camera and
+  the palette). `lab/curvelf/flow_trial/`: `curve_flow.py` (pictures are places in one world; characters live on the
+  screen and the pictures slide beneath; camera keys from the voice timeline; thread, labels on plates, captions),
+  `script.py` (LF01's opening, 8 lines, quote line left out), `lay_takes.py`, `mix_trial.py` (reuses
+  `ch2/ep06/mix_pre.py`). Output `CURVE_FLOW_TRIAL_v2.mp4` (54 s, 1080p, George + garage bed; gitignored, as are
+  `src/` pictures re-fetched from `lf01_escape/assets_ai.json` and `build/`). Needs `opencv-python-headless` in
+  `~/youtube/.venv` (installed with uv). Render: `curve_flow.py seg a b` x4 in parallel, concat, `mix_trial.py`.
+  Bugs fixed on the way: labels under the caption band, two captions up at once, labels lingering through a hop.
+  The trial's facts are LF01's (checked 3 Oct by its author, not re-verified): NOT for upload. A QC agent was
+  launched on v2; its report was pending when this was written. Next: the user's verdict, then convert LF01 in full.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

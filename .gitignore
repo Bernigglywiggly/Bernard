@@ -175,3 +175,6 @@ cython_debug/
 curve_voice_*.mp3
 # a browsable copy of the finished videos (too big for git)
 /VIDEOS/
+
+# look studies (regenerate with lab/ch2/ep06/rend_test.py)
+lab/ch2/ep06/*.mp4

@@ -196,17 +196,65 @@ def plate(seconds=0.95, pre=0.018):
     return out / np.abs(out).max()
 
 
+def sfx(dur, m, words):
+    """A light pass: a tick on the tap, a soft whoosh under each long camera move, a blip as each figure lands, a low
+    hit on the lawsuit number. All synthesised here."""
+    buf = np.zeros((int(dur * SR), 2))
+
+    def tick(f=2400.0, d=0.05, g=0.5):
+        n = int(d * SR)
+        t = np.arange(n) / SR
+        return np.sin(2 * np.pi * f * t) * np.exp(-t * 90) * g
+
+    def whoosh(d=1.6, g=0.22):
+        n = int(d * SR)
+        y = RNG.standard_normal(n)
+        k = np.linspace(0, 1, n)
+        y = bp(y, 300, 2600) * np.sin(np.pi * k) ** 2
+        return y * g
+
+    def hit(g=0.7):
+        n = int(0.7 * SR)
+        t = np.arange(n) / SR
+        return np.sin(2 * np.pi * (52 + 30 * np.exp(-t * 20)) * t) * np.exp(-t * 6) * g
+
+    def at(line, word=None, d=0.0):
+        if line not in m:
+            return None
+        if word:
+            for w, a_, _b in words.get(line, []):
+                if "".join(ch for ch in w.lower() if ch.isalnum()) == word:
+                    return a_ + d
+        return m[line]["start"] + d
+
+    ev = [(at("tap", "touches"), tick(), 0.0), (at("tap", "approved"), tick(1800, 0.09, 0.4), 0.0),
+          (at("ocean", None, 0.6), whoosh(3.6, 0.16), 0.0), (at("four", None, 1.6), whoosh(2.6), 0.0),
+          (at("cents", None, 0.6), whoosh(2.4), 0.0), (at("thin", None, 0.4), whoosh(2.2, 0.18), 0.0),
+          (at("weak", None, 0.4), whoosh(3.0), 0.0), (at("close", None, 0.4), whoosh(2.2), 0.0),
+          (at("scale", "seventeen", -0.1), tick(900, 0.12, 0.35), -0.3), (at("service", "seventeen", -0.1), tick(1200, 0.08, 0.3), -0.3),
+          (at("processing", "twenty", -0.1), tick(1200, 0.08, 0.3), -0.3), (at("border", "fourteen", -0.1), tick(1200, 0.08, 0.3), -0.3),
+          (at("incentives", "fifteen", -0.1), tick(700, 0.12, 0.3), 0.3), (at("net", "forty", -0.1), tick(1500, 0.1, 0.35), -0.2),
+          (at("profit", "twenty", -0.1), tick(1500, 0.1, 0.35), -0.2), (at("suits", "two", -0.1), hit(), 0.0)]
+    for t0, y, pan in ev:
+        if t0 is not None and t0 >= 0:
+            place(buf, y, t0, 1.0, pan)
+    return buf
+
+
 def main(build, picture, out):
     m = {ln["id"]: ln for ln in json.load(open(os.path.join(build, "lines.json")))["lines"]}
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", picture],
                                capture_output=True, text=True).stdout)
-    marks = [(0.0, "intro"), (m["ocean"]["start"], "a"), (m["never"]["start"], "intro"), (m["four"]["start"] + 2.0, "a"),
-             (m["quote"]["start"], "b"), (m["risk"]["start"], "a"), (m["fee"]["start"], "b"), (m["whyset"]["start"], "a"),
-             (dur - 6.0, "out")]
+    plan = [("ocean", "a"), ("never", "intro"), ("four", "a", 2.0), ("quote", "b"), ("risk", "a"), ("fee", "b"), ("whyset", "a"),
+            ("meters", "b"), ("border", "a"), ("back", "b"), ("cents", "intro"), ("thin", "a"), ("profit", "b"), ("why", "intro"),
+            ("returned", "a"), ("weak", "b"), ("regulators", "a"), ("verdict", "intro"), ("shop", "a"), ("close", "b")]
+    marks = [(0.0, "intro")] + [(m[p[0]]["start"] + (p[2] if len(p) > 2 else 0.0), p[1]) for p in plan if p[0] in m] + [(dur - 6.0, "out")]
     bar = 4 * BEAT
     marks = [(round(t / bar) * bar, s) for t, s in marks]                    # sections change on bar lines
     sf.write(os.path.join(build, "garage.wav"), bed(dur, marks), SR)
     sf.write(os.path.join(build, "plate.wav"), plate(), SR)
+    L_ = json.load(open(os.path.join(build, "lines.json")))["lines"]
+    sf.write(os.path.join(build, "sfx.wav"), sfx(dur, m, {ln["id"]: ln.get("words") or [] for ln in L_}), SR)
     dry = os.path.join(build, "voice_dry.wav")
     chain = ("highpass=f=85,equalizer=f=260:t=q:w=1.1:g=-2.5,equalizer=f=3400:t=q:w=1.2:g=2.5,"
              "highshelf=f=10500:g=4,deesser=i=0.35:m=0.5:f=0.5,"
@@ -215,9 +263,9 @@ def main(build, picture, out):
           "[vw][2:a]afir=dry=0:wet=1[rev];"
           "[v][rev]amix=inputs=2:weights='1 0.09':normalize=0[vox];"
           "[1:a]volume=0.72[bed];[bed][vk]sidechaincompress=threshold=0.05:ratio=3:attack=20:release=260[duck];"
-          "[vox][duck]amix=inputs=2:normalize=0,alimiter=limit=0.84,loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000[a]")
+          "[vox][duck][4:a]amix=inputs=3:normalize=0,alimiter=limit=0.84,loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", dry, "-i", os.path.join(build, "garage.wav"), "-i", os.path.join(build, "plate.wav"),
-                    "-i", picture, "-filter_complex", fc, "-map", "3:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k",
+                    "-i", picture, "-i", os.path.join(build, "sfx.wav"), "-filter_complex", fc, "-map", "3:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k",
                     "-shortest", out], check=True)
     print(out)
 

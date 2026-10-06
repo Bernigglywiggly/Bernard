@@ -7,7 +7,7 @@ scales, and the camera travels between them on the narration's timings (script.p
   scale 12   inside the crossing: the four parties on the wire, interchange passing under the network
   (to come)  the three meters, the money handed back, the one lit cell, half of it profit, the weak point, the close
 
-Stage 1 (this file, 6 Oct): chapters 0-2, to the end of "whyset". Later chapters are not drawn yet.
+All seven chapters are drawn (6 Oct). keys2() and later() hold chapters 3-6.
 
     cd lab/ch2/ep06
     EP_BUILD=build_est ~/youtube/.venv/bin/python flow.py still 0.5 14 20 27 40 50 60 72 84 97 108 118 128 146
@@ -180,6 +180,202 @@ def route(c, t, z):
          sm(t, tl.word("whyset", "every") - 0.2, tl.word("whyset", "every") + 0.6), align="center")
 
 
+# ================================================================ chapters 3-6 (added 6 Oct, same page, same camera)
+RED = "#FF6A4D"                                      # the one second colour, kept for the weak point
+X0 = NX[0] - NODE_W / 2
+MT = NY + 58.0                                       # the meters, under the route
+HT = MT + 72.0                                       # the money handed back, under the meters
+RX = NX[3] + NODE_W / 2 + 14.0                       # the last chapter's column, right of the route
+METERS = [("service", "01  service  ·  for being on the network at all", 17.5, "$17.5B", "service", "brought"),
+          ("processing", "02  data processing  ·  a charge on every message", 20.0, "$20.0B", "processing", "earned"),
+          ("border", "03  international  ·  only when card and shop are in different countries", 14.2, "$14.2B", "border", "earned"),
+          ("other", "04  other  ·  licences and extra services", 4.1, "$4.1B", "other", "added")]
+
+
+def W_(line, word, d=0.0):
+    try:
+        return tl.word(line, word) + d
+    except (KeyError, ValueError):
+        return tl.ls(line) + d
+
+
+def cells(c, x, y, n, k, size=2.0, gap=0.5, h=4.4, colr=None, a=0.5):
+    """A bar made of small cells, filling left to right."""
+    m = int(n * k + 0.999) if k > 0 else 0
+    p = skia.Paint(Color=col(colr or K["light"], a), AntiAlias=True)
+    for i in range(m):
+        c.drawRect(skia.Rect.MakeXYWH(x + i * (size + gap), y, size, h), p)
+    return x + m * (size + gap)
+
+
+def meters(c, t, z):
+    k0 = sm(t, L("meters") + 0.3, L("meters") + 1.0)
+    if k0 <= 0 or z < 2.5:
+        return
+    text(c, "What Visa charges the banks", X0, MT, sans(3.6), K["light"], k0)
+    text(c, "three meters  ·  fiscal 2025  ·  Visa results, 28 Oct 2025", X0, MT + 3.4, mono(1.4), K["dim"], k0, 0.05)
+    c.drawLine(X0, MT + 5.2, X0 + 150 * k0, MT + 5.2, hair(0.3, 0.1))
+    for i, (lid, lab, v, disp, wl, ww) in enumerate(METERS):
+        y = MT + 12 + i * 13.0
+        ka = sm(t, L(lid) + 0.2, L(lid) + 0.8) if lid != "processing" else sm(t, L("count") + 0.2, L("count") + 0.8)
+        if ka <= 0:
+            continue
+        text(c, lab, X0, y - 1.4, mono(1.5), K["dim"], ka, 0.05)
+        tv = W_(wl, ww, -0.5)
+        kb = sm(t, tv, tv + 1.2)
+        hot = lid == "processing"
+        xe = cells(c, X0, y, int(v * 2 + 0.5), kb, colr=K["acc"] if hot else None, a=0.9 if hot else 0.5)
+        text(c, disp, xe + 2.0, y + 4.0, sans(4.6), K["acc"] if hot else K["light"], sm(t, tv + 0.9, tv + 1.4))
+    # the second meter counts messages: a stream of them along its row
+    yc = MT + 12 + 13.0
+    kc = sm(t, W_("count", "processed", -0.3), W_("count", "processed", 0.3))
+    text(c, "257.5 billion transactions processed", X0 + 122, yc + 1.6, mono(1.7), K["light"], kc, 0.05)
+    box_label(c, "about 700 million a day", X0 + 122.7, yc + 5.6, sm(t, L("daily") + 0.4, L("daily") + 1.0), 1.7)
+    if kc > 0:
+        for j in range(7):
+            u = (t * 0.22 + j / 7) % 1.0
+            c.drawRect(skia.Rect.MakeXYWH(X0 + 100 * u, yc - 3.4, 1.1, 0.7), skia.Paint(Color=col(K["acc"], kc * (1 - abs(2 * u - 1)) ** 0.5), AntiAlias=True))
+    # the money handed back
+    kh = sm(t, L("back") + 0.3, L("back") + 1.0)
+    if kh > 0:
+        y, sc, hh = HT + 10, 1.8, 8.0
+        wi, wn = 15.8 * sc, 40.0 * sc
+        text(c, "Before any of it counts as revenue", X0, HT, sans(3.6), K["light"], kh)
+        text(c, "charged to banks and partners  ·  $55.8 billion", X0, HT + 3.4, mono(1.4), K["dim"], kh, 0.05)
+        ki = sm(t, W_("incentives", "paid", -0.2), W_("incentives", "paid", 0.8))
+        kn = sm(t, L("net") + 0.1, L("net") + 0.9)
+        drop = 12.0 * sm(t, W_("incentives", "incentives", 0.0), W_("incentives", "incentives", 1.0))
+        c.drawRect(skia.Rect.MakeXYWH(X0, y, wn * kh, hh), hair(0.8, 0.14))
+        c.drawRect(skia.Rect.MakeXYWH(X0 + wn, y + drop, wi * kh, hh), skia.Paint(Color=col(K["light"], 0.16 + 0.2 * ki), AntiAlias=True))
+        c.drawRect(skia.Rect.MakeXYWH(X0 + wn, y + drop, wi * kh, hh), hair(0.6, 0.12))
+        text(c, "$15.8B", X0 + wn + 2, y + drop + 5.6, sans(4.2), K["light"], ki)
+        text(c, "handed back as incentives", X0 + wn + wi + 2, y + drop + 3.0, mono(1.5), K["dim"], ki, 0.05)
+        text(c, "the price of keeping cards on this network", X0 + wn + wi + 2, y + drop + 5.6, mono(1.5), K["dim"],
+             sm(t, W_("incentives", "price", -0.2), W_("incentives", "price", 0.5)), 0.05)
+        if kn > 0:
+            c.drawRect(skia.Rect.MakeXYWH(X0, y, wn * kn, hh), skia.Paint(Color=col(K["acc"]), AntiAlias=True))
+            text(c, "$40.0 billion", X0 + 2.5, y + 5.9, sans(5.2), K["bg"], kn)
+            text(c, "net revenue  ·  fiscal 2025", X0 + 40, y + 5.2, mono(1.6), K["bg"], kn, 0.05)
+
+
+def cell_story(c, t, z):
+    """Back at the one lit cell: 24 cents, then half of it profit, and why."""
+    lx, ly = R.LIT
+    CELL = R.CELL
+    kc = sm(t, W_("cents", "kept", -0.4), W_("cents", "kept", 0.3))
+    text(c, "about 24¢ of every $100 moved", lx + CELL + 6, ly + CELL * 0.82 + 16, font("IBMPlexMono-400", 5.2), K["light"], kc, 0.2)
+    if z < 4 or t < L("thin"):
+        return
+    deep = sm(z, 8.0, 11.0)                                             # close in, the far labels would be giant: clear them
+    c.drawRect(skia.Rect.MakeXYWH(lx + CELL + 2, ly + CELL * 0.5, 190, CELL * 0.5 + 30), skia.Paint(Color=col(K["bg"], deep)))
+    sy, shh = ly + CELL * 0.6, CELL * 0.4                               # the lit sliver: $40.0B
+    text(c, "net revenue  $40.0B", lx + 1.2, sy - 1.6, mono(1.5), K["dim"], sm(t, L("thin") + 0.5, L("thin") + 1.2), 0.05)
+    ko = sm(t, W_("costs", "cost", -0.3), W_("costs", "cost", 0.5))
+    kp = sm(t, W_("profit", "profit", -0.3), W_("profit", "profit", 0.6))
+    kf = sm(t, W_("half", "fifty", -0.3), W_("half", "fifty", 0.5))
+    if ko > 0:                                                          # the right half dims: what it costs to run, and tax
+        c.drawRect(skia.Rect.MakeXYWH(lx + CELL / 2, sy, CELL / 2, shh), skia.Paint(Color=col(K["bg"], 0.62 * ko)))
+        text(c, "$16.0B to run", lx + CELL / 2 + 1.0, sy + 4.0, mono(1.35), K["light"], ko, 0.03)
+        text(c, "then tax", lx + CELL / 2 + 1.0, sy + 6.4, mono(1.35), K["light"], ko * kp, 0.03)
+    if kp > 0:
+        c.drawLine(lx + CELL / 2, sy, lx + CELL / 2, sy + shh * kp, skia.Paint(Color=col(K["bg"]), AntiAlias=True, StrokeWidth=0.3))
+        text(c, "$20.1B", lx + 1.0, sy + 6.0, sans(4.0), K["bg"], kp)
+        text(c, "profit after tax", lx + 1.0, sy + 9.0, mono(1.3), K["bg"], kp, 0.03)
+    text(c, "50¢ of every dollar", lx + 1.0, sy + 12.4, mono(1.35), K["bg"], kf, 0.03)
+    # why: what a bank carries and the network doesn't
+    wx, wy = lx + CELL + 10, ly - 2.0
+    kw = sm(t, L("why") + 0.4, L("why") + 1.1)
+    text(c, "A bank needs", wx, wy, mono(1.6), K["dim"], kw, 0.05)
+    for i, (s_, wd) in enumerate((("branches", "branches"), ("loan books", "loan"), ("reserves for unpaid debts", "reserves"))):
+        text(c, s_, wx, wy + 4.2 + i * 3.6, sans(2.8), K["light"], sm(t, W_("why", wd, -0.2), W_("why", wd, 0.4)))
+    kv = sm(t, W_("why", "data", -0.5), W_("why", "data", 0.2))
+    text(c, "The network needs", wx + 44, wy, mono(1.6), K["acc"], kv, 0.05)
+    for i, (s_, wd) in enumerate((("data centres", "data"), ("a rulebook", "rulebook"))):
+        text(c, s_, wx + 44, wy + 4.2 + i * 3.6, sans(2.8), K["acc"], sm(t, W_("why", wd, -0.2), W_("why", wd, 0.4)))
+    text(c, "one more message costs it almost nothing", wx + 44, wy + 13.0, mono(1.4), K["dim"], sm(t, W_("why", "almost", -0.4), W_("why", "almost", 0.3)), 0.05)
+    kr = sm(t, W_("returned", "sent", -0.3), W_("returned", "sent", 0.6))
+    if kr > 0:
+        c.drawLine(lx + CELL / 4, sy, lx + CELL / 4, sy - 14 * kr, skia.Paint(Color=col(K["acc"], kr), AntiAlias=True, StrokeWidth=0.25))
+        box_label(c, "$22.8B back to shareholders", lx + CELL / 4 + 1.5, sy - 13.5, kr, 1.6)
+        text(c, "buybacks and dividends  ·  fiscal 2025", lx + CELL / 4 + 1.2, sy - 10.6, mono(1.3), K["dim"], kr, 0.03)
+
+
+def rulebook(c, t, z):
+    if t < L("weak") - 0.5 or z < 2.5:
+        return
+    kr = sm(t, L("weak") + 0.4, L("weak") + 1.6)
+    xa, xb, y0, dip = NX[1], NX[3], NY + NODE_H / 2 + 0.8, 15.0
+    p = skia.Path()
+    for j in range(int(60 * kr) + 1):
+        u = j / 60
+        (p.moveTo if j == 0 else p.lineTo)(xa + (xb - xa) * u, y0 + dip * math.sin(math.pi * u))
+    g = glow(RED, 0.5 * kr, 1.4)
+    g.setStyle(skia.Paint.kStroke_Style)
+    g.setStrokeWidth(0.9)
+    c.drawPath(p, g)
+    c.drawPath(p, skia.Paint(Color=col(RED, kr), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=0.32))
+    text(c, "Shops have been taking Visa to court over this fee for years.", RX, NY - 9, sans(2.7), K["light"], sm(t, L("sued") + 0.2, L("sued") + 0.9))
+    ks = sm(t, W_("suits", "set", -0.3), W_("suits", "set", 0.5))
+    text(c, "$2.5 billion", RX, NY + 2.5, sans(8.0), RED, ks)
+    text(c, "set aside for the interchange litigation and other legal matters  ·  fiscal 2025", RX, NY + 6.2, mono(1.4), K["dim"], ks, 0.05)
+    kg = sm(t, L("regulators") + 0.6, L("regulators") + 1.4)
+    text(c, "“Regulatory authorities and central banks in a number of jurisdictions", RX, NY + 14, sans(2.5), K["light"], kg)
+    text(c, "have reviewed or are reviewing these fees, rules and practices.”", RX, NY + 17.6, sans(2.5), K["light"], kg)
+    text(c, "Visa Form 10-K  ·  fiscal 2025", RX, NY + 20.6, mono(1.3), K["dim"], kg, 0.05)
+    kv = sm(t, W_("verdict", "product", -0.4), W_("verdict", "product", 0.4))
+    text(c, "Visa's real product is the rulebook", RX, NY + 31, sans(4.6), K["light"], kv)
+    text(c, "that lets a café in Lisbon trust a bank in Ohio.", RX, NY + 36.4, sans(4.6), K["acc"], sm(t, W_("verdict", "lets", -0.3), W_("verdict", "lets", 0.5)))
+    text(c, "The wires only deliver it.", RX, NY + 41.4, mono(1.8), K["dim"], sm(t, W_("verdict", "wires", -0.3), W_("verdict", "wires", 0.5)), 0.05)
+    kshop = sm(t, W_("shop", "rate", -0.4), W_("shop", "rate", 0.4))
+    text(c, "If you run a shop: most of a card payment's cost goes to banks.", RX, NY + 50, sans(2.7), K["light"], sm(t, L("shop") + 0.3, L("shop") + 1.0))
+    box_label(c, "the rate your own bank quotes is the part to negotiate", RX + 0.7, NY + 54.6, kshop, 1.8)
+
+
+def last_crossing(c, t):
+    """The close: the same crossing again, so the film ends where it began."""
+    t0 = L("close") + 1.6
+    out, back = sm(t, t0, t0 + 2.2), sm(t, t0 + 2.5, t0 + 4.6)
+    if out <= 0 or back >= 1:
+        return
+    px, py = arc(out if back <= 0 else 1 - back)
+    c.drawCircle(px, py, 20, glow(K["acc"], 0.5, 14))
+    c.drawRect(skia.Rect.MakeXYWH(px - 9, py - 9, 18, 18), skia.Paint(Color=col(K["acc"]), AntiAlias=True))
+
+
+def later(c, t, z):
+    if "meters" not in tl.IDS:
+        return
+    meters(c, t, z)
+    cell_story(c, t, z)
+    rulebook(c, t, z)
+
+
+def keys2():
+    if "meters" not in tl.IDS:
+        return []
+    lx, ly = R.LIT
+    CELL = R.CELL
+    rc = ((NX[1] + NX[3]) / 2, NY + 11)
+    return [(L("meters") + 2.2, (X0 + 74, MT + 20, 8.4)), (E("service"), (X0 + 70, MT + 16, 9.2)),
+            (L("count") + 2.0, (X0 + 84, MT + 24, 9.4)), (E("processing"), (X0 + 86, MT + 26, 9.8)),
+            (L("border") + 2.4, (X0 + 70, MT + 36, 9.4)), (E("other"), (X0 + 68, MT + 44, 9.0)),
+            (L("back") + 2.2, (X0 + 62, HT + 10, 9.2)), (E("incentives"), (X0 + 66, HT + 16, 9.6)),
+            (E("net"), (X0 + 52, HT + 13, 11.0)),
+            (L("cents") + 2.4, (960, 760, 1.0)), (W_("cents", "kept", 0.4), (R.LITC[0] + 40, R.LITC[1], 6.4)),
+            (E("cents"), (R.LITC[0] + 44, R.LITC[1], 6.9)),
+            (L("thin") + 2.6, (lx + CELL / 2 + 6, ly + CELL * 0.72, 17.0)), (E("costs"), (lx + CELL / 2 + 4, ly + CELL * 0.76, 19.0)),
+            (E("half"), (lx + CELL / 2, ly + CELL * 0.8, 21.0)),
+            (L("why") + 2.6, (lx + CELL + 44, ly + 8, 11.5)), (E("why"), (lx + CELL + 48, ly + 9, 12.2)),
+            (L("returned") + 2.2, (lx + CELL / 2 + 26, ly + 12, 13.0)), (E("returned"), (lx + CELL / 2 + 26, ly + 10, 13.6)),
+            (L("weak") + 1.4, (960, 620, 1.0)),
+            (L("weak") + 3.6, (rc[0], rc[1], 10.4)), (E("weak"), (rc[0] + 6, rc[1], 10.8)),
+            (L("sued") + 2.0, (RX + 40, NY, 10.0)), (E("suits"), (RX + 44, NY + 2, 10.6)),
+            (L("regulators") + 2.0, (RX + 52, NY + 14, 9.8)), (E("regulators"), (RX + 54, NY + 16, 10.2)),
+            (L("verdict") + 2.4, (RX + 56, NY + 34, 8.8)), (E("verdict"), (RX + 58, NY + 36, 9.4)),
+            (L("shop") + 2.0, (RX + 54, NY + 50, 9.4)), (E("shop"), (RX + 54, NY + 51, 9.8)),
+            (L("close") + 1.6, (960, 520, 1.0)), (E("close") + 3.0, (960, 512, 1.05))]
+
+
 # ---------------------------------------------------------------- the camera: one move, keyed to the narration
 def camera(t):
     o0, o1 = L("ocean") + 0.6, L("ocean") + 4.8
@@ -199,6 +395,7 @@ def camera(t):
             (L("fee") + 2.4, ((NX[1] + NX[3]) / 2, NY + 11, 10.6)), (E("interchange"), ((NX[1] + NX[3]) / 2, NY + 13, 11.4)),
             (L("sets") + 2.0, (NX[2], NY + 9, 14.5)), (E("sets"), (NX[2], NY + 10, 15.2)),
             (L("whyset") + 2.6, (NX[2], NY + 30, 9.4)), (E("whyset"), (NX[2], NY + 32, 10.0))]
+    keys = keys + keys2()
     for (ta, a), (tb, b) in zip(keys, keys[1:]):
         if t <= tb:
             u = sm(t, ta, tb)
@@ -262,6 +459,9 @@ def frame(surf, t):
         ocean(c, t)
         c.restore()
     route(c, t, z)
+    later(c, t, z)
+    if "close" in tl.IDS:
+        last_crossing(c, t)
     c.restore()
     screen(c, t, z)
     return surf.makeImageSnapshot()

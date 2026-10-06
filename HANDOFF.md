@@ -114,6 +114,13 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   **v7 has not been through a critic** (v6 had; v7 = v6 plus those changes). NOT DONE: thumbnail, end card, Shorts.
   WAITING ON THE USER: a title; upload now or hold for fiscal 2026 (late Oct; "last year" is said six times); the
   upload itself is by hand in YouTube Studio while Zapier is at its task limit.
+- **6 Oct, late: HTP 06 PACKAGING CHOSEN** (user: "u choose the strongest curiosity trigger combo"). Title
+  "Visa Isn't a Credit Card Company" + thumbnail D "WHO GETS THIS?" (`lab/ch2/ep06/thumb_D.png`, mock
+  `combo_pick.png` from `combo.py`). Test & Compare: D vs H vs A. Nine thumbnails A to I exist (`thumbs.py`,
+  `thumbs2.py`). An independent reviewer preferred H as the main and said the first D failed at phone size; D and H
+  were rebuilt with the fixes and the rebuilt D has not been re-reviewed. Hold back E (repeats the title) and G
+  (misreads as half your spend). Detail in `lab/ch2/ep06/POST.md`. Still owed before upload: critic pass on v7, end
+  card, Shorts; upload is by hand in YouTube Studio (Zapier at its task limit).
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

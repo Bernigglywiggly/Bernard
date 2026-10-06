@@ -9,8 +9,21 @@ NOT uploaded. Before upload: the user's go-ahead, (critic gate: CRITIC_v6.md sai
 3. What Really Happens When You Tap Your Card  (vidIQ 87, widest audience)
 NEVER: "The Company That Never Touches Your Money" (false: Visa settles payments, FACTS.md "Settlement").
 
-## Thumbnail (thumbs.py; use all three in Test & Compare)
-- A `thumb_A.png` "24¢ OF EVERY $100" (recommended main)  ·  B `thumb_B.png` "LENDS $0 / KEEPS HALF"  ·  C `thumb_C.png` "$17 TRILLION / NOT ITS MONEY"
+## Thumbnail (thumbs.py A to C, thumbs2.py D to I; nine candidates, sheets `thumbs_sheet.png` and `thumbs2_sheet.png`)
+- A `thumb_A.png` "24¢ OF EVERY $100"  ·  B `thumb_B.png` "LENDS $0 / KEEPS HALF"  ·  C `thumb_C.png` "$17 TRILLION / NOT ITS MONEY"
+- D `thumb_D.png` "WHO GETS THIS?" (red circle on the card's sliver)  ·  E `thumb_E.png` "NOT A BANK" stamp  ·  F `thumb_F.png` "VISA'S CUT" (one lit cell)
+- G `thumb_G.png` "50% IS PROFIT"  ·  H `thumb_H.png` "LENDS $0 / MAKES $20B"  ·  I `thumb_I.png` "WHAT DOES VISA SELL? / NOT MONEY"
+
+## The pairing (6 Oct: the user said "u choose the strongest curiosity trigger combo"; mock in `combo_pick.png`, made by combo.py)
+- **Title 1 "Visa Isn't a Credit Card Company" + thumbnail D.** The title breaks a belief (then what is it?); the
+  thumbnail asks a second question the title does not answer (who gets the sliver, and why so little). The film pays
+  both off: Visa is a network, and the sliver is its 24¢ of every $100.
+- Test & Compare: D against H and A. E is held back because "NOT A BANK" repeats title 1; use E only with title 2.
+  G is held back: "50% IS PROFIT" can be misread as Visa taking half of what you spend.
+- Independent reviewer (6 Oct) preferred H + title 1 as the main and said the first D failed at phone size (strip and
+  ring too small, "WHO GETS" faint, arrow floating). D was rebuilt with those fixes (strip 8.5% of the card, ring
+  1.4x, larger type, arrow starts at the type); H's arcs no longer run behind "$0". The rebuilt D has NOT been
+  re-reviewed. Test & Compare decides between D and H on real viewers.
 
 ## Description
 Every time a card is tapped, a message crosses Visa's network, and the money moves between two banks. Visa lends none

@@ -56,13 +56,18 @@ def arrow(c, pts, colr=RED, w=16):
 
 
 def thumb_d():
-    """A question with the answer visibly tiny: the sliver at the card's edge."""
+    """A question with the answer visibly small: the lit strip at the card's edge. (Critic, 6 Oct: at phone size the
+    strip and the ring vanished and "WHO GETS" went faint, so all three are now much larger and the arrow starts at the type.)"""
     s, c = T.base()
-    T.card(c, 400, 372, 640, -7, sliver=0.03)
-    c.drawCircle(727, 330, 88, skia.Paint(Color=col(RED), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=12))
-    arrow(c, [(1060, 300), (940, 250), (838, 300)])
-    fit(c, "WHO GETS", 1240, 170, 470, 120, INK, align="right")
-    fit(c, "THIS?", 1240, 600, 430, 200, RED, halo=16, align="right")
+    T.card(c, 310, 372, 540, -7, sliver=0.085)
+    g = glow(RED, 0.5, 14)
+    g.setStyle(skia.Paint.kStroke_Style)
+    g.setStrokeWidth(22)
+    c.drawCircle(556, 342, 122, g)
+    c.drawCircle(556, 342, 122, skia.Paint(Color=col(RED), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=18))
+    arrow(c, [(960, 300), (840, 262), (716, 318)], w=20)
+    fit(c, "WHO GETS", 1244, 196, 500, 150, INK, align="right")
+    fit(c, "THIS?", 1244, 588, 500, 236, RED, halo=16, align="right")
     return s.makeImageSnapshot()
 
 
@@ -116,10 +121,10 @@ def thumb_g():
 def thumb_h():
     """The contradiction, stacked: nothing lent, twenty billion made."""
     s, c = T.base()
-    for k in range(7):                                               # a tap, radiating
-        rr = 120 + k * 110
-        c.drawArc(skia.Rect.MakeLTRB(1280 - rr, 360 - rr, 1280 + rr, 360 + rr), 120, 120, False,
-                  skia.Paint(Color=col(CYAN, 0.75 - k * 0.09), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=14 - k, StrokeCap=skia.Paint.kRound_Cap))
+    for k in range(4):                                               # a tap, radiating (kept clear of the type)
+        rr = 110 + k * 78
+        c.drawArc(skia.Rect.MakeLTRB(1290 - rr, 360 - rr, 1290 + rr, 360 + rr), 120, 120, False,
+                  skia.Paint(Color=col(CYAN, 0.9 - k * 0.15), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=18 - 2 * k, StrokeCap=skia.Paint.kRound_Cap))
     fit(c, "LENDS $0", 44, 300, 820, 230, INK)
     fit(c, "MAKES $20B", 44, 560, 900, 230, CYAN, halo=22)
     return s.makeImageSnapshot()

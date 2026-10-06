@@ -143,7 +143,7 @@ def box_label(c, s, x, y, k, size=1.7, align="left"):
 
 
 def route(c, t, z):
-    k = lod(z, 3.5, 7.0)
+    k = lod(z, 2.6, 5.0)
     if k <= 0:
         return
     c.drawLine(NX[0] - 60, NY, NX[3] + 60, NY, skia.Paint(Color=col(K["acc"], 0.9 * k), AntiAlias=True, StrokeWidth=0.18))
@@ -252,7 +252,7 @@ def frame(surf, t):
     c.scale(z, z)
     c.translate(-cx, -cy)
     near = 1.0 - sm(math.hypot(cx - MID[0], cy - MID[1]), 180, 420)  # only the wire has an inside
-    far = 1.0 - sm(z, 3.0, 6.5) * near                               # the ocean gives way as the camera enters it
+    far = 1.0 - sm(z, 1.5, 3.6) * near                               # the ocean gives way as the camera enters it
     if far > 0.999:
         ocean(c, t)
     elif far > 0.004:

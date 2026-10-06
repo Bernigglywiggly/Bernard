@@ -19,8 +19,8 @@ prefer the newer year if it's out.
 | $16.0 BILLION | GAAP operating expenses (+30%, litigation provision and staff) | 8-K |
 | 60% | GAAP operating margin ≈ (40.0 − 16.0) ÷ 40.0 | derived |
 | $22.8 BILLION | Share repurchases and dividends, full year | 8-K |
-| $17 TRILLION | Total payments and cash volume | as reported (Acquirer's Multiple summary of the release): TO VERIFY in the 8-K/10-K |
-| 329 BILLION | Visa-branded transactions processed by Visa or other networks (≈901M a day) | as reported: TO VERIFY |
+| $17 TRILLION | Total payments and cash volume | 10-K FY2025: "total payments and cash volume was $17 trillion" (verified 6 Oct 2026) |
+| 257.5 BILLION | Transactions processed by Visa, +10% (≈705M a day). The 329 billion figure (all Visa-branded transactions, including those on other networks) was not found in the 8-K or the 10-K: do not use | 8-K (verified 6 Oct 2026) |
 | ≈24¢ PER $100 | Net revenue ÷ volume = 40.0 ÷ 17,000 ≈ 0.24% | derived (depends on the $17T line) |
 
 ## The mechanism to explain (from the 10-K, to quote exactly)
@@ -35,3 +35,20 @@ prefer the newer year if it's out.
 revenue into profit, because it runs the rails and lets the banks carry the risk. A follow-the-dollar structure
 would repeat Film 05, so use a map instead: one card tap traced across the network (shop, acquirer, Visa,
 issuer), with each hop's cut.
+
+## Verified 6 Oct 2026 against the 8-K and 10-K (read on sec.gov)
+- Every figure in the table above matches the 8-K: $40.0B, $20.1B (non-GAAP $22.5B), $17.5B / $20.0B / $14.2B / $4.1B,
+  incentives $15.8B, operating expenses $16.0B, litigation provision $2.5B "associated with the interchange
+  multidistrict litigation (MDL) case and other legal matters", $22.8B returned, 257.5 billion processed transactions.
+- 10-K wording used in the script: "Visa is not a financial institution. We do not issue cards, extend credit or set
+  rates and fees for account holders of Visa products nor do we earn revenue from or bear credit risk with respect to
+  any of these activities." · "Generally, IRFs are paid by acquirers to issuers. We establish default IRFs" ·
+  interchange and related rules "continue to be subject to increased government regulation globally, and regulatory
+  authorities and central banks in a number of jurisdictions have reviewed or are reviewing these fees".
+- Also in the 10-K, unused so far: nearly 5 billion payment credentials; more than 175 million merchant locations;
+  more than 200 countries and territories.
+- NOT verified, so the script softens them: that interchange is "a large part of what accepting a card costs" (check
+  a primary source such as the Federal Reserve or Visa's published US interchange schedule before voicing); how long
+  merchants have been suing (the script says "for years").
+- The Lisbon cafe and the Ohio bank are an illustration: label it on screen.
+- **Fiscal 2026 results are due in late October 2026. Re-run this check and swap every figure before voicing.**

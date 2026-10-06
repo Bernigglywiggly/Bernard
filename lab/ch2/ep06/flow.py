@@ -233,7 +233,9 @@ def screen(c, t, z):
         f = sans(34, 500)
         y0 = H - 70 - (len(lines) - 1) * 44
         wmax = max(f.measureText(x) for x in lines)
-        c.drawRect(skia.Rect.MakeXYWH(W / 2 - wmax / 2 - 22, y0 - 40, wmax + 44, len(lines) * 44 + 16), skia.Paint(Color=col(K["bg"], 0.82 * k)))
+        plate = skia.Rect.MakeXYWH(W / 2 - wmax / 2 - 34, y0 - 46, wmax + 68, len(lines) * 44 + 30)
+        c.drawRect(plate, skia.Paint(Color=col(K["bg"], 0.985 * k)))             # solid: nothing in the drawing shows through the words
+        c.drawLine(plate.left(), plate.top(), plate.right(), plate.top(), skia.Paint(Color=col(K["light"], 0.22 * k), AntiAlias=True, StrokeWidth=1))
         n = 0
         for i, s in enumerate(lines):
             x = W / 2 - f.measureText(s) / 2

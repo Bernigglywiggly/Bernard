@@ -251,7 +251,8 @@ def frame(surf, t):
     c.translate(W / 2, H / 2 - 30)
     c.scale(z, z)
     c.translate(-cx, -cy)
-    far = 1.0 - sm(z, 3.0, 6.5)                                      # the ocean gives way as the camera enters the wire
+    near = 1.0 - sm(math.hypot(cx - MID[0], cy - MID[1]), 180, 420)  # only the wire has an inside
+    far = 1.0 - sm(z, 3.0, 6.5) * near                               # the ocean gives way as the camera enters it
     if far > 0.999:
         ocean(c, t)
     elif far > 0.004:

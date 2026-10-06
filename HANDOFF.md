@@ -75,6 +75,20 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   0-2, 1:34; build dir `build_george`). ElevenLabs had about 160k characters left (resets about 16 Oct); Higgsfield
   16.12 credits (10.6 went on Sterling takes that are now unused). Claude cannot hear: the user is the only check on
   pronunciation and on whether the bed sounds good. NEXT: chapters 3-6 drawn, voiced in George, sound effects, critic.
+- **6 Oct, 03:45: HTP 06 FIRST FULL CUT EXISTS.** `lab/ch2/ep06/HTP06_full_v1.mp4` (4:18, 1280x720 preview; phone copy
+  `HTP06_full_v1_phone.mp4`; both gitignored, rebuild below). All 37 lines are voiced in George
+  (`build_george/takes/NN_<id>/*.mp3`, gitignored: about 4,600 ElevenLabs characters to redo), all seven chapters are
+  drawn in `flow.py` (chapters 3-6 = `meters`, `cell_story`, `rulebook`, `last_crossing`, camera `keys2`), the music
+  plan covers the whole film and `mix_pre.py` has a synthesised sound-effects pass. Rebuild: takes in place ->
+  `lay_takes.py build_george` -> `EP_BUILD=build_george flow.py clip 0 258` -> `mix_pre.py build_george
+  flow_000_258.mp4 HTP06_full_v1.mp4` (about 6 minutes). Sent to the user at 03:45; NO REACTION YET.
+  **NOT DONE:** (1) the independent critic: launched and killed by the account's session limit at about 03:50
+  (resets 04:50 London) before writing `CRITIC_v1.md`; re-run it (the brief is the film-critic skill plus the user's
+  worry "text overlapping with certain animations and little bugs"). (2) Known flaws: a visible dark patch right of
+  the lit cell in the close-up (cell_story blanks far labels with a rectangle); two long fast camera moves; about 1 s
+  of near-black in the first dive; SFX levels unheard. (3) Fiscal 2026 figures in late October: re-check FACTS, swap,
+  re-voice the changed lines. (4) Full-resolution render, end card, thumbnail, Shorts, POST.md. (5) The other films and
+  channels have NOT been moved to this look or voice; ask before converting.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

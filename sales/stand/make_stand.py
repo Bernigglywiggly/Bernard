@@ -6,6 +6,7 @@ No Google logo or colours: the word only, so there is no trademark artwork on a 
 
     python3 sales/stand/make_stand.py "Stonefield Fish Bar" URL [--style ink|cream|green] [--out DIR]
     python3 sales/stand/make_stand.py --samples          # three colourways on one preview sheet (placeholder link)
+    python3 sales/stand/make_stand.py --matched [--town Stone]   # shops whose colours are "checked" in palettes.json
 
 URL is the shop's review link: `g.page/r/XXXX/review` from the owner's phone, or
 `https://search.google.com/local/writereview?placeid=PLACE_ID`. Output: build/<slug>_<style>.png at 300 dpi with 3 mm
@@ -32,6 +33,32 @@ STYLES = {
     "cream": dict(bg="#F4EFE4", fg="#1C1D20", soft="#6C6A64", acc="#C98A12", panel="#FFFFFF", qr="#1C1D20"),
     "green": dict(bg="#14402C", fg="#F4EFE4", soft="#A9C2B3", acc="#E8B23A", panel="#F4EFE4", qr="#14402C"),
 }
+def lum(h):
+    r, g, b = (int(h.lstrip("#")[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    f = lambda v: v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4  # noqa: E731
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b)
+
+
+def contrast(a, b):
+    la, lb = sorted((lum(a), lum(b)), reverse=True)
+    return (la + 0.05) / (lb + 0.05)
+
+
+def mix(a, b, t):
+    pa, pb = (tuple(int(h.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4)) for h in (a, b))
+    return "#%02X%02X%02X" % tuple(round(x + (y - x) * t) for x, y in zip(pa, pb))
+
+
+def style_from(bg, acc=None):
+    """A colourway from the shop's own colours: readable text, and a QR that is always dark on light."""
+    dark = lum(bg) < 0.35
+    fg = "#F4EFE4" if dark else "#1C1D20"
+    panel = "#F4EFE4" if dark else "#FFFFFF"
+    if not acc or contrast(acc, bg) < 2.0:
+        acc = "#E8B23A" if dark else "#C98A12"
+    return dict(bg=bg, fg=fg, soft=mix(fg, bg, 0.42), acc=acc, panel=panel, qr=bg if contrast(bg, panel) >= 7 else "#1C1D20")
+
+
 STOP = {"OF", "THE", "AND", "&", "IN", "DI", "DE", "LA", "AT", "ON", "A"}
 _TF = {}
 
@@ -133,7 +160,7 @@ def tap(c, cx, cy, r, s):
 
 
 def draw(name, url, style="ink", lines=("ENJOYED IT?", "Leave us a Google review")):
-    s = STYLES[style]
+    s = style if isinstance(style, dict) else STYLES[style]
     surf = skia.Surface(W + 2 * BLEED, H + 2 * BLEED)
     c = surf.getCanvas()
     c.clear(col(s["bg"]))
@@ -191,10 +218,37 @@ def samples(out):
     return save(sheet.makeImageSnapshot(), os.path.join(out, "samples.png"))
 
 
+def sheet_of(imgs, path, k=0.5, gap=40):
+    cw, ch = round((W + 2 * BLEED) * k), round((H + 2 * BLEED) * k)
+    sheet = skia.Surface(len(imgs) * cw + (len(imgs) + 1) * gap, ch + 2 * gap)
+    c = sheet.getCanvas()
+    c.clear(col("#DAD6CE"))
+    for i, im in enumerate(imgs):
+        c.drawImageRect(im, skia.Rect.MakeXYWH(gap + i * (cw + gap), gap, cw, ch), skia.SamplingOptions(skia.CubicResampler.Mitchell()))
+    return save(sheet.makeImageSnapshot(), path)
+
+
+def matched(out, town=None):
+    """One insert per shop in palettes.json whose colours were checked against its real branding."""
+    import json
+    pal = json.load(open(os.path.join(HERE, "palettes.json")))
+    imgs = []
+    for sid, p in pal.items():
+        if p["source"] != "checked" or (town and p["town"] != town):
+            continue
+        im = draw(p["name"], "https://search.google.com/local/writereview?placeid=SAMPLE", style_from(p["bg"], p["acc"]))
+        save(im, os.path.join(out, f"{slug(p['name'])}_matched.png"))
+        imgs.append(im)
+    return sheet_of(imgs, os.path.join(out, "matched.png"))
+
+
 def main(a):
     out = a[a.index("--out") + 1] if "--out" in a else os.path.join(HERE, "build")
     if "--samples" in a:
         print(samples(out))
+        return
+    if "--matched" in a:
+        print(matched(out, a[a.index("--town") + 1] if "--town" in a else None))
         return
     style = a[a.index("--style") + 1] if "--style" in a else "ink"
     pos = [x for i, x in enumerate(a) if not x.startswith("--") and (i == 0 or a[i - 1] not in ("--style", "--out"))]

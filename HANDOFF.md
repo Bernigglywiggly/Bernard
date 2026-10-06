@@ -89,6 +89,18 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   of near-black in the first dive; SFX levels unheard. (3) Fiscal 2026 figures in late October: re-check FACTS, swap,
   re-voice the changed lines. (4) Full-resolution render, end card, thumbnail, Shorts, POST.md. (5) The other films and
   channels have NOT been moved to this look or voice; ask before converting.
+- **6 Oct, 13:05: HTP 06 IS AT VERSION 5** (`HTP06_full_v5.mp4` + `_phone.mp4`, gitignored; rebuild as above). Four
+  independent critic passes are in `lab/ch2/ep06/CRITIC_v1..v4.md`: READ v4 FIRST. Claude overclaimed "fixed" on v2 and
+  v3; what finally worked was structural, not patching: (1) every block fades out when its chapter ends; (2) the camera
+  gets over its target before closing in, and far moves are single "hops" (a 4th value in a camera key = how far to dip
+  out); (3) the last chapter is ONE held frame; (4) scenes are populated from their first second (meter tracks, the
+  four boxes sketched in). v5 measured: no black frames in any hop or scene. **v5 has NOT been seen by a critic or by
+  the user** (the user last reacted to the 1:34 George preview; he has been sent v1-v5 of the full film).
+  KNOWN IN v5: in the last 8 s of the last chapter the three-line caption plate covers the bottom box label (fixed in
+  flow.py after the render: camera y NY+32; re-render to pick it up); four-parties scene still sparse (about 2% lit);
+  hops are quick; small grey notes are small. CONTENT, BLOCKS UPLOAD: two spoken lines about interchange being most of
+  a card's cost are unsourced (FACTS.md "Open after the critic pass"); "last year" x6 with fiscal 2026 due late Oct.
+  Do not run more critic passes before the user has watched: each costs about 230k tokens and he hit a session limit.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

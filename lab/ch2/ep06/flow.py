@@ -106,7 +106,7 @@ def ocean(c, t, z=1.0, far=1.0, near=0.0):
     kf = sm(t, ev["fig"], ev["fig"] + 0.6)
     FIG, GX, GY, CELL, GAP = R.FIG, R.GX, R.GY, R.CELL, R.GAP
     if kf > 0:
-        figa = kf * (1.0 - sm(z, 7.0, 10.0))
+        figa = kf * (1.0 - sm(z, 7.0, 10.0)) * (1.0 - sm(t, L("four") + 0.2, L("four") + 1.2))   # the headline belongs to its own scene
         grid_a = 1.0 - sm(z, 1.15, 1.9) * near                          # the matrix is not part of the dive into the wire
         figa *= grid_a
         text(c, "$17 trillion", FIG[0], FIG[1] + 14 * (1 - kf), font("InterTight-600", 150), K["light"], figa)
@@ -126,7 +126,7 @@ def ocean(c, t, z=1.0, far=1.0, near=0.0):
         if kl > 0:
             c.drawCircle(lx + CELL / 2, ly + CELL * 0.8, 16 * kl, glow(K["acc"], 0.45, 8))
             c.drawRect(skia.Rect.MakeXYWH(lx, ly + CELL * (1 - 0.4 * kl), CELL, CELL * 0.4 * kl), skia.Paint(Color=col(K["acc"]), AntiAlias=True))
-            kc = sm(t, W_("cents", "kept", -0.6), W_("cents", "kept", 0.2)) * (1.0 - sm(z, 8.0, 11.0)) if "cents" in tl.IDS else 0.0
+            kc = sm(t, W_("cents", "kept", -0.6), W_("cents", "kept", 0.2)) * (1.0 - sm(z, 7.4, 9.4)) if "cents" in tl.IDS else 0.0
             m6 = font("IBMPlexMono-400", 5.2)
             text(c, "$40.0 billion", lx + CELL + 6, ly + CELL * 0.82, m6, K["acc"], kc, 0.2)
             text(c, "what Visa kept", lx + CELL + 6, ly + CELL * 0.82 + 7, m6, K["dim"], kc, 0.2)
@@ -161,8 +161,8 @@ def party(c, i, k, t, hot=False):
     name, note = NODES[i]
     text(c, name, x, y + 0.6, sans(3.0), K["light"], k, align="center")
     n = int(len(note) * min(1.0, k * 1.5))
-    text(c, note[:n], x, y + 3.9, mono(1.45), K["dim"], k, 0.05, "center")
-    text(c, f"0{i + 1}", x - NODE_W / 2 + 1.2, y - NODE_H / 2 + 2.4, mono(1.3), K["acc"] if hot else K["dim"], k, 0.05)
+    text(c, note[:n], x, y + 4.1, mono(1.8), K["light"], 0.62 * k, 0.03, "center")
+    text(c, f"0{i + 1}", x - NODE_W / 2 + 1.2, y - NODE_H / 2 + 2.6, mono(1.6), K["acc"] if hot else K["dim"], k, 0.05)
 
 
 def wire_packets(c, t, k):
@@ -213,7 +213,7 @@ def box_label(c, s, x, y, k, size=1.7, align="left"):
 
 
 def route(c, t, z):
-    k = lod(z, 1.6, 3.2)
+    k = lod(z, 1.35, 2.3)
     if k <= 0:
         return
     c6_ = sm(t, L("weak") + 1.5, L("weak") + 2.6) if "weak" in tl.IDS else 0.0
@@ -224,7 +224,7 @@ def route(c, t, z):
     for i in range(4):                                               # the four places, sketched before they are named
         r = skia.Rect.MakeXYWH(NX[i] - NODE_W / 2, NY - NODE_H / 2, NODE_W, NODE_H)
         c.drawRect(r, skia.Paint(Color=col(K["bg"], 0.9 * k)))
-        c.drawRect(r, hair(0.2 * k * sm(t, L("four") + 0.6 + 0.2 * i, L("four") + 1.2 + 0.2 * i) * (1 - c6 if i == 0 else 1), 0.1))
+        c.drawRect(r, hair(0.5 * k * sm(t, L("four") + 0.6 + 0.2 * i, L("four") + 1.2 + 0.2 * i) * (1 - c6 if i == 0 else 1), 0.14))
     party(c, 0, k * sm(t, L("four") + 1.2, L("four") + 1.9) * (1 - c6), t)
     party(c, 1, k * sm(t, L("shopbank") + 0.2, L("shopbank") + 0.9), t)
     party(c, 3, k * sm(t, L("yourbank") + 0.2, L("yourbank") + 0.9), t)
@@ -267,7 +267,7 @@ RX = NX[3] + NODE_W / 2 + 16.0                       # the last chapter's column
 METERS = [("service", "01  service  ·  for being on the network at all", 17.5, "$17.5B", "service", "brought"),
           ("processing", "02  data processing  ·  a charge on every message", 20.0, "$20.0B", "processing", "earned"),
           ("border", "03  international  ·  only when card and shop are in different countries", 14.2, "$14.2B", "border", "earned"),
-          ("other", "04  other  ·  licences and extra services", 4.1, "$4.1B", "other", "added")]
+          ("other", "+   a fourth line  ·  licences and extra services", 4.1, "$4.1B", "other", "added")]
 
 
 def W_(line, word, d=0.0):
@@ -303,19 +303,19 @@ def meters(c, t, z):
 
 
 def _meters(c, t, k0):
-    text(c, "What Visa charges the banks", X0, MT, sans(3.6), K["light"], k0)
-    text(c, "three meters  ·  fiscal 2025  ·  Visa results, 28 Oct 2025", X0, MT + 3.4, mono(1.4), K["dim"], k0, 0.05)
+    text(c, "What Visa charges the banks", X0, MT, sans(4.4), K["light"], k0)
+    text(c, "three meters  ·  fiscal 2025  ·  Visa results, 28 Oct 2025", X0, MT + 3.6, mono(1.8), K["dim"], k0, 0.05)
     c.drawLine(X0, MT + 5.2, X0 + 150 * k0, MT + 5.2, hair(0.3, 0.1))
     for i, (lid, lab, v, disp, wl, ww) in enumerate(METERS):
         y = MT + 12 + i * 13.0
-        ka = sm(t, L("meters") + 0.7 + 0.25 * i, L("meters") + 1.3 + 0.25 * i)
+        ka = sm(t, L("meters") + 0.7 + 0.25 * i, L("meters") + 1.3 + 0.25 * i) if lid != "other" else sm(t, L("other") + 0.1, L("other") + 0.7)
         if ka <= 0:
             continue
         on = sm(t, L(lid) + 0.2, L(lid) + 0.8) if lid != "processing" else sm(t, L("count") + 0.2, L("count") + 0.8)
-        text(c, lab, X0, y - 1.4, mono(1.5), K["light"] if on > 0.5 else K["dim"], ka, 0.05)
-        c.drawRect(skia.Rect.MakeXYWH(X0, y, 100, 4.4), hair(0.22 * ka, 0.1))            # the empty track
+        text(c, lab, X0, y - 1.5, mono(1.9), K["light"], ka * (1.0 if on > 0.5 else 0.6), 0.05)
+        c.drawRect(skia.Rect.MakeXYWH(X0, y, 100, 4.4), hair(0.5 * ka, 0.16))             # the empty track
         tv = W_(wl, ww, -0.5)
-        kb = sm(t, tv, tv + 1.2)
+        kb = sm(t, tv, tv + 1.2) if lid != "service" else sm(t, L("service") + 0.6, tv + 0.6) ** 0.8   # the first fills while it is described
         hot = lid == "processing"
         xe = cells(c, X0, y, int(v * 2 + 0.5), kb, colr=K["acc"] if hot else None, a=0.9 if hot else 0.5)
         text(c, disp, xe + 2.0, y + 4.0, sans(4.6), K["acc"] if hot else K["light"], sm(t, tv + 0.9, tv + 1.4))
@@ -419,14 +419,14 @@ def rulebook(c, t, z):
     text(c, "Visa Form 10-K  ·  fiscal 2025", RX, NY + 34.0, mono(1.9), K["dim"], kg, 0.05)
     kv = sm(t, W_("verdict", "product", -0.4), W_("verdict", "product", 0.4))
     kv2 = sm(t, W_("verdict", "lets", -0.3), W_("verdict", "lets", 0.5))
-    text(c, "Visa's real product is the rulebook", RX, NY + 46, sans(5.6), K["light"], kv)
-    text(c, "that lets a café in Lisbon", RX, NY + 53, sans(5.6), K["acc"], kv2)
-    text(c, "trust a bank in Ohio.", RX, NY + 60, sans(5.6), K["acc"], kv2)
-    text(c, "The wires only deliver it.", RX, NY + 65.2, mono(2.2), K["dim"], sm(t, W_("verdict", "wires", -0.3), W_("verdict", "wires", 0.5)), 0.05)
+    text(c, "Visa's real product is the rulebook", RX, NY + 43, sans(5.6), K["light"], kv)
+    text(c, "that lets a café in Lisbon", RX, NY + 50, sans(5.6), K["acc"], kv2)
+    text(c, "trust a bank in Ohio.", RX, NY + 57, sans(5.6), K["acc"], kv2)
+    text(c, "The wires only deliver it.", RX, NY + 61.8, mono(2.2), K["dim"], sm(t, W_("verdict", "wires", -0.3), W_("verdict", "wires", 0.5)), 0.05)
     ksh = sm(t, L("shop") + 0.3, L("shop") + 1.0)
-    text(c, "If you run a shop: interchange goes", RX, NY + 75, sans(3.6), K["light"], ksh)
-    text(c, "to the banks, not to Visa.", RX, NY + 79.6, sans(3.6), K["light"], ksh)
-    box_label(c, "the rate your bank quotes is the part to negotiate", RX + 0.9, NY + 85.4, sm(t, W_("shop", "rate", -0.4), W_("shop", "rate", 0.4)), 2.3)
+    text(c, "If you run a shop: interchange goes", RX, NY + 69.5, sans(3.6), K["light"], ksh)
+    text(c, "to the banks, not to Visa.", RX, NY + 74, sans(3.6), K["light"], ksh)
+    box_label(c, "the rate your bank quotes is the part to negotiate", RX + 0.9, NY + 79.4, sm(t, W_("shop", "rate", -0.4), W_("shop", "rate", 0.4)), 2.3)
 
 
 def last_crossing(c, t):
@@ -460,17 +460,14 @@ def keys2():
             (L("border") + 2.4, (X0 + 80, MT + 36, 9.0)), (E("other"), (X0 + 78, MT + 38, 9.3)),
             (L("back") + 2.2, (X0 + 70, HT + 12, 9.2)), (E("incentives"), (X0 + 74, HT + 15, 9.6)),
             (E("net"), (X0 + 58, HT + 13, 10.6)),
-            (L("cents") + 2.6, (960, 880, 0.60)), (W_("cents", "kept", 0.4), (R.LITC[0] + 40, R.LITC[1] + 26, 6.4)),
+            (W_("cents", "kept", 0.4), (R.LITC[0] + 40, R.LITC[1] + 26, 6.4, 1.55)),
             (E("cents"), (R.LITC[0] + 44, R.LITC[1] + 26, 6.9)),
             (L("thin") + 2.6, (lx + CELL / 2 + 6, ly + CELL * 0.72, 17.0)), (E("costs"), (lx + CELL / 2 + 4, ly + CELL * 0.76, 19.0)),
             (E("half"), (lx + CELL / 2, ly + CELL * 0.8, 21.0)),
-            (L("why") + 2.6, (lx + CELL + 34, ly + 8, 11.0)), (E("why"), (lx + CELL + 36, ly + 9, 11.3)),
+            (L("why") + 2.6, (lx + CELL + 34, ly + 17, 10.6)), (E("why"), (lx + CELL + 36, ly + 18, 10.9)),
             (L("returned") + 2.2, (lx + CELL / 2 + 36, ly + 10, 11.4)), (E("returned"), (lx + CELL / 2 + 36, ly + 9, 11.8)),
-            (L("weak") + 1.5, (960, 880, 0.60)),
-            (L("weak") + 3.8, (wk[0], wk[1], 7.7)), (E("suits"), (wk[0], wk[1] + 2, 7.8)),
-            (E("regulators"), (wk[0], wk[1] + 10, 7.8)),
-            (L("verdict") + 2.6, (wk[0], wk[1] + 30, 7.7)), (E("verdict"), (wk[0], wk[1] + 33, 7.8)),
-            (L("shop") + 2.0, (wk[0], wk[1] + 46, 7.7)), (E("shop"), (wk[0], wk[1] + 47, 7.8)),
+            (L("weak") + 3.8, (wk[0], NY + 32.0, 7.0, 1.6)),             # then ONE framing for the whole chapter
+            (E("shop"), (wk[0], NY + 32.0, 7.06)),
             (L("close") + 1.6, (960, 440, 1.0)), (E("close") + 3.0, (960, 436, 1.04))]
 
 
@@ -485,19 +482,22 @@ def camera(t):
             (E("ocean"), (960, 520, 1.0)), (L("scale") - 0.3, (960, 560, 1.0)), (L("scale") + 1.6, (960, 1400, 1.02)),
             (L("never") - 0.5, (960, 1404, 1.06)), (L("never") + 5.5, (R.LITC[0] - 60, R.LITC[1] + 20, 4.6)),
             (E("never") - 0.2, (R.LITC[0] - 30, R.LITC[1] + 24, 5.2)),
-            (L("four") + 1.5, (960, 880, 0.60)),                        # the whole page, on the way to the wire
-            (L("four") + 4.4, (NX[0] + 34, NY + 2, 8.6)), (L("shopbank") + 1.0, (NX[0] + 40, NY + 2, 9.0)),
-            (L("yourbank") + 1.5, (rc[0] + 10, rc[1], 9.6)), (L("quote") - 0.3, (rc[0], rc[1], 9.4)),
-            (L("quote") + 2.2, (NX[2], NY - 12, 11.5)), (E("quote"), (NX[2], NY - 13, 12.2)),
-            (L("risk") + 2.2, ((NX[2] + NX[3]) / 2 + 2, NY - 9, 10.4)), (E("risk"), ((NX[2] + NX[3]) / 2 + 3, NY - 8, 10.9)),
-            (L("fee") + 2.4, ((NX[1] + NX[3]) / 2, NY + 9, 9.4)), (E("interchange"), ((NX[1] + NX[3]) / 2, NY + 10, 9.9)),
-            (L("sets") + 2.0, (NX[2], NY + 6, 11.4)), (E("sets"), (NX[2], NY + 7, 11.9)),
+            (L("four") + 4.4, (MID[0], NY + 2, 9.0, 1.75)), (L("shopbank") + 1.0, (MID[0], NY + 2, 9.2)),
+            (L("yourbank") + 1.5, (MID[0], rc[1], 9.4)), (L("quote") - 0.3, (MID[0], rc[1], 9.5)),
+            (L("quote") + 2.2, (MID[0], NY - 10, 9.7)), (E("quote"), (MID[0], NY - 10, 9.9)),
+            (L("risk") + 2.2, (MID[0], NY - 7, 10.0)), (E("risk"), (MID[0], NY - 6, 10.2)),
+            (L("fee") + 2.4, (MID[0], NY + 9, 9.4)), (E("interchange"), (MID[0], NY + 10, 9.7)),
+            (L("sets") + 2.0, (MID[0], NY + 6, 10.0)), (E("sets"), (MID[0], NY + 7, 10.2)),
             (L("whyset") + 2.6, (NX[2], NY + 22, 8.8)), (E("whyset"), (NX[2], NY + 24, 9.2))]
     keys = keys + keys2()
     for (ta, a), (tb, b) in zip(keys, keys[1:]):
         if t <= tb:
             u = sm(t, ta, tb)
             up = uz = u
+            if len(b) > 3:                                           # a hop between far places: dip out, travel, close in
+                up = sm(u, 0.12, 0.88)
+                zz = math.exp(math.log(a[2]) + (math.log(b[2]) - math.log(a[2])) * u - b[3] * math.sin(math.pi * u) ** 1.3)
+                return a[0] + (b[0] - a[0]) * up, a[1] + (b[1] - a[1]) * up, zz
             if b[2] > a[2] * 1.6:                                    # zooming in: get over the target, then close in
                 up, uz = 1 - (1 - u) ** 3.2, u ** 1.7
             elif b[2] < a[2] / 1.6:                                  # zooming out: open up, then travel
@@ -556,7 +556,7 @@ def frame(surf, t):
     c.scale(z, z)
     c.translate(-cx, -cy)
     near = 1.0 - sm(math.hypot(cx - MID[0], cy - MID[1]), 430, 720)  # only the wire has an inside
-    ocean(c, t, z, 1.0 - sm(z, 2.0, 3.8) * near, near)
+    ocean(c, t, z, 1.0 - sm(z, 2.4, 3.6) * near, near)
     route(c, t, z)
     later(c, t, z)
     if "close" in tl.IDS:

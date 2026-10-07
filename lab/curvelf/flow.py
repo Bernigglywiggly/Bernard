@@ -243,6 +243,31 @@ def photo(pid):
     return _PHOTO[pid]
 
 
+_STILL = {}
+RESOLVE = 0.8                                 # how far an illustration resolves from characters into the picture itself (8 Oct, the user: the characters alone can make the picture hard to read)
+
+
+def toned(g):
+    """A grey picture (0..1) in the film's palette: black, through cyan, to white."""
+    t = g[..., None]
+    cy = np.float32([0.37, 0.94, 0.89]) * 0.62
+    return np.where(t < 0.6, np.float32([0.02, 0.03, 0.035]) + (cy - 0.02) * (t / 0.6), cy + (1 - cy) * ((t - 0.6) / 0.4))
+
+
+def still(i, frame=0):
+    """An illustration as a toned picture with soft edges, to show through its own characters."""
+    key = (i, frame)
+    if key not in _STILL:
+        fr = pic(i)
+        g = fr[frame % len(fr)][0]                                  # the same grey field the characters are read from (feathered, levelled)
+        a = np.clip(g * 3.0, 0, 1) ** 0.8                           # dark surroundings stay clear: only the subject is laid in
+        rgba = np.dstack([(np.clip(toned(np.clip(g * 1.15, 0, 1)), 0, 1) * 255).astype(np.uint8), (a * 255).astype(np.uint8)])
+        if len(_STILL) > 40:
+            _STILL.clear()
+        _STILL[key] = skia.Image.fromarray(np.ascontiguousarray(rgba), colorType=skia.kRGBA_8888_ColorType, alphaType=skia.kUnpremul_AlphaType)
+    return _STILL[key]
+
+
 def pic(i):
     """A place's grey field as mip levels (a clip has one set per frame); None for places that are only crisp type."""
     if i in _PIC:
@@ -529,6 +554,13 @@ def world_type(c, t):
         if a <= 0:
             continue
         dur = max(1.0, E(i) - t0)
+        if k in ("img", "clip") and RESOLVE > 0:                  # an illustration resolves most of the way into the picture; the characters stay as its grain
+            fr = pic(i)
+            rr = a * sm(t, S(i) + 0.8, S(i) + 2.0) * RESOLVE
+            if fr and rr > 0:
+                hh = p["ww"] * 9 / 16
+                im = still(i, 0 if len(fr) == 1 else _pingpong(int(t * 12), len(fr)))
+                c.drawImageRect(im, skia.Rect.MakeXYWH(x - p["ww"] / 2, y - hh / 2, p["ww"], hh), skia.SamplingOptions(skia.FilterMode.kLinear), skia.Paint(Color=col("#FFFFFF", rr)))
         if k == "photo":                                          # the characters resolve into the photograph itself
             _, (img, fx, fy, fw, fh) = photo(v[1])
             hh = p["ww"] * 9 / 16

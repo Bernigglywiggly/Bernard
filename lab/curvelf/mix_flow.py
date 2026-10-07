@@ -53,7 +53,9 @@ def score(paths, dur, xf=6.0):
                 break
         while b > a + 10 and not live[b - 1]:
             b -= 1
-        pieces.append(y[a * SR:b * SR])
+        y = y[a * SR:b * SR]
+        y = y * (10 ** (-21 / 20) / (np.sqrt((y ** 2).mean()) + 1e-9))      # every piece at the same level, so a quiet first half does not sink under the voice
+        pieces.append(np.clip(y, -0.98, 0.98))
         print(os.path.basename(os.path.dirname(p)), "plays", a, "to", b, "s of", len(y) // SR)
     n, x = int((dur + 2) * SR), int(xf * SR)
     out = np.zeros((n, 2))
@@ -80,9 +82,9 @@ chain = ("highpass=f=85,equalizer=f=260:t=q:w=1.1:g=-2.5,equalizer=f=3400:t=q:w=
          "acompressor=threshold=-22dB:ratio=3.2:attack=6:release=110:makeup=5,alimiter=limit=0.89")
 fc = (f"[0:a]apad=whole_dur={dur:.2f},aformat=channel_layouts=stereo,{chain},asplit=3[v][vw][vk];[vw][2:a]afir=dry=0:wet=1[rev];"
       "[v][rev]amix=inputs=2:weights='1 0.09':normalize=0[vox];"
-      + ("[1:a]highpass=f=38,lowshelf=f=110:g=-5,volume=0.5[bed];" if MUSIC else "[1:a]volume=0.66,haas=level_in=1:side_gain=0.55:middle_source=mid[bed];")
+      + ("[1:a]highpass=f=38,lowshelf=f=110:g=-5,volume=0.9[bed];" if MUSIC else "[1:a]volume=0.66,haas=level_in=1:side_gain=0.55:middle_source=mid[bed];")
       + "[bed][vk]sidechaincompress=threshold=0.06:ratio=2:attack=30:release=700[duck];"
-      f"[vox][duck]amix=inputs=2:normalize=0,alimiter=limit=0.84,loudnorm=I=-14:TP=-2:LRA=9,aresample=48000,alimiter=limit=0.8:level=false,afade=t=out:st={dur - 3.0:.2f}:d=3.0[a]")
+      f"[vox][duck]amix=inputs=2:normalize=0,alimiter=limit=0.84,loudnorm=I=-14:TP=-2:LRA=9,aresample=48000,alimiter=limit=0.71:level=false,afade=t=out:st={dur - 3.0:.2f}:d=3.0[a]")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", os.path.join(B, "voice_dry.wav"), "-i", os.path.join(B, "garage.wav"), "-i", os.path.join(B, "plate.wav"),
                 "-i", picture, "-filter_complex", fc, "-map", "3:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-shortest", out], check=True)
 print(out)

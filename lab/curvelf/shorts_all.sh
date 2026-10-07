@@ -1,7 +1,7 @@
 #!/bin/zsh
 # All nine Shorts, three at a time, from the current film files.
 cd "$(dirname "$0")"; P=~/youtube/.venv/bin/python
-A=lf01_escape/LF01_FLOW_v4.mp4; B=lf02_price/LF02_FLOW_v3.mp4; C=lf03_held/LF03_FLOW_v1.mp4
+A=lf01_escape/LF01_FLOW_v5.mp4; B=lf02_price/LF02_FLOW_v4.mp4; C=lf03_held/LF03_FLOW_v2.mp4
 export FLOW_VERT=1
 s() { $P flow.py "$@" > flow_short_$3.log 2>&1 & }
 s lf01_escape short escape open_00 open_08 $A "An AI test escaped and hacked a real company" "The AI That Escaped"

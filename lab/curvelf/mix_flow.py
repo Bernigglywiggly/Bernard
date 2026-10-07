@@ -31,13 +31,57 @@ for ln in L:
         marks.append((ln["start"], "ba"[(floor + n // 4) % 2]))
 marks.append((dur - 6.0, "out"))
 marks = sorted((round(t / bar) * bar, s) for t, s in marks)
-sf.write(os.path.join(B, "garage.wav"), mp.bed(dur, marks), mp.SR)
+MUSIC = [p for p in os.environ.get("FLOW_MUSIC", "").split(",") if p]     # a serious score instead of the garage bed: pieces, played in turn
+
+
+def score(paths, dur, xf=6.0):
+    """Join generated pieces into one bed: each trimmed to where it is actually playing (they tend to stop early or
+    leave a silent tail), crossfaded, repeated in turn until the film is covered."""
+    import numpy as np
+    SR = mp.SR
+    pieces = []
+    for p in paths:
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", p, "-ac", "2", "-ar", str(SR), "/tmp/_piece.wav"], check=True)
+        y, _ = sf.read("/tmp/_piece.wav")
+        r = np.array([np.sqrt((y[i:i + SR] ** 2).mean()) for i in range(0, len(y) - SR, SR)])
+        live = 20 * np.log10(r + 1e-9) > -36
+        a = int(np.argmax(live))
+        b = len(live)
+        for i in range(max(a + 20, int(len(live) * 0.35)), len(live) - 3):           # a silence of 3 s or more is the end
+            if not live[i:i + 3].any():
+                b = i
+                break
+        while b > a + 10 and not live[b - 1]:
+            b -= 1
+        pieces.append(y[a * SR:b * SR])
+        print(os.path.basename(os.path.dirname(p)), "plays", a, "to", b, "s of", len(y) // SR)
+    n, x = int((dur + 2) * SR), int(xf * SR)
+    out = np.zeros((n, 2))
+    pos, k = 0, 0
+    while pos < n:
+        y = pieces[k % len(pieces)].copy()
+        k += 1
+        if pos:
+            y[:x] *= np.sin(np.linspace(0, np.pi / 2, x))[:, None]
+        y[-x:] *= np.cos(np.linspace(0, np.pi / 2, x))[:, None]
+        e = min(n, pos + len(y))
+        out[pos:e] += y[:e - pos]
+        pos += len(y) - x
+    out[:int(1.5 * SR)] *= np.linspace(0, 1, int(1.5 * SR))[:, None]
+    return out
+
+
+if MUSIC:
+    sf.write(os.path.join(B, "garage.wav"), score(MUSIC, dur), mp.SR)
+else:
+    sf.write(os.path.join(B, "garage.wav"), mp.bed(dur, marks), mp.SR)
 sf.write(os.path.join(B, "plate.wav"), mp.plate(), mp.SR)
 chain = ("highpass=f=85,equalizer=f=260:t=q:w=1.1:g=-2.5,equalizer=f=3400:t=q:w=1.2:g=2.5,highshelf=f=10500:g=4,deesser=i=0.35:m=0.5:f=0.5,"
          "acompressor=threshold=-22dB:ratio=3.2:attack=6:release=110:makeup=5,alimiter=limit=0.89")
 fc = (f"[0:a]apad=whole_dur={dur:.2f},aformat=channel_layouts=stereo,{chain},asplit=3[v][vw][vk];[vw][2:a]afir=dry=0:wet=1[rev];"
       "[v][rev]amix=inputs=2:weights='1 0.09':normalize=0[vox];"
-      "[1:a]volume=0.66,haas=level_in=1:side_gain=0.55:middle_source=mid[bed];[bed][vk]sidechaincompress=threshold=0.06:ratio=2:attack=30:release=700[duck];"
+      + ("[1:a]highpass=f=38,lowshelf=f=110:g=-5,volume=0.5[bed];" if MUSIC else "[1:a]volume=0.66,haas=level_in=1:side_gain=0.55:middle_source=mid[bed];")
+      + "[bed][vk]sidechaincompress=threshold=0.06:ratio=2:attack=30:release=700[duck];"
       f"[vox][duck]amix=inputs=2:normalize=0,alimiter=limit=0.84,loudnorm=I=-14:TP=-2:LRA=9,aresample=48000,alimiter=limit=0.8:level=false,afade=t=out:st={dur - 3.0:.2f}:d=3.0[a]")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", os.path.join(B, "voice_dry.wav"), "-i", os.path.join(B, "garage.wav"), "-i", os.path.join(B, "plate.wav"),
                 "-i", picture, "-filter_complex", fc, "-map", "3:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-shortest", out], check=True)

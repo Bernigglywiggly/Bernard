@@ -1,23 +1,12 @@
 #!/bin/zsh
-# One queue, in order, no waiting on other scripts (two earlier queues deadlocked waiting on each other's names).
-cd "$(dirname "$0")"; P=~/youtube/.venv/bin/python
-$P -c "import json,sys;sys.exit(0 if json.load(open('lf03_held/flow/lines.json'))['engine']=='eleven' else 1)" || $P flow.py lf03_held lay 2>&1 | tail -1
-./render_flow.sh lf03_held LF03_FLOW_v1 6 2>&1 | tail -1
-./render_flow.sh lf02_price LF02_FLOW_v3 6 2>&1 | tail -1
-[ -f lf02_price/LF02_FLOW_v3.mp4 ] && rm -f lf02_price/LF02_FLOW_v2*.mp4
-A=lf01_escape/LF01_FLOW_v4.mp4; B=lf02_price/LF02_FLOW_v3.mp4; C=lf03_held/LF03_FLOW_v1.mp4
-export FLOW_VERT=1
-s() { $P flow.py "$@" > flow_short_$3.log 2>&1 & }
-s lf01_escape short escape open_00 open_08 $A "An AI test escaped and hacked a real company" "The AI That Escaped"
-s lf01_escape short talk board_02 board_07 $A "The AI agents built a secret message board" "The AI That Escaped"
-s lf01_escape short cheat why_00 why_09 $A "Why the AI cheated" "The AI That Escaped"
-wait
-s lf02_price short war open_00 open_05 $B "Two AI labs cut prices in one afternoon" "The Price of Thinking"
-s lf02_price short bigmac bigmac_00 bigmac_07 $B "What AI really costs, in Big Macs" "The Price of Thinking"
-s lf02_price short jevons paradox_00 paradox_06 $B "Cheaper AI means a bigger bill" "The Price of Thinking"
-wait
-s lf03_held short held open_00 open_05 $C "OpenAI lined up its next model, then cancelled the launch" "Too Dangerous to Release"
-s lf03_held short test test_00 test_10 $C "What GPT-6 did in the UK's simulated test" "Too Dangerous to Release"
-s lf03_held short knew knew_00 knew_06 $C "It knew the rules. Sometimes it attacked anyway." "Too Dangerous to Release"
-wait
-tail -n 1 flow_short_*.log; ls -la lf0*/LF0*_FLOW_v*.mp4 lf0*/shorts/
+# All three films with the chapter rail; the serious score on films 1 and 3, the garage bed on film 2; then the nine Shorts.
+cd "$(dirname "$0")"
+S=music/serious
+FLOW_MUSIC="$(ls $S/lf01_a/*.mp3 | tail -1),$(ls $S/lf01_b/*.mp3 | tail -1)" ./render_flow.sh lf01_escape LF01_FLOW_v5 6 2>&1 | tail -4
+FLOW_MUSIC="$(ls $S/lf03_a/*.mp3 | tail -1),$(ls $S/lf03_b/*.mp3 | tail -1)" ./render_flow.sh lf03_held LF03_FLOW_v2 6 2>&1 | tail -4
+./render_flow.sh lf02_price LF02_FLOW_v4 6 2>&1 | tail -2
+[ -f lf01_escape/LF01_FLOW_v5.mp4 ] && rm -f lf01_escape/LF01_FLOW_v4*.mp4 lf01_escape/RAIL_TEST_v1.mp4
+[ -f lf03_held/LF03_FLOW_v2.mp4 ] && rm -f lf03_held/LF03_FLOW_v1*.mp4
+[ -f lf02_price/LF02_FLOW_v4.mp4 ] && rm -f lf02_price/LF02_FLOW_v3*.mp4
+./shorts_all.sh
+for f in lf0*/LF0*_FLOW_v?.mp4 lf0*/shorts/*.mp4; do echo "$f $(ffprobe -v error -show_entries format=duration -of csv=p=0 $f | cut -c1-6)s $(ffmpeg -hide_banner -nostats -i $f -af ebur128=peak=true -f null - 2>&1 | grep -E 'I:|Peak:' | tail -2 | tr -s ' ' | tr '\n' ' ')"; done

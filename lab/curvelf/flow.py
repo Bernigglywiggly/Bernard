@@ -30,7 +30,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "ch2", "ep06"))
 from look_test import col, font, glow, text  # noqa: E402
 
-W, H, FPS = 1920, 1080, 24
+VERT = os.environ.get("FLOW_VERT") == "1"            # a Short: the same world, framed 9:16
+W, H, FPS = (1080, 1920, 30) if VERT else (1920, 1080, 24)
 CW, CH = 8, 12
 COLS, ROWS = W // CW, H // CH
 FW, FH = W // 4, H // 4
@@ -38,7 +39,8 @@ BG, INK, CYAN, RED, DIM = "#040506", "#F2F5F7", "#5FF0E4", "#FF6A4D", "#7B858C"
 RAMP, EDGE = " .,:;-=+*o%#@", "-\\|/"
 BEAT_GAP, CHAPTER_GAP, LEAD = 0.3, 3.0, 1.2
 LONG_WORDS = 20
-RAISE = 44                                    # screen pixels the world is lifted, so pictures clear the caption plate
+CAP_TOP = (H - 640) if VERT else (H - 165)   # where the caption band begins
+RAISE = 110 if VERT else 44    #                                # screen pixels the world is lifted, so pictures clear the caption plate
 WIDTH = dict(img=2300, clip=2500, num=2100, words=2300, quote=2300, list=2100, split=2500, tl=2700)
 
 FILM = os.path.join(HERE, sys.argv[1]) if len(sys.argv) > 1 else None
@@ -151,7 +153,7 @@ def layout():
             x += (P[-1]["ww"] + ww) / 2 + (2600 if b["first"] else 520)
         y = 820 * math.sin(i * 1.9) + 380 * math.sin(i * 0.37)
         lab = k in ("img", "clip") and len(b["vis"]) > 2
-        P.append(dict(i=i, kind=k, x=x, y=y, ww=ww, off=(-0.13 if lab else 0.0)))
+        P.append(dict(i=i, kind=k, x=x, y=y, ww=ww, off=(-0.13 if lab and not VERT else 0.0)))
     return P
 
 
@@ -302,7 +304,7 @@ def keys():
     k = []
     for n, p in enumerate(PL):
         x, y, ww = p["x"] + p["ww"] * p["off"], p["y"], p["ww"]
-        z = W / ww * 0.92
+        z = W / ww * ((1.5 if p["kind"] in ("img", "clip") else 1.0) if VERT else 0.92)
         leave = 2.9 if (n + 1 < N and B[n + 1]["first"]) else 0.9          # a chapter's crossing is long: its name rides on it
         a, b = S(n) + (0.0 if n == 0 else 0.45), (NXT(n) - leave if n + 1 < N else TOTAL)
         b = max(b, a + 0.4)
@@ -424,7 +426,7 @@ def on_screen(x0, x1, y1):
     """1 when a block is wholly inside the frame and above the caption band, falling to 0 as it nears an edge."""
     cx, cy, z = CAM
     l, r, bot = (x0 - cx) * z + W / 2, (x1 - cx) * z + W / 2, (y1 - cy) * z + H / 2 - RAISE
-    return sm(l, 14, 70) * (1 - sm(r, W - 70, W - 14)) * (1 - sm(bot, H - 205, H - 165))
+    return sm(l, 14, 70) * (1 - sm(r, W - 70, W - 14)) * (1 - sm(bot, CAP_TOP - 40, CAP_TOP))
 
 
 def held(i, t, t0=None):
@@ -497,6 +499,8 @@ def world_type(c, t):
         if k in ("img", "clip") and len(v) > 2:
             f, size = fit_sans(v[2], 150 * u, 700 * u)
             X, Y = x - 1230 * u, y + 200 * u
+            if VERT:                                                # above the picture, centred
+                X, Y = x - f.measureText(v[2]) / 2, y - p["ww"] * 0.2 - 60 * u
             a *= on_screen(X - 36 * u, X + f.measureText(v[2]) + 36 * u, Y + 30 * u)
             if a > 0:
                 block(c, X, Y - size * 0.86, f.measureText(v[2]), size, a, 30 * u)
@@ -606,6 +610,8 @@ def wrap(s, f, maxw):
 
 def screen(c, t, cx, cy, z):
     n = now(t - 0.9)
+    if VERT:
+        return short_screen(c, t, n)
     c.drawRect(skia.Rect.MakeXYWH(52, 48, 640, 46), skia.Paint(Color=col(BG, 0.85)))
     c.drawRect(skia.Rect.MakeXYWH(W - 470, 48, 420, 46), skia.Paint(Color=col(BG, 0.85)))
     text(c, SC.TAG, 70, 78, mono(22), DIM, 1.0, 0.5)
@@ -627,15 +633,20 @@ def screen(c, t, cx, cy, z):
     if a > 0:                                                       # the sign-off, with room left for end-screen elements above it
         text(c, "THE CURVE", W / 2, H - 150, sans(64), INK, a, 6.0, align="center")
         text(c, "AI, EXPLAINED  ·  SOURCES IN THE DESCRIPTION", W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
+    captions(c, t, n)
+
+
+def captions(c, t, n):
     for ln in LINES[max(0, n - 1):n + 3]:
         k = sm(t, ln["start"], ln["start"] + 0.15) * (1 - sm(t, ln["end"] + 0.02, ln["end"] + 0.14))   # two lines are never up together
         if k <= 0:
             continue
-        f = sans(34)
+        f = sans(50 if VERT else 34)
+        CL, CB = (62, H - 500) if VERT else (44, H - 66)
         cap = re.sub(r"GPT (\d)", r"GPT-\1", ln["text"])
-        mw = 1180
+        mw = (W - 150) if VERT else 1180
         lines = wrap(cap, f, mw)
-        while len(lines) > 3 and mw < 1560:
+        while len(lines) > 3 and mw < (W - 90 if VERT else 1560):
             mw += 60
             lines = wrap(cap, f, mw)
         full = len(lines)
@@ -647,18 +658,41 @@ def screen(c, t, cx, cy, z):
         ws = ln.get("words") or []
         nw = len(cap.split())
         said = sum(1 for w_ in ws if w_[1] <= t) if ws else int(nw * sm(t, ln["start"], ln["end"]) + 0.999)
-        y0 = H - 66 - (len(lines) - 1) * 44
+        y0 = CB - (len(lines) - 1) * CL
         wmax = max(f.measureText(x) for x in lines)
-        pl = skia.Rect.MakeXYWH(W / 2 - wmax / 2 - 34, y0 - 46, wmax + 68, len(lines) * 44 + 28)
+        pl = skia.Rect.MakeXYWH(W / 2 - wmax / 2 - 34, y0 - CL - 2, wmax + 68, len(lines) * CL + 28)
         c.drawRect(pl, skia.Paint(Color=col(BG, 0.985 * k)))
         c.drawLine(pl.left(), pl.top(), pl.right(), pl.top(), skia.Paint(Color=col(INK, 0.22 * k), AntiAlias=True, StrokeWidth=1))
         m = 0
         for i, s in enumerate(lines):
             x = W / 2 - f.measureText(s) / 2
             for w_ in s.split():
-                text(c, w_, x, y0 + i * 44, f, INK, k * (1.0 if m < said else 0.42))
+                text(c, w_, x, y0 + i * CL, f, INK, k * (1.0 if m < said else 0.42))
                 x += f.measureText(w_ + " ")
                 m += 1
+
+
+SHORT = dict(t0=0.0, t1=1e9, headline="", film="")
+
+
+def short_screen(c, t, n):
+    """A Short's furniture: the headline up top, captions above the app's own buttons, an end card to the full film."""
+    f = sans(60)
+    lines = wrap(SHORT["headline"], f, W - 150)
+    c.drawRect(skia.Rect.MakeXYWH(0, 0, W, 190 + len(lines) * 70), skia.Paint(Color=col(BG, 0.9)))
+    text(c, "THE CURVE", 75, 150, mono(26), CYAN, 1.0, 3.0)
+    for i, s_ in enumerate(lines):
+        text(c, s_, 75, 230 + i * 70, f, INK)
+    e = sm(t, SHORT["t1"] - 2.6, SHORT["t1"] - 2.2)
+    if e > 0:
+        c.drawRect(skia.Rect.MakeXYWH(0, H / 2 - 260, W, 470), skia.Paint(Color=col(BG, 0.96 * e)))
+        text(c, "WATCH THE FULL FILM", W / 2, H / 2 - 150, mono(30), CYAN, e, 3.0, align="center")
+        ff, _ = fit_sans(SHORT["film"].upper(), 92, W - 140)
+        text(c, SHORT["film"].upper(), W / 2, H / 2 - 30, ff, INK, e, align="center")
+        c.drawRect(skia.Rect.MakeXYWH(W / 2 - 60, H / 2 + 20, 120, 7), skia.Paint(Color=col(CYAN, e)))
+        text(c, "ON THE CURVE  ·  LINK ON THIS SHORT", W / 2, H / 2 + 110, mono(26), INK, e, 1.0, align="center")
+    else:
+        captions(c, t, n)
 
 
 def frame(t):
@@ -678,6 +712,8 @@ def frame(t):
     c.restore()
     screen(c, t, cx, cy, z)
     a = sm(t, -0.2, 0.35) * (1 - sm(t, TOTAL - 1.4, TOTAL - 0.1))
+    if VERT:
+        a = sm(t, SHORT["t0"], SHORT["t0"] + 0.3) * (1 - sm(t, SHORT["t1"] - 0.4, SHORT["t1"]))
     if a < 1:
         c.drawRect(skia.Rect.MakeWH(W, H), skia.Paint(Color=col(BG, 1 - a)))
     return surf.makeImageSnapshot().toarray(colorType=skia.kRGBA_8888_ColorType)
@@ -712,6 +748,18 @@ def main():
     elif cmd == "seg":
         a, b = float(sys.argv[3]), float(sys.argv[4])
         encode(a, min(b, TOTAL), os.path.join(BUILD, f"seg_{int(a):04d}.mp4"), "1920:1080")
+    elif cmd == "short":                                            # FLOW_VERT=1 flow.py <film> short <name> <first id> <last id> <film mp4> "<headline>" "<film title>"
+        name, a_id, b_id, mp4, head, film = sys.argv[3:9]
+        ids = [b["id"] for b in B]
+        t0, t1 = max(0.0, S(ids.index(a_id)) - 0.5), E(ids.index(b_id)) + 0.6 + 2.6
+        SHORT.update(t0=t0, t1=t1, headline=head, film=film)
+        os.makedirs(os.path.join(FILM, "shorts"), exist_ok=True)
+        pic_, out = os.path.join(BUILD, f"short_{name}_pic.mp4"), os.path.join(FILM, "shorts", f"short_{name}.mp4")
+        encode(t0, t1, pic_, "1080:1920")
+        d = t1 - t0
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", pic_, "-ss", f"{t0:.3f}", "-t", f"{d:.3f}", "-i", mp4, "-map", "0:v", "-map", "1:a",
+                        "-af", f"afade=t=in:d=0.25,afade=t=out:st={d - 2.4:.2f}:d=2.3", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", out], check=True)
+        print(out, round(d, 1), "s")
     elif cmd == "times":
         for ln in LINES:
             print(f"{ln['start']:7.2f} {ln['end']:7.2f}  {ln['id']:10s} {B[ln['i']]['vis'][0]}")

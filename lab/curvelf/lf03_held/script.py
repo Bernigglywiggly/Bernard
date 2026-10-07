@@ -40,7 +40,7 @@ CHAPTERS = [
         ("Two days later, Google announced its new frontier model, Gemini 4 Argon, and gave it only to a vetted list of cyber defenders.",
          ("img", "h03")),
         ("Back in April, Anthropic had done much the same with a model called Mythos.", ("img", "h04")),
-        ("Three of the world's biggest AI labs, each holding back a model. What did their tests see? And who gets to decide what you're allowed to use?",
+        ("Three of the world's biggest AI labs, and each of them has held a model back this year. What did their tests see? And who gets to decide what you're allowed to use?",
          ("clip", "k01")),
     ]),
     dict(id="week", title="ONE WEEK", beats=[

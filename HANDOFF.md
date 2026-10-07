@@ -171,6 +171,12 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   (premise holds, 53 claims, 1 wrong), 19 edits; before voicing, check the open and close chapters against Anthropic
   widening Mythos access on 6 Oct. `flow.py lay` now leaves an 11 s tail; the corner indicator turns over with the
   chapter card. Each film still needs: critic on the finished file, new-look thumbnails, POST.md, hand source checks.
+- **7 Oct, 10:45: SHORTS MODE, SCHEDULE SHEET, YOUTUBE STATE.** `flow.py` has a 9:16 mode (`FLOW_VERT=1 ... short`):
+  headline up top, captions above the app's buttons, end card to the full film. Sheet for the user to schedule by hand:
+  `channel/the-curve/SCHEDULE_NEW_LOOK.md`. On YouTube the OLD uncorrected LF01 and two old Shorts are public; old LF02
+  was set to private by the assistant in Studio (Chrome); a further Studio change was blocked by the permission system
+  and is the user's to make (ids and actions in the sheet). The assistant cannot upload (Zapier limit, no vidIQ channel,
+  10 MB Chrome cap). LF03: corrected, voicing next.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

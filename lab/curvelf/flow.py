@@ -40,8 +40,8 @@ RAMP, EDGE = " .,:;-=+*o%#@", "-\\|/"
 BEAT_GAP, CHAPTER_GAP, LEAD = 0.3, 3.0, 1.2
 LONG_WORDS = 20
 LONG_NUM = 9
-CAP_TOP = (H - 640) if VERT else (H - 165)   # where the caption band begins
-RAISE = 110 if VERT else 44    #                                # screen pixels the world is lifted, so pictures clear the caption plate
+CAP_TOP = (H - 600) if VERT else (H - 165)   # where the caption band begins
+RAISE = 40 if VERT else 44    #                                # screen pixels the world is lifted, so pictures clear the caption plate
 WIDTH = dict(photo=2300, img=2300, clip=2500, num=2100, words=2300, quote=2300, list=2100, split=2500, tl=2700)
 
 FILM = os.path.join(HERE, sys.argv[1]) if len(sys.argv) > 1 else None
@@ -335,7 +335,7 @@ def keys():
     k = []
     for n, p in enumerate(PL):
         x, y, ww = p["x"] + p["ww"] * p["off"], p["y"], p["ww"]
-        z = W / ww * ((1.5 if p["kind"] in ("img", "clip") else 1.0) if VERT else 0.72 if p["kind"] == "photo" else 0.92)
+        z = W / ww * ((1.75 if p["kind"] in ("img", "clip", "photo") else 1.28) if VERT else 0.72 if p["kind"] == "photo" else 0.92)
         leave = 2.9 if (n + 1 < N and B[n + 1]["first"]) else 0.9          # a chapter's crossing is long: its name rides on it
         a, b = S(n) + (0.0 if n == 0 else 0.45), (NXT(n) - leave if n + 1 < N else TOTAL)
         b = max(b, a + 0.4)
@@ -683,6 +683,7 @@ def screen(c, t, cx, cy, z):
                 c.drawRect(skia.Rect.MakeXYWH(W / 2 - wd / 2, H / 2 + 74, wd * sm(t, S(i) - CHAPTER_GAP + 1.0, S(i) - 0.7), 6), skia.Paint(Color=col(CYAN, a)))
     a = sm(t, E(N - 1) + 1.2, E(N - 1) + 2.0)
     if a > 0:                                                       # the sign-off, with room left for end-screen elements above it
+        c.drawRect(skia.Rect.MakeXYWH(W / 2 - 430, H - 226, 860, 150), skia.Paint(Color=col(BG, 0.9 * a)))
         text(c, "THE CURVE", W / 2, H - 150, sans(64), INK, a, 6.0, align="center")
         text(c, "AI, EXPLAINED  ·  SOURCES IN THE DESCRIPTION", W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
     captions(c, t, n)
@@ -693,8 +694,8 @@ def captions(c, t, n):
         k = sm(t, ln["start"], ln["start"] + 0.15) * (1 - sm(t, ln["end"] + 0.02, ln["end"] + 0.14))   # two lines are never up together
         if k <= 0:
             continue
-        f = sans(50 if VERT else 34)
-        CL, CB = (62, H - 500) if VERT else (44, H - 66)
+        f = sans(56 if VERT else 34)
+        CL, CB = (68, H - 440) if VERT else (44, H - 66)
         cap = re.sub(r"GPT (\d)", r"GPT-\1", ln["text"])
         mw = (W - 150) if VERT else 1180
         lines = wrap(cap, f, mw)

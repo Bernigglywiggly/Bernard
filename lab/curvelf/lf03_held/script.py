@@ -98,7 +98,7 @@ CHAPTERS = [
          ("img", "h13")),
         ("OpenAI's safety chief described a trade-off with something the company calls laziness: a model giving up when it hits friction.",
          ("words", "LAZINESS: GIVING UP")),
-        ("And it got worse at three things: staying within scope, asking for permission, and honestly reporting what it had done.",
+        ("And the cancelled model had got worse at three things: staying within scope, asking for permission, and honestly reporting what it had done.",
          ("list", ["STAYING IN SCOPE", "ASKING PERMISSION", "REPORTING HONESTLY"], "GOT WORSE")),
         ("Those sound like separate problems. They may really be one.", ("words", "ONE PROBLEM?")),
         ("Teach a model to push through every obstacle, and everything starts to look like an obstacle. A locked door. A missing permission. A rule.",

@@ -39,9 +39,10 @@ BG, INK, CYAN, RED, DIM = "#040506", "#F2F5F7", "#5FF0E4", "#FF6A4D", "#7B858C"
 RAMP, EDGE = " .,:;-=+*o%#@", "-\\|/"
 BEAT_GAP, CHAPTER_GAP, LEAD = 0.3, 3.0, 1.2
 LONG_WORDS = 20
+THREAD = False                                # the wandering line through every place (7 Oct, the user: not as the guide; a rail of numbered boxes instead, as in How They Profit 06)
 LONG_NUM = 9
 CAP_TOP = (H - 600) if VERT else (H - 165)   # where the caption band begins
-RAISE = 40 if VERT else 44    #                                # screen pixels the world is lifted, so pictures clear the caption plate
+RAISE = 40 if VERT else 20    #                                # screen pixels the world is lifted, so pictures clear the caption plate
 WIDTH = dict(photo=2300, img=2300, clip=2500, num=2100, words=2300, quote=2300, list=2100, split=2500, tl=2700)
 
 FILM = os.path.join(HERE, sys.argv[1]) if len(sys.argv) > 1 else None
@@ -664,23 +665,46 @@ def screen(c, t, cx, cy, z):
     n = now(t - 0.9)
     if VERT:
         return short_screen(c, t, n)
-    c.drawRect(skia.Rect.MakeXYWH(52, 48, 640, 46), skia.Paint(Color=col(BG, 0.85)))
-    c.drawRect(skia.Rect.MakeXYWH(W - 470, 48, 420, 46), skia.Paint(Color=col(BG, 0.85)))
-    text(c, SC.TAG, 70, 78, mono(22), DIM, 1.0, 0.5)
-    b = B[now(t + 1.4)]                                             # where we are (it turns over as the chapter's name comes up) in the film (a first-time viewer read a camera readout here as debug text)
-    text(c, f"{b['floor'] + 1:02d} / {len(SC.CHAPTERS):02d}   {b['title'] or 'COLD OPEN'}", W - 70, 78, mono(22), DIM, 1.0, 0.5, align="right")
+    NC = len(SC.CHAPTERS)
+    firsts = [i for i, b in enumerate(B) if b["first"]] + [N]
+    cur = B[now(t + 1.4)]["floor"]                                  # it turns over as the chapter's name comes up
+    c0, c1 = S(firsts[cur]) - (0 if cur == 0 else 2.3), (S(firsts[cur + 1]) - 2.3 if cur + 1 < NC else E(N - 1))
+    prog = cur + min(1.0, max(0.0, (t - c0) / max(1.0, c1 - c0)))   # how far along the film, in chapters
+
+    def rail(x0, x1, y, bw, bh, a, fs, big):
+        """Numbered boxes on a hairline, one per chapter: done ones dim, the current one lit, the line filled as far as the film has run."""
+        step = (x1 - x0 - bw) / max(1, NC - 1)
+        c.drawLine(x0, y, x1, y, skia.Paint(Color=col(INK, 0.22 * a), AntiAlias=True, StrokeWidth=1.5))
+        c.drawLine(x0, y, x0 + bw / 2 + step * min(prog, NC - 1), y, skia.Paint(Color=col(CYAN, a), AntiAlias=True, StrokeWidth=2.5 if big else 2))
+        for k in range(NC):
+            r = skia.Rect.MakeXYWH(x0 + k * step, y - bh / 2, bw, bh)
+            on = k == cur
+            c.drawRect(r, skia.Paint(Color=col(BG, a)))
+            if on:
+                c.drawRect(r, glow(CYAN, 0.5 * a, 8))
+                c.drawRect(r, skia.Paint(Color=col("#0B2A2B", a)))
+            c.drawRect(r, skia.Paint(Color=col(CYAN if on else INK, (1.0 if on else 0.75 if k < cur else 0.32) * a), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2 if on else 1.3))
+            text(c, f"{k + 1:02d}", r.centerX(), y + fs * 0.36, mono(fs), CYAN if on else INK, (1.0 if on else 0.8 if k < cur else 0.4) * a, align="center")
+
+    c.drawRect(skia.Rect.MakeXYWH(0, 0, W, 104), skia.Paint(Color=col(BG, 0.78)))
+    text(c, SC.TAG.split("·")[0].strip(), 70, 62, mono(20), DIM, 1.0, 1.0)
+    rail(300, W - 70, 56, 46, 26, 1.0, 14, False)
+    step = (W - 70 - 300 - 46) / max(1, NC - 1)
+    name = SC.CHAPTERS[cur]["title"] or "COLD OPEN"
+    nw = mono(17).measureText(name) + 0.6 * (len(name) - 1)
+    text(c, name, min(max(300 + cur * step, 300), W - 70 - nw), 94, mono(17), CYAN, 1.0, 0.6)
     for i, b in enumerate(B):                                          # the chapter's name, while the camera crosses to it
         if b["first"] and b["title"] and abs(t - S(i)) < 4:
             a = sm(t, S(i) - CHAPTER_GAP + 1.0, S(i) - CHAPTER_GAP + 1.35) * (1 - sm(t, S(i) - 0.55, S(i) - 0.15))
             if a > 0:
                 f, size = fit_sans(b["title"], 150, W - 360)
                 wd = f.measureText(b["title"])
-                c.drawRect(skia.Rect.MakeXYWH(0, H / 2 - 170, W, 290), skia.Paint(Color=col(BG, 0.97 * min(1.0, a * 2.5))))        # a band, up before the name: nothing behind reads through a chapter's name
-                for yy in (H / 2 - 170, H / 2 + 120):
+                c.drawRect(skia.Rect.MakeXYWH(0, H / 2 - 190, W, 400), skia.Paint(Color=col(BG, 0.97 * min(1.0, a * 2.5))))        # a band, up before the name: nothing behind reads through a chapter's name
+                for yy in (H / 2 - 190, H / 2 + 210):
                     c.drawLine(0, yy, W, yy, skia.Paint(Color=col(INK, 0.14 * a), AntiAlias=True, StrokeWidth=1))
-                text(c, f"CHAPTER {b['floor'] + 1:02d}", W / 2 - wd / 2, H / 2 - 96, mono(28), CYAN, a, 2.0)
-                text(c, b["title"], W / 2 - wd / 2, H / 2 + 44, f, INK, a)
-                c.drawRect(skia.Rect.MakeXYWH(W / 2 - wd / 2, H / 2 + 74, wd * sm(t, S(i) - CHAPTER_GAP + 1.0, S(i) - 0.7), 6), skia.Paint(Color=col(CYAN, a)))
+                text(c, f"CHAPTER {b['floor'] + 1:02d}", W / 2 - wd / 2, H / 2 - 116, mono(28), CYAN, a, 2.0)
+                text(c, b["title"], W / 2 - wd / 2, H / 2 + 24, f, INK, a)
+                rail(200, W - 200, H / 2 + 132, 96, 54, a, 24, True)
     a = sm(t, E(N - 1) + 1.2, E(N - 1) + 2.0)
     if a > 0:                                                       # the sign-off, with room left for end-screen elements above it
         c.drawRect(skia.Rect.MakeXYWH(W / 2 - 430, H - 226, 860, 150), skia.Paint(Color=col(BG, 0.9 * a)))
@@ -760,7 +784,8 @@ def frame(t):
     c.translate(W / 2, H / 2 - RAISE)
     c.scale(z, z)
     c.translate(-cx, -cy)
-    thread(c, t, z)
+    if THREAD:
+        thread(c, t, z)
     world_type(c, t)
     c.restore()
     screen(c, t, cx, cy, z)

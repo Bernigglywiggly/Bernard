@@ -143,6 +143,16 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   premise). After VERIFY: fix the script, voice all 88 lines with George into `flow/takes/NNN_<id>/` (ids from
   `flow.py lf01_escape lines`, about 10,500 characters), `lay`, render segs in parallel, concat, mix (adapt
   `flow_trial/mix_trial.py`: bed sections per chapter), critic pass, then show the user. Trial v3 passed its checks.
+- **7 Oct, 01:40: LF01 FACT-CHECKED, CORRECTED, VOICED; FULL RENDER RUNNING.** `lf01_escape/VERIFY.md`: premise holds
+  (66 claims: 34 confirmed, 23 partly, 2 wrong, 7 unverifiable). 24 edits applied to `script.py` (VERIFY section 6):
+  the German wiki moved to "what else" as a separate incident; "700 of about 1,200"; five datasets opened; three
+  unsourced quote cards cut or replaced; dates and figures corrected. STILL TO CHECK BY HAND BEFORE UPLOAD: WSJ for the
+  two Wolf quotes, OpenAI's 26 Aug report (the `weak` chain), the 1 Oct Washington Post report (100+ organisations).
+  All 87 lines voiced with George (`flow/takes/`, 10,613 characters), laid: 11:29. `render_flow.sh lf01_escape
+  LF01_FLOW_v1 6` renders parts, joins, mixes (`mix_flow.py`) -> `lf01_escape/LF01_FLOW_v1.mp4` (+ `_phone`). The old
+  kit.py film (`out/lf01_escape_1080p.mp4`, uploaded page copy) still has the UNCORRECTED script: do not upload it.
+  Next: critic agent on LF01_FLOW_v1, fix, show the user; POST.md chapters and description need redoing for the new
+  timings and corrected facts.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

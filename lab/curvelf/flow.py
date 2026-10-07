@@ -181,7 +181,7 @@ def type_field(lines, frac=0.86, y=0.5, sizes=None):
     s = skia.Surface(1280, 720)
     c = s.getCanvas()
     c.clear(skia.ColorBLACK)
-    lh = 720 * 0.8 / max(1.6, len(lines))
+    lh = 720 * (0.8 if len(lines) == 1 else 0.6) / max(1.6, len(lines))      # several lines stay clear of the caption band
     for j, ln in enumerate(lines):
         size = min(lh * 0.98, sizes[j] if sizes else 999)
         f = font("InterTight-600", size)
@@ -228,7 +228,7 @@ def pic(i):
     elif k == "num":
         frames = [type_field([v[1]], 0.74, 0.44)]
     elif k == "words":
-        frames = [type_field(split_lines(v[1]), 0.8, 0.47)]
+        frames = [type_field(split_lines(v[1], 16 if len(v[1]) < 34 else 24), 0.8, 0.41)]
     elif k == "split":
         s = skia.Surface(1280, 720)
         c = s.getCanvas()
@@ -560,7 +560,7 @@ def world_type(c, t):
                     text(c, s_, X, Y, f, INK, aj)
         elif k == "tl":
             marks = v[1]
-            span = 2000 * u
+            span = 1740 * u
             X0, Y = x - span / 2, y - 40 * u
             a *= on_screen(X0 - 60 * u, X0 + span + 60 * u, Y + 260 * u)
             if a > 0:

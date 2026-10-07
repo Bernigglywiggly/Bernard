@@ -6,6 +6,8 @@ title and caption should be changed. Nothing here has been changed on YouTube. A
 
 ## Film (video id in channel/uploads.done.json: lustig_1080p.mp4)
 
+APPROVED BY THE USER on 7 Oct 2026 ("yes"): apply the film title, description line, pinned comment and the Capone Short title and caption once Zapier is live (8 Oct, after 16:00). Not applied yet.
+
 Title, now: The Man Who Sold the Eiffel Tower (And Conned Al Capone)
 Title, proposed: The Man Who Sold the Eiffel Tower (And, They Say, Conned Al Capone)
 

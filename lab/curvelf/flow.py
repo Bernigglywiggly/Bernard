@@ -75,6 +75,7 @@ def beats():
 
 
 B = beats()
+CHANNEL = SC.TAG.split("·")[0].strip()        # the channel's name, from the film's tag
 
 
 def est():
@@ -708,8 +709,8 @@ def screen(c, t, cx, cy, z):
     a = sm(t, E(N - 1) + 1.2, E(N - 1) + 2.0)
     if a > 0:                                                       # the sign-off, with room left for end-screen elements above it
         c.drawRect(skia.Rect.MakeXYWH(W / 2 - 430, H - 226, 860, 150), skia.Paint(Color=col(BG, 0.9 * a)))
-        text(c, "THE CURVE", W / 2, H - 150, sans(64), INK, a, 6.0, align="center")
-        text(c, "AI, EXPLAINED  ·  SOURCES IN THE DESCRIPTION", W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
+        text(c, CHANNEL, W / 2, H - 150, sans(64), INK, a, 6.0, align="center")
+        text(c, ("AI, EXPLAINED  ·  " if CHANNEL == "THE CURVE" else "") + "SOURCES IN THE DESCRIPTION", W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
     captions(c, t, n)
 
 
@@ -757,7 +758,7 @@ def short_screen(c, t, n):
     f = sans(60)
     lines = wrap(SHORT["headline"], f, W - 150)
     c.drawRect(skia.Rect.MakeXYWH(0, 0, W, 190 + len(lines) * 70), skia.Paint(Color=col(BG, 0.9)))
-    text(c, "THE CURVE", 75, 150, mono(26), CYAN, 1.0, 3.0)
+    text(c, CHANNEL, 75, 150, mono(26), CYAN, 1.0, 3.0)
     for i, s_ in enumerate(lines):
         text(c, s_, 75, 230 + i * 70, f, INK)
     e = sm(t, SHORT["t1"] - 2.6, SHORT["t1"] - 2.2)
@@ -767,7 +768,7 @@ def short_screen(c, t, n):
         ff, _ = fit_sans(SHORT["film"].upper(), 92, W - 140)
         text(c, SHORT["film"].upper(), W / 2, H / 2 - 30, ff, INK, e, align="center")
         c.drawRect(skia.Rect.MakeXYWH(W / 2 - 60, H / 2 + 20, 120, 7), skia.Paint(Color=col(CYAN, e)))
-        text(c, "ON THE CURVE  ·  LINK ON THIS SHORT", W / 2, H / 2 + 110, mono(26), INK, e, 1.0, align="center")
+        text(c, "ON " + CHANNEL + "  ·  LINK ON THIS SHORT", W / 2, H / 2 + 110, mono(26), INK, e, 1.0, align="center")
     else:
         captions(c, t, n)
 

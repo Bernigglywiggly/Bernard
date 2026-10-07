@@ -153,6 +153,15 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   kit.py film (`out/lf01_escape_1080p.mp4`, uploaded page copy) still has the UNCORRECTED script: do not upload it.
   Next: critic agent on LF01_FLOW_v1, fix, show the user; POST.md chapters and description need redoing for the new
   timings and corrected facts.
+- **7 Oct, 02:05: LF01 SECOND CUT MADE** `lab/curvelf/lf01_escape/LF01_FLOW_v2.mp4` (1080p, 11:37, -14.1 LUFS, peak
+  -1.3 dBFS; `_phone` is 720p). Critic on v1 (`CRITIC_FLOW_v1.md`: FIX THEN UPLOAD, no cuts, loudness fine) and what v2
+  changed: labels sooner and inside the frame; long punch lines are crisp type (LONG_WORDS), short ones ASCII at one
+  size; three weak visuals swapped in `script.py` (board_02, hours_06, open_07 now a 1,200 / 700 split); quotes type
+  faster; bed holds through chapter names, haas-widened, 0.62; 11 s tail with a sign-off; corner readout is now
+  "03 / 11  CHAPTER NAME" (the user said "u choose"; a first-time viewer read the camera readout as debug text).
+  KNOWN IN v2, FIXED IN CODE FOR THE NEXT RENDER: chapter cards say "CHAPTER 01" for the second chapter while the
+  corner says 02 / 11. v2 was checked by its maker on ten frames; a second critic was launched on it. Not for upload
+  until: the three hand source checks in VERIFY.md section 6, POST.md redone, the user's go-ahead.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

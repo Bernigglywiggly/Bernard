@@ -18,6 +18,7 @@ import importlib.util
 import json
 import math
 import os
+import re
 import subprocess
 import sys
 
@@ -37,6 +38,7 @@ BG, INK, CYAN, RED, DIM = "#040506", "#F2F5F7", "#5FF0E4", "#FF6A4D", "#7B858C"
 RAMP, EDGE = " .,:;-=+*o%#@", "-\\|/"
 BEAT_GAP, CHAPTER_GAP, LEAD = 0.3, 3.0, 1.2
 LONG_WORDS = 20
+RAISE = 44                                    # screen pixels the world is lifted, so pictures clear the caption plate
 WIDTH = dict(img=2300, clip=2500, num=2100, words=2300, quote=2300, list=2100, split=2500, tl=2700)
 
 FILM = os.path.join(HERE, sys.argv[1]) if len(sys.argv) > 1 else None
@@ -301,7 +303,7 @@ def keys():
     for n, p in enumerate(PL):
         x, y, ww = p["x"] + p["ww"] * p["off"], p["y"], p["ww"]
         z = W / ww * 0.92
-        leave = 2.5 if (n + 1 < N and B[n + 1]["first"]) else 0.9          # a chapter's crossing is long: its name rides on it
+        leave = 2.9 if (n + 1 < N and B[n + 1]["first"]) else 0.9          # a chapter's crossing is long: its name rides on it
         a, b = S(n) + (0.0 if n == 0 else 0.45), (NXT(n) - leave if n + 1 < N else TOTAL)
         b = max(b, a + 0.4)
         dx = ww * 0.03 * (1 if n % 2 else -1)
@@ -342,7 +344,7 @@ def now(t):
 def field(t, cx, cy, z):
     s = z * FW / W
     ls = s * LAT_WORLD / 512
-    m = np.float32([[ls, 0, FW / 2 - cx * s], [0, ls, FH / 2 - cy * s]])
+    m = np.float32([[ls, 0, FW / 2 - cx * s], [0, ls, FH / 2 - RAISE / 4 - cy * s]])
     f = cv2.warpAffine(LAT, m, (FW, FH), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP) * 0.16
     subj = np.zeros((FH, FW), np.float32)
     n = now(t)
@@ -360,7 +362,7 @@ def field(t, cx, cy, z):
         full = s * ww / lv[0].shape[1]
         g = lv[int(min(3, max(0, math.floor(-math.log2(max(full, 1e-6))))))]
         sc = s * ww / g.shape[1]
-        m = np.float32([[sc, 0, FW / 2 + (x - ww / 2 - cx) * s], [0, sc, FH / 2 + (y - hh / 2 - cy) * s]])
+        m = np.float32([[sc, 0, FW / 2 + (x - ww / 2 - cx) * s], [0, sc, FH / 2 - RAISE / 4 + (y - hh / 2 - cy) * s]])
         subj = np.maximum(subj, cv2.warpAffine(g, m, (FW, FH), flags=cv2.INTER_LINEAR, borderValue=0) * a)
     return np.maximum(f * (1 - np.clip(subj * 6, 0, 1)), subj), subj
 
@@ -421,13 +423,13 @@ CAM = [0.0, 0.0, 1.0]                         # the frame's camera, for type tha
 def on_screen(x0, x1, y1):
     """1 when a block is wholly inside the frame and above the caption band, falling to 0 as it nears an edge."""
     cx, cy, z = CAM
-    l, r, bot = (x0 - cx) * z + W / 2, (x1 - cx) * z + W / 2, (y1 - cy) * z + H / 2
+    l, r, bot = (x0 - cx) * z + W / 2, (x1 - cx) * z + W / 2, (y1 - cy) * z + H / 2 - RAISE
     return sm(l, 14, 70) * (1 - sm(r, W - 70, W - 14)) * (1 - sm(bot, H - 205, H - 165))
 
 
 def held(i, t, t0=None):
     """A place's type: on once the camera has arrived, off as it leaves."""
-    t0 = S(i) + 0.4 if t0 is None else max(t0, S(i) + 0.4)
+    t0 = S(i) + 0.15 if t0 is None else max(t0, S(i) + 0.15)
     off = min(NXT(i) - 0.35, E(i) + 0.55) if i < N - 1 else TOTAL + 9     # the last line holds to the end
     return sm(t, t0, t0 + 0.35) * (1 - sm(t, off - 0.3, off)), t0
 
@@ -501,11 +503,11 @@ def world_type(c, t):
                 text(c, v[2], X, Y, f, INK, a)
                 c.drawRect(skia.Rect.MakeXYWH(X, Y + 22 * u, 90 * u, 7 * u), skia.Paint(Color=col(CYAN, a)))
         elif k == "words" and len(v[1]) > LONG_WORDS:
-            lines = split_lines(v[1], 17)
-            f, size = fit_sans(max(lines, key=len), 230 * u, 1750 * u)
+            lines = split_lines(v[1], 17 if len(v[1]) < 40 else 24)
+            f, size = fit_sans(max(lines, key=len), min(230.0, 640.0 / (len(lines) * 1.04)) * u, 1750 * u)
             lh = size * 1.04
             wd = max(f.measureText(s_) for s_ in lines)
-            top = y - len(lines) * lh / 2 - 110 * u
+            top = y - len(lines) * lh / 2 - 70 * u
             a *= on_screen(x - wd / 2 - 40 * u, x + wd / 2 + 40 * u, top + len(lines) * lh + 30 * u)
             if a > 0:
                 c.drawRect(skia.Rect.MakeXYWH(x - wd / 2, top - 26 * u, 110 * u, 9 * u), skia.Paint(Color=col(CYAN, a)))
@@ -548,7 +550,7 @@ def world_type(c, t):
             if a > 0:
                 block(c, X - 110 * u, top - 40 * u, wd + 110 * u, hgt + 60 * u, a, 40 * u)
                 text(c, "“", X - 120 * u, top + 150 * u, sans(260 * u), CYAN, a, halo=14 * u)
-                shown = int(len(v[1]) * min(1.0, (t - t0 + 0.25) / min(len(v[1]) / 40.0 + 0.3, dur * 0.42, 2.4)))
+                shown = int(len(v[1]) * min(1.0, (t - t0 + 0.25) / min(len(v[1]) / 48.0 + 0.3, dur * 0.34, 2.2)))
                 done = 0
                 for j, s_ in enumerate(lines):
                     part = s_[:max(0, shown - done)]
@@ -569,7 +571,7 @@ def world_type(c, t):
                 if title:
                     text(c, title, X, top + 30 * u, mono(32 * u), CYAN, a, 1.0 * u)
                 for j, s_ in enumerate(items):
-                    aj = a * sm(t, t0 + dur * 0.6 * j / len(items) - 0.1, t0 + dur * 0.6 * j / len(items) + 0.2)
+                    aj = a * sm(t, t0 + dur * 0.45 * j / len(items) - 0.1, t0 + dur * 0.45 * j / len(items) + 0.2)
                     Y = top + (70 * u if title else 0) + (j + 0.75) * lh
                     c.drawRect(skia.Rect.MakeXYWH(X - 40 * u, Y - size * 0.74, 10 * u, size * 0.78), skia.Paint(Color=col(CYAN, aj)))
                     text(c, s_, X, Y, f, INK, aj)
@@ -611,14 +613,16 @@ def screen(c, t, cx, cy, z):
     text(c, f"{b['floor'] + 1:02d} / {len(SC.CHAPTERS):02d}   {b['title'] or 'COLD OPEN'}", W - 70, 78, mono(22), DIM, 1.0, 0.5, align="right")
     for i, b in enumerate(B):                                          # the chapter's name, while the camera crosses to it
         if b["first"] and b["title"] and abs(t - S(i)) < 4:
-            a = sm(t, S(i) - CHAPTER_GAP + 0.8, S(i) - CHAPTER_GAP + 1.2) * (1 - sm(t, S(i) - 0.55, S(i) - 0.15))
+            a = sm(t, S(i) - CHAPTER_GAP + 1.0, S(i) - CHAPTER_GAP + 1.35) * (1 - sm(t, S(i) - 0.55, S(i) - 0.15))
             if a > 0:
                 f, size = fit_sans(b["title"], 150, W - 360)
                 wd = f.measureText(b["title"])
-                c.drawRect(skia.Rect.MakeXYWH(W / 2 - wd / 2 - 60, H / 2 - 150, wd + 120, 250), skia.Paint(Color=col(BG, 0.92 * a)))
+                c.drawRect(skia.Rect.MakeXYWH(0, H / 2 - 170, W, 290), skia.Paint(Color=col(BG, 0.97 * min(1.0, a * 2.5))))        # a band, up before the name: nothing behind reads through a chapter's name
+                for yy in (H / 2 - 170, H / 2 + 120):
+                    c.drawLine(0, yy, W, yy, skia.Paint(Color=col(INK, 0.14 * a), AntiAlias=True, StrokeWidth=1))
                 text(c, f"CHAPTER {b['floor'] + 1:02d}", W / 2 - wd / 2, H / 2 - 96, mono(28), CYAN, a, 2.0)
                 text(c, b["title"], W / 2 - wd / 2, H / 2 + 44, f, INK, a)
-                c.drawRect(skia.Rect.MakeXYWH(W / 2 - wd / 2, H / 2 + 74, wd * sm(t, S(i) - CHAPTER_GAP + 0.4, S(i) - 0.8), 6), skia.Paint(Color=col(CYAN, a)))
+                c.drawRect(skia.Rect.MakeXYWH(W / 2 - wd / 2, H / 2 + 74, wd * sm(t, S(i) - CHAPTER_GAP + 1.0, S(i) - 0.7), 6), skia.Paint(Color=col(CYAN, a)))
     a = sm(t, E(N - 1) + 1.2, E(N - 1) + 2.0)
     if a > 0:                                                       # the sign-off, with room left for end-screen elements above it
         text(c, "THE CURVE", W / 2, H - 150, sans(64), INK, a, 6.0, align="center")
@@ -628,9 +632,20 @@ def screen(c, t, cx, cy, z):
         if k <= 0:
             continue
         f = sans(34)
-        lines = wrap(ln["text"], f, 1180)
+        cap = re.sub(r"GPT (\d)", r"GPT-\1", ln["text"])
+        mw = 1180
+        lines = wrap(cap, f, mw)
+        while len(lines) > 3 and mw < 1560:
+            mw += 60
+            lines = wrap(cap, f, mw)
+        full = len(lines)
+        while len(lines[-1].split()) < 2 and mw > 700 and len(lines) == full and full > 1:     # no word alone on the last line
+            mw -= 40
+            lines = wrap(cap, f, mw)
+        if len(lines) != full:
+            lines = wrap(cap, f, mw + 40)
         ws = ln.get("words") or []
-        nw = len(ln["text"].split())
+        nw = len(cap.split())
         said = sum(1 for w_ in ws if w_[1] <= t) if ws else int(nw * sm(t, ln["start"], ln["end"]) + 0.999)
         y0 = H - 66 - (len(lines) - 1) * 44
         wmax = max(f.measureText(x) for x in lines)
@@ -655,7 +670,7 @@ def frame(t):
     c = surf.getCanvas()
     c.drawImage(skia.Image.fromarray(rgba, colorType=skia.kRGBA_8888_ColorType), 0, 0)
     c.save()
-    c.translate(W / 2, H / 2)
+    c.translate(W / 2, H / 2 - RAISE)
     c.scale(z, z)
     c.translate(-cx, -cy)
     thread(c, t, z)

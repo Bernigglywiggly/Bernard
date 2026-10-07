@@ -162,6 +162,9 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
   KNOWN IN v2, FIXED IN CODE FOR THE NEXT RENDER: chapter cards say "CHAPTER 01" for the second chapter while the
   corner says 02 / 11. v2 was checked by its maker on ten frames; a second critic was launched on it. Not for upload
   until: the three hand source checks in VERIFY.md section 6, POST.md redone, the user's go-ahead.
+- **7 Oct, 02:20: USER APPROVED THE LOOK** ("looks really good i like it alot, continue"). The second critic on v2
+  died on the session limit (no CRITIC_FLOW_v2.md): re-run it on v3. v3 = v2 plus the chapter-card numbering fix
+  (`./render_flow.sh lf01_escape LF01_FLOW_v3 6`). Then POST.md, then LF02 and LF03 the same way (fact-check first).
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

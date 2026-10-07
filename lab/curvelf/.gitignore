@@ -8,3 +8,4 @@
 */out/*.mp4
 */out/*.2pass*
 __pycache__/
+flow_short_*.log

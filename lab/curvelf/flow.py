@@ -42,7 +42,7 @@ LONG_WORDS = 20
 LONG_NUM = 9
 CAP_TOP = (H - 640) if VERT else (H - 165)   # where the caption band begins
 RAISE = 110 if VERT else 44    #                                # screen pixels the world is lifted, so pictures clear the caption plate
-WIDTH = dict(img=2300, clip=2500, num=2100, words=2300, quote=2300, list=2100, split=2500, tl=2700)
+WIDTH = dict(photo=2300, img=2300, clip=2500, num=2100, words=2300, quote=2300, list=2100, split=2500, tl=2700)
 
 FILM = os.path.join(HERE, sys.argv[1]) if len(sys.argv) > 1 else None
 BUILD = os.path.join(FILM, "flow") if FILM else None
@@ -214,6 +214,33 @@ def split_lines(s, n=16):
     return out + [cur]
 
 
+_PHOTO = {}
+
+
+def photo(pid):
+    """A real photograph: its grey field for the characters (fitted inside 16:9, never stretched) and the picture itself,
+    toned to the palette, with the rectangle it occupies in the place (fractions of the place's width and height)."""
+    if pid not in _PHOTO:
+        path = glob.glob(os.path.join(FILM, "src", "photo", pid + ".*"))[0]
+        im = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        h, w = im.shape
+        sc = min(1280 * 0.94 / w, 720 * 0.94 / h)
+        r = cv2.resize(im, (int(w * sc), int(h * sc)), interpolation=cv2.INTER_AREA).astype(np.float32) / 255.0
+        lo, hi = np.percentile(r, 1), np.percentile(r, 99.5)
+        r = np.clip((r - lo) / max(1e-3, hi - lo), 0, 1)
+        fld = np.zeros((720, 1280), np.float32)
+        y0, x0 = (720 - r.shape[0]) // 2, (1280 - r.shape[1]) // 2
+        g = r ** 1.5
+        fld[y0:y0 + r.shape[0], x0:x0 + r.shape[1]] = np.clip(g + 0.6 * (g - cv2.GaussianBlur(g, (0, 0), 3)), 0, 1)
+        t = r[..., None]                                            # toned: black, through the film's cyan, to white
+        rgb = np.where(t < 0.6, np.float32([0.02, 0.03, 0.035]) + (np.float32([0.37, 0.94, 0.89]) * 0.62 - 0.02) * (t / 0.6),
+                       np.float32([0.37, 0.94, 0.89]) * 0.62 + (1 - np.float32([0.37, 0.94, 0.89]) * 0.62) * ((t - 0.6) / 0.4))
+        rgba = np.dstack([(np.clip(rgb, 0, 1) * 255).astype(np.uint8), np.full(r.shape, 255, np.uint8)])
+        img = skia.Image.fromarray(np.ascontiguousarray(rgba), colorType=skia.kRGBA_8888_ColorType)
+        _PHOTO[pid] = (fld, (img, x0 / 1280, y0 / 720, r.shape[1] / 1280, r.shape[0] / 720))
+    return _PHOTO[pid]
+
+
 def pic(i):
     """A place's grey field as mip levels (a clip has one set per frame); None for places that are only crisp type."""
     if i in _PIC:
@@ -234,6 +261,9 @@ def pic(i):
             frames.append(cv2.resize(im, (1280, 720), interpolation=cv2.INTER_AREA))
         fe = feather(*frames[0].shape)
         frames = [grey(f) * fe for f in frames]
+    elif k == "photo":
+        g, _ = photo(v[1])
+        frames = [g * feather(*g.shape)]
     elif k == "num" and len(v[1]) <= LONG_NUM:                      # a long "number" is a phrase: too small as characters, so world_type sets it crisp
         frames = [type_field([v[1]], 0.74, 0.44)]
     elif k == "words" and len(v[1]) <= LONG_WORDS:                  # longer lines are too small to read as characters: world_type sets them crisp
@@ -305,7 +335,7 @@ def keys():
     k = []
     for n, p in enumerate(PL):
         x, y, ww = p["x"] + p["ww"] * p["off"], p["y"], p["ww"]
-        z = W / ww * ((1.5 if p["kind"] in ("img", "clip") else 1.0) if VERT else 0.92)
+        z = W / ww * ((1.5 if p["kind"] in ("img", "clip") else 1.0) if VERT else 0.72 if p["kind"] == "photo" else 0.92)
         leave = 2.9 if (n + 1 < N and B[n + 1]["first"]) else 0.9          # a chapter's crossing is long: its name rides on it
         a, b = S(n) + (0.0 if n == 0 else 0.45), (NXT(n) - leave if n + 1 < N else TOTAL)
         b = max(b, a + 0.4)
@@ -497,7 +527,23 @@ def world_type(c, t):
         if a <= 0:
             continue
         dur = max(1.0, E(i) - t0)
-        if k in ("img", "clip") and len(v) > 2:
+        if k == "photo":                                          # the characters resolve into the photograph itself
+            _, (img, fx, fy, fw, fh) = photo(v[1])
+            hh = p["ww"] * 9 / 16
+            rr = a * sm(t, S(i) + 1.3, S(i) + 2.6)
+            R = skia.Rect.MakeXYWH(x - p["ww"] / 2 + fx * p["ww"], y - hh / 2 + fy * hh, fw * p["ww"], fh * hh)
+            if rr > 0:
+                c.drawImageRect(img, R, skia.SamplingOptions(skia.CubicResampler.Mitchell()), skia.Paint(Color=col("#FFFFFF", 0.94 * rr)))
+                c.drawRect(R, skia.Paint(Color=col(INK, 0.5 * rr), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2 * u))
+            if len(v) > 3:
+                text(c, typed("PHOTO  ·  " + v[3], t, t0 + 1.4, 40.0), R.left(), R.bottom() + 34 * u, mono(22 * u), DIM, a, 0.5 * u)
+            if len(v) > 2:                                          # the label sits on the picture's lower left, on a plate
+                f, size = fit_sans(v[2], 96 * u, R.width() - 90 * u)
+                X, Y = R.left() + 44 * u, R.bottom() - 54 * u
+                block(c, X, Y - size * 0.86, f.measureText(v[2]), size, a, 24 * u)
+                text(c, v[2], X, Y, f, INK, a)
+                c.drawRect(skia.Rect.MakeXYWH(X, Y + 18 * u, 80 * u, 6 * u), skia.Paint(Color=col(CYAN, a)))
+        elif k in ("img", "clip") and len(v) > 2:
             f, size = fit_sans(v[2], 150 * u, 700 * u)
             X, Y = x - 1230 * u, y + 200 * u
             if VERT:                                                # above the picture, centred

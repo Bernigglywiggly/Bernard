@@ -109,12 +109,12 @@ def lay():
         meta.append(dict(i=i, id=b["id"], floor=b["floor"], text=b["text"], start=round(t, 3), end=round(t + dur, 3), words=words))
         clips.append((t, y))
         t += dur
-    buf = np.zeros(int((t + 3.0) * SR))
+    buf = np.zeros(int((t + 11.0) * SR))
     for t0, y in clips:
         buf[int(t0 * SR):int(t0 * SR) + len(y)] += y
     sf.write(os.path.join(BUILD, "voice_dry.wav"), buf, SR)
-    json.dump(dict(engine="eleven", voice="george", total=round(t + 3.0, 3), lines=meta), open(os.path.join(BUILD, "lines.json"), "w"), indent=1)
-    print("total", round(t + 3, 2))
+    json.dump(dict(engine="eleven", voice="george", total=round(t + 11.0, 3), lines=meta), open(os.path.join(BUILD, "lines.json"), "w"), indent=1)
+    print("total", round(t + 11, 2))
 
 
 if len(sys.argv) > 2 and sys.argv[2] in ("est", "lay", "lines"):
@@ -607,7 +607,7 @@ def screen(c, t, cx, cy, z):
     c.drawRect(skia.Rect.MakeXYWH(52, 48, 640, 46), skia.Paint(Color=col(BG, 0.85)))
     c.drawRect(skia.Rect.MakeXYWH(W - 470, 48, 420, 46), skia.Paint(Color=col(BG, 0.85)))
     text(c, SC.TAG, 70, 78, mono(22), DIM, 1.0, 0.5)
-    b = B[now(t)]                                                   # where we are in the film (a first-time viewer read a camera readout here as debug text)
+    b = B[now(t + 1.4)]                                             # where we are (it turns over as the chapter's name comes up) in the film (a first-time viewer read a camera readout here as debug text)
     text(c, f"{b['floor'] + 1:02d} / {len(SC.CHAPTERS):02d}   {b['title'] or 'COLD OPEN'}", W - 70, 78, mono(22), DIM, 1.0, 0.5, align="right")
     for i, b in enumerate(B):                                          # the chapter's name, while the camera crosses to it
         if b["first"] and b["title"] and abs(t - S(i)) < 4:

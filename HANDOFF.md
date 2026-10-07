@@ -165,6 +165,12 @@ just below (`STUDIO.md` maps everything), then "4 Oct", "3 Oct evening", "3 Oct:
 - **7 Oct, 02:20: USER APPROVED THE LOOK** ("looks really good i like it alot, continue"). The second critic on v2
   died on the session limit (no CRITIC_FLOW_v2.md): re-run it on v3. v3 = v2 plus the chapter-card numbering fix
   (`./render_flow.sh lf01_escape LF01_FLOW_v3 6`). Then POST.md, then LF02 and LF03 the same way (fact-check first).
+- **7 Oct, 10:20: LF01 v3 MADE; LF02 VOICED AND RENDERING; LF03 CORRECTED, NOT VOICED.** LF01: `LF01_FLOW_v3.mp4`
+  (chapter cards numbered right; critic running -> `CRITIC_FLOW_v3.md`). LF02: `lf02_price/VERIFY.md` (premise holds,
+  43 claims, 1 wrong), 15 edits, 75 takes, `render_flow.sh lf02_price LF02_FLOW_v1 6`. LF03: `lf03_held/VERIFY.md`
+  (premise holds, 53 claims, 1 wrong), 19 edits; before voicing, check the open and close chapters against Anthropic
+  widening Mythos access on 6 Oct. `flow.py lay` now leaves an 11 s tail; the corner indicator turns over with the
+  chapter card. Each film still needs: critic on the finished file, new-look thumbnails, POST.md, hand source checks.
 - **GitHub push has been failing since about 01:55** ("Failed to connect to github.com port 443"); commits are local
   on the Mac (`git status -sb` shows "ahead N"). Retry `git push origin claude/funny-newton-gd9w8v`.
 - **Waiting on the user:** order NFC blanks + A6 holders; home town; a Stripe or SumUp account; which account sends

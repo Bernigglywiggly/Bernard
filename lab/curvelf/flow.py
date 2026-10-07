@@ -335,7 +335,7 @@ def keys():
     k = []
     for n, p in enumerate(PL):
         x, y, ww = p["x"] + p["ww"] * p["off"], p["y"], p["ww"]
-        z = W / ww * ((1.75 if p["kind"] in ("img", "clip", "photo") else 1.28) if VERT else 0.72 if p["kind"] == "photo" else 0.92)
+        z = W / ww * ((1.75 if p["kind"] in ("img", "clip", "photo") else 0.98 if p["kind"] in ("split", "tl") else 1.1) if VERT else 0.72 if p["kind"] == "photo" else 0.92)
         leave = 2.9 if (n + 1 < N and B[n + 1]["first"]) else 0.9          # a chapter's crossing is long: its name rides on it
         a, b = S(n) + (0.0 if n == 0 else 0.45), (NXT(n) - leave if n + 1 < N else TOTAL)
         b = max(b, a + 0.4)

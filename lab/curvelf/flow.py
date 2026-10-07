@@ -39,6 +39,7 @@ BG, INK, CYAN, RED, DIM = "#040506", "#F2F5F7", "#5FF0E4", "#FF6A4D", "#7B858C"
 RAMP, EDGE = " .,:;-=+*o%#@", "-\\|/"
 BEAT_GAP, CHAPTER_GAP, LEAD = 0.3, 3.0, 1.2
 LONG_WORDS = 20
+LONG_NUM = 9
 CAP_TOP = (H - 640) if VERT else (H - 165)   # where the caption band begins
 RAISE = 110 if VERT else 44    #                                # screen pixels the world is lifted, so pictures clear the caption plate
 WIDTH = dict(img=2300, clip=2500, num=2100, words=2300, quote=2300, list=2100, split=2500, tl=2700)
@@ -233,7 +234,7 @@ def pic(i):
             frames.append(cv2.resize(im, (1280, 720), interpolation=cv2.INTER_AREA))
         fe = feather(*frames[0].shape)
         frames = [grey(f) * fe for f in frames]
-    elif k == "num":
+    elif k == "num" and len(v[1]) <= LONG_NUM:                      # a long "number" is a phrase: too small as characters, so world_type sets it crisp
         frames = [type_field([v[1]], 0.74, 0.44)]
     elif k == "words" and len(v[1]) <= LONG_WORDS:                  # longer lines are too small to read as characters: world_type sets them crisp
         frames = [type_field(split_lines(v[1], 12), 0.8, 0.41)]
@@ -519,6 +520,11 @@ def world_type(c, t):
                     aj = a * sm(t, t0 + 0.18 * j, t0 + 0.18 * j + 0.25)
                     text(c, s_, x - wd / 2, top + (j + 0.86) * lh, f, CYAN if j == len(lines) - 1 else INK, aj, halo=(16 * u if j == len(lines) - 1 else 0))
         elif k == "num":
+            if len(v[1]) > LONG_NUM:
+                f, size = fit_sans(v[1], 300 * u, 1800 * u)
+                wd0 = f.measureText(v[1])
+                a0 = a * on_screen(x - wd0 / 2 - 30 * u, x + wd0 / 2 + 30 * u, y + 120 * u)
+                text(c, v[1], x - wd0 / 2, y + 60 * u, f, INK, a0)
             fm = mono(34 * u)
             s_ = v[2]
             while fm.measureText(s_) > 1900 * u:

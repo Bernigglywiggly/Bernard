@@ -38,9 +38,9 @@ FW, FH = W // 4, H // 4
 BG, INK, CYAN, RED, DIM = "#040506", "#F2F5F7", "#5FF0E4", "#FF6A4D", "#7B858C"
 RAMP, EDGE = " .,:;-=+*o%#@", "-\\|/"
 BEAT_GAP, CHAPTER_GAP, LEAD = 0.3, 3.0, 1.2
-LONG_WORDS = 20
+LONG_WORDS = 14
 THREAD = False                                # the wandering line through every place (7 Oct, the user: not as the guide; a rail of numbered boxes instead, as in How They Profit 06)
-LONG_NUM = 9
+LONG_NUM = 7
 LONG_SPLIT = 6                                # a split's big words longer than this are set crisp
 CAP_TOP = (H - 600) if VERT else (H - 165)   # where the caption band begins
 RAISE = 40 if VERT else 20
@@ -77,6 +77,7 @@ def beats():
 
 
 B = beats()
+HAS_PHOTO = any(b["vis"][0] == "photo" for b in B)
 CHANNEL = SC.TAG.split("·")[0].strip()        # the channel's name, from the film's tag
 
 
@@ -560,6 +561,13 @@ def world_type(c, t):
         if a <= 0:
             continue
         dur = max(1.0, E(i) - t0)
+        if k in ("img", "clip") and HAS_PHOTO and len(v) < 3:     # in a film that also shows real photographs, an illustration says so
+            tg = "ILLUSTRATION  ·  AI-GENERATED"
+            tx, ty = x - p["ww"] * 0.3, y + p["ww"] * 0.215
+            ta = a * on_screen(tx - 20 * u, tx + mono(20 * u).measureText(tg) + 60 * u, ty + 16 * u)
+            if ta > 0:
+                c.drawRect(skia.Rect.MakeXYWH(tx - 14 * u, ty - 26 * u, mono(20 * u).measureText(tg) + 0.5 * u * len(tg) + 30 * u, 38 * u), skia.Paint(Color=col(BG, 0.8 * ta)))
+                text(c, tg, tx, ty, mono(20 * u), DIM, ta, 0.5 * u)
         if k in ("img", "clip") and RESOLVE > 0:                  # an illustration resolves most of the way into the picture; the characters stay as its grain
             fr = pic(i)
             rr = a * sm(t, S(i) + 0.8, S(i) + 2.0) * RESOLVE
@@ -576,7 +584,10 @@ def world_type(c, t):
                 c.drawImageRect(img, R, skia.SamplingOptions(skia.CubicResampler.Mitchell()), skia.Paint(Color=col("#FFFFFF", 0.94 * rr)))
                 c.drawRect(R, skia.Paint(Color=col(INK, 0.5 * rr), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2 * u))
             if len(v) > 3:
-                text(c, typed("PHOTO  ·  " + v[3], t, t0 + 1.4, 40.0), R.left(), R.bottom() + 34 * u, mono(22 * u), DIM, a, 0.5 * u)
+                cr = typed("PHOTO  ·  " + v[3], t, t0 + 1.4, 40.0)                # the credit sits on the picture's top left, clear of the captions
+                fc_ = mono(21 * u)
+                c.drawRect(skia.Rect.MakeXYWH(R.left() + 10 * u, R.top() + 10 * u, fc_.measureText("PHOTO  ·  " + v[3]) + 0.5 * u * len(v[3]) + 44 * u, 38 * u), skia.Paint(Color=col(BG, 0.82 * rr / max(RESOLVE, 0.01) if False else 0.82 * a)))
+                text(c, cr, R.left() + 24 * u, R.top() + 36 * u, fc_, INK, a, 0.5 * u)
             if len(v) > 2:                                          # the label sits on the picture's lower left, on a plate
                 f, size = fit_sans(v[2], 96 * u, R.width() - 90 * u)
                 X, Y = R.left() + 44 * u, R.bottom() - 54 * u

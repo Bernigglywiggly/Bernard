@@ -53,6 +53,8 @@ def score(paths, dur, cuts=(), xf=6.0):
                 break
         while b > a + 10 and not live[b - 1]:
             b -= 1
+        lead = np.where(r[a:b] > 0.6 * np.median(r[a:b]))[0]          # start where the piece is properly under way: a quiet opening, joined to, sounds like a drop-out
+        a = a + (int(lead[0]) if len(lead) else 0)
         y = y[a * SR:b * SR]
         y = y * (10 ** (-21 / 20) / (np.sqrt((y ** 2).mean()) + 1e-9))      # every piece at the same level, so a quiet first half does not sink under the voice
         pieces.append(np.clip(y, -0.98, 0.98))

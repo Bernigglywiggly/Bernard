@@ -493,6 +493,8 @@ def held(i, t, t0=None):
     """A place's type: on once the camera has arrived, off as it leaves."""
     t0 = S(i) + 0.1 if t0 is None else max(t0, S(i) + 0.1)
     off = min(NXT(i) - 0.2, E(i) + 0.7) if i < N - 1 else TOTAL + 9     # the last line holds to the end
+    if VERT and S(i) - SHORT["t0"] < 0.5:                            # a Short opens with its first card already up
+        return 1 - sm(t, off - 0.3, off), t0
     return sm(t, t0, t0 + 0.35) * (1 - sm(t, off - 0.3, off)), t0
 
 
@@ -552,7 +554,8 @@ def world_type(c, t):
     n = now(t)
     for i in range(max(0, n - 1), min(N, n + 2)):
         p, v = PL[i], B[i]["vis"]
-        k, x, y, u = p["kind"], p["x"], p["y"], p["ww"] / 2300.0
+        k, x, y, u = p["kind"], p["x"], p["y"], p["ww"] / 2300.0 * (1.7 if VERT else 1.0)      # a Short's type is set much larger: a phone is small
+        FR = (W - (400 if VERT else 200)) / max(CAM[2], 1e-6)       # the widest a block may be in this frame
         a, t0 = held(i, t)
         if a <= 0:
             continue
@@ -610,7 +613,7 @@ def world_type(c, t):
                 text(c, v[1], x - wd0 / 2, y + 60 * u, f, INK, a0)
             fm = mono(34 * u)
             s_ = v[2]
-            while fm.measureText(s_) > 1900 * u:
+            while fm.measureText(s_) > min(1900 * u, FR):
                 fm = mono(fm.getSize() - 1)
             wd = fm.measureText(s_)
             Y = y + 330 * u
@@ -676,7 +679,7 @@ def world_type(c, t):
                     text(c, s_, X, Y, f, INK, aj)
         elif k == "tl":
             marks = v[1]
-            span = 1740 * u
+            span = min(1740 * u, FR)
             X0, Y = x - span / 2, y - 40 * u
             a *= on_screen(X0 - 60 * u, X0 + span + 60 * u, Y + 260 * u)
             if a > 0:

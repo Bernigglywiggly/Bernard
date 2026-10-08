@@ -536,7 +536,7 @@ def thread(c, t, z):
 
 
 def fit_sans(s, size, maxw):
-    maxw = min(maxw, (W - (300 if VERT else 200)) / max(CAM[2], 1e-6))      # never wider than the frame it is drawn in
+    maxw = min(maxw, (W - (400 if VERT else 200)) / max(CAM[2], 1e-6))      # never wider than the frame it is drawn in
     f = sans(size)
     while f.measureText(s) > maxw and size > 12:
         size -= 3

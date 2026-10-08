@@ -20,14 +20,14 @@ For every item: Not made for kids · Altered or synthetic content: YES · Catego
 | Day | Time | Kind | File | Title |
 |---|---|---|---|---|
 | Thu 9 Oct | 13:00 | Short | `short_war.mp4` | Two AI Labs Cut Their Prices 90 Minutes Apart |
-| Thu 9 Oct | 17:00 | Film | `LF02_FLOW_v4.mp4` | The Price of Thinking: AI Got 1,000× Cheaper. So Why Is the Bill $1 Trillion? |
+| Thu 9 Oct | 17:00 | Film | `LF02_FLOW_v5.mp4` | The Price of Thinking: AI Got 1,000× Cheaper. So Why Is the Bill $1 Trillion? |
 | Fri 10 Oct | 13:00 | Short | `short_bigmac.mp4` | What AI Really Costs Now, in Big Macs |
 | Sat 11 Oct | 13:00 | Short | `short_jevons.mp4` | The 1865 Paradox That Explains AI Spending |
-| Sun 12 Oct | 17:00 | Film | `LF01_FLOW_v5.mp4` | The AI That Escaped: How OpenAI's Agents Broke Out and Hacked Hugging Face |
+| Sun 12 Oct | 17:00 | Film | `LF01_FLOW_v6.mp4` | The AI That Escaped: How OpenAI's Agents Broke Out and Hacked Hugging Face |
 | Mon 13 Oct | 13:00 | Short | `short_escape.mp4` | OpenAI's AI Agents Broke Out of Their Test and Hacked Hugging Face |
 | Tue 14 Oct | 13:00 | Short | `short_talk.mp4` | The AI Agents Built a Secret Message Board |
 | Wed 15 Oct | 13:00 | Short | `short_cheat.mp4` | Why AI Cheats: Reward Hacking in 60 Seconds |
-| Thu 16 Oct | 17:00 | Film | `LF03_FLOW_v2.mp4` | Too Dangerous to Release: Why OpenAI Cancelled GPT-6.1, and What the UK's Tests Saw |
+| Thu 16 Oct | 17:00 | Film | `LF03_FLOW_v3.mp4` | Too Dangerous to Release: Why OpenAI Cancelled GPT-6.1, and What the UK's Tests Saw |
 | Fri 17 Oct | 13:00 | Short | `short_held.mp4` | Why OpenAI Cancelled Its Next AI Model |
 | Sat 18 Oct | 13:00 | Short | `short_test.mp4` | What GPT-6 Did When the UK Tested It With the Safety Filters Off |
 | Sun 19 Oct | 13:00 | Short | `short_knew.mp4` | The AI Knew the Rules. Sometimes It Attacked Anyway. |
@@ -50,7 +50,7 @@ One priced its new model a fifth lower. The other answered by half. So why is AI
 
 ### Thu 9 Oct 17:00 · Film · The Price of Thinking: AI Got 1,000× Cheaper. So Why Is the Bill $1 Trillion?
 
-- File: `~/Bernard/lab/curvelf/lf02_price/LF02_FLOW_v4.mp4`
+- File: `~/Bernard/lab/curvelf/lf02_price/LF02_FLOW_v5.mp4`
 - Title: The Price of Thinking: AI Got 1,000× Cheaper. So Why Is the Bill $1 Trillion?
 - Tags: ai, the curve, explained, economics, technology, chatgpt, claude, artificialintelligence
 - Pinned comment: What's the one job you'd hand to an AI now that it costs pennies? Every source is in the description.
@@ -113,7 +113,7 @@ Jevons saw it with coal. Google's token count went up more than 300 times in two
 
 ### Sun 12 Oct 17:00 · Film · The AI That Escaped: How OpenAI's Agents Broke Out and Hacked Hugging Face
 
-- File: `~/Bernard/lab/curvelf/lf01_escape/LF01_FLOW_v5.mp4`
+- File: `~/Bernard/lab/curvelf/lf01_escape/LF01_FLOW_v6.mp4`
 - Title: The AI That Escaped: How OpenAI's Agents Broke Out and Hacked Hugging Face
 - Tags: ai, the curve, explained, economics, technology, openai, cybersecurity, artificialintelligence
 - Pinned comment: Who's more to blame: the AI that broke out, or the people who built the sandbox? Every source is in the description.
@@ -195,7 +195,7 @@ Reward the score and you reward every shortcut to it, including breaking out of 
 
 ### Thu 16 Oct 17:00 · Film · Too Dangerous to Release: Why OpenAI Cancelled GPT-6.1, and What the UK's Tests Saw
 
-- File: `~/Bernard/lab/curvelf/lf03_held/LF03_FLOW_v2.mp4`
+- File: `~/Bernard/lab/curvelf/lf03_held/LF03_FLOW_v3.mp4`
 - Title: Too Dangerous to Release: Why OpenAI Cancelled GPT-6.1, and What the UK's Tests Saw
 - Tags: ai, the curve, explained, economics, technology, openai, chatgpt, artificialintelligence
 - Pinned comment: Should the most capable AI models go to defenders first, or to everyone at once? Every source is in the description.

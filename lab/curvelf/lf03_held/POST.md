@@ -47,3 +47,7 @@ Should the most capable AI models go to defenders first, or to everyone at once?
 - End screen: from 11:38 (the last 19 seconds hold the end card). Add "best for viewer" plus Subscribe; link LF01, The AI That Escaped.
 - Captions: upload `build/words.json` turned into an SRT, or paste the script (`script.py` beats, in order) as a transcript and let YouTube auto-sync it.
 - Shorts that point here (`shorts.py`): the cancelled launch, the UK's test numbers, "it knew".
+
+
+## Thumbnails in the new look (8 Oct, thumb_flow.py)
+`out/thumbflow_a.jpg` (lead), `out/thumbflow_b.jpg`, `out/thumbflow_c.jpg`: put all three in YouTube's Test & Compare. Sheet: `out/thumbflow_sheet.jpg`. Not yet reviewed by an independent critic. The older `out/thumb_*.jpg` are the OLD look: do not use.

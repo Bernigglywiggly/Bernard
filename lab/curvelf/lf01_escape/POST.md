@@ -54,3 +54,7 @@ Who's more to blame: the AI that broke out, or the people who built the sandbox?
 - End screen: from 11:27 (the last 10 seconds hold the sign-off, with room above it for the cards). Add "best for viewer" plus Subscribe.
 - Captions: turn `flow/lines.json` (word times) into an SRT, or paste the script (`script.py` beats, in order) as a transcript and let YouTube auto-sync it.
 - Shorts that point here (`shorts.py`): the cold open, the message board, reward hacking.
+
+
+## Thumbnails in the new look (8 Oct, thumb_flow.py)
+`out/thumbflow_a.jpg` (lead), `out/thumbflow_b.jpg`, `out/thumbflow_c.jpg`: put all three in YouTube's Test & Compare. Sheet: `out/thumbflow_sheet.jpg`. Not yet reviewed by an independent critic. The older `out/thumb_*.jpg` are the OLD look: do not use.

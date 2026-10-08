@@ -47,3 +47,7 @@ What's the one job you'd hand to an AI now that it costs pennies? Every source i
 - End screen: from 10:28 (the last 20 seconds hold the end card). Add "best for viewer" plus Subscribe; link LF01, The AI That Escaped.
 - Captions: upload `build/words.json` turned into an SRT, or paste the script (`script.py` beats, in order) as a transcript and let YouTube auto-sync it.
 - Shorts that point here (`shorts.py`): the price war, Big Macs, the Jevons paradox.
+
+
+## Thumbnails in the new look (8 Oct, thumb_flow.py)
+`out/thumbflow_a.jpg` (lead), `out/thumbflow_b.jpg`, `out/thumbflow_c.jpg`: put all three in YouTube's Test & Compare. Sheet: `out/thumbflow_sheet.jpg`. Not yet reviewed by an independent critic. The older `out/thumb_*.jpg` are the OLD look: do not use.

@@ -54,7 +54,7 @@ One priced its new model a fifth lower. The other answered by half. So why is AI
 - Title: The Price of Thinking: AI Got 1,000× Cheaper. So Why Is the Bill $1 Trillion?
 - Tags: ai, the curve, explained, economics, technology, chatgpt, claude, artificialintelligence
 - Pinned comment: What's the one job you'd hand to an AI now that it costs pennies? Every source is in the description.
-- Thumbnail: not made in the new look yet (YouTube will pick a frame)
+- Thumbnail: `out/thumbflow_a.jpg` in the film's folder (lead); b and c for Test & Compare
 
 Description:
 
@@ -117,7 +117,7 @@ Jevons saw it with coal. Google's token count went up more than 300 times in two
 - Title: The AI That Escaped: How OpenAI's Agents Broke Out and Hacked Hugging Face
 - Tags: ai, the curve, explained, economics, technology, openai, cybersecurity, artificialintelligence
 - Pinned comment: Who's more to blame: the AI that broke out, or the people who built the sandbox? Every source is in the description.
-- Thumbnail: not made in the new look yet (YouTube will pick a frame)
+- Thumbnail: `out/thumbflow_a.jpg` in the film's folder (lead); b and c for Test & Compare
 
 Description:
 
@@ -199,7 +199,7 @@ Reward the score and you reward every shortcut to it, including breaking out of 
 - Title: Too Dangerous to Release: Why OpenAI Cancelled GPT-6.1, and What the UK's Tests Saw
 - Tags: ai, the curve, explained, economics, technology, openai, chatgpt, artificialintelligence
 - Pinned comment: Should the most capable AI models go to defenders first, or to everyone at once? Every source is in the description.
-- Thumbnail: not made in the new look yet (YouTube will pick a frame)
+- Thumbnail: `out/thumbflow_a.jpg` in the film's folder (lead); b and c for Test & Compare
 
 Description:
 

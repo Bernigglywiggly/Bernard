@@ -43,3 +43,7 @@ What would you have asked him, standing in that queue? Every source is in the de
 ## Settings
 Altered or synthetic content: YES (synthetic narration, AI illustrations labelled on screen). Not made for kids.
 Category: Education. Playlist: Every film. Old Ponzi Shorts in the queue use the old script: remake from this cut first.
+
+
+## Thumbnails in the new look (8 Oct, thumb_flow.py)
+`out/thumbflow_a.jpg` (lead), `out/thumbflow_b.jpg`, `out/thumbflow_c.jpg`: put all three in YouTube's Test & Compare. Sheet: `out/thumbflow_sheet.jpg`. Not yet reviewed by an independent critic. The older `out/thumb_*.jpg` are the OLD look: do not use.

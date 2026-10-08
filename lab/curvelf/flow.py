@@ -66,7 +66,7 @@ def script():
 SC = script()
 LANG = getattr(SC, "LANG", "en")               # the narration's language (a translated film sets LANG in its script)
 HOLD = getattr(SC, "HOLD", {})                  # {beat id: seconds of silence after it}
-UI = {"en": dict(open="COLD OPEN", chapter="CHAPTER", sources="SOURCES IN THE DESCRIPTION", tagline="AI, EXPLAINED  ·  ", photo=UI["photo"],
+UI = {"en": dict(open="COLD OPEN", chapter="CHAPTER", sources="SOURCES IN THE DESCRIPTION", tagline="AI, EXPLAINED  ·  ", photo="PHOTO  ·  ",
                  illus="ILLUSTRATION  ·  AI-GENERATED", watch="WATCH THE FULL FILM", on="ON ", link="  ·  LINK ON THIS SHORT"),
       "es": dict(open="INICIO", chapter="CAPÍTULO", sources="FUENTES EN LA DESCRIPCIÓN", tagline="LA IA, EXPLICADA  ·  ", photo="FOTO  ·  ",
                  illus="ILUSTRACIÓN  ·  GENERADA CON IA", watch="MIRA LA PELÍCULA COMPLETA", on="EN ", link="  ·  ENLACE EN ESTE SHORT")}

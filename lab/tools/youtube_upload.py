@@ -194,6 +194,9 @@ def put_session(session, path, headers=None):
             q = requests.put(session, headers={**headers, "Content-Range": f"bytes */{size}"}, timeout=60)
             if q.status_code in (200, 201):
                 return q.json()
+            if q.status_code == 410 and sent + CHUNK >= size:       # 8 Oct: the last chunk's reply is lost but the video exists; the session is spent
+                raise Fail("Session closed after the last chunk: the video has most likely been created. "
+                           "Look it up (search forMine, newest first) before sending anything again.")
             rng = q.headers.get("Range")
             sent = int(rng.split("-")[1]) + 1 if rng else 0
     raise Fail("Upload ended without YouTube confirming the video")

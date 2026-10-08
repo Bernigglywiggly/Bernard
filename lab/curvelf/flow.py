@@ -600,7 +600,7 @@ def world_type(c, t):
             f, size = fit_sans(v[2], 150 * u, 700 * u)
             X, Y = x - 1230 * u, y + 200 * u
             if VERT:                                                # above the picture, centred
-                X, Y = x - f.measureText(v[2]) / 2, y - p["ww"] * 0.2 - 60 * u
+                X, Y = x - f.measureText(v[2]) / 2, y - p["ww"] * 0.2 - 60 * u + 150 / max(CAM[2], 1e-6)     # clear of the headline band, which now sits lower
             a *= on_screen(X - 36 * u, X + f.measureText(v[2]) + 36 * u, Y + 30 * u)
             if a > 0:
                 block(c, X, Y - size * 0.86, f.measureText(v[2]), size, a, 30 * u)
@@ -651,16 +651,16 @@ def world_type(c, t):
                     text(c, typed(small, t, t0 + 0.2 + 0.5 * j), X, Y, fm, CYAN if j == 0 else RED, aa)
         elif k == "quote":
             f = sans(80 * u)
-            qw = min(1560 * u, (W - (330 if VERT else 200)) / max(CAM[2], 1e-6))
+            qw = min(1560 * u, (W - (560 if VERT else 200)) / max(CAM[2], 1e-6))      # a Short's card, with its mark and plate, must sit wholly inside the frame or the edge gate flickers it
             lines = wrap(v[1], f, qw)
             lh = 100 * u
-            while len(lines) > (9 if VERT else 6):
+            while len(lines) > (8 if VERT else 6):
                 f = sans(f.getSize() * 0.9)
                 lh *= 0.9
                 lines = wrap(v[1], f, qw)
             wd = max(f.measureText(s_) for s_ in lines)
             hgt = len(lines) * lh + 70 * u
-            X, top = x - wd / 2, y - hgt / 2 - 80 * u
+            X, top = x - wd / 2 + (55 * u if VERT else 0), y - hgt / 2 - 80 * u
             a *= on_screen(X - 150 * u, X + wd + 40 * u, top + hgt + 30 * u)
             if a > 0:
                 block(c, X - 110 * u, top - 40 * u, wd + 110 * u, hgt + 60 * u, a, 40 * u)

@@ -64,11 +64,11 @@ def steady(y, SR):
             seg[-fade:] *= np.linspace(1, 0, fade)[:, None]
         parts.append(seg)
     y = np.concatenate(parts)
-    hop = SR                                                        # the slow level: 1 s steps, smoothed over about 8 s
+    hop = SR // 2                                                   # the level: half-second steps, smoothed over about 2.5 s (a 2 s slide is caught, a beat is not)
     e = np.array([np.sqrt((y[i:i + 2 * hop] ** 2).mean()) for i in range(0, len(y), hop)]) + 1e-6
-    k = np.hanning(9)
-    e = np.convolve(np.pad(e, 4, mode="edge"), k / k.sum(), mode="valid")
-    g = np.clip((np.median(e) / e) ** 0.8, 10 ** (-7 / 20), 10 ** (9 / 20))
+    k = np.hanning(7)
+    e = np.convolve(np.pad(e, 3, mode="edge"), k / k.sum(), mode="valid")
+    g = np.clip((np.median(e) / e) ** 0.9, 10 ** (-8 / 20), 10 ** (14 / 20))
     gain = np.interp(np.arange(len(y)), np.arange(len(e)) * hop + hop, g)
     return y * gain[:, None]
 

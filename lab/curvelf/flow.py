@@ -64,7 +64,13 @@ def script():
 
 
 SC = script()
+LANG = getattr(SC, "LANG", "en")               # the narration's language (a translated film sets LANG in its script)
 HOLD = getattr(SC, "HOLD", {})                  # {beat id: seconds of silence after it}
+UI = {"en": dict(open="COLD OPEN", chapter="CHAPTER", sources="SOURCES IN THE DESCRIPTION", tagline="AI, EXPLAINED  ·  ", photo=UI["photo"],
+                 illus="ILLUSTRATION  ·  AI-GENERATED", watch="WATCH THE FULL FILM", on="ON ", link="  ·  LINK ON THIS SHORT"),
+      "es": dict(open="INICIO", chapter="CAPÍTULO", sources="FUENTES EN LA DESCRIPCIÓN", tagline="LA IA, EXPLICADA  ·  ", photo="FOTO  ·  ",
+                 illus="ILUSTRACIÓN  ·  GENERADA CON IA", watch="MIRA LA PELÍCULA COMPLETA", on="EN ", link="  ·  ENLACE EN ESTE SHORT")}
+UI = UI.get(LANG, UI["en"])                   # the engine's own on-screen words, in the film's language
 
 
 def beats():
@@ -100,7 +106,7 @@ def lay():
     import soundfile as sf
     from faster_whisper import WhisperModel
     SR = 48000
-    model = WhisperModel("small.en", device="cpu", compute_type="int8")
+    model = WhisperModel("small.en" if LANG == "en" else "small", device="cpu", compute_type="int8")     # another language: the multilingual model
     t, meta, clips = LEAD, [], []
     for i, b in enumerate(B):
         d = glob.glob(os.path.join(BUILD, "takes", f"{i:03d}_{b['id']}", "*.mp3"))
@@ -112,7 +118,7 @@ def lay():
         on = np.where(np.abs(y) > 10 ** (-45 / 20) * np.abs(y).max())[0]
         a0, b0 = max(0, on[0] - int(0.04 * SR)), min(len(y), on[-1] + int(0.12 * SR))
         y, off = y[a0:b0], a0 / SR
-        segs, _ = model.transcribe(wav, word_timestamps=True, vad_filter=False, beam_size=5, condition_on_previous_text=False)
+        segs, _ = model.transcribe(wav, word_timestamps=True, vad_filter=False, beam_size=5, condition_on_previous_text=False, language=LANG)
         if i:
             t += CHAPTER_GAP if b["first"] else BEAT_GAP
         words = [[w.word.strip(), round(t + w.start - off, 3), round(t + w.end - off, 3)] for s in segs for w in s.words]
@@ -586,9 +592,9 @@ def world_type(c, t):
                 c.drawImageRect(img, R, skia.SamplingOptions(skia.CubicResampler.Mitchell()), skia.Paint(Color=col("#FFFFFF", 0.94 * rr)))
                 c.drawRect(R, skia.Paint(Color=col(INK, 0.5 * rr), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2 * u))
             if len(v) > 3:
-                cr = typed("PHOTO  ·  " + v[3], t, t0 + 1.4, 40.0)                # the credit sits on the picture's top left, clear of the captions
+                cr = typed(UI["photo"] + v[3], t, t0 + 1.4, 40.0)                # the credit sits on the picture's top left, clear of the captions
                 fc_ = mono(21 * u)
-                c.drawRect(skia.Rect.MakeXYWH(R.left() + 10 * u, R.top() + 10 * u, fc_.measureText("PHOTO  ·  " + v[3]) + 0.5 * u * len(v[3]) + 44 * u, 38 * u), skia.Paint(Color=col(BG, 0.82 * rr / max(RESOLVE, 0.01) if False else 0.82 * a)))
+                c.drawRect(skia.Rect.MakeXYWH(R.left() + 10 * u, R.top() + 10 * u, fc_.measureText(UI["photo"] + v[3]) + 0.5 * u * len(v[3]) + 44 * u, 38 * u), skia.Paint(Color=col(BG, 0.82 * rr / max(RESOLVE, 0.01) if False else 0.82 * a)))
                 text(c, cr, R.left() + 24 * u, R.top() + 36 * u, fc_, INK, a, 0.5 * u)
             if len(v) > 2:                                          # the label sits on the picture's lower left, on a plate
                 f, size = fit_sans(v[2], 96 * u, R.width() - 90 * u)
@@ -729,7 +735,7 @@ def screen(c, t, cx, cy, z):
     if HAS_PHOTO and B[i_]["vis"][0] in ("img", "clip") and len(B[i_]["vis"]) < 3:      # in a film that also shows real photographs, an illustration says so, where it can be read
         ta = held(i_, t)[0]
         if ta > 0:
-            tg, fg = "ILLUSTRATION  ·  AI-GENERATED", mono(21)
+            tg, fg = UI["illus"], mono(21)
             c.drawRect(skia.Rect.MakeXYWH(56, 104, fg.measureText(tg) + 0.6 * len(tg) + 30, 40), skia.Paint(Color=col(BG, 0.85 * ta)))
             c.drawRect(skia.Rect.MakeXYWH(56, 104, 3, 40), skia.Paint(Color=col(CYAN, ta)))
             text(c, tg, 72, 131, fg, INK, 0.9 * ta, 0.6)
@@ -757,7 +763,7 @@ def screen(c, t, cx, cy, z):
     text(c, SC.TAG.split("·")[0].strip(), 70, 62, mono(20), DIM, 1.0, 1.0)
     rail(300, W - 70, 56, 46, 26, 1.0, 14, False)
     step = (W - 70 - 300 - 46) / max(1, NC - 1)
-    name = SC.CHAPTERS[cur]["title"] or "COLD OPEN"
+    name = SC.CHAPTERS[cur]["title"] or UI["open"]
     nw = mono(17).measureText(name) + 0.6 * (len(name) - 1)
     text(c, name, min(max(300 + cur * step, 300), W - 70 - nw), 94, mono(17), CYAN, 1.0, 0.6)
     for i, b in enumerate(B):                                          # the chapter's name, while the camera crosses to it
@@ -769,14 +775,14 @@ def screen(c, t, cx, cy, z):
                 c.drawRect(skia.Rect.MakeXYWH(0, H / 2 - 190, W, 400), skia.Paint(Color=col(BG, 0.97 * min(1.0, a * 2.5))))        # a band, up before the name: nothing behind reads through a chapter's name
                 for yy in (H / 2 - 190, H / 2 + 210):
                     c.drawLine(0, yy, W, yy, skia.Paint(Color=col(INK, 0.14 * a), AntiAlias=True, StrokeWidth=1))
-                text(c, f"CHAPTER {b['floor'] + 1:02d}", W / 2 - wd / 2, H / 2 - 116, mono(28), CYAN, a, 2.0)
+                text(c, f"{UI['chapter']} {b['floor'] + 1:02d}", W / 2 - wd / 2, H / 2 - 116, mono(28), CYAN, a, 2.0)
                 text(c, b["title"], W / 2 - wd / 2, H / 2 + 24, f, INK, a)
                 rail(200, W - 200, H / 2 + 132, 96, 54, a, 24, True)
     a = sm(t, E(N - 1) + 1.2, E(N - 1) + 2.0)
     if a > 0:                                                       # the sign-off, with room left for end-screen elements above it
         c.drawRect(skia.Rect.MakeXYWH(W / 2 - 430, H - 226, 860, 150), skia.Paint(Color=col(BG, 0.9 * a)))
         text(c, CHANNEL, W / 2, H - 150, sans(64), INK, a, 6.0, align="center")
-        text(c, ("AI, EXPLAINED  ·  " if CHANNEL == "THE CURVE" else "") + "SOURCES IN THE DESCRIPTION", W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
+        text(c, (UI["tagline"] if CHANNEL in ("THE CURVE", "LA CURVA") else "") + UI["sources"], W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
     captions(c, t, n)
 
 
@@ -832,11 +838,11 @@ def short_screen(c, t, n):
     e = sm(t, SHORT["t1"] - 3.4, SHORT["t1"] - 3.1)
     if e > 0:
         c.drawRect(skia.Rect.MakeXYWH(0, HEAD + len(lines) * 70, W, H), skia.Paint(Color=col(BG, e)))
-        text(c, "WATCH THE FULL FILM", W / 2, H / 2 - 150, mono(30), CYAN, e, 3.0, align="center")
+        text(c, UI["watch"], W / 2, H / 2 - 150, mono(30), CYAN, e, 3.0, align="center")
         ff, _ = fit_sans(SHORT["film"].upper(), 92, W - 140)
         text(c, SHORT["film"].upper(), W / 2, H / 2 - 30, ff, INK, e, align="center")
         c.drawRect(skia.Rect.MakeXYWH(W / 2 - 60, H / 2 + 20, 120, 7), skia.Paint(Color=col(CYAN, e)))
-        text(c, "ON " + CHANNEL + "  ·  LINK ON THIS SHORT", W / 2, H / 2 + 110, mono(26), INK, e, 1.0, align="center")
+        text(c, UI["on"] + CHANNEL + UI["link"], W / 2, H / 2 + 110, mono(26), INK, e, 1.0, align="center")
     else:
         captions(c, t, n)
 

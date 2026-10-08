@@ -34,6 +34,45 @@ marks = sorted((round(t / bar) * bar, s) for t, s in marks)
 MUSIC = [p for p in os.environ.get("FLOW_MUSIC", "").split(",") if p]     # a serious score instead of the garage bed: pieces, played in turn
 
 
+def steady(y, SR):
+    """A generated piece made fit to sit under a voice for minutes: its silent holes cut out (8 Oct, critic: the music
+    vanished for two seconds and slammed back), and its long quiet passages and sudden hits drawn toward one level."""
+    import numpy as np
+    h = SR // 4
+    r = np.array([np.sqrt((y[i:i + h] ** 2).mean()) for i in range(0, len(y) - h, h)])
+    med = np.median(r)
+    quiet = r < 0.10 * med                                          # 20 dB under the piece: a hole
+    keep, i, fade = [], 0, int(0.08 * SR)
+    while i < len(r):
+        j = i
+        while j < len(r) and quiet[j] == quiet[i]:
+            j += 1
+        if not (quiet[i] and (j - i) * h >= 0.75 * SR):             # holes of 0.75 s or more go; shorter rests are music
+            keep.append((i * h, j * h if j < len(r) else len(y)))
+        i = j
+    merged = []
+    for a_, b_ in keep:
+        if merged and merged[-1][1] == a_:
+            merged[-1] = (merged[-1][0], b_)
+        else:
+            merged.append((a_, b_))
+    parts = []
+    for a_, b_ in merged:
+        seg = y[a_:b_].copy()
+        if len(seg) > 2 * fade:
+            seg[:fade] *= np.linspace(0, 1, fade)[:, None]
+            seg[-fade:] *= np.linspace(1, 0, fade)[:, None]
+        parts.append(seg)
+    y = np.concatenate(parts)
+    hop = SR                                                        # the slow level: 1 s steps, smoothed over about 8 s
+    e = np.array([np.sqrt((y[i:i + 2 * hop] ** 2).mean()) for i in range(0, len(y), hop)]) + 1e-6
+    k = np.hanning(9)
+    e = np.convolve(np.pad(e, 4, mode="edge"), k / k.sum(), mode="valid")
+    g = np.clip((np.median(e) / e) ** 0.8, 10 ** (-7 / 20), 10 ** (9 / 20))
+    gain = np.interp(np.arange(len(y)), np.arange(len(e)) * hop + hop, g)
+    return y * gain[:, None]
+
+
 def score(paths, dur, cuts=(), xf=6.0):
     """Join generated pieces into one bed: each trimmed to where it is actually playing (they tend to stop early or
     leave a silent tail), crossfaded, repeated in turn until the film is covered."""
@@ -56,6 +95,7 @@ def score(paths, dur, cuts=(), xf=6.0):
         lead = np.where(r[a:b] > 0.6 * np.median(r[a:b]))[0]          # start where the piece is properly under way: a quiet opening, joined to, sounds like a drop-out
         a = a + (int(lead[0]) if len(lead) else 0)
         y = y[a * SR:b * SR]
+        y = steady(y, SR)
         y = y * (10 ** (-21 / 20) / (np.sqrt((y ** 2).mean()) + 1e-9))      # every piece at the same level, so a quiet first half does not sink under the voice
         pieces.append(np.clip(y, -0.98, 0.98))
         print(os.path.basename(os.path.dirname(p)), "plays", a, "to", b, "s of", len(y) // SR)

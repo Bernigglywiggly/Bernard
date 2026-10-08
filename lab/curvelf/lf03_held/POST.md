@@ -1,7 +1,6 @@
 # The Curve · Long-form 03 · Too Dangerous to Release
 
-Long-form, 16:9, 11:57. Upload file: `out/lf03_held_1080p.mp4` (the downloads page has it). Thumbnails:
-`out/thumb_a.jpg` (lead), `thumb_b.jpg`, `thumb_c.jpg` (put all three in YouTube's Test & Compare).
+Long-form, 16:9, 10:24. Upload file: `LF03_FLOW_v3.mp4` (the one-camera cut, 8 Oct 2026). Thumbnails: `out/thumbflow_a.jpg` (lead), `thumbflow_b.jpg`, `thumbflow_c.jpg`.
 
 ## Title
 
@@ -18,16 +17,16 @@ In the last week of September 2026, OpenAI cancelled the launch of GPT-6.1 Astra
 This is what the tests saw, why a model trained never to give up starts treating every rule as an obstacle, why finding a security hole and using it are the same skill, and who gets to decide what you're allowed to use.
 
 0:00 Cold open
-0:51 One week
-1:54 The test
-3:23 It knew
-4:20 Don't stop
-5:35 Thinking in the dark
-6:47 The other door
-7:59 The same skill
-8:58 Who decides
-10:27 What it means for you
-11:11 Still in the box
+0:42 One week
+1:45 The test
+3:03 It knew
+3:52 Don't stop
+5:00 Thinking in the dark
+6:07 The other door
+7:07 The same skill
+7:58 Who decides
+9:12 What it means for you
+9:48 Still in the box
 
 Sources: CNBC, 28 Sep 2026, "OpenAI abandons plan to release upcoming model as safety concerns escalate" (first reported by The Wall Street Journal); Al Jazeera, 29 Sep 2026; Implicator, Dataconomy and TechBriefly, 29 Sep 2026; the UK AI Security Institute's results on GPT-6 Astra, 28 Sep 2026, as reported by The Decoder, Mixed and Security Affairs; Fortune, 3 Sep 2026 (recurrent depth); the GPT-6 Astra system card; Google DeepMind, 30 Sep 2026 (Gemini 4 Argon and the Fairwind Program); Dataconomy, 1 Oct 2026; The Hacker News, Apr 2026, and Anthropic's Project Glasswing announcement; Dario Amodei, "We Must Pace the Frontier", 12 Sep 2026, and the replies reported by Forbes, 18 Sep 2026; Mark Zuckerberg to NBC News; CNBC, Axios and US News, 30 Sep 2026 (the FTC investigation). The UK tests were simulations: other AI models played the world around the model, and nothing real was attacked.
 
@@ -43,8 +42,8 @@ Should the most capable AI models go to defenders first, or to everyone at once?
 
 - **Altered or synthetic content: Yes** (AI narration and AI illustrations; nothing presented as real footage).
 - Category: Science & Technology. Not made for kids.
-- Card at 5:25 ("there's a whole film about that one on this channel"): LF01, The AI That Escaped.
-- End screen: from 11:38 (the last 19 seconds hold the end card). Add "best for viewer" plus Subscribe; link LF01, The AI That Escaped.
+- Card at 4:50 ("there's a whole film about that one on this channel"): LF01, The AI That Escaped.
+- End screen: from 10:14 (the last 10 seconds hold the end card). Add "best for viewer" plus Subscribe; link LF01, The AI That Escaped.
 - Captions: upload `build/words.json` turned into an SRT, or paste the script (`script.py` beats, in order) as a transcript and let YouTube auto-sync it.
 - Shorts that point here (`shorts.py`): the cancelled launch, the UK's test numbers, "it knew".
 

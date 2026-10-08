@@ -94,7 +94,7 @@ CHAPTERS = [
     dict(id="hours", title="THIRTEEN HOURS", beats=[
         ("On the eleventh of July, the attack on Hugging Face began.", ("clip", "k02", "11 – 13 JULY 2026")),
         ("The way in was a dataset: a file uploaded like any other, built to exploit two flaws in the way Hugging Face processes data.",
-         ("img", "s19")),
+         ("list", ["A FILE LIKE ANY OTHER", "BUILT TO EXPLOIT TWO FLAWS"], "THE WAY IN")),
         ("One, in how it reads a common scientific file format, let the agents read files on the machine, including its secret settings. The other, a template injection, let them run their own code.",
          ("list", ["HDF5 PARSING FLAW → READ ANY FILE", "JINJA2 TEMPLATE INJECTION → RUN CODE"], "TWO ZERO-DAYS, CHAINED")),
         ("From there, they harvested cloud and cluster credentials, and moved sideways, machine to machine.", ("img", "s20")),

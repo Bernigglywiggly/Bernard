@@ -34,7 +34,7 @@ marks = sorted((round(t / bar) * bar, s) for t, s in marks)
 MUSIC = [p for p in os.environ.get("FLOW_MUSIC", "").split(",") if p]     # a serious score instead of the garage bed: pieces, played in turn
 
 
-def score(paths, dur, xf=6.0):
+def score(paths, dur, cuts=(), xf=6.0):
     """Join generated pieces into one bed: each trimmed to where it is actually playing (they tend to stop early or
     leave a silent tail), crossfaded, repeated in turn until the film is covered."""
     import numpy as np
@@ -63,6 +63,10 @@ def score(paths, dur, xf=6.0):
     while pos < n:
         y = pieces[k % len(pieces)].copy()
         k += 1
+        end = (pos + len(y)) / SR                                   # change pieces on a chapter crossing, under its card, where one falls in the piece's last stretch
+        ok = [c_ for c_ in cuts if pos / SR + 75 < c_ < end]
+        if ok and end < dur:
+            y = y[:int((ok[-1] + xf / 2) * SR) - pos]
         if pos:
             y[:x] *= np.sin(np.linspace(0, np.pi / 2, x))[:, None]
         y[-x:] *= np.cos(np.linspace(0, np.pi / 2, x))[:, None]
@@ -74,7 +78,12 @@ def score(paths, dur, xf=6.0):
 
 
 if MUSIC:
-    sf.write(os.path.join(B, "garage.wav"), score(MUSIC, dur), mp.SR)
+    floor_, cuts_ = -1, []
+    for ln in L:
+        if ln["floor"] != floor_:
+            floor_ = ln["floor"]
+            cuts_.append(ln["start"] - 1.6)
+    sf.write(os.path.join(B, "garage.wav"), score(MUSIC, dur, cuts_[1:]), mp.SR)
 else:
     sf.write(os.path.join(B, "garage.wav"), mp.bed(dur, marks), mp.SR)
 sf.write(os.path.join(B, "plate.wav"), mp.plate(), mp.SR)
@@ -82,7 +91,7 @@ chain = ("highpass=f=85,equalizer=f=260:t=q:w=1.1:g=-2.5,equalizer=f=3400:t=q:w=
          "acompressor=threshold=-22dB:ratio=3.2:attack=6:release=110:makeup=5,alimiter=limit=0.89")
 fc = (f"[0:a]apad=whole_dur={dur:.2f},aformat=channel_layouts=stereo,{chain},asplit=3[v][vw][vk];[vw][2:a]afir=dry=0:wet=1[rev];"
       "[v][rev]amix=inputs=2:weights='1 0.09':normalize=0[vox];"
-      + ("[1:a]highpass=f=38,lowshelf=f=110:g=-5,volume=0.9[bed];" if MUSIC else "[1:a]volume=0.66,haas=level_in=1:side_gain=0.55:middle_source=mid[bed];")
+      + ("[1:a]highpass=f=38,lowshelf=f=110:g=-5,dynaudnorm=f=500:g=31:m=14:p=0.5,volume=0.5[bed];" if MUSIC else "[1:a]volume=0.66,haas=level_in=1:side_gain=0.55:middle_source=mid[bed];")
       + "[bed][vk]sidechaincompress=threshold=0.06:ratio=2:attack=30:release=700[duck];"
       f"[vox][duck]amix=inputs=2:normalize=0,alimiter=limit=0.84,loudnorm=I=-14:TP=-2:LRA=9,aresample=48000,alimiter=limit=0.71:level=false,afade=t=out:st={dur - 3.0:.2f}:d=3.0[a]")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", os.path.join(B, "voice_dry.wav"), "-i", os.path.join(B, "garage.wav"), "-i", os.path.join(B, "plate.wav"),

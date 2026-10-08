@@ -110,7 +110,7 @@ CHAPTERS = [
         ("He was right. In the spring of 2024, Google was processing nearly ten trillion tokens a month.", ("num", "9.7 T", "TOKENS A MONTH · GOOGLE · 2024")),
         ("In 2025, four hundred and eighty trillion.", ("num", "480 T", "TOKENS A MONTH · GOOGLE · 2025")),
         ("In May this year: three point two quadrillion. More than three hundred times as much, in two years.",
-         ("num", "3,200 T", "TOKENS A MONTH · GOOGLE · MAY 2026")),
+         ("num", "3.2 QUADRILLION", "TOKENS A MONTH · GOOGLE · MAY 2026 · 3,200 TRILLION")),
     ]),
     dict(id="catch", title="THE CATCH", beats=[
         ("There's a catch in all of this. The price of a token is falling. The number of tokens in each answer is rising.",

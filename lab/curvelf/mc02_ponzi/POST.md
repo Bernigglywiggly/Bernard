@@ -1,6 +1,6 @@
 # Money Crimes 02 · The Original Ponzi Scheme: upload sheet (8 Oct 2026, the one-camera cut)
 
-File: `lab/curvelf/mc02_ponzi/MC02_PONZI_v3.mp4` (1920x1080, 10:59, George, real photographs, its own score).
+File: `lab/curvelf/mc02_ponzi/MC02_PONZI_v4.mp4` (1920x1080, 10:59, George, real photographs, its own score).
 NOT `lab/longform/ponzi/out/ponzi_1080p.mp4` and not `media/2026-10-05_youtube/money_crimes/29_*`: that older render has
 four wrong lines (lab/longform/ponzi/VERIFY.md). Critic: `CRITIC_v2.md` said FIX THEN UPLOAD; v3 has those fixes and has
 not been re-reviewed. Before upload: the user's go-ahead; one human look at the Library of Congress rights lines in

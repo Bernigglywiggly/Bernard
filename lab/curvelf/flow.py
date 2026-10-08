@@ -40,8 +40,8 @@ RAMP, EDGE = " .,:;-=+*o%#@", "-\\|/"
 BEAT_GAP, CHAPTER_GAP, LEAD = 0.3, 3.0, 1.2
 LONG_WORDS = 14
 THREAD = False                                # the wandering line through every place (7 Oct, the user: not as the guide; a rail of numbered boxes instead, as in How They Profit 06)
-LONG_NUM = 7
-LONG_SPLIT = 6                                # a split's big words longer than this are set crisp
+LONG_NUM = 0                                  # 8 Oct, final critic: figures as characters read dim; every figure is set crisp
+LONG_SPLIT = 0                                # a split's big words longer than this are set crisp
 CAP_TOP = (H - 600) if VERT else (H - 165)   # where the caption band begins
 RAISE = 40 if VERT else 20
 SHIFT = 56 if VERT else 0                     # a Short sits left of centre: the app's buttons run down the right edge    #                                # screen pixels the world is lifted, so pictures clear the caption plate
@@ -64,6 +64,7 @@ def script():
 
 
 SC = script()
+HOLD = getattr(SC, "HOLD", {})                  # {beat id: seconds of silence after it}
 
 
 def beats():
@@ -118,7 +119,7 @@ def lay():
         dur = len(y) / SR
         meta.append(dict(i=i, id=b["id"], floor=b["floor"], text=b["text"], start=round(t, 3), end=round(t + dur, 3), words=words))
         clips.append((t, y))
-        t += dur
+        t += dur + HOLD.get(b["id"], 0.0)                         # a short line's card may be held past its words
     buf = np.zeros(int((t + 11.0) * SR))
     for t0, y in clips:
         buf[int(t0 * SR):int(t0 * SR) + len(y)] += y
@@ -493,7 +494,7 @@ def on_screen(x0, x1, y1):
 def held(i, t, t0=None):
     """A place's type: on once the camera has arrived, off as it leaves."""
     t0 = S(i) + 0.1 if t0 is None else max(t0, S(i) + 0.1)
-    off = min(NXT(i) - 0.2, E(i) + 0.7) if i < N - 1 else TOTAL + 9     # the last line holds to the end
+    off = min(NXT(i) - 0.2, E(i) + 0.7 + HOLD.get(B[i]["id"], 0.0)) if i < N - 1 else TOTAL + 9     # the last line holds to the end
     if VERT and S(i) - SHORT["t0"] < 0.5:                            # a Short opens with its first card already up
         return 1 - sm(t, off - 0.3, off), t0
     return sm(t, t0, t0 + 0.35) * (1 - sm(t, off - 0.3, off)), t0
@@ -561,13 +562,14 @@ def world_type(c, t):
         if a <= 0:
             continue
         dur = max(1.0, E(i) - t0)
-        if k in ("img", "clip") and HAS_PHOTO and len(v) < 3:     # in a film that also shows real photographs, an illustration says so
+        if False and k in ("img", "clip") and HAS_PHOTO and len(v) < 3:     # (moved to the screen, 8 Oct: in the world it fell under the captions or the rail)
             tg = "ILLUSTRATION  ·  AI-GENERATED"
-            tx, ty = x - p["ww"] * 0.3, y + p["ww"] * 0.215
-            ta = a * on_screen(tx - 20 * u, tx + mono(20 * u).measureText(tg) + 60 * u, ty + 16 * u)
+            tx, ty = x - p["ww"] * 0.40, y - p["ww"] * 0.235    # top left of the picture: lower down, the caption plate hid it
+            fg = mono(30 * u)                                       # large enough to read at 1080p (final critic: 11 px was not)
+            ta = a * on_screen(tx - 20 * u, tx + fg.measureText(tg) + 80 * u, ty + 20 * u)
             if ta > 0:
-                c.drawRect(skia.Rect.MakeXYWH(tx - 14 * u, ty - 26 * u, mono(20 * u).measureText(tg) + 0.5 * u * len(tg) + 30 * u, 38 * u), skia.Paint(Color=col(BG, 0.8 * ta)))
-                text(c, tg, tx, ty, mono(20 * u), DIM, ta, 0.5 * u)
+                c.drawRect(skia.Rect.MakeXYWH(tx - 18 * u, ty - 38 * u, fg.measureText(tg) + 0.5 * u * len(tg) + 40 * u, 54 * u), skia.Paint(Color=col(BG, 0.85 * ta)))
+                text(c, tg, tx, ty, fg, INK, 0.85 * ta, 0.5 * u)
         if k in ("img", "clip") and RESOLVE > 0:                  # an illustration resolves most of the way into the picture; the characters stay as its grain
             fr = pic(i)
             rr = a * sm(t, S(i) + 0.8, S(i) + 2.0) * RESOLVE
@@ -723,6 +725,14 @@ def screen(c, t, cx, cy, z):
     if VERT:
         return short_screen(c, t, n)
     NC = len(SC.CHAPTERS)
+    i_ = now(t)
+    if HAS_PHOTO and B[i_]["vis"][0] in ("img", "clip") and len(B[i_]["vis"]) < 3:      # in a film that also shows real photographs, an illustration says so, where it can be read
+        ta = held(i_, t)[0]
+        if ta > 0:
+            tg, fg = "ILLUSTRATION  ·  AI-GENERATED", mono(21)
+            c.drawRect(skia.Rect.MakeXYWH(56, 104, fg.measureText(tg) + 0.6 * len(tg) + 30, 40), skia.Paint(Color=col(BG, 0.85 * ta)))
+            c.drawRect(skia.Rect.MakeXYWH(56, 104, 3, 40), skia.Paint(Color=col(CYAN, ta)))
+            text(c, tg, 72, 131, fg, INK, 0.9 * ta, 0.6)
     firsts = [i for i, b in enumerate(B) if b["first"]] + [N]
     cur = B[now(t + 1.4)]["floor"]                                  # it turns over as the chapter's name comes up
     c0, c1 = S(firsts[cur]) - (0 if cur == 0 else 2.3), (S(firsts[cur + 1]) - 2.3 if cur + 1 < NC else E(N - 1))
@@ -808,19 +818,20 @@ def captions(c, t, n):
 
 
 SHORT = dict(t0=0.0, t1=1e9, headline="", film="")
+HEAD = 300                                    # a Short's headline band: channel name at 250, first line at 330
 
 
 def short_screen(c, t, n):
     """A Short's furniture: the headline up top, captions above the app's own buttons, an end card to the full film."""
     f = sans(60)
     lines = wrap(SHORT["headline"], f, W - 260)
-    c.drawRect(skia.Rect.MakeXYWH(0, 0, W, 190 + len(lines) * 70), skia.Paint(Color=col(BG, 0.9)))
-    text(c, CHANNEL, 75, 150, mono(26), CYAN, 1.0, 3.0)
+    c.drawRect(skia.Rect.MakeXYWH(0, 0, W, HEAD + len(lines) * 70), skia.Paint(Color=col(BG, 0.9)))
+    text(c, CHANNEL, 75, HEAD - 50, mono(26), CYAN, 1.0, 3.0)      # all of it below the top 12%, which the app covers
     for i, s_ in enumerate(lines):
-        text(c, s_, 75, 230 + i * 70, f, INK)
+        text(c, s_, 75, HEAD + 30 + i * 70, f, INK)
     e = sm(t, SHORT["t1"] - 3.4, SHORT["t1"] - 3.1)
     if e > 0:
-        c.drawRect(skia.Rect.MakeXYWH(0, 190 + len(lines) * 70, W, H), skia.Paint(Color=col(BG, e)))
+        c.drawRect(skia.Rect.MakeXYWH(0, HEAD + len(lines) * 70, W, H), skia.Paint(Color=col(BG, e)))
         text(c, "WATCH THE FULL FILM", W / 2, H / 2 - 150, mono(30), CYAN, e, 3.0, align="center")
         ff, _ = fit_sans(SHORT["film"].upper(), 92, W - 140)
         text(c, SHORT["film"].upper(), W / 2, H / 2 - 30, ff, INK, e, align="center")

@@ -7,9 +7,9 @@ import subprocess
 import numpy as np
 import soundfile as sf
 
-SH = {"lf01_escape": ("LF01_FLOW_v6.mp4", {"escape": ("open_00", "open_08"), "talk": ("board_02", "board_07"), "cheat": ("why_00", "why_09")}),
-      "lf02_price": ("LF02_FLOW_v5.mp4", {"war": ("open_00", "open_05"), "bigmac": ("bigmac_00", "bigmac_07"), "jevons": ("paradox_00", "paradox_06")}),
-      "lf03_held": ("LF03_FLOW_v3.mp4", {"held": ("open_00", "open_05"), "test": ("test_00", "test_10"), "knew": ("knew_00", "knew_06")})}
+SH = {"lf01_escape": ("LF01_FLOW_v7.mp4", {"escape": ("open_00", "open_07"), "talk": ("board_02", "board_07"), "cheat": ("why_00", "why_08")}),
+      "lf02_price": ("LF02_FLOW_v6.mp4", {"war": ("open_00", "open_05"), "bigmac": ("bigmac_00", "bigmac_07"), "jevons": ("paradox_00", "paradox_06")}),
+      "lf03_held": ("LF03_FLOW_v4.mp4", {"held": ("open_00", "open_05"), "test": ("test_00", "test_07"), "knew": ("knew_00", "knew_06")})}
 for F, (f, shorts) in SH.items():
     L = json.load(open(f"{F}/flow/lines.json"))["lines"]
     by = {l["id"]: l for l in L}

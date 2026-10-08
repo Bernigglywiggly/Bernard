@@ -20,14 +20,14 @@ For every item: Not made for kids · Altered or synthetic content: YES · Catego
 | Day | Time | Kind | File | Title |
 |---|---|---|---|---|
 | Thu 9 Oct | 13:00 | Short | `short_war.mp4` | Two AI Labs Cut Their Prices 90 Minutes Apart |
-| Thu 9 Oct | 17:00 | Film | `LF02_FLOW_v5.mp4` | The Price of Thinking: AI Got 1,000× Cheaper. So Why Is the Bill $1 Trillion? |
+| Thu 9 Oct | 17:00 | Film | `LF02_FLOW_v6.mp4` | The Price of Thinking: AI Got 1,000× Cheaper. So Why Is the Bill $1 Trillion? |
 | Fri 10 Oct | 13:00 | Short | `short_bigmac.mp4` | What AI Really Costs Now, in Big Macs |
 | Sat 11 Oct | 13:00 | Short | `short_jevons.mp4` | The 1865 Paradox That Explains AI Spending |
-| Sun 12 Oct | 17:00 | Film | `LF01_FLOW_v6.mp4` | The AI That Escaped: How OpenAI's Agents Broke Out and Hacked Hugging Face |
+| Sun 12 Oct | 17:00 | Film | `LF01_FLOW_v7.mp4` | The AI That Escaped: How OpenAI's Agents Broke Out and Hacked Hugging Face |
 | Mon 13 Oct | 13:00 | Short | `short_escape.mp4` | OpenAI's AI Agents Broke Out of Their Test and Hacked Hugging Face |
 | Tue 14 Oct | 13:00 | Short | `short_talk.mp4` | The AI Agents Built a Secret Message Board |
 | Wed 15 Oct | 13:00 | Short | `short_cheat.mp4` | Why AI Cheats: Reward Hacking in 60 Seconds |
-| Thu 16 Oct | 17:00 | Film | `LF03_FLOW_v3.mp4` | Too Dangerous to Release: Why OpenAI Cancelled GPT-6.1, and What the UK's Tests Saw |
+| Thu 16 Oct | 17:00 | Film | `LF03_FLOW_v4.mp4` | Too Dangerous to Release: Why OpenAI Cancelled GPT-6.1, and What the UK's Tests Saw |
 | Fri 17 Oct | 13:00 | Short | `short_held.mp4` | Why OpenAI Cancelled Its Next AI Model |
 | Sat 18 Oct | 13:00 | Short | `short_test.mp4` | What GPT-6 Did When the UK Tested It With the Safety Filters Off |
 | Sun 19 Oct | 13:00 | Short | `short_knew.mp4` | The AI Knew the Rules. Sometimes It Attacked Anyway. |
@@ -50,7 +50,7 @@ One priced its new model a fifth lower. The other answered by half. So why is AI
 
 ### Thu 9 Oct 17:00 · Film · The Price of Thinking: AI Got 1,000× Cheaper. So Why Is the Bill $1 Trillion?
 
-- File: `~/Bernard/lab/curvelf/lf02_price/LF02_FLOW_v5.mp4`
+- File: `~/Bernard/lab/curvelf/lf02_price/LF02_FLOW_v6.mp4`
 - Title: The Price of Thinking: AI Got 1,000× Cheaper. So Why Is the Bill $1 Trillion?
 - Tags: ai, the curve, explained, economics, technology, chatgpt, claude, artificialintelligence
 - Pinned comment: What's the one job you'd hand to an AI now that it costs pennies? Every source is in the description.
@@ -113,7 +113,7 @@ Jevons saw it with coal. Google's token count went up more than 300 times in two
 
 ### Sun 12 Oct 17:00 · Film · The AI That Escaped: How OpenAI's Agents Broke Out and Hacked Hugging Face
 
-- File: `~/Bernard/lab/curvelf/lf01_escape/LF01_FLOW_v6.mp4`
+- File: `~/Bernard/lab/curvelf/lf01_escape/LF01_FLOW_v7.mp4`
 - Title: The AI That Escaped: How OpenAI's Agents Broke Out and Hacked Hugging Face
 - Tags: ai, the curve, explained, economics, technology, openai, cybersecurity, artificialintelligence
 - Pinned comment: Who's more to blame: the AI that broke out, or the people who built the sandbox? Every source is in the description.
@@ -195,7 +195,7 @@ Reward the score and you reward every shortcut to it, including breaking out of 
 
 ### Thu 16 Oct 17:00 · Film · Too Dangerous to Release: Why OpenAI Cancelled GPT-6.1, and What the UK's Tests Saw
 
-- File: `~/Bernard/lab/curvelf/lf03_held/LF03_FLOW_v3.mp4`
+- File: `~/Bernard/lab/curvelf/lf03_held/LF03_FLOW_v4.mp4`
 - Title: Too Dangerous to Release: Why OpenAI Cancelled GPT-6.1, and What the UK's Tests Saw
 - Tags: ai, the curve, explained, economics, technology, openai, chatgpt, artificialintelligence
 - Pinned comment: Should the most capable AI models go to defenders first, or to everyone at once? Every source is in the description.
@@ -212,13 +212,13 @@ This is what the tests saw, why a model trained never to give up starts treating
 0:42 One week
 1:45 The test
 3:03 It knew
-3:52 Don't stop
-5:00 Thinking in the dark
-6:07 The other door
-7:07 The same skill
-7:58 Who decides
-9:12 What it means for you
-9:48 Still in the box
+3:53 Don't stop
+5:01 Thinking in the dark
+6:08 The other door
+7:08 The same skill
+7:59 Who decides
+9:13 What it means for you
+9:49 Still in the box
 
 Sources: CNBC, 28 Sep 2026, "OpenAI abandons plan to release upcoming model as safety concerns escalate" (first reported by The Wall Street Journal); Al Jazeera, 29 Sep 2026; Implicator, Dataconomy and TechBriefly, 29 Sep 2026; the UK AI Security Institute's results on GPT-6 Astra, 28 Sep 2026, as reported by The Decoder, Mixed and Security Affairs; Fortune, 3 Sep 2026 (recurrent depth); the GPT-6 Astra system card; Google DeepMind, 30 Sep 2026 (Gemini 4 Argon and the Fairwind Program); Dataconomy, 1 Oct 2026; The Hacker News, Apr 2026, and Anthropic's Project Glasswing announcement; Dario Amodei, "We Must Pace the Frontier", 12 Sep 2026, and the replies reported by Forbes, 18 Sep 2026; Mark Zuckerberg to NBC News; CNBC, Axios and US News, 30 Sep 2026 (the FTC investigation). The UK tests were simulations: other AI models played the world around the model, and nothing real was attacked.
 

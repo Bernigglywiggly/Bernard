@@ -1,6 +1,6 @@
 # The Curve · Long-form 01 · The AI That Escaped
 
-Long-form, 16:9, 11:37. Upload file: `LF01_FLOW_v6.mp4` (the one-camera cut, 8 Oct 2026; George's voice, its own score).
+Long-form, 16:9, 11:37. Upload file: `LF01_FLOW_v7.mp4` (the one-camera cut, 8 Oct 2026; George's voice, its own score).
 NOT `out/lf01_escape_1080p.mp4`: that older render carries the script from before the 7 Oct fact check (VERIFY.md).
 NOT uploaded. Before upload: the three hand source checks in VERIFY.md section 6, the critic pass is CRITIC_FINAL_8OCT.md, the user's go-ahead.
 Thumbnails `out/thumb_a.jpg`, `thumb_b.jpg`, `thumb_c.jpg` are in the OLD look: remake them in the new look first.

@@ -41,13 +41,13 @@ def steady(y, SR):
     h = SR // 4
     r = np.array([np.sqrt((y[i:i + h] ** 2).mean()) for i in range(0, len(y) - h, h)])
     med = np.median(r)
-    quiet = r < 0.10 * med                                          # 20 dB under the piece: a hole
+    quiet = r < 0.18 * med                                          # 15 dB under the piece: a hole
     keep, i, fade = [], 0, int(0.08 * SR)
     while i < len(r):
         j = i
         while j < len(r) and quiet[j] == quiet[i]:
             j += 1
-        if not (quiet[i] and (j - i) * h >= 0.75 * SR):             # holes of 0.75 s or more go; shorter rests are music
+        if not (quiet[i] and (j - i) * h >= 0.5 * SR):             # holes of 0.75 s or more go; shorter rests are music
             keep.append((i * h, j * h if j < len(r) else len(y)))
         i = j
     merged = []

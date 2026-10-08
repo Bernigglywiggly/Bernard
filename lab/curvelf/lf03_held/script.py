@@ -23,6 +23,7 @@ Visuals as in ../lf01_escape/script.py.
 TITLE = "TOO DANGEROUS TO RELEASE"
 TAG = "THE CURVE  ·  TOO DANGEROUS TO RELEASE"
 NAME = "lf03_held"
+HOLD = {"knew_02": 1.3}                       # "And then attacked it anyway.": the card needs two seconds
 FIX = {"GPT -6.1": "GPT-6.1", "GPT -6": "GPT-6", "GPT -5.6": "GPT-5.6", "GPT -5.5": "GPT-5.5", "Mithos": "Mythos",
        "Open BSD": "OpenBSD", "Sachi": "Saachi", "mythos": "Mythos", "GPT 6.1": "GPT-6.1", "Jane,": "Jain,",
        "websites used": "websites use", "your human.": "you're human.", "GPT-5.6-SAL,": "GPT-5.6 Sol,",

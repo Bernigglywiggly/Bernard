@@ -1,4 +1,4 @@
-# Money Crimes 01 · Lustig: correction for the public film (drafted 7 Oct 2026, NOT applied)
+# Money Crimes 01 · Lustig: correction for the public film (drafted 7 Oct 2026, APPLIED 8 Oct 2026 17:53 via Zapier)
 
 From `lab/longform/lustig/VERIFY.md` (independent check: 56 claims, 0 invented, 11 parts of the legend told as fact).
 The checker's view: a pinned comment plus a title and description edit is enough for the film; the Capone Short's
@@ -29,3 +29,9 @@ Caption: begin with "The story goes:"
 
 ## If the film is ever re-cut in the new look
 VERIFY.md section 3 lists 17 one-line narration and label changes.
+
+
+## Applied 8 Oct 2026, 17:53
+- Film fvCbFDHik1s: title and description changed (the replaced sentence was split into two so it reads: "...rests on later accounts. And why the same trick still works on people today.").
+- Capone Short r1l_L9kkTkk: title changed; caption now begins "The story goes: he borrowed...".
+- Comment posted on the film as the channel (id Ugx-Cvu_k8Tl9Dicdal4AaABAg). PINNING it cannot be done through the API: the user pins it in YouTube Studio or the app.

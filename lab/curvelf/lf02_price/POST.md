@@ -1,6 +1,6 @@
 # The Curve · Long-form 02 · The Price of Thinking
 
-Long-form, 16:9, 9:02. Upload file: `LF02_FLOW_v5.mp4` (the one-camera cut, 8 Oct 2026). Thumbnails: `out/thumbflow_a.jpg` (lead), `thumbflow_b.jpg`, `thumbflow_c.jpg`.
+Long-form, 16:9, 9:02. Upload file: `LF02_FLOW_v6.mp4` (the one-camera cut, 8 Oct 2026). Thumbnails: `out/thumbflow_a.jpg` (lead), `thumbflow_b.jpg`, `thumbflow_c.jpg`.
 
 ## Title
 

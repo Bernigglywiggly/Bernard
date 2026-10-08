@@ -14,10 +14,10 @@ for F, (f, shorts) in SH.items():
     L = json.load(open(f"{F}/flow/lines.json"))["lines"]
     by = {l["id"]: l for l in L}
     for name, (a, b) in shorts.items():
-        t0, t1 = max(0.0, by[a]["start"] - 0.5), by[b]["end"] + 0.6 + 2.6
+        t0, t1 = max(0.0, by[a]["start"] - 0.15), by[b]["end"] + 0.5 + 3.4
         d = t1 - t0
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", f"{F}/flow/short_{name}_pic.mp4", "-ss", f"{t0:.3f}", "-t", f"{d:.3f}", "-i", f"{F}/{f}", "-map", "0:v", "-map", "1:a",
-                        "-af", f"afade=t=in:d=0.25,afade=t=out:st={d - 2.4:.2f}:d=2.3", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", f"{F}/shorts/short_{name}.mp4"], check=True)
+                        "-af", f"afade=t=in:d=0.25,afade=t=out:st={d - 3.0:.2f}:d=2.9", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", f"{F}/shorts/short_{name}.mp4"], check=True)
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", f"{F}/{f}", "-ac", "1", "-ar", "16000", "/tmp/_t.wav"])
     y, sr = sf.read("/tmp/_t.wav")
     sp = np.zeros(len(y), bool)

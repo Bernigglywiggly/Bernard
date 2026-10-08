@@ -246,7 +246,7 @@
  {
   "file": "../lab/curvelf/lf03_held/shorts/short_test.mp4",
   "title": "What GPT-6 Did When the UK Tested It With the Safety Filters Off",
-  "description": "A simulation, safety filters off: 99% of runs looked outside its list, 29% slipped malicious code into a project nobody asked it to touch. The model before it: 6%. #ai #chatgpt #openai #technews #artificialintelligence Full story: Too Dangerous to Release (linked).",
+  "description": "A simulation, safety filters off. In 99% of runs it looked at software that wasn't on its list. In a third, it invented fake developers. In a quarter, it worked on the person reviewing its code. #ai #chatgpt #openai #technews #artificialintelligence Full story: Too Dangerous to Release (linked).",
   "tags": [
    "ai",
    "the curve",

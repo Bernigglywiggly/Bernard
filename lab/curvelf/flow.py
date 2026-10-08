@@ -654,13 +654,13 @@ def world_type(c, t):
             qw = min(1560 * u, (W - (560 if VERT else 200)) / max(CAM[2], 1e-6))      # a Short's card, with its mark and plate, must sit wholly inside the frame or the edge gate flickers it
             lines = wrap(v[1], f, qw)
             lh = 100 * u
-            while len(lines) > (8 if VERT else 6):
+            while len(lines) > (7 if VERT else 6):
                 f = sans(f.getSize() * 0.9)
                 lh *= 0.9
                 lines = wrap(v[1], f, qw)
             wd = max(f.measureText(s_) for s_ in lines)
             hgt = len(lines) * lh + 70 * u
-            X, top = x - wd / 2 + (55 * u if VERT else 0), y - hgt / 2 - 80 * u
+            X, top = x - wd / 2 + (55 * u if VERT else 0), y - hgt / 2 - (230 if VERT else 80) * u      # a Short's captions sit high: a tall quote must clear them
             a *= on_screen(X - 150 * u, X + wd + 40 * u, top + hgt + 30 * u)
             if a > 0:
                 block(c, X - 110 * u, top - 40 * u, wd + 110 * u, hgt + 60 * u, a, 40 * u)

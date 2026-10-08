@@ -71,3 +71,21 @@ Lustig correction: APPLIED 8 Oct (film fvCbFDHik1s, Capone Short r1l_L9kkTkk, co
 ---
 # Earlier handoff (older; the block above wins where they disagree)
 
+- 8 Oct ~20:00: short_escape re-rendered and frame-checked (quote clear of captions), READY, but YouTube refused the upload session: "The user has exceeded the number of videos they may upload" (The Curve's daily cap, 10 uploaded today). Retry after ~19:30 on Fri 9 Oct: index 5 of channel/uploads_newlook.json (size 27725811 unless re-rendered), then LF03 (index 8). No session was opened, so nothing is half-uploaded.
+
+## UPDATE 8 Oct ~20:45: user's new direction = AI persona on Fanvue ("AI OFM")
+- He dropped the Uber Eats idea. He declared Fanvue the next step. Plan + rules + money model: `~/Bernard/FANVUE_PLAN_8OCT.md` (verdict: a 6-9 month build; ~8% chance of £500+ in Dec, 1-2% of £2,000+; day-30 gate Sat 7 Nov: 10+ paying subs or £75+ gross = continue, under 3 subs and under 300 followers = stop). It contradicts the "Stop AI influencer" row in ALIGNMENT_8OCT.md; he was told so.
+- Assistant's limits here: SFW material only (no explicit imagery), invented face only (never a real person), cannot create accounts or pass ID. Bio and messages must say AI (Fanvue rule).
+- Waiting on him: persona choice (3 options given in chat: A "Mara", B "Ines", C "Tess"), Fanvue sign-up + ID, social accounts with AI label on. Next assistant work once he picks: persona_bible.md, copy_pack.md, 40 SFW images + 12 short SFW videos (Higgsfield Soul ID), posting calendar, analytics sheet. Put them in ~/Bernard/fanvue/.
+- Earlier research on this: ~/🧧/📜_RECORD/HANDOFF-2026-08-16.md line 217 on (its 85/15 fee split is out of date: now 20%, 15% for the first 30 days).
+
+## UPDATE 8 Oct ~21:30: user said "go" to "pilot both and translate one" (target: 10 channels by 31 Oct; told 100 by Dec is blocked by phone verification (2 channels per number per year), per-channel monetisation, network-ban risk, production capacity)
+- THREE BACKGROUND AGENTS writing: `~/Bernard/lab/pilots/economy/` (CHANNEL.md, script.py, IMAGES.md, VERIFY.md, POST.md), `~/Bernard/lab/pilots/megaprojects/` (same + src/photo with CREDITS.md), `~/Bernard/lab/curvelf/lf02_price_es/script.py` + POST.md (Spanish LF02; `src` is a symlink to lf02_price/src). If any folder is missing its script.py, the agent died: re-launch.
+- Engine is now language-aware: a script with `LANG = "es"` uses the multilingual Whisper model in `flow.py <film> lay` and Spanish engine words (UI table in flow.py).
+- NEXT for Spanish test: `flow.py lf02_price_es lines` -> one ElevenLabs take per line (George JBFqnCBsd6RMkjVDRZzb, model eleven_multilingual_v2, language es) into lf02_price_es/flow/takes/NNN_<id>/ -> `flow.py lf02_price_es lay` -> `./render_flow.sh lf02_price_es LF02_ES_v1 6` -> critic by a Spanish-reading agent. It needs a NEW channel (user creates + phone-verifies + connects in Zapier) before upload.
+- NEXT for pilots: generate images with GPT Image (user: NO Higgsfield for new channels), voice, render, critic. No images tool chosen yet: check what is available (Canva generate-image, vidIQ, or ask).
+- Pilot niches came from vidIQ outliers (economy/cost-of-living explainers; megaprojects). vidIQ credits left: 70 (resets 5 Nov).
+
+## UPDATE 9 Oct ~00:45 (appended; the START HERE block at the top still holds, with these changes)
+- Spanish LF02: script + 75 George takes (multilingual v2) done, `lay` total 662.98 s; RENDERING to `~/Bernard/lab/curvelf/lf02_price_es/LF02_ES_v1.mp4`. Then: critic by a Spanish-reading agent; nobody has listened to the voice. Needs a new channel ("La Curva") from the user.
+- Economy pilot `~/Bernard/lab/pilots/economy/`: names The Household Ledger / Paycheck Math / The Median Household; pilot "Why $87,000 Feels Like Less" (115 beats, ~15 min). Independent FACTCHECK.md done and applied (28 edits; verdict VOICE AFTER LISTED FIXES; pay-measure hedge added by me). DO NOT VOICE before the 14 Oct US CPI / real-earnings release (if real hourly pay turns positive the last third needs a rewrite); re-pull the dated figures listed in FACTCHECK.md section 3 on voicing day. Do not use the title "Feels Like a Pay Cut". Real photos being sourced into `src/ai/e01..e33.jpg` with `src/CREDITS.md` (agent running).

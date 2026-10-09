@@ -16,6 +16,18 @@ Repo: `~/Bernard`, branch `claude/funny-newton-gd9w8v` ONLY (push with: `git pus
 
 ElevenLabs: about 89,000 characters left until about 16 Oct. Strategic warning from a critic (CRAFT "Learned", 9 Oct): every channel shares one engine look; a new channel needs its own look before launch.
 
+## 1b. NEW DIRECTION from the user (9 Oct, evening): a maps channel in the Visa typography look
+- He loves the How They Profit Visa film's opening: the world map set in type (# + % * coastlines, dots for land, one
+  glowing route line, nested zooms). Engine: `lab/ch2/ep06/flow.py` (`ocean()` etc.), look study `rend_test.py` B.
+- His idea: geography / maps & power as its own channel, starting with the Strait of Hormuz (trend desk pick #1,
+  23/25: https://claude.ai/artifact/FXjyxJ6wRAA1sXaUzdp3Qp). This also answers the critic's warning that every channel
+  shares one look: the typographic map becomes this channel's signature, distinct from The Curve.
+- Plan (not started, waiting for his go): (1) generalise the ASCII map so it can draw any region from real coastline
+  data (Natural Earth, public domain); (2) fact base for Hormuz (EIA chokepoint figures: width, share of world oil;
+  the trend desk's "21 miles" and "a fifth" are UNVERIFIED); (3) script to CRAFT, lint, voice George; (4) stills, render,
+  critic. Channel name to pick with him. Money: same YouTube arithmetic as the other channels (£0 before 2027).
+- Also unanswered: Visa film to How They Profit on Wed 14 Oct (recommended: its figures are right until Visa reports in late Oct).
+
 ## 2. YouTube: what is uploaded (all PRIVATE with a publish time; ids also in `~/Bernard/channel/uploads_newlook.done.json`)
 | Video | Channel | Public (UTC) | Id |
 |---|---|---|---|

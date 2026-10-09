@@ -27,7 +27,7 @@ def narration(path):
     for d in mod.get("LINES", []):
         out.append((d.get("id", "?"), d.get("text", "")))
     for ch in mod.get("CHAPTERS", []):
-        out += [(ch.get("id", "?"), beat[0]) for beat in ch.get("beats", [])]
+        out += [(ch.get("id", "?"), beat[0][0] if isinstance(beat[0], tuple) else beat[0]) for beat in ch.get("beats", [])]      # (shown, said): lint what is shown
         out += [(ch.get("id", "?"), para) for para in ch.get("paras", [])]
     return out
 

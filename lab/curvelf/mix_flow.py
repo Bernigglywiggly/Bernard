@@ -135,7 +135,46 @@ def fill(y, SR):
     return y * gain[:, None]
 
 
-if MUSIC:
+def drone(dur, marks):
+    """A beatless bed for serious films (9 Oct, Hormuz critic: a garage groove under missile strikes undercuts the
+    narrator). D minor: a sub that breathes every 8 s, a slowly detuned fifth, faint band-passed static, and a sonar
+    ping on each chapter crossing. Made in code, so we own it."""
+    import numpy as np
+    SR = mp.SR
+    n = int((dur + 2) * SR)
+    t = np.arange(n) / SR
+    rng = np.random.default_rng(7)
+    sub = np.sin(2 * np.pi * 36.71 * t) * (0.55 + 0.45 * np.sin(2 * np.pi * t / 8.0 - np.pi / 2) ** 2)
+    pad = sum(a * np.sin(2 * np.pi * f * t + 0.6 * np.sin(2 * np.pi * t / p_))
+              for f, a, p_ in ((73.42, 0.5, 23.0), (110.0, 0.32, 31.0), (146.83, 0.22, 17.0), (174.61, 0.12, 41.0)))
+    pad *= 0.75 + 0.25 * np.sin(2 * np.pi * t / 29.0)
+    noise = rng.standard_normal(n)
+    k = np.exp(-np.arange(64) / 9.0)
+    static = np.convolve(noise, k / k.sum(), mode="same")
+    static = (static - np.convolve(static, np.ones(400) / 400, mode="same")) * (0.4 + 0.6 * (np.sin(2 * np.pi * t / 13.0) > 0.6))
+    mono = 0.55 * sub + 0.45 * pad + 0.10 * static
+    ping = np.zeros(n)
+    for tm, _ in marks:
+        i0 = int(tm * SR)
+        for e, g in ((0.0, 1.0), (0.42, 0.35), (0.84, 0.12)):          # the ping and two returns
+            j = i0 + int(e * SR)
+            m_ = min(n - j, int(2.5 * SR))
+            if m_ > 0:
+                tt = np.arange(m_) / SR
+                ping[j:j + m_] += g * np.sin(2 * np.pi * 1180 * tt) * np.exp(-tt * 3.2)
+    L = mono + 0.18 * ping
+    R = np.roll(mono, int(0.011 * SR)) + 0.18 * np.roll(ping, int(0.023 * SR))
+    out = np.stack([L, R], 1)
+    out *= 10 ** (-21 / 20) / (np.sqrt((out ** 2).mean()) + 1e-9)
+    out[:int(2 * SR)] *= np.linspace(0, 1, int(2 * SR))[:, None]
+    return np.clip(out, -0.98, 0.98)
+
+
+BED = os.environ.get("FLOW_BED", "")
+if BED == "drone":
+    chap = [(ln["start"] - 1.6, "ch") for k_, ln in enumerate(L) if k_ and ln["floor"] != L[k_ - 1]["floor"]]     # a ping on each chapter crossing only
+    sf.write(os.path.join(B, "garage.wav"), drone(dur, chap), mp.SR)
+elif MUSIC:
     floor_, cuts_ = -1, []
     for ln in L:
         if ln["floor"] != floor_:
@@ -149,7 +188,7 @@ chain = ("highpass=f=85,equalizer=f=260:t=q:w=1.1:g=-2.5,equalizer=f=3400:t=q:w=
          "acompressor=threshold=-22dB:ratio=3.2:attack=6:release=110:makeup=5,alimiter=limit=0.89")
 fc = (f"[0:a]apad=whole_dur={dur:.2f},aformat=channel_layouts=stereo,{chain},asplit=3[v][vw][vk];[vw][2:a]afir=dry=0:wet=1[rev];"
       "[v][rev]amix=inputs=2:weights='1 0.09':normalize=0[vox];"
-      + ("[1:a]highpass=f=38,lowshelf=f=110:g=-5,dynaudnorm=f=500:g=31:m=14:p=0.5,volume=0.5[bed];" if MUSIC else "[1:a]volume=0.66,haas=level_in=1:side_gain=0.55:middle_source=mid[bed];")
+      + ("[1:a]volume=0.42[bed];" if BED == "drone" else "[1:a]highpass=f=38,lowshelf=f=110:g=-5,dynaudnorm=f=500:g=31:m=14:p=0.5,volume=0.5[bed];" if MUSIC else "[1:a]volume=0.66,haas=level_in=1:side_gain=0.55:middle_source=mid[bed];")
       + "[bed][vk]sidechaincompress=threshold=0.06:ratio=2:attack=30:release=700[duck];"
       f"[vox][duck]amix=inputs=2:normalize=0,alimiter=limit=0.84,loudnorm=I=-14:TP=-2:LRA=9,aresample=48000,alimiter=limit={os.environ.get('FLOW_LIMIT', '0.71')}:level=false,afade=t=out:st={dur - 3.0:.2f}:d=3.0[a]")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", os.path.join(B, "voice_dry.wav"), "-i", os.path.join(B, "garage.wav"), "-i", os.path.join(B, "plate.wav"),

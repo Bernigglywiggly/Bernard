@@ -45,7 +45,7 @@ LONG_SPLIT = 0                                # a split's big words longer than 
 CAP_TOP = (H - 600) if VERT else (H - 165)   # where the caption band begins
 RAISE = 40 if VERT else 20
 SHIFT = 56 if VERT else 0                     # a Short sits left of centre: the app's buttons run down the right edge    #                                # screen pixels the world is lifted, so pictures clear the caption plate
-WIDTH = dict(photo=2300, img=2300, clip=2500, num=2100, words=2300, quote=2300, list=2100, split=2500, tl=2700)
+WIDTH = dict(photo=2300, img=2300, clip=2500, num=2100, words=2300, quote=2300, list=2100, split=2500, tl=2700, map=2300)
 
 FILM = os.path.join(HERE, sys.argv[1]) if len(sys.argv) > 1 else None
 BUILD = os.path.join(FILM, "flow") if FILM else None
@@ -372,6 +372,357 @@ PH, SP = _R.uniform(0, 6.28, (ROWS, COLS)).astype(np.float32), _R.uniform(0.6, 2
 LO, MID, HI = np.float32([0.03, 0.2, 0.22]), np.float32([0.37, 0.94, 0.89]), np.float32([0.95, 1.0, 1.0])   # RGB
 
 
+# ------------------------------------------------------------------ maps: the world set in type (the How They Profit 06 opening)
+# ("map", dict(view=(lon0, lat0, lon1, lat1), labels=[(lon, lat, title, sub)], routes=[[(lon, lat), ...]], pins=[(lon, lat)],
+#              zones=[[(lon, lat), ...]], caption="...")). Land is Natural Earth (public domain): 1:110m for wide views,
+# 1:10m for regional ones. Equirectangular, longitudes scaled by cos(mid latitude). The view is the least that is shown:
+# it is widened to fill the map's box. Coast cells are #+%*, land .:·, sea empty; routes, pins and zones are the one accent.
+DATA = os.path.join(HERE, "data")
+MAP_LAND, MAP_COAST = "#3C474E", "#8A969E"
+_LAND, _MAPF, _MAPP = {}, {}, {}
+
+
+def land_rings(res):
+    """Every land ring of a Natural Earth file as an (n, 2) array with its bounding box."""
+    if res not in _LAND:
+        out = []
+        for ft in json.load(open(os.path.join(DATA, f"ne_{res}_land.geojson")))["features"]:
+            for ring in ft["geometry"]["coordinates"]:
+                a = np.asarray(ring, np.float64)
+                out.append((a, a[:, 0].min(), a[:, 1].min(), a[:, 0].max(), a[:, 1].max()))
+        _LAND[res] = out
+    return _LAND[res]
+
+
+def map_frame(i):
+    """A map's geometry in the world: the box it fills, the widened view, the grid, and lon/lat -> world."""
+    if i in _MAPF:
+        return _MAPF[i]
+    v, p = B[i]["vis"][1], PL[i]
+    lon0, lat0, lon1, lat1 = v["view"]
+    u = p["ww"] / 2300.0
+    BW, BH = (1700.0, 1250.0) if VERT else (2000.0, 760.0)
+    BW, BH = BW * u, BH * u
+    k = math.cos(math.radians((lat0 + lat1) / 2))
+    sc = min(BW / ((lon1 - lon0) * k), BH / (lat1 - lat0))         # world units per degree of latitude
+    lw, lh = min(360.0, BW / sc / k), min(170.0, BH / sc)           # the view, widened to the box (never past the whole earth)
+    cx_, cy_ = (lon0 + lon1) / 2, min(85 - lh / 2, max(-85 + lh / 2, (lat0 + lat1) / 2))
+    cw = (29.0 if VERT else 18.0) * u                               # one character cell, about 14 x 18 px on screen at 1080p
+    chh = cw * 4 / 3
+    cols, rows = int(lw * sc * k / cw), int(lh * sc / chh)
+    w, h = cols * cw, rows * chh
+    L0, L1, A0, A1 = cx_ - lw / 2, cx_ + lw / 2, cy_ - lh / 2, cy_ + lh / 2
+    bx, by = p["x"] - w / 2, p["y"] - h / 2 - (55 if not VERT else 120) * u     # lifted: the ruler and the source line sit under it
+
+    def proj(lon, lat):
+        return bx + (lon - L0) / (L1 - L0) * w, by + (A1 - lat) / (A1 - A0) * h
+
+    pts = [proj(q[0], q[1]) for q in list(v.get("pins", [])) + [lb[:2] for lb in v.get("labels", [])]]
+    focus = ((sum(q[0] for q in pts) / len(pts) - p["x"], sum(q[1] for q in pts) / len(pts) - p["y"]) if pts else (0.0, 0.0))
+    _MAPF[i] = dict(v=v, u=u, bx=bx, by=by, w=w, h=h, cols=cols, rows=rows, cw=cw, ch=chh, view=(L0, A0, L1, A1), proj=proj,
+                    focus=(max(-400.0, min(400.0, focus[0])), max(-200.0, min(200.0, focus[1]))))
+    return _MAPF[i]
+
+
+def map_mask(m):
+    """Land coverage of every cell (0..1): the rings that touch the view, clipped to it, filled at 4x4 per cell."""
+    L0, A0, L1, A1 = m["view"]
+    res = "110m" if L1 - L0 > 40 else "10m"
+    ss, cols, rows = 4, m["cols"], m["rows"]
+    gw, gh = cols * ss, rows * ss
+    mx, my = 0.08 * (L1 - L0), 0.08 * (A1 - A0)
+    polys = []
+    for a, x0, y0, x1, y1 in land_rings(res):
+        if x1 < L0 - mx or x0 > L1 + mx or y1 < A0 - my or y0 > A1 + my:
+            continue
+        g = np.empty_like(a)
+        g[:, 0] = (a[:, 0] - L0) / (L1 - L0) * gw
+        g[:, 1] = (A1 - a[:, 1]) / (A1 - A0) * gh
+        g[:, 0] = np.clip(g[:, 0], -0.08 * gw, 1.08 * gw)                   # clamped just outside the view: exact inside it
+        g[:, 1] = np.clip(g[:, 1], -0.08 * gh, 1.08 * gh)
+        q = np.round(g * 16).astype(np.int32)
+        keep = np.r_[True, np.any(q[1:] != q[:-1], axis=1)]
+        q = q[keep]
+        if len(q) >= 3:
+            polys.append(q.reshape(-1, 1, 2))
+    img = np.zeros((gh, gw), np.uint8)
+    if polys:
+        cv2.fillPoly(img, polys, 255, lineType=cv2.LINE_8, shift=4)          # even-odd over all rings: holes stay holes
+    return img.reshape(rows, ss, cols, ss).mean(axis=(1, 3)) / 255.0
+
+
+def nice_step(span, n=6):
+    for s_ in (0.25, 0.5, 1, 2, 5, 10, 15, 20, 30, 45, 60, 90):
+        if span / s_ <= n:
+            return s_
+    return 90
+
+
+def deg(x, pos, neg, frac):
+    return (f"{abs(x):.1f}" if frac else f"{abs(x):.0f}") + (pos if x >= 0 else neg)
+
+
+def map_pics(i):
+    """A map's type as two recorded pictures (every frame replays them): the map itself, and its coast lit in the accent."""
+    if i in _MAPP:
+        return _MAPP[i]
+    m = map_frame(i)
+    cov = map_mask(m)
+    land = cov > 0.5
+    pad = np.pad(land, 1, mode="edge")                                      # the box's edge is not a coast
+    water_near = ~(pad[:-2, 1:-1] & pad[2:, 1:-1] & pad[1:-1, :-2] & pad[1:-1, 2:])
+    coast = (land & water_near) | ((cov > 0.12) & ~land)                     # a sliver of land too small to fill a cell is still drawn
+    inner = land & ~coast
+    f = mono(m["ch"] * 0.95)
+    out = []
+    for lit in (False, True):
+        rec = skia.PictureRecorder()
+        c = rec.beginRecording(skia.Rect.MakeXYWH(m["bx"] - 400, m["by"] - 400, m["w"] + 800, m["h"] + 800))
+        pc = skia.Paint(Color=col(CYAN if lit else MAP_COAST, 1.0 if lit else 0.92), AntiAlias=True)
+        pl = skia.Paint(Color=col(CYAN if lit else MAP_LAND, 0.35 if lit else 1.0), AntiAlias=True)
+        for j in range(m["rows"]):
+            y = m["by"] + (j + 0.8) * m["ch"]
+            for mask, glyphs, paint in ((inner[j], ".:·", pl), (coast[j], "#+%*", pc)):
+                ii = np.nonzero(mask)[0]
+                if len(ii):
+                    s_ = "".join(glyphs[(q * 7 + j * 3) % 4] if len(glyphs) == 4 else glyphs[(q + j * 2) % 3] for q in ii)
+                    xs = [m["bx"] + q * m["cw"] + (m["cw"] - f.measureText("#")) / 2 for q in ii]
+                    c.drawTextBlob(skia.TextBlob.MakeFromPosTextH(s_, xs, y, f), 0, 0, paint)
+        if not lit:                                                 # the sea: a faint graticule of crosses, so the water reads as chart
+            L0, A0, L1, A1 = m["view"]
+            st = nice_step(max(L1 - L0, (A1 - A0) * 1.6), 8)
+            pg = skia.Paint(Color=col(INK, 0.16), AntiAlias=True, StrokeWidth=1.4 * m["u"])
+            r_ = 5 * m["u"]
+            for lo in np.arange(math.ceil(L0 / st) * st, L1, st):
+                for la in np.arange(math.ceil(A0 / st) * st, A1, st):
+                    x, y = m["proj"](lo, la)
+                    jj, ii = int((y - m["by"]) / m["ch"]), int((x - m["bx"]) / m["cw"])
+                    if 0 <= jj < m["rows"] and 0 <= ii < m["cols"] and cov[jj, ii] < 0.05:
+                        c.drawLine(x - r_, y, x + r_, y, pg)
+                        c.drawLine(x, y - r_, x, y + r_, pg)
+        out.append(rec.finishRecordingAsPicture())
+    _MAPP[i] = out
+    if len(_MAPP) > 6:
+        for old in [q for q in _MAPP if abs(q - i) > 3]:
+            del _MAPP[old]
+    return out
+
+
+def spring(x):
+    """A critically damped spring from 0 to 1: quick out, long settle."""
+    x = min(1.0, max(0.0, x))
+    return (1 - (1 + 8 * x) * math.exp(-8 * x)) / (1 - 9 * math.exp(-8))
+
+
+def route_path(m, pts):
+    """A route through its points as a smooth curve (Catmull-Rom) in the world."""
+    P = [m["proj"](lo, la) for lo, la in pts]
+    p = skia.Path()
+    p.moveTo(*P[0])
+    for j in range(len(P) - 1):
+        a0, a1, a2, a3 = P[max(0, j - 1)], P[j], P[j + 1], P[min(len(P) - 1, j + 2)]
+        for s_ in range(1, 13):
+            q = s_ / 12
+            p.lineTo(*[0.5 * (2 * a1[d] + (-a0[d] + a2[d]) * q + (2 * a0[d] - 5 * a1[d] + 4 * a2[d] - a3[d]) * q * q
+                              + (-a0[d] + 3 * a1[d] - 3 * a2[d] + a3[d]) * q ** 3) for d in (0, 1)])
+    return p
+
+
+def map_labels(i):
+    """Where each label's plate goes: beside its point, on the side with room, clear of the other plates and points."""
+    m = map_frame(i)
+    if "plates" in m:
+        return m["plates"]
+    u = m["u"] * (1.7 if VERT else 1.0)
+    ft, fs = sans(50 * u), mono(31 * u)
+    taken = [skia.Rect.MakeLTRB(x - 14 * u, y - 14 * u, x + 14 * u, y + 14 * u) for x, y in
+             [m["proj"](*q) for q in list(m["v"].get("pins", [])) + [lb[:2] for lb in m["v"].get("labels", [])]]]
+    out = []
+    cxm, cym = m["bx"] + m["w"] / 2, m["by"] + m["h"] / 2
+    for lon, lat, title, sub in m["v"].get("labels", []):
+        x, y = m["proj"](lon, lat)
+        pw = max(ft.measureText(title), fs.measureText(sub) + 0.5 * u * len(sub)) + 36 * u
+        ph = 112 * u if sub else 72 * u
+        cands = []
+        for L in (64 * u, 150 * u, 250 * u):
+            for sy in ((1, -1) if y < cym else (-1, 1)):
+                for sx in ((1, -1) if x < cxm else (-1, 1)):
+                    cands.append((sx, sy, skia.Rect.MakeXYWH(x + 2 if sx > 0 else x - pw - 2, y + L if sy > 0 else y - L - ph, pw, ph)))
+            for sx in ((1, -1) if x < cxm else (-1, 1)):            # beside the point, the leader running sideways
+                cands.append((sx, 0, skia.Rect.MakeXYWH(x + L if sx > 0 else x - L - pw, y - ph / 2, pw, ph)))
+        best, bs = None, 1e18
+        for n_, (sx, sy, r) in enumerate(cands):
+            inside = r.left() > m["bx"] - 160 * u and r.right() < m["bx"] + m["w"] + 160 * u and r.top() > m["by"] - 60 * u and r.bottom() < m["by"] + m["h"] + 20 * u
+            hit = 0.0
+            for q in taken + [o[2] for o in out]:
+                ix = skia.Rect(r.left(), r.top(), r.right(), r.bottom())
+                if ix.intersect(q):
+                    hit += ix.width() * ix.height() + 1e4
+            sc_ = hit * 10 + (0 if inside else 1e7) + n_ * 50
+            if sc_ < bs:
+                best, bs = (sx, sy, r), sc_
+        out.append(best)
+    m["plates"] = out
+    return out
+
+
+def draw_map(c, i, t):
+    """A map beat: the type map wipes on, then its zones, pins, routes and labels arrive one after another."""
+    m = map_frame(i)
+    v, u0 = m["v"], m["u"]
+    u = u0 * (1.7 if VERT else 1.0)
+    base, lit = map_pics(i)
+    first = i == 0 and OPEN_RESOLVED and not VERT
+    leave = 1 - sm(t, NXT(i) - 0.2, NXT(i) + 0.6) if i < N - 1 else 1.0
+    am = (1.0 if first else sm(t, S(i) - 1.6, S(i) - 0.6)) * leave
+    if am <= 0:
+        return
+    bx, by, w, h = m["bx"], m["by"], m["w"], m["h"]
+    rv = 1.0 if first else sm(t, S(i) - 1.2, S(i) + 0.6)              # the map is typed on, left to right, behind a lit edge
+    c.saveLayerAlpha(skia.Rect.MakeXYWH(bx - 600, by - 400, w + 1200, h + 800), int(255 * am))
+    c.drawRect(skia.Rect.MakeXYWH(bx - 40 * u0, by - 30 * u0, w + 80 * u0, h + 60 * u0), skia.Paint(Color=col(BG, 0.72)))    # the lattice stays out of the sea
+    ex = bx + (w + 240 * u0) * rv - 120 * u0
+    c.save()
+    c.clipRect(skia.Rect.MakeLTRB(bx - 50, by - 50, ex, by + h + 50))
+    c.drawPicture(base)
+    c.restore()
+    band = [(ex - 140 * u0, ex)] if rv < 1 else []
+    ph = ((t - S(i)) % 7.0) / 7.0                                      # then a slow sweep of light crosses the coast every 7 s
+    band.append((bx - 300 * u0 + ph * (w + 600 * u0), bx - 300 * u0 + ph * (w + 600 * u0) + 220 * u0))
+    for x0, x1 in band:
+        c.save()
+        c.clipRect(skia.Rect.MakeLTRB(max(bx - 50, x0), by - 50, min(ex, x1), by + h + 50))
+        c.drawPicture(lit, None, skia.Paint(Color=col("#FFFFFF", 0.55 if x1 == ex else 0.32)))
+        c.restore()
+    # the ruler: longitudes under the map, latitudes down its left side, and the source line beneath
+    L0, A0, L1, A1 = m["view"]
+    fr = mono(23 * u)
+    ink = skia.Paint(Color=col(INK, 0.5), AntiAlias=True, StrokeWidth=1.3 * u0)
+    ra = sm(t, S(i) - 0.4, S(i) + 0.6) if not first else 1.0
+    yb = by + h + 12 * u0
+    c.drawLine(bx, yb, bx + w * ra, yb, skia.Paint(Color=col(INK, 0.3), AntiAlias=True, StrokeWidth=1.2 * u0))
+    st = nice_step(L1 - L0, 7 if not VERT else 4)
+    for lo in np.arange(math.ceil(L0 / st) * st, L1 + 1e-9, st):
+        x, _ = m["proj"](lo, 0)
+        if x > bx + w * ra:
+            break
+        c.drawLine(x, yb, x, yb + 12 * u0, ink)
+        text(c, deg(((lo + 180) % 360) - 180, "E", "W", st < 1), x, yb + 40 * u, fr, DIM, ra, 0.5 * u, "center")
+    st = nice_step(A1 - A0, 4 if not VERT else 6)
+    for la in np.arange(math.ceil(A0 / st) * st, A1 + 1e-9, st):
+        _, y = m["proj"](0, la)
+        c.drawLine(bx - 22 * u0, y, bx - 8 * u0, y, ink)
+        text(c, deg(la, "N", "S", st < 1), bx - 30 * u0, y + 7 * u, fr, DIM, ra, 0.5 * u, "right")
+    if v.get("caption"):
+        cap = typed(v["caption"], t, S(i) + 0.3, 45.0) if not first else v["caption"]
+        c.drawRect(skia.Rect.MakeXYWH(bx, yb + 62 * u, 6 * u, 24 * u), skia.Paint(Color=col(CYAN)))
+        text(c, cap, bx + 18 * u, yb + 82 * u, mono(22 * u), DIM, 1.0, 0.8 * u)
+    c.restore()
+    a, t0 = held(i, t)
+    a *= leave if a > 0 else 0
+    if a <= 0:
+        return
+    dur = max(2.0, E(i) - t0)
+    for k_, zone in enumerate(v.get("zones", [])):                     # a zone: a lit hatch inside a hairline
+        za = a * sm(t, t0 + 0.2 + 0.4 * k_, t0 + 1.0 + 0.4 * k_)
+        if za <= 0:
+            continue
+        zp = skia.Path()
+        zp.addPoly([skia.Point(*m["proj"](lo, la)) for lo, la in zone], True)
+        R = zp.computeTightBounds()
+        sweep = R.left() + (R.width() + 2) * spring((t - t0 - 0.2 - 0.4 * k_) / 1.2)
+        c.save()
+        c.clipRect(skia.Rect.MakeLTRB(R.left() - 4, R.top() - 4, sweep + 4, R.bottom() + 4))
+        c.drawPath(zp, skia.Paint(Color=col(CYAN, 0.10 * za), AntiAlias=True))
+        c.save()
+        c.clipPath(zp, skia.ClipOp.kIntersect, True)
+        gap = 14 * u0
+        off = (t * 10 * u0) % gap                                      # the hatch drifts, slowly
+        hp = skia.Paint(Color=col(CYAN, 0.42 * za), AntiAlias=True, StrokeWidth=1.6 * u0)
+        xx = R.left() - R.height() - gap + off
+        while xx < R.right() + gap:
+            c.drawLine(xx, R.bottom(), xx + R.height(), R.top(), hp)
+            xx += gap
+        c.restore()
+        c.drawPath(zp, skia.Paint(Color=col(CYAN, 0.85 * za), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2.0 * u0))
+        c.restore()
+    for k_, rt in enumerate(v.get("routes", [])):                     # a route draws itself on, then a light runs along it
+        if len(rt) < 2:
+            continue
+        ts, td = t0 + 0.4 + 0.6 * k_, min(3.2, max(1.4, dur * 0.5))
+        pr = spring((t - ts) / td)
+        if pr <= 0:
+            continue
+        if "rp" not in m:
+            m["rp"] = {}
+        if k_ not in m["rp"]:
+            pp = route_path(m, rt)
+            m["rp"][k_] = (pp, skia.PathMeasure(pp, False))
+        pp, pm = m["rp"][k_]
+        Lr = pm.getLength()
+        seg = skia.Path()
+        pm.getSegment(0, Lr * pr, seg, True)
+        g = glow(CYAN, 0.5 * a, 12 * u0)
+        g.setStyle(skia.Paint.kStroke_Style)
+        g.setStrokeWidth(7 * u0)
+        c.drawPath(seg, g)
+        c.drawPath(seg, skia.Paint(Color=col(CYAN, a), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2.6 * u0, StrokeCap=skia.Paint.kRound_Cap))
+        if pr < 0.999:
+            hd = pm.getPosTan(Lr * pr)[0]
+            c.drawCircle(hd.x(), hd.y(), 16 * u0, glow(INK, 0.8 * a, 12 * u0))
+            c.drawCircle(hd.x(), hd.y(), 5.5 * u0, skia.Paint(Color=col(INK, a), AntiAlias=True))
+        else:
+            q = ((t - ts - td) % 3.0) / 3.0                             # a pulse runs the route every 3 s
+            hd = pm.getPosTan(Lr * q)[0]
+            pa = a * math.sin(math.pi * q)
+            c.drawCircle(hd.x(), hd.y(), 14 * u0, glow(INK, 0.7 * pa, 10 * u0))
+            c.drawCircle(hd.x(), hd.y(), 4.5 * u0, skia.Paint(Color=col(INK, pa), AntiAlias=True))
+    for k_, (lo, la) in enumerate(v.get("pins", [])):                 # a pin: a lit point and rings going out from it
+        pa = a * sm(t, t0 + 0.1 + 0.3 * k_, t0 + 0.5 + 0.3 * k_)
+        if pa <= 0:
+            continue
+        x, y = m["proj"](lo, la)
+        for ph_ in (0.0, 0.5):
+            q = ((t - t0 + ph_ * 1.8) % 1.8) / 1.8
+            c.drawCircle(x, y, (12 + 46 * q) * u0, skia.Paint(Color=col(CYAN, 0.75 * pa * (1 - q)), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2.2 * u0))
+        c.drawCircle(x, y, 20 * u0, glow(CYAN, 0.6 * pa, 12 * u0))
+        c.drawCircle(x, y, 8 * u0, skia.Paint(Color=col(CYAN, pa), AntiAlias=True))
+    labels = v.get("labels", [])
+    stag = min(1.1, dur * 0.55 / max(1, len(labels)))
+    ft, fs = sans(50 * u), mono(31 * u)
+    for k_, ((lo, la, title, sub), (sx, sy, r)) in enumerate(zip(labels, map_labels(i))):   # a label: a point, a leader, a plate
+        tl = t0 + 0.5 + stag * k_
+        la_ = a * sm(t, tl, tl + 0.45)
+        if la_ <= 0:
+            continue
+        la_ *= on_screen(r.left(), r.right(), r.bottom())
+        x, y = m["proj"](lo, la)
+        grow = spring((t - tl) / 0.7)
+        c.drawCircle(x, y, 5.5 * u0, skia.Paint(Color=col(INK, la_), AntiAlias=True))
+        c.drawCircle(x, y, 14 * u0, skia.Paint(Color=col(INK, 0.6 * la_), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=1.4 * u0))
+        if sy:                                                      # the leader: from the ring to the plate's near edge
+            x_end, y_end = x, (r.top() if sy > 0 else r.bottom())
+        else:
+            x_end, y_end = (r.left() if sx > 0 else r.right()), y
+        dl = math.hypot(x_end - x, y_end - y) or 1.0
+        xb, yb_ = x + (x_end - x) / dl * 14 * u0, y + (y_end - y) / dl * 14 * u0
+        c.drawLine(xb, yb_, xb + (x_end - xb) * grow, yb_ + (y_end - yb_) * grow, skia.Paint(Color=col(INK, 0.85 * la_), AntiAlias=True, StrokeWidth=1.4 * u0))
+        pa = la_ * sm(t, tl + 0.25, tl + 0.6)
+        if pa <= 0:
+            continue
+        c.drawRect(r, skia.Paint(Color=col(BG, 0.92 * pa)))
+        c.drawRect(skia.Rect.MakeXYWH(r.left() if sx > 0 else r.right() - 3 * u0, r.top(), 3 * u0, r.height()), skia.Paint(Color=col(CYAN, pa)))
+        tx, al = (r.left() + 18 * u, "left") if sx > 0 else (r.right() - 18 * u, "right")
+        text(c, title, tx, r.top() + 54 * u, ft, INK, pa, 0.0, al)
+        if sub:
+            st_ = typed(sub, t, tl + 0.5, 40.0)
+            if al == "right":                                              # typed from the left even when set right
+                tx_ = tx - (fs.measureText(sub) + 0.5 * u * (len(sub) - 1))
+                text(c, st_, tx_, r.top() + 94 * u, fs, CYAN, pa, 0.5 * u)
+            else:
+                text(c, st_, tx, r.top() + 94 * u, fs, CYAN, pa, 0.5 * u)
+
+
 # ------------------------------------------------------------------ the camera: one move, start to finish
 def keys():
     k = []
@@ -382,6 +733,15 @@ def keys():
         a, b = S(n) + (0.0 if n == 0 else 0.45 if E(n) - S(n) > 2.6 else 0.22), (NXT(n) - leave if n + 1 < N else TOTAL)
         b = max(b, a + 0.4)
         dx = ww * 0.03 * (1 if n % 2 else -1)
+        if p["kind"] == "map":                                      # a map holds still and pushes slowly toward what it is about
+            fx, fy = map_frame(n)["focus"]
+            if n == 0:
+                k.append((0.0, (x, y + 10, z * 1.12)))
+                k.append((a + 1.4, (x, y, z)))
+            else:
+                k.append((a, (x, y, z * 0.97), 0.35 + 0.25 * min(1.0, math.hypot(x - k[-1][1][0], y - k[-1][1][1]) / 6000)))
+            k.append((b, (x + fx * 0.14, y + fy * 0.14, z * 1.08)))
+            continue
         if n == 0:
             k.append((0.0, (x - 40, y + 20, z * 1.45)))
             k.append((a + 1.4, (x + dx * 0.2, y, z * 1.02)))
@@ -571,6 +931,9 @@ def world_type(c, t):
         p, v = PL[i], B[i]["vis"]
         k, x, y, u = p["kind"], p["x"], p["y"], p["ww"] / 2300.0 * (1.7 if VERT else 1.0)      # a Short's type is set much larger: a phone is small
         FR = (W - (400 if VERT else 200)) / max(CAM[2], 1e-6)       # the widest a block may be in this frame
+        if k == "map":
+            draw_map(c, i, t)
+            continue
         a, t0 = held(i, t)
         if a <= 0:
             continue

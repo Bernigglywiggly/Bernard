@@ -1,16 +1,20 @@
-# START HERE: state at Fri 9 Oct 2026, 16:05 UK (written for a Claude with zero history)
+# START HERE: state at Fri 9 Oct 2026, 17:10 UK (written for a Claude with zero history)
 
 This block is the truth. Everything below it in this file is older history, kept for detail only.
 Repo: `~/Bernard`, branch `claude/funny-newton-gd9w8v` ONLY (push with: `git push -q origin claude/funny-newton-gd9w8v 2>/dev/null || git -c http.curloptResolve=github.com:443:140.82.121.4 push -q origin claude/funny-newton-gd9w8v`). Python: `~/youtube/.venv/bin/python`. Videos, voice takes and pictures are on THIS Mac only (not in git): a cloud session cannot render or upload them.
 
-## 1. What is running / just done (9 Oct afternoon session; background jobs die with the session)
-| Job | Output | State |
+## 1. Done this session (9 Oct afternoon) and what is still running
+| Item | File | State |
 |---|---|---|
-| Spanish film 2 v2 (8 lines re-voiced after critic CRITIC_ES_v1.md; old takes in `lf02_price_es/flow/takes_old_v1/`) | `lab/curvelf/lf02_price_es/LF02_ES_v2.mp4` | rendering; if missing: `flow.py lf02_price_es lay && ./render_flow.sh lf02_price_es LF02_ES_v2 6`. Then a fresh Spanish-reading critic on v2, then fix POST.md chapter times |
-| Tunnel pilot (megaprojects; engine link `lab/curvelf/pilot_tunnel`) v1: all 94 takes match the fixed script, stills checked | `lab/curvelf/pilot_tunnel/TUNNEL_PILOT_v1.mp4` | queued after the Spanish render; if missing: `./render_flow.sh pilot_tunnel TUNNEL_PILOT_v1 6`. Then critic |
-| LF03 music drops at 7:24 / 8:02: new `fill()` in `mix_flow.py score()`; sound-only re-mix | `lab/curvelf/lf03_held/LF03_FLOW_v5.mp4` | re-mixing; if missing: `FLOW_MUSIC="$(ls music/serious/lf03_a/*.mp3|tail -1),$(ls music/serious/lf03_b/*.mp3|tail -1)" python mix_flow.py lf03_held lf03_held/flow/picture.mp4 lf03_held/LF03_FLOW_v5.mp4`. v5 replaces v4 for upload index 8 (edit the manifest path) |
-| Economy pilot pictures e01-e33, drawn in code with skia (no AI generator), by a background agent | `lab/pilots/economy/illustrations.py`, `src/ai/e*.png`, `src/qc/ILLUSTRATIONS_QC.md` | running; if no illustrations.py: re-launch (brief = IMAGES.md, copy the method of `pilots/megaprojects/diagrams.py`). Then voice (George, English), `lay`, render via engine link `lab/curvelf/pilot_ledger` |
-| `short_escape` upload (index 5 of `channel/uploads_newlook.json`) | YouTube | after 19:30 UK 9 Oct (daily cap hit on 8 Oct) |
+| Spanish film 2 | `lab/curvelf/lf02_price_es/LF02_ES_v2.mp4` | DONE. 8 lines re-voiced; critic `CRITIC_ES_v2.md` = UPLOAD; chapters in POST.md. WAITING ON USER: which channel (The Curve or a new "La Curva"), and his ear check of `ear_check_v2.mp3` (xAI said "equis A I"). Old takes in `flow/takes_old_v1/` |
+| LF03 music drops | `lab/curvelf/lf03_held/LF03_FLOW_v5.mp4` | DONE. `mix_flow.py` gained `fill()` (lifts short holes in a score bed); sound-only re-mix; dips now about 5 dB. Manifest index 8 points at v5. Upload after 19:30 9 Oct |
+| `short_escape` | index 5 of `channel/uploads_newlook.json` | Upload after 19:30 UK 9 Oct (daily cap hit 8 Oct) |
+| Tunnel pilot ("Megaprojects"/"Datum Line") | `lab/curvelf/pilot_tunnel/TUNNEL_PILOT_v2.mp4` (= `lab/pilots/megaprojects/`) | DONE. Critic v1 (`CRITIC_v1.md`, FIX THEN UPLOAD) fixes applied in v2: honest diagram label, frame 0 shows the photo, hook at 5.4 s, ≈15 MILLION, POST.md with photo links + chapters. NOT done: name pronunciations by ear (Fehmarn, Rødbyhavn, Øresund, Lolland, Scandlines); channel name; channel does not exist |
+| Economy pilot ("The Household Ledger") | `lab/curvelf/pilot_ledger/LEDGER_PILOT_v2.mp4` (= `lab/pilots/economy/`) | 33 pictures drawn in code (`illustrations.py`, no AI generator), 115 lines voiced, lint clean, v2 rendered. Critic RUNNING -> `lab/pilots/economy/CRITIC_v2.md`; if missing, re-run the film-critic skill on v2 |
+| Engine (`lab/curvelf/flow.py`) | | New script options: `ILLUS = "..."` (picture label), `LEAD` (seconds before the first word), `OPEN_RESOLVED = True` (frame 0 shows the first picture). Long channel names push the chapter rail right. Photo credit no longer doubles "PHOTO" |
+| Trend desk report (another session) | https://claude.ai/artifact/FXjyxJ6wRAA1sXaUzdp3Qp | Read only; nothing in the repo |
+
+ElevenLabs: about 89,000 characters left until about 16 Oct. Strategic warning from a critic (CRAFT "Learned", 9 Oct): every channel shares one engine look; a new channel needs its own look before launch.
 
 ## 2. YouTube: what is uploaded (all PRIVATE with a publish time; ids also in `~/Bernard/channel/uploads_newlook.done.json`)
 | Video | Channel | Public (UTC) | Id |
@@ -55,11 +59,11 @@ Lustig correction: APPLIED 8 Oct (film fvCbFDHik1s, Capone Short r1l_L9kkTkk, co
 - Scale: he wants 10 channels by 31 Oct and 100 by 31 Dec. He was told 100 is blocked (one phone number verifies 2 channels a year; monetisation is per channel; linked-network bans; capacity) and said "go" to: pilot two new channels + translate one film into Spanish. New channels: NO Higgsfield; use GPT/Claude/public image generation and real photos with clear rights. Existing scale plan: `~/Bernard/AUTOMATION.md`.
 
 ## 6. Next steps, in order
-1. Read the three agents' output (section 1). Spanish: `flow.py lf02_price_es lines`, voice every line (George, model `eleven_multilingual_v2`, Spanish), `lay`, `./render_flow.sh lf02_price_es LF02_ES_v1 6` (garage bed, no FLOW_MUSIC), critic by a Spanish-reading agent. `lf02_price_es/src` is a symlink to the English film's pictures.
-2. Pilots: generate each IMAGES.md picture (black background, monochrome, no text) with an image tool that is NOT Higgsfield, put them in `<pilot>/src/ai/`, voice, render, critic. The pilot folders are film folders for flow.py once `src/` exists (flow.py takes a path relative to `lab/curvelf`, so move or symlink them there).
-3. 9 Oct evening: upload short_escape; get the user's word on LF03 and upload it.
-4. New channels need the user: create each channel, phone-verify, connect it in Zapier. Ask him for channel names from each pilot's CHANNEL.md.
-5. Still unmade: Shorts for Ponzi and for the Visa film; TikTok/Reels versions wait on Metricool connections.
+1. After 19:30 UK 9 Oct: upload `short_escape` (index 5) and LF03 v5 (index 8) via section 3. Before each upload, a critic must have passed the file (LF03: picture as v4 which passed; only the music bed changed).
+2. Read `lab/pilots/economy/CRITIC_v2.md`; apply its fixes (one more render at most).
+3. Spanish film: upload when the user names the channel. YouTube multi-language audio on the English video would be the ideal home but is not available through the API.
+4. New channels need the user: create, phone-verify, connect in Zapier; names from each pilot's CHANNEL.md.
+5. Still unmade: Shorts for Ponzi and Visa; TikTok/Reels wait on Metricool connections.
 
 ## 7. Standing rules (never break)
 - Never touch TikTok `thegoldenplate` or `passdaboof2`. Pinterest DTwork7: read-only. Nothing is sent to any shop without his approval. Never copy API keys into a handoff. No model names in commits or PRs. Delete `media/` in a commit before the PR is merged.

@@ -17,7 +17,7 @@ Looking-Glass (1871); Leigh Van Valen, "A New Evolutionary Law" (1973); Nvidia's
 Visuals as in ../lf01_escape/script.py.
 """
 TITLE = "EL PRECIO DE PENSAR"
-TAG = "LA CURVA  ·  EL PRECIO DE PENSAR"
+TAG = "CURVAEXPLICA  ·  EL PRECIO DE PENSAR"
 NAME = "lf02_price"
 LANG = "es"
 FIX = {}

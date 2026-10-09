@@ -1,6 +1,6 @@
 # LF02 · EL PRECIO DE PENSAR · versión en español
 
-Upload file: `LF02_ES_v2.mp4` (critic CRITIC_ES_v2.md: UPLOAD, 9 Oct). Which channel it goes on is the user's call (see HANDOFF).
+Upload file: `LF02_ES_v3.mp4` (= v2 passed critic, renamed on screen to CURVAEXPLICA). Channel: CurvaExplica (created by the user 9 Oct).
 
 ## Título
 
@@ -37,4 +37,4 @@ La narración es una voz sintética y las imágenes son ilustraciones generadas 
 
 ## Etiquetas
 
-inteligencia artificial, ia, la curva, explicado, economía, tecnología, chatgpt, claude, guerra de precios, paradoja de jevons
+inteligencia artificial, ia, curvaexplica, explicado, economía, tecnología, chatgpt, claude, guerra de precios, paradoja de jevons

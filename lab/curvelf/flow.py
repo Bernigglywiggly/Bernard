@@ -795,7 +795,7 @@ def screen(c, t, cx, cy, z):
     if a > 0:                                                       # the sign-off, with room left for end-screen elements above it
         c.drawRect(skia.Rect.MakeXYWH(W / 2 - 430, H - 226, 860, 150), skia.Paint(Color=col(BG, 0.9 * a)))
         text(c, CHANNEL, W / 2, H - 150, sans(64), INK, a, 6.0, align="center")
-        text(c, (UI["tagline"] if CHANNEL in ("THE CURVE", "LA CURVA") else "") + UI["sources"], W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
+        text(c, (UI["tagline"] if CHANNEL in ("THE CURVE", "LA CURVA", "CURVAEXPLICA") else "") + UI["sources"], W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
     captions(c, t, n)
 
 

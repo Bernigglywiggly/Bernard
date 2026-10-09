@@ -100,32 +100,34 @@ QATAR_HIT = (51.20, 26.98)            # ~94 km north of Madinat ash Shamal (appr
 FUJ_HIT = (56.55, 25.17)              # ~10 nm east of the Fujairah moorings (approximate)
 
 # ---- routes: schematic paths, sourced endpoints ----
-R_GULF_OUT = [(50.05, 26.71), (51.2, 27.0), (52.6, 26.85), (54.0, 26.45), (55.3, 26.40), (55.98, 26.44),
-              (56.21, 26.60), (56.44, 26.70), (56.67, 26.64), (56.96, 26.53), (57.2, 26.1), (57.9, 25.2), (59.4, 23.9)]
+R_GULF_OUT = [(50.05, 26.71), (51.2, 27.0), (52.6, 26.85), (54.0, 26.45), (55.3, 26.32), (56.12, 26.37),
+              (56.26, 26.47), (56.43, 26.54), (56.55, 26.53), (56.63, 26.39), (56.67, 26.12), (57.4, 25.4), (59.4, 23.9)]   # FACTCHECK: kept on the Omani side, clear of Iran's coast
 R_INDIA = [(59.4, 23.9), (63.5, 23.0), (67.5, 22.6), (69.8, 22.45)]
 R_CHINA = [(59.4, 23.9), (64.0, 17.5), (72.5, 9.5), (80.3, 5.6), (88.0, 5.9), (95.3, 5.9), (98.8, 3.9), (101.6, 2.4),
-           (103.8, 1.2), (106.5, 3.5), (110.5, 8.5), (115.0, 14.5), (119.0, 21.5), (121.5, 26.5), (122.3, 29.8)]
+           (103.0, 1.45), (103.8, 1.15), (104.4, 1.3), (106.5, 3.5), (110.5, 8.5), (115.0, 14.5), (119.0, 21.5), (121.5, 26.5), (122.3, 29.8)]
 R_JAPAN = [(115.0, 14.5), (120.9, 20.0), (124.5, 24.5), (130.0, 30.5), (135.0, 33.3), (139.8, 35.3)]
 R_KOREA = [(124.5, 24.5), (126.5, 31.0), (128.6, 34.3), (129.4, 35.5)]
-R_EUROPE = [(59.4, 23.9), (57.8, 19.5), (53.0, 14.0), (48.0, 12.3), (43.4, 12.6), (41.0, 15.5), (38.3, 20.5),
+R_EUROPE = [(59.4, 23.9), (60.0, 22.6), (59.3, 20.6), (58.5, 19.0), (53.0, 14.0), (48.0, 12.3), (43.4, 12.6), (41.0, 15.5), (38.3, 20.5),
             (35.0, 26.5), (32.55, 29.95), (32.3, 31.3), (26.0, 33.5)]
 P_EASTWEST = [ABQAIQ, (47.5, 25.3), (45.0, 24.7), (42.0, 24.4), (39.8, 24.2), YANBU]
 P_HABSHAN = [HABSHAN, (54.6, 24.1), (55.5, 24.6), (56.0, 25.0), FUJAIRAH]
-R_NORTH = [(55.90, 26.55), (56.20, 26.75), (56.45, 26.96), (56.75, 26.86), (57.02, 26.62)]     # Iran-approved route (CSIS: closer to Iranian waters)
+R_NORTH = [(55.90, 26.55), (56.20, 26.75), (56.30, 26.90), (56.45, 26.96), (56.75, 26.86), (57.02, 26.62)]     # Iran-approved route (CSIS: closer to Iranian waters)
 R_SOUTH = [(55.95, 26.30), (56.25, 26.42), (56.48, 26.42), (56.62, 26.25), (56.62, 25.95)]     # the southern corridor, Omani side
 R_SHUTTLE = [(55.60, 26.28), (55.95, 26.30), (56.25, 26.42), (56.48, 26.42), (56.62, 26.25), (56.62, 25.80), (56.50, 25.40)]
 LINE_GAP = [LARAK, QUOIN]
 
 # ---- zones: the two lanes, 2 nmi each with a 2 nmi buffer, drawn schematically (FACTS F02) ----
-Z_INBOUND = [(56.957, 26.515), (56.666, 26.626), (56.438, 26.681), (56.211, 26.584), (55.969, 26.434),
-             (55.948, 26.461), (56.192, 26.613), (56.434, 26.714), (56.679, 26.657), (56.972, 26.546)]
-Z_OUTBOUND = [(56.943, 26.485), (56.654, 26.594), (56.442, 26.649), (56.229, 26.556), (55.991, 26.406),
-              (56.012, 26.379), (56.248, 26.527), (56.446, 26.616), (56.641, 26.563), (56.928, 26.454)]
+# FACTCHECK 9 Oct: redrawn so both lanes sit on the Omani side of the Larak-Quoin median (the old drawing put the
+# inbound lane, and the eastern ends of both, nearer Iran's coast than Oman's, against the narration). Still schematic.
+Z_INBOUND = [(56.088, 26.408), (56.23, 26.514), (56.416, 26.591), (56.581, 26.573), (56.688, 26.405), (56.728, 26.122),
+             (56.765, 26.126), (56.724, 26.414), (56.604, 26.599), (56.409, 26.624), (56.21, 26.542), (56.064, 26.433)]
+Z_OUTBOUND = [(56.112, 26.382), (56.25, 26.486), (56.424, 26.559), (56.559, 26.547), (56.652, 26.395), (56.692, 26.118),
+              (56.655, 26.114), (56.616, 26.386), (56.536, 26.521), (56.431, 26.526), (56.27, 26.458), (56.136, 26.357)]
 Z_SOUTH = [(55.95, 26.36), (56.30, 26.47), (56.55, 26.45), (56.68, 26.25), (56.68, 25.90), (56.56, 25.90),
            (56.56, 26.22), (56.45, 26.37), (56.25, 26.37), (55.95, 26.26)]
 
 # ---- attack pins, 1-8 Oct (approximate, from UKMTO / Windward descriptions) ----
-OCT_HITS = [(56.40, 26.36), (56.48, 26.26), (56.52, 26.42), (56.57, 26.12), (56.47, 25.97), (56.60, 26.30)]
+OCT_HITS = [(56.46, 26.40), (56.48, 26.26), (56.52, 26.42), (56.57, 26.12), (56.47, 25.97), (56.60, 26.30)]
 
 CAP_EIA = "SOURCE: US EIA · TODAY IN ENERGY · 16 JUN 2025"
 CAP_LANES = "LANES DRAWN SCHEMATICALLY · WIDTHS: US EIA"
@@ -133,7 +135,7 @@ CAP_ROUTES = "SEA ROUTES AND PIPELINES DRAWN SCHEMATICALLY"
 
 CHAPTERS = [
     dict(id="open", title="", beats=[
-        ("On the eighth of October, only eight ships crossed the Strait of Hormuz, and yet the Middle East is exporting roughly as much crude oil as it did before the war.",
+        ("On the eighth of October, only eight ships crossed the Strait of Hormuz, and yet, by one tracker's count, Middle East crude exports are back to about where they were before the war.",
          ("map", {"view": V_NARROWS,
                   "labels": [(56.44, 26.67, "STRAIT OF HORMUZ", "26.6N 56.4E · 8 OCT 2026"), (56.62, 26.95, "8 SHIPS", "5 IN · 3 OUT · WINDWARD")],
                   "routes": [R_GULF_OUT[4:11]], "pins": [], "zones": [Z_INBOUND, Z_OUTBOUND],
@@ -171,7 +173,7 @@ CHAPTERS = [
          ("num", "39 KM", "NARROWEST WIDTH · ABOUT 21 NAUTICAL MILES · LARAK TO GREAT QUOIN")),
         ("Large ships keep to two marked lanes, inbound to the north and outbound to the south. Each lane is about two miles wide, with a buffer of the same width between them.",
          ("map", {"view": V_NARROWS,
-                  "labels": [(56.20, 26.70, "INBOUND", "≈2 MI"), (56.30, 26.45, "OUTBOUND", "≈2 MI")],
+                  "labels": [(56.22, 26.62, "INBOUND", "≈2 MI"), (56.34, 26.44, "OUTBOUND", "≈2 MI")],
                   "routes": [], "pins": [], "zones": [Z_INBOUND, Z_OUTBOUND], "caption": CAP_LANES})),
         ("Those lanes lie in Omani waters, but the islands that overlook them, Qeshm, Hormuz and Larak, belong to Iran.",
          ("map", {"view": V_STRAIT,
@@ -192,8 +194,8 @@ CHAPTERS = [
         ("That is the equivalent of roughly a fifth of all the oil the world consumes.",
          ("num", "~20%", "OF WORLD PETROLEUM CONSUMPTION · 2024 · US EIA")),
         ("It was also more than a quarter of all the oil traded by sea, and about a fifth of the world's trade in liquefied gas, most of it from Qatar.",
-         ("split", ("> ¼", "OF SEABORNE OIL TRADE"), ("~⅕", "OF WORLD LNG TRADE · MOSTLY QATAR · US EIA"))),
-        ("Saudi Arabia ships more through it than anyone, with Iraq, the Emirates, Kuwait, Qatar and Iran behind it.",
+         ("split", ("> 1/4", "OF SEABORNE OIL TRADE"), ("~1/5", "OF WORLD LNG TRADE · MOSTLY QATAR · US EIA"))),
+        ("Saudi Arabia ships more through it than anyone, with Iraq, the Emirates, Iran, Kuwait and Qatar behind it.",
          ("map", {"view": V_GULF,
                   "labels": [(RAS_TANURA[0], RAS_TANURA[1], "RAS TANURA", "SAUDI ARABIA · 38% OF HORMUZ CRUDE"),
                              (KHARG[0], KHARG[1], "KHARG", "IRAN · 29.2N 50.3E"),
@@ -208,7 +210,7 @@ CHAPTERS = [
                   "caption": "HORMUZ CRUDE BY DESTINATION, 2024 · US EIA / VORTEXA · " + CAP_ROUTES})),
         ("In 2024, about eighty-four percent of the crude that crossed the strait went to Asia.",
          ("num", "84%", "OF HORMUZ CRUDE AND CONDENSATE WENT TO ASIA · 2024 · US EIA")),
-        ("China alone took about a third of it, with India, South Korea and Japan close behind.",
+        ("China alone took about a third of it, with India, South Korea and Japan well behind.",
          ("map", {"view": (55.0, -2.0, 145.0, 42.0),
                   "labels": [(122.3, 29.8, "CHINA", "ABOUT A THIRD · 4.8M B/D"), (69.8, 22.45, "INDIA", "1.9M B/D"),
                              (129.4, 35.5, "S. KOREA", "1.7M B/D"), (139.8, 35.3, "JAPAN", "1.5M B/D")],
@@ -223,30 +225,30 @@ CHAPTERS = [
         ("On the twenty-eighth of February the United States and Israel began striking Iran, and within hours Iran's Revolutionary Guard was radioing ships that none would pass.",
          ("map", {"view": V_STRAIT,
                   "labels": [(BANDAR_ABBAS[0], BANDAR_ABBAS[1], "28 FEB 2026", "RADIO WARNINGS TO SHIPS")],
-                  "routes": [], "pins": [BANDAR_ABBAS], "zones": [Z_INBOUND, Z_OUTBOUND], "caption": "SOURCE: AL JAZEERA · CSIS"})),
+                  "routes": [], "pins": [BANDAR_ABBAS], "zones": [Z_INBOUND, Z_OUTBOUND], "caption": "SOURCE: REUTERS · UKMTO ADVISORY 003-26"})),
         ("By the second of March, according to the Center for Strategic and International Studies, the strait was effectively closed.",
          ("num", "2 MAR", "STRAIT EFFECTIVELY CLOSED · CSIS, 22 APR 2026")),
-        ("A few days later the International Energy Agency gave its verdict on what was happening.",
+        ("Ten days later the International Energy Agency gave its verdict on what was happening.",
          ("quote", "The war in the Middle East is creating the largest supply disruption in the history of the global oil market.",
           "INTERNATIONAL ENERGY AGENCY · OIL MARKET REPORT · 12 MARCH 2026")),
         ("Its members agreed to put 400 million barrels of emergency oil on the market.",
          ("num", "400M", "BARRELS OF EMERGENCY STOCKS MADE AVAILABLE · AGREED 11 MAR · IEA")),
         ("Gulf producers, with nowhere to send their crude, cut their output by at least ten million barrels a day.",
-         ("num", "−10M", "BARRELS A DAY OF GULF OUTPUT CUT · MARCH 2026 · IEA")),
+         ("num", "−10M", "AT LEAST · BARRELS A DAY OF GULF OUTPUT CUT · MARCH 2026 · IEA")),
         ("A physical cargo of Brent crude had cost about seventy-one dollars a barrel before the war. By early April it had nearly doubled, to its highest level since the summer of 2008.",
          ("split", ("$71.32", "BRENT SPOT · 27 FEB"), ("$138.21", "7 APR · HIGHEST SINCE JULY 2008 · EIA"))),
         ("Then came months of false dawns.",
          ("tl", [("28 FEB", "STRIKES BEGIN"), ("2 MAR", "EFFECTIVELY CLOSED"), ("13 APR", "US BLOCKADES IRAN'S PORTS"),
-                 ("17 APR", "OPEN FOR A DAY"), ("17 JUN", "DEAL · BRIEF REOPENING"), ("7 JUL", "MISSILES HIT SHIPS"),
+                 ("17 APR", "OPEN FOR A DAY"), ("17 JUN", "DEAL · BRIEF REOPENING"), ("6 JUL", "MISSILES HIT SHIPS"),
                  ("6 OCT", "9 TANKERS HIT THIS MONTH")])),
         ("In April, Iran declared the strait open, and its Revolutionary Guard shut it again the very next day.",
          ("map", {"view": V_NARROWS,
-                  "labels": [(56.62, 26.95, "17 APR · OPEN", "18 APR · SHUT"), (56.30, 26.40, "13 TANKERS", "MADE IT THROUGH · CSIS")],
+                  "labels": [(56.62, 26.95, "17 APR · OPEN", "18 APR · SHUT"), (56.30, 26.40, "AT LEAST 13", "TANKERS MADE IT THROUGH · CSIS")],
                   "routes": [R_GULF_OUT[4:11]], "pins": [], "zones": [Z_INBOUND, Z_OUTBOUND], "caption": "SOURCE: CSIS · STARBOARD MARITIME INTELLIGENCE"})),
-        ("In June, a deal between Washington and Tehran brought a brief reopening, which ended in early July when missiles struck a Qatari gas carrier and a Saudi tanker.",
+        ("In June, a deal between Washington and Tehran brought a brief, partial reopening. It began to unravel in early July, when missiles struck a Qatari gas carrier and a Saudi tanker.",
          ("map", {"view": V_STRAIT,
-                  "labels": [(56.45, 25.95, "7 JUL", "QATARI LNG CARRIER HIT · OFF LIMAH, OMAN")],
-                  "routes": [], "pins": [(56.45, 25.95)], "zones": [], "caption": "SOURCE: AL JAZEERA / REUTERS · UKMTO · POSITION APPROXIMATE"})),
+                  "labels": [(56.60, 25.95, "6–7 JUL", "QATARI LNG CARRIER HIT · OFF LIMAH, OMAN")],
+                  "routes": [], "pins": [(56.60, 25.95)], "zones": [], "caption": "SOURCE: AL JAZEERA / REUTERS · UKMTO · POSITION APPROXIMATE"})),
         ("So for most of this year the strait has been closed in practice, and the strange part, coming next, is how.",
          ("words", "HOW DO YOU CLOSE A STRAIT?")),
     ]),
@@ -259,18 +261,18 @@ CHAPTERS = [
          ("words", "WILL ANYONE INSURE THE SHIP?")),
         ("In the first days of March, war-risk cover jumped from about a fifth of a percent of a ship's value to as much as one percent.",
          ("split", ("~0.2%", "OF A SHIP'S VALUE · LATE FEBRUARY"), ("1%", "EARLY MARCH · INDUSTRY SOURCES VIA AL JAZEERA"))),
-        ("On a new supertanker, one percent of the hull is more than a million dollars.",
-         ("num", "$1.3M", "1% OF A ~$130M NEW SUPERTANKER · NEWBUILD PRICE: WINDWARD")),
-        ("By March, the International Maritime Organization counted about twenty thousand seafarers trapped west of the strait. They were aboard nearly two thousand ships.",
+        ("On a new supertanker, that one percent comes to more than a million dollars for a single voyage.",
+         ("num", "$1.3M", "PER VOYAGE · 1% OF A ~$130M NEW SUPERTANKER · NEWBUILD PRICE: WINDWARD")),
+        ("By March, the head of the International Maritime Organization said about twenty thousand seafarers were stranded inside the Gulf. They could not safely sail out.",
          ("map", {"view": V_GULF,
-                  "labels": [(51.8, 27.2, "≈2,000 SHIPS", "≈20,000 SEAFARERS · IMO, 19 MAR")],
-                  "routes": [], "pins": [], "zones": [], "caption": "SOURCE: IMO SECRETARY-GENERAL VIA REUTERS"})),
+                  "labels": [(51.8, 27.2, "≈20,000 SEAFARERS", "STRANDED IN THE GULF · IMO, MARCH 2026")],
+                  "routes": [], "pins": [], "zones": [], "caption": "SOURCE: IMO SECRETARY-GENERAL, 18 MAR 2026"})),
         ("Iran then offered its own terms, with approved ships taking a route closer to its coast, sharing their voyage details and in some cases paying a fee.",
          ("map", {"view": V_NARROWS,
                   "labels": [(56.45, 26.98, "IRAN-APPROVED ROUTE", "CLOSER TO IRAN'S COAST"), (56.70, 26.10, "SOUTHERN CORRIDOR", "OMANI SIDE")],
                   "routes": [R_NORTH, R_SOUTH], "pins": [LARAK], "zones": [], "caption": "CSIS, APRIL 2026 · ROUTES DRAWN SCHEMATICALLY"})),
         ("More than half of the ships that got through in March and April were run by companies from just four countries, with China at the top of the list.",
-         ("num", "187", "SHIPS THROUGH · 4 MAR TO ~20 APR · OVER HALF FROM 4 COUNTRIES · CHINA FIRST · CSIS")),
+         ("num", "187", "SHIPS THROUGH · 4 MAR TO 22 APR · OVER HALF FROM 4 COUNTRIES · CHINA FIRST · CSIS")),
         ("So the closure worked as a permission system, and the Gulf's producers set about getting around it.",
          ("words", "A PERMISSION SYSTEM")),
     ]),
@@ -299,7 +301,7 @@ CHAPTERS = [
          ("num", "~40%", "OF THE REGION'S OIL EXPORTS NOW BYPASS THE STRAIT · KPLER VIA AL JAZEERA · 6 OCT")),
         ("By the end of September, Kpler's provisional figures put Middle East crude exports at about eighteen million barrels a day, roughly where they were before the war.",
          ("split", ("~18.0M", "B/D · AVERAGE OF THE YEAR BEFORE THE WAR"), ("18.3M", "7-DAY AVERAGE · 30 SEP · KPLER, PROVISIONAL"))),
-        ("I would treat that with care, because the IEA's August count still had Gulf exports at nearly half their pre-war level.",
+        ("I would treat that with care, because the IEA's count for August, a month earlier and including fuels as well as crude, still had Gulf exports at only about half their pre-war level.",
          ("split", ("~½", "GULF OIL EXPORTS · AUGUST · IEA"), ("≈ PRE-WAR", "MIDDLE EAST CRUDE · LATE SEPTEMBER · KPLER"))),
         ("Either way, the oil is moving again, and that is exactly why the attacks have changed, which brings us to this month.",
          ("map", {"view": V_STRAIT,
@@ -313,7 +315,7 @@ CHAPTERS = [
          ("split", ("9", "IN THE STRAIT · 1–6 OCTOBER"), ("~18", "STRAIT AND GULF · ALL OF SEPTEMBER · UKMTO"))),
         ("Look at where the ships were hit.",
          ("map", {"view": V_NARROWS,
-                  "labels": [(56.80, 26.20, "1–8 OCT", "TANKERS STRUCK")],
+                  "labels": [(56.80, 26.20, "1–6 OCT", "TANKERS STRUCK")],
                   "routes": [], "pins": OCT_HITS, "zones": [Z_SOUTH], "caption": "UKMTO · WINDWARD · POSITIONS APPROXIMATE"})),
         ("Windward says every ship it could confirm was running dark through the southern corridor on the Omani side, the route the shuttles depend on.",
          ("map", {"view": V_NARROWS,
@@ -341,14 +343,14 @@ CHAPTERS = [
          ("split", ("1–3%", "FREIGHT'S SHARE OF DELIVERED COST · NORMAL"), ("25–30%", "NOW · WINDWARD, 9 OCT 2026"))),
         ("A second-hand supertanker reportedly changed hands for a record price, far above what a brand new one costs.",
          ("split", ("~$200M", "SECOND-HAND VLCC · A RECORD"), ("~$130M", "A NEW ONE · WINDWARD"))),
-        ("That is why oil now has two prices. On the sixth of October, Brent futures, the paper price in the headlines, settled just under a hundred dollars.",
-         ("num", "$99.57", "ICE BRENT FUTURES · 6 OCT 2026 · VIA AL JAZEERA")),
+        ("And oil now has two prices. On the sixth of October, Brent futures, the paper price in the headlines, traded just under a hundred dollars.",
+         ("num", "$99.57", "BRENT FUTURES · 6 OCT 2026 · OILPRICE.COM VIA AL JAZEERA")),
         ("The price of an actual cargo, as tracked by the EIA, was a hundred and twenty-five.",
          ("split", ("$99.57", "PAPER · BRENT FUTURES"), ("$125.44", "PHYSICAL · BRENT SPOT · EIA · 6 OCT"))),
-        ("The gap between those two numbers is the strait's toll, paid in freight, insurance and scarcity.",
-         ("words", "THE GAP IS THE TOLL")),
+        ("That gap measures how scarce real barrels are right now, and I read it as part of the strait's toll.",
+         ("words", "THE GAP IS SCARCITY")),
         ("Meanwhile the world has been living off its savings, with global oil stocks down by more than 500 million barrels since the war began, according to the IEA.",
-         ("num", "−507M", "BARRELS DRAWN FROM GLOBAL OIL STOCKS SINCE FEBRUARY · IEA, SEPTEMBER 2026")),
+         ("num", "−507M", "BARRELS DRAWN FROM GLOBAL OIL STOCKS · FEB TO END-AUG · IEA, SEPTEMBER 2026")),
         ("The agency now expects world oil demand to shrink this year, as high prices bite.",
          ("num", "−2.5M", "B/D · WORLD OIL DEMAND IN 2026 · FORECAST · IEA, SEPTEMBER 2026")),
         ("In America, a gallon of regular gasoline cost three dollars twelve a year ago. On the fifth of October it cost four thirty-five.",
@@ -359,13 +361,13 @@ CHAPTERS = [
          ("map", {"view": V_NARROWS, "labels": [], "routes": [], "pins": [], "zones": [Z_INBOUND, Z_OUTBOUND], "caption": CAP_LANES})),
         ("My answer is that Hormuz works less like a tap and more like a tollgate.",
          ("split", ("A TAP", "WHAT EVERYONE FEARED"), ("A TOLLGATE", "WHAT IT TURNED OUT TO BE"))),
-        ("Closing it did not stop the oil, but it made every barrel more expensive to move, and the world drew on its reserves to cover the difference.",
+        ("Closing it cut the flow hard for months, but it never stopped the oil. Once the detours were built, it mostly made every barrel more expensive to move, and the world drew on its reserves to cover the difference.",
          ("words", "IT TAXES EVERY BARREL")),
         ("It also shows what a closure looks like, because this year we lived through something close to one.",
          ("list", ["PRICE NEARLY DOUBLED · $71 → $138", "GULF OUTPUT CUT BY 10M+ B/D", "GLOBAL STOCKS −507M BARRELS",
                    "WORLD DEMAND FALLING", "THE OIL KEPT MOVING"], "WHAT A CLOSURE LOOKED LIKE")),
-        ("The world did not run dry, but the buffers are much thinner now than they were in March.",
-         ("num", "−507M", "BARRELS ALREADY DRAWN · THE BUFFER IS SMALLER NOW · IEA")),
+        ("The world did not run dry, but the buffers are thinner now than they were in March.",
+         ("num", "−507M", "BARRELS DRAWN TO END-AUGUST · THE BUFFER IS SMALLER NOW · IEA")),
         ("If I had to watch three things, the first is attacks around Fujairah and on the East-West pipeline, the routes that kept the oil flowing.",
          ("map", {"view": V_PIPES,
                   "labels": [(YANBU[0], YANBU[1], "YANBU", "WATCH"), (FUJAIRAH[0], FUJAIRAH[1], "FUJAIRAH", "WATCH")],

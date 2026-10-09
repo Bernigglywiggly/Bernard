@@ -40,7 +40,8 @@ SOURCES (date of each page in brackets)
 - Fortune / Bloomberg, East-West pipeline at full capacity [28 Mar 2026] https://fortune.com/2026/03/28/saudi-arabia-east-west-oil-pipeline-strait-hormuz-bypass-7-million-barrels-yanbu-red-sea/
 - FRED / EIA, Europe Brent spot price FOB (DCOILBRENTEU) https://fred.stlouisfed.org/series/DCOILBRENTEU
 - FRED / EIA, US regular gasoline (GASREGW) https://fred.stlouisfed.org/series/GASREGW
-- IMO Secretary-General on seafarers stranded west of the strait, via Reuters [19 Mar 2026]
+- IMO Secretary-General Arsenio Dominguez on ~20,000 seafarers stranded in the Gulf, opening remarks to the extraordinary IMO Council [18 Mar 2026]
+- UKMTO Advisory 003-26 (update 002) and Reuters on IRGC VHF warnings to ships [28 Feb - 1 Mar 2026]
 - Place coordinates: Wikipedia articles for each island and port.
 
 ## Tags

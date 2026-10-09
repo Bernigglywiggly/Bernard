@@ -22,7 +22,7 @@ ElevenLabs: about 89,000 characters left until about 16 Oct. Strategic warning f
 - His idea: geography / maps & power as its own channel, starting with the Strait of Hormuz (trend desk pick #1,
   23/25: https://claude.ai/artifact/FXjyxJ6wRAA1sXaUzdp3Qp). This also answers the critic's warning that every channel
   shares one look: the typographic map becomes this channel's signature, distinct from The Curve.
-- Plan (not started, waiting for his go): (1) generalise the ASCII map so it can draw any region from real coastline
+- STARTED 9 Oct 20:45 (user: "usage reset lets go"). Two background agents: (a) `map` beat kind in `lab/curvelf/flow.py` + Natural Earth 10m data in `lab/curvelf/data/`, test film `lab/curvelf/maps_test/`; (b) Hormuz FACTS.md, script.py, POST.md, CHANNEL.md in `lab/maps/hormuz/`. If those files are missing, the agent died: re-launch. Original plan: (1) generalise the ASCII map so it can draw any region from real coastline
   data (Natural Earth, public domain); (2) fact base for Hormuz (EIA chokepoint figures: width, share of world oil;
   the trend desk's "21 miles" and "a fifth" are UNVERIFIED); (3) script to CRAFT, lint, voice George; (4) stills, render,
   critic. Channel name to pick with him. Money: same YouTube arithmetic as the other channels (£0 before 2027).

@@ -760,12 +760,14 @@ def screen(c, t, cx, cy, z):
             text(c, f"{k + 1:02d}", r.centerX(), y + fs * 0.36, mono(fs), CYAN if on else INK, (1.0 if on else 0.8 if k < cur else 0.4) * a, align="center")
 
     c.drawRect(skia.Rect.MakeXYWH(0, 0, W, 104), skia.Paint(Color=col(BG, 0.78)))
-    text(c, SC.TAG.split("·")[0].strip(), 70, 62, mono(20), DIM, 1.0, 1.0)
-    rail(300, W - 70, 56, 46, 26, 1.0, 14, False)
-    step = (W - 70 - 300 - 46) / max(1, NC - 1)
+    chan = SC.TAG.split("·")[0].strip()
+    text(c, chan, 70, 62, mono(20), DIM, 1.0, 1.0)
+    x0 = max(300, 70 + mono(20).measureText(chan) + len(chan) + 44)    # a long channel name pushes the rail right (9 Oct: THE HOUSEHOLD LEDGER ran into box 01)
+    rail(x0, W - 70, 56, 46, 26, 1.0, 14, False)
+    step = (W - 70 - x0 - 46) / max(1, NC - 1)
     name = SC.CHAPTERS[cur]["title"] or UI["open"]
     nw = mono(17).measureText(name) + 0.6 * (len(name) - 1)
-    text(c, name, min(max(300 + cur * step, 300), W - 70 - nw), 94, mono(17), CYAN, 1.0, 0.6)
+    text(c, name, min(max(x0 + cur * step, x0), W - 70 - nw), 94, mono(17), CYAN, 1.0, 0.6)
     for i, b in enumerate(B):                                          # the chapter's name, while the camera crosses to it
         if b["first"] and b["title"] and abs(t - S(i)) < 4:
             a = sm(t, S(i) - CHAPTER_GAP + 1.0, S(i) - CHAPTER_GAP + 1.35) * (1 - sm(t, S(i) - 0.55, S(i) - 0.15))

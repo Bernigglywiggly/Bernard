@@ -378,7 +378,7 @@ LO, MID, HI = np.float32([0.03, 0.2, 0.22]), np.float32([0.37, 0.94, 0.89]), np.
 # 1:10m for regional ones. Equirectangular, longitudes scaled by cos(mid latitude). The view is the least that is shown:
 # it is widened to fill the map's box. Coast cells are #+%*, land .:·, sea empty; routes, pins and zones are the one accent.
 DATA = os.path.join(HERE, "data")
-MAP_LAND, MAP_COAST = "#3C474E", "#8A969E"
+MAP_LAND, MAP_COAST = "#56636B", "#A9B4BB"      # brighter (9 Oct: the land read as faint next to the Visa map)
 _LAND, _MAPF, _MAPP = {}, {}, {}
 
 
@@ -401,7 +401,7 @@ def map_frame(i):
     v, p = B[i]["vis"][1], PL[i]
     lon0, lat0, lon1, lat1 = v["view"]
     u = p["ww"] / 2300.0
-    BW, BH = (1700.0, 1250.0) if VERT else (2000.0, 760.0)
+    BW, BH = (1700.0, 1250.0) if VERT else (2060.0, 760.0)
     BW, BH = BW * u, BH * u
     k = math.cos(math.radians((lat0 + lat1) / 2))
     sc = min(BW / ((lon1 - lon0) * k), BH / (lat1 - lat0))         # world units per degree of latitude
@@ -471,7 +471,7 @@ def map_pics(i):
     land = cov > 0.5
     pad = np.pad(land, 1, mode="edge")                                      # the box's edge is not a coast
     water_near = ~(pad[:-2, 1:-1] & pad[2:, 1:-1] & pad[1:-1, :-2] & pad[1:-1, 2:])
-    coast = (land & water_near) | ((cov > 0.12) & ~land)                     # a sliver of land too small to fill a cell is still drawn
+    coast = (land & water_near) | ((cov > 0.3) & ~land)     # 0.3: a strait narrower than a cell still shows water (Qeshm)                     # a sliver of land too small to fill a cell is still drawn
     inner = land & ~coast
     f = mono(m["ch"] * 0.95)
     out = []
@@ -596,7 +596,7 @@ def draw_map(c, i, t):
         c.restore()
     # the ruler: longitudes under the map, latitudes down its left side, and the source line beneath
     L0, A0, L1, A1 = m["view"]
-    fr = mono(23 * u)
+    fr = mono(29 * u)                                              # readable on a phone (9 Oct)
     ink = skia.Paint(Color=col(INK, 0.5), AntiAlias=True, StrokeWidth=1.3 * u0)
     ra = sm(t, S(i) - 0.4, S(i) + 0.6) if not first else 1.0
     yb = by + h + 12 * u0

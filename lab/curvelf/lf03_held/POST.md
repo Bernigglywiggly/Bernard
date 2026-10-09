@@ -1,6 +1,6 @@
 # The Curve · Long-form 03 · Too Dangerous to Release
 
-Long-form, 16:9, 10:25. Upload file: `LF03_FLOW_v4.mp4` (the one-camera cut, 8 Oct 2026). Thumbnails: `out/thumbflow_a.jpg` (lead), `thumbflow_b.jpg`, `thumbflow_c.jpg`.
+Long-form, 16:9, 10:25. Upload file: `LF03_FLOW_v5.mp4` (the one-camera cut, 8 Oct 2026). Thumbnails: `out/thumbflow_a.jpg` (lead), `thumbflow_b.jpg`, `thumbflow_c.jpg`.
 
 ## Title
 

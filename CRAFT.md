@@ -81,6 +81,14 @@ is fine; **no visible author is what gets flagged.**
   actions. Keep a music-only fallback.
 
 ## Learned on our films
+- 9 Oct (tunnel and economy pilots, Spanish LF02): (1) the engine stamped "AI-GENERATED" on diagrams drawn in code: a
+  false label that invites "AI slop" comments. A film now sets `ILLUS` in its script ("DIAGRAM · DRAWN FOR THIS FILM").
+  (2) Frame 0 was a near-black blob and the twist landed at 9.3 s: `OPEN_RESOLVED = True` and `LEAD = 0.4` put the first
+  picture up at frame 0, and the twist moved to the first sentence (5.4 s). (3) A critic warned that three channels on
+  one engine look (rail, ASCII resolve, caption plate) is the "mass-produced" pattern: each new channel needs its own
+  visible look before launch. (4) Spanish: "cuando + subjuntivo" needs a future main verb; calques ("de por token")
+  and regional words ("sale en", "inversionistas") were caught only by a Spanish-reading critic. Respell names the
+  voice mangles in the spoken text and keep the real spelling on screen with the `(shown, said)` tuple.
 - 6 Oct (HTP 06 Visa, five critic passes): (1) the working TITLE was a factual claim nobody had checked ("never touches
   your money"): Visa settles payments and guarantees settlement, per its own 10-K. Put the title and the thesis line in
   FACTS.md with a source before scripting. (2) In a one-camera film, patching overlaps one at a time failed three

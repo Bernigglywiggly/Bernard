@@ -65,15 +65,16 @@ Derived figures (the sums) and anything soft are in VERIFY.md. Visuals as in ../
 TITLE = "WHY $87,000 FEELS LIKE LESS"
 TAG = "THE HOUSEHOLD LEDGER  ·  WHY $87,000 FEELS LIKE LESS"
 LEAD = 0.4
+HOLD = {"basket_06": 2.0}               # the ranked list stays up long enough to read (critic v2, H1)
 OPEN_RESOLVED = True
 NAME = "economy_pilot01"
 FIX = {}
 
 CHAPTERS = [
     dict(id="open", title="", beats=[
-        ("In September, the Census Bureau reported that the typical American household earned more last year than in any year on record.",
+        ("The typical American household just earned a record income, yet in the same month it felt worse about money than in almost any month since 1952.",
          ("num", "$87,460", "MEDIAN HOUSEHOLD INCOME, 2025 · CENSUS BUREAU · HIGHEST SINCE RECORDS BEGAN IN 1967")),
-        ("In the same month, a long-running survey of how those households feel about money fell close to its lowest level ever.",
+        ("The record comes from the Census Bureau, and the gloom comes from a survey the University of Michigan has run for more than seventy years.",
          ("num", "48.1", "INDEX OF CONSUMER SENTIMENT · SEPTEMBER 2026 · UNIVERSITY OF MICHIGAN")),
         ("Both numbers are accurate, and your household is living somewhere in the gap between them.",
          ("split", ("RECORD HIGH", "WHAT HOUSEHOLDS EARN"), ("NEAR RECORD LOW", "HOW HOUSEHOLDS FEEL"))),
@@ -109,6 +110,8 @@ CHAPTERS = [
          ("num", "99.8", "INDEX OF CONSUMER SENTIMENT · JANUARY 2020")),
         ("This September it was forty-eight point one, which is less than half the earlier figure.",
          ("split", ("99.8", "JANUARY 2020"), ("48.1", "SEPTEMBER 2026"))),
+        ("The preliminary October reading slipped again, to forty-six point three.",
+         ("num", "46.3", "INDEX OF CONSUMER SENTIMENT · OCTOBER 2026 · PRELIMINARY · UNIVERSITY OF MICHIGAN")),
         ("For comparison, the worst month of the financial crisis, late in 2008, came in above fifty-five.",
          ("num", "55.3", "NOVEMBER 2008 · THE LOW OF THE FINANCIAL CRISIS")),
         ("The lowest reading before this decade came in May 1980, at just under fifty-two.",
@@ -148,7 +151,7 @@ CHAPTERS = [
         ("So where did pay actually pull ahead? Largely in categories such as new cars, up twenty-one percent, and medical services, up eighteen.",
          ("split", ("+21.2%", "NEW VEHICLES"), ("+18.3%", "MEDICAL CARE SERVICES"))),
         ("Set those against a pay rise of thirty-three percent, and a pattern appears.",
-         ("list", ["ELECTRICITY +43%", "GASOLINE +42%", "EATING OUT +38%", "RENT +33%", "PAY +33%", "GROCERIES +32%", "NEW CARS +21%", "MEDICAL SERVICES +18%"], "SINCE JANUARY 2020")),
+         ("list", ["ELECTRICITY +43% · GASOLINE +42%", "EATING OUT +38%", "RENT +33%", "PAY +33%", "GROCERIES +32%", "NEW CARS +21% · MEDICAL +18%"], "SINCE JANUARY 2020")),
         ("Pay tied or lost on the bills that arrive every week or every month, and it won on things most households buy rarely.",
          ("img", "e12")),
         ("My reading is that this alone explains a good part of the mood, because people judge the economy by the purchases they repeat.",
@@ -295,8 +298,8 @@ CHAPTERS = [
          ("list", ["RENT +33% · GROCERIES +32%", "POWER +43% · GASOLINE +42%", "MORTGAGE RATE 3.72% → 7.40%", "CARD RATE 15% → 21%", "SAVING RATE 7.3% → 4.1%", "REAL HOURLY PAY −0.3% IN THE YEAR TO AUGUST"], "DEBIT")),
         ("My verdict is that the income record is true and the low mood is rational, because they measure different years and different bills.",
          ("words", "BOTH NUMBERS ARE TRUE")),
-        ("The record counts 2025, before tax, and before interest. The mood counts this month, at your address, with your loan.",
-         ("split", ("2025 · BEFORE INTEREST", "THE RECORD"), ("THIS MONTH · YOUR LOAN", "THE MOOD"))),
+        ("The record counts 2025, before tax, and before interest. The mood counts this autumn, at your address, with your loan.",
+         ("split", ("2025 · BEFORE INTEREST", "THE RECORD"), ("THIS AUTUMN · YOUR LOAN", "THE MOOD"))),
         ("If I had to watch a single figure from here, it would be real hourly earnings, which was negative over the year to August.",
          ("num", "−0.3%", "THE ONE TO WATCH · REAL HOURLY EARNINGS · NEXT RELEASE WITH EACH CPI REPORT")),
         ("Nothing in this film is advice about what to do with your money. It is a way of reading the numbers when they next make the news.",

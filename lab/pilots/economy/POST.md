@@ -1,40 +1,51 @@
 # POST: pilot 01 (draft, not uploaded)
 
+Upload file: `LEDGER_PILOT_v3.mp4` (critic v2 fixes applied). Chapter times are for v3.
+
 ## Title options
 
-1. **Why a Record $87,000 Income Feels Like a Pay Cut** (48 characters) — lead
-2. Why $87,000 Feels Like Less (27 characters, 5 words; the strict CRAFT-length version)
-3. Americans Earned a Record $87,460. The Mood Hit 48.1 (52 characters)
+1. **Why $87,000 Feels Like Less** (27 characters) — lead; also the on-screen title
+2. A Record Income, and Nobody Feels Rich (38 characters)
 
-Title check: "$87,000" and "record" are Census (2025). "Pay cut" is supported for hourly pay only (real average
-hourly earnings -0.3% over the year to August 2026, BLS); real weekly earnings were +0.3%. If that nuance worries
-you, use option 2.
+Do NOT use "...Feels Like a Pay Cut": the fact check ruled it out (real weekly earnings +0.3%; pay 2-3% ahead of
+prices since 2020). The "48.1" title and thumbnail went stale on 9 Oct (October preliminary 46.3).
+
+Title check: "$87,000" and "record" are Census (2025).
 
 ## Thumbnail text (four words or fewer; never repeats the title)
 
 1. **BOTH ARE TRUE**
 2. **NOT IN THE CPI**
-3. **48.1**  (with a small "MOOD" label beside an "$87,460" ledger line)
+
 
 Look: black background, one white ledger line with the figure in a single accent colour, no faces.
 
 ## Description
 
 The typical American household earned a record $87,460 in 2025. In the same month that figure was published,
-consumer sentiment fell to 48.1, lower than any reading before 2022. Both numbers are accurate. This film goes
+consumer sentiment fell to 48.1, and October's preliminary reading slipped again to 46.3. Both numbers are accurate. This film goes
 through the gap between them like a ledger: what pay really did against prices since 2020, which bills rose
 fastest, why the cost of borrowing is missing from the inflation figure, and what changed in 2026.
 
 Every number is from an official or published source, listed below with the date of the data. Sums marked
 "our sum" are our own arithmetic from those sources. Some figures are preliminary or will be revised; where that
-matters we say so in the film. Illustrations are AI-generated and show no real people.
+matters we say so in the film. The illustrations were drawn in code for this film. There are no photographs and no real people. The narration is a synthetic voice.
 
 This is an explanation, not financial advice.
 
-Chapters (timestamps to be filled from the final render)
+Chapters
 0:00 Two numbers that disagree
-The credit side · The mood · The race · The basket · The level · The price of money · Two streets · The cushion ·
-This year · Who is the middle · The verdict
+0:41 The credit side
+1:44 The mood
+2:50 The race
+3:45 The basket
+4:48 The level
+5:55 The price of money
+7:47 Two streets
+9:07 The cushion
+10:35 This year
+12:13 Who is the middle
+12:53 The verdict
 
 Sources (all opened 8 Oct 2026)
 Income
@@ -60,7 +71,7 @@ Borrowing
 - Federal Reserve G.19 Consumer Credit (August 2026, preliminary): https://www.federalreserve.gov/releases/g19/current/
 - Credit card interest rate history (Federal Reserve via FRED): https://fred.stlouisfed.org/series/TERMCBCCALLNS
 - Household debt service ratio (Federal Reserve via FRED): https://fred.stlouisfed.org/series/TDSP
-- Mortgage shares by interest rate, FHFA data as reported by Wolf Street (secondary source): https://wolfstreet.com/2026/10/02/homeowners-are-clinging-to-their-below-4-mortgages-for-dear-life-as-mortgage-rates-went-over-7/
+- FHFA National Mortgage Database, outstanding mortgage statistics, Q2 2026 (file dated 24 Sep 2026): https://www.fhfa.gov/data/nmdb
 - Bolhuis, Cramer, Schulz and Summers, The Cost of Money is Part of the Cost of Living (NBER, 2024): https://www.nber.org/papers/w32163
 Saving and debt
 - BEA, Personal Income and Outlays, August 2026: https://bea.gov/news/2026/personal-income-and-outlays-august-2026
@@ -81,9 +92,12 @@ consumer sentiment, mortgage rates 2026, 7 percent mortgage, housing affordabili
 personal saving rate, CPI explained, gas prices 2026, why everything feels expensive, American middle class,
 economy explained, Census income 2025, vibecession
 
-## Before upload
+## Internal notes (do NOT paste)
 
-- Run the independent fact check (CRAFT 5) and the film-critic skill. Neither has been run.
-- Re-pull the weekly figures (mortgage rate, pump price) and the Michigan October preliminary on the day of voicing.
-- Replace or cut the two Wolf Street beats (mortgage shares by rate) once FHFA's own table is read.
-- Altered or synthetic content: tick YouTube's disclosure for AI illustrations and voice as the house rule requires.
+- Done 9 Oct: independent FACTCHECK.md; critic CRITIC_v2.md; its H1-H3, M1, M2 applied in v3. M3 (a look of its own) is
+  for episode 2 and needs the user's go-ahead.
+- Upload by 13 Oct or re-pull after the 14 Oct CPI. Re-pull list: EIA gasoline (13 Oct), Freddie Mac (15 Oct; "highest
+  since Nov 2023" fails above 7.44%), Michigan final (23 Oct).
+- Link a saved September copy of Michigan's page for the Hsu quote (the live page now shows October text).
+- Disclosure: say "synthetic voice" in the description; the altered-content tick is for realistic content and is optional here.
+- Michigan Oct prelim 46.3 checked at sca.isr.umich.edu on 9 Oct.

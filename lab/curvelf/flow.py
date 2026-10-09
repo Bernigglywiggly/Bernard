@@ -690,6 +690,9 @@ def world_type(c, t):
         elif k == "list":
             items, title = v[1], (v[2] if len(v) > 2 else None)
             f, size = fit_sans(max(items, key=len), 96 * u, 1700 * u)
+            cap = (0.40 * p["ww"] - (70 * u if title else 0)) / (len(items) * 1.55)     # a long list shrinks to fit above the captions (9 Oct: 8 rows were hidden by on_screen)
+            if size > cap:
+                f, size = fit_sans(max(items, key=len), cap, 1700 * u)
             lh = size * 1.55
             wd = max(f.measureText(s_) for s_ in items)
             hgt = len(items) * lh + (70 * u if title else 0)
@@ -874,7 +877,7 @@ def frame(t):
     world_type(c, t)
     c.restore()
     screen(c, t, cx, cy, z)
-    a = sm(t, -0.2, 0.35) * (1 - sm(t, TOTAL - 1.4, TOTAL - 0.1))
+    a = (1.0 if OPEN_RESOLVED else sm(t, -0.2, 0.35)) * (1 - sm(t, TOTAL - 1.4, TOTAL - 0.1))     # a film that opens resolved has no fade-in: frame 0 is the thumbnail
     if VERT:
         a = 1 - sm(t, SHORT["t1"] - 0.35, SHORT["t1"])
     if a < 1:

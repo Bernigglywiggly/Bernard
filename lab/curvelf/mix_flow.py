@@ -115,8 +115,24 @@ def score(paths, dur, cuts=(), xf=6.0):
         e = min(n, pos + len(y))
         out[pos:e] += y[:e - pos]
         pos += len(y) - x
+    out = fill(out, SR)
     out[:int(1.5 * SR)] *= np.linspace(0, 1, int(1.5 * SR))[:, None]
     return out
+
+
+def fill(y, SR):
+    """Lift the short holes steady() is too slow to see (9 Oct, LF03: the bed fell 10-13 dB for about a second before a
+    hit, at 7:24 and 8:02). Each eighth of a second is held to within 4 dB of the music around it; at most +12 dB."""
+    import numpy as np
+    h = SR // 8
+    e = np.array([np.sqrt((y[i:i + h] ** 2).mean()) for i in range(0, len(y), h)]) + 1e-6
+    w = 32                                                          # the reference: the median of the 4 s around
+    ref = np.array([np.median(e[max(0, i - w // 2):i + w // 2]) for i in range(len(e))])
+    g = np.clip(ref * 10 ** (-4 / 20) / e, 1.0, 10 ** (12 / 20))
+    k = np.hanning(5)
+    g = np.convolve(np.pad(g, 2, mode="edge"), k / k.sum(), mode="valid")
+    gain = np.interp(np.arange(len(y)), np.arange(len(g)) * h + h / 2, g)
+    return y * gain[:, None]
 
 
 if MUSIC:

@@ -1,15 +1,16 @@
-# START HERE: state at Thu 8 Oct 2026, 21:45 UK (written for a Claude with zero history)
+# START HERE: state at Fri 9 Oct 2026, 16:05 UK (written for a Claude with zero history)
 
 This block is the truth. Everything below it in this file is older history, kept for detail only.
 Repo: `~/Bernard`, branch `claude/funny-newton-gd9w8v` ONLY (push with: `git push -q origin claude/funny-newton-gd9w8v 2>/dev/null || git -c http.curloptResolve=github.com:443:140.82.121.4 push -q origin claude/funny-newton-gd9w8v`). Python: `~/youtube/.venv/bin/python`. Videos, voice takes and pictures are on THIS Mac only (not in git): a cloud session cannot render or upload them.
 
-## 1. What is running right now (background agents in the session that wrote this; they die with it)
-| Job | Output folder | Done when |
+## 1. What is running / just done (9 Oct afternoon session; background jobs die with the session)
+| Job | Output | State |
 |---|---|---|
-| Pilot channel 4: US economy / cost-of-living explainer | `~/Bernard/lab/pilots/economy/` | CHANNEL.md, script.py, IMAGES.md, VERIFY.md, POST.md exist |
-| Pilot channel 5: megaprojects / engineering | `~/Bernard/lab/pilots/megaprojects/` | same, plus `src/photo/*.jpg` and `src/photo/CREDITS.md` |
-| Spanish version of film 2 | `~/Bernard/lab/curvelf/lf02_price_es/` | script.py (with `LANG = "es"`) and POST.md exist |
-If a folder lacks its script.py, that agent died: re-launch it (the briefs are described in section 6).
+| Spanish film 2 v2 (8 lines re-voiced after critic CRITIC_ES_v1.md; old takes in `lf02_price_es/flow/takes_old_v1/`) | `lab/curvelf/lf02_price_es/LF02_ES_v2.mp4` | rendering; if missing: `flow.py lf02_price_es lay && ./render_flow.sh lf02_price_es LF02_ES_v2 6`. Then a fresh Spanish-reading critic on v2, then fix POST.md chapter times |
+| Tunnel pilot (megaprojects; engine link `lab/curvelf/pilot_tunnel`) v1: all 94 takes match the fixed script, stills checked | `lab/curvelf/pilot_tunnel/TUNNEL_PILOT_v1.mp4` | queued after the Spanish render; if missing: `./render_flow.sh pilot_tunnel TUNNEL_PILOT_v1 6`. Then critic |
+| LF03 music drops at 7:24 / 8:02: new `fill()` in `mix_flow.py score()`; sound-only re-mix | `lab/curvelf/lf03_held/LF03_FLOW_v5.mp4` | re-mixing; if missing: `FLOW_MUSIC="$(ls music/serious/lf03_a/*.mp3|tail -1),$(ls music/serious/lf03_b/*.mp3|tail -1)" python mix_flow.py lf03_held lf03_held/flow/picture.mp4 lf03_held/LF03_FLOW_v5.mp4`. v5 replaces v4 for upload index 8 (edit the manifest path) |
+| Economy pilot pictures e01-e33, drawn in code with skia (no AI generator), by a background agent | `lab/pilots/economy/illustrations.py`, `src/ai/e*.png`, `src/qc/ILLUSTRATIONS_QC.md` | running; if no illustrations.py: re-launch (brief = IMAGES.md, copy the method of `pilots/megaprojects/diagrams.py`). Then voice (George, English), `lay`, render via engine link `lab/curvelf/pilot_ledger` |
+| `short_escape` upload (index 5 of `channel/uploads_newlook.json`) | YouTube | after 19:30 UK 9 Oct (daily cap hit on 8 Oct) |
 
 ## 2. YouTube: what is uploaded (all PRIVATE with a publish time; ids also in `~/Bernard/channel/uploads_newlook.done.json`)
 | Video | Channel | Public (UTC) | Id |

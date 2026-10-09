@@ -1,5 +1,7 @@
 # POST: Fehmarnbelt pilot
 
+Upload file: `TUNNEL_PILOT_v2.mp4` (9 Oct; critic v1 fixes applied). Chapter times are for v2.
+
 ## Title (3 options, each under 60 characters)
 
 1. Europe's Sunken Tunnel Is Years Late  (36)
@@ -26,18 +28,18 @@ tunnel, what it costs, why it is late, and what the pace so far implies.
 Figures are as published on the dates shown. The "8 to 11 years at this pace" sum is our own arithmetic, not a forecast.
 Diagrams are drawn for this film from the owner's published descriptions; they are not photographs. Narration: synthetic voice. Recorded 9 October 2026.
 
-CHAPTERS (fill in times after the voice track)
+CHAPTERS
 0:00 Two years late
-Forty-five minutes of water
-A tunnel you don't dig
-The factory
-The trench
-The ship that wasn't ready
-Fourteen hours
-The money
-The German half
-Where it stands
-The arithmetic
+0:52 Forty-five minutes of water
+1:59 A tunnel you don't dig
+2:48 The factory
+3:57 The trench
+4:39 The ship that wasn't ready
+5:49 Fourteen hours
+6:53 The money
+8:01 The German half
+9:16 Where it stands
+10:18 The arithmetic
 
 SOURCES
 Femern A/S / Sund & Bælt (project owner):

@@ -26,6 +26,7 @@ ElevenLabs: about 89,000 characters left until about 16 Oct. Strategic warning f
   data (Natural Earth, public domain); (2) fact base for Hormuz (EIA chokepoint figures: width, share of world oil;
   the trend desk's "21 miles" and "a fifth" are UNVERIFIED); (3) script to CRAFT, lint, voice George; (4) stills, render,
   critic. Channel name to pick with him. Money: same YouTube arithmetic as the other channels (£0 before 2027).
+- Economy pilot ERROR found by the Hormuz research (9 Oct): its line "In July, after the strait had reopened" is partly wrong (a June reopening collapsed in early July). Fix `year_03` before that pilot is ever uploaded.
 - Also unanswered: Visa film to How They Profit on Wed 14 Oct (recommended: its figures are right until Visa reports in late Oct).
 
 ## 2. YouTube: what is uploaded (all PRIVATE with a publish time; ids also in `~/Bernard/channel/uploads_newlook.done.json`)

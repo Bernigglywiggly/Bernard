@@ -6,7 +6,7 @@ Repo: `~/Bernard`, branch `claude/funny-newton-gd9w8v` ONLY (push with: `git pus
 ## 1. Done this session (9 Oct afternoon) and what is still running
 | Item | File | State |
 |---|---|---|
-| Spanish film 2 | `lab/curvelf/lf02_price_es/LF02_ES_v2.mp4` | DONE. 8 lines re-voiced; critic `CRITIC_ES_v2.md` = UPLOAD; chapters in POST.md. WAITING ON USER: which channel (The Curve or a new "La Curva"), and his ear check of `ear_check_v2.mp3` (xAI said "equis A I"). Old takes in `flow/takes_old_v1/` |
+| Spanish film 2 | `lab/curvelf/lf02_price_es/LF02_ES_v2.mp4` | DONE. 8 lines re-voiced; critic `CRITIC_ES_v2.md` = UPLOAD; chapters in POST.md. WAITING ON USER: "La Curva" is TAKEN (user, 9 Oct). Offered: "La Curva IA", "Curva Explica", or upload on The Curve, and his ear check of `ear_check_v2.mp3` (xAI said "equis A I"). Old takes in `flow/takes_old_v1/` |
 | LF03 music drops | `lab/curvelf/lf03_held/LF03_FLOW_v5.mp4` | DONE. `mix_flow.py` gained `fill()` (lifts short holes in a score bed); sound-only re-mix; dips now about 5 dB. Manifest index 8 points at v5. Upload after 19:30 9 Oct |
 | `short_escape` | index 5 of `channel/uploads_newlook.json` | Upload after 19:30 UK 9 Oct (daily cap hit 8 Oct) |
 | Tunnel pilot ("Megaprojects"/"Datum Line") | `lab/curvelf/pilot_tunnel/TUNNEL_PILOT_v2.mp4` (= `lab/pilots/megaprojects/`) | DONE. Critic v1 (`CRITIC_v1.md`, FIX THEN UPLOAD) fixes applied in v2: honest diagram label, frame 0 shows the photo, hook at 5.4 s, ≈15 MILLION, POST.md with photo links + chapters. NOT done: name pronunciations by ear (Fehmarn, Rødbyhavn, Øresund, Lolland, Scandlines); channel name; channel does not exist |

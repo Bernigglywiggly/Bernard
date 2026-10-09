@@ -3,8 +3,8 @@
 002_open_02	53	Dos empresas. Una tarde. Las dos bajaron sus precios.
 003_open_03	145	Esto ya pasa todo el tiempo. El precio de la inteligencia artificial está cayendo más rápido de lo que jamás cayó el de los chips de computadora.
 004_open_04	155	Lo cual debería significar que la industria gasta menos. En cambio, va camino de gastar más de un billón de dólares este año, en edificios llenos de chips.
-005_open_05	109	Entonces, ¿quién está pagando en realidad para que pensar sea más barato? ¿Y qué pasa cuando sea casi gratis?
-006_afternoon_00	157	Ni siquiera fue el único lanzamiento de esa semana. El día anterior, xAI había presentado Grok 4.7, y el fabricante de teléfonos Xiaomi, dos modelos propios.
+005_open_05	111	Entonces, ¿quién está pagando en realidad para que pensar sea más barato? ¿Y qué pasará cuando sea casi gratis?
+006_afternoon_00	163	Ni siquiera fue el único lanzamiento de esa semana. El día anterior, equis A I había presentado Grok 4.7, y el fabricante de teléfonos Xiaomi, dos modelos propios.
 007_afternoon_01	224	El primer movimiento fue de Anthropic. Su nuevo modelo Opus, Claude Opus 5.5, costaba cuatro dólares por leer un millón de tokens de texto, en lugar de cinco, y veinte dólares por escribir un millón, en lugar de veinticinco.
 008_afternoon_02	73	Leer texto que ya había visto se volvió un sesenta por ciento más barato.
 009_afternoon_03	113	Después, OpenAI lanzó GPT-6 Sol, a dos dólares y diez dólares: la mitad del precio del modelo al que reemplazaba.
@@ -14,7 +14,7 @@
 013_afternoon_07	127	Modelos nuevos más baratos, y modelos viejos a punto de encarecerse. A todos los empujan en la misma dirección: hacia adelante.
 014_thousand_00	57	Para ver lo extraño que es esto, retrocedamos cinco años.
 015_thousand_01	255	En 2021, la única inteligencia artificial capaz de alcanzar cierta puntuación en una prueba estándar de conocimientos costaba unos sesenta dólares por millón de tokens. A finales de 2024, el modelo más barato con la misma puntuación costaba seis centavos.
-016_thousand_02	121	Mil veces más barato, en tres años. La firma de inversión a16z lo llamó LLMflation: unas diez veces más barato, cada año.
+016_thousand_02	133	Mil veces más barato, en tres años. La firma de inversión a dieciséis zeta lo llamó LLMflation: unas diez veces más barato, cada año.
 017_thousand_03	146	En comparación, la Ley de Moore, la famosa duplicación de los transistores de un chip cada dos años, tarda unos veinte años en llegar a mil veces.
 018_thousand_04	93	Tres cosas hacen el trabajo a la vez. Cada nueva generación de chips hace más por cada vatio.
 019_thousand_05	205	Los propios modelos se vuelven más inteligentes por cada cálculo. Investigadores de Epoch AI estiman que el cómputo necesario para el mismo rendimiento se reduce a la mitad aproximadamente cada ocho meses.
@@ -35,21 +35,21 @@
 034_why_04	196	La mayoría de estos modelos se invocan de la misma manera, por internet, a través de conexiones casi idénticas. Un desarrollador puede pasar de un laboratorio a otro cambiando una línea de código.
 035_why_05	175	Así que, cuando un laboratorio baja el precio, los clientes pueden abandonar al otro antes de que termine la tarde. El otro laboratorio tiene horas para responder, no semanas.
 036_queen_00	56	Los biólogos tienen un nombre para este tipo de carrera.
-037_queen_01	125	En A través del espejo, la Reina Roja le dice a Alicia: hace falta correr todo lo que puedas para quedarte en el mismo lugar.
-038_queen_02	158	En 1973, el biólogo Leigh Van Valen la tomó prestada para explicar por qué las especies nunca parecen sacar ventaja. Sus rivales también siguen evolucionando.
+037_queen_01	136	En el libro «A través del espejo», la Reina Roja le dice a Alicia: hace falta correr todo lo que puedas para quedarte en el mismo lugar.
+038_queen_02	155	En 1973, el biólogo Li Van Valen la tomó prestada para explicar por qué las especies nunca parecen sacar ventaja. Sus rivales también siguen evolucionando.
 039_queen_03	107	Los laboratorios corren tan rápido como pueden, y siguen exactamente en el mismo lugar unos frente a otros.
 040_queen_04	49	Y con cada paso que dan, a ti te sale más barato.
 041_paradox_00	148	Si pensar es cada vez más barato, uno esperaría que el mundo gastara menos en ello. En 1865, un economista inglés explicó por qué pasa lo contrario.
 042_paradox_01	146	William Stanley Jevons notó que, a medida que las máquinas de vapor quemaban carbón con más eficiencia, Gran Bretaña quemaba más carbón, no menos.
 043_paradox_02	130	Haz que algo sea más barato de usar, y la gente le encuentra tantos usos nuevos que el total sube. Se llama la paradoja de Jevons.
-044_paradox_03	168	Cuando un laboratorio chino lanzó un modelo barato y capaz en enero de 2025, el director ejecutivo de Microsoft, Satya Nadella, publicó: otra vez la paradoja de Jevons.
+044_paradox_03	176	Cuando un laboratorio chino lanzó un modelo barato y capaz en enero de 2025, el director ejecutivo de Microsoft, Satya Nadella, publicó: «La paradoja de Jevons ataca de nuevo».
 045_paradox_04	91	Tenía razón. En la primavera de 2024, Google procesaba casi diez billones de tokens al mes.
 046_paradox_05	40	En 2025, cuatrocientos ochenta billones.
 047_paradox_06	93	En mayo de este año: tres mil doscientos billones. Más de trescientas veces más, en dos años.
 048_catch_00	116	Hay un pero en todo esto. El precio de un token está bajando. La cantidad de tokens en cada respuesta está subiendo.
 049_catch_01	131	Los modelos más nuevos piensan antes de responder, y escriben largas cadenas de razonamiento que nunca ves. Pagas por cada palabra.
 050_catch_02	198	Cuando Simon Willison le pidió a Opus 5.5 el dibujo de un pelícano, con el nivel de pensamiento más alto, el modelo pensó hasta llegar a su límite de ciento veintiocho mil tokens, y nunca respondió.
-051_catch_03	144	A veinte dólares el millón, ese silencio sale en unos dos dólares con cincuenta y seis centavos. Cuatro décimas de un Big Mac, a cambio de nada.
+051_catch_03	143	A veinte dólares el millón, ese silencio cuesta unos dos dólares con cincuenta y seis centavos. Cuatro décimas de un Big Mac, a cambio de nada.
 052_catch_04	133	Y los agentes, inteligencia artificial que trabaja por su cuenta durante horas, pueden consumir millones de tokens en una sola tarea.
 053_catch_05	115	Así que la guerra de precios se está moviendo en silencio, del precio de un token al precio de una tarea terminada.
 054_pays_00	97	Cada uno de esos tokens corre en un chip, dentro de un edificio, conectado a una línea eléctrica.
@@ -69,7 +69,7 @@
 068_imagine_02	101	Después, el mejor programador. El mejor traductor. La mejor segunda opinión, a las tres de la mañana.
 069_imagine_03	50	Cuando pensar es casi gratis, ¿qué se vuelve caro?
 070_imagine_04	97	Quizá las cosas que una máquina no te puede enviar. Tu tiempo. Tu atención. Alguien que esté ahí.
-071_close_00	144	La versión de esta noche es más sencilla. Busca esa tarea que vienes postergando porque implica horas de lectura, y entrégala por unos centavos.
+071_close_00	143	La versión de esta noche es más sencilla. Busca esa tarea que vienes postergando porque implica horas de lectura, y delégala por unos centavos.
 072_close_01	165	El veintidós de septiembre, un laboratorio le puso a su nuevo modelo un precio una quinta parte más bajo. Noventa minutos después, el otro redujo el suyo a la mitad.
 073_close_02	25	Los dos siguen corriendo.
 074_close_03	69	Y hasta ahora, cada paso que dan hace que pensar te salga más barato.

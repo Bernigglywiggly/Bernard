@@ -44,6 +44,8 @@ state-owned project owner.
   S9  Femern, finance page (dev mirror of femern.com/finance, same text) · opened 8 Oct 2026
       https://dev.femern.com/finance/   and   https://femern.com/finance
       (DKK 55.1bn at 2015 prices incl. DKK 7.3bn reserves; EU roughly EUR 1.3bn; toll set by the Danish minister)
+      FACTCHECK 9 Oct: the live /finance page no longer carries the DKK 55.1bn sentence (dev mirror only). The figure
+      is confirmed by the owner's fact sheet of 2 Mar 2026: https://femern.com/media/rarfzhzq/fakta-femern-baelt-projektet-2026.pdf
   S10 Femern, "Why we're building the Fehmarnbelt fixed link"
       https://femern.com/why-we-re-building-the-fehmarnbelt-fixed-link/
       (about one hour saved each way; Copenhagen-Hamburg "from four and a half hours to two and a half"; 200 km/h)
@@ -84,7 +86,8 @@ WHERE SOURCES DIFFER (each is said in the line or kept off screen):
   - Fehmarnsund tunnel length: 1.8 km (YACHT/NDR) or 2.2 km (The Local). Said as "about two kilometres".
   - New opening year: dpa "no earlier than 2031"; the owner has published no date. Said exactly that way.
 
-Photographs: 22 real pictures, CC BY, CC BY-SA or public domain, in src/photo/, rights in src/photo/CREDITS.md.
+Photographs: 16 real pictures used, CC BY or public domain, in src/photo/, rights in src/photo/CREDITS.md. The six
+CC BY-SA files were taken out of the script on 9 Oct (FACTCHECK.md: toning, cropping and labels would trigger share-alike).
 Illustrations g01-g22 are generated cutaways and diagrams (IMAGES.md), never labelled as photographs.
 
 Each chapter is a list of beats: (spoken text, visual). Visuals as in lab/curvelf/mc02_ponzi/script.py.
@@ -120,7 +123,7 @@ CHAPTERS = [
         ("For decades the only way across has been a ferry. The operator, Scandlines, gives the crossing time as forty-five minutes.",
          ("photo", "prinsesse_benedikte_2018", "THE RØDBY–PUTTGARDEN FERRY · 2018", "PHOTO: DGUENDEL · CC BY 4.0")),
         ("A boat leaves every half hour, around the clock, and then you add the queue to get on and the queue to get off.",
-         ("photo", "ferry_car_deck_2015", "ON DECK, MID-CROSSING · 2015", "PHOTO: SMILEY.TOERIST · CC BY-SA 4.0")),
+         ("words", "EVERY HALF HOUR")),
         ("In twenty fourteen, when this picture was taken, the express train from Copenhagen to Hamburg still rolled onto the ferry itself.",
          ("photo", "ice_train_on_ferry_2014", "A TRAIN INSIDE A SHIP · 2014", CR_TW)),
         ("The tunnel is meant to replace all of that with a drive of about ten minutes, or seven minutes by train.",
@@ -140,30 +143,30 @@ CHAPTERS = [
         ("Engineers call it an immersed tunnel, and Denmark already drives through one every day on the way to Sweden.",
          ("photo", "drogden_tunnel_2024", "THE ØRESUND TUNNEL, NEAR COPENHAGEN · 2024", "PHOTO: LUKAS BECK · CC BY 4.0")),
         ("That tunnel is about three and a half kilometres long. The longest of this type in service anywhere is under seven.",
-         ("photo", "oresund_link_aerial_2015", "THE ØRESUND LINK FROM THE AIR · 2015", "PHOTO: ESKIL MALMBERG · CC BY-SA 4.0")),
-        ("The Fehmarnbelt tunnel will be eighteen, so nobody has ever joined this many pieces in a row.",
+         ("words", "THREE AND A HALF KILOMETRES")),
+        ("The Fehmarnbelt tunnel will be eighteen, which is more than twice the length of any immersed tunnel built before it.",
          ("split", ("UNDER 7 km", "LONGEST IMMERSED TUNNEL IN SERVICE"), ("18 km", "FEHMARNBELT"))),
         ("It's also deeper. The Øresund is about fifteen metres deep where that tunnel went in, while this trench sits up to forty metres below the surface.",
          ("split", ("≈15 m", "ØRESUND · DPA"), ("UP TO 40 m", "FEHMARNBELT TRENCH · FEMERN A/S"))),
-        ("Hold on to that difference in depth, because it's where the two years went.",
+        ("Hold on to that difference in depth, because it comes back when we reach the delay.",
          ("words", "REMEMBER THE DEPTH")),
     ]),
     dict(id="factory", title="THE FACTORY", beats=[
         ("To make eighty-nine pieces of tunnel, Denmark first had to build a factory, on the coast at Rødbyhavn.",
-         ("photo", "rodbyhavn_site_2021", "RØDBYHAVN, EARLY WORKS · MAY 2021", "PHOTO: LARS PLOUGMANN · CC BY-SA 2.0")),
+         ("words", "A FACTORY AT RØDBYHAVN")),
         ("The owner describes the site as the largest in Europe, about the size of three hundred football pitches. More than two thousand people work on it.",
          ("num", "2,000+", "WORKERS FROM MORE THAN 40 COUNTRIES · FEMERN A/S, SUMMER 2026")),
         ("Inside are three halls and six production lines. Five of them cast the standard elements.",
          ("img", "g06")),
         ("A standard element is two hundred and seventeen metres long. It's cast in nine segments, and the owner says each element takes about nine weeks.",
          ("num", "217 m", "ONE STANDARD ELEMENT · 9 SEGMENTS · ABOUT 9 WEEKS TO CAST")),
-        ("In cross-section it holds five tubes. Two carry the motorway, two carry the railway, and a narrow one in the middle is for technical installations and access.",
+        ("In cross-section it holds five tubes. Two carry the motorway, two carry the railway, and a narrow fifth one is for technical installations and access.",
          ("img", "g07", "CROSS-SECTION")),
         ("The engineering press gives the outside as roughly forty-two metres wide and nine metres tall.",
          ("list", ["217 m LONG", "ABOUT 42 m WIDE", "ABOUT 9 m TALL", "73,500 TONNES"], "ONE STANDARD ELEMENT")),
         ("The sixth line makes ten shorter pieces with a basement underneath for the electrical equipment. One of those goes in roughly every two kilometres.",
          ("split", ("79", "STANDARD ELEMENTS"), ("10", "SPECIAL ELEMENTS WITH A BASEMENT"))),
-        ("At peak, the works harbour was taking in sixty-five thousand tonnes of stone, cement, sand and steel every week.",
+        ("At peak production, the owner says, the works harbour takes in about sixty-five thousand tonnes of stone, cement, sand and steel every week.",
          ("photo", "pilen_viewpoint_c_2026", "THE SITE AT RØDBYHAVN · MAY 2026", CR_TDN)),
         ("Every element has to last. The design life written into the project is at least a hundred and twenty years.",
          ("num", "120 YEARS", "DESIGN LIFE · FEMERN A/S")),
@@ -178,7 +181,7 @@ CHAPTERS = [
         ("That material hasn't been dumped. It's being used to build about three hundred hectares of new coastline beside the factory.",
          ("photo", "pilen_viewpoint_b_2026", "NEW LAND AT RØDBYHAVN · MAY 2026", CR_TDN)),
         ("The first stretch opened to the public on the first of September this year, so Denmark is now slightly larger than it was.",
-         ("photo", "pilen_viewpoint_2026", "THE PILEN VIEWPOINT · MAY 2026", CR_TDN)),
+         ("photo", "pilen_viewpoint_2026", "THE PILEN VIEWPOINT · PHOTO FROM MAY 2026", CR_TDN)),
         ("So by twenty twenty-four the trench was ready and the factory was casting. What the project didn't have was a way to put one inside the other.",
          ("words", "A TRENCH. A FACTORY. NO WAY DOWN.")),
     ]),
@@ -210,7 +213,7 @@ CHAPTERS = [
         ("Late on Monday the fourth, the first element left the works harbour, held between the two pontoons and pulled by five tugs.",
          ("img", "g12", "ILLUSTRATION")),
         ("It only had to travel a short distance, to a point just in front of the Danish tunnel entrance.",
-         ("photo", "rodbyhavn_portal_2025", "THE DANISH TUNNEL ENTRANCE, UNDER CONSTRUCTION · MAY 2025", "PHOTO: M.LUNDWALL · CC BY-SA 4.0")),
+         ("words", "A SHORT DISTANCE")),
         ("Around noon on Wednesday the lowering began. Ballast makes the element just heavy enough to sink, and steel wires hold it the whole way down.",
          ("img", "g13")),
         ("About fourteen hours later it was sitting on a bed of gravel in the trench.",
@@ -268,25 +271,25 @@ CHAPTERS = [
         ("That is why, in May, the owner announced the tunnel will open in two stages. The road comes first, and the railway follows once Germany is ready.",
          ("list", ["STAGE 1 · THE MOTORWAY", "STAGE 2 · THE RAILWAY, LATER"], "ANNOUNCED 17 MAY 2026")),
         ("Its chief executive called that unfortunate for the green transition and for rail passengers, and I think he's right.",
-         ("photo", "last_train_rodby_2021", "THE LAST TRAIN TO RØDBY FÆRGE LEAVES COPENHAGEN · APRIL 2021", "PHOTO: LEIF JØRGENSEN · CC BY-SA 4.0")),
+         ("words", "UNFORTUNATE FOR THE GREEN TRANSITION")),
     ]),
     dict(id="now", title="WHERE IT STANDS", beats=[
         ("Here is the position on the ninth of October, twenty twenty-six, using only what the owner has published.",
          ("words", "9 OCTOBER 2026")),
         ("Four elements out of eighty-nine are on the seabed. That's a little under five percent of the tunnel.",
          ("num", "4 OF 89", "ELEMENTS IMMERSED · FEMERN A/S, 28 SEP 2026")),
-        ("Nineteen elements have been cast, sixteen standard and three special, so the factory is well ahead of the sea.",
-         ("split", ("19", "ELEMENTS CAST"), ("4", "ELEMENTS IMMERSED"))),
+        ("At least nineteen elements have been cast, three of them special ones, so the factory is well ahead of the sea.",
+         ("split", ("19+", "ELEMENTS CAST · FEMERN A/S, 28 SEP 2026"), ("4", "ELEMENTS IMMERSED"))),
         ("Both tunnel entrances are close to done. The Danish one is complete, and the German one has more than ninety percent of its concrete poured.",
-         ("photo", "rodbyhavn_portal_2025", "THE DANISH ENTRANCE · MAY 2025", "PHOTO: M.LUNDWALL · CC BY-SA 4.0")),
+         ("words", "CLOSE TO DONE")),
         ("The next test is the first special element, which the owner compares to a four-storey building and expects to sink this autumn.",
          ("list", ["39 m LONG", "47 m WIDE", "13 m HIGH"], "SPECIAL ELEMENT · FEMERN A/S")),
         ("In September, Ivy passed a load test for it, carrying an extra sixteen hundred tonnes.",
          ("num", "+1,600 t", "IVY LOAD TEST · FEMERN A/S, 11 SEP 2026")),
-        ("A new timetable is promised once five standard elements and one special element are down. That means it could arrive within weeks of this video.",
+        ("A new timetable is promised once five standard elements and one special element are down. That is two more immersions from here, so at this summer's pace it is likely months away.",
          ("img", "g20")),
         ("One news agency has reported an opening no earlier than twenty thirty-one. The owner hasn't confirmed any year, so treat that figure with care.",
-         ("quote", "No earlier than 2031.", "DPA NEWS AGENCY · 16 JAN 2026 · NOT CONFIRMED BY THE OWNER")),
+         ("quote", "now expected to open no earlier than 2031", "DPA NEWS AGENCY REPORT · 16 JAN 2026 · NOT CONFIRMED BY THE OWNER")),
     ]),
     dict(id="verdict", title="THE ARITHMETIC", beats=[
         ("Now some arithmetic of my own, which you won't find in a press release.",
@@ -300,11 +303,11 @@ CHAPTERS = [
         ("So when the new timetable appears, the number to look for isn't the opening year. It's how many elements a month the plan assumes.",
          ("words", "WATCH THE ELEMENTS PER MONTH")),
         ("My verdict is that the hard engineering question has been answered. A seventy-three-thousand-tonne block can be set on the seabed to within millimetres, and it has now been done four times, though the deepest water is still ahead.",
-         ("photo", "drilling_platform_2015", "SURVEY DRILLING OFF RØDBY · 2015", "PHOTO: HOLGER.ELLGAARD · CC BY-SA 4.0")),
+         ("words", "DEEPEST WATER IS STILL AHEAD")),
         ("The open questions are about time and paperwork, and most of them are on dry land in Germany.",
          ("photo", "puttgarden_site_2022", "PUTTGARDEN · FEB 2022", "PHOTO: FABIAN HORST · CC BY 4.0 · CROPPED")),
         ("For now the ferries keep sailing every half hour, over the top of a tunnel that is nine hundred metres long and has seventeen kilometres to go.",
-         ("photo", "ferry_deutschland_2014", "STILL SAILING", CR_TW)),
+         ("photo", "ferry_deutschland_2014", "THE FERRY DEUTSCHLAND · 2014", CR_TW)),
         ("Every source and every photograph credit is in the description. I'll update this film when the new date is published.",
          ("img", "g22")),
     ]),

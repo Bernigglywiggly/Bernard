@@ -10,7 +10,7 @@ Repo: `~/Bernard`, branch `claude/funny-newton-gd9w8v` ONLY (push with: `git pus
 | LF03 music drops | `lab/curvelf/lf03_held/LF03_FLOW_v5.mp4` | DONE. `mix_flow.py` gained `fill()` (lifts short holes in a score bed); sound-only re-mix; dips now about 5 dB. Manifest index 8 points at v5. Upload after 19:30 9 Oct |
 | `short_escape` | index 5 of `channel/uploads_newlook.json` | Upload after 19:30 UK 9 Oct (daily cap hit 8 Oct) |
 | Tunnel pilot ("Megaprojects"/"Datum Line") | `lab/curvelf/pilot_tunnel/TUNNEL_PILOT_v2.mp4` (= `lab/pilots/megaprojects/`) | DONE. Critic v1 (`CRITIC_v1.md`, FIX THEN UPLOAD) fixes applied in v2: honest diagram label, frame 0 shows the photo, hook at 5.4 s, ≈15 MILLION, POST.md with photo links + chapters. NOT done: name pronunciations by ear (Fehmarn, Rødbyhavn, Øresund, Lolland, Scandlines); channel name; channel does not exist |
-| Economy pilot ("The Household Ledger") | `lab/curvelf/pilot_ledger/LEDGER_PILOT_v2.mp4` (= `lab/pilots/economy/`) | 33 pictures drawn in code (`illustrations.py`, no AI generator), 115 lines voiced, lint clean, v2 rendered. Critic RUNNING -> `lab/pilots/economy/CRITIC_v2.md`; if missing, re-run the film-critic skill on v2 |
+| Economy pilot ("The Household Ledger") | `lab/curvelf/pilot_ledger/LEDGER_PILOT_v3.mp4` (= `lab/pilots/economy/`) | DONE. 33 pictures drawn in code, 116 lines voiced. Critic `CRITIC_v2.md` (FIX THEN UPLOAD): H1-H3, M1, M2 fixed in v3 and checked on the file (ranked list visible, frame 0 bright, hook in line 1, October sentiment 46.3 verified at the source, POST.md honest + chapters). M3 (a look of its own) waits on the user. Stale after 13 Oct (CPI 14 Oct) |
 | Engine (`lab/curvelf/flow.py`) | | New script options: `ILLUS = "..."` (picture label), `LEAD` (seconds before the first word), `OPEN_RESOLVED = True` (frame 0 shows the first picture). Long channel names push the chapter rail right. Photo credit no longer doubles "PHOTO" |
 | Trend desk report (another session) | https://claude.ai/artifact/FXjyxJ6wRAA1sXaUzdp3Qp | Read only; nothing in the repo |
 
@@ -60,7 +60,7 @@ Lustig correction: APPLIED 8 Oct (film fvCbFDHik1s, Capone Short r1l_L9kkTkk, co
 
 ## 6. Next steps, in order
 1. After 19:30 UK 9 Oct: upload `short_escape` (index 5) and LF03 v5 (index 8) via section 3. Before each upload, a critic must have passed the file (LF03: picture as v4 which passed; only the music bed changed).
-2. Read `lab/pilots/economy/CRITIC_v2.md`; apply its fixes (one more render at most).
+2. Both pilots are finished files. Nothing more on them until the user decides on the channels (and on M3, a look of their own).
 3. Spanish film: upload when the user names the channel. YouTube multi-language audio on the English video would be the ideal home but is not available through the API.
 4. New channels need the user: create, phone-verify, connect in Zapier; names from each pilot's CHANNEL.md.
 5. Still unmade: Shorts for Ponzi and Visa; TikTok/Reels wait on Metricool connections.

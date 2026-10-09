@@ -136,7 +136,7 @@ CAP_ROUTES = "SEA ROUTES AND PIPELINES DRAWN SCHEMATICALLY"
 
 CHAPTERS = [
     dict(id="open", title="", beats=[
-        ("On the eighth of October, only eight ships crossed the Strait of Hormuz, and yet, by one tracker's count, Middle East crude exports are back to about where they were before the war.",
+        (("On the eighth of October, only eight ships crossed the Strait of Hormuz, and yet, by one tracker's count, Middle East crude exports are back to about where they were before the war.", "On the eighth of October, only eight ships crossed the Strait of Hormuz, and yet, by one tracker's count, Middle East crude oil exports are back to about where they were before the war."),
          ("map", {"view": V_NARROWS,
                   "labels": [(56.44, 26.67, "STRAIT OF HORMUZ", "26.6N 56.4E · 8 OCT 2026"), (56.62, 26.95, "8 SHIPS", "5 IN · 3 OUT · WINDWARD")],
                   "routes": [R_GULF_OUT[4:11]], "pins": [], "zones": [Z_INBOUND, Z_OUTBOUND],
@@ -369,7 +369,7 @@ CHAPTERS = [
                    "WORLD DEMAND FALLING", "THE OIL KEPT MOVING"], "WHAT A CLOSURE LOOKED LIKE")),
         ("The world did not run dry, but the buffers are thinner now than they were in March.",
          ("num", "−507M", "BARRELS DRAWN TO END-AUGUST · THE BUFFER IS SMALLER NOW · IEA")),
-        (("If I had to watch three things, the first is attacks around Fujairah and on the East-West pipeline, the routes that kept the oil flowing.", "If I had to watch three things, the first is, attacks near Foo-jai-rah and on the East-West pipeline, the routes that kept the oil flowing."),
+        (("If I had to watch three things, the first is attacks around Fujairah and on the East-West pipeline, the routes that kept the oil flowing.", "If I had to watch three things, the first is more strikes near Foo-jai-rah, and on the East-West pipeline, the routes that kept the oil flowing."),
          ("map", {"view": V_PIPES,
                   "labels": [(YANBU[0], YANBU[1], "YANBU", "WATCH"), (FUJAIRAH[0], FUJAIRAH[1], "FUJAIRAH", "WATCH")],
                   "routes": [P_EASTWEST, P_HABSHAN], "pins": [YANBU, FUJAIRAH, FUJ_HIT], "zones": [], "caption": CAP_ROUTES})),

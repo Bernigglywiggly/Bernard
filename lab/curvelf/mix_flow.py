@@ -146,13 +146,14 @@ def drone(dur, marks):
     rng = np.random.default_rng(7)
     sub = np.sin(2 * np.pi * 36.71 * t) * (0.55 + 0.45 * np.sin(2 * np.pi * t / 8.0 - np.pi / 2) ** 2)
     pad = sum(a * np.sin(2 * np.pi * f * t + 0.6 * np.sin(2 * np.pi * t / p_))
-              for f, a, p_ in ((73.42, 0.5, 23.0), (110.0, 0.32, 31.0), (146.83, 0.22, 17.0), (174.61, 0.12, 41.0)))
+              for f, a, p_ in ((73.42, 0.5, 23.0), (110.0, 0.32, 31.0), (146.83, 0.3, 17.0), (174.61, 0.2, 41.0),
+                               (220.0, 0.16, 37.0), (293.66, 0.12, 19.0), (349.23, 0.07, 53.0)))   # upper partials: audible on a phone (9 Oct critic: the sub alone vanished)
     pad *= 0.75 + 0.25 * np.sin(2 * np.pi * t / 29.0)
     noise = rng.standard_normal(n)
     k = np.exp(-np.arange(64) / 9.0)
     static = np.convolve(noise, k / k.sum(), mode="same")
     static = (static - np.convolve(static, np.ones(400) / 400, mode="same")) * (0.4 + 0.6 * (np.sin(2 * np.pi * t / 13.0) > 0.6))
-    mono = 0.55 * sub + 0.45 * pad + 0.10 * static
+    mono = 0.30 * sub + 0.62 * pad + 0.12 * static
     ping = np.zeros(n)
     for tm, _ in marks:
         i0 = int(tm * SR)

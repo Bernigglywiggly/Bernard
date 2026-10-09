@@ -147,7 +147,7 @@ def body_for(e):
     if len(",".join(tags)) > 500:
         raise Fail(f"Tags for {title!r} add up to more than 500 characters")
     return {"snippet": {"title": title, "description": desc, "tags": tags, "categoryId": str(e.get("category", 27)),
-                        "defaultLanguage": "en", "defaultAudioLanguage": "en"},
+                        "defaultLanguage": e.get("lang", "en"), "defaultAudioLanguage": e.get("lang", "en")},
             "status": status}
 
 

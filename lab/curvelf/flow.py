@@ -76,6 +76,8 @@ if ILLUS:
     UI["illus"] = ILLUS
 LEAD = getattr(SC, "LEAD", LEAD)                # seconds of picture before the first word
 OPEN_RESOLVED = getattr(SC, "OPEN_RESOLVED", False)     # frame 0 shows the first picture already resolved (it is the Short hook and the fallback thumbnail)
+CHROME = getattr(SC, "CHROME", "curve")         # "chart" (9 Oct, maps channel): a nav-instrument header, plain captions, cards in ruled frames
+CHART = CHROME == "chart"
 
 
 def beats():
@@ -167,6 +169,9 @@ def layout():
     for i, b in enumerate(B):
         k = b["vis"][0]
         ww = WIDTH[k]
+        if i and k == "map" and P[-1]["kind"] == "map":           # map after map: the same plate, the geography zooms (handover)
+            P.append(dict(i=i, kind=k, x=x, y=P[-1]["y"], ww=ww, off=0.0))
+            continue
         if i:
             x += (P[-1]["ww"] + ww) / 2 + (2600 if b["first"] else 520)
         y = 820 * math.sin(i * 1.9) + 380 * math.sin(i * 0.37)
@@ -400,6 +405,11 @@ def map_frame(i):
         return _MAPF[i]
     v, p = B[i]["vis"][1], PL[i]
     lon0, lat0, lon1, lat1 = v["view"]
+    ov = [q[:2] for q in list(v.get("pins", [])) + list(v.get("labels", []))] + [q for r in v.get("routes", []) for q in r] + [q for z in v.get("zones", []) for q in z]
+    if ov:                                                          # the view grows to hold every overlay, with a margin (9 Oct critic H3)
+        mx_, my_ = 0.07 * (lon1 - lon0), 0.09 * (lat1 - lat0)
+        lon0, lon1 = min(lon0, min(q[0] for q in ov) - mx_), max(lon1, max(q[0] for q in ov) + mx_)
+        lat0, lat1 = min(lat0, min(q[1] for q in ov) - my_), max(lat1, max(q[1] for q in ov) + my_)
     u = p["ww"] / 2300.0
     BW, BH = (1700.0, 1250.0) if VERT else (2060.0, 760.0)
     BW, BH = BW * u, BH * u
@@ -407,7 +417,7 @@ def map_frame(i):
     sc = min(BW / ((lon1 - lon0) * k), BH / (lat1 - lat0))         # world units per degree of latitude
     lw, lh = min(360.0, BW / sc / k), min(170.0, BH / sc)           # the view, widened to the box (never past the whole earth)
     cx_, cy_ = (lon0 + lon1) / 2, min(85 - lh / 2, max(-85 + lh / 2, (lat0 + lat1) / 2))
-    cw = (29.0 if VERT else 18.0) * u                               # one character cell, about 14 x 18 px on screen at 1080p
+    cw = ((29.0 if VERT else 18.0) * (0.66 if lw < 6.5 else 1.0)) * u    # one character cell; finer for a close view, so islands separate
     chh = cw * 4 / 3
     cols, rows = int(lw * sc * k / cw), int(lh * sc / chh)
     w, h = cols * cw, rows * chh
@@ -424,15 +434,19 @@ def map_frame(i):
     return _MAPF[i]
 
 
-def map_mask(m):
-    """Land coverage of every cell (0..1): the rings that touch the view, clipped to it, filled at 4x4 per cell."""
+def map_res(m):
     L0, A0, L1, A1 = m["view"]
-    res = "110m" if L1 - L0 > 40 else "10m"
-    ss, cols, rows = 4, m["cols"], m["rows"]
+    return "110m" if L1 - L0 > 40 else "10m"
+
+
+def map_mask(m, ss=4):
+    """Land coverage of every cell (0..1): the rings that touch the view, clipped to it, filled at ss x ss per cell; and the fine fill."""
+    L0, A0, L1, A1 = m["view"]
+    cols, rows = m["cols"], m["rows"]
     gw, gh = cols * ss, rows * ss
     mx, my = 0.08 * (L1 - L0), 0.08 * (A1 - A0)
     polys = []
-    for a, x0, y0, x1, y1 in land_rings(res):
+    for a, x0, y0, x1, y1 in land_rings(map_res(m)):
         if x1 < L0 - mx or x0 > L1 + mx or y1 < A0 - my or y0 > A1 + my:
             continue
         g = np.empty_like(a)
@@ -447,8 +461,33 @@ def map_mask(m):
             polys.append(q.reshape(-1, 1, 2))
     img = np.zeros((gh, gw), np.uint8)
     if polys:
-        cv2.fillPoly(img, polys, 255, lineType=cv2.LINE_8, shift=4)          # even-odd over all rings: holes stay holes
-    return img.reshape(rows, ss, cols, ss).mean(axis=(1, 3)) / 255.0
+        cv2.fillPoly(img, polys, 255, lineType=cv2.LINE_AA, shift=4)          # even-odd over all rings: holes stay holes
+    return img.reshape(rows, ss, cols, ss).mean(axis=(1, 3)) / 255.0, img
+
+
+def coast_path(m):
+    """The coastline itself, as vector runs in the world (the Natural Earth rings, kept to the view)."""
+    L0, A0, L1, A1 = m["view"]
+    mx, my = 0.04 * (L1 - L0), 0.04 * (A1 - A0)
+    path = skia.Path()
+    step = 0.5 * m["cw"] / 18.0
+    for a, x0, y0, x1, y1 in land_rings(map_res(m)):
+        if x1 < L0 - mx or x0 > L1 + mx or y1 < A0 - my or y0 > A1 + my:
+            continue
+        inside = (a[:, 0] > L0 - mx) & (a[:, 0] < L1 + mx) & (a[:, 1] > A0 - my) & (a[:, 1] < A1 + my)
+        X = m["bx"] + (a[:, 0] - L0) / (L1 - L0) * m["w"]
+        Y = m["by"] + (A1 - a[:, 1]) / (A1 - A0) * m["h"]
+        d = np.diff(inside.astype(np.int8), prepend=0, append=0)
+        for s0, s1 in zip(np.nonzero(d == 1)[0], np.nonzero(d == -1)[0]):
+            xs, ys = X[s0:s1], Y[s0:s1]
+            if len(xs) < 2:
+                continue
+            keep = [0]
+            for q in range(1, len(xs)):                               # drop points closer than half a world unit
+                if abs(xs[q] - xs[keep[-1]]) + abs(ys[q] - ys[keep[-1]]) > step or q == len(xs) - 1:
+                    keep.append(q)
+            path.addPoly([skia.Point(float(xs[q]), float(ys[q])) for q in keep], False)
+    return path
 
 
 def nice_step(span, n=6):
@@ -462,50 +501,158 @@ def deg(x, pos, neg, frac):
     return (f"{abs(x):.1f}" if frac else f"{abs(x):.0f}") + (pos if x >= 0 else neg)
 
 
+SEA, LANDF = "#06141B", "#1A2226"                 # the sea has a colour (blue-black); the land a faint warm-grey mass under its glyphs
+
+
 def map_pics(i):
-    """A map's type as two recorded pictures (every frame replays them): the map itself, and its coast lit in the accent."""
+    """A map's type as two recorded pictures (every frame replays them): the map itself, and its coast lit in the accent.
+    The coast is a vector stroke from the real rings; its glyphs follow its direction (- | / \\); land inside is a quiet
+    dot field; the sea is tinted with a sparse ~ swell (9 Oct critic H2)."""
     if i in _MAPP:
         return _MAPP[i]
     m = map_frame(i)
-    cov = map_mask(m)
+    cov, fine = map_mask(m, 6)
     land = cov > 0.5
     pad = np.pad(land, 1, mode="edge")                                      # the box's edge is not a coast
     water_near = ~(pad[:-2, 1:-1] & pad[2:, 1:-1] & pad[1:-1, :-2] & pad[1:-1, 2:])
-    coast = (land & water_near) | ((cov > 0.3) & ~land)     # 0.3: a strait narrower than a cell still shows water (Qeshm)                     # a sliver of land too small to fill a cell is still drawn
-    inner = land & ~coast
+    coast = (land & water_near) | ((cov > 0.3) & ~land)     # 0.3: a sliver of land too small to fill a cell is still drawn
+    dist = cv2.distanceTransform(np.pad(land, 1, mode="edge").astype(np.uint8), cv2.DIST_L1, 3)[1:-1, 1:-1]
+    second = land & ~coast & (dist <= 2)
+    inner = land & ~coast & ~second
+    sea_d = cv2.distanceTransform(np.pad(cov < 0.05, 1, mode="edge").astype(np.uint8), cv2.DIST_L1, 3)[1:-1, 1:-1]
+    sm_ = cv2.GaussianBlur(cov.astype(np.float32), (0, 0), 0.9)
+    gx = cv2.Sobel(sm_, cv2.CV_32F, 1, 0, ksize=3) / m["cw"]
+    gy = cv2.Sobel(sm_, cv2.CV_32F, 0, 1, ksize=3) / m["ch"]
+    ang = np.degrees(np.arctan2(gx, -gy)) % 180.0                  # the coast's own direction (across the gradient), y down
+    ori = np.select([(ang < 22.5) | (ang >= 157.5), ang < 67.5, ang < 112.5], ["-", "\\", "|"], "/")
     f = mono(m["ch"] * 0.95)
-    out = []
-    for lit in (False, True):
+    gwid = f.measureText("#")
+    cpath = coast_path(m)
+    rgba = np.zeros(fine.shape + (4,), np.uint8)
+    rgba[..., :3] = [int(LANDF[1:3], 16), int(LANDF[3:5], 16), int(LANDF[5:7], 16)]
+    rgba[..., 3] = fine
+    fimg = skia.Image.fromarray(np.ascontiguousarray(rgba), colorType=skia.kRGBA_8888_ColorType, alphaType=skia.kUnpremul_AlphaType)
+    box = skia.Rect.MakeXYWH(m["bx"], m["by"], m["w"], m["h"])
+    L0, A0, L1, A1 = m["view"]
+    st = nice_step(max(L1 - L0, (A1 - A0) * 1.6), 8)
+
+    def rec_(draw):
         rec = skia.PictureRecorder()
         c = rec.beginRecording(skia.Rect.MakeXYWH(m["bx"] - 400, m["by"] - 400, m["w"] + 800, m["h"] + 800))
-        pc = skia.Paint(Color=col(CYAN if lit else MAP_COAST, 1.0 if lit else 0.92), AntiAlias=True)
-        pl = skia.Paint(Color=col(CYAN if lit else MAP_LAND, 0.35 if lit else 1.0), AntiAlias=True)
+        c.save()
+        c.clipRect(box)
+        draw(c)
+        c.restore()
+        return rec.finishRecordingAsPicture()
+
+    def stroke(c, lit):
+        c.drawPath(cpath, skia.Paint(Color=col(CYAN if lit else MAP_COAST, 0.9 if lit else 0.55), AntiAlias=True, Style=skia.Paint.kStroke_Style,
+                                     StrokeWidth=(2.2 if lit else 1.5) * m["u"], StrokeJoin=skia.Paint.kRound_Join))
+
+    def vector(c):                                                  # land mass, the sea's swell, the coast stroke, the graticule
+        c.drawImageRect(fimg, box, skia.SamplingOptions(skia.FilterMode.kLinear), skia.Paint(Color=col("#FFFFFF", 0.9)))
+        stroke(c, False)
+        pg = skia.Paint(Color=col(INK, 0.16), AntiAlias=True, StrokeWidth=1.4 * m["u"])
+        r_ = 5 * m["u"]
+        for lo in np.arange(math.ceil(L0 / st) * st, L1, st):
+            for la in np.arange(math.ceil(A0 / st) * st, A1, st):
+                x, y = m["proj"](lo, la)
+                jj, ii = int((y - m["by"]) / m["ch"]), int((x - m["bx"]) / m["cw"])
+                if 0 <= jj < m["rows"] and 0 <= ii < m["cols"] and cov[jj, ii] < 0.05:
+                    c.drawLine(x - r_, y, x + r_, y, pg)
+                    c.drawLine(x, y - r_, x, y + r_, pg)
+
+    def glyphs(c, lit):
+        if not lit:
+            sw = skia.Paint(Color=col("#3F8C93", 0.30), AntiAlias=True)        # the sea: a sparse swell of ~, clear of the shore
+            for j in range(1, m["rows"], 3):
+                ii = [q for q in range((j // 3) % 2 * 3 + 1, m["cols"], 6) if sea_d[j, q] > 2]
+                if ii:
+                    xs = [m["bx"] + q * m["cw"] + (m["cw"] - gwid) / 2 for q in ii]
+                    c.drawTextBlob(skia.TextBlob.MakeFromPosTextH("~" * len(ii), xs, m["by"] + (j + 0.8) * m["ch"], f), 0, 0, sw)
+        pc = skia.Paint(Color=col(CYAN if lit else MAP_COAST, 1.0 if lit else 0.95), AntiAlias=True)
+        p2 = skia.Paint(Color=col(CYAN if lit else MAP_LAND, 0.45 if lit else 1.0), AntiAlias=True)
+        pl = skia.Paint(Color=col(CYAN if lit else MAP_LAND, 0.3 if lit else 0.75), AntiAlias=True)
         for j in range(m["rows"]):
             y = m["by"] + (j + 0.8) * m["ch"]
-            for mask, glyphs, paint in ((inner[j], ".:·", pl), (coast[j], "#+%*", pc)):
+            for mask, glyph, paint in ((inner[j], "·", pl), (second[j], ":", p2), (coast[j], None, pc)):
                 ii = np.nonzero(mask)[0]
                 if len(ii):
-                    s_ = "".join(glyphs[(q * 7 + j * 3) % 4] if len(glyphs) == 4 else glyphs[(q + j * 2) % 3] for q in ii)
-                    xs = [m["bx"] + q * m["cw"] + (m["cw"] - f.measureText("#")) / 2 for q in ii]
+                    s_ = "".join(ori[j, q] for q in ii) if glyph is None else glyph * len(ii)
+                    xs = [m["bx"] + q * m["cw"] + (m["cw"] - gwid) / 2 for q in ii]
                     c.drawTextBlob(skia.TextBlob.MakeFromPosTextH(s_, xs, y, f), 0, 0, paint)
-        if not lit:                                                 # the sea: a faint graticule of crosses, so the water reads as chart
-            L0, A0, L1, A1 = m["view"]
-            st = nice_step(max(L1 - L0, (A1 - A0) * 1.6), 8)
-            pg = skia.Paint(Color=col(INK, 0.16), AntiAlias=True, StrokeWidth=1.4 * m["u"])
-            r_ = 5 * m["u"]
-            for lo in np.arange(math.ceil(L0 / st) * st, L1, st):
-                for la in np.arange(math.ceil(A0 / st) * st, A1, st):
-                    x, y = m["proj"](lo, la)
-                    jj, ii = int((y - m["by"]) / m["ch"]), int((x - m["bx"]) / m["cw"])
-                    if 0 <= jj < m["rows"] and 0 <= ii < m["cols"] and cov[jj, ii] < 0.05:
-                        c.drawLine(x - r_, y, x + r_, y, pg)
-                        c.drawLine(x, y - r_, x, y + r_, pg)
-        out.append(rec.finishRecordingAsPicture())
+
+    out = [rec_(vector), rec_(lambda c: glyphs(c, False)), rec_(lambda c: (stroke(c, True), glyphs(c, True)))]
     _MAPP[i] = out
     if len(_MAPP) > 6:
         for old in [q for q in _MAPP if abs(q - i) > 3]:
             del _MAPP[old]
     return out
+
+
+# ---- map after map: one plate, the geography zooms from one view into the next (9 Oct critic M1: no dip to black)
+def handover_in(i):
+    """True when beat i is a map that takes over from the map just before it (same plate)."""
+    return 0 < i < N and B[i]["vis"][0] == "map" and B[i - 1]["vis"][0] == "map" and PL[i]["x"] == PL[i - 1]["x"]
+
+
+def ho_window(j):
+    """The seconds over which map j takes over from map j-1."""
+    return (S(j) - 2.4, S(j) + 0.5) if B[j]["first"] else (S(j) - 0.6, S(j) + 1.0)
+
+
+def ho_geo(j):
+    """Per axis (scale, offset) taking map j's world coords onto map j-1's, so the same lon/lat lands on the same point."""
+    a, b = map_frame(j - 1), map_frame(j)
+    (L0i, A0i, L1i, A1i), (L0j, A0j, L1j, A1j) = a["view"], b["view"]
+    sx = ((L1j - L0j) / b["w"]) / ((L1i - L0i) / a["w"])
+    sy = ((A1j - A0j) / b["h"]) / ((A1i - A0i) / a["h"])
+    ox = a["bx"] + (L0j - L0i) * a["w"] / (L1i - L0i) - sx * b["bx"]
+    oy = a["by"] + (A1i - A1j) * a["h"] / (A1i - A0i) - sy * b["by"]
+    return (sx, ox), (sy, oy)
+
+
+def ho_D(j, e):
+    """The display transform at progress e: identity for map j-1 at e=0, and the inverse of ho_geo at e=1."""
+    out = []
+    for s, o in ho_geo(j):
+        se = s ** -e
+        if abs(s - 1) < 1e-6:
+            out.append((1.0, -e * o / s))
+        else:
+            f_ = -o / (s - 1)
+            out.append((se, f_ * (1 - se)))
+    return out
+
+
+def ho_progress(j, t):
+    a, b = ho_window(j)
+    return sm(t, a, b)
+
+
+def map_xform(i, t):
+    """(sx, ox, sy, oy, role, e): how map i is displayed now; role 'in' while it takes over, 'out' while it hands over."""
+    if handover_in(i):
+        e = ho_progress(i, t)
+        if e < 1:
+            (dx, dox), (dy, doy) = ho_D(i, e)
+            (gx, gox), (gy, goy) = ho_geo(i)
+            return dx * gx, dx * gox + dox, dy * gy, dy * goy + doy, "in", e
+    if i + 1 < N and handover_in(i + 1):
+        e = ho_progress(i + 1, t)
+        if e > 0:
+            (dx, dox), (dy, doy) = ho_D(i + 1, e)
+            return dx, dox, dy, doy, "out", e
+    return 1.0, 0.0, 1.0, 0.0, None, 0.0
+
+
+def map_geo_at(i, t, wx, wy):
+    """The lon/lat under a world point, as map i shows it now."""
+    m = map_frame(i)
+    sx, ox, sy, oy, _, _ = map_xform(i, t)
+    x, y = (wx - ox) / sx, (wy - oy) / sy
+    L0, A0, L1, A1 = m["view"]
+    return L0 + (x - m["bx"]) / m["w"] * (L1 - L0), A1 - (y - m["by"]) / m["h"] * (A1 - A0)
 
 
 def spring(x):
@@ -552,7 +699,7 @@ def map_labels(i):
                 cands.append((sx, 0, skia.Rect.MakeXYWH(x + L if sx > 0 else x - L - pw, y - ph / 2, pw, ph)))
         best, bs = None, 1e18
         for n_, (sx, sy, r) in enumerate(cands):
-            inside = r.left() > m["bx"] - 160 * u and r.right() < m["bx"] + m["w"] + 160 * u and r.top() > m["by"] - 60 * u and r.bottom() < m["by"] + m["h"] + 20 * u
+            inside = r.left() > m["bx"] + 6 * u and r.right() < m["bx"] + m["w"] - 6 * u and r.top() > m["by"] + 6 * u and r.bottom() < m["by"] + m["h"] - 6 * u
             hit = 0.0
             for q in taken + [o[2] for o in out]:
                 ix = skia.Rect(r.left(), r.top(), r.right(), r.bottom())
@@ -567,61 +714,102 @@ def map_labels(i):
 
 
 def draw_map(c, i, t):
-    """A map beat: the type map wipes on, then its zones, pins, routes and labels arrive one after another."""
+    """A map beat: the type map wipes on, then its zones, pins, routes and labels arrive one after another. A map that
+    follows a map takes over its plate: the geography zooms from one view to the next, with no fade to black."""
     m = map_frame(i)
     v, u0 = m["v"], m["u"]
     u = u0 * (1.7 if VERT else 1.0)
-    base, lit = map_pics(i)
+    vecp, glyp, lit = map_pics(i)
+    gs = 1 - sm(abs(math.log(max(1e-6, math.sqrt(abs(map_xform(i, t)[0] * map_xform(i, t)[2]))))), math.log(1.3), math.log(2.0))   # glyphs give way while the view is magnified or shrunk
     first = i == 0 and OPEN_RESOLVED and not VERT
-    leave = 1 - sm(t, NXT(i) - 0.2, NXT(i) + 0.6) if i < N - 1 else 1.0
-    am = (1.0 if first else sm(t, S(i) - 1.6, S(i) - 0.6)) * leave
+    sx, ox, sy, oy, role, e = map_xform(i, t)
+    nxt_map = i + 1 < N and handover_in(i + 1)
+    leave = 1 - sm(t, NXT(i) + 0.4, NXT(i) + 1.0) if (i < N - 1 and not nxt_map) else 1.0     # the map stays up while the camera leaves it
+    if role == "in":
+        am = sm(e, 0.05, 0.4)
+    elif first:
+        am = 1.0
+    else:
+        am = sm(t, S(i) - 1.6, S(i) - 0.6) * leave
+    back = am
+    fin = 1.0
+    if role == "out":
+        fin = 1 - sm(e, 0.1, 0.4)                                  # inside the incoming map's box the old one gives way; outside it stays
     if am <= 0:
         return
     bx, by, w, h = m["bx"], m["by"], m["w"], m["h"]
-    rv = 1.0 if first else sm(t, S(i) - 1.2, S(i) + 0.6)              # the map is typed on, left to right, behind a lit edge
+    box = skia.Rect.MakeXYWH(bx, by, w, h)
+    rv = 1.0 if (first or role == "in" or handover_in(i)) else sm(t, S(i) - 1.2, S(i) + 0.6)    # the map is typed on, left to right, behind a lit edge
+    if role != "in":                                               # the plate: the sea's colour, which also keeps the lattice out
+        c.drawRect(skia.Rect.MakeXYWH(bx - 40 * u0, by - 30 * u0, w + 80 * u0, h + 60 * u0), skia.Paint(Color=col(BG, 0.72 * back)))
+        c.drawRect(box, skia.Paint(Color=col(SEA, 0.95 * back)))
+    mat = skia.Matrix.MakeAll(sx, 0, ox, 0, sy, oy, 0, 0, 1)
     c.saveLayerAlpha(skia.Rect.MakeXYWH(bx - 600, by - 400, w + 1200, h + 800), int(255 * am))
-    c.drawRect(skia.Rect.MakeXYWH(bx - 40 * u0, by - 30 * u0, w + 80 * u0, h + 60 * u0), skia.Paint(Color=col(BG, 0.72)))    # the lattice stays out of the sea
     ex = bx + (w + 240 * u0) * rv - 120 * u0
-    c.save()
-    c.clipRect(skia.Rect.MakeLTRB(bx - 50, by - 50, ex, by + h + 50))
-    c.drawPicture(base)
-    c.restore()
-    band = [(ex - 140 * u0, ex)] if rv < 1 else []
     ph = ((t - S(i)) % 7.0) / 7.0                                      # then a slow sweep of light crosses the coast every 7 s
-    band.append((bx - 300 * u0 + ph * (w + 600 * u0), bx - 300 * u0 + ph * (w + 600 * u0) + 220 * u0))
-    for x0, x1 in band:
+    band = ([(ex - 140 * u0, ex)] if rv < 1 else []) + [(bx - 300 * u0 + ph * (w + 600 * u0), bx - 300 * u0 + ph * (w + 600 * u0) + 220 * u0)]
+    passes = [(None, 1.0)]
+    if role == "out":
+        jm = map_frame(i + 1)
+        jx, jox, jy, joy, _, _ = map_xform(i + 1, t)
+        jr = skia.Rect.MakeXYWH(jx * jm["bx"] + jox, jy * jm["by"] + joy, jx * jm["w"], jy * jm["h"])
+        passes = [((jr, skia.ClipOp.kDifference), 1.0), ((jr, skia.ClipOp.kIntersect), fin)]
+    for clip_, pa_ in passes:
+        if pa_ <= 0:
+            continue
         c.save()
-        c.clipRect(skia.Rect.MakeLTRB(max(bx - 50, x0), by - 50, min(ex, x1), by + h + 50))
-        c.drawPicture(lit, None, skia.Paint(Color=col("#FFFFFF", 0.55 if x1 == ex else 0.32)))
+        c.clipRect(box)
+        if clip_:
+            c.clipRect(clip_[0], clip_[1])
+        c.concat(mat)
+        c.save()
+        c.clipRect(skia.Rect.MakeLTRB(bx - 50, by - 50, ex, by + h + 50))
+        c.drawPicture(vecp, None, skia.Paint(Color=col("#FFFFFF", pa_)))
+        if gs > 0:
+            c.drawPicture(glyp, None, skia.Paint(Color=col("#FFFFFF", pa_ * gs)))
         c.restore()
-    # the ruler: longitudes under the map, latitudes down its left side, and the source line beneath
-    L0, A0, L1, A1 = m["view"]
-    fr = mono(29 * u)                                              # readable on a phone (9 Oct)
-    ink = skia.Paint(Color=col(INK, 0.5), AntiAlias=True, StrokeWidth=1.3 * u0)
-    ra = sm(t, S(i) - 0.4, S(i) + 0.6) if not first else 1.0
-    yb = by + h + 12 * u0
-    c.drawLine(bx, yb, bx + w * ra, yb, skia.Paint(Color=col(INK, 0.3), AntiAlias=True, StrokeWidth=1.2 * u0))
-    st = nice_step(L1 - L0, 7 if not VERT else 4)
-    for lo in np.arange(math.ceil(L0 / st) * st, L1 + 1e-9, st):
-        x, _ = m["proj"](lo, 0)
-        if x > bx + w * ra:
-            break
-        c.drawLine(x, yb, x, yb + 12 * u0, ink)
-        text(c, deg(((lo + 180) % 360) - 180, "E", "W", st < 1), x, yb + 40 * u, fr, DIM, ra, 0.5 * u, "center")
-    st = nice_step(A1 - A0, 4 if not VERT else 6)
-    for la in np.arange(math.ceil(A0 / st) * st, A1 + 1e-9, st):
-        _, y = m["proj"](0, la)
-        c.drawLine(bx - 22 * u0, y, bx - 8 * u0, y, ink)
-        text(c, deg(la, "N", "S", st < 1), bx - 30 * u0, y + 7 * u, fr, DIM, ra, 0.5 * u, "right")
-    if v.get("caption"):
-        cap = typed(v["caption"], t, S(i) + 0.3, 45.0) if not first else v["caption"]
-        c.drawRect(skia.Rect.MakeXYWH(bx, yb + 62 * u, 6 * u, 24 * u), skia.Paint(Color=col(CYAN)))
-        text(c, cap, bx + 18 * u, yb + 82 * u, mono(22 * u), DIM, 1.0, 0.8 * u)
-    c.restore()
-    a, t0 = held(i, t)
+        for x0, x1 in band:
+            c.save()
+            c.clipRect(skia.Rect.MakeLTRB(max(bx - 50, x0), by - 50, min(ex, x1), by + h + 50))
+            c.drawPicture(lit, None, skia.Paint(Color=col("#FFFFFF", (0.55 if x1 == ex else 0.32) * pa_ * max(gs, 0.3))))
+            c.restore()
+        c.restore()
+    # the ruler: longitudes under the map, latitudes down its left side, and the source line beneath (on the plate, not the geography)
+    rk = sm(e, 0.6, 1.0) if role == "in" else (1 - sm(e, 0.0, 0.4)) if role == "out" else 1.0
+    if rk > 0:
+        L0, A0, L1, A1 = m["view"]
+        fr = mono(29 * u)                                              # readable on a phone (9 Oct)
+        ink = skia.Paint(Color=col(INK, 0.5 * rk), AntiAlias=True, StrokeWidth=1.3 * u0)
+        ra = sm(t, S(i) - 0.4, S(i) + 0.6) if not (first or handover_in(i)) else 1.0
+        yb = by + h + 12 * u0
+        c.drawLine(bx, yb, bx + w * ra, yb, skia.Paint(Color=col(INK, 0.3 * rk), AntiAlias=True, StrokeWidth=1.2 * u0))
+        st = nice_step(L1 - L0, 7 if not VERT else 4)
+        for lo in np.arange(math.ceil(L0 / st) * st, L1 + 1e-9, st):
+            x, _ = m["proj"](lo, 0)
+            if x > bx + w * ra:
+                break
+            c.drawLine(x, yb, x, yb + 12 * u0, ink)
+            text(c, deg(((lo + 180) % 360) - 180, "E", "W", st < 1), x, yb + 40 * u, fr, DIM, ra * rk, 0.5 * u, "center")
+        st = nice_step(A1 - A0, 4 if not VERT else 6)
+        for la in np.arange(math.ceil(A0 / st) * st, A1 + 1e-9, st):
+            _, y = m["proj"](0, la)
+            c.drawLine(bx - 22 * u0, y, bx - 8 * u0, y, ink)
+            text(c, deg(la, "N", "S", st < 1), bx - 30 * u0, y + 7 * u, fr, DIM, ra * rk, 0.5 * u, "right")
+        if v.get("caption"):
+            cap = typed(v["caption"], t, S(i) + 0.3, 45.0) if not (first or handover_in(i)) else v["caption"]
+            c.drawRect(skia.Rect.MakeXYWH(bx, yb + 62 * u, 6 * u, 24 * u), skia.Paint(Color=col(CYAN, rk)))
+            text(c, cap, bx + 18 * u, yb + 82 * u, mono(22 * u), DIM, rk, 0.8 * u)
+    a, t0 = held(i, t, (ho_window(i)[1] - 0.4) if handover_in(i) else None)
+    if first:
+        t0 -= 10.0                                                 # frame 0 is the thumbnail: everything already drawn
     a *= leave if a > 0 else 0
     if a <= 0:
+        c.restore()
         return
+    c.save()
+    c.concat(mat)
+    c.save()
+    c.clipRect(box)
     dur = max(2.0, E(i) - t0)
     for k_, zone in enumerate(v.get("zones", [])):                     # a zone: a lit hatch inside a hairline
         za = a * sm(t, t0 + 0.2 + 0.4 * k_, t0 + 1.0 + 0.4 * k_)
@@ -687,6 +875,7 @@ def draw_map(c, i, t):
             c.drawCircle(x, y, (12 + 46 * q) * u0, skia.Paint(Color=col(CYAN, 0.75 * pa * (1 - q)), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2.2 * u0))
         c.drawCircle(x, y, 20 * u0, glow(CYAN, 0.6 * pa, 12 * u0))
         c.drawCircle(x, y, 8 * u0, skia.Paint(Color=col(CYAN, pa), AntiAlias=True))
+    c.restore()                                                    # labels may lean out of the plate; the rest may not
     labels = v.get("labels", [])
     stag = min(1.1, dur * 0.55 / max(1, len(labels)))
     ft, fs = sans(50 * u), mono(31 * u)
@@ -721,6 +910,8 @@ def draw_map(c, i, t):
                 text(c, st_, tx_, r.top() + 94 * u, fs, CYAN, pa, 0.5 * u)
             else:
                 text(c, st_, tx, r.top() + 94 * u, fs, CYAN, pa, 0.5 * u)
+    c.restore()
+    c.restore()
 
 
 # ------------------------------------------------------------------ the camera: one move, start to finish
@@ -735,11 +926,15 @@ def keys():
         dx = ww * 0.03 * (1 if n % 2 else -1)
         if p["kind"] == "map":                                      # a map holds still and pushes slowly toward what it is about
             fx, fy = map_frame(n)["focus"]
-            if n == 0:
+            if n == 0 and OPEN_RESOLVED:                            # frame 0 is already framed: the thumbnail, ruler and all
+                k.append((0.0, (x, y, z)))
+                k.append((a + 1.4, (x, y, z * 1.02)))
+            elif n == 0:
                 k.append((0.0, (x, y + 10, z * 1.12)))
                 k.append((a + 1.4, (x, y, z)))
             else:
-                k.append((a, (x, y, z * 0.97), 0.35 + 0.25 * min(1.0, math.hypot(x - k[-1][1][0], y - k[-1][1][1]) / 6000)))
+                far = math.hypot(x - k[-1][1][0], y - k[-1][1][1])
+                k.append((a, (x, y, z * 0.97), 0.0 if handover_in(n) else 0.35 + 0.25 * min(1.0, far / 6000)))
             k.append((b, (x + fx * 0.14, y + fy * 0.14, z * 1.08)))
             continue
         if n == 0:
@@ -848,6 +1043,8 @@ def plate(c, x, y, w, h, a):
 
 
 def typed(s, t, t0, cps=30.0):
+    if CHART:                                                       # the chart look: no typing, no block cursor; the line fades with its card
+        return s
     n = int(max(0.0, t - t0) * cps)
     return s[:n] + ("█" if 0 < n < len(s) else "")
 
@@ -859,6 +1056,8 @@ def on_screen(x0, x1, y1):
     """1 when a block is wholly inside the frame and above the caption band, falling to 0 as it nears an edge."""
     cx, cy, z = CAM
     l, r, bot = (x0 - cx) * z + W / 2 - SHIFT, (x1 - cx) * z + W / 2 - SHIFT, (y1 - cy) * z + H / 2 - RAISE
+    if CHART and not VERT:                                          # the chart look: type slides through the frame with its card
+        return 1 - sm(bot, CAP_TOP - 40, CAP_TOP)
     return sm(l, 14, 70) * (1 - sm(r, W - 70 - 2 * SHIFT, W - 14 - 2 * SHIFT)) * (1 - sm(bot, CAP_TOP - 40, CAP_TOP))
 
 
@@ -925,6 +1124,56 @@ def block(c, x0, top, w, h, a, pad=36):
     plate(c, x0 - pad, top - pad * 0.6, w + 2 * pad, h + pad * 1.2, a)
 
 
+def last_map(i):
+    """The map a beat belongs to: itself, else the latest map before it, else the first map after it."""
+    for j in list(range(i, -1, -1)) + list(range(i + 1, N)):
+        if B[j]["vis"][0] == "map":
+            return j
+    return None
+
+
+def fmt_ll(lon, lat, d=2):
+    return f"{abs(lat):0{3 + d}.{d}f}°{'N' if lat >= 0 else 'S'}   {abs(lon):0{4 + d}.{d}f}°{'E' if lon >= 0 else 'W'}"
+
+
+def card_tag(i):
+    """A card's reference in the chart look: its chapter.beat number and the place it is about (the map it sits among)."""
+    kind = dict(num="FIG", split="CMP", words="NOTE", quote="NOTICE", list="LOG", tl="TIMELINE").get(B[i]["vis"][0], "REF")
+    bi = sum(1 for j in range(i) if B[j]["floor"] == B[i]["floor"])
+    j = last_map(i)
+    if j is None:
+        return f"{kind} {B[i]['floor'] + 1:02d}.{bi + 1:02d}"
+    L0, A0, L1, A1 = map_frame(j)["view"]
+    return f"{kind} {B[i]['floor'] + 1:02d}.{bi + 1:02d}  ·  " + fmt_ll((L0 + L1) / 2, (A0 + A1) / 2, 1)
+
+
+def chart_frame(c, r, a, tag, u, divider=None):
+    """A card as a plate on the instrument: a hairline frame, cyan corner ticks, a small reference tag."""
+    if a <= 0:
+        return
+    c.drawRect(r, skia.Paint(Color=col(BG, 0.55 * a)))
+    c.drawRect(r, skia.Paint(Color=col(INK, 0.2 * a), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=1.3 * u))
+    tk, pt = 34 * u, skia.Paint(Color=col(CYAN, a), AntiAlias=True, StrokeWidth=2.6 * u)
+    for x, y, dx, dy in ((r.left(), r.top(), 1, 1), (r.right(), r.top(), -1, 1), (r.left(), r.bottom(), 1, -1), (r.right(), r.bottom(), -1, -1)):
+        c.drawLine(x, y, x + dx * tk, y, pt)
+        c.drawLine(x, y, x, y + dy * tk, pt)
+    if divider is not None:
+        c.drawLine(divider, r.top() + 60 * u, divider, r.bottom() - 60 * u, skia.Paint(Color=col(INK, 0.2 * a), AntiAlias=True, StrokeWidth=1.3 * u))
+    fm = mono(22 * u)
+    text(c, tag, r.left() + 26 * u, r.top() + 44 * u, fm, DIM, a, 1.0 * u)
+    for k_ in range(9):                                             # a hairline scale along the bottom edge, like a chart's border
+        x = r.right() - 30 * u - k_ * 22 * u
+        c.drawLine(x, r.bottom() - 4 * u, x, r.bottom() - (16 if k_ % 4 == 0 else 9) * u, skia.Paint(Color=col(INK, 0.3 * a), AntiAlias=True, StrokeWidth=1.2 * u))
+
+
+def held_chart(i, t):
+    """The chart look: a card is up before the camera arrives and stays as it leaves, so it slides through the frame (no dip to black)."""
+    t0 = S(i) - 0.5                                                # its type is already set as it slides in
+    if i == N - 1:
+        return sm(t, S(i) - 0.9, S(i) - 0.45), t0
+    return sm(t, S(i) - 0.9, S(i) - 0.45) * (1 - sm(t, NXT(i) + 0.35, NXT(i) + 0.8)), t0
+
+
 def world_type(c, t):
     n = now(t)
     for i in range(max(0, n - 1), min(N, n + 2)):
@@ -934,9 +1183,11 @@ def world_type(c, t):
         if k == "map":
             draw_map(c, i, t)
             continue
-        a, t0 = held(i, t)
+        a, t0 = held_chart(i, t) if CHART else held(i, t)
         if a <= 0:
             continue
+        a_fr = a
+        fr_rect, fr_div = None, None
         dur = max(1.0, E(i) - t0)
         if False and k in ("img", "clip") and HAS_PHOTO and len(v) < 3:     # (moved to the screen, 8 Oct: in the world it fell under the captions or the rail)
             tg = "ILLUSTRATION  ·  AI-GENERATED"
@@ -990,6 +1241,9 @@ def world_type(c, t):
             wd = max(f.measureText(s_) for s_ in lines)
             top = y - len(lines) * lh / 2 - 70 * u
             a *= on_screen(x - wd / 2 - 40 * u, x + wd / 2 + 40 * u, top + len(lines) * lh + 30 * u)
+            if CHART:
+                hw = max(wd, 900 * u) / 2 + 100 * u
+                chart_frame(c, skia.Rect.MakeLTRB(x - hw, top - 110 * u, x + hw, top + len(lines) * lh + 60 * u), a_fr, card_tag(i), u)
             if a > 0:
                 c.drawRect(skia.Rect.MakeXYWH(x - wd / 2, top - 26 * u, 110 * u, 9 * u), skia.Paint(Color=col(CYAN, a)))
                 for j, s_ in enumerate(lines):
@@ -1000,6 +1254,9 @@ def world_type(c, t):
                 f, size = fit_sans(v[1], 300 * u, 1800 * u)
                 wd0 = f.measureText(v[1])
                 a0 = a * on_screen(x - wd0 / 2 - 30 * u, x + wd0 / 2 + 30 * u, y + 120 * u)
+                if CHART:
+                    hw = max(wd0, mono(34 * u).measureText(v[2]), 900 * u) / 2 + 110 * u
+                    chart_frame(c, skia.Rect.MakeLTRB(x - hw, y - 270 * u, x + hw, y + 400 * u), a_fr, card_tag(i), u)
                 text(c, v[1], x - wd0 / 2, y + 60 * u, f, INK, a0)
             fm = mono(34 * u)
             s_ = v[2]
@@ -1012,6 +1269,8 @@ def world_type(c, t):
                 block(c, x - wd / 2, Y - 34 * u, wd, 44 * u, a, 24 * u)
                 text(c, typed(s_, t, t0 + 0.2), x - wd / 2, Y, fm, CYAN, a)
         elif k == "split":
+            if CHART:
+                chart_frame(c, skia.Rect.MakeLTRB(x - 0.45 * p["ww"], y - 190 * u, x + 0.45 * p["ww"], y + 320 * u), a_fr, card_tag(i), u, divider=x)
             if max(len(v[1][0]), len(v[2][0])) > LONG_SPLIT:
                 for j, (big, _) in enumerate(v[1:3]):
                     f, size = fit_sans(big, 170 * u, p["ww"] * 0.34)
@@ -1040,8 +1299,12 @@ def world_type(c, t):
             X, top = x - wd / 2 + (55 * u if VERT else 0), y - hgt / 2 - (230 if VERT else 80) * u      # a Short's captions sit high: a tall quote must clear them
             a *= on_screen(X - 150 * u, X + wd + 40 * u, top + hgt + 30 * u)
             if a > 0:
-                block(c, X - 110 * u, top - 40 * u, wd + 110 * u, hgt + 60 * u, a, 40 * u)
-                text(c, "“", X - 120 * u, top + 150 * u, sans(260 * u), CYAN, a, halo=14 * u)
+                if CHART:                                       # a notice slip, not a pull-quote: no big mark
+                    chart_frame(c, skia.Rect.MakeLTRB(X - 130 * u, top - 120 * u, X + wd + 90 * u, top + hgt + 70 * u), a_fr, card_tag(i), u)
+                    c.drawRect(skia.Rect.MakeXYWH(X - 50 * u, top + 20 * u, 4 * u, len(lines) * lh - 10 * u), skia.Paint(Color=col(CYAN, a)))
+                else:
+                    block(c, X - 110 * u, top - 40 * u, wd + 110 * u, hgt + 60 * u, a, 40 * u)
+                    text(c, "“", X - 120 * u, top + 150 * u, sans(260 * u), CYAN, a, halo=14 * u)
                 shown = int(len(v[1]) * min(1.0, (t - t0 + 0.25) / min(len(v[1]) / 48.0 + 0.3, dur * 0.34, 2.2)))
                 done = 0
                 for j, s_ in enumerate(lines):
@@ -1062,7 +1325,10 @@ def world_type(c, t):
             X, top = x - wd / 2, y - hgt / 2 - 80 * u
             a *= on_screen(X - 80 * u, X + wd + 40 * u, top + hgt + 20 * u)
             if a > 0:
-                block(c, X - 50 * u, top, wd + 50 * u, hgt, a, 40 * u)
+                if CHART:
+                    chart_frame(c, skia.Rect.MakeLTRB(X - 110 * u, top - 64 * u, X + wd + 90 * u, top + hgt + 50 * u), a_fr, card_tag(i), u)
+                else:
+                    block(c, X - 50 * u, top, wd + 50 * u, hgt, a, 40 * u)
                 if title:
                     text(c, title, X, top + 30 * u, mono(32 * u), CYAN, a, 1.0 * u)
                 for j, s_ in enumerate(items):
@@ -1076,7 +1342,10 @@ def world_type(c, t):
             X0, Y = x - span / 2, y - 40 * u
             a *= on_screen(X0 - 60 * u, X0 + span + 60 * u, Y + 260 * u)
             if a > 0:
-                block(c, X0, Y - 190 * u, span, 420 * u, a, 50 * u)
+                if CHART:
+                    chart_frame(c, skia.Rect.MakeLTRB(X0 - 70 * u, Y - 270 * u, X0 + span + 70 * u, Y + 300 * u), a_fr, card_tag(i), u)
+                else:
+                    block(c, X0, Y - 190 * u, span, 420 * u, a, 50 * u)
                 c.drawLine(X0, Y, X0 + span * sm(t, t0, t0 + dur * 0.6), Y, skia.Paint(Color=col(CYAN, a), AntiAlias=True, StrokeWidth=4 * u))
                 for j, (date, what) in enumerate(marks):
                     aj = a * sm(t, t0 + dur * 0.6 * j / len(marks), t0 + dur * 0.6 * j / len(marks) + 0.3)
@@ -1133,15 +1402,18 @@ def screen(c, t, cx, cy, z):
             c.drawRect(r, skia.Paint(Color=col(CYAN if on else INK, (1.0 if on else 0.75 if k < cur else 0.32) * a), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2 if on else 1.3))
             text(c, f"{k + 1:02d}", r.centerX(), y + fs * 0.36, mono(fs), CYAN if on else INK, (1.0 if on else 0.8 if k < cur else 0.4) * a, align="center")
 
-    c.drawRect(skia.Rect.MakeXYWH(0, 0, W, 104), skia.Paint(Color=col(BG, 0.78)))
-    chan = SC.TAG.split("·")[0].strip()
-    text(c, chan, 70, 62, mono(20), DIM, 1.0, 1.0)
-    x0 = max(300, 70 + mono(20).measureText(chan) + len(chan) + 44)    # a long channel name pushes the rail right (9 Oct: THE HOUSEHOLD LEDGER ran into box 01)
-    rail(x0, W - 70, 56, 46, 26, 1.0, 14, False)
-    step = (W - 70 - x0 - 46) / max(1, NC - 1)
-    name = SC.CHAPTERS[cur]["title"] or UI["open"]
-    nw = mono(17).measureText(name) + 0.6 * (len(name) - 1)
-    text(c, name, min(max(x0 + cur * step, x0), W - 70 - nw), 94, mono(17), CYAN, 1.0, 0.6)
+    if CHART:
+        chart_header(c, t, cx, cy, z, cur, prog, NC)
+    else:
+        c.drawRect(skia.Rect.MakeXYWH(0, 0, W, 104), skia.Paint(Color=col(BG, 0.78)))
+        chan = SC.TAG.split("·")[0].strip()
+        text(c, chan, 70, 62, mono(20), DIM, 1.0, 1.0)
+        x0 = max(300, 70 + mono(20).measureText(chan) + len(chan) + 44)    # a long channel name pushes the rail right (9 Oct: THE HOUSEHOLD LEDGER ran into box 01)
+        rail(x0, W - 70, 56, 46, 26, 1.0, 14, False)
+        step = (W - 70 - x0 - 46) / max(1, NC - 1)
+        name = SC.CHAPTERS[cur]["title"] or UI["open"]
+        nw = mono(17).measureText(name) + 0.6 * (len(name) - 1)
+        text(c, name, min(max(x0 + cur * step, x0), W - 70 - nw), 94, mono(17), CYAN, 1.0, 0.6)
     for i, b in enumerate(B):                                          # the chapter's name, while the camera crosses to it
         if b["first"] and b["title"] and abs(t - S(i)) < 4:
             a = sm(t, S(i) - CHAPTER_GAP + 1.0, S(i) - CHAPTER_GAP + 1.35) * (1 - sm(t, S(i) - 0.55, S(i) - 0.15))
@@ -1153,13 +1425,46 @@ def screen(c, t, cx, cy, z):
                     c.drawLine(0, yy, W, yy, skia.Paint(Color=col(INK, 0.14 * a), AntiAlias=True, StrokeWidth=1))
                 text(c, f"{UI['chapter']} {b['floor'] + 1:02d}", W / 2 - wd / 2, H / 2 - 116, mono(28), CYAN, a, 2.0)
                 text(c, b["title"], W / 2 - wd / 2, H / 2 + 24, f, INK, a)
-                rail(200, W - 200, H / 2 + 132, 96, 54, a, 24, True)
+                if CHART:                                       # a ruled line with the chapter's place on it, not numbered boxes
+                    c.drawLine(W / 2 - wd / 2, H / 2 + 80, W / 2 + wd / 2, H / 2 + 80, skia.Paint(Color=col(INK, 0.25 * a), AntiAlias=True, StrokeWidth=1.2))
+                    c.drawLine(W / 2 - wd / 2, H / 2 + 80, W / 2 - wd / 2 + wd * (b["floor"] + 1) / NC, H / 2 + 80, skia.Paint(Color=col(CYAN, a), AntiAlias=True, StrokeWidth=2.4))
+                    text(c, f"{b['floor'] + 1:02d} / {NC:02d}", W / 2 + wd / 2, H / 2 + 124, mono(22), DIM, a, 1.0, "right")
+                else:
+                    rail(200, W - 200, H / 2 + 132, 96, 54, a, 24, True)
     a = sm(t, E(N - 1) + 1.2, E(N - 1) + 2.0)
     if a > 0:                                                       # the sign-off, with room left for end-screen elements above it
         c.drawRect(skia.Rect.MakeXYWH(W / 2 - 430, H - 226, 860, 150), skia.Paint(Color=col(BG, 0.9 * a)))
         text(c, CHANNEL, W / 2, H - 150, sans(64), INK, a, 6.0, align="center")
         text(c, (UI["tagline"] if CHANNEL in ("THE CURVE", "LA CURVA", "CURVAEXPLICA") else "") + UI["sources"], W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
     captions(c, t, n)
+
+
+def chart_header(c, t, cx, cy, z, cur, prog, NC):
+    """The chart look's header: the channel on the left; the chapter and a live position readout of the camera's map centre
+    on the right, like a navigation instrument; a hairline with the film's progress along it."""
+    c.drawRect(skia.Rect.MakeXYWH(0, 0, W, 86), skia.Paint(Color=col(BG, 0.82)))
+    c.drawLine(70, 86, W - 70, 86, skia.Paint(Color=col(INK, 0.16), AntiAlias=True, StrokeWidth=1))
+    c.drawLine(70, 86, 70 + (W - 140) * min(1.0, prog / max(1, NC)), 86, skia.Paint(Color=col(CYAN, 0.9), AntiAlias=True, StrokeWidth=2))
+    c.drawRect(skia.Rect.MakeXYWH(70, 40, 10, 10), skia.Paint(Color=col(CYAN)))
+    chan = SC.TAG.split("·")[0].strip()
+    text(c, chan, 94, 52, mono(21), INK, 0.9, 1.5)
+    i_ = now(t)
+    j = i_ if B[i_]["vis"][0] == "map" else last_map(i_)
+    if j is not None:
+        if B[i_]["vis"][0] == "map":
+            lon, lat = map_geo_at(j, t, cx + SHIFT / z, cy + RAISE / z)
+        else:
+            L0, A0, L1, A1 = map_frame(j)["view"]
+            lon, lat = (L0 + L1) / 2, (A0 + A1) / 2
+        rd = fmt_ll(((lon + 180) % 360) - 180, lat, 2)
+    else:
+        rd = "--"
+    fr = mono(21)
+    rw = sum(fr.measureText(ch) + 1.0 for ch in rd)
+    text(c, rd, W - 70, 52, fr, INK, 0.95, 1.0, "right")
+    name = SC.CHAPTERS[cur]["title"] or UI["open"]
+    text(c, f"{cur + 1:02d}  {name}", W - 70 - rw - 36, 52, mono(18), CYAN, 1.0, 1.2, "right")
+    c.drawLine(W - 70 - rw - 18, 34, W - 70 - rw - 18, 58, skia.Paint(Color=col(INK, 0.25), AntiAlias=True, StrokeWidth=1))
 
 
 def captions(c, t, n):
@@ -1187,6 +1492,14 @@ def captions(c, t, n):
         said = sum(1 for w_ in ws if w_[1] <= t) if ws else int(nw * sm(t, ln["start"], ln["end"]) + 0.999)
         y0 = CB - (len(lines) - 1) * CL
         wmax = max(f.measureText(x) for x in lines)
+        if CHART and not VERT:                                      # the chart look: set left, on a plain plate with a cyan rule; every word in full
+            X0 = 190
+            pl = skia.Rect.MakeXYWH(X0 - 30, y0 - CL - 2, wmax + 60, len(lines) * CL + 28)
+            c.drawRect(pl, skia.Paint(Color=col(BG, 0.94 * k)))
+            c.drawRect(skia.Rect.MakeXYWH(pl.left(), pl.top(), 3, pl.height()), skia.Paint(Color=col(CYAN, k)))
+            for i, s in enumerate(lines):
+                text(c, s, X0, y0 + i * CL, f, INK, k)
+            continue
         pl = skia.Rect.MakeXYWH(CX - wmax / 2 - 34, y0 - CL - 2, wmax + 68, len(lines) * CL + 28)
         c.drawRect(pl, skia.Paint(Color=col(BG, 0.985 * k)))
         c.drawLine(pl.left(), pl.top(), pl.right(), pl.top(), skia.Paint(Color=col(INK, 0.22 * k), AntiAlias=True, StrokeWidth=1))

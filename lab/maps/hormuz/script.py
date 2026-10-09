@@ -66,6 +66,7 @@ TITLE = "HORMUZ IS CLOSED. THE OIL ISN'T."
 TAG = "MAPS & POWER  ·  THE STRAIT OF HORMUZ"      # placeholder channel name: change this one line (see CHANNEL.md)
 LEAD = 0.4
 OPEN_RESOLVED = True
+CHROME = "chart"                                  # the maps channel's own look (flow.py): nav header with live coordinates, plain captions, ruled cards
 ILLUS = "MAP  ·  DRAWN FOR THIS FILM"             # nothing here is generated: maps and cards are drawn in code
 HOLD = {"verdict_07": 1.5}                        # the watch-list stays up long enough to read
 NAME = "maps_hormuz01"

@@ -94,6 +94,9 @@ Each chapter is a list of beats: (spoken text, visual). Visuals as in lab/curvel
 """
 TITLE = "89 PIECES UNDER THE BALTIC"
 TAG = "MEGAPROJECTS  ·  THE FEHMARNBELT TUNNEL"
+ILLUS = "DIAGRAM  ·  DRAWN FOR THIS FILM"
+LEAD = 0.4
+OPEN_RESOLVED = True
 FIX = {}
 
 CR_TDN = "PHOTO: THOMAS DAHLSTRØM NIELSEN · CC BY 4.0"
@@ -102,7 +105,7 @@ CR_NO = "PHOTO: JOHAN WESSMAN / NEWS ØRESUND · CC BY 2.0"
 
 CHAPTERS = [
     dict(id="open", title="", beats=[
-        ("Denmark is building the longest tunnel of its kind in the world, eighteen kilometres under the Baltic Sea to Germany, and it is running about two years late.",
+        ("Denmark is building the longest tunnel of its kind in the world, and it is running about two years late. It will run eighteen kilometres under the Baltic Sea, to Germany.",
          ("photo", "fehmarnbelt_satellite_nasa", "DENMARK ABOVE · GERMANY BELOW", "IMAGE: NASA · PUBLIC DOMAIN")),
         ("It isn't bored through rock. It's made from concrete blocks that each weigh more than seventy-three thousand tonnes, and every one has to be sunk into place.",
          ("num", "73,500 t", "ONE STANDARD TUNNEL ELEMENT · FEMERN A/S")),
@@ -177,7 +180,7 @@ CHAPTERS = [
         ("Up to sixty vessels worked on it, and they finished the trench in twenty twenty-four.",
          ("img", "g08")),
         ("They took out almost fifteen million cubic metres of sand, clay and stone.",
-         ("num", "15 MILLION m³", "DREDGED FROM THE TRENCH, 2020–2024 · FEMERN A/S")),
+         ("num", "≈15 MILLION m³", "DREDGED FROM THE TRENCH, 2020–2024 · FEMERN A/S")),
         ("That material hasn't been dumped. It's being used to build about three hundred hectares of new coastline beside the factory.",
          ("photo", "pilen_viewpoint_b_2026", "NEW LAND AT RØDBYHAVN · MAY 2026", CR_TDN)),
         ("The first stretch opened to the public on the first of September this year, so Denmark is now slightly larger than it was.",

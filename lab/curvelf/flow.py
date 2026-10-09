@@ -71,6 +71,11 @@ UI = {"en": dict(open="COLD OPEN", chapter="CHAPTER", sources="SOURCES IN THE DE
       "es": dict(open="INICIO", chapter="CAPÍTULO", sources="FUENTES EN LA DESCRIPCIÓN", tagline="LA IA, EXPLICADA  ·  ", photo="FOTO  ·  ",
                  illus="ILUSTRACIÓN  ·  GENERADA CON IA", watch="MIRA LA PELÍCULA COMPLETA", on="EN ", link="  ·  ENLACE EN ESTE SHORT")}
 UI = UI.get(LANG, UI["en"])                   # the engine's own on-screen words, in the film's language
+ILLUS = getattr(SC, "ILLUS", "")                # a film whose pictures are drawn, not generated, says so on every one (9 Oct critic: "AI-GENERATED" on code-drawn diagrams was false)
+if ILLUS:
+    UI["illus"] = ILLUS
+LEAD = getattr(SC, "LEAD", LEAD)                # seconds of picture before the first word
+OPEN_RESOLVED = getattr(SC, "OPEN_RESOLVED", False)     # frame 0 shows the first picture already resolved (it is the Short hook and the fallback thumbnail)
 
 
 def beats():
@@ -503,6 +508,8 @@ def held(i, t, t0=None):
     off = min(NXT(i) - 0.2, E(i) + 0.7 + HOLD.get(B[i]["id"], 0.0)) if i < N - 1 else TOTAL + 9     # the last line holds to the end
     if VERT and S(i) - SHORT["t0"] < 0.5:                            # a Short opens with its first card already up
         return 1 - sm(t, off - 0.3, off), t0
+    if i == 0 and OPEN_RESOLVED and not VERT:                         # a film can open on its first picture already up
+        return 1 - sm(t, off - 0.3, off), t0
     return sm(t, t0, t0 + 0.35) * (1 - sm(t, off - 0.3, off)), t0
 
 
@@ -578,7 +585,7 @@ def world_type(c, t):
                 text(c, tg, tx, ty, fg, INK, 0.85 * ta, 0.5 * u)
         if k in ("img", "clip") and RESOLVE > 0:                  # an illustration resolves most of the way into the picture; the characters stay as its grain
             fr = pic(i)
-            rr = a * sm(t, S(i) + 0.8, S(i) + 2.0) * RESOLVE
+            rr = a * (1.0 if i == 0 and OPEN_RESOLVED else sm(t, S(i) + 0.8, S(i) + 2.0)) * RESOLVE
             if fr and rr > 0:
                 hh = p["ww"] * 9 / 16
                 im = still(i, 0 if len(fr) == 1 else _pingpong(int(t * 12), len(fr)))
@@ -586,15 +593,16 @@ def world_type(c, t):
         if k == "photo":                                          # the characters resolve into the photograph itself
             _, (img, fx, fy, fw, fh) = photo(v[1])
             hh = p["ww"] * 9 / 16
-            rr = a * sm(t, S(i) + 1.3, S(i) + 2.6)
+            rr = a * (1.0 if i == 0 and OPEN_RESOLVED else sm(t, S(i) + 1.3, S(i) + 2.6))
             R = skia.Rect.MakeXYWH(x - p["ww"] / 2 + fx * p["ww"], y - hh / 2 + fy * hh, fw * p["ww"], fh * hh)
             if rr > 0:
                 c.drawImageRect(img, R, skia.SamplingOptions(skia.CubicResampler.Mitchell()), skia.Paint(Color=col("#FFFFFF", 0.94 * rr)))
                 c.drawRect(R, skia.Paint(Color=col(INK, 0.5 * rr), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2 * u))
             if len(v) > 3:
-                cr = typed(UI["photo"] + v[3], t, t0 + 1.4, 40.0)                # the credit sits on the picture's top left, clear of the captions
+                crt = v[3] if v[3].upper().startswith(("PHOTO", "IMAGE", "FOTO")) else UI["photo"] + v[3]     # no "PHOTO · PHOTO:" when the credit already says it
+                cr = typed(crt, t, 0.0 if i == 0 and OPEN_RESOLVED else t0 + 1.4, 40.0)                # the credit sits on the picture's top left, clear of the captions
                 fc_ = mono(21 * u)
-                c.drawRect(skia.Rect.MakeXYWH(R.left() + 10 * u, R.top() + 10 * u, fc_.measureText(UI["photo"] + v[3]) + 0.5 * u * len(v[3]) + 44 * u, 38 * u), skia.Paint(Color=col(BG, 0.82 * rr / max(RESOLVE, 0.01) if False else 0.82 * a)))
+                c.drawRect(skia.Rect.MakeXYWH(R.left() + 10 * u, R.top() + 10 * u, fc_.measureText(crt) + 0.5 * u * len(crt) + 44 * u, 38 * u), skia.Paint(Color=col(BG, 0.82 * rr / max(RESOLVE, 0.01) if False else 0.82 * a)))
                 text(c, cr, R.left() + 24 * u, R.top() + 36 * u, fc_, INK, a, 0.5 * u)
             if len(v) > 2:                                          # the label sits on the picture's lower left, on a plate
                 f, size = fit_sans(v[2], 96 * u, R.width() - 90 * u)
@@ -732,7 +740,7 @@ def screen(c, t, cx, cy, z):
         return short_screen(c, t, n)
     NC = len(SC.CHAPTERS)
     i_ = now(t)
-    if HAS_PHOTO and B[i_]["vis"][0] in ("img", "clip") and len(B[i_]["vis"]) < 3:      # in a film that also shows real photographs, an illustration says so, where it can be read
+    if (HAS_PHOTO or ILLUS) and B[i_]["vis"][0] in ("img", "clip") and (len(B[i_]["vis"]) < 3 or ILLUS):      # in a film that also shows real photographs, an illustration says so, where it can be read
         ta = held(i_, t)[0]
         if ta > 0:
             tg, fg = UI["illus"], mono(21)

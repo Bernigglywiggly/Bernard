@@ -64,6 +64,8 @@ Derived figures (the sums) and anything soft are in VERIFY.md. Visuals as in ../
 """
 TITLE = "WHY $87,000 FEELS LIKE LESS"
 TAG = "THE HOUSEHOLD LEDGER  ·  WHY $87,000 FEELS LIKE LESS"
+LEAD = 0.4
+OPEN_RESOLVED = True
 NAME = "economy_pilot01"
 FIX = {}
 

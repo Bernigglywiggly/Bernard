@@ -93,6 +93,23 @@ def beats():
 B = beats()
 HAS_PHOTO = any(b["vis"][0] == "photo" for b in B)
 CHANNEL = SC.TAG.split("·")[0].strip()        # the channel's name, from the film's tag
+TAGLINE = getattr(SC, "TAGLINE", None)          # the sign-off's tagline; None keeps the channel default
+
+# ---- LOOK = "system" (10 Oct 2026: the owner picked style F, lab/maps/style/STYLE.md). Black base; highlighter inks as
+# the colour language, colour = meaning; texture follows meaning (contours = terrain, marker swipes = places, particles =
+# flows, neon = events, halftone = data); one hero colour per chapter (a chapter's "hero"). Every other film is untouched.
+LOOK = getattr(SC, "LOOK", "")
+SYSTEM = LOOK == "system"
+PAL = dict(cyan="#3DFFF2", magenta="#FF2BD6", yellow="#E6FF2E", orange="#FF6A1A", violet="#A77BFF", green="#39FF88", grey="#C9D2D8")
+ROLE_INK = dict(place="cyan", event="orange", data="violet", flow="yellow")
+RELIEF_NPZ = getattr(SC, "RELIEF", os.path.join(HERE, "..", "maps", "style", "data", "etopo2022_15s_hormuz.npz"))   # NOAA NCEI ETOPO 2022 15", public domain
+
+
+def ink(h):
+    return PAL.get(h, h)
+
+
+HERO = [ink(ch.get("hero", "cyan")) for ch in SC.CHAPTERS]
 
 
 def est():
@@ -375,6 +392,8 @@ ATLAS = atlas()
 _R = np.random.default_rng(3)
 PH, SP = _R.uniform(0, 6.28, (ROWS, COLS)).astype(np.float32), _R.uniform(0.6, 2.2, (ROWS, COLS)).astype(np.float32)
 LO, MID, HI = np.float32([0.03, 0.2, 0.22]), np.float32([0.37, 0.94, 0.89]), np.float32([0.95, 1.0, 1.0])   # RGB
+if SYSTEM:                                    # the system look: the world's faint lattice is neutral; colour is kept for meaning
+    LO, MID, HI = np.float32([0.03, 0.03, 0.035]), np.float32([0.5, 0.53, 0.55]), np.float32([0.92, 0.93, 0.94])
 
 
 # ------------------------------------------------------------------ maps: the world set in type (the How They Profit 06 opening)
@@ -502,6 +521,8 @@ def deg(x, pos, neg, frac):
 
 
 SEA, LANDF = "#06141B", "#1A2226"                 # the sea has a colour (blue-black); the land a faint warm-grey mass under its glyphs
+if SYSTEM:                                        # black base; the typographic coast stays, toned down so the inks lead
+    SEA, LANDF, MAP_LAND, MAP_COAST = "#020203", "#0C0D0E", "#353B3F", "#79838A"
 
 
 def map_pics(i):
@@ -545,12 +566,21 @@ def map_pics(i):
         c.restore()
         return rec.finishRecordingAsPicture()
 
+    LIT = CYAN
+    rimg = None
+    if SYSTEM:                                                      # the sweep of light is pale ink, not an accent; relief where real data exists
+        LIT = INK
+        rimg = relief_image(m, fine)
+        m["relief"] = rimg is not None
+
     def stroke(c, lit):
-        c.drawPath(cpath, skia.Paint(Color=col(CYAN if lit else MAP_COAST, 0.9 if lit else 0.55), AntiAlias=True, Style=skia.Paint.kStroke_Style,
+        c.drawPath(cpath, skia.Paint(Color=col(LIT if lit else MAP_COAST, (0.5 if SYSTEM else 0.9) if lit else 0.55), AntiAlias=True, Style=skia.Paint.kStroke_Style,
                                      StrokeWidth=(2.2 if lit else 1.5) * m["u"], StrokeJoin=skia.Paint.kRound_Join))
 
     def vector(c):                                                  # land mass, the sea's swell, the coast stroke, the graticule
         c.drawImageRect(fimg, box, skia.SamplingOptions(skia.FilterMode.kLinear), skia.Paint(Color=col("#FFFFFF", 0.9)))
+        if rimg is not None:
+            c.drawImageRect(rimg, box, skia.SamplingOptions(skia.FilterMode.kLinear), skia.Paint(AntiAlias=True))
         stroke(c, False)
         pg = skia.Paint(Color=col(INK, 0.16), AntiAlias=True, StrokeWidth=1.4 * m["u"])
         r_ = 5 * m["u"]
@@ -563,16 +593,16 @@ def map_pics(i):
                     c.drawLine(x, y - r_, x, y + r_, pg)
 
     def glyphs(c, lit):
-        if not lit:
-            sw = skia.Paint(Color=col("#3F8C93", 0.30), AntiAlias=True)        # the sea: a sparse swell of ~, clear of the shore
+        if not lit and not (SYSTEM and rimg is not None):            # the system look: where the relief is drawn, the swell gives way to it
+            sw = skia.Paint(Color=col("#5A6268" if SYSTEM else "#3F8C93", 0.30), AntiAlias=True)        # the sea: a sparse swell of ~, clear of the shore
             for j in range(1, m["rows"], 3):
                 ii = [q for q in range((j // 3) % 2 * 3 + 1, m["cols"], 6) if sea_d[j, q] > 2]
                 if ii:
                     xs = [m["bx"] + q * m["cw"] + (m["cw"] - gwid) / 2 for q in ii]
                     c.drawTextBlob(skia.TextBlob.MakeFromPosTextH("~" * len(ii), xs, m["by"] + (j + 0.8) * m["ch"], f), 0, 0, sw)
-        pc = skia.Paint(Color=col(CYAN if lit else MAP_COAST, 1.0 if lit else 0.95), AntiAlias=True)
-        p2 = skia.Paint(Color=col(CYAN if lit else MAP_LAND, 0.45 if lit else 1.0), AntiAlias=True)
-        pl = skia.Paint(Color=col(CYAN if lit else MAP_LAND, 0.3 if lit else 0.75), AntiAlias=True)
+        pc = skia.Paint(Color=col(LIT if lit else MAP_COAST, (0.6 if SYSTEM else 1.0) if lit else (0.8 if SYSTEM else 0.95)), AntiAlias=True)
+        p2 = skia.Paint(Color=col(LIT if lit else MAP_LAND, 0.45 if lit else 1.0), AntiAlias=True)
+        pl = skia.Paint(Color=col(LIT if lit else MAP_LAND, 0.3 if lit else 0.75), AntiAlias=True)
         for j in range(m["rows"]):
             y = m["by"] + (j + 0.8) * m["ch"]
             for mask, glyph, paint in ((inner[j], "·", pl), (second[j], ":", p2), (coast[j], None, pc)):
@@ -686,7 +716,8 @@ def map_labels(i):
              [m["proj"](*q) for q in list(m["v"].get("pins", [])) + [lb[:2] for lb in m["v"].get("labels", [])]]]
     out = []
     cxm, cym = m["bx"] + m["w"] / 2, m["by"] + m["h"] / 2
-    for lon, lat, title, sub in m["v"].get("labels", []):
+    for lb in m["v"].get("labels", []):
+        lon, lat, title, sub = lb[:4]                              # a label may carry a fifth item: its role in the system look
         x, y = m["proj"](lon, lat)
         pw = max(ft.measureText(title), fs.measureText(sub) + 0.5 * u * len(sub)) + 36 * u
         ph = 112 * u if sub else 72 * u
@@ -711,6 +742,490 @@ def map_labels(i):
         out.append(best)
     m["plates"] = out
     return out
+
+
+# ------------------------------------------------------------------ LOOK = "system": the map and card treatments (style F)
+def acc(i):
+    """A beat's accent: its chapter's hero colour in the system look, else the film's cyan."""
+    return HERO[B[i]["floor"]] if SYSTEM else CYAN
+
+
+def acc_ch(k):
+    return HERO[k] if SYSTEM else CYAN
+
+
+def hmix(h1, h2, t):
+    a = [int(h1[1 + 2 * q:3 + 2 * q], 16) for q in range(3)]
+    b = [int(h2[1 + 2 * q:3 + 2 * q], 16) for q in range(3)]
+    return "#%02X%02X%02X" % tuple(int(round(x * (1 - t) + y * t)) for x, y in zip(a, b))
+
+
+_DEM = {}
+SEA_LV = [-20 * k for k in range(1, 11)] + [-100 * k for k in range(3, 11)] + [-250 * k for k in range(5, 13)]
+LAND_LV = [200 * k for k in range(1, 17)]
+
+
+def topo_hex(lv):
+    """The graded ramp: shallow cyan to deep violet at sea, green through yellow to red on land (style B)."""
+    if lv < 0:
+        t = min(1.0, math.log(-lv / 20.0) / math.log(2600 / 20.0))
+        stops = [(0, "#5FFFF4"), (0.35, "#3DB8FF"), (0.65, "#5A6BFF"), (1.0, "#9B4BFF")]
+    else:
+        t = min(1.0, (lv - 200) / 2600.0)
+        stops = [(0, "#39FF88"), (0.4, "#E6FF2E"), (0.75, "#FF9A1A"), (1.0, "#FF4A3A")]
+    for (t0, c0), (t1, c1) in zip(stops[:-1], stops[1:]):
+        if t <= t1:
+            return hmix(c0, c1, (t - t0) / max(1e-6, t1 - t0))
+    return stops[-1][1]
+
+
+def relief_image(m, fine):
+    """Real relief (ETOPO 2022) as contours in the map's box, or None when the data covers less than half the view.
+    Where the data ends inside the view the contours fade out; nothing is drawn beyond it (relief is real or not shown)."""
+    if not os.path.exists(RELIEF_NPZ):
+        return None
+    if "z" not in _DEM:
+        d = np.load(RELIEF_NPZ)
+        _DEM.update(z=d["z"].astype(np.float32), lon=np.asarray(d["lon"], np.float64), lat=np.asarray(d["lat"], np.float64))
+    z0, lon, lat = _DEM["z"], _DEM["lon"], _DEM["lat"]
+    L0, A0, L1, A1 = m["view"]
+    e0, e1, f0, f1 = lon[0], lon[-1], lat[0], lat[-1]
+    ov = max(0.0, min(L1, e1) - max(L0, e0)) * max(0.0, min(A1, f1) - max(A0, f0))
+    if ov < 0.5 * (L1 - L0) * (A1 - A0):
+        return None
+    gw, gh = int(m["w"]), int(m["h"])
+    lons = L0 + (np.arange(gw) + 0.5) / gw * (L1 - L0)
+    lats = A1 - (np.arange(gh) + 0.5) / gh * (A1 - A0)
+    mx, my = np.meshgrid(((lons - e0) / (lon[1] - lon[0])).astype(np.float32), ((lats - f0) / (lat[1] - lat[0])).astype(np.float32))
+    z = cv2.remap(z0, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    z = cv2.GaussianBlur(z, (0, 0), max(1.0, 0.0045 / ((L1 - L0) / gw)))
+    inside = ((lons >= e0) & (lons <= e1))[None, :] & ((lats >= f0) & (lats <= f1))[:, None]
+    fe = np.clip(cv2.distanceTransform(np.pad(inside.astype(np.uint8), 1), cv2.DIST_L2, 5)[1:-1, 1:-1] / 70.0, 0, 1)
+    fe = fe * fe * (3 - 2 * fe)
+    land = cv2.resize(fine, (gw, gh), interpolation=cv2.INTER_AREA) > 127
+    zin = z[inside]
+    zmin, zmax = float(zin.min()), float(zin.max())
+    import contourpy
+    gen = contourpy.contour_generator(z=z, line_type=contourpy.LineType.Separate)
+    surf = skia.Surface(gw, gh)
+    c = surf.getCanvas()
+    c.clear(skia.ColorTRANSPARENT)
+    for lv in SEA_LV + LAND_LV:
+        if not zmin < lv < zmax:
+            continue
+        idx = (lv < 0 and lv % 100 == 0 and lv >= -200) or (lv < 0 and lv % 500 == 0) or (lv > 0 and lv % 1000 == 0)
+        path = skia.Path()
+        for l in gen.lines(lv):
+            if len(l) < 6:
+                continue
+            li = np.clip(l.astype(int), [0, 0], [gw - 1, gh - 1])
+            ok = ~land[li[:, 1], li[:, 0]] if lv < 0 else land[li[:, 1], li[:, 0]]     # sea contours in the sea, land contours on land
+            dd = np.diff(ok.astype(np.int8), prepend=0, append=0)
+            for s0, s1 in zip(np.nonzero(dd == 1)[0], np.nonzero(dd == -1)[0]):
+                if s1 - s0 >= 5:
+                    path.addPoly([skia.Point(float(x), float(y)) for x, y in l[s0:s1]], False)
+        c.drawPath(path, skia.Paint(Color=col(hmix(topo_hex(lv), "#8C979D", 0.35), 0.55 if idx else 0.34), AntiAlias=True,
+                                    Style=skia.Paint.kStroke_Style, StrokeWidth=1.8 if idx else 1.0, StrokeJoin=skia.Paint.kRound_Join))
+    a = surf.makeImageSnapshot().toarray(colorType=skia.kRGBA_8888_ColorType, alphaType=skia.kPremul_AlphaType).astype(np.float32)
+    a = np.ascontiguousarray((a * fe[..., None]).astype(np.uint8))
+    return skia.Image.fromarray(a, colorType=skia.kRGBA_8888_ColorType, alphaType=skia.kPremul_AlphaType)
+
+
+def chaikin(p, n=3):
+    p = np.asarray(p, np.float64)
+    for _ in range(n):
+        q = np.empty((2 * (len(p) - 1) + 2, 2))
+        q[0], q[-1] = p[0], p[-1]
+        q[1:-1:2] = 0.75 * p[:-1] + 0.25 * p[1:]
+        q[2:-1:2] = 0.25 * p[:-1] + 0.75 * p[1:]
+        p = q
+    return p
+
+
+def resample(p, step):
+    p = np.asarray(p, np.float64)
+    d = np.r_[0, np.cumsum(np.hypot(*np.diff(p, axis=0).T))]
+    n = max(2, int(d[-1] / step) + 1)
+    s = np.linspace(0, d[-1], n)
+    return np.c_[np.interp(s, d, p[:, 0]), np.interp(s, d, p[:, 1])], s
+
+
+def normals(p):
+    t = np.gradient(p, axis=0)
+    t /= np.maximum(1e-9, np.hypot(t[:, 0], t[:, 1]))[:, None]
+    return np.c_[-t[:, 1], t[:, 0]]
+
+
+def marker_pic(pts, width, hx, a=0.92, seed=0):
+    """A highlighter swiped along pts (parallel nib streaks, ragged ends, a little wobble), recorded once."""
+    r = np.random.default_rng(seed)
+    p, s = resample(chaikin(pts, 2), 2.0)
+    n = normals(p)
+    L = s[-1]
+    K = max(4, int(width / 2.2))
+    rec = skia.PictureRecorder()
+    c = rec.beginRecording(skia.Rect.MakeLTRB(p[:, 0].min() - width * 2, p[:, 1].min() - width * 2, p[:, 0].max() + width * 2, p[:, 1].max() + width * 2))
+    c.saveLayer(None, skia.Paint(Color=col("#FFFFFF", a)))
+    for k in range(K):
+        off = (-0.5 + (k + 0.5) / K) * width
+        q = p + n * (off + np.sin(s / (60 + 40 * r.random()) + r.random() * 6) * 0.6)[:, None]
+        keep = (s >= r.uniform(0, 0.012 * L + 5)) & (s <= L - r.uniform(0, 0.012 * L + 5))
+        if keep.sum() < 2:
+            continue
+        c.drawPath(skpoly(q[keep]), skia.Paint(Color=col(hx, 0.55 + 0.45 * r.random()), AntiAlias=True, Style=skia.Paint.kStroke_Style,
+                                              StrokeWidth=width / K * 1.25, StrokeCap=skia.Paint.kButt_Cap, StrokeJoin=skia.Paint.kRound_Join))
+    c.restore()
+    return rec.finishRecordingAsPicture()
+
+
+def skpoly(p, close=False):
+    path = skia.Path()
+    path.addPoly([skia.Point(float(x), float(y)) for x, y in p], close)
+    return path
+
+
+def lab_ink(lb):
+    """A label's ink: its role (place / event / data / flow) or an explicit ink, from an optional fifth item."""
+    ex = lb[4] if len(lb) > 4 else {}
+    if isinstance(ex, str):
+        ex = dict(role=ex)
+    return ink(ex.get("ink", ROLE_INK.get(ex.get("role", "place"), "cyan")))
+
+
+def per(v, key, k, default):
+    """A per-overlay option: one value for all, or a list matching the overlays."""
+    x = v.get(key, default)
+    if isinstance(x, (list, tuple)):
+        return x[k] if k < len(x) else default
+    return x
+
+
+def stutter(t, t_on, seed, dur=0.55):
+    """A neon tube striking: dark, a few failed blinks, a warm-up, then steady."""
+    if t < t_on:
+        return 0.0
+    x = t - t_on
+    if x >= dur:
+        return 1.0
+    r = np.random.default_rng(seed)
+    ev = np.cumsum(r.uniform(0.025, 0.11, 10))
+    on = (np.searchsorted(ev, x) % 2) == 0
+    return float(r.uniform(0.35, 1.1) * on * (0.4 + 0.6 * x / dur))
+
+
+def hum(t, seed):
+    ph = np.random.default_rng(seed).uniform(0, 6.28, 3)
+    return 0.955 + 0.025 * math.sin(2 * math.pi * 1.7 * t + ph[0]) + 0.015 * math.sin(2 * math.pi * 9.3 * t + ph[1]) + 0.012 * math.sin(2 * math.pi * 23.1 * t + ph[2])
+
+
+def neon_path(c, path, hx, lvl, wdt, glass=True):
+    """A glass tube along path: unlit glass, then (lit) the halo, the coloured gas and a pale core."""
+    if glass:
+        c.drawPath(path, skia.Paint(Color=col("#FFFFFF", 0.07), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=wdt + 1.5, StrokeCap=skia.Paint.kRound_Cap))
+    if lvl <= 0:
+        return
+    for bl, al, ww in ((wdt * 6.5, 0.34, wdt * 2.2), (wdt * 2.4, 0.6, wdt * 1.4)):
+        c.drawPath(path, skia.Paint(Color=col(hx, min(1.0, al * lvl)), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=ww,
+                                    StrokeCap=skia.Paint.kRound_Cap, MaskFilter=skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, bl)))
+    c.drawPath(path, skia.Paint(Color=col(hx, min(1.0, lvl)), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=wdt, StrokeCap=skia.Paint.kRound_Cap,
+                                StrokeJoin=skia.Paint.kRound_Join))
+    c.drawPath(path, skia.Paint(Color=col(hmix(hx, "#FFFFFF", 0.8), min(1.0, lvl)), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=max(1.0, wdt * 0.38),
+                                StrokeCap=skia.Paint.kRound_Cap, StrokeJoin=skia.Paint.kRound_Join))
+
+
+def sparks(c, x, y, tt, hx, seed, u0, n=44):
+    """Particles off a pin as it strikes: streaks that arc and die, a shock ring, a white flash."""
+    if tt < 0 or tt > 1.6:
+        return
+    r = np.random.default_rng(seed)
+    ang, spd, life = r.uniform(0, 2 * math.pi, n), r.uniform(120, 520, n) * u0, r.uniform(0.25, 0.95, n)
+    live = tt < life
+    t0_ = max(0.0, tt - 0.045)
+    x0, y0 = x + np.cos(ang) * spd * t0_, y + np.sin(ang) * spd * t0_ + 420 * u0 * t0_ * t0_
+    x1, y1 = x + np.cos(ang) * spd * tt, y + np.sin(ang) * spd * tt + 420 * u0 * tt * tt
+    fade = np.clip(1 - tt / life, 0, 1)
+    for q in np.nonzero(live)[0]:
+        c.drawLine(float(x0[q]), float(y0[q]), float(x1[q]), float(y1[q]), skia.Paint(Color=col(hmix(hx, "#FFF6D0", float(fade[q])), float(fade[q])), AntiAlias=True,
+                                                                                    StrokeWidth=(1.2 + 1.6 * float(fade[q])) * u0, StrokeCap=skia.Paint.kRound_Cap))
+    if tt < 0.7:
+        c.drawCircle(x, y, (15 + 150 * (1 - math.exp(-tt * 5))) * u0, skia.Paint(Color=col(hx, 0.7 * (1 - tt / 0.7) ** 1.5), AntiAlias=True,
+                                                                                  Style=skia.Paint.kStroke_Style, StrokeWidth=2.5 * u0))
+    if tt < 0.1:
+        c.drawCircle(x, y, 22 * u0, skia.Paint(Color=col("#FFF1C8", 1 - tt / 0.1), AntiAlias=True, MaskFilter=skia.MaskFilter.MakeBlur(skia.kNormal_BlurStyle, 9 * u0)))
+
+
+OIL_STOPS = [(0.0, "#3A2A00"), (0.35, "#B8A000"), (0.7, "#E6FF2E"), (1.0, "#FFFFF2")]
+
+
+def _lut(stops, n=256):
+    out = np.zeros((n, 3), np.float32)
+    for k in range(n):
+        v = k / (n - 1)
+        for (t0, c0), (t1, c1) in zip(stops[:-1], stops[1:]):
+            if v <= t1:
+                h = hmix(c0, c1, (v - t0) / max(1e-6, t1 - t0))
+                break
+        out[k] = [int(h[1 + 2 * q:3 + 2 * q], 16) / 255.0 for q in range(3)]
+    return out
+
+
+OIL_LUT = _lut(OIL_STOPS)
+FLOW_RS, FLOW_V0 = 0.75, 0.55                   # raster pixels per world unit; the volume that reads white-hot
+
+
+def flow_geom(m, k, rt):
+    """A route's centreline sampled every 2 world units, with its normals (once per map)."""
+    fg = m.setdefault("fg", {})
+    if k not in fg:
+        pp = route_path(m, rt)
+        pm = skia.PathMeasure(pp, False)
+        L = pm.getLength()
+        s = np.arange(0.0, L, 2.0)
+        P = np.array([[pm.getPosTan(float(x))[0].x(), pm.getPosTan(float(x))[0].y()] for x in s], np.float64)
+        fg[k] = (s, P, normals(P), L)
+    return fg[k]
+
+
+def _blur(a, sigma):
+    d = max(1, int(sigma / 3))
+    if d == 1:
+        return cv2.GaussianBlur(a, (0, 0), sigma)
+    h, w = a.shape[:2]
+    sm_ = cv2.GaussianBlur(cv2.resize(a, (max(1, w // d), max(1, h // d)), interpolation=cv2.INTER_AREA), (0, 0), sigma / d)
+    return cv2.resize(sm_, (w, h), interpolation=cv2.INTER_LINEAR)
+
+
+def flow_image(m, t, items):
+    """Particles advected along the flow routes, their trails splatted into a density field: brightness is the
+    particles, colour is how crowded the water is (oil heat ramp: amber, yellow, white-hot). Vectorised; one raster."""
+    gw, gh = int(m["w"] * FLOW_RS), int(m["h"] * FLOW_RS)
+    acc_ = np.zeros((gh + 2, gw + 2), np.float32)
+    heads = np.zeros_like(acc_)
+    u0 = m["u"]
+    for k, rt, pr, ts in items:
+        s, P, Nn, L = flow_geom(m, k, rt)
+        r = np.random.default_rng(300 + k)
+        n = int(L / 4.5) + 40
+        s0 = r.uniform(0, L, n)
+        spd = r.uniform(0.85, 1.15, n) * 140 * u0
+        lat = np.clip(r.normal(0, 1, n), -2.6, 2.6) * 3.4 * u0
+        trail = r.uniform(14, 36, n) * u0
+        pos = (s0 + spd * max(0.0, t - ts)) % L
+        front = L * pr
+        fade = np.clip(np.minimum(pos, L - pos) / (50 * u0), 0, 1) * (pos <= front)
+        hsel = r.random(n) < 0.35
+        for q in range(8):
+            sv = np.clip(pos - trail * q / 7, 0, L)
+            x = np.interp(sv, s, P[:, 0]) + np.interp(sv, s, Nn[:, 0]) * lat
+            y = np.interp(sv, s, P[:, 1]) + np.interp(sv, s, Nn[:, 1]) * lat
+            xx, yy = (x - m["bx"]) * FLOW_RS, (y - m["by"]) * FLOW_RS
+            wgt = fade * (1 - q / 8) ** 1.3
+            ok = (xx >= 0) & (xx < gw) & (yy >= 0) & (yy < gh) & (wgt > 0)
+            np.add.at(acc_, (yy[ok].astype(int) + 1, xx[ok].astype(int) + 1), wgt[ok])
+            if q == 0:
+                o2 = ok & hsel
+                np.add.at(heads, (yy[o2].astype(int) + 1, xx[o2].astype(int) + 1), fade[o2])
+    D = cv2.GaussianBlur(acc_[1:-1, 1:-1], (0, 0), 0.8)
+    vc = np.clip(_blur(D, 7) / FLOW_V0, 0, 1)
+    br = (1 - np.exp(-D / 0.45)) * (0.5 + 0.5 * vc)
+    Pc = OIL_LUT[(vc * 255).astype(int)] * br[..., None]
+    G = 0.5 * _blur(Pc, 2) + 0.42 * _blur(Pc, 7) + 0.3 * _blur(Pc, 22)
+    hd = np.clip(cv2.GaussianBlur(heads[1:-1, 1:-1], (0, 0), 0.7) * 2.2, 0, 1)[..., None]
+    Pc = Pc * (1 - 0.35 * hd) + hd * (0.55 * Pc / np.maximum(1e-3, Pc.max(axis=2, keepdims=True)) + 0.45)
+    out = np.clip(Pc + G, 0, 1)
+    rgba = np.dstack([(out * 255).astype(np.uint8), np.full((gh, gw), 255, np.uint8)])
+    return skia.Image.fromarray(np.ascontiguousarray(rgba), colorType=skia.kRGBA_8888_ColorType)
+
+
+def sys_marks(c, i, m, t, t0, a, dur):
+    """Zones as hatched highlighter fills, flows as particle streams, event routes as neon, pins as places or neon events."""
+    v, u0 = m["v"], m["u"]
+    rnd = np.random.default_rng(17 + i)
+    for k_, zone in enumerate(v.get("zones", [])):
+        za = a * sm(t, t0 + 0.2 + 0.4 * k_, t0 + 1.0 + 0.4 * k_)
+        if za <= 0:
+            continue
+        hx = ink(per(v, "zone_inks", k_, "cyan"))
+        zp = skia.Path()
+        zp.addPoly([skia.Point(*m["proj"](lo, la)) for lo, la in zone], True)
+        R = zp.computeTightBounds()
+        sweep = R.left() + (R.width() + 2) * spring((t - t0 - 0.2 - 0.4 * k_) / 1.2)
+        c.save()
+        c.clipRect(skia.Rect.MakeLTRB(R.left() - 4, R.top() - 4, sweep + 4, R.bottom() + 4))
+        c.drawPath(zp, skia.Paint(Color=col(hx, 0.09 * za), AntiAlias=True))
+        c.save()
+        c.clipPath(zp, skia.ClipOp.kIntersect, True)
+        gap = 13 * u0
+        off = (t * 8 * u0) % gap
+        xx = R.left() - R.height() - gap + off
+        while xx < R.right() + gap:                                 # marker strokes: uneven ink, a slight wobble of width
+            c.drawLine(xx, R.bottom(), xx + R.height(), R.top(), skia.Paint(Color=col(hx, za * rnd.uniform(0.22, 0.5)), AntiAlias=True,
+                                                                             StrokeWidth=rnd.uniform(2.2, 3.4) * u0, StrokeCap=skia.Paint.kButt_Cap))
+            xx += gap
+        c.restore()
+        c.drawPath(zp, skia.Paint(Color=col(hx, 0.7 * za), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=1.6 * u0))
+        c.restore()
+    flows = []
+    for k_, rt in enumerate(v.get("routes", [])):
+        if len(rt) < 2:
+            continue
+        kind = per(v, "kinds", k_, "flow")
+        ts, td = t0 + 0.4 + 0.6 * k_, min(3.2, max(1.4, dur * 0.5))
+        if kind == "flow":
+            pr = spring((t - ts) / td)
+            if pr > 0:
+                flows.append((k_, rt, pr, ts))
+            continue
+        rp = m.setdefault("rp", {})
+        if k_ not in rp:
+            pp = route_path(m, rt)
+            rp[k_] = (pp, skia.PathMeasure(pp, False))
+        pp, pm = rp[k_]
+        if kind == "event":                                         # a route that is itself an event: a neon tube that strikes
+            neon_path(c, pp, ink(per(v, "route_inks", k_, "orange")), a * stutter(t, ts, 60 + k_) * hum(t, 60 + k_), 3.4 * u0)
+            continue
+        pr = spring((t - ts) / td)                                  # "line": a measured distance, ink with end ticks
+        if pr <= 0:
+            continue
+        seg = skia.Path()
+        pm.getSegment(0, pm.getLength() * pr, seg, True)
+        lp = skia.Paint(Color=col(INK, 0.9 * a), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=2.0 * u0, StrokeCap=skia.Paint.kRound_Cap)
+        c.drawPath(seg, lp)
+        for dd in ([0.0] + ([pm.getLength()] if pr > 0.999 else [])):
+            p_, tn = pm.getPosTan(dd)
+            nx, ny = -tn.y(), tn.x()
+            c.drawLine(p_.x() - nx * 12 * u0, p_.y() - ny * 12 * u0, p_.x() + nx * 12 * u0, p_.y() + ny * 12 * u0, lp)
+    if flows:
+        img = flow_image(m, t, flows)
+        c.drawImageRect(img, skia.Rect.MakeXYWH(m["bx"], m["by"], m["w"], m["h"]), skia.SamplingOptions(skia.FilterMode.kLinear),
+                        skia.Paint(Color=col("#FFFFFF", a), BlendMode=skia.BlendMode.kScreen))
+    for k_, (lo, la) in enumerate(v.get("pins", [])):
+        x, y = m["proj"](lo, la)
+        tp = t0 + 0.1 + 0.3 * k_
+        if per(v, "pin_kinds", k_, "place") == "event":             # an event: a neon ring strikes, flashes, sparks, then hums
+            hx = ink(per(v, "pin_inks", k_, "orange"))
+            tt = t - tp
+            lvl = a * (stutter(t, tp - 0.14, 50 + k_, 0.14) if tt < 0 else (1.0 + 2.0 * math.exp(-tt * 7)) * hum(t, 50 + k_))
+            ring = skia.Path()
+            ring.addCircle(x, y, 15 * u0)
+            neon_path(c, ring, hx, lvl, 4.0 * u0, glass=a > 0)
+            if lvl > 0:
+                c.drawCircle(x, y, 3.2 * u0, skia.Paint(Color=col(hmix(hx, "#FFFFFF", 0.7), min(1.0, lvl)), AntiAlias=True))
+                if i == 0 and OPEN_RESOLVED:
+                    continue
+                c.save()
+                c.clipRect(skia.Rect.MakeXYWH(m["bx"], m["by"], m["w"], m["h"]))
+                sparks(c, x, y, tt, hx, 70 + 7 * i + k_, u0, 44 if k_ == 0 else 26)
+                c.restore()
+            continue
+        pa = a * sm(t, tp, tp + 0.4)
+        if pa <= 0:
+            continue
+        hx = ink(per(v, "pin_inks", k_, "cyan"))                    # a place: a small lit point and one slow ring
+        q = ((t - t0) % 2.6) / 2.6
+        c.drawCircle(x, y, (10 + 26 * q) * u0, skia.Paint(Color=col(hx, 0.5 * pa * (1 - q)), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=1.6 * u0))
+        c.drawCircle(x, y, 12 * u0, glow(hx, 0.45 * pa, 8 * u0))
+        c.drawCircle(x, y, 6 * u0, skia.Paint(Color=col(hx, pa), AntiAlias=True))
+
+
+def sys_labels(c, i, m, t, t0, a, dur):
+    """A label in the system look: a point and leader in the label's ink, the name set dark on a highlighter swipe that
+    wipes on at marker speed, the second line in the ink on a black slip."""
+    v, u0 = m["v"], m["u"]
+    u = u0 * (1.7 if VERT else 1.0)
+    labels = v.get("labels", [])
+    stag = min(1.1, dur * 0.55 / max(1, len(labels)))
+    ft, fs = sans(50 * u), mono(31 * u)
+    sw = m.setdefault("swipes", {})
+    for k_, (lb, (sx, sy, r)) in enumerate(zip(labels, map_labels(i))):
+        lo, la, title, sub = lb[:4]
+        hx = lab_ink(lb)
+        tl = t0 + 0.5 + stag * k_
+        la_ = a * sm(t, tl, tl + 0.45)
+        if la_ <= 0:
+            continue
+        la_ *= on_screen(r.left(), r.right(), r.bottom())
+        x, y = m["proj"](lo, la)
+        grow = spring((t - tl) / 0.7)
+        c.drawCircle(x, y, 5.5 * u0, skia.Paint(Color=col(hx, la_), AntiAlias=True))
+        c.drawCircle(x, y, 14 * u0, skia.Paint(Color=col(hx, 0.6 * la_), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=1.4 * u0))
+        if sy:
+            x_end, y_end = x, (r.top() if sy > 0 else r.bottom())
+        else:
+            x_end, y_end = (r.left() if sx > 0 else r.right()), y
+        dl = math.hypot(x_end - x, y_end - y) or 1.0
+        xb, yb_ = x + (x_end - x) / dl * 14 * u0, y + (y_end - y) / dl * 14 * u0
+        c.drawLine(xb, yb_, xb + (x_end - xb) * grow, yb_ + (y_end - yb_) * grow, skia.Paint(Color=col(hx, 0.85 * la_), AntiAlias=True, StrokeWidth=1.4 * u0))
+        pa = la_ * sm(t, tl + 0.25, tl + 0.6)
+        if pa <= 0:
+            continue
+        tw_ = ft.measureText(title)
+        tx = r.left() + 18 * u if sx > 0 else r.right() - 18 * u - tw_
+        base = r.top() + 54 * u
+        size = 50 * u
+        key = (k_, round(tx, 1), round(base, 1), hx)
+        if key not in sw:
+            cap = size * 0.73
+            rr = np.random.default_rng(31 + k_)
+            x0, x1 = tx - size * 0.28 - rr.uniform(0, 6) * u, tx + tw_ + size * 0.28 + rr.uniform(0, 8) * u
+            yc = base - cap * 0.5
+            pts = [(x0, yc + rr.uniform(-1.5, 1.5) * u), ((x0 + x1) / 2, yc - 0.006 * (x1 - x0) + rr.uniform(-1, 1) * u), (x1, yc - 0.012 * (x1 - x0) + rr.uniform(-1.5, 1.5) * u)]
+            sw[key] = (marker_pic(pts, cap * 1.62, hx, 0.92, 31 + k_), x0, x1)
+        pic_, x0, x1 = sw[key]
+        wp = spring((t - tl - 0.2) / 0.55)                          # the swipe goes on left to right, the word with it
+        if wp > 0:
+            c.save()
+            c.clipRect(skia.Rect.MakeLTRB(x0 - 30 * u, base - size * 1.4, x0 - 10 * u + (x1 - x0 + 40 * u) * wp, base + size * 0.8))
+            c.drawPicture(pic_, None, skia.Paint(Color=col("#FFFFFF", pa)))
+            text(c, title, tx, base, ft, "#060606", pa)
+            c.restore()
+        if sub:
+            sw_ = fs.measureText(sub) + 0.5 * u * (len(sub) - 1)
+            sx_ = tx if sx > 0 else r.right() - 18 * u - sw_
+            c.drawRect(skia.Rect.MakeXYWH(sx_ - 8 * u, base + 12 * u, sw_ + 16 * u, 40 * u), skia.Paint(Color=col("#000000", 0.82 * pa)))
+            text(c, sub, sx_, base + 40 * u, fs, INK if hx == PAL["grey"] else hx, pa, 0.5 * u)
+
+
+_HT = {}
+
+
+def ht_text(c, s, x, y, f, hx, a):
+    """Data type in the system look: the figure filled with a halftone screen (dense at the top, opening downward)
+    inside a crisp outline, with a soft bloom. Rendered once per figure, at world scale."""
+    if a <= 0:
+        return
+    key = (s, round(f.getSize(), 2), hx)
+    if key not in _HT:
+        size = f.getSize()
+        pad = int(size * 0.2) + 6
+        wd, hh = int(f.measureText(s)) + 2 * pad, int(size * 1.25) + 2 * pad
+        base = pad + size
+        sf = skia.Surface(wd, hh)
+        cc = sf.getCanvas()
+        cc.clear(skia.ColorTRANSPARENT)
+        cc.drawString(s, pad, base, f, skia.Paint(AntiAlias=True, Color=skia.ColorWHITE))
+        mk = sf.makeImageSnapshot().toarray(colorType=skia.kRGBA_8888_ColorType)[..., 3].astype(np.float32) / 255.0
+        cell = max(5.0, size / 34.0)
+        yy, xx = np.mgrid[0:hh, 0:wd].astype(np.float32)
+        ca, sa = math.cos(math.radians(45)), math.sin(math.radians(45))
+        uu, vv = (xx * ca + yy * sa) / cell, (-xx * sa + yy * ca) / cell
+        dist = np.hypot(uu - np.floor(uu) - 0.5, vv - np.floor(vv) - 0.5) * cell
+        grad = np.clip((yy - (base - size * 0.74)) / (size * 0.78), 0, 1)
+        dens = np.clip(cv2.GaussianBlur(mk, (0, 0), cell * 0.3) * (1.0 - 0.5 * grad), 0, 1)
+        dot = np.clip(cell * np.sqrt(dens / math.pi) * 1.12 - dist + 0.5, 0, 1) * mk
+        kk = max(3, int(size / 90) * 2 + 1)
+        edge = np.clip(mk - cv2.erode(mk, np.ones((kk, kk), np.uint8)), 0, 1)
+        al = np.clip(np.maximum(dot, edge), 0, 1)
+        rgba = np.zeros((hh, wd, 4), np.uint8)
+        rgba[..., :3] = [int(hx[1 + 2 * q:3 + 2 * q], 16) for q in range(3)]
+        rgba[..., 3] = (al * 255).astype(np.uint8)
+        if len(_HT) > 30:
+            _HT.clear()
+        _HT[key] = (skia.Image.fromarray(np.ascontiguousarray(rgba), colorType=skia.kRGBA_8888_ColorType, alphaType=skia.kUnpremul_AlphaType), pad, base, size)
+    img, pad, base, size = _HT[key]
+    c.drawImage(img, x - pad, y - base, skia.SamplingOptions(skia.FilterMode.kLinear),
+                skia.Paint(Color=col("#FFFFFF", 0.45 * a), ImageFilter=skia.ImageFilters.Blur(size * 0.06, size * 0.06)))
+    c.drawImage(img, x - pad, y - base, skia.SamplingOptions(skia.FilterMode.kLinear), skia.Paint(Color=col("#FFFFFF", a)))
 
 
 def draw_map(c, i, t):
@@ -795,9 +1310,12 @@ def draw_map(c, i, t):
             _, y = m["proj"](0, la)
             c.drawLine(bx - 22 * u0, y, bx - 8 * u0, y, ink)
             text(c, deg(la, "N", "S", st < 1), bx - 30 * u0, y + 7 * u, fr, DIM, ra * rk, 0.5 * u, "right")
-        if v.get("caption"):
-            cap = typed(v["caption"], t, S(i) + 0.3, 45.0) if not (first or handover_in(i)) else v["caption"]
-            c.drawRect(skia.Rect.MakeXYWH(bx, yb + 62 * u, 6 * u, 24 * u), skia.Paint(Color=col(CYAN, rk)))
+        capt = v.get("caption")
+        if SYSTEM and m.get("relief"):                                 # relief is real and says where it is from
+            capt = (capt + " · " if capt else "") + "RELIEF: NOAA ETOPO 2022"
+        if capt:
+            cap = typed(capt, t, S(i) + 0.3, 45.0) if not (first or handover_in(i)) else capt
+            c.drawRect(skia.Rect.MakeXYWH(bx, yb + 62 * u, 6 * u, 24 * u), skia.Paint(Color=col(acc(i), rk)))
             text(c, cap, bx + 18 * u, yb + 82 * u, mono(22 * u), DIM, rk, 0.8 * u)
     a, t0 = held(i, t, (ho_window(i)[1] - 0.4) if handover_in(i) else None)
     if first:
@@ -811,6 +1329,13 @@ def draw_map(c, i, t):
     c.save()
     c.clipRect(box)
     dur = max(2.0, E(i) - t0)
+    if SYSTEM:                                                     # the system look: hatched zones, particle flows, neon events, swiped labels
+        sys_marks(c, i, m, t, t0, a, dur)
+        c.restore()
+        sys_labels(c, i, m, t, t0, a, dur)
+        c.restore()
+        c.restore()
+        return
     for k_, zone in enumerate(v.get("zones", [])):                     # a zone: a lit hatch inside a hairline
         za = a * sm(t, t0 + 0.2 + 0.4 * k_, t0 + 1.0 + 0.4 * k_)
         if za <= 0:
@@ -879,7 +1404,8 @@ def draw_map(c, i, t):
     labels = v.get("labels", [])
     stag = min(1.1, dur * 0.55 / max(1, len(labels)))
     ft, fs = sans(50 * u), mono(31 * u)
-    for k_, ((lo, la, title, sub), (sx, sy, r)) in enumerate(zip(labels, map_labels(i))):   # a label: a point, a leader, a plate
+    for k_, (lb, (sx, sy, r)) in enumerate(zip(labels, map_labels(i))):
+        lo, la, title, sub = lb[:4]   # a label: a point, a leader, a plate
         tl = t0 + 0.5 + stag * k_
         la_ = a * sm(t, tl, tl + 0.45)
         if la_ <= 0:

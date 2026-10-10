@@ -1,0 +1,11 @@
+# media is re-made or re-fetched (assets_ai.json / assets_vo.json keep the URLs)
+*/src/ai/
+*/src/vo_*.wav
+*/src/audition/
+*/build/*
+!*/build/chapters.json
+!*/build/words.json
+*/out/*.mp4
+*/out/*.2pass*
+__pycache__/
+flow_short_*.log

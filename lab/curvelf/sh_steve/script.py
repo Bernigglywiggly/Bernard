@@ -24,8 +24,8 @@ FIX = {}
 
 CHAPTERS = [
     dict(id="two", title="", beats=[
-        (("That clip of Minecraft's hero in GTA V is two games running at once.",
-          "That clip of Minecraft's hero in GTA Five is two games running at once."),
+        (("You've seen Minecraft's hero walking around GTA V. That's two games running at once.",
+          "You've seen Minecraft's hero walking around GTA Five. That's two games running at once."),
          ("img", "h01", "TWO GAMES · ONE SCREEN")),
         ("An AI coding agent wrote the bridge between them in about two days.",
          ("num", "~2 DAYS", "CLAUDE CODE + ONE PERSON · FIELD NOTE, 30 SEP 2026")),
@@ -35,8 +35,6 @@ CHAPTERS = [
          ("img", "h03", "AN INVISIBLE FLOOR")),
         ("His picture comes back with depth, so a lamp post can hide him.",
          ("img", "h04", "DEPTH DECIDES")),
-        ("The mod caps him at four hundred blocks, because too many objects crash the city.",
-         ("num", "400", "BLOCK CAP · TOO MANY OBJECTS CRASH GTA V")),
         ("Nobody fused any code, and in my view that glue is the whole trick.",
          ("img", "h05", "GLUE, NOT FUSION")),
         ("You need both games, a Windows PC, and a build from source.",

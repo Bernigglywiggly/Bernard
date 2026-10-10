@@ -952,7 +952,7 @@ _KT = [k[0] for k in KEYS]
 
 
 def camera(t):
-    t = min(max(t, KEYS[0][0]), KEYS[-1][0])
+    t = min(max(t, KEYS[1][0] if OPEN_RESOLVED and len(KEYS) > 2 else KEYS[0][0]), KEYS[-1][0])     # a resolved open starts already arrived at its first place (10 Oct: frame 0 was mid-move)
     i = max(0, min(len(KEYS) - 2, int(np.searchsorted(_KT, t, side="right")) - 1))
     (t0, a), k1 = KEYS[i][0:2], KEYS[i + 1]
     t1, b = k1[0], k1[1]
@@ -1524,7 +1524,7 @@ def short_screen(c, t, n):
     text(c, CHANNEL, 75, HEAD - 50, mono(26), CYAN, 1.0, 3.0)      # all of it below the top 12%, which the app covers
     for i, s_ in enumerate(lines):
         text(c, s_, 75, HEAD + 30 + i * 70, f, INK)
-    e = sm(t, SHORT["t1"] - 3.4, SHORT["t1"] - 3.1)
+    e = sm(t, SHORT["t1"] - 3.4, SHORT["t1"] - 3.1) if SHORT["film"] else 0.0
     if e > 0:
         c.drawRect(skia.Rect.MakeXYWH(0, HEAD + len(lines) * 70, W, H), skia.Paint(Color=col(BG, e)))
         text(c, UI["watch"], W / 2, H / 2 - 150, mono(30), CYAN, e, 3.0, align="center")
@@ -1593,14 +1593,14 @@ def main():
     elif cmd == "short":                                            # FLOW_VERT=1 flow.py <film> short <name> <first id> <last id> <film mp4> "<headline>" "<film title>"
         name, a_id, b_id, mp4, head, film = sys.argv[3:9]
         ids = [b["id"] for b in B]
-        t0, t1 = max(0.0, S(ids.index(a_id)) - 0.15), E(ids.index(b_id)) + 0.5 + 3.4
+        t0, t1 = max(0.0, S(ids.index(a_id)) - 0.15), E(ids.index(b_id)) + 0.5 + (3.4 if film else 0.3)      # a standalone Short (film "") has no end card: it loops
         SHORT.update(t0=t0, t1=t1, headline=head, film=film)
         os.makedirs(os.path.join(FILM, "shorts"), exist_ok=True)
         pic_, out = os.path.join(BUILD, f"short_{name}_pic.mp4"), os.path.join(FILM, "shorts", f"short_{name}.mp4")
         encode(t0, t1, pic_, "1080:1920")
         d = t1 - t0
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", pic_, "-ss", f"{t0:.3f}", "-t", f"{d:.3f}", "-i", mp4, "-map", "0:v", "-map", "1:a",
-                        "-af", f"afade=t=in:d=0.25,afade=t=out:st={d - 2.4:.2f}:d=2.3", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", out], check=True)
+                        "-af", f"afade=t=in:d=0.25,afade=t=out:st={d - (2.4 if film else 0.4):.2f}:d={2.3 if film else 0.35}", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", out], check=True)
         print(out, round(d, 1), "s")
     elif cmd == "times":
         for ln in LINES:

@@ -29,6 +29,15 @@ ElevenLabs: about 89,000 characters left until about 16 Oct. Strategic warning f
 - Economy pilot ERROR found by the Hormuz research (9 Oct): its line "In July, after the strait had reopened" is partly wrong (a June reopening collapsed in early July). Fix `year_03` before that pilot is ever uploaded.
 - Also unanswered: Visa film to How They Profit on Wed 14 Oct (recommended: its figures are right until Visa reports in late Oct).
 
+## 1c. 10 Oct, early hours (user: "usage reset, continue"): four background jobs
+| Job | Output | If missing |
+|---|---|---|
+| Map style frames (highlighter multi-colour, real-elevation contours, neon + flicker clip, riso, particle flow, combined system) | `lab/maps/style/` (sheet.jpg, STYLE.md, *.png, C_neon.mp4, E_flow.mp4) | re-launch (brief: user wants a MIX of punchy highlighter colours on black + textures: contours, neon glow with animation; plus my own picks) |
+| "Play as Steve in GTA 5" AI story: fact-check premise, 8-10 Short concepts, one prototype Short (no game footage/IP) | `lab/curvelf/sh_steve/` (FACTS.md, IDEAS.md, script.py, stills) | re-launch |
+| Attention/psychology deep research -> playbook + CRAFT section 9 | `lab/research/ATTENTION_PLAYBOOK.md`, CRAFT.md §9 | re-launch |
+| Flash-game stickman talker lip-synced to the USER's own voice recording (+ ElevenLabs speech-to-speech voice changer, premade voice only, never a real person's clone) | `lab/stickman/talk.py`, `in/`, `out/test_talk*.mp4` | re-launch; user must record 10-30 s voice memo into `lab/stickman/in/` |
+Hormuz: waiting on the user's channel pick (How They Profit recommended) and the style choice; then set TAG, restyle, re-render, upload.
+
 ## 2. YouTube: what is uploaded (all PRIVATE with a publish time; ids also in `~/Bernard/channel/uploads_newlook.done.json`)
 | Video | Channel | Public (UTC) | Id |
 |---|---|---|---|

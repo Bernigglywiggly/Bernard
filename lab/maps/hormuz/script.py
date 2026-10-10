@@ -310,7 +310,7 @@ CHAPTERS = [
         ("Either way, the oil is moving again, and that is exactly why the attacks have changed, which brings us to this month.",
          ("map", {"view": V_STRAIT,
                   "labels": [(57.15, 25.85, "OCTOBER", "", "event")],
-                  "routes": [R_SOUTH], "pins": [], "zones": [Z_SOUTH], "zone_inks": "orange", "caption": "CORRIDOR AND ROUTE DRAWN SCHEMATICALLY · RELIEF: NOAA ETOPO 2022"})),
+                  "routes": [R_SOUTH], "pins": [], "zones": [Z_SOUTH], "zone_inks": "orange", "caption": "CORRIDOR AND ROUTE DRAWN SCHEMATICALLY"})),
     ]),
     dict(id="october", hero="orange", title="OCTOBER", beats=[
         ("In the first six days of October, the Royal Navy's maritime trade office, known as UKMTO, recorded nine attacks on tankers in the strait.",

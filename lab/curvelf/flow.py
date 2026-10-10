@@ -1555,7 +1555,7 @@ def frame(t):
     screen(c, t, cx, cy, z)
     a = (1.0 if OPEN_RESOLVED else sm(t, -0.2, 0.35)) * (1 - sm(t, TOTAL - 1.4, TOTAL - 0.1))     # a film that opens resolved has no fade-in: frame 0 is the thumbnail
     if VERT:
-        a = 1 - sm(t, SHORT["t1"] - 0.35, SHORT["t1"])
+        a = (1 - sm(t, SHORT["t1"] - 0.35, SHORT["t1"])) if SHORT["film"] else 1.0     # a standalone Short loops: no fade to black at the seam
     if a < 1:
         c.drawRect(skia.Rect.MakeWH(W, H), skia.Paint(Color=col(BG, 1 - a)))
     return surf.makeImageSnapshot().toarray(colorType=skia.kRGBA_8888_ColorType)
@@ -1600,7 +1600,7 @@ def main():
         encode(t0, t1, pic_, "1080:1920")
         d = t1 - t0
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", pic_, "-ss", f"{t0:.3f}", "-t", f"{d:.3f}", "-i", mp4, "-map", "0:v", "-map", "1:a",
-                        "-af", f"afade=t=in:d=0.25,afade=t=out:st={d - (2.4 if film else 0.4):.2f}:d={2.3 if film else 0.35}", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", out], check=True)
+                        "-af", f"afade=t=in:d=0.25,afade=t=out:st={d - (2.4 if film else 0.06):.2f}:d={2.3 if film else 0.05}", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", out], check=True)
         print(out, round(d, 1), "s")
     elif cmd == "times":
         for ln in LINES:

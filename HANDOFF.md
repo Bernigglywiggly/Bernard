@@ -36,7 +36,7 @@ ElevenLabs: about 89,000 characters left until about 16 Oct. Strategic warning f
 | Steve/GTA Short | `lab/curvelf/sh_steve/shorts/short_steve.mp4` (35 s, loops; facts `FACTS.md`; premise half true: universal-modder bridge, not AI dreaming) | DONE, sent. Needs a film-critic pass before upload. WAITING: user yes/no to The Curve |
 | Attention playbook | `lab/research/ATTENTION_PLAYBOOK.md`, CRAFT.md §9 | DONE. Key: AI narration costs engagement (likes -5.4%, shares -7.4%) -> the user's own voice is an edge |
 | Flash stickman talker | `lab/stickman/talk.py`, `flash.py`, `out/test_talk*.mp4` | DONE (tested on macOS `say`). WAITING: user's 10-30 s voice memo into `lab/stickman/in/`; then ElevenLabs speech-to-speech (premade voice) -> `in/changed.*` -> `talk.py` |
-| Hormuz | `lab/maps/hormuz/HORMUZ_v2.mp4` | WAITING: channel (How They Profit recommended) + style pick. Two re-voiced lines and a brighter drone are laid, not yet rendered. Render with FLOW_BED=drone |
+| Hormuz | `lab/maps/hormuz/HORMUZ_v2.mp4` | USER 10 Oct: goes on THE CURVE (TAG set) and style F ("the system") chosen; restyle agent building LOOK="system" in flow.py. Two re-voiced lines and a brighter drone are laid, not yet rendered. Render with FLOW_BED=drone |
 Engine changes 10 Oct: standalone Shorts (film "") loop with no end card; OPEN_RESOLVED starts the camera at its first place.
 
 ## 2. YouTube: what is uploaded (all PRIVATE with a publish time; ids also in `~/Bernard/channel/uploads_newlook.done.json`)

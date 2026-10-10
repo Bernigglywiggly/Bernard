@@ -24,8 +24,8 @@ FIX = {}
 
 CHAPTERS = [
     dict(id="two", title="", beats=[
-        (("You've seen Minecraft's hero walking around GTA V. That's two games running at once.",
-          "You've seen Minecraft's hero walking around GTA Five. That's two games running at once."),
+        (("You've seen Steve walking around GTA V. The trick is two games running at once.",
+          "You've seen Steve walking around GTA Five. The trick is two games running at once."),
          ("img", "h01", "TWO GAMES · ONE SCREEN")),
         ("An AI coding agent wrote the bridge between them in about two days.",
          ("num", "~2 DAYS", "CLAUDE CODE + ONE PERSON · FIELD NOTE, 30 SEP 2026")),
@@ -40,6 +40,6 @@ CHAPTERS = [
         ("You need both games, a Windows PC, and a build from source.",
          ("list", ["BOTH GAMES, YOUR OWN", "A WINDOWS PC", "STORY MODE ONLY", "BUILD IT YOURSELF"], "TO PLAY IT")),
         ("And it's open source, so the next clip could be two other games running at once.",
-         ("img", "h01")),
+         ("img", "h01", "TWO GAMES · ONE SCREEN")),          # same label as frame 0: the loop seam matches (critic v1)
     ]),
 ]

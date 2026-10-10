@@ -63,7 +63,7 @@ SOURCES ACTUALLY OPENED (9 Oct 2026; date of the page in brackets)
   S18 Wikipedia, "Strait of Hormuz", "2026 Strait of Hormuz crisis" and island/port articles: pointers and coordinates only.
 """
 TITLE = "HORMUZ IS CLOSED. THE OIL ISN'T."
-TAG = "MAPS & POWER  ·  THE STRAIT OF HORMUZ"      # placeholder channel name: change this one line (see CHANNEL.md)
+TAG = "THE CURVE  ·  THE STRAIT OF HORMUZ"      # user 10 Oct: The Curve covers AI plus global trends
 LEAD = 0.4
 OPEN_RESOLVED = True
 CHROME = "chart"                                  # the maps channel's own look (flow.py): nav header with live coordinates, plain captions, ruled cards

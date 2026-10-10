@@ -970,7 +970,7 @@ def _lut(stops, n=256):
 
 
 OIL_LUT = _lut(OIL_STOPS)
-FLOW_RS, FLOW_V0 = 0.75, 0.55                   # raster pixels per world unit; the volume that reads white-hot
+FLOW_RS, FLOW_V0 = 0.75, 0.32                   # raster pixels per world unit; the volume that reads white-hot
 
 
 def flow_geom(m, k, rt):
@@ -1005,7 +1005,7 @@ def flow_image(m, t, items):
     for k, rt, pr, ts in items:
         s, P, Nn, L = flow_geom(m, k, rt)
         r = np.random.default_rng(300 + k)
-        n = int(L / 4.5) + 40
+        n = int(L / 2.0) + 60
         s0 = r.uniform(0, L, n)
         spd = r.uniform(0.85, 1.15, n) * 140 * u0
         lat = np.clip(r.normal(0, 1, n), -2.6, 2.6) * 3.4 * u0
@@ -1027,9 +1027,9 @@ def flow_image(m, t, items):
                 np.add.at(heads, (yy[o2].astype(int) + 1, xx[o2].astype(int) + 1), fade[o2])
     D = cv2.GaussianBlur(acc_[1:-1, 1:-1], (0, 0), 0.8)
     vc = np.clip(_blur(D, 7) / FLOW_V0, 0, 1)
-    br = (1 - np.exp(-D / 0.45)) * (0.5 + 0.5 * vc)
+    br = (1 - np.exp(-D / 0.2)) * (0.6 + 0.4 * vc)
     Pc = OIL_LUT[(vc * 255).astype(int)] * br[..., None]
-    G = 0.5 * _blur(Pc, 2) + 0.42 * _blur(Pc, 7) + 0.3 * _blur(Pc, 22)
+    G = 0.6 * _blur(Pc, 2) + 0.5 * _blur(Pc, 7) + 0.4 * _blur(Pc, 22) + 0.2 * _blur(Pc, 60)
     hd = np.clip(cv2.GaussianBlur(heads[1:-1, 1:-1], (0, 0), 0.7) * 2.2, 0, 1)[..., None]
     Pc = Pc * (1 - 0.35 * hd) + hd * (0.55 * Pc / np.maximum(1e-3, Pc.max(axis=2, keepdims=True)) + 0.45)
     out = np.clip(Pc + G, 0, 1)
@@ -1040,7 +1040,6 @@ def flow_image(m, t, items):
 def sys_marks(c, i, m, t, t0, a, dur):
     """Zones as hatched highlighter fills, flows as particle streams, event routes as neon, pins as places or neon events."""
     v, u0 = m["v"], m["u"]
-    rnd = np.random.default_rng(17 + i)
     for k_, zone in enumerate(v.get("zones", [])):
         za = a * sm(t, t0 + 0.2 + 0.4 * k_, t0 + 1.0 + 0.4 * k_)
         if za <= 0:
@@ -1059,8 +1058,10 @@ def sys_marks(c, i, m, t, t0, a, dur):
         off = (t * 8 * u0) % gap
         xx = R.left() - R.height() - gap + off
         while xx < R.right() + gap:                                 # marker strokes: uneven ink, a slight wobble of width
-            c.drawLine(xx, R.bottom(), xx + R.height(), R.top(), skia.Paint(Color=col(hx, za * rnd.uniform(0.22, 0.5)), AntiAlias=True,
-                                                                             StrokeWidth=rnd.uniform(2.2, 3.4) * u0, StrokeCap=skia.Paint.kButt_Cap))
+            hq = math.sin(round((xx - off) / gap) * 12.9898 + k_ * 7.1) * 43758.5453
+            hq -= math.floor(hq)                                    # each stroke keeps its own ink as the hatch drifts (no flicker)
+            c.drawLine(xx, R.bottom(), xx + R.height(), R.top(), skia.Paint(Color=col(hx, za * (0.22 + 0.28 * hq)), AntiAlias=True,
+                                                                             StrokeWidth=(2.2 + 1.2 * hq) * u0, StrokeCap=skia.Paint.kButt_Cap))
             xx += gap
         c.restore()
         c.drawPath(zp, skia.Paint(Color=col(hx, 0.7 * za), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=1.6 * u0))
@@ -1105,6 +1106,8 @@ def sys_marks(c, i, m, t, t0, a, dur):
         if per(v, "pin_kinds", k_, "place") == "event":             # an event: a neon ring strikes, flashes, sparks, then hums
             hx = ink(per(v, "pin_inks", k_, "orange"))
             tt = t - tp
+            if handover_in(i) and (lo, la) in [tuple(q) for q in B[i - 1]["vis"][1].get("pins", [])]:
+                tt, tp = 9.0, t - 9.0                               # already lit on the map it takes over from: no second strike
             lvl = a * (stutter(t, tp - 0.14, 50 + k_, 0.14) if tt < 0 else (1.0 + 2.0 * math.exp(-tt * 7)) * hum(t, 50 + k_))
             ring = skia.Path()
             ring.addCircle(x, y, 15 * u0)
@@ -1673,20 +1676,20 @@ def card_tag(i):
     return f"{kind} {B[i]['floor'] + 1:02d}.{bi + 1:02d}  ·  " + fmt_ll((L0 + L1) / 2, (A0 + A1) / 2, 1)
 
 
-def chart_frame(c, r, a, tag, u, divider=None):
+def chart_frame(c, r, a, tag, u, divider=None, tick=None):
     """A card as a plate on the instrument: a hairline frame, cyan corner ticks, a small reference tag."""
     if a <= 0:
         return
     c.drawRect(r, skia.Paint(Color=col(BG, 0.55 * a)))
     c.drawRect(r, skia.Paint(Color=col(INK, 0.2 * a), AntiAlias=True, Style=skia.Paint.kStroke_Style, StrokeWidth=1.3 * u))
-    tk, pt = 34 * u, skia.Paint(Color=col(CYAN, a), AntiAlias=True, StrokeWidth=2.6 * u)
+    tk, pt = 34 * u, skia.Paint(Color=col(tick or CYAN, a), AntiAlias=True, StrokeWidth=2.6 * u)
     for x, y, dx, dy in ((r.left(), r.top(), 1, 1), (r.right(), r.top(), -1, 1), (r.left(), r.bottom(), 1, -1), (r.right(), r.bottom(), -1, -1)):
         c.drawLine(x, y, x + dx * tk, y, pt)
         c.drawLine(x, y, x, y + dy * tk, pt)
     if divider is not None:
         c.drawLine(divider, r.top() + 60 * u, divider, r.bottom() - 60 * u, skia.Paint(Color=col(INK, 0.2 * a), AntiAlias=True, StrokeWidth=1.3 * u))
     fm = mono(22 * u)
-    text(c, tag, r.left() + 26 * u, r.top() + 44 * u, fm, DIM, a, 1.0 * u)
+    text(c, tag, r.left() + 26 * u, r.top() + 44 * u, fm, (tick if SYSTEM and tick else DIM), a, 1.0 * u)
     for k_ in range(9):                                             # a hairline scale along the bottom edge, like a chart's border
         x = r.right() - 30 * u - k_ * 22 * u
         c.drawLine(x, r.bottom() - 4 * u, x, r.bottom() - (16 if k_ % 4 == 0 else 9) * u, skia.Paint(Color=col(INK, 0.3 * a), AntiAlias=True, StrokeWidth=1.2 * u))
@@ -1769,12 +1772,12 @@ def world_type(c, t):
             a *= on_screen(x - wd / 2 - 40 * u, x + wd / 2 + 40 * u, top + len(lines) * lh + 30 * u)
             if CHART:
                 hw = max(wd, 900 * u) / 2 + 100 * u
-                chart_frame(c, skia.Rect.MakeLTRB(x - hw, top - 110 * u, x + hw, top + len(lines) * lh + 60 * u), a_fr, card_tag(i), u)
+                chart_frame(c, skia.Rect.MakeLTRB(x - hw, top - 110 * u, x + hw, top + len(lines) * lh + 60 * u), a_fr, card_tag(i), u, tick=acc(i))
             if a > 0:
-                c.drawRect(skia.Rect.MakeXYWH(x - wd / 2, top - 26 * u, 110 * u, 9 * u), skia.Paint(Color=col(CYAN, a)))
+                c.drawRect(skia.Rect.MakeXYWH(x - wd / 2, top - 26 * u, 110 * u, 9 * u), skia.Paint(Color=col(acc(i), a)))
                 for j, s_ in enumerate(lines):
                     aj = a * sm(t, t0 + 0.18 * j, t0 + 0.18 * j + 0.25)
-                    text(c, s_, x - wd / 2, top + (j + 0.86) * lh, f, CYAN if j == len(lines) - 1 else INK, aj, halo=(16 * u if j == len(lines) - 1 else 0))
+                    text(c, s_, x - wd / 2, top + (j + 0.86) * lh, f, acc(i) if j == len(lines) - 1 else INK, aj, halo=(16 * u if j == len(lines) - 1 else 0))
         elif k == "num":
             if len(v[1]) > LONG_NUM:
                 f, size = fit_sans(v[1], 300 * u, 1800 * u)
@@ -1782,8 +1785,11 @@ def world_type(c, t):
                 a0 = a * on_screen(x - wd0 / 2 - 30 * u, x + wd0 / 2 + 30 * u, y + 120 * u)
                 if CHART:
                     hw = max(wd0, mono(34 * u).measureText(v[2]), 900 * u) / 2 + 110 * u
-                    chart_frame(c, skia.Rect.MakeLTRB(x - hw, y - 270 * u, x + hw, y + 400 * u), a_fr, card_tag(i), u)
-                text(c, v[1], x - wd0 / 2, y + 60 * u, f, INK, a0)
+                    chart_frame(c, skia.Rect.MakeLTRB(x - hw, y - 270 * u, x + hw, y + 400 * u), a_fr, card_tag(i), u, tick=(PAL["violet"] if SYSTEM else None))
+                if SYSTEM:                                          # a figure is data: violet halftone inside a crisp edge
+                    ht_text(c, v[1], x - wd0 / 2, y + 60 * u, f, PAL["violet"], a0)
+                else:
+                    text(c, v[1], x - wd0 / 2, y + 60 * u, f, INK, a0)
             fm = mono(34 * u)
             s_ = v[2]
             while fm.measureText(s_) > min(1900 * u, FR):
@@ -1793,15 +1799,19 @@ def world_type(c, t):
             a *= on_screen(x - wd / 2 - 30 * u, x + wd / 2 + 30 * u, Y + 20 * u)
             if a > 0:
                 block(c, x - wd / 2, Y - 34 * u, wd, 44 * u, a, 24 * u)
-                text(c, typed(s_, t, t0 + 0.2), x - wd / 2, Y, fm, CYAN, a)
+                text(c, typed(s_, t, t0 + 0.2), x - wd / 2, Y, fm, PAL["violet"] if SYSTEM else CYAN, a)
         elif k == "split":
             if CHART:
-                chart_frame(c, skia.Rect.MakeLTRB(x - 0.45 * p["ww"], y - 190 * u, x + 0.45 * p["ww"], y + 320 * u), a_fr, card_tag(i), u, divider=x)
+                chart_frame(c, skia.Rect.MakeLTRB(x - 0.45 * p["ww"], y - 190 * u, x + 0.45 * p["ww"], y + 320 * u), a_fr, card_tag(i), u, divider=x, tick=acc(i))
             if max(len(v[1][0]), len(v[2][0])) > LONG_SPLIT:
                 for j, (big, _) in enumerate(v[1:3]):
                     f, size = fit_sans(big, 170 * u, p["ww"] * 0.34)
                     bx = x + (-0.21 + 0.42 * j) * p["ww"] - f.measureText(big) / 2
-                    text(c, big, bx, y + 90 * u, f, INK if j == 0 else CYAN, a * on_screen(bx - 20 * u, bx + f.measureText(big) + 20 * u, y + 120 * u), halo=(14 * u if j else 0))
+                    ab = a * on_screen(bx - 20 * u, bx + f.measureText(big) + 20 * u, y + 120 * u)
+                    if SYSTEM and j:                                # the side that matters: the hero colour, in halftone
+                        ht_text(c, big, bx, y + 90 * u, f, acc(i), ab)
+                    else:
+                        text(c, big, bx, y + 90 * u, f, INK if j == 0 else CYAN, ab, halo=(14 * u if j else 0))
             for j, (_, small) in enumerate(v[1:3]):
                 fm = mono(30 * u)
                 wd = fm.measureText(small)
@@ -1810,7 +1820,7 @@ def world_type(c, t):
                 aa = a * on_screen(X - 30 * u, X + wd + 30 * u, Y + 20 * u)
                 if aa > 0:
                     block(c, X, Y - 30 * u, wd, 40 * u, aa, 20 * u)
-                    text(c, typed(small, t, t0 + 0.2 + 0.5 * j), X, Y, fm, CYAN if j == 0 else RED, aa)
+                    text(c, typed(small, t, t0 + 0.2 + 0.5 * j), X, Y, fm, ((("#AEB6BB" if j == 0 else acc(i)) if SYSTEM else (CYAN if j == 0 else RED))), aa)
         elif k == "quote":
             f = sans(80 * u)
             qw = min(1560 * u, (W - (560 if VERT else 200)) / max(CAM[2], 1e-6))      # a Short's card, with its mark and plate, must sit wholly inside the frame or the edge gate flickers it
@@ -1826,8 +1836,8 @@ def world_type(c, t):
             a *= on_screen(X - 150 * u, X + wd + 40 * u, top + hgt + 30 * u)
             if a > 0:
                 if CHART:                                       # a notice slip, not a pull-quote: no big mark
-                    chart_frame(c, skia.Rect.MakeLTRB(X - 130 * u, top - 120 * u, X + wd + 90 * u, top + hgt + 70 * u), a_fr, card_tag(i), u)
-                    c.drawRect(skia.Rect.MakeXYWH(X - 50 * u, top + 20 * u, 4 * u, len(lines) * lh - 10 * u), skia.Paint(Color=col(CYAN, a)))
+                    chart_frame(c, skia.Rect.MakeLTRB(X - 130 * u, top - 120 * u, X + wd + 90 * u, top + hgt + 70 * u), a_fr, card_tag(i), u, tick=acc(i))
+                    c.drawRect(skia.Rect.MakeXYWH(X - 50 * u, top + 20 * u, 4 * u, len(lines) * lh - 10 * u), skia.Paint(Color=col(acc(i), a)))
                 else:
                     block(c, X - 110 * u, top - 40 * u, wd + 110 * u, hgt + 60 * u, a, 40 * u)
                     text(c, "“", X - 120 * u, top + 150 * u, sans(260 * u), CYAN, a, halo=14 * u)
@@ -1837,12 +1847,12 @@ def world_type(c, t):
                     part = s_[:max(0, shown - done)]
                     done += len(s_) + 1
                     text(c, part, X, top + (j + 0.8) * lh, f, INK, a)
-                c.drawRect(skia.Rect.MakeXYWH(X, top + len(lines) * lh + 18 * u, 90 * u, 6 * u), skia.Paint(Color=col(CYAN, a)))
-                text(c, typed(v[2], t, t0 + 0.3, 60.0), X, top + len(lines) * lh + 66 * u, mono(30 * u), CYAN, a, 0.5 * u)
+                c.drawRect(skia.Rect.MakeXYWH(X, top + len(lines) * lh + 18 * u, 90 * u, 6 * u), skia.Paint(Color=col(acc(i), a)))
+                text(c, typed(v[2], t, t0 + 0.3, 60.0), X, top + len(lines) * lh + 66 * u, mono(30 * u), PAL["violet"] if SYSTEM else CYAN, a, 0.5 * u)
         elif k == "list":
             items, title = v[1], (v[2] if len(v) > 2 else None)
             f, size = fit_sans(max(items, key=len), 96 * u, 1700 * u)
-            cap = (0.40 * p["ww"] - (70 * u if title else 0)) / (len(items) * 1.55)     # a long list shrinks to fit above the captions (9 Oct: 8 rows were hidden by on_screen)
+            cap = ((0.30 if SYSTEM else 0.40) * p["ww"] - (70 * u if title else 0)) / (len(items) * 1.55)      # the chart frame needs more headroom     # a long list shrinks to fit above the captions (9 Oct: 8 rows were hidden by on_screen)
             if size > cap:
                 f, size = fit_sans(max(items, key=len), cap, 1700 * u)
             lh = size * 1.55
@@ -1852,15 +1862,15 @@ def world_type(c, t):
             a *= on_screen(X - 80 * u, X + wd + 40 * u, top + hgt + 20 * u)
             if a > 0:
                 if CHART:
-                    chart_frame(c, skia.Rect.MakeLTRB(X - 110 * u, top - 64 * u, X + wd + 90 * u, top + hgt + 50 * u), a_fr, card_tag(i), u)
+                    chart_frame(c, skia.Rect.MakeLTRB(X - 110 * u, top - 64 * u, X + wd + 90 * u, top + hgt + 50 * u), a_fr, card_tag(i), u, tick=acc(i))
                 else:
                     block(c, X - 50 * u, top, wd + 50 * u, hgt, a, 40 * u)
                 if title:
-                    text(c, title, X, top + 30 * u, mono(32 * u), CYAN, a, 1.0 * u)
+                    text(c, title, X, top + 30 * u, mono(32 * u), acc(i), a, 1.0 * u)
                 for j, s_ in enumerate(items):
                     aj = a * sm(t, t0 + dur * 0.45 * j / len(items) - 0.1, t0 + dur * 0.45 * j / len(items) + 0.2)
                     Y = top + (70 * u if title else 0) + (j + 0.75) * lh
-                    c.drawRect(skia.Rect.MakeXYWH(X - 40 * u, Y - size * 0.74, 10 * u, size * 0.78), skia.Paint(Color=col(CYAN, aj)))
+                    c.drawRect(skia.Rect.MakeXYWH(X - 40 * u, Y - size * 0.74, 10 * u, size * 0.78), skia.Paint(Color=col(acc(i), aj)))
                     text(c, s_, X, Y, f, INK, aj)
         elif k == "tl":
             marks = v[1]
@@ -1869,10 +1879,10 @@ def world_type(c, t):
             a *= on_screen(X0 - 60 * u, X0 + span + 60 * u, Y + 260 * u)
             if a > 0:
                 if CHART:
-                    chart_frame(c, skia.Rect.MakeLTRB(X0 - 70 * u, Y - 270 * u, X0 + span + 70 * u, Y + 300 * u), a_fr, card_tag(i), u)
+                    chart_frame(c, skia.Rect.MakeLTRB(X0 - 70 * u, Y - 270 * u, X0 + span + 70 * u, Y + 300 * u), a_fr, card_tag(i), u, tick=acc(i))
                 else:
                     block(c, X0, Y - 190 * u, span, 420 * u, a, 50 * u)
-                c.drawLine(X0, Y, X0 + span * sm(t, t0, t0 + dur * 0.6), Y, skia.Paint(Color=col(CYAN, a), AntiAlias=True, StrokeWidth=4 * u))
+                c.drawLine(X0, Y, X0 + span * sm(t, t0, t0 + dur * 0.6), Y, skia.Paint(Color=col(acc(i), a), AntiAlias=True, StrokeWidth=4 * u))
                 for j, (date, what) in enumerate(marks):
                     aj = a * sm(t, t0 + dur * 0.6 * j / len(marks), t0 + dur * 0.6 * j / len(marks) + 0.3)
                     mx = X0 + span * (j + 0.08) / len(marks)
@@ -1881,7 +1891,7 @@ def world_type(c, t):
                     text(c, date, mx - 10 * u, Y - 50 * u, fd, INK, aj)
                     fm = mono(26 * u)
                     for q, s_ in enumerate(wrap(what, fm, span / len(marks) * 0.86)):
-                        text(c, s_, mx - 10 * u, Y + (70 + q * 38) * u, fm, CYAN, aj)
+                        text(c, s_, mx - 10 * u, Y + (70 + q * 38) * u, fm, acc(i), aj)
 
 
 def wrap(s, f, maxw):
@@ -1906,7 +1916,7 @@ def screen(c, t, cx, cy, z):
         if ta > 0:
             tg, fg = UI["illus"], mono(21)
             c.drawRect(skia.Rect.MakeXYWH(56, 104, fg.measureText(tg) + 0.6 * len(tg) + 30, 40), skia.Paint(Color=col(BG, 0.85 * ta)))
-            c.drawRect(skia.Rect.MakeXYWH(56, 104, 3, 40), skia.Paint(Color=col(CYAN, ta)))
+            c.drawRect(skia.Rect.MakeXYWH(56, 104, 3, 40), skia.Paint(Color=col(acc(i_), ta)))
             text(c, tg, 72, 131, fg, INK, 0.9 * ta, 0.6)
     firsts = [i for i, b in enumerate(B) if b["first"]] + [N]
     cur = B[now(t + 1.4)]["floor"]                                  # it turns over as the chapter's name comes up
@@ -1949,11 +1959,11 @@ def screen(c, t, cx, cy, z):
                 c.drawRect(skia.Rect.MakeXYWH(0, H / 2 - 190, W, 400), skia.Paint(Color=col(BG, 0.97 * min(1.0, a * 2.5))))        # a band, up before the name: nothing behind reads through a chapter's name
                 for yy in (H / 2 - 190, H / 2 + 210):
                     c.drawLine(0, yy, W, yy, skia.Paint(Color=col(INK, 0.14 * a), AntiAlias=True, StrokeWidth=1))
-                text(c, f"{UI['chapter']} {b['floor'] + 1:02d}", W / 2 - wd / 2, H / 2 - 116, mono(28), CYAN, a, 2.0)
+                text(c, f"{UI['chapter']} {b['floor'] + 1:02d}", W / 2 - wd / 2, H / 2 - 116, mono(28), acc(i), a, 2.0)
                 text(c, b["title"], W / 2 - wd / 2, H / 2 + 24, f, INK, a)
                 if CHART:                                       # a ruled line with the chapter's place on it, not numbered boxes
                     c.drawLine(W / 2 - wd / 2, H / 2 + 80, W / 2 + wd / 2, H / 2 + 80, skia.Paint(Color=col(INK, 0.25 * a), AntiAlias=True, StrokeWidth=1.2))
-                    c.drawLine(W / 2 - wd / 2, H / 2 + 80, W / 2 - wd / 2 + wd * (b["floor"] + 1) / NC, H / 2 + 80, skia.Paint(Color=col(CYAN, a), AntiAlias=True, StrokeWidth=2.4))
+                    c.drawLine(W / 2 - wd / 2, H / 2 + 80, W / 2 - wd / 2 + wd * (b["floor"] + 1) / NC, H / 2 + 80, skia.Paint(Color=col(acc(i), a), AntiAlias=True, StrokeWidth=2.4))
                     text(c, f"{b['floor'] + 1:02d} / {NC:02d}", W / 2 + wd / 2, H / 2 + 124, mono(22), DIM, a, 1.0, "right")
                 else:
                     rail(200, W - 200, H / 2 + 132, 96, 54, a, 24, True)
@@ -1961,7 +1971,7 @@ def screen(c, t, cx, cy, z):
     if a > 0:                                                       # the sign-off, with room left for end-screen elements above it
         c.drawRect(skia.Rect.MakeXYWH(W / 2 - 430, H - 226, 860, 150), skia.Paint(Color=col(BG, 0.9 * a)))
         text(c, CHANNEL, W / 2, H - 150, sans(64), INK, a, 6.0, align="center")
-        text(c, (UI["tagline"] if CHANNEL in ("THE CURVE", "LA CURVA", "CURVAEXPLICA") else "") + UI["sources"], W / 2, H - 100, mono(24), CYAN, a, 1.0, align="center")
+        text(c, (TAGLINE if TAGLINE is not None else UI["tagline"] if CHANNEL in ("THE CURVE", "LA CURVA", "CURVAEXPLICA") else "") + UI["sources"], W / 2, H - 100, mono(24), acc(N - 1), a, 1.0, align="center")
     captions(c, t, n)
 
 
@@ -1970,8 +1980,8 @@ def chart_header(c, t, cx, cy, z, cur, prog, NC):
     on the right, like a navigation instrument; a hairline with the film's progress along it."""
     c.drawRect(skia.Rect.MakeXYWH(0, 0, W, 86), skia.Paint(Color=col(BG, 0.82)))
     c.drawLine(70, 86, W - 70, 86, skia.Paint(Color=col(INK, 0.16), AntiAlias=True, StrokeWidth=1))
-    c.drawLine(70, 86, 70 + (W - 140) * min(1.0, prog / max(1, NC)), 86, skia.Paint(Color=col(CYAN, 0.9), AntiAlias=True, StrokeWidth=2))
-    c.drawRect(skia.Rect.MakeXYWH(70, 40, 10, 10), skia.Paint(Color=col(CYAN)))
+    c.drawLine(70, 86, 70 + (W - 140) * min(1.0, prog / max(1, NC)), 86, skia.Paint(Color=col(acc_ch(cur), 0.9), AntiAlias=True, StrokeWidth=2))
+    c.drawRect(skia.Rect.MakeXYWH(70, 40, 10, 10), skia.Paint(Color=col(acc_ch(cur))))
     chan = SC.TAG.split("·")[0].strip()
     text(c, chan, 94, 52, mono(21), INK, 0.9, 1.5)
     i_ = now(t)
@@ -1989,7 +1999,7 @@ def chart_header(c, t, cx, cy, z, cur, prog, NC):
     rw = sum(fr.measureText(ch) + 1.0 for ch in rd)
     text(c, rd, W - 70, 52, fr, INK, 0.95, 1.0, "right")
     name = SC.CHAPTERS[cur]["title"] or UI["open"]
-    text(c, f"{cur + 1:02d}  {name}", W - 70 - rw - 36, 52, mono(18), CYAN, 1.0, 1.2, "right")
+    text(c, f"{cur + 1:02d}  {name}", W - 70 - rw - 36, 52, mono(18), acc_ch(cur), 1.0, 1.2, "right")
     c.drawLine(W - 70 - rw - 18, 34, W - 70 - rw - 18, 58, skia.Paint(Color=col(INK, 0.25), AntiAlias=True, StrokeWidth=1))
 
 
@@ -2022,7 +2032,7 @@ def captions(c, t, n):
             X0 = 190
             pl = skia.Rect.MakeXYWH(X0 - 30, y0 - CL - 2, wmax + 60, len(lines) * CL + 28)
             c.drawRect(pl, skia.Paint(Color=col(BG, 0.94 * k)))
-            c.drawRect(skia.Rect.MakeXYWH(pl.left(), pl.top(), 3, pl.height()), skia.Paint(Color=col(CYAN, k)))
+            c.drawRect(skia.Rect.MakeXYWH(pl.left(), pl.top(), 3, pl.height()), skia.Paint(Color=col(acc(ln["i"]), k)))
             for i, s in enumerate(lines):
                 text(c, s, X0, y0 + i * CL, f, INK, k)
             continue

@@ -80,6 +80,26 @@ is fine; **no visible author is what gets flagged.**
 - -14 LUFS, true peak at or below -1 dBFS. One soft whoosh per real scene change; clicks only on real on-screen
   actions. Keep a music-only fallback.
 
+## 9. Attention playbook (10 Oct research)
+Full tables, evidence grades and sources: `lab/research/ATTENTION_PLAYBOOK.md`. Rules marked (test) are unproven.
+1. Frame 0 of a Short is the payoff image plus 2-6 words; line 1 (≤ 3 s) is the most surprising true fact, says "you"
+   once and says the search term out loud.
+2. Judge Shorts on engaged views and "Stayed to watch" (target ≥ 70%), never raw views (every replay counts since Mar 2025).
+3. Shorts: YouTube 20-35 s by default, 50-60 s only if the story holds; TikTok gets its own 61-90 s cut.
+4. No licensed or claimable music in any Short over 60 s: one Content ID claim blocks it worldwide.
+5. Shorts get burned-in captions (2-4 words per chunk); long films get keyword overlays plus CC, not full captions.
+6. Faster is not better: one visual change every 1.5-2.5 s in Shorts, 2-4 s in films, one dimension at a time.
+7. Long films: show the thumbnail's promise by 0:08, a real payoff by 1:00, re-engagement beats near 3:00 and 6:00.
+8. End on the second-best fact plus the verdict, then stop within 15 s (peak-end); never say "to wrap up".
+9. Every promise in a title or thumbnail appears on screen before 1:00 (YouTube removes "egregious clickbait" on news,
+   which covers The Curve and the geopolitics channel).
+10. Titles: a concrete subject with the outcome withheld; true negativity is allowed, invented stakes are not.
+11. Thumbnails need text and one focal subject; faces are optional (no measured edge). 2-3 vs 4-6 words (test).
+12. Every long film goes into Test & Compare with three title/thumbnail combos; it judges by watch time share.
+13. Spend expressive-voice effort on the middle third: AI voices lose most engagement where the story builds.
+14. Repeat brand marks (colour, sting, recurring object, narrator), never the structure: that is the "mass-produced" flag.
+15. One change per test, logged with 48 h and 7 d numbers against the channel's own median (playbook §6).
+
 ## Learned on our films
 - 9 Oct (tunnel and economy pilots, Spanish LF02): (1) the engine stamped "AI-GENERATED" on diagrams drawn in code: a
   false label that invites "AI slop" comments. A film now sets `ILLUS` in its script ("DIAGRAM · DRAWN FOR THIS FILM").

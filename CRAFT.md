@@ -101,6 +101,10 @@ Full tables, evidence grades and sources: `lab/research/ATTENTION_PLAYBOOK.md`. 
 15. One change per test, logged with 48 h and 7 d numbers against the channel's own median (playbook §6).
 
 ## Learned on our films
+- 11 Oct (first opportunity radar, ~650 videos vs their channel medians): outliers in our niches run long (How They
+  Profit-style ~16 min, Money Crimes-style ~25 min; Visa at 4.3 min is too short for mid-roll ads); winning titles
+  put the search phrase first, then the twist ("How Uber Really Makes Money (It Is Not the Rides)"); winning
+  thumbnails pin the money number to a real, recognisable place, not a number on black. Radar: `lab/research/`.
 - 11 Oct (thumbnails, owner: "too boring, not attention grabbing"): dark, quiet thumbnails vanish in a bright feed.
   Every thumbnail now comes from `lab/tools/thumbs_v2.py` (rules in `lab/tools/THUMBS.md`): one focal subject at
   60-70% with a glow rim, 2-5 huge words in fluoro highlighter/neon, a complementary fluoro pair per channel, honest

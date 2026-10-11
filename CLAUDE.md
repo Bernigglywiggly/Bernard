@@ -7,3 +7,5 @@ handoff's top section. `lab/motion` has its own `AGENTS.md` for Remotion work.
 Before scripting, storyboarding or prompting any film or Short, read `CRAFT.md` (house rules: authorship vs YouTube's
 inauthentic-content policy, narration style, banned looks, process gates, packaging). Before any upload, run the
 `film-critic` skill. After each film, add what the critic caught to CRAFT.md's "Learned on our films".
+
+Growth loop: `GROWTH.md` (pick ideas from the weekly radar, make to CRAFT, measure with YouTube Analytics at 48 h / 7 d and write lessons into CRAFT "Learned"). Scheduled: Monday 09:00 weekly review + radar (local scheduled task `weekly-growth-review`).

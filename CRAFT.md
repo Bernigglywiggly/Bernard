@@ -101,6 +101,11 @@ Full tables, evidence grades and sources: `lab/research/ATTENTION_PLAYBOOK.md`. 
 15. One change per test, logged with 48 h and 7 d numbers against the channel's own median (playbook §6).
 
 ## Learned on our films
+- 11 Oct (thumbnails, owner: "too boring, not attention grabbing"): dark, quiet thumbnails vanish in a bright feed.
+  Every thumbnail now comes from `lab/tools/thumbs_v2.py` (rules in `lab/tools/THUMBS.md`): one focal subject at
+  60-70% with a glow rim, 2-5 huge words in fluoro highlighter/neon, a complementary fluoro pair per channel, honest
+  devices (struck-out old number, circle on the detail, crossed-out myth), a small brand mark, checked at 168 px on a
+  white and a dark feed. Three variants per film for Test & Compare.
 - 9 Oct (tunnel and economy pilots, Spanish LF02): (1) the engine stamped "AI-GENERATED" on diagrams drawn in code: a
   false label that invites "AI slop" comments. A film now sets `ILLUS` in its script ("DIAGRAM · DRAWN FOR THIS FILM").
   (2) Frame 0 was a near-black blob and the twist landed at 9.3 s: `OPEN_RESOLVED = True` and `LEAD = 0.4` put the first

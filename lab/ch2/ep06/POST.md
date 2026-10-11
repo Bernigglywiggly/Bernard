@@ -1,6 +1,6 @@
 # How They Profit 06 · Visa: upload sheet (6 Oct 2026)
 
-File: `HTP06_MASTER_v7.mp4` (1920x1080, 4:18, George, garage bed). Channel: How They Profit (@howtheyprofithq).
+File: `HTP06_MASTER_v7.mp4` (1920x1080, 4:19, George, garage bed). Channel: How They Profit (@howtheyprofithq).
 NOT uploaded. Before upload: the user's go-ahead, (critic gate: CRITIC_v6.md said UPLOAD after edits; v7 = those edits plus two re-voiced lines).
 
 ## Title (researched 6 Oct: RESEARCH_TITLE_THUMB.md)
@@ -33,12 +33,12 @@ to show what Visa charges, what it hands back, and why about half of its net rev
 Figures are for Visa's fiscal 2025 (year to 30 September 2025).
 
 0:00 One second
-0:26 Four parties
-1:00 The fee it doesn't keep
-1:31 Three meters
-2:16 The money it hands back
-2:43 Half
-3:26 The rulebook
+0:28 Four parties
+1:02 The fee it doesn't keep
+1:33 Three meters
+2:18 The money it hands back
+2:45 Half
+3:28 The rulebook
 
 Sources
 - Visa Inc., Fiscal Fourth Quarter and Full-Year 2025 Results (Form 8-K, Exhibit 99.1, 28 October 2025),

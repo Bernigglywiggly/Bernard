@@ -57,7 +57,7 @@ NOT uploaded yet:
 - `lab/curvelf/lf01_escape/shorts/short_escape.mp4` (index 5 of `channel/uploads_newlook.json`, due 13 Oct 12:00Z): READY. YouTube refused on 8 Oct ~19:00 UK: daily upload cap on The Curve. Retry after ~19:30 UK on 9 Oct.
 - `lab/curvelf/lf03_held/LF03_FLOW_v4.mp4` (index 8, due 16 Oct 16:00Z): two music dips of about 1 s near 7:24 and 8:02 (12-15 dB). User was asked to listen and say "fine"; no answer yet. Fix in `lab/curvelf/mix_flow.py` `steady()` or upload as is with his OK.
 - Thumbnails (`lab/curvelf/<film>/out/thumbflow_a.jpg`): YouTube returns forbidden until the user phone-verifies each channel at youtube.com/verify. Then: `youtube_upload.py zapier-thumb VIDEO_ID file` and the same two-step send.
-- How They Profit 06 Visa film (`lab/ch2/ep06/HTP06_MASTER_v7.mp4`, sheet `lab/ch2/ep06/POST.md`): finished, never uploaded; user never answered "upload now or hold for late-October figures".
+- How They Profit 06 Visa film UPLOADED 11 Oct (user: "do whatever needs done"): id Lnb7eAGzNEA, public Wed 14 Oct 16:00Z, thumbnail D set; critic v7 = UPLOAD. Visa reports fiscal 2026 on 27 Oct: after that the "last year" figures are stale (pin a correction comment then).
 Lustig correction: APPLIED 8 Oct (film fvCbFDHik1s, Capone Short r1l_L9kkTkk, comment posted). User must PIN the comment by hand.
 
 ## 3. How to upload (Zapier is on a paid plan since 8 Oct and works)

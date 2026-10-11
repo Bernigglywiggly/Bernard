@@ -382,5 +382,28 @@
   "thumbnail": "../lab/maps/hormuz/out/thumb_8ships.jpg",
   "playlist_name": "Every film",
   "pinned": "If Hormuz reopened tomorrow, which of the three signals would move first? Every source is in the description."
+ },
+ {
+  "file": "../lab/curvelf/sh_steve/shorts/short_steve.mp4",
+  "title": "How Minecraft's Steve Got Into GTA 5",
+  "description": "That viral clip of Minecraft's Steve walking around GTA 5 isn't AI hacking or dreaming up a game. It's two unmodified games running side by side on one PC, with a bridge passing the camera, the ground and the picture between them every frame. An AI coding agent (Claude Code) wrote that bridge in about two days, with one person directing it. To try it, you need both games, a Windows PC, GTA V story mode only, and a build from source.\n\nSources:\nuniversal-modder (MIT), GitHub README: https://github.com/rehan-remade/universal-modder\nField note \"minecraft-passthrough\", 30 Sep 2026: https://github.com/rehan-remade/universal-modder/blob/main/knowledge/games/gta-v/minecraft-passthrough.md\nVGTimes, how the AI game mash-ups work: https://vgtimes.com/articles/169886-how-ai-game-mashups-work.html\nGamingBible, 7 Oct 2026: https://www.gamingbible.com/news/gta-5-minecraft-mod-does-impossible-124923-20261007\n\nDisclosure: the mod was built with Claude Code, and The Curve is also made with Claude.\nNot affiliated with or endorsed by Mojang, Microsoft, Rockstar Games or Take-Two. Minecraft and Grand Theft Auto are trademarks of their owners. All visuals are original diagrams drawn for this Short; no game footage is shown.\n\n#Minecraft #GTA5 #AI #ClaudeCode #Shorts",
+  "tags": [
+   "minecraft",
+   "gta 5",
+   "gta v",
+   "steve",
+   "ai",
+   "claude code",
+   "mods",
+   "universal modder",
+   "the curve",
+   "shorts"
+  ],
+  "channel": "curve",
+  "publish_at": "2026-10-12T12:00:00Z",
+  "category": 27,
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short"
  }
 ]

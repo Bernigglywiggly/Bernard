@@ -40,7 +40,8 @@ MOTIONS = {
              "camera, candid",
     "sip": "she lifts the cup, takes a small sip, lowers it and smiles at the camera, natural pace",
 }
-KEEP = ("Keep her face, eye colour, freckles, mole and hair exactly as in the image. Realistic human motion, "
+KEEP = ("Keep her face, age, eye colour, any skin marks and hair (colour, streaks, parting) exactly as in the image. "
+        "Realistic human motion, "
         "natural skin, no morphing, no face change, no extra fingers, stable background.")
 NEG = "morphing face, identity change, distorted hands, extra fingers, warped jewellery, flicker, cartoon, CGI"
 

@@ -1,0 +1,30 @@
+{
+  "name": "test_ava",
+  "note": "PLACEHOLDER TEST CHARACTER for pipeline validation only. Invented person; not based on any real individual. Content is labelled AI.",
+  "age": 27,
+  "ethnicity_look": "Mediterranean, light olive complexion",
+  "face": {
+    "shape": "oval with a softly defined jaw and high cheekbones",
+    "eyes": "hazel-green almond-shaped",
+    "brows": "medium-thick dark brown brows with a soft natural arch",
+    "nose": "straight nose with a slightly rounded tip",
+    "lips": "medium-full lips, defined cupid's bow, natural rose colour",
+    "skin": "light olive skin with warm undertone"
+  },
+  "hair": {
+    "colour": "dark chestnut brown",
+    "length": "shoulder-blade length",
+    "style": "loose soft waves with a centre parting"
+  },
+  "marks": [
+    {"name": "mole", "description": "one small dark-brown beauty mole", "placement": "on her left cheekbone, about 2 cm below the outer corner of her left eye (viewer's right)"},
+    {"name": "freckles", "description": "a light dusting of small freckles", "placement": "across the bridge of her nose and upper cheeks"},
+    {"name": "tattoo", "description": "a small fine-line black crescent-moon tattoo about 2 cm tall", "placement": "on the inside of her right wrist"}
+  ],
+  "body": {
+    "height": "about 170 cm tall",
+    "build": "slim athletic build, toned arms, natural proportions"
+  },
+  "signature_style": "minimal neutral-tone outfits, thin gold hoop earrings, a fine gold chain necklace",
+  "lora": {"trigger_word": "av4test", "path": null}
+}

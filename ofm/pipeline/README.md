@@ -1,6 +1,6 @@
 # Consistent-character pipeline (WaveSpeed)
 
-SFW promo content for a **disclosed AI persona**: same invented adult woman (25-30) in every photo and Reel,
+SFW promo content for a **disclosed AI persona**: same invented adult woman (25-45) in every photo and Reel,
 realistic phone/35mm look, posted with the platforms' AI labels. Model choices and prices: `MODELS.md`.
 
 ## Your part (only you can do this)
@@ -14,7 +14,7 @@ realistic phone/35mm look, posted with the platforms' AI labels. Model choices a
 ## The flow
 
 ```
-characters/<name>.json  (fixed traits: face, eyes, hair, marks with exact placement, build, age 25-30)
+characters/<name>.json  (fixed traits: face, eyes, hair, marks with exact placement, build, age 25-45)
       │
       ▼  character.py master        anchor portrait + front / 3-4 L / 3-4 R / profile / full body
       ▼  qc.py                      face-embedding score vs the anchor, contact sheet, CHECKLIST.md
@@ -52,7 +52,7 @@ Motion presets: `hair`, `turn`, `walk`, `laugh`, `sip`, or any free text.
 ## Safety rules built into the code
 
 - SFW only: nude / explicit / lingerie / see-through terms are refused before any call.
-- Clearly adult: bible age must be 25-30; teen / schoolgirl / petite-young / youthful etc. are refused.
+- Clearly adult: bible age must be 25-45; teen / schoolgirl / petite-young / youthful etc. are refused.
 - Invented person only: celebrity / lookalike / resembling terms are refused; no real photo is ever uploaded.
 - WaveSpeed's own policy bans nudity on every model anyway (`MODELS.md` §2).
 - Posts carry the AI label on every platform; bios say AI (Fanvue rule, `FANVUE_PLAN_8OCT.md`).

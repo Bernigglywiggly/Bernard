@@ -37,7 +37,7 @@ def lint(text: str, where: str = "prompt") -> None:
     hits = sorted({m.group(0) for r in _BANNED_RE for m in [r.search(text)] if m})
     if hits:
         raise SystemExit(f"[safety] refused {where}: banned term(s) {hits}. "
-                         "SFW only, clearly adult (25-30), invented person only.")
+                         "SFW only, clearly adult (25-45), invented person only.")
 
 
 # ---------------------------------------------------------------- character bible
@@ -46,8 +46,8 @@ def load_bible(name: str) -> dict:
     p = HERE / "characters" / f"{name}.json"
     bible = json.loads(p.read_text())
     age = int(bible.get("age", 0))
-    if not 25 <= age <= 30:
-        raise SystemExit(f"[safety] bible age must be 25-30 (got {age}).")
+    if not 25 <= age <= 45:
+        raise SystemExit(f"[safety] bible age must be 25-45 (got {age}).")
     lint(json.dumps(bible), where=f"bible {p.name}")
     return bible
 
@@ -69,7 +69,7 @@ def marks_checklist(b: dict) -> list[str]:
     items = [f"Eye colour: {b['face']['eyes']}", f"Hair: {b['hair']['colour']}, {b['hair']['length']}"]
     items += [f"{mk['name']}: {mk['description']} {mk['placement']}" for mk in b["marks"]]
     items.append(f"Build: {b['body']['build']}")
-    items.append("Reads clearly as an adult woman of 25-30 (no youthful look)")
+    items.append(f"Reads clearly as an adult woman of about {b['age']} (no youthful look; reject if she reads under {int(b['age']) - 5})")
     items.append("Hands: five fingers each, no fused/extra fingers; jewellery not warped; no garbled text")
     return items
 

@@ -1,0 +1,213 @@
+# a1 photo shot list: photos P01-P20 of BACKLOG_A.md = the LAUNCH SET photos (launch target 19 Oct 2026).
+# SFW, fully clothed, AI label on every post. Instagram captions never point to a link (link-free 14 days).
+# Identity: the bible states about 40, fine laugh lines, natural skin texture, silver streak at the front.
+#   Generators pull faces younger: reject any image that reads under 35 at QC.
+# Fields read by shoot.py: id, scene, outfit, pose, lighting, camera, mood, look (phone|35mm|studio), aspect.
+# Extra field `caption` is ignored by shoot.py (it is still safety-linted) and is the post caption.
+# The silver streak is in the character bible marks, so it is in every prompt. Never cover it: no hats, no hoods up.
+# No real brands, logos, readable labels or named games/shows in any scene.
+#
+#   python shoot.py --char a1 shots/a1_photos.yaml --dry-run          # $0, prints requests
+#   python shoot.py --char a1 shots/a1_photos.yaml --variants 2       # ~ $1.08 for 40 images (seedream flash)
+#   python qc.py --char a1 out/a1/shoots/a1_photos --approve-to out/a1/approved
+shots:
+  - id: p01_friday_sofa
+    scene: stylish London flat living room, deep green velvet sofa, warm table lamp, bookshelves and plants behind, glass of red wine on a side table
+    outfit: black fine-knit midi dress with long sleeves, gold hoop earrings
+    pose: curled up on the sofa with legs tucked to one side, holding the wine glass by the stem, confident closed-mouth half-smile at the camera
+    lighting: warm tungsten lamp light with soft shadows, evening
+    camera: friend's phone from the armchair opposite, eye level, slightly off-centre
+    mood: Friday night calm, unbothered
+    look: phone
+    aspect: "4:5"
+    caption: "Friday, sorted."
+  - id: p02_ragu_counter
+    scene: warm compact London kitchen, wooden worktop, a heavy pot simmering on the hob, garlic and tomatoes on a board, open shelves with jars
+    outfit: black ribbed turtleneck jumper, high-waisted charcoal tailored trousers, gold hoop earrings
+    pose: leaning back against the worktop holding a wooden spoon, head tilted, half-smile at the camera
+    lighting: warm under-cabinet light plus soft window light from the left
+    camera: phone at chest height from across the kitchen
+    mood: in charge of dinner
+    look: phone
+    aspect: "4:5"
+    caption: "Ragu's on. Nobody touch it."
+  - id: p03_window_dusk
+    scene: wide window seat with cushions overlooking generic London rooftops and chimney pots at dusk, a mug on the sill
+    outfit: oversized cream cable-knit jumper, dark straight jeans, gold hoop earrings
+    pose: sitting sideways on the window seat hugging her knees, turning her face from the window to the camera
+    lighting: blue dusk from the window mixed with a warm lamp behind the camera
+    camera: 35mm at seated eye level, candid framing
+    mood: quiet hour, reflective
+    look: 35mm
+    aspect: "4:5"
+    caption: "Rooftops and a quiet hour."
+  - id: p04_hall_coat
+    scene: narrow flat hallway with a round brass-framed mirror, coat hooks and a small console table with keys
+    outfit: camel wool knee-length coat over a black knit dress, gold hoop earrings
+    pose: standing at the mirror adjusting one earring, eyes meeting the camera in the mirror reflection
+    lighting: soft warm hallway pendant light
+    camera: phone from the end of the hallway, slight wide-angle
+    mood: plan made, heading out
+    look: phone
+    aspect: "4:5"
+    caption: "Coat on. Plan made."
+  - id: p05_candle_glass
+    scene: dark wooden dining table with two lit candles, a bottle with a plain unlabelled dark glass, bread on a board
+    outfit: deep burgundy satin long-sleeve blouse, black tailored trousers, gold hoop earrings
+    pose: seated, gently swirling red wine in a glass, looking at the camera over the rim with a knowing half-smile
+    lighting: candlelight with warm falloff, dark background
+    camera: 35mm across the table, shallow depth of field
+    mood: intimate dinner, knowing
+    look: 35mm
+    aspect: "4:5"
+    caption: "Ask me what's in the glass."
+  - id: p06_coop_night
+    scene: living room at night, TV glow off-frame, sofa with a knitted throw, a plain black game controller in her hands, wine glass on the side table
+    outfit: soft grey cashmere crew-neck jumper, black straight trousers, gold hoop earrings
+    pose: sitting forward on the sofa holding the controller, laughing mid-game and glancing at the camera
+    lighting: cool blue screen glow on her face mixed with a warm lamp
+    camera: phone from the side of the sofa, slightly low angle
+    mood: competitive and having fun
+    look: phone
+    aspect: "4:5"
+    caption: "Co-op night. I carry."
+  - id: p07_record_shelf
+    scene: low wooden record shelf full of vinyl with plain unprinted sleeves, a turntable on top, plants and a lamp
+    outfit: black wrap midi dress with three-quarter sleeves, gold hoop earrings
+    pose: crouched elegantly at the shelf flicking through records, looking up at the camera
+    lighting: warm lamp light, soft evening shadows
+    camera: phone from standing height looking slightly down
+    mood: choosing the soundtrack
+    look: phone
+    aspect: "4:5"
+    caption: "Pick one. I'll pour."
+  - id: p08_balcony_night
+    scene: small flat balcony with warm string lights and potted olive tree, blurred city lights beyond
+    outfit: black leather jacket over a black knit midi dress, gold hoop earrings
+    pose: leaning on the railing with a glass of red wine, looking back over her shoulder at the camera
+    lighting: warm string lights and cool city night ambience
+    camera: 35mm from the balcony door, candid
+    mood: night air, relaxed confidence
+    look: 35mm
+    aspect: "4:5"
+    caption: "Night air, red glass."
+  - id: p09_basil_board
+    scene: kitchen worktop with a chopping board of fresh basil, garlic cloves and a knife, pot steaming behind
+    outfit: white linen shirt with sleeves rolled to the elbow, dark jeans, black linen apron, gold hoop earrings
+    pose: chopping basil, looking up at the camera mid-laugh
+    lighting: soft daylight from a window on the right
+    camera: phone at worktop height, close medium shot
+    mood: easy Sunday cooking
+    look: phone
+    aspect: "4:5"
+    caption: "Basil, garlic, patience."
+  - id: p10_mirror_dress
+    scene: bedroom with a tall floor-standing mirror, linen bedding and a chair with a folded blanket in the background
+    outfit: black fitted knit midi dress with a square neckline and long sleeves, gold hoop earrings, thin gold bracelet
+    pose: mirror selfie holding a plain black phone with no logo at chest height, one hip slightly turned, half-smile
+    lighting: warm evening lamp light
+    camera: mirror selfie on the phone, natural framing
+    mood: deciding between dinner out and the sofa
+    look: phone
+    aspect: "4:5"
+    caption: "Dinner or sofa? Same dress."
+  - id: p11_armchair_book
+    scene: reading corner with a worn leather armchair, floor lamp and packed bookshelves, glass of red on a stack of books
+    outfit: long oatmeal knitted cardigan over a black t-shirt, dark jeans, tortoiseshell reading glasses, gold hoop earrings
+    pose: curled in the armchair with an open book, peering over the reading glasses at the camera
+    lighting: warm floor lamp, cosy evening
+    camera: 35mm from across the room, eye level
+    mood: two chapters, one glass
+    look: 35mm
+    aspect: "4:5"
+    caption: "Two chapters, one glass."
+  - id: p12_streak_portrait
+    scene: plain warm-white wall beside a tall window in her flat
+    outfit: black ribbed turtleneck jumper, gold hoop earrings
+    pose: head-and-shoulders portrait, slight turn to her left so the silver streak falls clearly along the side of her face, confident closed-mouth half-smile
+    lighting: soft side window light, gentle shadow on the far cheek
+    camera: phone portrait at eye level, close crop
+    mood: signature, self-assured
+    look: phone
+    aspect: "4:5"
+    caption: "The streak stays."
+  - id: p13_espresso_morning
+    scene: small round kitchen table by a window with an espresso cup, a newspaper with blurred unreadable text and a bowl of figs
+    outfit: soft grey crew-neck jumper, black trousers, gold hoop earrings
+    pose: seated with the espresso cup at her lips, eyes smiling at the camera
+    lighting: bright soft morning daylight
+    camera: phone across the table, eye level
+    mood: Sunday starts slow
+    look: phone
+    aspect: "4:5"
+    caption: "Sunday starts slow."
+  - id: p14_episode_four
+    scene: living room at night, sofa with a chunky blanket, bowl of popcorn, TV glow off-frame
+    outfit: matching oatmeal knit lounge set, long sleeves and wide-leg trousers, gold hoop earrings
+    pose: wrapped in the blanket on the sofa, popcorn in hand, side-eye to the camera with a half-smile
+    lighting: cool screen glow and one warm lamp
+    camera: phone from the end of the sofa
+    mood: do not disturb, one more episode
+    look: phone
+    aspect: "4:5"
+    caption: "Episode four. Don't text."
+  - id: p15_bottle_choice
+    scene: kitchen wall wine rack with dark unlabelled bottles, wooden shelves and warm light
+    outfit: emerald-green fine-knit midi dress, gold hoop earrings
+    pose: pulling one bottle halfway out of the rack and glancing at the camera with raised eyebrows
+    lighting: warm directional light from above
+    camera: 35mm at shoulder height, slight angle
+    mood: making a considered choice
+    look: 35mm
+    aspect: "4:5"
+    caption: "This one, I think."
+  - id: p16_front_door
+    scene: flat front door with a brass handle, coat rack and a small mirror, evening
+    outfit: black long-sleeve wide-leg jumpsuit with a belt, small black shoulder bag, gold hoop earrings
+    pose: hand on the door handle, looking back over her shoulder at the camera with a teasing half-smile
+    lighting: warm hallway light
+    camera: phone from inside the hallway, waist height
+    mood: back by midnight, probably
+    look: phone
+    aspect: "4:5"
+    caption: "Back by midnight. Probably."
+  - id: p17_taste_spoon
+    scene: hob with a pan of tomato sauce, steam rising, kitchen shelves with jars behind
+    outfit: black knit midi dress with a dark green cotton apron over it, gold hoop earrings
+    pose: tasting sauce from a wooden spoon with a hand cupped underneath, eyes to the camera, eyebrows up
+    lighting: warm kitchen light and steam glow
+    camera: phone close medium shot at hob height
+    mood: needs salt, always
+    look: phone
+    aspect: "4:5"
+    caption: "Needs salt. Always."
+  - id: p18_desk_setup
+    scene: tidy desk gaming setup in the corner of the living room, monitor glow with an abstract unreadable screen, plain black headset, plant and a wine glass on a coaster
+    outfit: oversized black knit jumper, black trousers, gold hoop earrings, headset resting around her neck
+    pose: swivelled round in the desk chair facing the camera, one arm on the chair back, confident half-smile
+    lighting: cool monitor glow from behind and a warm desk lamp on her face
+    camera: phone from standing height, slight downward angle
+    mood: headset on, mercy off
+    look: phone
+    aspect: "4:5"
+    caption: "Headset on. Mercy off."
+  - id: p19_herb_sill
+    scene: kitchen windowsill with pots of basil, rosemary and thyme, small watering can
+    outfit: cream fine-knit jumper, dark jeans, gold hoop earrings
+    pose: watering the herbs, turning to the camera with a proud little smile
+    lighting: soft morning window light, backlit leaves
+    camera: phone from the side, eye level
+    mood: small domestic win
+    look: phone
+    aspect: "4:5"
+    caption: "Herbs alive. Personal best."
+  - id: p20_two_glasses
+    scene: dining table with two poured glasses of red wine, candle, a board of cheese and grapes
+    outfit: black fine-knit long-sleeve midi dress, gold hoop earrings
+    pose: seated with her chin resting on one hand, the second glass pushed slightly towards the camera, amused half-smile
+    lighting: warm candlelight and a dim lamp
+    camera: 35mm across the table, viewer's seat point of view
+    mood: playful invitation to talk
+    look: 35mm
+    aspect: "4:5"
+    caption: "Second glass is for whoever's brave."

@@ -1,5 +1,5 @@
 # a1 photo shot list: photos P01-P20 of BACKLOG_A.md = the LAUNCH SET photos (launch target 19 Oct 2026).
-# SFW, fully clothed, AI label on every post. Instagram captions never point to a link (link-free 14 days).
+# SFW, fully clothed, AI label on every post. Instagram captions never point to a link (link-free for 30 days, to Wed 18 Nov).
 # Identity: the bible states about 40, fine laugh lines, natural skin texture, silver streak at the front.
 #   Generators pull faces younger: reject any image that reads under 35 at QC.
 # Fields read by shoot.py: id, scene, outfit, pose, lighting, camera, mood, look (phone|35mm|studio), aspect.
@@ -22,7 +22,7 @@ shots:
     aspect: "4:5"
     caption: "Friday, sorted."
   - id: p02_ragu_counter
-    scene: warm compact London kitchen, wooden worktop, a heavy pot simmering on the hob, garlic and tomatoes on a board, open shelves with jars
+    scene: warm compact London kitchen, dark green cabinets, wooden worktop, a heavy pot simmering on the hob, garlic and tomatoes on a board, open shelves with jars
     outfit: black ribbed turtleneck jumper, high-waisted charcoal tailored trousers, gold hoop earrings
     pose: leaning back against the worktop holding a wooden spoon, head tilted, half-smile at the camera
     lighting: warm under-cabinet light plus soft window light from the left
@@ -62,7 +62,7 @@ shots:
     aspect: "4:5"
     caption: "Ask me what's in the glass."
   - id: p06_coop_night
-    scene: living room at night, TV glow off-frame, sofa with a knitted throw, a plain black game controller in her hands, wine glass on the side table
+    scene: living room at night, TV glow off-frame, deep green velvet sofa with a knitted throw, a plain black game controller in her hands, wine glass on the side table
     outfit: soft grey cashmere crew-neck jumper, black straight trousers, gold hoop earrings
     pose: sitting forward on the sofa holding the controller, laughing mid-game and glancing at the camera
     lighting: cool blue screen glow on her face mixed with a warm lamp
@@ -92,7 +92,7 @@ shots:
     aspect: "4:5"
     caption: "Night air, red glass."
   - id: p09_basil_board
-    scene: kitchen worktop with a chopping board of fresh basil, garlic cloves and a knife, pot steaming behind
+    scene: kitchen worktop with dark green cabinets, a chopping board of fresh basil, garlic cloves and a knife, pot steaming behind
     outfit: white linen shirt with sleeves rolled to the elbow, dark jeans, black linen apron, gold hoop earrings
     pose: chopping basil, looking up at the camera mid-laugh
     lighting: soft daylight from a window on the right
@@ -142,7 +142,7 @@ shots:
     aspect: "4:5"
     caption: "Sunday starts slow."
   - id: p14_episode_four
-    scene: living room at night, sofa with a chunky blanket, bowl of popcorn, TV glow off-frame
+    scene: living room at night, deep green velvet sofa with a chunky blanket, bowl of popcorn, TV glow off-frame
     outfit: matching oatmeal knit lounge set, long sleeves and wide-leg trousers, gold hoop earrings
     pose: wrapped in the blanket on the sofa, popcorn in hand, side-eye to the camera with a half-smile
     lighting: cool screen glow and one warm lamp
@@ -172,7 +172,7 @@ shots:
     aspect: "4:5"
     caption: "Back by midnight. Probably."
   - id: p17_taste_spoon
-    scene: hob with a pan of tomato sauce, steam rising, kitchen shelves with jars behind
+    scene: hob with a pan of tomato sauce, steam rising, dark green cabinets and shelves with jars behind
     outfit: black knit midi dress with a dark green cotton apron over it, gold hoop earrings
     pose: tasting sauce from a wooden spoon with a hand cupped underneath, eyes to the camera, eyebrows up
     lighting: warm kitchen light and steam glow
@@ -194,7 +194,7 @@ shots:
   - id: p19_herb_sill
     scene: kitchen windowsill with pots of basil, rosemary and thyme, small watering can
     outfit: cream fine-knit jumper, dark jeans, gold hoop earrings
-    pose: watering the herbs, turning to the camera with a proud little smile
+    pose: watering the herbs, turning to the camera with a proud half-smile
     lighting: soft morning window light, backlit leaves
     camera: phone from the side, eye level
     mood: small domestic win

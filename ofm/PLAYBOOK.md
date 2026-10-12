@@ -138,7 +138,7 @@ flowchart LR
 | Platform | Test phase: 19 Oct to 1 Nov | Scale phase: 2 Nov to 3 Dec |
 |---|---|---|
 | Instagram Reels | 1 a day (2 at weekends), 3 POV formats rotated | 1 to 2 a day; winning format ≥ 4 a week; retest winners as Trial Reels |
-| Instagram stories | 3 a day | 3 a day; still no link (stories link from 18 Nov) |
+| Instagram stories | 3 a day | 3 a day; still no link (story link from Thu 19 Nov) |
 | X | 2 to 3 posts a day; link reply on 1 in 3 | 3 a day |
 | Reddit | 1 post a day across AI-allowed subs; never repeat a sub inside 3 days | 1 to 2 a day in the subs that brought subs |
 | Threads | 1 to 2 a day | 2 a day |

@@ -11,13 +11,13 @@
 #                     --duration <reel.duration> --caption "<reel.hook>"          # $0.21 per 5 s, $0.42 per 10 s
 #   reel.hook is burned in at 68% height by reels.py: max 26 characters so it fits one line at 1080 px.
 #   reel.beats are timed text overlays added in the Instagram / TikTok editor (not burned in).
-#   reel.caption is the post caption. reel.cta_ig never points to a link (Instagram is link-free for the first 14 days). X carries the link, in a reply.
+#   reel.caption is the post caption. reel.cta_ig never points to a link (Instagram is link-free for the first 30 days, to Wed 18 Nov). X carries the link, in a reply.
 #   Audio: silent track; pick a trending sound from the platform library when posting.
 # Identity: the bible states about 40, fine laugh lines, natural skin texture, silver streak at the front.
 #   Each pose/motion repeats the streak; reject any still that reads under 35 at QC.
 shots:
   - id: r01_cooking_for_you
-    scene: warm compact London kitchen, pan of garlic and olive oil on the hob, two wine glasses and an unlabelled bottle on the wooden worktop
+    scene: warm compact London kitchen, dark green cabinets, pan of garlic and olive oil on the hob, two wine glasses and an unlabelled bottle on the wooden worktop
     outfit: black knit midi dress with a dark green cotton apron, gold hoop earrings
     pose: stirring the pan with a wooden spoon and looking up at the camera as if you just walked in, warm half-smile, silver streak at the front of her hair clearly visible
     lighting: warm kitchen light with steam glow
@@ -31,7 +31,7 @@ shots:
       hook: "POV: I'm cooking for you"
       beats: ["Garlic in. Phone away.", "Red's breathing. So should you.", "You're on washing up."]
       caption: "You said you don't eat pasta. We'll see. 🍝"
-      cta_ig: "Follow for Sunday's recipe"
+      cta_ig: "Follow for next week's recipe"
       motion: "she stirs the pan, looks up into the camera and smiles warmly, then tilts her head towards the wine glasses, steam rising, gentle handheld movement, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r02_friday_9pm
@@ -53,7 +53,7 @@ shots:
       motion: "she settles back into the sofa, takes a slow sip of wine and looks into the camera with a content half-smile, candles flicker, very slow push-in, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r03_player_two
-    scene: living room at night, sofa with a knitted throw, TV glow off-frame, two plain black game controllers, wine glass and a bowl of crisps on the side table
+    scene: living room at night, deep green velvet sofa with a knitted throw, TV glow off-frame, two plain black game controllers, wine glass and a bowl of crisps on the side table
     outfit: soft grey cashmere jumper, black straight trousers, gold hoop earrings
     pose: sitting on the sofa holding one controller and holding the second one out towards the camera, eyebrows raised, silver streak at the front of her hair clearly visible
     lighting: cool screen glow mixed with a warm lamp
@@ -73,7 +73,7 @@ shots:
   - id: r04_sunday_coffee
     scene: small round kitchen table by a bright window, two espresso cups, a bowl of figs, a newspaper with blurred unreadable text
     outfit: oversized cream cable-knit jumper, dark jeans, gold hoop earrings
-    pose: seated with an espresso cup in both hands, sliding the second cup across the table towards the camera, sleepy warm smile, silver streak at the front of her hair clearly visible
+    pose: seated with an espresso cup in both hands, the second cup already set on the table in front of the camera, sleepy warm smile, silver streak at the front of her hair clearly visible
     lighting: bright soft morning daylight
     camera: point-of-view from the opposite chair, phone at eye level, vertical framing
     mood: slow Sunday morning, easy company
@@ -82,16 +82,16 @@ shots:
     reel:
       concept: R04
       format: with-her POV (morning coffee)
-      hook: "POV: slow Sunday coffee"
+      hook: "POV: I made you a coffee"
       beats: ["No plans before noon.", "Yours is the one on the left.", "Tell me one good thing."]
       caption: "Coffee's still hot. Tell me one good thing from your week."
-      cta_ig: "Follow for slow Sundays"
-      motion: "she slides the second espresso cup towards the camera, wraps both hands around her own cup, takes a sip and smiles softly, morning light, gentle handheld, the silver streak at the front of her hair stays visible"
+      cta_ig: "Comment one good thing"
+      motion: "she glances at the cup in front of the camera, lifts her own cup with both hands, takes a slow sip and smiles softly, morning light, gentle handheld, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r05_five_more_minutes
     scene: bedroom with a tall floor-standing mirror and a small dressing table with a jewellery dish, evening
     outfit: black fitted knit midi dress with long sleeves, camel coat over the chair, gold hoop earrings
-    pose: at the mirror putting in the second gold hoop, catching the camera's eye in the mirror with a playful look, silver streak at the front of her hair clearly visible
+    pose: at the mirror touching one gold hoop earring, catching the camera's eye in the mirror with a playful look, silver streak at the front of her hair clearly visible
     lighting: warm evening lamp light
     camera: point-of-view from the bedroom doorway, phone at eye level, vertical framing
     mood: getting ready to go out, teasing about being late
@@ -103,8 +103,8 @@ shots:
       hook: "POV: 'five more minutes'"
       beats: ["Earrings: done.", "Lipstick: done.", "Coat: you're holding it.", "Okay. Twelve more minutes."]
       caption: "I said five minutes. I meant it emotionally. 🖤"
-      cta_ig: "Follow for part 2: the wine bar"
-      motion: "she fastens the gold hoop earring, meets the camera's eye in the mirror, holds up one finger as if to say one more minute and smiles, natural pace, handheld, the silver streak at the front of her hair stays visible"
+      cta_ig: "Send it to someone always 'nearly ready'"
+      motion: "she gives her gold hoop a last touch, meets the camera's eye in the mirror, holds up one finger as if to say one more minute and smiles, natural pace, handheld, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r06_are_you_real
     scene: window seat at night with city lights behind the glass, cushions, glass of red on the sill
@@ -122,12 +122,12 @@ shots:
       beats: ["No. I'm AI. It says so on my profile.", "Made, not born.", "The company's still good.", "Ask me anything. I answer in Reels."]
       caption: "AI-generated character, not a real person. The company's still good. Ask me anything below 😏"
       cta_ig: "Comment a question, I'll answer in a Reel"
-      motion: "she reads something on her phone, looks up into the camera, laughs softly and shrugs, then puts the phone down, natural pace, handheld, the silver streak at the front of her hair stays visible"
+      motion: "she reads something on her phone, looks up into the camera, laughs softly and shrugs, natural pace, handheld, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r07_date_night_in
     scene: dining table set for two with candles, a board of bread and olives, pasta in a shallow bowl, unlabelled bottle of red, warm flat behind
     outfit: deep burgundy satin long-sleeve blouse, black tailored trousers, gold hoop earrings
-    pose: seated across the table pouring red wine into the glass nearest the camera, looking up with a warm knowing half-smile, silver streak at the front of her hair clearly visible
+    pose: seated across the table holding her glass of red, the glass nearest the camera already poured, looking up with a warm knowing half-smile, silver streak at the front of her hair clearly visible
     lighting: candlelight, dark warm background
     camera: point-of-view from the opposite seat, phone at seated eye level, vertical framing
     mood: date night at home, unhurried
@@ -136,14 +136,14 @@ shots:
     reel:
       concept: R07
       format: with-her POV (date night in)
-      hook: "POV: date night in"
+      hook: "POV: date night at mine"
       beats: ["Table's set.", "Phones in the fruit bowl.", "Tell me something you've never told anyone."]
       caption: "Phones in the fruit bowl. Tell me something good. 🍷"
-      cta_ig: "Follow, dessert is next week"
-      motion: "she pours wine into the glass nearest the camera, sets the bottle down, looks up into the camera and smiles, candle flames flicker, slow push-in, the silver streak at the front of her hair stays visible"
+      cta_ig: "Follow for next Friday"
+      motion: "she lifts her glass slightly towards the camera as if to say cheers, looks into the camera and smiles, candle flames flicker, slow push-in, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r08_coop_excuses
-    scene: living room at night, sofa with a knitted throw, TV glow off-frame, plain black game controller, wine glass on the side table
+    scene: living room at night, deep green velvet sofa with a knitted throw, TV glow off-frame, plain black game controller, wine glass on the side table
     outfit: soft grey cashmere jumper, black straight trousers, gold hoop earrings
     pose: sitting on the sofa holding the controller, glancing sideways at the camera with a sceptical look, silver streak at the front of her hair clearly visible
     lighting: cool screen glow mixed with a warm lamp
@@ -154,16 +154,16 @@ shots:
     reel:
       concept: R08
       format: gaming night together
-      hook: "Rating his co-op excuses"
+      hook: "Rating your co-op excuses"
       beats: ["'Lag.' 2/10", "'Controller died.' 4/10, creative", "'I was covering you.' You were in a bush.", "'Sorry, my fault.' 10/10"]
       caption: "The only excuse I accept is an honest one. Drop yours below. 🎮"
       cta_ig: "Comment yours, best one gets a reply Reel"
       motion: "she plays with the controller, then pauses, turns her head to the camera with a sceptical look and breaks into a laugh, screen light flickers softly, the silver streak at the front of her hair stays visible"
       duration: 10
   - id: r09_taste_this
-    scene: kitchen island with three glasses of red wine in a row, an unlabelled bottle, a small board of cheese
+    scene: kitchen island in front of dark green cabinets, three glasses of red wine in a row, an unlabelled bottle, a small board of cheese
     outfit: emerald-green fine-knit midi dress, gold hoop earrings
-    pose: leaning on the island and pushing the middle glass towards the camera, curious expression, silver streak at the front of her hair clearly visible
+    pose: leaning on the island with one finger resting beside the middle glass, curious expression, silver streak at the front of her hair clearly visible
     lighting: warm pendant light over the island
     camera: point-of-view from across the island, phone at eye level, vertical framing
     mood: playful tasting at home
@@ -176,12 +176,12 @@ shots:
       beats: ["One: cherry, cheap, cheerful.", "Two: smoky, serious.", "Three: you'll pretend to like it.", "Which one are you?"]
       caption: "Be honest. One, two or three? There is a wrong answer. 😏"
       cta_ig: "Comment 1, 2 or 3"
-      motion: "she slides the middle glass towards the camera, watches with a curious raised eyebrow, then laughs and takes a sip from her own glass, natural pace, handheld, the silver streak at the front of her hair stays visible"
+      motion: "she taps the table beside the middle glass, raises a curious eyebrow at the camera, then laughs, natural pace, handheld, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r10_dinner_or_sofa
     scene: bedroom with a tall floor-standing mirror, linen bedding, a chair with a folded blanket
     outfit: black fitted knit midi dress with a square neckline and long sleeves, gold hoop earrings, thin gold bracelet
-    pose: standing in front of the mirror, turning slowly to check the dress, then looking at the camera, silver streak at the front of her hair clearly visible
+    pose: standing beside the mirror, shoulders slightly turned to show the dress, looking at the camera, silver streak at the front of her hair clearly visible
     lighting: warm evening lamp light
     camera: phone on a tripod, full-length vertical framing
     mood: playful decision, confident
@@ -194,5 +194,5 @@ shots:
       beats: ["A: wine bar, 8pm.", "B: same dress, sofa, takeaway, you.", "Comment A or B."]
       caption: "Same dress, two Fridays. I know which one I'd pick. 🖤"
       cta_ig: "Comment A or B"
-      motion: "she does a slow half-turn in front of the mirror to show the dress, then faces the camera and raises her eyebrows with a half-smile, natural pace, the silver streak at the front of her hair stays visible"
+      motion: "she shifts her weight and turns her shoulders a little to show the dress, keeping her face to the camera, and raises her eyebrows with a half-smile, natural pace, the silver streak at the front of her hair stays visible"
       duration: 5

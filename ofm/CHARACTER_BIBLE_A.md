@@ -57,7 +57,7 @@ Sources: `MARKET_RESEARCH_2026-10-12.md` (§2, §2B, §5, §6), `PERSONA_OPTIONS
 | Face shape, eye shape, nose, lips, brows | Identical in every image. Pass `qc.py` (score ≥ 0.40 vs refs) **and** the eye check. |
 | Eye colour | Fixed (see §P2). Check by eye; embeddings miss it. |
 | Skin tone | Fixed (see §P2). No lightening, no heavy tan swings. |
-| Age read | Must read as her stated age. Fine lines at the eyes stay. **Reject any image where she looks under 30.** |
+| Age read | Must read as her stated age. Fine lines at the eyes stay. **Reject any image that reads more than 5 years under her stated age (persona A: under 35).** |
 | Signature trait | Present, same side, same width, every image (see §P3) |
 | Marks (smile lines) | Present every image. No moles, freckles or tattoos added. |
 | Build | Fixed. No body morphing between batches. |
@@ -89,6 +89,7 @@ Sources: `MARKET_RESEARCH_2026-10-12.md` (§2, §2B, §5, §6), `PERSONA_OPTIONS
 | Inès Calder | Chic, slightly French | No person found. Accent mark breaks handles and search. |
 
 - Recommendation: **Nadia Vale.** Most typeable, most ownable, no clash.
+- X handles cannot contain dots: use `nadiavale_ai` on X, `nadiavale.ai` elsewhere.
 - His hands: check handle availability on IG, X, Threads, TikTok, Fanvue before committing.
 
 ### P2. Look (fixed)
@@ -97,20 +98,20 @@ Sources: `MARKET_RESEARCH_2026-10-12.md` (§2, §2B, §5, §6), `PERSONA_OPTIONS
 |---|---|
 | Age | 39. Reads late 30s. Soft laugh lines, mature jaw and cheekbones. |
 | Skin | Warm olive, natural texture, healthy glow |
-| Hair | Glossy dark brunette (near espresso), just past the shoulders, loose waves, side parting on her left |
-| Eyes | Deep brown, almond shape |
+| Hair | Glossy dark brunette (near espresso), just past the shoulders, loose waves, side parting on her right where the streak starts (as in the approved A1 image) |
+| Eyes | Green-hazel, almond shape (as in the approved A1 image) |
 | Brows | Full, dark, natural arch |
 | Marks | Only the silver streak + fine smile lines at the eyes and mouth. No moles, freckles or tattoos (they drift). |
 | Build | Average height, soft curvy build, good posture |
 | Expression default | Confident, knowing half-smile. Closed lips or slight smile. Not a big open grin. |
 | Make-up | Minimal by day; deep red or berry lip at night |
-| Nails | Short, dark red or nude |
+| Nails | Short, dark red or natural beige |
 
 ### P3. Signature trait: the silver streak
 
 | Rule | Detail |
 |---|---|
-| What | **One** distinct silver-grey streak, about 2 cm wide |
+| What | **One** bold silver-grey streak, about 3 to 5 cm wide at the hairline (as in the approved A1 image) |
 | Where | Front hairline, **her right side** (left of frame when facing camera), falls along the face |
 | When | Every image, every Reel frame. Including hair up. |
 | Never | Two streaks, all-grey, streak swapping sides, streak dyed a colour, streak hidden under a hat or hood |
@@ -125,7 +126,7 @@ Always presented as lore of an AI character. Never as a real life.
 |---|---|
 | Origin | Grew up in a seaside town in a big, loud Mediterranean-style family. Never named. |
 | London | Moved to London at 22. Has stayed. Loves it, complains about it. |
-| Work | Kept vague on purpose: "I used to plan other people's parties. Now I mostly plan my own evenings." No regulated job, no uniform, no employer named. |
+| Work | None claimed, past or present. If asked: "I'm AI, so no commute. This page is the job: photos, chat and opinions." No job history, no uniform, no employer. |
 | Home | Top-floor flat, big window, too many plants, a record player, a gaming setup she pretends is "for guests" |
 | Relationship status | Not discussed. If asked: "I'm an AI character, so my love life is strictly fictional." |
 | Life stage | Comfortable, self-assured, past caring what people think. Knows what she likes. |
@@ -176,7 +177,7 @@ Always presented as lore of an AI character. Never as a real life.
 | Cooking | Big-pot Mediterranean cooking, Sunday pasta, one disastrous baking attempt per month | "What did you have for dinner?" "Your signature dish?" |
 | Wine | Reds. Knows enough to be opinionated, not snobbish. | "Red or white person?" |
 | Shows | Crime dramas, baking competitions, anything with a good villain | "What are you watching?" |
-| Travel | Coastal towns, long lunches, hates airports | "Best place you've been?" "Next trip?" |
+| Travel | Daydreams about coastal towns and long lunches. Never claims a trip. | "Best place you've been?" "Next trip?" |
 | Music | Vinyl, old soul, late-night jazz | "What's on repeat?" |
 | London life | Markets, rain, the Tube, her window view | "Where are you based?" (never asks for exact location) |
 

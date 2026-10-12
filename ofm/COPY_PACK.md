@@ -14,7 +14,7 @@ Nothing here has been posted. All copy is SFW.
 | AI in every bio | Each bio below contains "AI". Do not trim it to fit. Cut other words first. |
 | SFW in public | Bios and posts describe the character, never sexual content |
 | Link placement | **From launch day (Mon 19 Oct): X (link in a reply under the post) and Reddit (AI-allowed subreddits only) carry the Fanvue link.** Threads bio too. **Instagram: no Fanvue link for 30 days** (link-in-bio and highlights were being flagged in early Oct). TikTok: no adult link at all. |
-| Tracking links | One Fanvue tracking link per placement: `x-bio`, `x-reply`, `reddit-<sub>` (one per subreddit), `threads-bio`, later `ig-story`. Judge each on paying fans, not clicks. Day-14 gate (Mon 26 Oct): 40+ clicks and 1+ paying fan across all links. |
+| Tracking links | One Fanvue tracking link per placement: `x-bio`, `x-reply`, `reddit-<sub>` (one per subreddit), `threads-bio`, later `ig-story`. Judge each on paying fans, not clicks. Plan day-14 gate (Mon 26 Oct = 7 days live; plan day 0 = Mon 12 Oct): 40+ clicks and 1+ paying fan across all links. |
 | 18+ | Link hub (if used) shows an 18+ notice |
 | British spelling | colour, favourite, flat |
 | Who sends | Fanvue AI Messaging may draft. A person reviews anything to a new sub, any offer, anything to the $50+ list. |
@@ -37,7 +37,7 @@ Nothing here has been posted. All copy is SFW.
 
 | Platform | Bio (each says AI) | Link |
 |---|---|---|
-| Instagram | `Nadia · 39 · London 🍷` / `AI-generated character, not a real person.` / `Cosy nights in, good pasta, bad at shooters 🎮` / `More of me on X + Threads: @nadiavale.ai` | **None** (first 30 days) |
+| Instagram | `Nadia · 39 · London 🍷` / `AI-generated character, not a real person.` / `Cosy nights, good pasta, bad at shooters 🎮` / `X @nadiavale_ai · Threads @nadiavale.ai` | **None** (first 30 days) |
 | Threads | `AI character · 39 · London` / `Wine, cooking, cosy games and opinions you didn't ask for 😏` / `18+ page linked ↓` | `threads-bio` tracking link |
 | X | `Nadia 🖤 AI-generated character, not a real person · 18+` / `London flat, red wine, co-op nights, honest advice` / `My page ↓` | `x-bio` tracking link. Plus link in a reply on posts. |
 | TikTok | `AI character · 39 · London 🍷` / `Cosy nights, cooking, co-op games` | **None** |
@@ -51,7 +51,7 @@ Nothing here has been posted. All copy is SFW.
 | Post type | Reply text |
 |---|---|
 | Advice/roast post | `More of me (AI character, 18+) → [x-reply link]` |
-| Photo post | `The rest of tonight's set is on my page (18+, AI) → [x-reply link]` |
+| Photo post | `The full set is on my page (18+, AI) → [x-reply link]` |
 
 - At most 1 in 3 posts gets a link reply. Link everywhere = spam signal.
 
@@ -104,15 +104,15 @@ Now the important bit: what should I call you, and what are you up to tonight?
 - No offer in the welcome message.
 - Free followers get the same message minus "you made it" → "Hey, welcome in".
 
-## 5. First-week messages (Fanvue's Day 1 / 3 / 7 schedule)
+## 5. First-week messages (Fanvue's Day 1 / 3 / 7 schedule, counted from each fan's subscribe date)
 
 | Day | Goal | Template | Sale? |
 |---|---|---|---|
 | **Day 1** | One question. Start a real chat. | `Quick one before I pour another glass: are you more of a cosy-game night or a film night?` | **No** |
 | Day 1 alt | | `Tell me one thing that made today worth it. Small things count.` | No |
-| **Day 3** | Use what they said. Show she remembers. | `You said [their thing]. Did that ever get sorted? I've been wondering 😏` | No |
+| **Day 3** | Use what they said. Show she remembers. | `You said [their thing]. Did that ever get sorted? I keep meaning to ask.` | No |
 | Day 3 alt (no reply yet) | Light nudge, no guilt | `No pressure to reply. Just dropping in. Marlo knocked my wine over, so that's my evening.` | No |
-| **Day 7** | **Modest offer, only if the chat is real** (2+ replies from them) | `I put together a new set this week: [set title], [exact count] photos. It's [price] if you want it. No worries if not, I'm still here for the chat.` | **Yes, $6 to $9 first unlock** |
+| **Day 7** | **Modest offer, only if the chat is real** (2+ replies from them) | `There's a new set up: [set title], [exact count] photos. It's [price] if you want it. No worries if not, I'm still here for the chat.` | **Yes, $6 to $9 first unlock** |
 | Day 7, no real chat | Do not sell. Ask one more question. | `What are you playing this week? I need a recommendation.` | No |
 
 - Reply to every new subscriber within hours. 83% of spend lands in the first 48 hours (research §1).

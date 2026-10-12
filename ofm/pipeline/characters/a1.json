@@ -5,7 +5,7 @@
   "ethnicity_look": "Southern European, warm olive complexion",
   "face": {
     "shape": "softly oval face with defined cheekbones and a gently tapered jaw",
-    "eyes": "warm dark-brown almond-shaped",
+    "eyes": "green-hazel almond-shaped",
     "brows": "full dark-brown brows with a soft natural arch",
     "nose": "straight nose with a slight natural bump at the bridge",
     "lips": "medium-full lips in a muted natural rose colour, usually a confident closed-mouth half-smile",
@@ -14,12 +14,12 @@
   "hair": {
     "colour": "glossy dark brunette, almost espresso brown",
     "length": "just past the shoulders",
-    "style": "loose glossy blow-dried waves with a soft side parting on her left"
+    "style": "loose glossy blow-dried waves with a soft side parting on her right, where the silver streak starts"
   },
   "marks": [
     {
       "name": "silver streak",
-      "description": "one single silver-grey streak of hair at the front, about 2 cm wide, the only grey in her hair, always visible and never covered",
+      "description": "one single bold silver-grey streak of hair at the front, about 3 to 5 cm wide at the hairline, the only grey in her hair, always visible and never covered",
       "placement": "starting at her front hairline on her right side (viewer's left) and falling along the right side of her face to below the jaw"
     },
     {

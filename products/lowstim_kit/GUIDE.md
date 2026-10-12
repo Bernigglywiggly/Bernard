@@ -4,11 +4,8 @@ Your phone, but quieter. This guide turns a bright, buzzy home screen into a cal
 
 **Two tracks. Pick one:**
 
-| | 10-minute calm mode | Full minimal mode |
-|---|---|---|
-| Time | About 10 minutes | 30 to 45 minutes |
-| Custom icons | No | Yes |
-| Best for | Trying it out tonight | Going all in |
+- **Track 1, 10-minute calm mode:** about 10 minutes, no custom icons. Best for trying it out tonight.
+- **Track 2, full minimal mode:** 30 to 45 minutes, with custom icons. Best for going all in.
 
 Steps are marked **[iOS]** (iPhone) or **[Android]**. Menu names change a little between phones and updates. If something doesn't match exactly, look for the closest wording.
 
@@ -17,11 +14,16 @@ Steps are marked **[iOS]** (iPhone) or **[Android]**. Menu names change a little
 ## What's in your download
 
 - `wallpapers_iphone/`: 6 home screen and 6 lock screen wallpapers
-- `wallpapers_android/`: 12 wallpapers
+- `wallpapers_android/`: 6 home screen and 6 lock screen wallpapers
 - `icons/graphite/` and `icons/ash/`: 100 monochrome icons in each tone (PNG). Graphite is dark, ash is light grey.
+- `licences/`: the open-source licences for the icon artwork and font
 - This guide
 
 **Tip:** Unzip on a computer if you can, then send the files to your phone with AirDrop, Google Drive, iCloud Drive or email. On iPhone, save wallpapers to **Photos** and icons to **Files**.
+
+**Licence:** For personal use on your own devices. Please don't resell or share the files.
+
+**Credits:** Icon glyphs are based on Google's Material Symbols (Apache License 2.0). Text set in Inter (SIL Open Font License). Full licence texts are in the `licences/` folder.
 
 ---
 
@@ -43,14 +45,14 @@ This kit doesn't block anything. It just takes away the shouting. Lots of people
 2. **[iOS]** Or long-press the lock screen, tap **+**, choose **Photos**, pick a lock wallpaper, then tap **Customise** to set the home screen.
 3. **[Android]** Long-press an empty spot on the home screen, tap **Wallpaper & style** (Pixel) or **Wallpaper and style** (Samsung), then choose from your photos.
 
-**Tip:** Turn on **Dark Mode**. **[iOS]** Settings › Display & Brightness › Dark. **[Android]** Settings › Display › Dark theme.
+**Tip:** Turn on **Dark Mode**. **[iOS]** Settings › Display & Brightness › Dark. **[Android]** Settings › Display (or Display & touch) › Dark theme.
 
 ### Step 2. Make your icons dark or tinted
 
 1. **[iOS]** Long-press an empty spot on the home screen, tap **Edit**, then **Customise**.
 2. **[iOS]** Choose **Dark** for the simplest calm look, or **Tinted**, then drag the colour sliders towards grey. You can also use the eyedropper, if your version shows one, to pick the grey from your wallpaper. **Clear** works well too on recent versions.
-3. **[Android, Pixel]** Wallpaper & style › turn on **Themed icons**. On recent Pixel updates this themes almost every app, not just Google's.
-4. **[Android, Samsung]** Wallpaper and style › **Colour palette** › pick a grey-toned palette and switch on the option to apply it to app icons, if your version shows it.
+3. **[Android]** Pixel: Wallpaper & style › turn on **Themed icons**. On recent Pixel updates this themes almost every app, not just Google's.
+4. **[Android]** Samsung: Wallpaper and style › **Colour palette** › pick a grey-toned palette and switch on the option to apply it to app icons, if your version shows it.
 
 **Tip:** Icon styles on iPhone also apply to your widgets, so everything matches.
 
@@ -61,8 +63,8 @@ Greyscale is the single most powerful setting in this kit. Colour is a big part 
 1. **[iOS]** Settings › Accessibility › Display & Text Size › **Colour Filters**. Turn it on and choose **Greyscale**.
 2. **[iOS]** Settings › Accessibility › **Accessibility Shortcut** (at the very bottom) › tick **Colour Filters**.
 3. **[iOS]** Now **triple-click the side button** (or Home button) to flip greyscale on and off whenever you like.
-4. **[Android, Pixel]** Settings › Digital Wellbeing › **Bedtime mode** › Screen options › turn on **Greyscale**. On recent versions this lives under Settings › **Modes** › Bedtime, and you can create your own mode with greyscale too.
-5. **[Android, Samsung]** Settings › Digital Wellbeing and parental controls › **Bedtime mode** (greyscale is part of it), or create a Sleep mode in **Modes and Routines** and add **Greyscale**.
+4. **[Android]** Pixel: Settings › Digital Wellbeing › **Bedtime mode** › Screen options › turn on **Greyscale**. On recent versions this lives under Settings › **Modes** › Bedtime, and you can create your own mode with greyscale too.
+5. **[Android]** Samsung: Settings › Digital Wellbeing and parental controls › **Bedtime mode** (greyscale is part of it), or use the **Sleep** mode in **Modes and Routines**, which has a **Greyscale** option.
 
 **Tip:** Many people keep greyscale on all day and only switch it off for photos and maps.
 
@@ -72,8 +74,8 @@ Greyscale is the single most powerful setting in this kit. Colour is a big part 
 2. **[iOS]** Settings › **Focus** › tap **+** › **Custom**. Name it "Calm".
 3. **[iOS]** Under **Customise Screens**, tap the **Home Screen** preview and select only your essentials page. While Calm is on, the other pages disappear.
 4. **[iOS]** Optional: tap the **Lock Screen** preview and pick your low-stim lock wallpaper.
-5. **[Android, Pixel]** Settings › **Modes** › create a mode with greyscale and Do Not Disturb, and schedule it.
-6. **[Android, Samsung]** Settings › **Modes and Routines** › **+** › create a "Calm" mode with greyscale, dark mode and Do Not Disturb.
+5. **[Android]** Pixel: Settings › **Modes** › create a mode with greyscale and Do Not Disturb, and schedule it.
+6. **[Android]** Samsung: Settings › **Modes and Routines** › **+** › create a "Calm" mode with Do Not Disturb and dark mode (add greyscale if your version offers it; the built-in Sleep mode always has it).
 7. **[Android]** Keep one home page with your essentials. Move everything else into the app drawer.
 
 ### Step 5. Widget tips
@@ -103,7 +105,7 @@ iPhone can't replace an app's real icon. Instead, you make a home screen shortcu
 6. **[iOS]** Type a short name (or leave it blank for an even cleaner look) and tap **Add**.
 7. **[iOS]** Repeat for each app on your main page. Most people do 8 to 12.
 8. **[iOS]** Hide the originals: long-press each original icon › **Remove App** › **Remove from Home Screen**. The app stays installed in the App Library.
-9. **[iOS]** Set the icon style back to **Default** or **Dark** (long-press › Edit › Customise) so iOS doesn't restyle your custom icons.
+9. **[iOS]** Set the icon style back to **Default** (long-press › Edit › Customise) so iOS doesn't restyle your custom icons. Dark usually looks fine with the graphite set; Tinted and Clear will recolour them.
 
 **Good to know:**
 - Shortcut icons don't show notification badges. Many people find that's a bonus.
@@ -113,7 +115,7 @@ iPhone can't replace an app's real icon. Instead, you make a home screen shortcu
 
 Your icons are image files (PNG), so the best method depends on your launcher.
 
-**Option A: any phone, using a shortcut app (easiest)**
+### Option A: any phone, using a shortcut app (easiest)
 
 1. **[Android]** Save the icons to your phone (a folder such as `Pictures/LowStim`).
 2. **[Android]** Install a free shortcut-making app from the Play Store, such as **Shortcut Maker**.
@@ -123,7 +125,7 @@ Your icons are image files (PNG), so the best method depends on your launcher.
 
 These shortcuts don't show notification dots, and some launchers add a tiny badge to them.
 
-**Option B: a launcher that lets you set an image per app**
+### Option B: a launcher that lets you set an image per app
 
 Some third-party launchers let you change a single app's icon to an image from your gallery. Long-press the app, look for **Edit** or **Customise**, tap the icon and choose a gallery or photo option. Nova Launcher supports this but is no longer actively developed, so it may stop working well on future Android versions. Check your launcher's settings before you start.
 
@@ -153,22 +155,16 @@ Some third-party launchers let you change a single app's icon to an image from y
 
 **Greyscale won't switch on with a triple-click.** [iOS] Check that Colour Filters is ticked in Accessibility › Accessibility Shortcut. If several features are ticked, a menu appears. Choose Colour Filters.
 
-**My screenshots are still in colour.** That's normal. Greyscale only changes what you see, not the images you save.
+**My screenshots are still in colour.** That's normal. Greyscale only changes what you see.
 
 **I can't find Themed icons or a grey palette.** [Android] Not every phone or launcher has it. Use the dark wallpapers and dark theme, or try Track 2.
 
-**My custom iPhone icons look washed out or tinted.** Set the icon style to Default or Dark (long-press › Edit › Customise).
+**My custom iPhone icons look washed out or tinted.** Set the icon style to Default (long-press › Edit › Customise).
 
 **The custom icon opens the wrong app.** Open Shortcuts, find that shortcut, and check which app the Open App action points to.
 
-**The icons look blurry.** Pick the image from Files rather than a compressed copy sent through a messaging app.
+**The icons look blurry.** Use the original file, not a copy sent through a messaging app.
 
-**Bedtime mode isn't where the guide says.** [Android] Search Settings for "Bedtime" or "Modes". Menus move between updates and brands.
+**Bedtime mode isn't where the guide says.** [Android] Search Settings for "Bedtime" or "Modes".
 
-**I want everything back to normal.** [iOS] Set Customise back to Default, turn off Colour Filters, and remove the Focus. [Android] Turn off Themed icons and greyscale, and delete the shortcuts. Your apps were never touched.
-
----
-
-**Licence:** For personal use on your own devices. Please don't resell or share the files.
-
-Enjoy the quiet.
+**I want everything back to normal.** [iOS] Set Customise back to Default, turn off Colour Filters, and remove the Focus. [Android] Turn off Themed icons and greyscale, and delete the shortcuts. Your apps were never touched. Enjoy the quiet.

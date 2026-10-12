@@ -126,16 +126,19 @@ def build():
     save(c, "02_hero.jpg")
     # 2 before / after
     c, d = canvas()
-    c.alpha_composite(phone(home_screen(busy=True), 1500), (180, 380))
-    c.alpha_composite(phone(home_screen(), 1500), (1000, 380))
-    d.text((150, 130), "Make your phone boring.", font=make.inter(130, 650), fill=INK)
-    d.text((360, 300), "before", font=make.inter(64, 500), fill=SOFT)
-    d.text((1190, 300), "after", font=make.inter(64, 500), fill=INK)
-    y = 760
-    for line in ["Low-Stim Phone Kit", "iPhone + Android", "24 wallpapers", "200 icons", "10-min setup guide"]:
-        big = line == "Low-Stim Phone Kit"
-        d.text((1900, y), line, font=make.inter(84 if big else 62, 600 if big else 400), fill=INK if big else SOFT)
-        y += 150 if big else 105
+    c.alpha_composite(phone(home_screen(busy=True), 1460), (420, 470))
+    c.alpha_composite(phone(home_screen(), 1460), (1540, 470))
+    t = "Make your phone boring."
+    f = make.inter(150, 700)
+    d.text(((W - d.textlength(t, font=f)) / 2, 90), t, font=f, fill=INK)
+    arrow = make.sym_font(200, 400)
+    cpp = make.codepoints()
+    d.text((1255, 1100), cpp["arrow_forward"], font=arrow, fill=INK)
+    pill = "LOW-STIM PHONE KIT  ·  iPhone + Android"
+    pf = make.inter(64, 700)
+    pw = d.textlength(pill, font=pf) + 120
+    d.rounded_rectangle([(W - pw) / 2, 290, (W + pw) / 2, 400], 55, fill=INK)
+    d.text(((W - pw) / 2 + 60, 308), pill, font=pf, fill=STONE)
     save(c, "01_before_after.jpg")
     # 3 icons
     c, d = canvas("200 icons, two tones", "graphite + ash · 100 everyday apps · 1024 px PNG")
@@ -158,6 +161,19 @@ def build():
     for i, wname in enumerate(["01_matte", "05_ring", "06_contour"]):
         c.alpha_composite(phone(lock_screen(wname), 1420), (330 + i * 720, 450))
     save(c, "05_lock.jpg")
+    # 6 guide page
+    import subprocess, tempfile
+    pdf = os.path.join(KIT, "Low-Stim_Phone_Kit_Guide.pdf")
+    if os.path.exists(pdf):
+        c, d = canvas("A 10-minute setup guide", "step by step for iPhone and Android · plus a 7-day reset plan")
+        tmp = tempfile.mkdtemp()
+        subprocess.run(["sips", "-s", "format", "png", pdf, "--out", os.path.join(tmp, "p.png")], capture_output=True)
+        pg = os.path.join(tmp, "p.png")
+        if os.path.exists(pg):
+            im = Image.open(pg).convert("RGB")
+            im = im.resize((int(1500 * im.width / im.height), 1500), Image.LANCZOS)
+            c.paste(im, ((W - im.width) // 2, 450))
+        save(c, "06_guide.jpg")
     print("listing images ->", OUT)
 
 

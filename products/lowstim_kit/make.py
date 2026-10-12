@@ -42,9 +42,9 @@ ICONS = [  # (file name, material symbol)
     ("downloads", "download"),
     ("printer", "print"),
     ("wifi", "wifi"),
-    ("bluetooth", "bluetooth"),
+    ("devices", "devices"),
     ("flashlight", "flashlight_on"),
-    ("battery", "battery_full"),
+    ("battery", "bolt"),
     ("remote", "settings_remote"),
     ("tv", "tv"),
     ("radio", "radio"),
@@ -77,10 +77,10 @@ ICONS = [  # (file name, material symbol)
     ("meetings", "groups"),
     ("docs", "description"),
     ("sheets", "table_chart"),
-    ("slides", "slideshow"),
+    ("slides", "present_to_all"),
     ("upload", "cloud_upload"),
-    ("vpn", "vpn_key"),
-    ("security", "shield"),
+    ("vpn", "encrypted"),
+    ("security", "fingerprint"),
     ("authenticator", "verified_user"),
     ("crypto", "currency_bitcoin"),
     ("cards", "credit_card"),
@@ -89,7 +89,7 @@ ICONS = [  # (file name, material symbol)
     ("tickets", "confirmation_number"),
     ("events", "event"),
     ("movies", "movie"),
-    ("live_tv", "live_tv"),
+    ("subscriptions", "subscriptions"),
 ]
 TONES = {  # tile, glyph
     "graphite": ((44, 45, 47), (170, 172, 175)),
@@ -133,10 +133,19 @@ def vgrad(size, top, bottom):
 
 # ---------------------------------------------------------------- wallpapers
 def wp_matte(size, lock):
-    return grain(Image.new("RGB", size, BG), 3.5, 1)
+    if not lock:
+        return grain(Image.new("RGB", size, BG), 3.5, 1)
+    w, h = size  # lock: soft lift low in the frame, clock area stays flat
+    yy, xx = np.mgrid[0:h, 0:w]
+    r = np.sqrt(((xx - w / 2) / w) ** 2 + ((yy - h * 0.72) / h) ** 2)
+    lift = np.clip(1 - r / 0.45, 0, 1) ** 2 * 14
+    a = np.array(BG, np.float32)[None, None, :] + lift[..., None]
+    return grain(Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)), 3.5, 11)
 
 
 def wp_fade(size, lock):
+    if lock:  # reversed: dark clock area, faint light rising from the bottom
+        return grain(vgrad(size, (24, 25, 27), (54, 55, 58)), 3.5, 12)
     return grain(vgrad(size, (46, 47, 49), (24, 25, 27)), 3.5, 2)
 
 
@@ -146,7 +155,7 @@ def wp_line(size, lock):
     d = ImageDraw.Draw(img)
     y = int(h * (0.62 if lock else 0.5))
     m = int(w * 0.28)
-    d.line([(m, y), (w - m, y)], fill=(70, 71, 74), width=max(2, w // 600))
+    d.line([(m, y), (w - m, y)], fill=(92, 93, 96), width=max(3, w // 420))
     return img
 
 
@@ -158,7 +167,7 @@ def wp_words(size, lock):
     f = inter(int(w * 0.034), 300)
     tw = d.textlength(txt, font=f)
     y = int(h * (0.80 if lock else 0.47))
-    d.text(((w - tw) / 2, y), txt, font=f, fill=(96, 97, 100))
+    d.text(((w - tw) / 2, y), txt, font=f, fill=(122, 123, 126))
     return img
 
 
@@ -169,9 +178,9 @@ def wp_ring(size, lock):
     d = ImageDraw.Draw(big)
     cy = int(h * (0.62 if lock else 0.5))
     r = int(w * 0.30)
-    d.ellipse([w / 2 - r, cy - r, w / 2 + r, cy + r], outline=255, width=max(2, w // 500))
-    big = big.filter(ImageFilter.GaussianBlur(w / 400))
-    return Image.composite(Image.new("RGB", size, (66, 67, 70)), img, big)
+    d.ellipse([w / 2 - r, cy - r, w / 2 + r, cy + r], outline=255, width=max(4, w // 300))
+    big = big.filter(ImageFilter.GaussianBlur(w / 700))
+    return Image.composite(Image.new("RGB", size, (90, 91, 94)), img, big)
 
 
 def wp_contour(size, lock):
@@ -181,7 +190,7 @@ def wp_contour(size, lock):
     fig = plt.figure(figsize=(w / 100, h / 100), dpi=100)
     ax = fig.add_axes([0, 0, 1, 1]); ax.axis("off")
     fig.patch.set_facecolor(np.array(BG) / 255)
-    ax.contour(z, levels=22, colors=[np.array((60, 61, 64)) / 255], linewidths=1.1 * w / 1320)
+    ax.contour(z, levels=22, colors=[np.array((74, 75, 78)) / 255], linewidths=1.4 * w / 1320)
     ax.set_xlim(0, z.shape[1] - 1); ax.set_ylim(0, z.shape[0] - 1)
     fig.canvas.draw()
     img = Image.frombuffer("RGBA", fig.canvas.get_width_height(), fig.canvas.buffer_rgba()).convert("RGB")
@@ -202,8 +211,12 @@ def icon(glyph, tone, px=1024):
     img = Image.new("RGB", (px, px), tile)
     d = ImageDraw.Draw(img)
     f = sym_font(int(px * 0.46), 300)
-    l, t, r, b = d.textbbox((0, 0), glyph, font=f)
-    d.text(((px - (r - l)) / 2 - l, (px - (b - t)) / 2 - t), glyph, font=f, fill=ink)
+    m = Image.new("L", (px * 2, px * 2), 0)
+    ImageDraw.Draw(m).text((px // 2, px // 2), glyph, font=f, fill=255)
+    l, t, r, b = m.getbbox()  # actual ink, not font metrics
+    glyph_img = m.crop((l, t, r, b))
+    gw, gh = glyph_img.size
+    img.paste(Image.new("RGB", (gw, gh), ink), ((px - gw) // 2, (px - gh) // 2), glyph_img)
     return img
 
 

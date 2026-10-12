@@ -9,7 +9,8 @@ Researched 12 Oct 2026. Compatibility claims are limited to what was verified: i
 1. **Don't claim "icon pack for Nova / Niagara / Lawnchair".** The icons are PNG files. Niagara and Lawnchair only take icons from *installed icon-pack apps (APKs)*, and Lawnchair's docs confirm per-app icons come only from installed packs. Nova does allow per-app gallery images, but its founder left in Sept 2025 and active development stopped. The copy below says "works on Android with a free shortcut app or any launcher that supports custom icon images", which is true. If you want the "icon pack" search traffic, you'd need to build a real APK icon pack later (a separate project).
 2. **Icon count: done.** Raised to 100 icons per tone (200 PNGs) on 12 Oct, in line with "100+ icons" packs.
 3. **No brand logos.** The icons are generic Material Symbols (Apache 2.0), not Instagram, WhatsApp and so on. That keeps the listing safe from Etsy IP takedowns. Keep it that way.
-4. **Mockups:** first photo = before/after phone side by side. Second = icon grid in both tones. Third = "what's inside" graphic. Fourth = one guide page.
+4. **Mockups (as built in out/listing/):** 01 before/after, 02 hero + what's inside, 03 icons in both tones, 04 wallpaper designs, 05 lock screens. There is no guide-page image yet; adding one is recommended (see QC.md).
+5. **Files to upload.** Etsy allows 5 files of max 20 MB each, so upload the three part ZIPs (LowStim_1, LowStim_2, LowStim_3). LowStim_Phone_Kit_FULL.zip is 26.7 MB and is for Gumroad only.
 
 ---
 
@@ -66,7 +67,7 @@ WHAT'S INSIDE
 HOW DELIVERY WORKS
 ━━━━━━━━━━━━━━
 This is an instant digital download. Nothing physical will be posted.
-1. After purchase, go to Etsy › You › Purchases and reviews, then tap Download Files.
+1. After purchase, go to Etsy › You › Purchases and reviews, then tap Download Files. You'll get 3 ZIP files: iPhone wallpapers, Android wallpapers, and icons + guide.
 2. Unzip on a computer if you can, then send the files to your phone (AirDrop, iCloud Drive, Google Drive or email).
 3. Open the guide and choose your track.
 
@@ -83,7 +84,7 @@ LICENCE
 ━━━━━━━━━━━━━━
 Personal use on your own devices only. Please don't resell, share or redistribute the files.
 
-Because this is a digital download, refunds aren't available. If anything doesn't work, message me and I'll help you sort it.
+Because this is a digital download, returns and exchanges aren't accepted. If a file is faulty or anything doesn't work, message me and I'll fix it or make it right.
 ```
 
 ### FAQ (Etsy FAQ section, or the end of the description)
@@ -132,7 +133,7 @@ Reasoning, from comparables found 12 Oct 2026:
 - The kit matches 100+ icon packs on count (200 PNGs in two tones) and adds 24 wallpapers, both platforms and a real setup guide. £5.99 (about $7.50 to $8) is the launch price; test £6.99 once it has a few sales and reviews.
 - At £5.99, Etsy fees (£0.16 listing + 6.5% transaction + about 4% + £0.20 processing) leave roughly **£5.00 net per sale**.
 - Optional launch tactic: list at £7.99 with a 25% off launch sale (£5.99) for the first 2 weeks. The "sale" badge lifts click-through on Etsy.
-- **Upgrade path:** at 100+ icons plus widget images, move to £7.99 on Etsy and £9 on Gumroad.
+- **Upgrade path:** the kit already has 100 icons per tone. Adding widget images is the next step; then move to £7.99 on Etsy and £9 on Gumroad.
 
 ---
 

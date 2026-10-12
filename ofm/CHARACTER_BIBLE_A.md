@@ -3,6 +3,7 @@
 Status: **draft. The owner has not picked a persona yet.**
 Everything persona-specific sits between the `PERSONA BLOCK` markers below. To switch to B (gamer, 33) or C (alt/goth, 30), replace only that block.
 Everything outside the block applies to every persona.
+Face spec in code: `pipeline/characters/a1.json` (must match §P2 and §P3).
 Sources: `MARKET_RESEARCH_2026-10-12.md` (§2, §2B, §5, §6), `PERSONA_OPTIONS_2026-10-12.md`, `FANVUE_PLAN_8OCT.md` §6.
 
 ---
@@ -58,7 +59,7 @@ Sources: `MARKET_RESEARCH_2026-10-12.md` (§2, §2B, §5, §6), `PERSONA_OPTIONS
 | Skin tone | Fixed (see §P2). No lightening, no heavy tan swings. |
 | Age read | Must read as her stated age. Fine lines at the eyes stay. **Reject any image where she looks under 30.** |
 | Signature trait | Present, same side, same width, every image (see §P3) |
-| Marks (mole, freckles) | Same place every image. If a mark drifts, reject. |
+| Marks (smile lines) | Present every image. No moles, freckles or tattoos added. |
 | Build | Fixed. No body morphing between batches. |
 | Changeable | Outfit, hair styling (up/down/waved), make-up intensity, setting, lighting, pose |
 
@@ -94,11 +95,11 @@ Sources: `MARKET_RESEARCH_2026-10-12.md` (§2, §2B, §5, §6), `PERSONA_OPTIONS
 | Trait | Value |
 |---|---|
 | Age | 39. Reads late 30s. Soft laugh lines, mature jaw and cheekbones. |
-| Skin | Warm olive, natural texture, light freckles across the nose |
-| Hair | Glossy dark brunette, shoulder-length to collarbone, soft waves |
+| Skin | Warm olive, natural texture, healthy glow |
+| Hair | Glossy dark brunette (near espresso), just past the shoulders, loose waves, side parting on her left |
 | Eyes | Deep brown, almond shape |
 | Brows | Full, dark, natural arch |
-| Mark | Small mole above the left corner of the lip |
+| Marks | Only the silver streak + fine smile lines at the eyes and mouth. No moles, freckles or tattoos (they drift). |
 | Build | Average height, soft curvy build, good posture |
 | Expression default | Confident, knowing half-smile. Closed lips or slight smile. Not a big open grin. |
 | Make-up | Minimal by day; deep red or berry lip at night |

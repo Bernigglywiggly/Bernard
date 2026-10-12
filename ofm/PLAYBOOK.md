@@ -223,7 +223,7 @@ flowchart LR
 |---|---|---|---|
 | 1 | Pick persona A / B / C | **Him** | Everything |
 | 2 | Widen pipeline age guard to an adult range that includes the persona (e.g. 25 to 45), keep every youth ban | Assistant | Character JSON |
-| 3 | `characters/nadia.json` from bible §P2 and §P3 | Assistant | Master set |
+| 3 | `characters/a1.json` (drafted) checked against bible §P2 and §P3 | Assistant | Master set |
 | 4 | Master set → QC → pick refs (≈ $0.40) | Assistant, his yes on the face | Shoots |
 | 5 | 20 to 30 identity images → LoRA ($2.50 to $5) | Assistant | Backlog |
 | 6 | Backlog: 30 Reels + 60 photos, AI-labelled | Assistant | Socials |

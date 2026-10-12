@@ -65,7 +65,8 @@ Sources: `MARKET_RESEARCH_2026-10-12.md` (§2, §2B, §5, §6), `PERSONA_OPTIONS
 
 - Reject rule: if a stranger could think it is a different woman, it is rejected.
 - Generators skew young. Prompts must age her on purpose (laugh lines, mature bone structure).
-- Pipeline note: `pipeline/prompts.py` currently only accepts age 25-30. It must be widened before this persona can run (see `PLAYBOOK.md` §8).
+- Pipeline age guard accepts 25-45 and rejects any image that reads more than 5 years under the stated age.
+- Face lock method: reference-edit model from the approved A1 image (`IDENTITY_TEST_2026-10-12.md`). Text-only and style-reference routes drift to mid-20s.
 
 ### 1d. Content line
 
@@ -215,7 +216,8 @@ Always presented as lore of an AI character. Never as a real life.
 
 | Format | Example hook |
 |---|---|
-| Blunt advice Reel | "Three things men over 35 still get wrong on a first date." |
+| **Lead: "with her" POV** (at least 3 in 4 Reels), aimed at men 35 to 54 | "POV: co-op night at mine. You're carrying." / "POV: I'm cooking for you." / "Black knit or green silk? You pick." |
+| Blunt advice Reel (max 1 in 4, with roasts) | "Three things men over 35 still get wrong on a first date." |
 | Roast | "Rating your opening lines. Brace yourself." |
 | Kitchen POV | "Cooking for someone who said they 'don't really eat pasta'." |
 | Wine-and-a-thought | "Unpopular opinion with a glass in hand." |

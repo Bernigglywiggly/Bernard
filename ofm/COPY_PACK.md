@@ -13,18 +13,20 @@ Nothing here has been posted. All copy is SFW.
 |---|---|
 | AI in every bio | Each bio below contains "AI". Do not trim it to fit. Cut other words first. |
 | SFW in public | Bios and posts describe the character, never sexual content |
-| Link placement | **Instagram: no Fanvue link at first** (link-in-bio and link highlights were being flagged in early Oct). **X and Threads carry the link.** On X, the link goes **in a reply** under the post, not in the post. TikTok: no adult link at all. |
-| Tracking links | One Fanvue tracking link per placement: `x-bio`, `x-reply`, `threads-bio`, `threads-post`, later `ig-bio`. Judge each on subscribers at day 14, not clicks. |
+| Link placement | **From launch day (Mon 19 Oct): X (link in a reply under the post) and Reddit (AI-allowed subreddits only) carry the Fanvue link.** Threads bio too. **Instagram: no Fanvue link for 30 days** (link-in-bio and highlights were being flagged in early Oct). TikTok: no adult link at all. |
+| Tracking links | One Fanvue tracking link per placement: `x-bio`, `x-reply`, `reddit-<sub>` (one per subreddit), `threads-bio`, later `ig-story`. Judge each on paying fans, not clicks. Day-14 gate (Mon 26 Oct): 40+ clicks and 1+ paying fan across all links. |
 | 18+ | Link hub (if used) shows an 18+ notice |
 | British spelling | colour, favourite, flat |
 | Who sends | Fanvue AI Messaging may draft. A person reviews anything to a new sub, any offer, anything to the $50+ list. |
+| Set up first | §4 welcome, §5 Day 1/3/7 and §8 ladder go into Fanvue **before** the content backlog is made. Target: by Fri 16 Oct. |
+| Lead caption style | "With her" POV for men 35 to 54 (§2b). Advice/roast at most 1 in 4. |
 
 ### When Instagram gets a link
 
 | Phase | Instagram bio |
 |---|---|
-| Days 1 to 30 | No link. Text points to her X/Threads by name only. |
-| After day 30, if Account Status is clean and followers ≥ 1,000 | Test `ig-bio` tracking link for 14 days |
+| Mon 19 Oct to Wed 18 Nov (30 days) | No link anywhere on IG. Bio text names her X/Threads only. |
+| From Thu 19 Nov, if Account Status is clean | Plain `ig-story` link in 1 story a day. Never in bio, highlights, link hubs or cloaked. |
 | If "not recommended" appears | Remove the link the same day. Back to no-link. |
 
 ---
@@ -35,10 +37,11 @@ Nothing here has been posted. All copy is SFW.
 
 | Platform | Bio (each says AI) | Link |
 |---|---|---|
-| Instagram | `Nadia · 39 · London 🍷` / `AI-generated character, not a real person.` / `Blunt advice, good pasta, bad at shooters 🎮` / `More of me on X + Threads: @nadiavale.ai` | **None** (days 1 to 30) |
+| Instagram | `Nadia · 39 · London 🍷` / `AI-generated character, not a real person.` / `Cosy nights in, good pasta, bad at shooters 🎮` / `More of me on X + Threads: @nadiavale.ai` | **None** (first 30 days) |
 | Threads | `AI character · 39 · London` / `Wine, cooking, cosy games and opinions you didn't ask for 😏` / `18+ page linked ↓` | `threads-bio` tracking link |
 | X | `Nadia 🖤 AI-generated character, not a real person · 18+` / `London flat, red wine, co-op nights, honest advice` / `My page ↓` | `x-bio` tracking link. Plus link in a reply on posts. |
-| TikTok | `AI character · 39 · London 🍷` / `Advice, roasts and kitchen chaos` | **None** |
+| TikTok | `AI character · 39 · London 🍷` / `Cosy nights, cooking, co-op games` | **None** |
+| Reddit (profile) | `Nadia · AI-generated character, not a real person · 18+ · London` | `reddit-profile` tracking link in profile |
 
 - Display name everywhere: `Nadia Vale · AI`
 - Instagram: switch on "AI-generated profile" before the first post.
@@ -51,6 +54,28 @@ Nothing here has been posted. All copy is SFW.
 | Photo post | `The rest of tonight's set is on my page (18+, AI) → [x-reply link]` |
 
 - At most 1 in 3 posts gets a link reply. Link everywhere = spam signal.
+
+### Reddit post template (AI-allowed subreddits only)
+
+| Field | Text |
+|---|---|
+| Title | `[AI] Wine night at mine. Black knit or green silk? 🍷` / `[AI] Cooking for you tonight, what are we having?` |
+| Flair / tag | The sub's AI flair, every post |
+| First comment | `AI-generated character (not a real person). My page, 18+: [reddit-<sub> link]` |
+| Rules | Read each sub's rules first. One sub per post. Never repeat a sub inside 3 days. Never the same link pasted widely. |
+
+## 2b. Reel caption bank: "with her" POV (lead format, men 35 to 54)
+
+| Format | On-screen hook | Caption |
+|---|---|---|
+| Cosy gaming night | `POV: co-op night at mine` | `You're carrying. I'm "helping". Marlo is judging. 🎮` |
+| Cooking for you | `POV: I'm cooking for you` | `You said you don't eat pasta. We'll see. 🍝` |
+| Outfit check | `Black knit or green silk?` | `You pick. We're already late. 🖤` |
+| Wine and chat | `POV: second glass, rain on the window` | `Tell me about your day. Properly this time. 🍷` |
+| London walk | `Walk with me` | `Camel coat weather. Wine bar's two streets away.` |
+| Advice (max 1 in 4) | `What men over 35 still get wrong` | `Short list. Long sigh. 😏` |
+
+- Every caption on IG/TikTok sits under the platform AI label. Never imply she is real or available to meet.
 
 ## 3. Fanvue bio
 

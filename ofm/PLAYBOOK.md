@@ -1,9 +1,10 @@
-# Fanvue AI-persona playbook (written Mon 12 Oct 2026)
+# Fanvue AI-persona playbook (written Mon 12 Oct 2026, alignment changes folded in)
 
 The merged operating plan. Replaces the 30-day table in `FANVUE_PLAN_8OCT.md` §3 where they differ.
-Character: `CHARACTER_BIBLE_A.md`. Copy: `COPY_PACK.md`. Evidence: `MARKET_RESEARCH_2026-10-12.md`. Pipeline: `pipeline/README.md`.
+Character: `CHARACTER_BIBLE_A.md`. Copy: `COPY_PACK.md`. Evidence: `MARKET_RESEARCH_2026-10-12.md`.
+Changes from: `ALIGNMENT_2026-10-12.md` (gates, order, links, formats, expectations) and `IDENTITY_TEST_2026-10-12.md` (face lock).
 Status: **plan only. Persona not picked. Nothing created, posted or sent.**
-[E] = estimate.
+[E] = estimate. Calendar: day 0 = Mon 12 Oct.
 
 ---
 
@@ -11,31 +12,54 @@ Status: **plan only. Persona not picked. Nothing created, posted or sent.**
 
 | Item | Decision |
 |---|---|
+| **Launch** | **Fanvue live + first public posts by Mon 19 Oct. If not live by then, stop the plan.** |
 | Persona | A1 recommended: Nadia Vale, 39, silver streak (swap block in bible/copy for B or C) |
-| Disclosure | Openly AI everywhere: bios, IG label, TikTok label, welcome message, every "are you real?" |
+| Disclosure | Openly AI everywhere: bios, IG label, TikTok label, Reddit AI tag, welcome message, every "are you real?" |
+| Build order | **Chat + paid-message ladder + Day 1/3/7 messages first.** Then a small backlog: **14 Reels + 20 photos.** |
 | Money comes from | Paid messages / PPV (60 to 70%), not the subscription |
-| Traffic engines | Instagram Reels (reach, no link at first) + X (link in a reply) + Threads (link allowed) |
-| Not used | YouTube (link bans, Jul 2026 terminations). TikTok = reach only, no link. |
+| Fanvue link | **X (in a reply) + Reddit (AI-allowed subs only) from launch day.** Threads bio too. **Instagram link-free for 30 days (to Wed 18 Nov)**, then a plain link in stories only. |
+| Reach formats | **"With her" POV for men 35 to 54** (US + UK). At most 1 in 4 Reels as advice or roast. |
+| Face lock | **Reference-edit model** from the approved A1 image. Text-only and style-reference routes do not hold the face. |
+| Not used | YouTube (link bans). TikTok = reach only, no link. |
 | Price | Free follow on, $7.99 sub, 3-month bundle 20 to 30% off, PPV $6 to $9 → $15 to $25 → $40+ |
-| Chat | 2 fixed inbox windows a day + VIP notifications. Day 1 / 3 / 7 schedule. |
+| Chat | 2 fixed inbox windows a day + VIP notifications |
 | Content cost | about $23/month WaveSpeed (≈ £17) + Fanvue 20% (15% first 30 days) |
-| His time | Setup 4 to 6 h in week 1. Then 6 to 12 h/week, mostly chat. |
-| Target | £2,000/month net ≈ **155 to 175 paying subs** at $20 to $22 each |
-| Realistic timing [E] | Months 1 to 3: £0 to £250. £2k/month is a month 6 to 9+ outcome, about 10 to 15% chance by Jun 2027. |
-| Gates | Day 14: pick the winning format. Day 30: continue / hold / stop. |
-| Blocker before images | Pipeline age guard only allows 25-30 (see §8) |
+| His time | 8 to 10 h in setup week, then about 10 h/week |
+| Gates | Day 14 (Mon 26 Oct): 40+ link clicks + 1+ paying fan. Day 30 (Wed 11 Nov): 10+ paying fans or £75+ net, else stop or hold. |
+| Honest expectation | Mid case about **£35 / £145 / £315 net** per month at day 30 / 60 / 90 (§7). Cash lags 7 to 28 days. |
 
 ---
 
-## 2. Funnel
+## 2. Honest expectation (from `ALIGNMENT_2026-10-12.md` §1)
+
+| Case | Chance | Paying fans day 30 / 60 / 90 | **£/month net, day 30** | **day 60** | **day 90** |
+|---|---|---|---|---|---|
+| Low | 55% | 0 / 3 / 6 | £0 | £25 | £50 |
+| Mid | 35% | 2 / 12 / 25 | £20 | £120 | £250 |
+| High | 10% | 15 / 50 / 110 | £270 | £900 | £2,000 |
+| **Expected value** | | | **about £35** | **about £145** | **about £315** |
+
+| Fact | Number |
+|---|---|
+| Cash in the bank at day 30 (low and mid) | about £0. Fanvue holds payouts **7 to 28 days**; first withdrawal is reviewed by hand. |
+| Chance of £2,000+/month run-rate by day 90 | about 5% |
+| Chance of £2,000+/month by June 2027 | about 10 to 15% |
+| His £/hour during the ramp, mid case | about £3 |
+| Why run it anyway | The option on months 4 to 12. The gates decide fast whether to hold it. |
+| Withdraw | The first $20 as soon as it exists |
+
+---
+
+## 3. Funnel
 
 ```mermaid
 flowchart LR
-    IG["Instagram Reels<br/>AI label on, SFW<br/>no link days 1-30"] -->|"name mention"| X
+    IG["Instagram Reels<br/>AI label on, SFW<br/>no link for 30 days"] -->|"name mention"| X
     TT["TikTok<br/>AI label, reach only"] -->|"name mention"| X
     X["X posts<br/>link in a reply"] --> FV
-    TH["Threads<br/>link in bio + posts"] --> FV
-    IG -.->|"day 30+ test<br/>ig-bio link"| FV
+    RD["Reddit<br/>AI-allowed subs only<br/>AI tag on every post"] --> FV
+    TH["Threads<br/>link in bio"] --> FV
+    IG -.->|"after 30 days<br/>plain link in stories"| FV
     FV["Fanvue page<br/>free follow ON<br/>bio says AI"] --> W["Welcome message<br/>says AI, asks a question"]
     W --> D1["Day 1: question<br/>no sale"]
     D1 --> D3["Day 3: remembers<br/>their detail"]
@@ -49,77 +73,94 @@ flowchart LR
 
 | Stage | Number to watch | Benchmark |
 |---|---|---|
-| Reach → follow | sends per reach, follows per Reel | 0.27% view-to-follow (one measured AI Reel) |
-| Views → Fanvue sub | tracking-link subs | 10 to 20 per 100k Reel views [F] |
+| Reddit click → sub (mature niche) | tracking-link subs | 8 to 12% [V, one source] |
+| Reel views → paying fan | tracking-link subs | 10 to 20 per 100k views [F] |
 | Sub → first PPV in 7 days | % of new subs | 10 to 20% solid, 30 to 60% top |
-| Sub → ever pays | % | 4.2% average |
 | Spend timing | first 48 h | 83% of payments land here |
 
 ---
 
-## 3. Platform roles
+## 4. Build order (chat first, then content)
+
+| # | By | Step | Who |
+|---|---|---|---|
+| 1 | Tue 13 Oct | Pick persona A / B / C; agree launch date Mon 19 Oct | **Him** |
+| 2 | Fri 16 Oct | Fanvue sign-up, KYC, tax, bank, mark account as AI | **Him** |
+| 3 | Fri 16 Oct | **Chat engine:** welcome automation, Day 1/3/7 messages, Creator Personality file, two inbox windows set, Fan Notes habit (`COPY_PACK.md` §4 to §6) | Assistant writes, he pastes |
+| 4 | Fri 16 Oct | **Paid-message ladder:** $7.99 sub, 3-month bundle, 7-day capped trial link per channel, tracking links, 5 PPV set listings | Assistant writes, he sets |
+| 5 | Sat 17 Oct | 5 paid PPV sets made on his own tool, matching the face | **Him** |
+| 6 | Thu 15 Oct | **Identity set: 20 to 30 images via reference-edit** (Nano Banana 2.1 Edit; A/B Seedream 5.0 Flash Edit on 3 scenes, keep whichever holds the face). Never text-only or soul_2 style-ref. | Assistant, his yes on the face |
+| 7 | Thu 15 Oct | Independent QC agent checks every image: same face 10/10, reads 35+, streak present | Agent |
+| 8 | Sat 17 Oct | **Backlog: 14 Reels + 20 photos**, AI-labelled | Assistant |
+| 9 | Sun 18 Oct | Accounts: IG (AI label), X, Threads, TikTok, Reddit; 20 Fanvue wall posts up | **Him** |
+| 10 | **Mon 19 Oct** | **Launch.** First posts on X, Reddit, IG. Fanvue live. | Both |
+| later | after 15-25 approved images | LoRA (~$2.50), A/B against ref-edit, keep the winner | Assistant |
+
+- Pipeline age guard already accepts 25-45, so age 39 runs as is.
+- Every prompt states age 39 and "fine laugh lines, natural skin texture". Generators pull faces younger.
+- Keep WaveSpeed generation logs per batch as provenance (Fanvue withholds earnings for face-swapped or real-photo content).
+
+---
+
+## 5. Platform roles
 
 | Platform | Role | Link | Must do |
 |---|---|---|---|
-| Instagram | **Reach engine.** Reels + stories. Carousels build trust. | **None days 1 to 30.** Test `ig-bio` after, only if Account Status is clean. | "AI-generated profile" on before post 1. Original content only. |
-| X | **Link engine #1** | `x-bio` + link in a **reply** under 1 in 3 posts | Mark any adult media; never adult avatar/header |
-| Threads | **Link engine #2**, low effort | `threads-bio`, `threads-post` | Cross-post IG with conversational captions. Reply to others. |
+| X | **Link engine #1, from launch** | `x-bio` + link in a **reply** under 1 in 3 posts | Label any adult media; never adult avatar/header |
+| Reddit | **Link engine #2, from launch** | `reddit-<sub>` tracking link per subreddit | **Only subreddits that allow AI.** AI tag on every post. Never the same link in many subs. Read each sub's rules first. |
+| Instagram | **Reach engine.** Reels + stories. | **None for 30 days after launch (to Wed 18 Nov).** Then a plain link in stories only (`ig-story`), never cloaked. | "AI-generated profile" on before post 1. Check Account Status weekly. |
+| Threads | Cross-post, low effort | `threads-bio` | Conversational captions |
 | TikTok | Reach only | None | AI label on every post with her in it |
-| Fanvue | Where money happens | — | 20 wall posts live before any promo. Bio says AI. |
-| Facebook Page | Optional test after day 14 | Links allowed | One test, measured like the rest |
-| Reddit | Only subreddits that allow AI | Per sub rules | Never the same link in many subs |
+| Fanvue | Where money happens | — | 20 wall posts before launch. Bio says AI. |
+| Facebook Page | Optional test from week 2 | Links allowed | One test, measured like the rest |
 | YouTube | **No** | — | Channel terminations for sexual-content links (Jul 2026) |
 
-- Aim posts at **US + UK adults**. Views from regions that don't buy don't convert.
-- Posting window: **UK 19:00 to 22:00** (= US East 14:00 to 17:00). Clocks: UK changes 25 Oct, US 1 Nov; gap is 4 h that week.
+- Audience target: **men 35 to 54, US + UK.** Day-14 check: 40%+ US/UK/CA/AU, 50%+ men 25 to 54.
+- Posting window: **UK 19:00 to 22:00** (= US East 14:00 to 17:00). Clocks: UK changes 25 Oct, US 1 Nov.
 
 ---
 
-## 4. Posting cadence
+## 6. Content
 
-### Days 1 to 14: test (12 to 20 test posts across 3 formats)
+### Lead formats: "with her" POV (at least 3 in 4 Reels)
 
-| Platform | Per day | Formats rotated |
+| Format | Example hook (SFW) |
+|---|---|
+| Cosy gaming night | "POV: co-op night at mine. You're carrying. I'm 'helping'." |
+| Cooking for you | "POV: I'm cooking for you and you said you don't eat pasta." |
+| Date-night outfit check | "Black knit or green silk? You pick, we're late." |
+| Evening wine and chat | "POV: second glass, rain on the window, tell me about your day." |
+| London walk | "Walk with me to the wine bar. Camel coat weather." |
+| Advice / roast (max 1 in 4) | "One thing men over 35 still get wrong on a first date." |
+
+### Cadence
+
+| Platform | Test phase: 19 Oct to 1 Nov | Scale phase: 2 Nov to 3 Dec |
 |---|---|---|
-| Instagram Reels | 1 (2 on weekends) | **F1** blunt advice / roast · **F2** kitchen + wine POV · **F3** gaming-night story |
-| Instagram stories | 3 | selfie, lifestyle, poll |
-| Instagram carousel | 2 per week | "my week", outfits |
-| X | 2 to 3 posts | photo + one-line opinion; link reply on 1 in 3 |
-| Threads | 1 to 2 | cross-post + a question |
-| TikTok | 1 | same Reel, AI label |
-| Fanvue wall | 20 posts live **before day 1 of promo**, then 1 a day | SFW teasers |
-| Fanvue PPV | 3 sets ready at launch | owner makes |
+| Instagram Reels | 1 a day (2 at weekends), 3 POV formats rotated | 1 to 2 a day; winning format ≥ 4 a week; retest winners as Trial Reels |
+| Instagram stories | 3 a day | 3 a day; still no link (stories link from 18 Nov) |
+| X | 2 to 3 posts a day; link reply on 1 in 3 | 3 a day |
+| Reddit | 1 post a day across AI-allowed subs; never repeat a sub inside 3 days | 1 to 2 a day in the subs that brought subs |
+| Threads | 1 to 2 a day | 2 a day |
+| TikTok | 1 a day | 1 a day |
+| Fanvue wall | 20 before launch, then 1 a day | 1 a day; new PPV set weekly |
 
-### Days 15 to 45: scale the winner
-
-| Platform | Per day | Rule |
+| Backlog | Pre-launch | Monthly after |
 |---|---|---|
-| Instagram Reels | 1 to 2 | **Winning format ≥ 4 times a week.** Retest winners as Trial Reels. |
-| Instagram stories | 3 | Same |
-| X | 3 | Winner's angle in text form |
-| Threads | 2 | Same |
-| TikTok | 1 | Same |
-| Fanvue wall | 1 a day | New PPV set every week |
-| Facebook Page | 1 (test) | Only if a free hour exists |
-
-### Content needed per month
-
-| Item | Volume | Pipeline cost |
-|---|---|---|
-| Photos (approved) | 60 | included in $23 |
-| Reels (approved) | 20 to 30 | included in $23 (30 Reels ≈ +$3) |
-| His approval time | 60 to 90 s per image | about 1.5 to 2 h/month |
+| Reels | 14 | 20 to 30 |
+| Photos | 20 | 60 |
+| His approval time | about 40 min | about 1.5 to 2 h |
 
 ---
 
-## 5. Chat windows
+## 7. Chat windows
 
 | Window | Time (UK) | Length | What |
 |---|---|---|---|
-| Morning | 07:00 | 20 to 30 min | $50+ list first, then new subs, then the rest |
-| Evening | 19:00 to 20:00 | 30 to 45 min | Same order. Day 1 / 3 / 7 messages. PPV offers. |
+| Before work | 07:00 | about 20 min | $50+ list first, then new subs, then the rest |
+| After work | 19:00 to 20:00 | about 20 to 30 min | Same order. Day 1/3/7 messages. PPV offers. |
 | VIP | Phone notifications | As they come | $50+ list only |
-| Weekly | Sunday | 20 min | Review a sample of AI-drafted chats; update Fan Notes |
+| Weekly | Sunday | 20 min | Review a sample of AI-drafted chats; update Fan Notes; log £ per chat hour |
 
 | Who writes what | |
 |---|---|
@@ -127,128 +168,109 @@ flowchart LR
 | AI drafts, person reviews | First message to a new sub, every PPV pitch, anything to $50+ |
 | Person only | "Are you real?", customs, complaints, refunds, a fan in distress |
 
-- Target: new subs answered within hours; everyone within 12 h. Over 48 h costs revenue (one report: −18%).
-- Use Fanvue's own AI Messaging only. No outside tools, no pasting chats elsewhere.
+- Every new fan answered inside 24 h (target: hours). Over 48 h costs revenue.
+- Fanvue's own AI Messaging only. No outside tools, no pasting chats elsewhere.
 
 ---
 
-## 6. Metrics and gates
+## 8. Metrics and gates
 
-### Weekly sheet (he enters Fanvue numbers twice a week, 5 min)
+### Sheet (he enters Fanvue numbers twice a week, 5 min)
 
 | Metric | Type | Where |
 |---|---|---|
-| Sends per reach, per Reel | Leading | IG Insights |
-| Follows per Reel | Leading | IG Insights |
+| Median Reel views, sends per reach | Leading | IG Insights |
 | Tracking-link clicks, per link | Leading | Fanvue |
-| **New paying subs, per tracking link** | **Decides** | Fanvue |
-| % new subs buying first PPV in 7 days | Money | Fanvue |
-| Gross, net, per paying sub | Money | Fanvue |
-| Median reply time | Ops | Fanvue |
-| IG Account Status | Risk | IG settings |
+| Free follows | Leading | Fanvue |
+| **New paying fans, per tracking link** | **Decides** | Fanvue |
+| Net per paying fan, £ per chat hour | Money | Fanvue + log |
+| Inbox windows kept (days) | Ops | Log |
+| IG Account Status, audience country/age/gender | Risk | IG |
 
-### Target curve (from `FANVUE_PLAN_8OCT.md`)
-
-| Week | Link clicks / week | New paying subs / week | Followers, all platforms |
-|---|---|---|---|
-| 1 | n/a | n/a | 0 |
-| 2 | 40 | 1 | 150 |
-| 3 | 100 | 3 | 500 |
-| 4 | 150 | 5 | 1,000 |
-
-### Day-14 gate (format)
+### Day 7: Mon 19 Oct (execution gate)
 
 | Result | Action |
 |---|---|
-| One format leads on sends per reach by ≥ 1.5x | Make it ≥ 4 a week from day 15. Drop the weakest format. |
-| No clear leader | Keep all 3 for 7 more days. Change hooks, not the persona. |
-| A tracking link has 0 clicks in 14 days | Check the link works. Then move effort to the other links. |
-| Any IG restriction | Remove any link mention. Keep posting SFW. |
+| Fanvue verified + marked AI, 20 wall posts, PPV ladder set, first posts live on X, Reddit and IG | Continue |
+| **Not live** | **Stop the plan.** Move the hours elsewhere. |
 
-### Day-30 gate (continue / hold / stop), day 30 = 30 days after Fanvue goes live
+### Day 14: Mon 26 Oct (about 7 days live)
 
 | Result | Action |
 |---|---|
-| 10+ paying subs total, or £75+ gross in days 15 to 30 | **Continue.** Add a second batch day. Test $12.99 sub (one change). |
-| 3 to 9 paying subs and 100+ link clicks a week | **Hold.** 30 more days at the same hours. No new spend. |
-| Under 3 paying subs and under 300 followers | **Stop.** Cancel paid tools. Sunk cost about £20 to £60. |
+| **40+ tracking-link clicks AND 1+ paying fan** (plus 10+ Reels, 15+ X/Reddit posts, median Reel 300+ views or one 3,000+, 5+ free follows) | **Continue** |
+| Reach passes, clicks under 40 | Fix one thing: link placement or call to action. Re-check day 21 (Mon 2 Nov). |
+| Clicks 40+, 0 follows | Fix one thing: Fanvue page, price or trial link. Re-check day 21. |
+| Median Reel under 200 views AND X/Reddit under 20 clicks | **Stop**, or one last format change, hard re-check day 21 |
+| IG flagged "not recommended" AND X/Reddit under 20 clicks | **Stop** |
+
+### Day 30: Wed 11 Nov (about 23 days live)
+
+| Result | Action |
+|---|---|
+| **10+ paying fans, or £75+ net in days 15 to 30**, AND £10+ net per chat hour | **Continue.** Add one content day a week. Test $12.99 sub (one change). |
+| 3 to 9 paying fans AND 100+ link clicks a week | **Hold** to day 60 at the same hours. No new hours, no paid tools. |
+| Under 3 paying fans AND under 300 followers | **Stop.** Cancel paid tools. |
+| 300+ clicks but under 3 paying fans | **Stop.** Funnel broken. |
+| Inbox windows kept on under half of days | **Stop.** Chat carries the money. |
+
+### Day 60: Fri 11 Dec (hard check)
+
+| Result | Action |
+|---|---|
+| £200+/month net run-rate, or 25+ paying fans | Continue to the 6-month review (mid-April 2027) |
+| Below that | **Stop.** |
 
 ---
 
-## 7. Money
+## 9. Money
 
 ### Weekly budget
 
 | Line | Per week | Per month | Note |
 |---|---|---|---|
-| WaveSpeed stack (60 photos + 20 Reels + LoRA) | about $6 (£4.30) | about $23 (£17) | `pipeline/MODELS.md` §7. Code caps: $2 per run, $100 per month. |
+| WaveSpeed stack | about $6 (£4.30) | about $23 (£17) | `pipeline/MODELS.md` §7. Code caps: $2 per run, $100 per month. Nano Banana edits (~$0.07) add about £2/month if they win the A/B. |
 | After LoRA wins | about $3 | about $12 | photos drop to $0.01 each |
-| Fanvue fee | — | 15% of sales first 30 days after KYC, then 20% | VAT is added on top for the fan; Fanvue pays it |
-| Link hub | £0 | £0 | Only if used; 18+ notice |
-| Scheduler | £0 to £3.50 | £0 to £15 | One already connected on this Mac |
-| Higgsfield | — | £0 extra | Optional; the WaveSpeed pipeline replaces it |
+| Fanvue fee | — | 15% of sales first 30 days after KYC, then 20% | VAT added on top for the fan |
+| Scheduler | £0 to £3.50 | £0 to £15 | One already connected |
+| Paid shoutouts | £0 | £0 | Not before day 30; then a £30 test only if net per fan is £15+ |
+| Chatters | £0 | £0 | Not before £1,000/month gross |
 | **Total fixed** | **about £4 to £8** | **about £17 to £32** | |
 
-- Break-even [E]: 2 to 3 paying subs at $20.
-- Cash timing: Fanvue holds money 7 to 28 days; first withdrawal is reviewed by hand.
+### What £2,000/month net takes [E]
 
-### Revenue scenario to £2,000/month net [E]
-
-| Gross per paying sub / month | Net to him (−20%, £1 = $1.33) | Paying subs for £2,000 + £17 tools | Gross needed |
+| Gross per paying fan / month | Net (−20%, £1 = $1.33) | Paying fans for £2,000 + £17 tools | Gross needed |
 |---|---|---|---|
 | $18 | £10.83 | **187** | $3,370 |
 | **$20** | **£12.03** | **168** | **$3,360** |
 | $22 | £13.23 | **153** | $3,370 |
 
-| Where the $20 comes from [E] | Per paying sub | Share |
+| Holding 168 paying fans | Churn 25% | Churn 40% |
 |---|---|---|
-| Subscription | $7.99 | 40% |
-| PPV + paid messages | $10 | 50% |
-| Tips + customs | $2 | 10% |
-
-| Holding 168 paying subs | Low churn (25%) | High churn (40%) |
-|---|---|---|
-| New paying subs needed per month | 42 | 67 |
-| Reel views per month at 10 to 20 subs / 100k [F] | 0.21M to 0.42M | 0.34M to 0.67M |
-| Views to reach 168 the first time | 0.84M to 1.68M | same |
-
-- Persona A's mature niche reports $20 to $25 subs and 8 to 12-month retention [V]. If that holds, the low-churn column applies.
-- The one solo case on record: 150 paying subs = $2,500 to $4,000/month, "a few hours a day" (Fortune, self-reported).
+| New paying fans per month | 42 | 67 |
+| Reel views per month at 10 to 20 per 100k | 0.21M to 0.42M | 0.34M to 0.67M |
+| Average views per Reel at 2 a day | 3,500 to 7,000 | 5,600 to 11,000 |
+| Chat hours at that size | 15 to 20 a week. That is the point to add a chatter. | |
 
 ---
 
-## 8. Build order before launch
-
-| # | Step | Who | Blocks |
-|---|---|---|---|
-| 1 | Pick persona A / B / C | **Him** | Everything |
-| 2 | Widen pipeline age guard to an adult range that includes the persona (e.g. 25 to 45), keep every youth ban | Assistant | Character JSON |
-| 3 | `characters/a1.json` (drafted) checked against bible §P2 and §P3 | Assistant | Master set |
-| 4 | Master set → QC → pick refs (≈ $0.40) | Assistant, his yes on the face | Shoots |
-| 5 | 20 to 30 identity images → LoRA ($2.50 to $5) | Assistant | Backlog |
-| 6 | Backlog: 30 Reels + 60 photos, AI-labelled | Assistant | Socials |
-| 7 | Quality-check agent reviews the actual images and Reels (face, streak, age read) | Independent agent | Launch |
-| 8 | Accounts, KYC, paid content | **Him** | Launch |
-| 9 | 20 Fanvue wall posts + 3 PPV sets live | **Him** (upload) | Promo |
-| 10 | Day 1 of posting | Both | — |
-
----
-
-## 9. His hands
-
-- [ ] 🪪🏦📸🧷🧾 **Fanvue: sign up, pass ID + selfie (KYC), tax interview, bank details, mark the account as AI.**
-
-- [ ] 📱🏷️🧩🚪🌙 **Create IG, X, Threads, TikTok accounts with the AI labels on, display name `Nadia Vale · AI`.**
-
-- [ ] 🎬🗂️🔒🧪🍷 **Make the paid content with your own tools, matching the face lock, and upload it to Fanvue.**
-
-- [ ] 🔑📁🛡️🧯⚙️ **Create `~/Bernard/ofm/.env` with `WAVESPEED_API_KEY=...` yourself. Never paste it in chat.**
+## 10. His hands
 
 - [ ] 🎯🧭🖊️🌀🦊 **Pick the persona (A, B or C) and check the handles are free.**
 
+- [ ] 🗓️🚦📣🧲🌙 **Agree the launch: live by Mon 19 Oct, or the plan stops.**
+
+- [ ] 🪪🏦📸🧷🧾 **Fanvue: sign up, ID + selfie, tax interview, bank details, mark the account as AI. By Fri 16 Oct.**
+
+- [ ] 🎬🗂️🔒🧪🍷 **Make 5 paid PPV sets on your own tool, matching the face, and upload them. By Sat 17 Oct.**
+
+- [ ] 📱🏷️🧩🚪🐈 **Create IG, X, Threads, TikTok, Reddit with AI labels on, display name `Nadia Vale · AI`. By Sun 18 Oct.**
+
+- [ ] 🔑📁🛡️🧯⚙️ **Create `~/Bernard/ofm/.env` with `WAVESPEED_API_KEY=...` yourself. Never paste it in chat.**
+
 Also his:
-- [ ] Final yes on the face (master set)
-- [ ] Publish clicks where scheduling isn't possible
+- [ ] Final yes on the face (identity set)
+- [ ] Publish clicks where scheduling isn't possible (X, Reddit, IG)
 - [ ] Sending messages (Fanvue drafts, he sends), and every "are you real?" answer
-- [ ] Price changes and the day-14 / day-30 calls
+- [ ] Price changes and the day 7 / 14 / 30 / 60 calls
 - [ ] Fanvue numbers into the sheet twice a week

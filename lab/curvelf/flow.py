@@ -1315,7 +1315,7 @@ def draw_map(c, i, t):
             text(c, deg(la, "N", "S", st < 1), bx - 30 * u0, y + 7 * u, fr, DIM, ra * rk, 0.5 * u, "right")
         capt = v.get("caption")
         if SYSTEM and m.get("relief"):                                 # relief is real and says where it is from
-            capt = (capt + " · " if capt else "") + "RELIEF: NOAA ETOPO 2022"
+            capt = (capt + " · " if capt else "") + ("RELIEVE: NOAA ETOPO 2022" if LANG == "es" else "RELIEF: NOAA ETOPO 2022")
         if capt:
             cap = typed(capt, t, S(i) + 0.3, 45.0) if not (first or handover_in(i)) else capt
             c.drawRect(skia.Rect.MakeXYWH(bx, yb + 62 * u, 6 * u, 24 * u), skia.Paint(Color=col(acc(i), rk)))
@@ -1667,7 +1667,8 @@ def fmt_ll(lon, lat, d=2):
 
 def card_tag(i):
     """A card's reference in the chart look: its chapter.beat number and the place it is about (the map it sits among)."""
-    kind = dict(num="FIG", split="CMP", words="NOTE", quote="NOTICE", list="LOG", tl="TIMELINE").get(B[i]["vis"][0], "REF")
+    kind = (dict(num="FIG", split="COMP", words="NOTA", quote="AVISO", list="REG", tl="CRONOLOGÍA") if LANG == "es" else      # 11 Oct: the Spanish Hormuz film showed English card tags
+            dict(num="FIG", split="CMP", words="NOTE", quote="NOTICE", list="LOG", tl="TIMELINE")).get(B[i]["vis"][0], "REF")
     bi = sum(1 for j in range(i) if B[j]["floor"] == B[i]["floor"])
     j = last_map(i)
     if j is None:

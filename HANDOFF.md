@@ -39,6 +39,11 @@ ElevenLabs: about 89,000 characters left until about 16 Oct. Strategic warning f
 | Hormuz | `lab/maps/hormuz/HORMUZ_v2.mp4` | USER 10 Oct: goes on THE CURVE, style F. UPLOADED 10 Oct 22:30: HORMUZ_v5.mp4 -> The Curve, id teTMVjz6LTs, private, public Sun 11 Oct 16:00Z, title "Hormuz Is Closed. The Oil Isn't.", thumbnail out/thumb_8ships.jpg SET. Strait status checked 10 Oct: still ~5-10% of normal traffic (title holds). Test & Compare pairs in POST.md (user adds in Studio). Pin comment by hand. Two re-voiced lines and a brighter drone are laid, not yet rendered. Render with FLOW_BED=drone |
 Engine changes 10 Oct: standalone Shorts (film "") loop with no end card; OPEN_RESOLVED starts the camera at its first place.
 
+## 1d. 12 Oct: FOCUS SWITCHED TO AI OFM (user: "yt decent backlog, move away for a bit")
+- YouTube backlog is scheduled to 19 Oct (see section 2 + uploads_newlook.done.json); Spanish Hormuz (`lab/maps/hormuz_es/`) finishing in the background, upload to Curva Explica for Wed 15 Oct when its critic passes. Weekly growth review runs Mondays 09:00.
+- AI OFM (Fanvue AI persona): plan `FANVUE_PLAN_8OCT.md`; ChatGPT's earlier research in `~/Documents/Codex/2026-10-09/vidiq-plugin-app-69dd11f3e50c8191b1ca48d03cf7e2ad-openai-curated/outputs/fanvue/`. User has the paid Skool "AI Model Academy" (aimodelacademy) and is in its Telegram + Discord; Chrome is logged in to all three (Claude in Chrome connected). He wants: a fresh persona built from research, viral social potential, high spenders, conversion + upsell. Running: community/course analysis -> `ofm/COMMUNITY_INSIGHTS_2026-10-12.md`; public market research -> `ofm/MARKET_RESEARCH_2026-10-12.md`. Next: merge into `ofm/PLAYBOOK.md`, 3 persona options with SFW concept sheets, launch plan.
+- Lines kept: AI disclosed (Fanvue rule), never claim to be a real person, no fabricated emergencies, no off-platform payment; assistant makes SFW promo + strategy only, paid content is his; READ-ONLY in his chats (never post/DM); no usernames in our notes.
+
 ## 2. YouTube: what is uploaded (all PRIVATE with a publish time; ids also in `~/Bernard/channel/uploads_newlook.done.json`)
 | Video | Channel | Public (UTC) | Id |
 |---|---|---|---|

@@ -429,7 +429,7 @@ def strike(c, x0, y0, x1, y1, h, width=18):
     c.drawPath(path, strokep(h, width))
 
 
-def brand(c, ch_key, corner="tl"):
+def brand(c, ch_key, corner="tl", label=None):
     """Small channel mark, top-left by default (bottom-right is under YouTube's duration badge)."""
     ch = CHANNELS[ch_key]
     x, y = (28, 26) if corner == "tl" else (28, H - 70)
@@ -443,8 +443,8 @@ def brand(c, ch_key, corner="tl"):
         c.drawPath(p, strokep(ch["a"], 6.5))
         c.drawCircle(x + 40, y + 4, 6.5, P(Color=col("#FFFFFF")))
         f = mono(19)
-        c.drawString("THE CURVE", x + 54, y + 30, f, glowp("#000000", 0.9, 5))
-        c.drawString("THE CURVE", x + 54, y + 30, f, P(Color=col("#FFFFFF", 0.92)))
+        c.drawString(label or "THE CURVE", x + 54, y + 30, f, glowp("#000000", 0.9, 5))
+        c.drawString(label or "THE CURVE", x + 54, y + 30, f, P(Color=col("#FFFFFF", 0.92)))
     else:
         # the avatar's mark: serif initials in a ring (gold on red for MC, gold for HTP)
         ring_c = "#E02A20" if ch_key == "mc" else "#D9B45A"
@@ -580,7 +580,8 @@ AI = {k: os.path.join(LAB, p) for k, p in {
 OUT = {
     "hormuz": os.path.join(LAB, "maps/hormuz/out"), "lf01": os.path.join(LAB, "curvelf/lf01_escape/out"),
     "lf02": os.path.join(LAB, "curvelf/lf02_price/out"), "lf03": os.path.join(LAB, "curvelf/lf03_held/out"),
-    "visa": os.path.join(LAB, "ch2/ep06/out"), "mc02": os.path.join(LAB, "curvelf/mc02_ponzi/out")}
+    "visa": os.path.join(LAB, "ch2/ep06/out"), "mc02": os.path.join(LAB, "curvelf/mc02_ponzi/out"),
+    "hormuz_es": os.path.join(LAB, "maps/hormuz_es/out")}
 OLD = {
     "hormuz": "maps/hormuz/out/thumb_8ships.jpg", "lf01": "curvelf/lf01_escape/out/thumbflow_a.jpg",
     "lf02": "curvelf/lf02_price/out/thumbflow_a.jpg", "lf03": "curvelf/lf03_held/out/thumbflow_a.jpg",
@@ -651,6 +652,25 @@ def hormuz_c():
     brand(c, "curve", corner="bl")
     finish(s, o("hormuz", "c"))
 
+
+
+# ---------------------------------------------------------------- HORMUZ, SPANISH (CurvaExplica, 11 Oct 2026)
+# Claims as hormuz_a: "8 BARCOS" on screen at 0:00 (8 Oct 2026, Windward); "125 AL DÍA" = the split card at ~0:12.
+def hormuz_es_a():
+    ch = CHANNELS["curve"]
+    crop = (230, 300, 1000, 562)
+    base = hormuz_on(black(), crop, 1.3)
+    base = dim_region(base, lambda x, y: 0.35 + 0.65 * (1 - smooth(820, 980, x) * (1 - smooth(520, 700, y) * 0)))
+    s, c = to_surface(base)
+    f8 = heavy(560, 100)
+    glow_text(c, "8", 1240, 560, f8, ch["c"], glow=ch["c"], glow_a=0.9, glow_s=30, keyline=12, align="right")
+    hl_text(c, "BARCOS", 1222, 670, heavy(96, 100), ch["b"], ink="#0A0008", seed=4, align="right")
+    f125 = heavy(150, 100)
+    x0, w = glow_text(c, "125", 50, 600, f125, "#FFFFFF", keyline=8)
+    strike(c, x0 - 10, 600 - 8, x0 + w + 10, 600 - cap_h(f125) + 8, ch["warn"], 12)
+    glow_text(c, "AL DÍA, ANTES", 56, 662, heavy(34, 100), "#FFFFFF", keyline=6)
+    brand(c, "curve", label="CURVAEXPLICA")         # the Spanish channel's name beside the same curve mark
+    finish(s, o("hormuz_es", "a"))
 
 
 # ---------------------------------------------------------------- LF01 THE AI THAT ESCAPED (The Curve)
@@ -903,7 +923,8 @@ def mc02_c():
 
 RECIPES = {
     "hormuz": [hormuz_a, hormuz_b, hormuz_c], "lf01": [lf01_a, lf01_b, lf01_c], "lf02": [lf02_a, lf02_b, lf02_c],
-    "lf03": [lf03_a, lf03_b, lf03_c], "visa": [visa_a, visa_b, visa_c], "mc02": [mc02_a, mc02_b, mc02_c]}
+    "lf03": [lf03_a, lf03_b, lf03_c], "visa": [visa_a, visa_b, visa_c], "mc02": [mc02_a, mc02_b, mc02_c],
+    "hormuz_es": [hormuz_es_a]}
 
 
 # ================================================================================================ feed sheet
@@ -927,7 +948,7 @@ def neighbour(seed, bright):
 def feed_sheet():
     """Every variant at real phone sizes on YouTube's white and dark UI, next to synthetic 'typical' neighbours."""
     from PIL import Image, ImageDraw, ImageFont
-    films = list(RECIPES)
+    films = [f for f in RECIPES if len(RECIPES[f]) == 3]      # a film with one variant (a translation) is not in the feed test
     tw_, th_ = 168, 94           # mobile search / suggested-list size
     hw, hh = 360, 202            # home feed card on a 390 pt phone (scaled for the sheet)
     fnt = ImageFont.truetype(os.path.join(REPO, "a01_v6", "fonts", "IBMPlexMono-500.ttf"), 13)
@@ -976,7 +997,7 @@ def feed_sheet():
 def phone_check(film):
     """168 px preview of one film's three variants, upscaled 3x nearest, for eyeballing legibility."""
     from PIL import Image
-    ims = [Image.open(o(film, v)).convert("RGB").resize((168, 94), Image.LANCZOS).resize((504, 282), Image.NEAREST) for v in "abc"]
+    ims = [Image.open(o(film, v)).convert("RGB").resize((168, 94), Image.LANCZOS).resize((504, 282), Image.NEAREST) for v in "abc" if os.path.exists(o(film, v))]
     sheet = Image.new("RGB", (504 * 3 + 20, 282), (255, 255, 255))
     for k, im in enumerate(ims):
         sheet.paste(im, (k * 514, 0))

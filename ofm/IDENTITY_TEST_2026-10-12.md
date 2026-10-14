@@ -13,3 +13,10 @@ Reference: `concepts/A1.png` (Higgsfield soul_2 text-only). Sheets: `concepts/a1
 - Every prompt states the age and "fine laugh lines, natural skin texture": generators pull faces younger.
 - After 15-25 approved images: train the LoRA (~$2.50) and compare.
 - Higgsfield credits left ~9.6 (used ~6.5 tonight). Further generation should run on WaveSpeed once `ofm/.env` exists.
+
+## WaveSpeed head-to-head (15 Oct, refs = A1 + 3 Nano Banana edits)
+| Model | Cost | Face score vs refs (gate 0.40) | Look |
+|---|---|---|---|
+| Seedream 5.0 Flash Edit | $0.027 | 0.850 / 0.872 | Closest to the reference glamour; streak bold and on the right side. **Default.** |
+| Nano Banana 2.1 Edit | $0.068 | 0.837 / 0.784 | More candid "phone photo" realism; streak softer/greyer. Use for hero shots and fixes. |
+Sheet: `pipeline/out/a1/COMPARE_seedream_vs_nanobanana.jpg` (gitignored). Spend so far $0.17 of $9.49.

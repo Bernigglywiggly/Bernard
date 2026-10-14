@@ -101,6 +101,14 @@ Full tables, evidence grades and sources: `lab/research/ATTENTION_PLAYBOOK.md`. 
 15. One change per test, logged with 48 h and 7 d numbers against the channel's own median (playbook §6).
 
 ## Learned on our films
+- 14 Oct (first analytics review, `lab/research/REVIEW_2026-10-14.md`): (1) the Escape Short fell from 73% to 47%
+  watching between 0:07 and 0:10, during a definition line ("It's the website where..."), and its answer came at 0:44.
+  The Steve Short gives the answer in line 1 and runs 35 s; it got 280 views in 2 days, about 37x the Curve median.
+  So a Short starts on the twist, and Shorts are cut from the film's reveal, not its cold open. (2) 79% of Curve views
+  and 46% of Money Crimes views came from YouTube search, so the exact search phrase goes in the title. (3) Money
+  Crimes Shorts held 50-63% viewed (best of any channel). The death-certificate Short still lost viewers in its set-up
+  dates and in a callback to the long film: open on the object and cut any callback. (4) 4 uploads sat "processing"
+  for 6 days while public, with 0 views. After every upload, poll `processingDetails` until it says `succeeded`.
 - 11 Oct (first opportunity radar, ~650 videos vs their channel medians): outliers in our niches run long (How They
   Profit-style ~16 min, Money Crimes-style ~25 min; Visa at 4.3 min is too short for mid-roll ads); winning titles
   put the search phrase first, then the twist ("How Uber Really Makes Money (It Is Not the Rides)"); winning

@@ -113,12 +113,13 @@
   ],
   "pinned": "Who's more to blame: the AI that broke out, or the people who built the sandbox? Every source is in the description.",
   "channel": "curve",
-  "publish_at": "2026-10-12T16:00:00Z",
+  "publish_at": "2026-10-15T16:00:00Z",
   "playlist_name": "Every film",
   "category": 27,
   "made_for_kids": false,
   "synthetic": true,
-  "kind": "long"
+  "kind": "long",
+  "thumbnail": "../lab/curvelf/lf01_escape/out/thumbs_v2_a.jpg"
  },
  {
   "file": "../lab/curvelf/lf01_escape/shorts/short_escape.mp4",

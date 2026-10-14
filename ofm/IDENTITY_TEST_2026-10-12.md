@@ -20,3 +20,10 @@ Reference: `concepts/A1.png` (Higgsfield soul_2 text-only). Sheets: `concepts/a1
 | Seedream 5.0 Flash Edit | $0.027 | 0.850 / 0.872 | Closest to the reference glamour; streak bold and on the right side. **Default (user confirmed 15 Oct).** User workflow note: Nano Banana for raw realism, Seedream for edits/adding things. |
 | Nano Banana 2.1 Edit | $0.068 | 0.837 / 0.784 | More candid "phone photo" realism; streak softer/greyer. Use for hero shots and fixes. |
 Sheet: `pipeline/out/a1/COMPARE_seedream_vs_nanobanana.jpg` (gitignored). Spend so far $0.17 of $9.49.
+
+## Look rule by destination (user, 15 Oct)
+| Destination | Model | Finish |
+|---|---|---|
+| Instagram / Threads / X / TikTok | Seedream 5.0 | Polished, Instagram-style effects and filters are fine |
+| Fanvue (feed, previews, SFW wall) | Nano Banana 2.1 | Raw, unfiltered "real phone photo" realism |
+| Edits / adding objects to any image | Seedream 5.0 | — |

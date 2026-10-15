@@ -89,9 +89,9 @@ shots:
       motion: "she glances at the cup in front of the camera, lifts her own cup with both hands, takes a slow sip and smiles softly, morning light, gentle handheld, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r05_five_more_minutes
-    scene: bedroom with a tall floor-standing mirror and a small dressing table with a jewellery dish, evening
+    scene: bedroom with a small dressing table and a jewellery dish behind her, no mirror anywhere in frame, evening
     outfit: black fitted knit midi dress with long sleeves, camel coat over the chair, gold hoop earrings
-    pose: at the mirror touching one gold hoop earring, catching the camera's eye in the mirror with a playful look, silver streak at the front of her hair clearly visible
+    pose: facing the camera directly, touching one gold hoop earring with a playful look, she is the only person in the room, silver streak at the front of her hair clearly visible
     lighting: warm evening lamp light
     camera: point-of-view from the bedroom doorway, phone at eye level, vertical framing
     mood: getting ready to go out, teasing about being late
@@ -104,7 +104,7 @@ shots:
       beats: ["Earrings: done.", "Lipstick: done.", "Coat: you're holding it.", "Okay. Twelve more minutes."]
       caption: "I said five minutes. I meant it emotionally. 🖤"
       cta_ig: "Send it to someone always 'nearly ready'"
-      motion: "she gives her gold hoop a last touch, meets the camera's eye in the mirror, holds up one finger as if to say one more minute and smiles, natural pace, handheld, the silver streak at the front of her hair stays visible"
+      motion: "she gives her gold hoop a last touch, looks straight into the camera, holds up one finger as if to say one more minute and smiles, natural pace, handheld, no mirror, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r06_are_you_real
     scene: window seat at night with city lights behind the glass, cushions, glass of red on the sill
@@ -179,9 +179,9 @@ shots:
       motion: "she taps the table beside the middle glass, raises a curious eyebrow at the camera, then laughs, natural pace, handheld, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r10_dinner_or_sofa
-    scene: bedroom with a tall floor-standing mirror, linen bedding, a chair with a folded blanket
-    outfit: black fitted knit midi dress with a square neckline and long sleeves, gold hoop earrings, thin gold bracelet
-    pose: standing beside the mirror, shoulders slightly turned to show the dress, looking at the camera, silver streak at the front of her hair clearly visible
+    scene: bedroom with linen bedding and a chair with a folded blanket, no mirror in frame
+    outfit: black fitted knit midi dress with a high crew neckline and long sleeves, gold hoop earrings, thin gold bracelet
+    pose: standing in the bedroom doorway, shoulders slightly turned to show the dress, looking at the camera, silver streak at the front of her hair clearly visible
     lighting: warm evening lamp light
     camera: phone on a tripod, full-length vertical framing
     mood: playful decision, confident
@@ -199,7 +199,7 @@ shots:
   - id: r11_you_stir
     scene: warm compact London kitchen, dark green cabinets, a wide pan of risotto steaming on the hob nearest the camera with a wooden spoon resting in it, unlabelled bottle of white wine on the worktop
     outfit: white linen shirt with sleeves rolled to the elbow, dark jeans, black linen apron, gold hoop earrings
-    pose: leaning on the worktop beside the hob holding an already-full glass of white wine, smiling at the camera as if you are doing the stirring, silver streak at the front of her hair clearly visible
+    pose: leaning on the worktop beside the hob with both hands resting on the worktop, a full glass of white wine standing on the worktop beside her, smiling at the camera as if you are doing the stirring, silver streak at the front of her hair clearly visible
     lighting: warm kitchen light with steam glow, soft window light from the left
     camera: point-of-view from the hob, phone at chest height looking across the pan to her, vertical framing
     mood: playful supervisor, you do the work
@@ -212,7 +212,7 @@ shots:
       beats: ["Risotto rule one: you stir.", "Stock goes in warm.", "Parmesan off the heat.", "One glass for the pan, one for the cook."]
       caption: "Twenty minutes of stirring and you'll never order it out again. 🍝"
       cta_ig: "Save it, follow for the next one"
-      motion: "she raises her glass slightly in a small cheers towards the camera, smiles and nods at the pan, steam rises, gentle handheld movement, no pouring, the silver streak at the front of her hair stays visible"
+      motion: "she smiles, nods at the pan and gestures towards the wooden spoon with one open hand, the wine glass stays standing on the worktop untouched, steam rises, gentle handheld movement, the silver streak at the front of her hair stays visible"
       duration: 5
   - id: r12_snacks
     scene: living room at night, green velvet sofa with a knitted throw, coffee table with plain white bowls of crisps and olives, a cheese board and a glass of red, two plain black game controllers, no packets or labels anywhere, TV glow off-frame

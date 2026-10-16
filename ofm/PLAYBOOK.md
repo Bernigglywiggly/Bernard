@@ -294,3 +294,19 @@ Also his:
 - [ ] Sending messages (Fanvue drafts, he sends), and every "are you real?" answer
 - [ ] Price changes and the day 7 / 14 / 30 / 60 calls
 - [ ] Fanvue numbers into the sheet twice a week
+
+## Affiliate + "insinuating review" pillar (owner decision 16 Oct)
+
+| Phase | Instagram / TikTok / Threads / Facebook | X / Reddit |
+|---|---|---|
+| Weeks 1-4 | SFW product Reels with innuendo (wine, kitchen gadgets, candles, silk robes, perfume, gaming chairs). Bio link = affiliate storefront (Amazon Storefront / LTK). No Fanvue link. | Owner runs these (NSFW, with Grok). Fanvue link from day 1. |
+| Week 5+ (after socials established) | Fanvue link added (story link first, then bio) | unchanged |
+
+**Script rules (UK fake-review ban, DMCC Act 2024 + ASA/CAP; FTC in the US):**
+- Nadia is AI, so she **can't claim she used or tested a product**. Frame it as "Nadia's picks", "would you get me this?", "rate my choice": opinion and style, not a testimonial.
+- **#ad** (or "affiliate link") on every post with an affiliate link, plus the platform's paid-partnership tag where it exists. The AI label stays on.
+- Innuendo stays suggestive, not sexual. No sex-toy products on Instagram/TikTok (that's X/Reddit's lane).
+- Products only from programmes that allow AI creators. Check each programme's terms (Amazon Associates requires clear disclosure).
+
+**Formats:** "POV: you bought me this", "3 things in my kitchen men always ask about", "rate my Friday night: 1-10", "the candle that makes him stay over", "unboxing what he sent me" (no claims that it works).
+**Track:** affiliate clicks per 1k views (storefront dashboard) alongside follows and sends.

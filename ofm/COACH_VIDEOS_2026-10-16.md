@@ -162,3 +162,14 @@ Not in these videos but still banned (community pass): engagement pods, automate
 | IG minimum audience age 18 | On = safer for an 18+ funnel, may trim reach | 1 min |
 | 4th slide on each carousel (3.15) | Use existing approved photos | £0 |
 | Target age check 35-54 → 35-65 | Community (2 reports) and V1 both say older men spend most | £0 |
+
+## Added 16 Oct (late): the two tool videos
+
+| Video | Claim | Label | Verdict for Nadia |
+|---|---|---|---|
+| Seedance 2.5 (kwE6lV2U5Ms) | Up to 30 reference images per generation, plus video and **audio** references, so an ElevenLabs voice can drive a talking clip | promotional (with demo) | **Adopt for the voice Reels** (research rank 1): same 4-6 refs + Nadia's ElevenLabs voice. Check WaveSpeed price first |
+| | 720p is enough if the references are strong; 4K and 30 s clips are a waste for marketing | promotional | Adopt: keep 5 s at 720p |
+| | 30 s clips at 9 Reels a day ≈ $450/day | promotional (their numbers) | Confirms our 1-2 Reels a day at ~$0.21 each |
+| | Multi-shot inside one clip keeps the face consistent across cuts (skits) | promotional | Test later for "at 39" skits |
+| Wan 3.0 (9T73uxeHXGs) | Download a real creator's Reel and swap your model's face/outfit onto it ("replicate Reels") | promotional | **DO NOT USE.** Uses a real person's body, voice and work: copyright, Instagram originality rule, and a real-person-likeness risk (UK deepfake offence, Fanvue bans). Also against our "invented face only" rule |
+| | Wan 3.0 gives more natural facial expressions than Seedance for talking/dance clips | promotional | Note only: if we test it, it's **image-to-video from our own stills**, never from someone else's video |

@@ -5,6 +5,10 @@ All copy in her voice sits inside the `PERSONA BLOCK` markers. Rules, pricing, V
 Character: `CHARACTER_BIBLE_A.md`. Plan: `PLAYBOOK.md`. Evidence: `MARKET_RESEARCH_2026-10-12.md` (§3, §4c, §5, §6).
 Nothing here has been posted. All copy is SFW.
 
+**Changed 16 Oct** (evidence: `COACH_VIDEOS_2026-10-16.md` + community pass 16 Oct)
+- §7 + §8 + §9: new **$80-$250 top tier** (set 8, VIP list only). **Trial links dropped from launch**; the 3-month bundle is the default offer.
+- §1 + §2: **Facebook Page** bio and `fb-page` tracking link (week-1 test). **IG story-link test from Mon 2 Nov** if the day-14 gate passed; bio and posts stay link-free to Wed 18 Nov.
+
 ---
 
 ## 1. Rules for all copy (every persona)
@@ -13,8 +17,8 @@ Nothing here has been posted. All copy is SFW.
 |---|---|
 | AI in every bio | Each bio below contains "AI". Do not trim it to fit. Cut other words first. |
 | SFW in public | Bios and posts describe the character, never sexual content |
-| Link placement | **From launch day (Mon 19 Oct): X (link in a reply under the post) and Reddit (AI-allowed subreddits only) carry the Fanvue link.** Threads bio too. **Instagram: no Fanvue link for 30 days** (link-in-bio and highlights were being flagged in early Oct). TikTok: no adult link at all. |
-| Tracking links | One Fanvue tracking link per placement: `x-bio`, `x-reply`, `reddit-<sub>` (one per subreddit), `threads-bio`, later `ig-story`. Judge each on paying fans, not clicks. Plan day-14 gate (Mon 26 Oct = 7 days live; plan day 0 = Mon 12 Oct): 40+ clicks and 1+ paying fan across all links. |
+| Link placement | **From launch day (Mon 19 Oct): X (link in a reply under the post) and Reddit (AI-allowed subreddits only) carry the Fanvue link.** Threads bio too. **Facebook Page: `fb-page` link in the Page intro/website field only** (week-1 test). **Instagram: no Fanvue link in bio or posts for 30 days** (link-in-bio and highlights were being flagged in early Oct); story-link test from Mon 2 Nov, see below. TikTok: no adult link at all. |
+| Tracking links | One Fanvue tracking link per placement: `x-bio`, `x-reply`, `reddit-<sub>` (one per subreddit), `threads-bio`, `fb-page`, later `ig-story`. Judge each on paying fans, not clicks. Plan day-14 gate (Mon 26 Oct = 7 days live; plan day 0 = Mon 12 Oct): 40+ clicks and 1+ paying fan across all links. |
 | 18+ | Link hub (if used) shows an 18+ notice |
 | British spelling | colour, favourite, flat |
 | Who sends | Fanvue AI Messaging may draft. A person reviews anything to a new sub, any offer, anything to the $50+ list. |
@@ -25,8 +29,9 @@ Nothing here has been posted. All copy is SFW.
 
 | Phase | Instagram bio |
 |---|---|
-| Mon 19 Oct to Wed 18 Nov (30 days) | No link anywhere on IG. Bio text names her X/Threads only. |
-| From Thu 19 Nov, if Account Status is clean | Plain `ig-story` link in 1 story a day. Never in bio, highlights, link hubs or cloaked. |
+| Mon 19 Oct to Sun 1 Nov (14-day test) | No link anywhere on IG. Bio text names her X/Threads only. |
+| Mon 2 Nov to Wed 18 Nov: **test**, only if the day-14 gate passed and Account Status is clean | Plain `ig-story` link in 1 story a day. Bio and posts still link-free. Never highlights, link hubs or cloaked. Compare `ig-story` paying fans with `x-reply`. |
+| From Thu 19 Nov, if Account Status is clean | Story link continues. Bio link only if the story test ran 14 days with no flag. |
 | If "not recommended" appears | Remove the link the same day. Back to no-link. |
 
 ---
@@ -42,6 +47,7 @@ Nothing here has been posted. All copy is SFW.
 | X | `Nadia 🖤 AI-generated character, not a real person · 18+` / `London flat, red wine, co-op nights, honest advice` / `My page ↓` | `x-bio` tracking link. Plus link in a reply on posts. |
 | TikTok | `AI character · 39 · London 🍷` / `Cosy nights, cooking, co-op games` | **None** |
 | Reddit (profile) | `Nadia · AI-generated character, not a real person · 18+ · London` | `reddit-profile` tracking link in profile |
+| Facebook Page | `Nadia Vale · AI` / `AI-generated character, not a real person. 18+.` / `London flat, red wine, co-op nights, honest advice 🍷` | `fb-page` tracking link in the website field. Never in Reel captions |
 
 - Display name everywhere: `Nadia Vale · AI`
 - Instagram: switch on "AI-generated profile" before the first post.
@@ -142,6 +148,7 @@ The owner makes the paid content with his own tools. Descriptions must say **exa
 | 5 | Dinner For Two | `[N] photos. Green silk shirt, candles, the pasta I keep bragging about.` | $15 to $25 |
 | 6 | London After Dark | `[N] photos. Camel coat, wet streets, the wine bar.` | $15 to $25 |
 | 7 | The Full Month | `Every set from [month]: [N] photos + [N] clips.` | $40+ bundle |
+| 8 | The Collection (top tier, VIP list only) | `Every set so far: [N] photos + [N] clips, plus [N] photos never posted anywhere else.` | **$80 to $150**; up to **$250** only when the count truly doubles. Exact counts in the description |
 | Custom | Made for you | Quoted per request. Written description of exactly what is delivered before payment. | Quoted |
 
 - Never describe a set as "live", "just now" or "real-time".
@@ -156,11 +163,12 @@ The owner makes the paid content with his own tools. Descriptions must say **exa
 |---|---|---|
 | Free follow | **On** | The 95% who never subscribe can still buy PPV in chat |
 | Subscription | **$7.99** entry | Inside every Fanvue range. Subs are a small share of money anyway. |
-| Default discount | **3-month bundle, 20 to 30% off** | Fanvue's best-retaining offer |
-| Trial links | **7-day, capped uses, one per channel** | Judge at first renewal, not at sign-up |
+| Default discount | **3-month bundle, 20 to 30% off = the default offer everywhere** | Fanvue's best-retaining offer |
+| Trial links | **Not at launch.** Test only after the day-30 gate, one channel, 7-day, capped (card-required if Fanvue offers it) | Community (6+ reports): trial subs rarely chat or buy. Count paying fans, never trial subs |
 | PPV first unlock | **$6 to $9** | Matches first-PPV benchmark |
 | PPV sets | **$15 to $25** | Benchmark band |
 | PPV bundles | **$40+** | Monthly round-up |
+| Top tier | **$80 to $250** (set 8), offered only to the $50+ list, once per fan per month at most | Purchase feeds show $80, $120 and $250 unlocks; our ladder had no step there |
 | Customs | **Quoted per request** | Must match the description exactly |
 | Mass messages | **Segments only**: warm, $50+, expired. Never everyone. | Targeted opens 3 to 6x higher |
 | Persona A note | Mature niche supports $20 to $25 subs. **Test $12.99 at day 30** as the one price change, only if day-30 gate passed. | One variable at a time |
@@ -173,6 +181,7 @@ The owner makes the paid content with his own tools. Descriptions must say **exa
 | Person reviews everything | AI may draft. A person reads and edits every message before it goes. |
 | First look | New sets go to VIPs 24 hours before anyone else |
 | Loyalty pricing | Offer a discounted 6- or 12-month bundle |
+| Top tier | Offer set 8 ($80 to $250) only here, after at least two paid unlocks, at most once a month. Describe exactly what is in it. No deadlines or scarcity claims that aren't true |
 | Customs | Quote per request, describe exactly, deliver exactly |
 | Tip asks | Only after rapport, at most once per fan per week, for a real stated reason (e.g. "funds next week's set") |
 | Shout-outs | Only with the fan's permission |

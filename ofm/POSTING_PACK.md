@@ -4,6 +4,12 @@ Written Thu 15 Oct 2026, updated the same day after the second QC round (8 new R
 Inputs: `BACKLOG_A.md` §4, `PLAYBOOK.md` §5-§8, `COPY_PACK.md` §2, `pipeline/shots/a1_reels.yaml`, `pipeline/out/a1/APPROVAL.md`.
 Phone folder: **`~/Bernard/ofm/POST_READY/`** (63 files, 98 MB). AirDrop the whole folder. Files sort in posting order.
 
+**Changed 16 Oct** (evidence: `COACH_VIDEOS_2026-10-16.md` + community pass 16 Oct)
+- **Facebook Page Reels added as a required week-1 test**: every IG Reel also goes to the Page, same time, same file and caption (§3, §4). Own `fb-page` link and a log column (§5).
+- §5: format decisions use **72-hour** numbers; Sun 1 Nov read uses the checklist in `COACH_VIDEOS_2026-10-16.md` §4. The day-14 gate still uses 24-h views.
+- §6: **10 min of IG comment replies** after the evening Reel. IG story-link test can start Mon 2 Nov (after this pack) if the day-14 gate passed.
+- No change to files, dates or captions.
+
 ## 1. Reel QC (independent check, Thu 15 Oct)
 
 ### Round 1: the launch set R01-R14
@@ -84,7 +90,9 @@ T3 ready/morning: R10 R05 R04 R17 R18       (5)
 
 - [ ] **Reddit** → profile: `Nadia · AI-generated character, not a real person · 18+ · London`, `reddit-profile` link. **Pick 4-5 subreddits that allow AI** and read their rules (karma and account-age limits too). Never the same sub inside 3 days.
 
-- [ ] **Fanvue tracking links** → make: `x-bio`, `x-reply`, `threads-bio`, `reddit-profile`, plus one `reddit-<sub>` per subreddit.
+- [ ] **Facebook Page** → create it from **your own personal Facebook profile** (Meta requires a real admin; admins aren't shown on the Page). Name `Nadia Vale · AI`. Bio from `COPY_PACK.md` §2. `fb-page` tracking link in the website field only. Same avatar.
+
+- [ ] **Fanvue tracking links** → make: `x-bio`, `x-reply`, `threads-bio`, `reddit-profile`, `fb-page`, plus one `reddit-<sub>` per subreddit.
 
 - [ ] **Avatar, every platform + Fanvue** → `~/Bernard/ofm/POST_READY/00_AVATAR_P12.jpeg` (source `pipeline/out/a1/approved/p12_streak_portrait_v1.jpeg`). Circle crop centred on the face. Do **not** use `ref.png`.
 
@@ -94,13 +102,13 @@ T3 ready/morning: R10 R05 R04 R17 R18       (5)
 
 ### How to post a Reel (same every time)
 
-| Step | Instagram | TikTok | X |
-|---|---|---|---|
-| 1 | Upload the `.mp4` as a Reel | Upload the same `.mp4` | Upload the same `.mp4` |
-| 2 | Add a **trending sound** (audio browser, look for the ↗ arrow) | Add a trending sound | Leave silent (no music library) |
-| 3 | Add each **beat** as timed text, top third of the screen (the hook already sits low). 5 s clip: about 1.2 s per beat. R08: about 2.5 s | Same beats | No beats |
-| 4 | Paste caption, then the CTA on a new line | Same | Caption only |
-| 5 | AI label ON. Trial toggle optional; if you use it, use it on every T1/T2/T3 Reel so the test stays fair. **R06: normal Reel, then pin it** | AI-generated content ON | If the table says "Reply under it", post the reply straight after |
+| Step | Instagram | TikTok | X | Facebook Page (every IG Reel) |
+|---|---|---|---|---|
+| 1 | Upload the `.mp4` as a Reel | Upload the same `.mp4` | Upload the same `.mp4` | Upload the same `.mp4` as a Reel, **natively** on the Page (not the IG "share to Facebook" toggle) |
+| 2 | Add a **trending sound** (audio browser, look for the ↗ arrow) | Add a trending sound | Leave silent (no music library) | Add a sound from FB's library, same mood |
+| 3 | Add each **beat** as timed text, top third of the screen (the hook already sits low). 5 s clip: about 1.2 s per beat. R08: about 2.5 s | Same beats | No beats | Same beats |
+| 4 | Paste caption, then the CTA on a new line | Same | Caption only | Same caption and CTA. **No link in the caption** |
+| 5 | AI label ON. Trial toggle optional; if you use it, use it on every T1/T2/T3 Reel so the test stays fair. **R06: normal Reel, then pin it** | AI-generated content ON | If the table says "Reply under it", post the reply straight after | AI label ON. R06: pin it on the Page too |
 
 - Sounds: no lyrics about being single, meeting up, or "being real". Mood hint is in the table.
 - All times are UK clock time. The clocks go back on Sun 25 Oct; nothing to change, just post at the time shown.
@@ -108,6 +116,7 @@ T3 ready/morning: R10 R05 R04 R17 R18       (5)
 ## 4. Day-by-day (19 Oct to 1 Nov)
 
 Only Reels that passed QC and photos approved in `APPROVAL.md`. Instagram never gets a link. X gets one link reply a day.
+**Every row with an IG Reel also goes to the Facebook Page at the same time** (17 Reels). Photos and carousels stay off FB in this test.
 Photo captions come from `BACKLOG_A.md` §3. One change, accepted by you: P13 on Wed 21 uses `Mornings start slow here.` (the original says Sunday).
 P10 (rejected) is replaced: P04 on Wed 21 and P16 on Sat 31. P06 is kept out of the first 3 posts.
 
@@ -170,7 +179,7 @@ P10 (rejected) is replaced: P04 on Wed 21 and P16 on Sat 31. P06 is kept out of 
 | 55 | Sun 1 Nov | 19:30 | IG · TT · Threads | `55_2026-11-01_IG-TT-TH_R18.mp4` | Coffee at the window. → Flowers in the jug. → Sauce on all afternoon. → Wine at seven. | Nothing happened today and it was perfect. | IG/TT: Follow for slow Sundays · X: no link on this post | IG/TT trending sound, calm acoustic morning. X: post silent. |
 | 56 | Sun 1 Nov | 22:00 | X | `56_2026-11-01_X_P07.jpeg` | — | Pick one. I'll pour. | Reply under it: `The full set is on my page (18+, AI) → [x-reply link]` | — |
 
-## 5. The 3 numbers to log each day (2 min, after the evening post)
+## 5. The 4 numbers to log each day (3 min, after the evening post)
 
 From the `PLAYBOOK.md` §8 day-14 gate (Mon 26 Oct, about 7 days live).
 
@@ -179,23 +188,24 @@ From the `PLAYBOOK.md` §8 day-14 gate (Mon 26 Oct, about 7 days live).
 | 1 | **Tracking-link clicks today** (all links added up) | Fanvue → tracking links | **40+ in total** |
 | 2 | **New paying fans today** | Fanvue | **1+ in total** |
 | 3 | **Views on yesterday's Reel** (24 h) | IG Insights on the Reel | **Median 300+**, or one Reel 3,000+ |
+| 4 | **FB views on yesterday's Reel** (24 h) + `fb-page` clicks | Page insights + Fanvue | No gate. Day-14 read: keep FB if its median ≥ IG's |
 
-| Date | Clicks | Running total | Paying fans | Running total | Reel views (24 h) |
-|---|---|---|---|---|---|
-| Mon 19 Oct | | | | | — |
-| Tue 20 Oct | | | | | R06: · R01: |
-| Wed 21 Oct | | | | | R03: |
-| Thu 22 Oct | | | | | R10: |
-| Fri 23 Oct | | | | | R02: |
-| Sat 24 Oct | | | | | R08: |
-| Sun 25 Oct | | | | | R05: · R07: |
-| **Mon 26 Oct: GATE** | | **40+?** | | **1+?** | R04: · R12: · median: |
-| Tue 27 Oct | | | | | R09: |
-| Wed 28 Oct | | | | | R13: |
-| Thu 29 Oct | | | | | R17: |
-| Fri 30 Oct | | | | | R11: |
-| Sat 31 Oct | | | | | R14: |
-| Sun 1 Nov: format read | | | | | R15: · per-format medians (T1 / T2 / T3): |
+| Date | Clicks | Running total | Paying fans | Running total | Reel views (24 h) | FB Reel views (24 h) / `fb-page` clicks |
+|---|---|---|---|---|---|---|
+| Mon 19 Oct | | | | | — | |
+| Tue 20 Oct | | | | | R06: · R01: | |
+| Wed 21 Oct | | | | | R03: | |
+| Thu 22 Oct | | | | | R10: | |
+| Fri 23 Oct | | | | | R02: | |
+| Sat 24 Oct | | | | | R08: | |
+| Sun 25 Oct | | | | | R05: · R07: | |
+| **Mon 26 Oct: GATE** | | **40+?** | | **1+?** | R04: · R12: · median: | |
+| Tue 27 Oct | | | | | R09: | |
+| Wed 28 Oct | | | | | R13: | |
+| Thu 29 Oct | | | | | R17: | |
+| Fri 30 Oct | | | | | R11: | |
+| Sat 31 Oct | | | | | R14: | |
+| Sun 1 Nov: format read | | | | | R15: · per-format medians (T1 / T2 / T3): | |
 
 | Mon 26 Oct result | Action (PLAYBOOK §8) |
 |---|---|
@@ -204,13 +214,15 @@ From the `PLAYBOOK.md` §8 day-14 gate (Mon 26 Oct, about 7 days live).
 | 40+ clicks, 0 paying | Change one thing: Fanvue page, price or trial link. Re-check Mon 2 Nov |
 | Median Reel under 200 views AND X + Reddit under 20 clicks | Stop, or one last format change, hard re-check Mon 2 Nov |
 
-On Sun 1 Nov also read, per format, sends per reach and follows per 1,000 reach (IG Insights). The winning format runs 4+ times a week from day 15.
+On Sun 1 Nov also read, per format, sends per reach and follows per 1,000 reach (IG Insights). **Use each Reel's 72-hour numbers for this read**, not 24 h, and the symptom → fix checklist in `COACH_VIDEOS_2026-10-16.md` §4 (one change only). The winning format runs 4+ times a week from day 15. Also compare FB vs IG median views per Reel: FB stays if it is level or ahead.
 
 ## 6. Rules while posting
 
 | Rule | Detail |
 |---|---|
-| Instagram link | None anywhere until Wed 18 Nov. Not in bio, stories, comments or DMs |
+| Instagram link | None anywhere during this pack (to Sun 1 Nov). Not in bio, stories, comments or DMs. After it: story-link test from Mon 2 Nov only if the day-14 gate passed (PLAYBOOK §5); bio and posts stay link-free to Wed 18 Nov |
+| Facebook Page | Same Reel, same time as IG, AI label on. Link only in the Page's website field. Any Page restriction → stop FB that day |
+| Comment replies | **10 min after the evening Reel**: reply to new IG comments with a short question, in her voice. Never claim to be real. Never move to DMs |
 | X link | Only as a reply under her own post, only where the table says so |
 | Reddit | AI flair on every post. Link only in the first comment. One tracking link per sub |
 | "Are you real?" | You answer it yourself, always truthfully (`COPY_PACK.md` §6) |
@@ -220,6 +232,8 @@ On Sun 1 Nov also read, per format, sends per reach and follows per 1,000 reach 
 ## 7. Decisions for you
 
 - [ ] 🎮📺🧯🔁🌙 **Say yes or no to re-rendering R16 and R19 (2 clips, about $0.45).** Not needed for the calendar: every day already has a Reel. They would only restore the second Reel on Sat 31 and Sun 1.
+
+- [ ] 🔞🧭🪧🛡️🌗 **Say yes or no to setting Instagram's minimum audience age to 18 on day 0.** Safer for an 18+ funnel; may trim reach a little (coach video 1, item 1.9).
 
 Already settled, no action: the P13 caption (you accepted it). R03, R13, R14 pads and the R06 phone look like real products' shapes but carry no logo (same call as p06 in `APPROVAL.md`). R17 shows her back for half the clip; it fits the idea, so it stays.
 

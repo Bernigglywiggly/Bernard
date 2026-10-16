@@ -6,6 +6,13 @@ Changes from: `ALIGNMENT_2026-10-12.md` (gates, order, links, formats, expectati
 Status: **plan only. Persona not picked. Nothing created, posted or sent.**
 [E] = estimate. Calendar: day 0 = Mon 12 Oct.
 
+**Changed 16 Oct** (evidence: `COACH_VIDEOS_2026-10-16.md` + community pass 16 Oct)
+- Price: new **$80-$250 top tier** (VIP list only). **Trials de-prioritised**; the 3-month bundle is the default offer.
+- **Facebook Page Reels = required week-1 test** with its own `fb-page` link and log column (was an optional week-2 test).
+- **IG story link = test from Mon 2 Nov** (live day 15) if the day-14 gate passed and Account Status is clean. Bio and posts stay link-free to Wed 18 Nov.
+- Scale phase: **2 Reels a day (1 new + 1 Trial variant)**; any Reel at 10K+ views gets 3-5 Trial variants. Format reads at 72 h.
+- Metrics: coach benchmark lines added (§8). Day-14 audience check adds 85%+ male.
+
 ---
 
 ## 1. One-page summary
@@ -17,11 +24,12 @@ Status: **plan only. Persona not picked. Nothing created, posted or sent.**
 | Disclosure | Openly AI everywhere: bios, IG label, TikTok label, Reddit AI tag, welcome message, every "are you real?" |
 | Build order | **Chat + paid-message ladder + Day 1/3/7 messages first.** Then a small backlog: **14 Reels + 20 photos.** |
 | Money comes from | Paid messages / PPV (60 to 70%), not the subscription |
-| Fanvue link | **X (in a reply) + Reddit (AI-allowed subs only) from launch day.** Threads bio too. **Instagram link-free for 30 days (to Wed 18 Nov)**, then a plain link in stories only. |
+| Fanvue link | **X (in a reply) + Reddit (AI-allowed subs only) from launch day.** Threads bio too. **Facebook Page from launch (week-1 test).** **Instagram bio and posts link-free for 30 days (to Wed 18 Nov).** Plain story link: test from Mon 2 Nov only if the day-14 gate passed and Account Status is clean. |
 | Reach formats | **"With her" POV for men 35 to 54** (US + UK). At most 1 in 4 Reels as advice or roast. |
 | Face lock | **Reference-edit model** from the approved A1 image. Text-only and style-reference routes do not hold the face. |
 | Not used | YouTube (link bans). TikTok = reach only, no link. |
-| Price | Free follow on, $7.99 sub, 3-month bundle 20 to 30% off, PPV $6 to $9 → $15 to $25 → $40+ |
+| Facebook | **Required week-1 test:** every IG Reel also goes to a Facebook Page, same day, own `fb-page` tracking link (§5) |
+| Price | Free follow on, $7.99 sub, **3-month bundle 20 to 30% off = default offer**, no trial links at launch. PPV $6 to $9 → $15 to $25 → $40+ → **$80 to $250 top tier (VIP list only)** |
 | Chat | 2 fixed inbox windows a day + VIP notifications |
 | Content cost | about $23/month WaveSpeed (≈ £17) + Fanvue 20% (15% first 30 days) |
 | His time | 8 to 10 h in setup week, then about 10 h/week |
@@ -59,7 +67,8 @@ flowchart LR
     X["X posts<br/>link in a reply"] --> FV
     RD["Reddit<br/>AI-allowed subs only<br/>AI tag on every post"] --> FV
     TH["Threads<br/>link in bio"] --> FV
-    IG -.->|"after 30 days<br/>plain link in stories"| FV
+    FB["Facebook Page Reels<br/>AI label, week-1 test<br/>fb-page link"] --> FV
+    IG -.->|"story-link test from day 15<br/>if gate passed; bio after 30 days"| FV
     FV["Fanvue page<br/>free follow ON<br/>bio says AI"] --> W["Welcome message<br/>says AI, asks a question"]
     W --> D1["Day 1: question<br/>no sale"]
     D1 --> D3["Day 3: remembers<br/>their detail"]
@@ -68,6 +77,7 @@ flowchart LR
     D7 -->|"no"| D1
     P1 --> P2["Sets $15-25<br/>bundle $40+"]
     P2 --> V["$50+ VIP list<br/>priority replies, first look,<br/>6/12-month bundles"]
+    V --> T["Top tier $80-250<br/>archive + collection"]
     FV --> S["$7.99 sub or<br/>3-month bundle"]
 ```
 
@@ -87,7 +97,7 @@ flowchart LR
 | 1 | Tue 13 Oct | Pick persona A / B / C; agree launch date Mon 19 Oct | **Him** |
 | 2 | Fri 16 Oct | Fanvue sign-up, KYC, tax, bank, mark account as AI | **Him** |
 | 3 | Fri 16 Oct | **Chat engine:** welcome automation, Day 1/3/7 messages, Creator Personality file, two inbox windows set, Fan Notes habit (`COPY_PACK.md` §4 to §6) | Assistant writes, he pastes |
-| 4 | Fri 16 Oct | **Paid-message ladder:** $7.99 sub, 3-month bundle, 7-day capped trial link per channel, tracking links, 5 PPV set listings | Assistant writes, he sets |
+| 4 | Fri 16 Oct | **Paid-message ladder:** $7.99 sub, 3-month bundle as the default offer (no trial links at launch), tracking links incl. `fb-page`, 5 PPV set listings + 1 top-tier listing ($80-$250) | Assistant writes, he sets |
 | 5 | Sat 17 Oct | 5 paid PPV sets made on his own tool, matching the face | **Him** |
 | 6 | Thu 15 Oct | **Identity set: 20 to 30 images via reference-edit** (Nano Banana 2.1 Edit; A/B Seedream 5.0 Flash Edit on 3 scenes, keep whichever holds the face). Never text-only or soul_2 style-ref. | Assistant, his yes on the face |
 | 7 | Thu 15 Oct | Independent QC agent checks every image: same face 10/10, reads 35+, streak present | Agent |
@@ -108,14 +118,14 @@ flowchart LR
 |---|---|---|---|
 | X | **Link engine #1, from launch** | `x-bio` + link in a **reply** under 1 in 3 posts | Label any adult media; never adult avatar/header |
 | Reddit | **Link engine #2, from launch** | `reddit-<sub>` tracking link per subreddit | **Only subreddits that allow AI.** AI tag on every post. Never the same link in many subs. Read each sub's rules first. |
-| Instagram | **Reach engine.** Reels + stories. | **None for 30 days after launch (to Wed 18 Nov).** Then a plain link in stories only (`ig-story`), never cloaked. | "AI-generated profile" on before post 1. Check Account Status weekly. |
+| Instagram | **Reach engine.** Reels + stories. | **Bio and posts: none for 30 days after launch (to Wed 18 Nov).** **Story-link test from Mon 2 Nov (live day 15)**, only if the day-14 gate passed and Account Status is clean: plain `ig-story` link in 1 story a day, never cloaked, never highlights. "Not recommended" = remove that day. | "AI-generated profile" on before post 1. Check Account Status weekly. |
 | Threads | Cross-post, low effort | `threads-bio` | Conversational captions |
 | TikTok | Reach only | None | AI label on every post with her in it |
 | Fanvue | Where money happens | — | 20 wall posts before launch. Bio says AI. |
-| Facebook Page | Optional test from week 2 | Links allowed | One test, measured like the rest |
+| Facebook Page | **Required week-1 test (from Mon 19 Oct).** Every IG Reel posted natively to the Page, same day, same clean `.mp4` and caption | `fb-page` tracking link in the Page intro/website field only, never in captions | AI label on each Reel; Page bio says AI. Created from his real personal profile (Meta rule). Log FB Reel views separately. Day-14 read: if FB reach ≥ IG, keep; if the Page gets any restriction, stop it the same day |
 | YouTube | **No** | — | Channel terminations for sexual-content links (Jul 2026) |
 
-- Audience target: **men 35 to 54, US + UK.** Day-14 check: 40%+ US/UK/CA/AU, 50%+ men 25 to 54.
+- Audience target: **men 35 to 54, US + UK.** Day-14 check: 40%+ US/UK/CA/AU, 50%+ men 25 to 54, **85%+ male**.
 - Posting window: **UK 19:00 to 22:00** (= US East 14:00 to 17:00). Clocks: UK changes 25 Oct, US 1 Nov.
 
 ---
@@ -137,8 +147,9 @@ flowchart LR
 
 | Platform | Test phase: 19 Oct to 1 Nov | Scale phase: 2 Nov to 3 Dec |
 |---|---|---|
-| Instagram Reels | 1 a day (2 at weekends), 3 POV formats rotated | 1 to 2 a day; winning format ≥ 4 a week; retest winners as Trial Reels |
-| Instagram stories | 3 a day | 3 a day; still no link (story link from Thu 19 Nov) |
+| Instagram Reels | 1 a day (2 at weekends), 3 POV formats rotated | **2 a day: 1 new + 1 Trial Reel variant**; winning format ≥ 4 a week. **Any Reel at 10K+ views → 3 to 5 Trial variants, one change each** (outfit colour, timing, opening frame); about $0.22 each. Judge at 72 h |
+| Facebook Page Reels | Every IG Reel, same day (week-1 test) | Keep if day-14 FB reach ≥ IG; else drop |
+| Instagram stories | 3 a day | 3 a day; **story-link test from Mon 2 Nov** if the day-14 gate passed (1 linked story a day) |
 | X | 2 to 3 posts a day; link reply on 1 in 3 | 3 a day |
 | Reddit | 1 post a day across AI-allowed subs; never repeat a sub inside 3 days | 1 to 2 a day in the subs that brought subs |
 | Threads | 1 to 2 a day | 2 a day |
@@ -147,7 +158,7 @@ flowchart LR
 
 | Backlog | Pre-launch | Monthly after |
 |---|---|---|
-| Reels | 14 | 20 to 30 |
+| Reels | 14 | 20 to 30 new + up to 30 Trial variants |
 | Photos | 20 | 60 |
 | His approval time | about 40 min | about 1.5 to 2 h |
 
@@ -186,6 +197,15 @@ flowchart LR
 | Net per paying fan, £ per chat hour | Money | Fanvue + log |
 | Inbox windows kept (days) | Ops | Log |
 | IG Account Status, audience country/age/gender | Risk | IG |
+| FB Page Reel views, `fb-page` clicks and paying fans | Leading / decides | FB + Fanvue |
+
+| Coach benchmark lines (V3, unverified; replace with our own 30-day median once we have one) | Line |
+|---|---|
+| Non-follower share of reach | 60% |
+| Saves per 1K reach | 10+ |
+| Shares (sends) per 1K reach | 5+ |
+| Profile visits per 1K reach | 20 to 40 |
+| Follows per profile visit | 8 to 15% |
 
 ### Day 7: Mon 19 Oct (execution gate)
 
@@ -200,7 +220,7 @@ flowchart LR
 |---|---|
 | **40+ tracking-link clicks AND 1+ paying fan** (plus 10+ Reels, 15+ X/Reddit posts, median Reel 300+ views or one 3,000+, 5+ free follows) | **Continue** |
 | Reach passes, clicks under 40 | Fix one thing: link placement or call to action. Re-check day 21 (Mon 2 Nov). |
-| Clicks 40+, 0 follows | Fix one thing: Fanvue page, price or trial link. Re-check day 21. |
+| Clicks 40+, 0 follows | Fix one thing: Fanvue page, price or bundle offer. Re-check day 21. |
 | Median Reel under 200 views AND X/Reddit under 20 clicks | **Stop**, or one last format change, hard re-check day 21 |
 | IG flagged "not recommended" AND X/Reddit under 20 clicks | **Stop** |
 
@@ -264,7 +284,7 @@ flowchart LR
 
 - [ ] 🎬🗂️🔒🧪🍷 **Make 5 paid PPV sets on your own tool, matching the face, and upload them. By Sat 17 Oct.**
 
-- [ ] 📱🏷️🧩🚪🐈 **Create IG, X, Threads, TikTok, Reddit with AI labels on, display name `Nadia Vale · AI`. By Sun 18 Oct.**
+- [ ] 📱🏷️🧩🚪🐈 **Create IG, X, Threads, TikTok, Reddit + a Facebook Page (from your own profile) with AI labels on, display name `Nadia Vale · AI`. By Sun 18 Oct.**
 
 - [ ] 🔑📁🛡️🧯⚙️ **Create `~/Bernard/ofm/.env` with `WAVESPEED_API_KEY=...` yourself. Never paste it in chat.**
 

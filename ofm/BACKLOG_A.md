@@ -190,3 +190,15 @@ T3 getting ready/morning: R10 R05 R04 R17 R19 R18
 | Tracking-link clicks and subs | Fanvue (`x-reply`, `x-bio`, `reddit-<sub>`) | 40+ clicks and 1+ paying fan by Mon 26 Oct (alignment gate) |
 
 - From day 15: the winning format runs 4+ times a week; the losing one is dropped. Winners get retested as Trial Reels.
+
+## Seasonal sets (added 16 Oct; a coach says Oct-Dec ≈ 50% of agency yearly revenue — promotional, but the calendar is real)
+
+| Date | Moment | SFW social idea (Seedream) | Fanvue / PPV angle (his content) | Make by |
+|---|---|---|---|---|
+| Fri 31 Oct | Halloween | Elegant vampire / witch look in her flat, candles, red wine; POV "you're late to my Halloween drinks" | Themed set, time-limited (48 h) | Tue 28 Oct |
+| Wed 5 Nov | Bonfire Night (UK) | Scarf + coat on the balcony, sparklers out of shot, mulled wine; "watching the fireworks from mine?" | Cosy-night bundle | Mon 3 Nov |
+| Fri 27 Nov | Black Friday | "My only Black Friday deal" talking-to-camera Reel | Biggest bundle discount of the year (3/6-month), not a sub price cut | Mon 24 Nov |
+| Fri 12 Dec onwards | Christmas party season | Velvet dress, party prep GRWM; Christmas jumper cooking Reel | Advent-style 12-day drops for the $50+ list | Mon 8 Dec |
+| Wed 31 Dec | New Year's Eve | "Midnight with me" POV, champagne | NYE set + January loyalty offer | Mon 29 Dec |
+
+Rules: clearly adult, tasteful costumes only (no school/young-coded costumes), AI label on, no real brands. Each seasonal Reel gets 3 Trial Reel variants if it passes 10K views (coach rule, PLAYBOOK).

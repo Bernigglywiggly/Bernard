@@ -19,12 +19,14 @@ import { v2 } from "./palette";
 // under our narration and graphics). Timings follow the narration's pauses (vo_c_real_chris.mp3):
 // S1 0.00-2.30 · S2 2.84-6.30 · S3 7.06-9.34 · S4 10.05-11.90 (seconds).
 
-const RealClip: React.FC<{ src: string; trimBeforeSec: number; rate: number; push: [number, number]; frames: number }> = ({
+export const RealClip: React.FC<{ src: string; trimBeforeSec: number; rate: number; push: [number, number]; frames: number;
+  objectPosition?: (f: number) => string }> = ({
   src,
   trimBeforeSec,
   rate,
   push,
   frames,
+  objectPosition,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -39,6 +41,7 @@ const RealClip: React.FC<{ src: string; trimBeforeSec: number; rate: number; pus
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          objectPosition: objectPosition ? objectPosition(frame) : "50% 50%",
           filter: "saturate(1.15) contrast(1.08) brightness(1.05)",
           scale: interpolate(frame, [0, frames], push, CLAMP),
         }}

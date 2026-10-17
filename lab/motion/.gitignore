@@ -18,3 +18,6 @@ public/whatif/*/sound*.mp3
 
 # Stand-in trial media (copied from lab/curve_v2/trials)
 public/trials/
+
+# whisper.cpp install + models (scripts/whisper-setup.mjs)
+whisper.cpp/

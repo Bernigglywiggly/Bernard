@@ -18,13 +18,13 @@ import { v2 } from "./palette";
 // Style trial C (Oct 2026 reboot): real footage underneath, The Curve v2 graphics on top.
 // The clips here are AI stand-ins; in the film they are swapped for short, commented cuts of the real livestream.
 
-const keyline = (u: number, w = 10): React.CSSProperties => ({
+export const keyline = (u: number, w = 10): React.CSSProperties => ({
   WebkitTextStroke: `${w * u}px ${v2.colors.black}`,
   paintOrder: "stroke fill",
 });
 
 // --------------------------------------------------------------------------------------------- background clips
-const Clip: React.FC<{ src: string; frames: number; push?: [number, number] }> = ({ src, frames, push = [1, 1.06] }) => {
+export const Clip: React.FC<{ src: string; frames: number; push?: [number, number] }> = ({ src, frames, push = [1, 1.06] }) => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ overflow: "hidden", backgroundColor: v2.colors.black }}>
@@ -44,7 +44,7 @@ const Clip: React.FC<{ src: string; frames: number; push?: [number, number] }> =
 };
 
 // --------------------------------------------------------------------------------------------- hook text
-const Word: React.FC<{ text: string; delay: number; color: string; size: number; glow?: string }> = ({
+export const Word: React.FC<{ text: string; delay: number; color: string; size: number; glow?: string }> = ({
   text,
   delay,
   color,
@@ -104,7 +104,7 @@ const Hook: React.FC<{ u: number }> = ({ u }) => {
 };
 
 // --------------------------------------------------------------------------------------------- callout
-const Ring: React.FC<{ x: number; y: number; color: string; u: number; start: number }> = ({ x, y, color, u, start }) => {
+export const Ring: React.FC<{ x: number; y: number; color: string; u: number; start: number }> = ({ x, y, color, u, start }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const period = Math.round(0.8 * fps);
@@ -149,7 +149,7 @@ const Ring: React.FC<{ x: number; y: number; color: string; u: number; start: nu
   );
 };
 
-const Label: React.FC<{ text: string; color: string; u: number; x: number; y: number; start: number }> = ({
+export const Label: React.FC<{ text: string; color: string; u: number; x: number; y: number; start: number }> = ({
   text,
   color,
   u,
@@ -184,7 +184,7 @@ const Label: React.FC<{ text: string; color: string; u: number; x: number; y: nu
   );
 };
 
-const Leader: React.FC<{ d: string; color: string; u: number; start: number }> = ({ d, color, u, start }) => {
+export const Leader: React.FC<{ d: string; color: string; u: number; start: number }> = ({ d, color, u, start }) => {
   const frame = useCurrentFrame();
   const { fps, width, height } = useVideoConfig();
   const p = interpolate(frame, [start, start + 0.35 * fps], [0, 1], { ...CLAMP, easing: EASE_OUT });
@@ -201,7 +201,7 @@ const Leader: React.FC<{ d: string; color: string; u: number; start: number }> =
 };
 
 // A label that points at a (possibly moving) target and leaves fast.
-const Callout: React.FC<{
+export const Callout: React.FC<{
   text: string;
   color: string;
   u: number;
@@ -289,7 +289,7 @@ const Counter: React.FC<{ u: number }> = ({ u }) => {
 };
 
 // --------------------------------------------------------------------------------------------- "?" push-through
-const PushThrough: React.FC<{ u: number }> = ({ u }) => {
+export const PushThrough: React.FC<{ u: number }> = ({ u }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const grow = interpolate(frame, [0, 0.45 * fps], [0.15, 28], {
@@ -326,7 +326,7 @@ const PushThrough: React.FC<{ u: number }> = ({ u }) => {
   );
 };
 
-const Iris: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const Iris: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const r = interpolate(frame, [0, 0.45 * fps], [0, 80], { ...CLAMP, easing: EASE_OUT });

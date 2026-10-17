@@ -40,7 +40,7 @@ Quotes come from YouTube auto-captions of Tesla's stream. **Play the audio befor
 | About Mach 0.5 (roughly 380 mph) | ASPIRATION | Musk (20:41-20:49) | P1 |
 | "Half a mile in the time other cars do a quarter" | CLAIMED | Musk (19:19). No time given | P1 |
 | The car refills its own air tank | **CONFLICT** | Musk on stage (12:30). Moravy to Top Gear: filled through a nozzle from high-pressure nitrogen, taking 2-6 h today, with a goal under 30 min; one launch per fill | P1, S1 |
-| Production in 2028 | CLAIMED | Musk (21:12): "actually". This is the eighth production date since 2017 | P1, S7 |
+| Production in 2028 | CLAIMED | Musk (21:12): "actually". Comes after at least six production slips since 2017 (Electrek's count) | P1, S7 |
 | A Snake River Canyon jump | PLANNED | Follow-up demo, Evel Knievel-style (19:58) | P1 |
 | "It was staged or CGI" | **RUMOUR** | An Autonocion opinion piece, with no technical evidence. See §8 | S16 |
 | "Remote-operated, not street-legal" | MOSTLY TRUE | Electrek said "reportedly" before the event. Musk said autonomous; Tesla's page says Rocket is not approved for public roads | S7, P1, P10 |
@@ -175,7 +175,7 @@ down by almost exactly the Nasdaq's fall.
 | Safety | TechRadar; Moravy | 80 kN of exhaust could turn gravel into projectiles; a rollercoaster-style harness would be needed | S13, S1 |
 | Safety | TechCrunch | COPVs have been linked to past SpaceX rocket explosions | S2 |
 | Staged? | Autonocion | Says the flights were pre-recorded or CGI. Opinion only, with no frame analysis | S16 |
-| Against "staged" | Evidence | Tesla's aerial shot shows the crowd's grandstand beside the ramp (Ramp clip 0:35-0:42); DragTimes filmed it in person (678k views); Tesla calls all three "live demos" | P2, S23, P2-P4 |
+| Against "staged" | Evidence | Tesla's wide aerial (Ramp clip 0:35-0:42) shows a long lit structure beside the ramp that looks like the spectator stand (our reading of low-res frames); DragTimes filmed it in person (678k views); Tesla calls all three "live demos" | P2, S23, P2-P4 |
 | Fair caveat | Evidence | The 0-60 segment opened with a pre-recorded test; the car was driverless and sits on a bespoke chassis | P1, S1 |
 | Credibility | MKBHD | "This is a prank, right?": a 4,000+ lb car doing flips at 380+ mph; no street tyre exists for that | S15 |
 | Credibility | Record | Production promised for 2020, now 2028; range cut from 620 to about 310-320 mi | S21, S1 |
@@ -219,10 +219,10 @@ Timings for B and C are within ±1 s (storyboard frames every 0.98 s). Timings m
 | # | Video @ time | Link | What it shows |
 |---|---|---|---|
 | 1 | **B 0:18-0:25** | https://www.youtube.com/watch?v=7p5LxFdc-Qg&t=18s | **Best shot.** Close angle: hangs upside down at the top of the ramp, drops, blue side jets fire, down-jets fire, lands in smoke |
-| 2 | B 0:03-0:09 | https://www.youtube.com/watch?v=7p5LxFdc-Qg&t=3s | Wide: climbs the 68 ft curl until it's inverted |
+| 2 | B 0:03-0:09 | https://www.youtube.com/watch?v=7p5LxFdc-Qg&t=3s | Wide: climbs the curl (about 68 ft, per Tesla Oracle) until it's inverted |
 | 3 | B 0:09-0:15 | https://www.youtube.com/watch?v=7p5LxFdc-Qg&t=9s | Leaves the top, three thruster plumes, smoke-cloud landing |
 | 4 | B 0:27-0:29 | https://www.youtube.com/watch?v=7p5LxFdc-Qg&t=27s | Overhead drone: the roll and landing from above |
-| 5 | B 0:35-0:42 | https://www.youtube.com/watch?v=7p5LxFdc-Qg&t=35s | Wide aerial with the **crowd's grandstand** beside the ramp; mid-air roll at 0:38. Our proof it was live |
+| 5 | B 0:35-0:42 | https://www.youtube.com/watch?v=7p5LxFdc-Qg&t=35s | Wide aerial: the whole run, with a mid-air roll at 0:38, beside a long lit structure that looks like the spectator stand (check in HD). Possible proof it was live |
 | 6 | **C 0:13-0:17** | https://www.youtube.com/watch?v=r5vsHHPVhJg&t=13s | **Best shot.** Side view: upside down above the Semi lineup, rolls upright, lands |
 | 7 | C 0:06-0:11 | https://www.youtube.com/watch?v=r5vsHHPVhJg&t=6s | Head-on: approach and lift-off over the Semi |
 | 8 | C 0:26-0:30 | https://www.youtube.com/watch?v=r5vsHHPVhJg&t=26s | Close: rolling over the Semi with jets firing, then the smoke landing |

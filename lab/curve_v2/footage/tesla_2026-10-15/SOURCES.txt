@@ -2,3 +2,17 @@ Source: Tesla official YouTube uploads (rights: Tesla). Used as short, credited 
 7p5LxFdc-Qg "The Ramp" 0:18-0:25
 r5vsHHPVhJg "The Kickflip" 0:13-0:17
 qt5p-_tE8d0 "Roadster Event" 18:29-18:36
+7p5LxFdc-Qg "The Ramp" 0:18-0:25 in 2160p (format 313) for punch-ins
+
+Film clip log (17 Oct 2026; all Tesla uploads, 3840x2160 23.976 fps, video only; used muted, under our narration,
+credited on screen and in the description; why each is needed: evidence for the narration line it sits under)
+film/ramp_climb_wide   7p5LxFdc-Qg "The Ramp"     0:03-0:09  wide climb up the curl (needs punch-in: car is tiny)
+film/ramp_leave_top    7p5LxFdc-Qg "The Ramp"     0:09-0:15  leaves the top, jets, smoke landing
+film/ramp_overhead     7p5LxFdc-Qg "The Ramp"     0:26-0:30  overhead drone: mid-air roll with jets (S2 roll)
+film/ramp_aerial_wide  7p5LxFdc-Qg "The Ramp"     0:35-0:42  wide aerial of the whole run (S8 establishing)
+film/kick_headon       r5vsHHPVhJg "The Kickflip" 0:06-0:11  head-on approach and lift over the lineup
+film/kick_side         r5vsHHPVhJg "The Kickflip" 0:13-0:17  inverted over the Semi, rolls upright, lands
+film/kick_close        r5vsHHPVhJg "The Kickflip" 0:26-0:30  close roll over the Semi, jets, smoke landing
+film/kick_under        r5vsHHPVhJg "The Kickflip" 0:32-0:35  low angle, underside visible while inverted (S1 fans)
+film/zero60            Zg9Q56t7bdo "The 0-60"     whole (0.96 s) launch in tyre smoke (S3)
+FAILED (ffmpeg code 8): cvKIR-c1SsU 0:53-0:59 product film (reference only); qt5p-_tE8d0 stream sections

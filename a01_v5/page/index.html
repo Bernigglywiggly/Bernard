@@ -1,0 +1,355 @@
+<title>One Line, Many Worlds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Unbounded:wght@600;800&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --ground:#07080B; --panel:#0E1016; --panel2:#12151D; --ink:#ECEDEF; --soft:#C9CCD3; --dim:#8A90A0; --faint:#252932;
+  --amber:#FFB23F; --amber-soft:rgba(255,178,63,.14);
+  --w-stair:#8C857A; --w-lobby:#3A5BA8; --w-void:#3A3F4B; --w-press:#ECE6DA; --w-cloud:#F5F5F5; --w-chrome:#BEC6D2; --w-signal:#5CFF9D;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"IBM Plex Sans",-apple-system,"Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:400 16px/1.6 var(--body);padding-inline:clamp(16px,4vw,40px);padding-block:0 72px}
+.wrap{max-width:1080px;margin:0 auto}
+a{color:var(--amber)}
+.eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.02em;text-wrap:balance;margin:0}
+h1{font-size:clamp(36px,6.6vw,78px);line-height:.96;margin-block:14px 18px}
+h1 em{font-style:normal;color:var(--amber)}
+h2{font-size:clamp(22px,3.4vw,34px);line-height:1.06;margin-block:0 6px}
+h3{font-size:17px;line-height:1.2;font-weight:600}
+.lede{font-size:clamp(17px,2vw,20px);max-width:60ch;color:var(--soft);margin:0}
+header{padding-block:44px 28px}
+section{padding-block:52px 8px;border-top:1px solid var(--faint)}
+.sub{color:var(--dim);max-width:66ch;margin:4px 0 22px}
+/* reel */
+.reel{margin-top:6px;border:1px solid var(--faint);border-radius:14px;overflow:hidden;background:#000}
+.reel video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+.cap{font:400 13px/1.5 var(--mono);color:var(--dim);margin:10px 2px 0}
+/* map */
+.mapbox{overflow-x:auto;border:1px solid var(--faint);border-radius:14px;background:var(--panel);padding:18px 18px 10px}
+.mapbox svg{display:block;min-width:880px;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin:14px 2px 0;font:500 12px/1 var(--mono);color:var(--soft)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.tablebox{overflow-x:auto;margin-top:18px;border:1px solid var(--faint);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--faint);text-align:left;vertical-align:top}
+th{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);background:var(--panel)}
+td.t{font:500 13px/1.5 var(--mono);color:var(--dim);white-space:nowrap;font-variant-numeric:tabular-nums}
+td.w{white-space:nowrap;font:600 12px/1.5 var(--mono)}
+td.w i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px;vertical-align:-1px}
+td.l{color:var(--soft)}
+tr:last-child td{border-bottom:0}
+/* worlds */
+.worlds{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.world{background:var(--panel);border:1px solid var(--faint);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.world img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.wb{padding:14px 16px 16px;display:grid;gap:8px;flex:1}
+.wcode{font:600 11px/1 var(--mono);letter-spacing:.18em;color:var(--dim)}
+.world h3{display:flex;align-items:center;gap:10px}
+.sw{display:flex;gap:5px}
+.sw i{width:18px;height:18px;border-radius:4px;border:1px solid rgba(236,237,239,.18);display:block}
+.world p{margin:0;font-size:14px;color:var(--soft)}
+.reg{font:500 12px/1.4 var(--mono);color:var(--amber)}
+.moves{font:400 13px/1.5 var(--mono);color:var(--dim)}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.opt{font:600 12px/1 var(--mono);letter-spacing:.06em;color:var(--ink);background:var(--panel2);border:1px solid var(--faint);border-radius:999px;padding:9px 13px;cursor:pointer}
+.opt:hover{border-color:#4a4f5c}
+.opt:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.opt[aria-pressed="true"]{border-color:var(--amber);background:var(--amber-soft);color:var(--amber)}
+.saved{font:500 11px/1.2 var(--mono);color:var(--dim);min-height:13px}
+/* constants */
+.consts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;counter-reset:c}
+.const{border:1px solid var(--faint);border-radius:12px;padding:14px 16px;background:linear-gradient(180deg,rgba(255,178,63,.05),transparent)}
+.const b{display:block;font-family:var(--display);font-weight:600;font-size:15px;margin-bottom:4px}
+.const span{font-size:14px;color:var(--soft)}
+.q{background:var(--panel);border:1px solid var(--faint);border-radius:14px;padding:18px;margin-bottom:14px}
+.q h3{margin-bottom:4px}
+.q .why{font-size:13px;color:var(--dim);margin:0 0 12px}
+.note{width:100%;margin-top:10px;background:var(--panel2);color:var(--ink);border:1px solid var(--faint);border-radius:9px;padding:10px;font:inherit;font-size:14px;resize:vertical;min-height:48px}
+.note:focus{outline:2px solid var(--amber);outline-offset:1px}
+.status{font:500 12px/1.4 var(--mono);color:var(--dim);margin:0 0 16px}
+.status.live{color:var(--w-signal)}
+.steps{margin:0;padding-left:20px;display:grid;gap:8px;color:var(--soft);max-width:70ch}
+code{font:500 13px var(--mono);background:var(--panel2);border:1px solid var(--faint);border-radius:5px;padding:1px 5px;color:var(--ink)}
+.pr{border:1px solid var(--faint);border-radius:12px;background:var(--panel);margin-bottom:12px}
+.pr summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 16px}
+.pr summary::-webkit-details-marker{display:none}
+.pr summary:focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:12px}
+.pr .pt{font-family:var(--display);font-weight:600;font-size:15px}
+.pr .pk{font:500 11px/1 var(--mono);letter-spacing:.14em;color:var(--dim);text-transform:uppercase;white-space:nowrap}
+.pr pre{margin:0;padding:0 16px 14px;white-space:pre-wrap;word-break:break-word;font:400 12.5px/1.55 var(--mono);color:var(--soft);max-height:340px;overflow:auto}
+.prbar{display:flex;gap:10px;align-items:center;padding:0 16px 14px}
+.copied{font:500 11px var(--mono);color:var(--w-signal)}
+.nexts{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.nx{border:1px solid var(--faint);border-radius:12px;padding:14px 16px;background:var(--panel);display:grid;gap:8px;align-content:start}
+.nx h3{font-size:16px}
+.nx p{margin:0;font-size:14px;color:var(--soft)}
+.foot{margin-top:36px;font:400 12px/1.6 var(--mono);color:var(--dim)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">A01 · v5 proof · the 50-second hook · 25 Sep 2026</div>
+  <h1>One line. <em>Many worlds.</em></h1>
+  <p class="lede">Five visual palettes, each one a room on the same amber drift line. The room changes with what the voice is doing: facts, street translation, jokes, the deep line. The line, the type and the finish never change, so the variety comes across as range instead of randomness.</p>
+</header>
+
+<div class="reel">
+  <video id="reel" controls playsinline preload="metadata" poster="media/poster.jpg" src="media/reel.mp4"></video>
+</div>
+<p class="cap">Cousin take (Roger, 1.12×) · 17 shots · sound design synthesised on the cut frames · Blender (Eevee, Cycles for chrome) rendered on a 4-core cloud CPU at 540p and upscaled. On your Mac the same scripts render at 1080p with more samples. Headphones on.</p>
+
+<section id="map">
+  <div class="eyebrow">The hook, on the line</div>
+  <h2>Where every world lands</h2>
+  <p class="sub">To scale, 0 to 50 seconds. Each block is a shot, coloured by its world; the label under it is the register it serves. The worlds rotate with the voice, and the amber line never leaves the frame.</p>
+  <div class="mapbox"><svg id="mapsvg" viewBox="0 0 1000 200" role="img" aria-label="Shot map of the 50-second hook"></svg></div>
+  <div class="legend" id="legend"></div>
+  <div class="tablebox"><table>
+    <thead><tr><th>Time</th><th>Shot</th><th>World</th><th>Camera</th><th>Voice</th></tr></thead>
+    <tbody id="shotrows"></tbody>
+  </table></div>
+</section>
+
+<section id="worlds">
+  <div class="eyebrow">The palettes</div>
+  <h2>Five worlds, one line</h2>
+  <p class="sub">Each world is taken from clips you saved, and each has its own camera language. Tap keep, cut or more of this under each one; your taps save here and I build the next pass from them.</p>
+  <p class="status" id="status">Connecting…</p>
+  <div class="worlds" id="worldcards"></div>
+</section>
+
+<section id="constants">
+  <div class="eyebrow">What never changes</div>
+  <h2>The five constants</h2>
+  <p class="sub">These travel through every world. They are why a dithered joke burst and a chrome hero shot still look like the same channel.</p>
+  <div class="consts">
+    <div class="const"><b>The amber line</b><span>#FFB23F, in every shot, always the warmest thing in frame. Even the 3-colour dither keeps amber as one of its colours.</span></div>
+    <div class="const"><b>Near-black edges</b><span>#07080B. Every world falls back to the same ground at its edges.</span></div>
+    <div class="const"><b>Two typefaces</b><span>Unbounded for numbers and headlines, IBM Plex Mono for labels. No third face, ever.</span></div>
+    <div class="const"><b>One finish</b><span>The same highlight bloom, vignette and film grain on every shot, whatever engine or world it came from.</span></div>
+    <div class="const"><b>The frame</b><span>Crop marks, A01, the world code, a mini drift line showing where you are, and a swatch whose last square is always amber.</span></div>
+  </div>
+</section>
+
+<section id="home">
+  <div class="eyebrow">The ending ritual</div>
+  <h2>Every video comes home</h2>
+  <p class="sub">A 12-second template for the last moments of every video. The HUD fades away, the amber stops being a line and becomes the dawn, and whatever hopeful thing you say lands in a quiet, safe place. Same place every time, so it becomes the channel's exhale.</p>
+  <div class="reel"><video controls playsinline preload="metadata" poster="media/poster_home.jpg" src="media/outro.mp4"></video></div>
+  <p class="cap">Placeholder pad synthesised here; swap in the Astra outro theme (prompt 3) or your own FL track.</p>
+  <div class="q" data-q="home" style="margin-top:16px">
+    <h3>Does it feel like home?</h3>
+    <div class="opts">
+      <button class="opt" type="button" data-v="yes" aria-pressed="false">Yes, keep it</button>
+      <button class="opt" type="button" data-v="warmer" aria-pressed="false">Warmer, slower</button>
+      <button class="opt" type="button" data-v="different" aria-pressed="false">Different place</button>
+    </div>
+    <div class="saved" id="saved_home"></div>
+  </div>
+</section>
+
+<section id="astra">
+  <div class="eyebrow">Offload to GPT Astra</div>
+  <h2>Prompts, ready to paste</h2>
+  <p class="sub">Paste the channel brief first, then any task. Each prompt ends with a self-check so Astra fixes its own misses before handing over. The kit items get built once and reused in every video.</p>
+  <div id="prompts"></div>
+</section>
+
+<section id="next">
+  <div class="eyebrow">The backlog</div>
+  <h2>The next five</h2>
+  <p class="sub">Researched today. Each one hits at least three of: emotion, trending, evergreen, high RPM, jaw-drop visuals, genuinely useful. Each adds a new island to the drift map. Suggested order: A02 → A04 → A03 → A06 → A05. Full outlines, sources and set-pieces: <a href="https://github.com/Bernigglywiggly/Bernard/blob/claude/funny-newton-gd9w8v/channel/BACKLOG.md">BACKLOG.md</a>.</p>
+  <div class="nexts">
+    <article class="nx"><div class="wcode">A02 · W5 SHELTER</div><h3>The Government Is About to Tell You to Stockpile. Here's the Real List.</h3><p>Fear turned into a plan: the 72-hour kit, food that works when nothing does, the nuclear rules, drones, and staying sane.</p><div class="reg">Growth · keep it non-graphic</div></article>
+    <article class="nx"><div class="wcode">A03 · W6 FRONT</div><h3>Robots Just Took a Position in a Real War</h3><p>Ukraine took a position with only drones and ground robots. Humanoids, lasers at £10 a shot, and the Terminator scale.</p><div class="reg">Spectacle · shareable</div></article>
+    <article class="nx"><div class="wcode">A04 · W7 OFFICE</div><h3>AI Was the #1 Reason for Layoffs This Year. Now What?</h3><p>116,175 US cuts through August; 22–25s hit hardest. What's real, what's hype, and the edge.</p><div class="reg">High RPM · careers</div></article>
+    <article class="nx"><div class="wcode">A05 · W8 BODY</div><h3>People Climbed Everest in Exoskeletons. You Can Buy One.</h3><p>Superpowers for the price of an e-bike, and the people they help first.</p><div class="reg">Affiliate + tech ads</div></article>
+    <article class="nx"><div class="wcode">A06 · W9 MARKET</div><h3>Intelligence Now Costs Less Than a Chocolate Bar</h3><p>The AI price war, in street units: what a genius for 8p changes.</p><div class="reg">Highest RPM</div></article>
+  </div>
+</section>
+
+<section id="picks">
+  <div class="eyebrow">Your call</div>
+  <h2>Two more taps</h2>
+  <div class="q" data-q="move">
+    <h3>Which camera move hit hardest?</h3>
+    <p class="why">The winner becomes a signature move in A02.</p>
+    <div class="opts" id="moveopts"></div>
+    <div class="saved" id="saved_move"></div>
+  </div>
+  <div class="q" data-q="next">
+    <h3>Next step for A01?</h3>
+    <p class="why">The upgraded look can go on the hook only, or across the whole 8-minute video.</p>
+    <div class="opts">
+      <button class="opt" type="button" data-v="hook" aria-pressed="false">Hook only, post this week</button>
+      <button class="opt" type="button" data-v="full" aria-pressed="false">Whole video in v5</button>
+      <button class="opt" type="button" data-v="a02" aria-pressed="false">Ship A01 as is, v5 starts at A02</button>
+    </div>
+    <div class="saved" id="saved_next"></div>
+  </div>
+  <div class="q" data-q="note">
+    <h3>Anything else?</h3>
+    <p class="why">One word is enough: sick, mid, cringe, more of this.</p>
+    <textarea class="note" id="note_note" placeholder="e.g. the dither bits are sick, chrome feels too clean"></textarea>
+    <div class="saved" id="saved_note"></div>
+  </div>
+</section>
+
+<section id="run">
+  <div class="eyebrow">On your Mac</div>
+  <h2>Render it properly</h2>
+  <ol class="steps">
+    <li>Pull the scripts from <code>a01_v5/</code> on the <code>claude/funny-newton-gd9w8v</code> branch of your Bernard repo.</li>
+    <li>Run <code>python3 posters.py</code>, then each shot through Blender at <code>--res 1920x1080 --samples 24</code>, then <code>python3 assemble.py</code>. The README has the exact loop.</li>
+    <li>Check the S06 numbers (52.3 and 66.4) against the A01 script before anything goes public.</li>
+    <li>If you re-record the Cousin in your own voice, re-time the cut points in <code>shots.py</code>; every animation cue follows them.</li>
+  </ol>
+</section>
+
+<p class="foot">Built from the Taste Map (your 32 clips) and the v4 look. Picks save to this page's own store; only people you share it with can see them.</p>
+</div>
+
+<script>
+const DUR = 50.31;
+const WORLDS = {
+  STAIR:{name:"W0 · STAIR", col:"var(--w-stair)", hex:"#56524C"},
+  LOBBY:{name:"W0 · LOBBY", col:"var(--w-lobby)", hex:"#0B2A6B"},
+  VOID:{name:"W0 · VOID", col:"var(--w-void)", hex:"#07080B"},
+  PRESS:{name:"W1 · PRESS", col:"var(--w-press)", hex:"#ECE6DA"},
+  CLOUD:{name:"W2 · CLOUD", col:"var(--w-cloud)", hex:"#F5F5F5"},
+  CHROME:{name:"W3 · CHROME", col:"var(--w-chrome)", hex:"#BEC6D2"},
+  SIGNAL:{name:"W4 · SIGNAL", col:"var(--w-signal)", hex:"#5CFF9D"},
+  MAP:{name:"MAP", col:"var(--amber)", hex:"#FFB23F"},
+};
+const SHOTS = [
+  ["S01",0.00,2.30,"STAIR","FACT","Worm's-eye crane, line draws itself","On September 22nd"],
+  ["S02",2.30,4.85,"STAIR","FACT","God's-eye top-down, slow roll","two AI companies dropped new models"],
+  ["S03",4.85,6.20,"PRESS","TRANSLATE","Top-down on the page","ninety minutes apart"],
+  ["S04",6.20,7.60,"PRESS","TRANSLATE","Swing to grazing angle, the 90 stands up","Ninety minutes."],
+  ["S05",7.60,12.60,"SIGNAL","JOKE","Shot/reverse, dutch, 4-frame bursts","two exes posting a glow-up on the same night"],
+  ["S06",12.60,17.50,"LOBBY","FACT","Low orbit, 88°","scored fourteen points higher … on the coding test"],
+  ["S07",17.50,19.90,"CHROME","PAYOFF","FPV swoop that lands","Fourteen points better."],
+  ["S08",19.90,22.50,"CLOUD","DEEP","Dolly zoom (vertigo)","But what does that actually mean?"],
+  ["S09",22.50,26.20,"PRESS","TRANSLATE","Dutch truck + rack focus","most people read that like a phone update"],
+  ["S10",26.20,28.80,"PRESS","JOKE","Push, then snap zoom on “cool”","oh, fourteen percent faster, cool"],
+  ["S11",28.80,32.50,"SIGNAL","JOKE","Snap zooms on the beat","you would not notice, you would not care"],
+  ["S12",32.50,33.60,"VOID","JOKE","Snap push + impact shake","Wrong."],
+  ["S13",33.60,34.60,"VOID","JOKE","Worm's-eye dutch","Not only wrong"],
+  ["S14",34.60,36.90,"VOID","JOKE","Spiral dive through the words","completely, embarrassingly wrong"],
+  ["S15",36.90,41.70,"CLOUD","DEEP","Long-lens crane, points become the line","fourteen points on the right test …"],
+  ["S16",41.70,47.50,"PRESS","TRANSLATE","Truck, whip pan on “hands”","the one who starts vs the one who hands it in"],
+  ["S17",47.50,50.31,"MAP","PAYOFF","Crane up: one line, many worlds","Same number. Whole different animal."],
+];
+const CARDS = [
+  {k:"W0", title:"Core rooms", code:"W0 · STAIR / LOBBY / VOID", img:"media/W0.jpg", sw:["#07080B","#56524C","#0B2A6B"], reg:"FACT · the home base", from:"The v4 look: fog stairs, blue grid lobby, black void for type slams.", moves:"Worm's-eye crane · god's-eye roll · low orbit · snap push"},
+  {k:"W1", title:"Press", code:"W1 · PRESS", img:"media/W1.jpg", sw:["#ECE6DA","#0B0B0C"], reg:"TRANSLATE · the street unit", from:"Editorial posters (R18, R31): bone paper, crop marks, barcodes, micro labels.", moves:"Top-down → grazing angle · dutch truck · rack focus · whip pan"},
+  {k:"W2", title:"Cloud", code:"W2 · CLOUD", img:"media/W2.jpg", sw:["#07080B","#F5F5F5"], reg:"DEEP · the Huey line", from:"Point clouds and particles (R13, R15): the number dissolves, then becomes the line.", moves:"Dolly zoom · long-lens crane"},
+  {k:"W3", title:"Chrome", code:"W3 · CHROME", img:"media/W3.jpg", sw:["#07080B","#BEC6D2"], reg:"PAYOFF · the big number", from:"Icy chrome tangles (R24), lit by softbox bands with one amber band.", moves:"FPV swoop that lands, motion blur"},
+  {k:"W4", title:"Signal", code:"W4 · SIGNAL", img:"media/W4.jpg", sw:["#07080B","#5CFF9D"], reg:"JOKE · the Riley bursts", from:"Dither and grain (R21, R26), animated on twos like stop-motion.", moves:"Shot/reverse · dutch ±18° · snap zooms · 4-frame cuts"},
+];
+const MOVES = [["crane","Worm's-eye crane (S01)"],["godseye","God's-eye roll (S02)"],["standup","The 90 standing up (S04)"],["bursts","Dither bursts (S05)"],["orbit","Low orbit (S06)"],["fpv","Chrome FPV swoop (S07)"],["vertigo","Dolly zoom (S08)"],["dive","Spiral dive (S14)"],["whip","Whip pan (S16)"],["reveal","Map reveal (S17)"]];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// ---- map (to scale) ----
+(function(){
+  const svg = document.getElementById("mapsvg"), X0 = 20, X1 = 980, sx = t => X0 + (X1 - X0) * t / DUR;
+  const wave = x => 64 + 16 * Math.sin((x - X0) / 38);
+  let g = "";
+  for (let t = 0; t <= 50; t += 5) g += `<line x1="${sx(t)}" y1="150" x2="${sx(t)}" y2="156" stroke="#6b7180"/><text x="${sx(t)}" y="172" fill="#8A90A0" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">${t}s</text>`;
+  SHOTS.forEach(([id,t0,t1,w,reg]) => {
+    const a = sx(t0), b = sx(t1);
+    g += `<rect x="${a + 1}" y="100" width="${Math.max(2, b - a - 2)}" height="30" rx="3" fill="${WORLDS[w].col}" opacity="${w === "VOID" ? 1 : .9}"/>`;
+    if (b - a > 26) g += `<text x="${(a + b) / 2}" y="119" fill="${["PRESS","CLOUD","CHROME","SIGNAL","MAP"].includes(w) ? "#07080B" : "#ECEDEF"}" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" text-anchor="middle">${id.slice(1)}</text>`;
+    if (b - a > 44) g += `<text x="${(a + b) / 2}" y="145" fill="#8A90A0" font-family="IBM Plex Mono, monospace" font-size="9" text-anchor="middle" letter-spacing="1">${reg}</text>`;
+  });
+  let d = `M${X0},${wave(X0)}`;
+  for (let x = X0 + 4; x <= X1; x += 4) d += ` L${x},${wave(x).toFixed(1)}`;
+  g += `<path d="${d}" fill="none" stroke="#FFB23F" stroke-width="3" stroke-linecap="round"/>`;
+  SHOTS.forEach(([,t0]) => { const x = sx(t0); g += `<circle cx="${x}" cy="${wave(x)}" r="3.5" fill="#07080B" stroke="#FFB23F" stroke-width="2"/>`; });
+  g += `<text x="${X0}" y="26" fill="#ECEDEF" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="2">THE DRIFT LINE · EVERY CUT IS A STOP ON IT</text>`;
+  svg.innerHTML = g;
+  document.getElementById("legend").innerHTML = ["STAIR","LOBBY","VOID","PRESS","CLOUD","CHROME","SIGNAL","MAP"].map(k => `<span><i style="background:${WORLDS[k].col}"></i>${WORLDS[k].name}</span>`).join("");
+  document.getElementById("shotrows").innerHTML = SHOTS.map(([id,t0,t1,w,reg,move,line]) => `<tr><td class="t">${t0.toFixed(1)}–${t1.toFixed(1)}</td><td class="t">${id}</td><td class="w"><i style="background:${WORLDS[w].col}"></i>${esc(WORLDS[w].name)}</td><td>${esc(move)}</td><td class="l">${esc(line)}</td></tr>`).join("");
+})();
+
+// ---- world cards + picks ----
+document.getElementById("worldcards").innerHTML = CARDS.map(c => `
+  <article class="world" data-q="world_${c.k}">
+    <img src="${c.img}" alt="${esc(c.title)} world, frame from the proof" loading="lazy">
+    <div class="wb">
+      <div class="wcode">${esc(c.code)}</div>
+      <h3>${esc(c.title)} <span class="sw">${c.sw.concat("#FFB23F").map(h => `<i style="background:${h}" title="${h}"></i>`).join("")}</span></h3>
+      <div class="reg">${esc(c.reg)}</div>
+      <p>${esc(c.from)}</p>
+      <div class="moves">${esc(c.moves)}</div>
+      <div class="opts">
+        <button class="opt" type="button" data-v="keep" aria-pressed="false">Keep</button>
+        <button class="opt" type="button" data-v="more" aria-pressed="false">More of this</button>
+        <button class="opt" type="button" data-v="cut" aria-pressed="false">Cut</button>
+      </div>
+      <div class="saved" id="saved_world_${c.k}"></div>
+    </div>
+  </article>`).join("");
+document.getElementById("moveopts").innerHTML = MOVES.map(([v,t]) => `<button class="opt" type="button" data-v="${v}" aria-pressed="false">${esc(t)}</button>`).join("");
+
+const PROMPTS = [{"title": "The channel brief", "kind": "Paste first", "text": "You are the art department for a YouTube channel that explains AI news by translating the numbers\ninto things people have actually held (\"every number gets a street unit\"). The narrator persona is\n\"the Cousin\": hella smart, street smart, two beers deep; funny in the jokes, exact in the facts,\nand one quiet deep line per video. The channel should feel like a safe, warm place: complex and\nenergetic, with soul, and every video ends on a hopeful note.\n\nVISUAL SYSTEM: \"one line, many worlds\". Every visual world is a room on the same glowing amber line.\nConstants that never change:\n- Amber #FFB23F is the only warm accent, and the drift line is always the warmest thing in frame.\n- Near-black ground #07080B at the edges of every frame.\n- Type: Unbounded (800/900) for numbers and headlines, IBM Plex Mono (500/600) for labels. No other faces.\n- One finish on everything: soft highlight bloom, gentle vignette, fine film grain.\n- Frame furniture: thin crop marks, small mono labels, generous negative space.\nWorlds (palettes), each tied to what the narrator is doing:\n- W0 CORE (facts): fog and concrete stairs, an imperial-blue #0B2A6B grid lobby, black void.\n- W1 PRESS (translating a number into a street unit): bone paper #ECE6DA, black ink #0B0B0C,\n  crop marks, barcodes, risograph texture, editorial layouts.\n- W2 CLOUD (the deep line): white point clouds and particles on black.\n- W3 CHROME (the big payoff number): icy mirror chrome lit by softboxes, one amber reflection.\n- W4 SIGNAL (the jokes): 3-colour ordered dither (#07080B, phosphor #5CFF9D, amber #FFB23F),\n  animated on twos like stop-motion.\n- HOME (the ending): still water, fireflies, the amber line running to an amber dawn.\nTaste: premium but not sterile. Hand-made details over stock looks. Never cheesy, never\n\"AI slop\": no glossy robot faces, no blue brains, no generic circuit boards, no lens-flare spam,\nno text baked into images unless asked. No real brands, logos or real people."}, {"title": "Texture and overlay library", "kind": "Evergreen", "text": "Make a texture and overlay library for the channel above. Deliver PNG/EXR stills and MP4/ProRes loops:\n1. Film grain plates: 6 loops, 10 s each, 3840x2160, 24 fps, luma-only grain on mid-grey (#808080)\n   for Overlay/Soft Light blending; fine, medium, 16mm-coarse, each in \"clean\" and \"slightly gate-weaving\".\n2. Light leaks: 8 loops, 6 s, 3840x2160, black background (Screen blend), strictly in amber #FFB23F\n   plus warm white; slow organic movement, no rainbow colours.\n3. Dust and hair: 4 loops, 10 s, white on black, sparse, realistic.\n4. Paper: 12 bone-paper scans #ECE6DA at 4096 px: risograph grain, slight misregistration, fold\n   lines, a coffee ring on one, tape marks on two. Seamless tiling where possible.\n5. Concrete: 6 seamless 4096 px PBR sets (albedo, roughness, normal), warm grey #56524C, poured and brushed.\n6. Dither and halftone patterns: 8 seamless 1024 px tiles, 1-bit, for the SIGNAL world.\nFile names: tex_<type>_<nn>.<ext>. Folder: a01_v5/kit/textures/.\nSELF-CHECK before delivering: every loop is seamless (last frame into first frame shows no jump); no\ncolour outside the palette in leaks; paper tiles tile with no visible seam at 2x2; grain has no chroma."}, {"title": "The sound identity kit", "kind": "Evergreen", "text": "Design the channel's sound kit. 48 kHz / 24-bit WAV, peaks at or below -1 dBTP, clean starts,\nnatural tails, no music in the SFX. The palette is warm analog and tactile: tape, paper, air,\nsub-bass, never cartoonish or stock-trailer \"braaams\".\n1. Signature: \"the line\", a 1.5 s sonic logo. A warm analog tone that rises and resolves, like a\n   light switching on in your chest. 3 variants (bright, soft, deep).\n2. Whooshes x12 (0.25-1.2 s), stereo sweeps L->R and R->L, air and cloth, not jets.\n3. Impacts x8: sub thumps with a paper/wood transient; 2 huge ones for type slams.\n4. Glitches x12 for the SIGNAL world: bit-crushed, short, musical, pitched to Db.\n5. UI ticks and clicks x10: soft, mechanical, like a good camera shutter or a mechanical watch.\n6. Risers x6 (1-4 s) that end on a hard stop, not a crash.\n7. Shimmers x6: small bells and glass, pentatonic in Db, for particles assembling.\n8. Room tones x4 (60 s): night room, rain on a window, city far away, empty stairwell.\nFolder: a01_v5/kit/sfx/<category>/sfx_<category>_<nn>.wav\nSELF-CHECK: every file trimmed to its sound with a 10 ms fade in and out; loudness matched within\neach category; nothing clips; the signature reads on phone speakers."}, {"title": "The ending ritual: music for the outro", "kind": "Evergreen", "text": "Compose the channel's ending theme, the \"going home\" loop that plays under the last 20-40 seconds\nof every video while the narrator says something hopeful. The feeling: that heavy, warm feeling in\nyour chest at the end of a late-night drive; nostalgia and sadness and gratitude at once, and\nunderneath it, a certainty that things will be okay. Magical but calm. A safe place.\nMusical brief: 66-70 BPM, Db major (Dbmaj9, Bbm9, Gbmaj9, Ab6/9 as a starting point), dreamy\n80s-style analog polysynth pads (slow attack, gently detuned, slight tape wow), a soft distant\ngated-room drum pattern that enters on the second pass, a sparse sparkling arpeggio, sub-bass\nyou feel more than hear, subtle vinyl and tape texture. No vocals, no drops, no risers.\nMust be original; do not imitate any specific song's melody or chord voicings.\nDeliver: a 90 s seamless loop; 12 s, 20 s and 30 s cut-downs with natural endings; stems (pads,\ndrums, arp, bass, texture). WAV 48 kHz/24-bit, mastered to -16 LUFS, -1.5 dBTP.\nFolder: a01_v5/kit/music/.\nSELF-CHECK: the loop point is inaudible; the 12 s edit fades naturally; it sits under a speaking\nvoice without masking 1-4 kHz; it still feels warm on phone speakers."}, {"title": "Street-unit icon set", "kind": "Evergreen", "text": "Draw 40 pictograms for \"street units\", the everyday things we convert numbers into: chocolate bar,\ngeneric cognac bottle, generic ride-share car, shift clock, pay slip, rent key, bus ticket, phone\nbattery, energy drink can, trainers, gaming controller, pizza box, kettle, bike, headphones,\nschool bag, group-project folder, fridge, microwave timer, cinema ticket, and 20 more you choose.\nStyle: editorial print pictograms, 2 colours only (ink #0B0B0C + amber #FFB23F), 3 px stroke at\n256 px, rounded caps, flat fills, slightly imperfect like risograph print. No brands or logos.\nDeliver: SVG + 2048 px transparent PNG each. Folder: a01_v5/kit/icons/. Names: icon_<thing>.svg\nSELF-CHECK: all 40 read at 64 px; stroke weight is identical across the set; only the 2 colours."}, {"title": "Chrome environment", "kind": "Evergreen", "text": "Make a 4K (4096x2048) equirectangular HDRI in EXR for rendering chrome typography: pure black\nsurroundings with three large soft rectangular softboxes (one wide horizontal strip at +15 degrees,\none tall vertical strip camera-left, one small top light) and one thin warm amber (#FFB23F) strip\nlight low behind the subject. Clean studio, no floor, no visible rigging.\nFolder: a01_v5/kit/hdri/chrome_studio.exr\nSELF-CHECK: the black is true black (0,0,0); softboxes have smooth falloff edges; values reach at\nleast 20 in the brightest strip so reflections read as light, not grey."}, {"title": "TouchDesigner: the heartbeat field", "kind": "Evergreen", "text": "Build a TouchDesigner network (.toe) called heartbeat_field: an audio-reactive particle field for\nthe channel's quiet \"deep line\" moments. Amber (#FFB23F) and warm-white particles on black, drifting\nslowly upward like embers or fireflies, gently pulsing with the low-mids (80-300 Hz) of an audio\nfile; a soft glowing horizontal line through the middle that breathes with the voice; depth of field\nwith round bokeh. Calm, never frantic.\nExpose parameters: audio file, particle count, rise speed, pulse amount, bokeh size, line on/off.\nRender: Movie File Out, 3840x2160, 24 fps, ProRes 4444 with alpha, plus an MP4 preview.\nInclude a README of how to swap the audio and re-render.\nSELF-CHECK: no frame drops at 4K; alpha is clean (no black fringing); motion is smooth when the\naudio is silent (never freezes); it looks good paused on any frame."}, {"title": "The finishing LUT", "kind": "Evergreen", "text": "Create a .cube 3D LUT (33 point) for the channel's final grade in DaVinci Resolve: slightly cool\nshadows, warm highlights, rich but not crushed blacks (floor at about 3%), gentle filmic highlight\nroll-off, and exact preservation of the brand amber #FFB23F and phosphor #5CFF9D (within 2%).\nDeliver LUT + a before/after frame on a test chart. Folder: a01_v5/kit/lut/\nSELF-CHECK: a grey ramp stays neutral in the mids; the two brand colours measure within tolerance."}, {"title": "Shot-list director", "kind": "Per video", "text": "You are the shot-list director for the channel above. Input: a narration script with word timings.\nFor every sentence decide its register: FACT, TRANSLATE (a street unit), JOKE, DEEP, PAYOFF or HOPE.\nMap register -> world: FACT->W0, TRANSLATE->W1 PRESS, JOKE->W4 SIGNAL (or W0 VOID type slams),\nDEEP->W2 CLOUD, PAYOFF->W3 CHROME, HOPE->HOME. Then give each shot one camera move from this grammar:\nworm's-eye crane, god's-eye top-down roll, low orbit, top-down to grazing swing, dutch truck + rack\nfocus, snap zoom, shot/reverse with dutch, 4-frame burst, FPV swoop that lands, dolly zoom,\nlong-lens crane, whip pan, spiral dive, crane-up reveal, slow glide.\nRules: at least 50% of runtime in W0; no more than one world change every 6-8 s except JOKE bursts;\nnever two identical moves back to back; the amber line appears in every shot; cut on the first\nsyllable of the key word; one \"Huey moment\" (the deep line) gets the longest, calmest shot of the\nvideo; the video ends in HOME with a hopeful line.\nOutput: a Python list in exactly this format, one dict per shot:\ndict(id=\"S01\", t0=0.00, t1=2.30, world=\"W0 · STAIR\", reg=\"FACT\", move=\"...\", line=\"...\", hits=[...])\nthen a 3-line summary of the rhythm, then the self-check.\nSELF-CHECK: every rule above passes; the times cover the whole script with no gaps or overlaps;\ncuts land on word starts."}, {"title": "A01-specific upgrades", "kind": "Per video", "text": "Using the channel brief, make these A01 assets:\na) Two phone-screen \"glow-up\" posts for the joke \"two AI companies posting a glow-up on the same\n   night, like exes\": 1080x2160 vertical, black UI, huge type, sparkles, before/after energy,\n   one says MODEL A, one says MODEL B. They will be dithered to 3 colours, so use strong shapes.\nb) Two editorial illustrations (2400x3200, risograph, ink + amber only): \"the one who starts the\n   group project\" (an empty chair, a half-open laptop, a to-do list with one tick) and \"the one\n   who actually hands it in\" (a stamped folder, a clock at 23:58, a tired smile).\nc) Three thumbnail concepts in the v5 language (1280x720): the chrome +14, the dither exes, the\n   standing 90. Big type, one idea each, readable at 120 px wide.\nFolder: a01_v5/kit/a01/. SELF-CHECK: palette only; no real brands; each thumbnail readable at 120 px."}, {"title": "Research brief", "kind": "Next videos", "text": "Research the topic below for a 12-16 minute explainer on the channel above. Today's date matters:\nstate it, and only use facts you can date. Topic: <paste the video's title + spine from BACKLOG.md>\nDeliver:\n1. The 12 strongest facts, each with a number, the date it was true, and a primary source link\n   (government, official body, company filing, peer-reviewed study, or a major outlet quoting one).\n2. For every number, 2 \"street unit\" translations (things a UK 20-something has actually held,\n   bought or waited for).\n3. The strongest counter-argument or nuance for each big claim, so the video is never one-sided.\n4. 3 absurd-but-real facts that make people say \"wait, what?\".\n5. 3 future predictions with the best evidence for each, and one wild \"Terminator-level\"\n   extrapolation clearly labelled as fantasy.\n6. Anything that could get the video limited ads or flagged (graphic content, medical or legal\n   claims, named people) and how to say it safely.\nSELF-CHECK: every fact has a date and a source; no source older than the topic needs; claims that\nyou could not verify are listed separately as UNVERIFIED, never mixed in."}, {"title": "Script writer", "kind": "Next videos", "text": "Write the full narration for the video below in the Cousin's voice: hella smart, street smart, two\nbeers deep; Riley in the jokes, Huey in the landings, facts always exact.\nRules: 190-220 words per minute pace, so about 2,800 words for 14 minutes. Rotate the register every\n20-30 seconds: FACT -> TRANSLATE (street unit) -> JOKE or tangent (\"anyway-\") -> DEEP. One\ntangent per chapter. One \"Huey line\" per video: short, quiet, true. Heat 1: damn/hell/ass at most,\nand never in the first 30 seconds; no slurs; never accuse a named real person. Open with a\n50-second hook: fact, translation, joke, deep line. End in HOME: hopeful, warm, one line that makes\nthe viewer feel part of something (\"see you on the line\").\nMark each paragraph with its register in [brackets] and suggest the world (W0-W4 or the hero world)\nand a camera move from the grammar, so it drops straight into the shot-list director (prompt 8).\nResearch to use: <paste the prompt 10 output>\nSELF-CHECK: read it aloud at 200 wpm; cut any sentence that needs a second read; every number has a\nstreet unit; the ending would make a stranger feel better about the future without lying to them."}, {"title": "Title and thumbnail lab", "kind": "Next videos", "text": "For the video below, write 20 titles and rank the top 5 by likely click-through. Rules: under 60\ncharacters; a specific number or a surprising claim; curiosity without lying (the video must\ndeliver exactly what the title promises); no ALL CAPS words except one; no \"WW3\", gore, or fake\nurgency. Then design 3 thumbnails in the channel's world language (PRESS poster, CHROME hero or\nSIGNAL dither), each readable at 120 px wide: one idea, max 3 words of type (Unbounded), the amber\nline somewhere in frame, near-black edges. Describe each precisely enough to build in Blender or\nFigma, then generate them at 1280x720.\nVideo: <title + spine>\nSELF-CHECK: shrink each thumbnail to 120 px wide and check it still reads in one second; the title\nand thumbnail say different things that add up (never repeat the same words)."}, {"title": "FX set-piece designer", "kind": "Next videos", "text": "Design the 3 jaw-drop set-pieces for the video below, in the channel's visual system. For each:\nthe moment in the script it lands on, the world (existing or the video's new hero world), what the\nviewer sees second by second (camera move from the grammar, what moves, what glows), the one\ndetail that makes it feel hand-made, and the sound (from the sound kit). Then give build\ninstructions for the best tool for each: Blender (Python-friendly steps: objects, materials,\nkeyframes), TouchDesigner (network outline), or an image/video model (exact prompt, aspect ratio,\nseed advice). Keep the amber line in every set-piece and near-black edges.\nVideo: <title + outline>\nSELF-CHECK: each set-piece could only belong to this channel; none relies on real violent\nfootage; each is renderable in under 2 hours on a laptop GPU."}];
+document.getElementById("prompts").innerHTML = PROMPTS.map((p, i) => `
+  <details class="pr"${i === 0 ? " open" : ""}>
+    <summary><span class="pt">${esc(p.title)}</span><span class="pk">${esc(p.kind)}</span></summary>
+    <div class="prbar"><button class="opt copy" type="button" data-i="${i}">Copy prompt</button><span class="copied" id="copied_${i}"></span></div>
+    <pre id="ptext_${i}">${esc(p.text)}</pre>
+  </details>`).join("");
+document.getElementById("prompts").addEventListener("click", async e => {
+  const b = e.target.closest(".copy"); if (!b) return;
+  e.stopPropagation();
+  const i = b.dataset.i, msg = document.getElementById("copied_" + i);
+  try { await navigator.clipboard.writeText(PROMPTS[i].text); msg.textContent = "copied ✓"; }
+  catch (err) {
+    const r = document.createRange(); r.selectNodeContents(document.getElementById("ptext_" + i));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    msg.textContent = "selected: copy it with your keyboard or long-press";
+  }
+});
+const state = {};
+let db = null, canSave = false;
+function paint(q){
+  const el = document.querySelector(`[data-q="${q}"]`); if (!el) return;
+  el.querySelectorAll(".opt").forEach(o => o.setAttribute("aria-pressed", String(!!state[q] && o.dataset.v === state[q].choice)));
+  const n = document.getElementById("note_" + q);
+  if (n && state[q] && typeof state[q].note === "string" && document.activeElement !== n) n.value = state[q].note;
+}
+async function save(q, patch){
+  state[q] = Object.assign({}, state[q], patch, {at: new Date().toISOString()});
+  paint(q);
+  const s = document.getElementById("saved_" + q);
+  if (!canSave){ s.textContent = "not saved in this view: screenshot it and send it to me"; return; }
+  try { await db.doc("picks/" + q).set(state[q]); s.textContent = "saved ✓"; }
+  catch (e){ s.textContent = "couldn't save (" + ((e && e.code) || "error") + ")"; }
+}
+document.addEventListener("click", e => {
+  const o = e.target.closest(".opt"); if (!o || o.classList.contains("copy")) return;
+  const q = o.closest("[data-q]").dataset.q;
+  save(q, {choice: o.dataset.v});
+});
+let timer;
+document.getElementById("note_note").addEventListener("input", e => {
+  clearTimeout(timer); timer = setTimeout(() => save("note", {note: e.target.value}), 900);
+});
+(async () => {
+  const st = document.getElementById("status");
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db){ st.textContent = "Picks can't be stored in this view. Tap anyway and send me a screenshot."; return; }
+  canSave = true; st.textContent = "Live: picks save as you tap"; st.classList.add("live");
+  try {
+    const snap = await db.collection("picks").get();
+    snap.docs.forEach(d => { const v = d.data(); if (v){ state[d.id] = Object.assign({}, v); paint(d.id); } });
+  } catch (e) { /* nothing stored yet */ }
+})();
+</script>

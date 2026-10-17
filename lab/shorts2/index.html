@@ -1,0 +1,336 @@
+<title>The Curve Shorts II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter+Tight:wght@400;600&family=Michroma&display=swap">
+<style>
+:root{--ground:#F2F6F5;--surface:#FFFFFF;--ink:#0B1414;--muted:#51625F;--accent:#0B8A7E;--line:#D3E0DD;--chip:#E3F1EE;
+color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ground:#070A0B;--surface:#0E1416;--ink:#E6F0EF;
+--muted:#8EA3A1;--accent:#35D6C6;--line:#1B2729;--chip:#0F2524;color-scheme:dark}}
+:root[data-theme="dark"]{--ground:#070A0B;--surface:#0E1416;--ink:#E6F0EF;--muted:#8EA3A1;--accent:#35D6C6;--line:#1B2729;
+--chip:#0F2524;color-scheme:dark}
+body{background:var(--ground);color:var(--ink);font:16px/1.55 "Inter Tight",system-ui,sans-serif;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:28px 64px}
+.eyebrow{font:500 12px/1.4 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font:400 clamp(28px,6vw,44px)/1.1 Michroma,"Inter Tight",sans-serif;letter-spacing:.02em;margin:.35em 0 .3em;text-wrap:balance}
+h2{font:400 18px/1.3 Michroma,"Inter Tight",sans-serif;letter-spacing:.04em;margin:0;text-wrap:balance}
+.lede{color:var(--muted);max-width:62ch;margin:0}
+section{margin-top:36px;display:grid;gap:16px}
+.plan{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.day{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.day b{font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.1em;color:var(--accent);display:block}
+.day span{font-size:14px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+video{width:100%;aspect-ratio:9/16;max-height:72vh;background:#000;display:block;object-fit:contain}
+.body{padding:14px 16px 16px;display:grid;gap:10px;align-content:start}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font:500 12px/1.3 "IBM Plex Mono",monospace;color:var(--muted)}
+.chip{background:var(--chip);color:var(--accent);border-radius:999px;padding:3px 9px;letter-spacing:.06em}
+.hook{font-weight:600;font-size:17px;line-height:1.35;margin:0;text-wrap:balance}
+.post{font-size:14px;color:var(--muted);margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+button{font:600 14px/1 "Inter Tight",sans-serif;border-radius:10px;padding:11px 14px;border:1px solid var(--line);
+background:var(--ground);color:var(--ink);cursor:pointer}
+button.main{background:var(--accent);border-color:var(--accent);color:var(--ground)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.note{font-size:13px;color:var(--muted);min-height:1.2em;margin:0}
+footer{margin-top:44px;font-size:13px;color:var(--muted);max-width:62ch}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+
+h3{font:600 15px/1.3 "Inter Tight",sans-serif;margin:8px 0 0;color:var(--muted);letter-spacing:.02em}
+.ep{border-top:1px solid var(--line);padding-top:28px}
+.ep-title{margin-top:6px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+nav a{font:500 13px/1 "IBM Plex Mono",monospace;color:var(--accent);text-decoration:none;border:1px solid var(--line);
+border-radius:999px;padding:8px 12px;background:var(--surface)}
+nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.day span{display:block}
+.card.wide{grid-template-rows:auto 1fr}
+.card.wide video{aspect-ratio:16/9;max-height:none}
+.card img.thumb{width:100%;max-width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+.brand .hook{font-size:15px;font-weight:600}
+.txt{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:6px}
+.txt b{font:500 12px/1.3 "IBM Plex Mono",monospace;letter-spacing:.06em;color:var(--accent);text-transform:uppercase}
+.txt p,.pin{margin:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.txt button{justify-self:start}
+.pin{border-left:3px solid var(--accent);padding-left:10px}
+details summary{cursor:pointer;font-weight:600;color:var(--accent)}
+details .post{margin-top:8px}
+.day .plus{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted)}
+.start{background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:18px 18px 20px;gap:10px}
+.start h2{font-size:17px}
+.start ol,.start ul{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px}
+.start p{margin:0;font-size:15px}
+.muted{color:var(--muted)}
+.films b{font:500 12px/1.4 "IBM Plex Mono",monospace;letter-spacing:.06em;color:var(--accent);margin-right:6px}
+</style>
+<div class="wrap">
+<header>
+  <span class="eyebrow">The Curve · posting kit</span>
+  <h1>Shorts, ready to post</h1>
+  <p class="lede">16 vertical cuts from 2 films, voiced by George, for TikTok, Reels, YouTube Shorts and Facebook. Each film comes as parts that add up to the whole video, plus standalone highlights. Copy the caption, save the video, post.</p>
+  <nav><a href="#ep06">EP06 · Who&#x27;s Human Here?</a><a href="#ep07">EP07 · The Thirty-Year Delay</a><a href="https://claude.ai/artifact/GgTivRE2Kt7UbrafqUJFrE" target="_blank" rel="noopener">EP05 · EP08 · EP04 → The Curve Shorts</a></nav>
+</header>
+<section class="start" aria-label="Start here">
+  <span class="eyebrow">Start here</span>
+  
+  
+  <h3>Then keep the rhythm</h3>
+  <p>A new full film every two days. Its shorts start the same day: each day, post what the plans below list for that
+    day (a part and a highlight per film, so two to four shorts a day), the same file on every platform, and pin each Part 1.</p>
+  <ul class="films"><li><b>Thu 1 Oct</b> EP05 · Follow the Sun <span class=muted>(on the other page)</span></li><li><b>Sat 3 Oct</b> EP08 · Cheaper Makes More <span class=muted>(on the other page)</span></li><li><b>Mon 5 Oct</b> EP04 · The Man in the Machine <span class=muted>(on the other page)</span></li><li><b>Wed 7 Oct</b> EP06 · Who&#x27;s Human Here?</li><li><b>Fri 9 Oct</b> EP07 · The Thirty-Year Delay</li><li><b>Sun 11 Oct</b> EP03 · The Shovel Sellers</li><li><b>Tue 13 Oct</b> EP09 · The Laundry Problem</li><li><b>Thu 15 Oct</b> EP10 · Counting Sums</li></ul>
+  <p class="muted">Save time: schedule a week in one sitting. YouTube Studio schedules videos and Shorts; TikTok schedules from a
+    computer up to 10 days ahead; Meta Business Suite schedules Reels to Instagram and Facebook together.</p>
+</section>
+<section id="ep06" class="ep">
+  <div><span class="eyebrow">EP06 · Who&#x27;s Human Here?</span><h2 class="ep-title">The Turing test, bots and proving you&#x27;re you</h2></div>
+  <article class="card wide" id="ep06-full">
+  <img class="thumb" src="media/ep06/ep06_thumb.jpg" alt="They Picked the AI as the Human: the YouTube thumbnail" loading="lazy">
+  <div class="body">
+    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE · Wed 7 Oct</span><span>2:15 · 16:9 · the 1080p file is in the chat</span></div>
+    <p class="hook">They Picked the AI as the Human</p>
+    <p class="post">In 2025, 284 people chatted with two strangers at once for five minutes: one a person, one an AI. Their job was to pick the human. They picked the AI 73% of the time, more often than the real person.
+
+In this video: what Alan Turing actually proposed in 1950 and the bar he set, the trick that doubled the AI&#x27;s score, why most web traffic is no longer human, the AI agent that clicked &quot;verify you are human&quot;, the FBI&#x27;s low-tech advice for voice scams, and a labelled what-if: when any voice could be synthetic, how do you prove you&#x27;re you?
+
+Sources:
+• Jones &amp; Bergen, &quot;Large Language Models Pass the Turing Test&quot; (UC San Diego, arXiv 2503.23674, Mar 2025): 284 participants, 5-minute three-party tests; GPT-4.5 with a persona prompt judged human 73% of the time, 36% without; LLaMa-3.1-405B 56%; ELIZA 23%; GPT-4o 21%; small talk in 61% of games
+• A. M. Turing, &quot;Computing Machinery and Intelligence&quot;, Mind, 1950: in about fifty years &quot;an average interrogator will not have more than 70 per cent chance of making the right identification after five minutes of questioning&quot;
+• Imperva (Thales) Bad Bot Report 2026: automated traffic over 53% of all web traffic in 2025 (51% in 2024)
+• ChatGPT Agent clicking Cloudflare&#x27;s &quot;Verify you are human&quot; checkbox, July 2025, narrating &quot;This step is necessary to prove I&#x27;m not a bot&quot; (Ars Technica; Tom&#x27;s Hardware)
+• FBI IC3 public service announcement PSA241203, 3 Dec 2024: create a secret word or phrase with your family
+• The 2030 section is a labelled what-if, not a forecast</p>
+
+    <p class="pin">Does your family have a secret word yet? Sources are in the description.</p>
+    <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
+      <button class="main" type="button" data-copy="post">Copy description</button>
+      <button type="button" data-save="media/ep06/ep06_thumb.jpg">Save thumbnail</button>
+      <button type="button" data-copy="pin" data-what="Pinned comment">Copy pinned comment</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+  <h3>Suggested order</h3>
+  <div class="plan"><div class="day"><b>Day 7 · Wed 7 Oct</b><span>284 people had to pick the human. They picked the AI.</span><span class="plus">They picked the AI as the human 73% of the time</span></div><div class="day"><b>Day 8 · Thu 8 Oct</b><span>How the AI passed the Turing test</span><span class="plus">The trick that made an AI pass as human</span></div><div class="day"><b>Day 9 · Fri 9 Oct</b><span>Can you prove you&#x27;re human?</span><span class="plus">An AI clicked &quot;I&#x27;m not a robot&quot;</span></div><div class="day"><b>Day 10 · Sat 10 Oct</b><span>Most of the internet isn&#x27;t people any more</span><span class="plus">The FBI&#x27;s advice for AI voice scams is one word</span></div></div>
+  <h3>The whole film, in 3 parts</h3>
+  <div class="grid"><article class="card" id="ep06-part1">
+  <video controls playsinline preload="metadata" src="media/ep06/part1.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">WHO&#x27;S HUMAN HERE? · PART 1 OF 3</span><span>21 s · 1080×1920</span></div>
+    <p class="hook">284 people had to pick the human. They picked the AI.</p>
+    <p class="post">Two chats at once, five minutes, one person and one AI. People picked the AI as the human 73% of the time, more often than the real person. Part 1 of 3. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep06/part1.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep06-part2">
+  <video controls playsinline preload="metadata" src="media/ep06/part2.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">WHO&#x27;S HUMAN HERE? · PART 2 OF 3</span><span>33 s · 1080×1920</span></div>
+    <p class="hook">How the AI passed the Turing test</p>
+    <p class="post">Turing&#x27;s 1950 bar: fool people 30% of the time by 2000. In 2025 an AI hit 73%, and the trick wasn&#x27;t knowing more. Part 2 of 3. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep06/part2.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep06-part3">
+  <video controls playsinline preload="metadata" src="media/ep06/part3.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">WHO&#x27;S HUMAN HERE? · PART 3 OF 3</span><span>74 s · 1080×1920</span></div>
+    <p class="hook">Can you prove you&#x27;re human?</p>
+    <p class="post">53% of web traffic in 2025 was automated. An AI agent clicked &quot;verify you are human&quot;. The FBI says: agree a secret word with your family. Part 3 of 3. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep06/part3.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+  <h3>Highlights</h3>
+  <div class="grid"><article class="card" id="ep06-picked">
+  <video controls playsinline preload="metadata" src="media/ep06/picked.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">WHO&#x27;S HUMAN HERE?</span><span>19 s · 1080×1920</span></div>
+    <p class="hook">They picked the AI as the human 73% of the time</p>
+    <p class="post">A 2025 UC San Diego study: 284 people chatted with a person and an AI at the same time for five minutes. GPT-4.5 with a persona was picked as the human 73% of the time. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep06/picked.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep06-persona">
+  <video controls playsinline preload="metadata" src="media/ep06/persona.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">WHO&#x27;S HUMAN HERE?</span><span>15 s · 1080×1920</span></div>
+    <p class="hook">The trick that made an AI pass as human</p>
+    <p class="post">Without a persona the AI was picked as human 36% of the time. Told to act like an introverted young person into internet culture: 73%. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep06/persona.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep06-captcha">
+  <video controls playsinline preload="metadata" src="media/ep06/captcha.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">WHO&#x27;S HUMAN HERE?</span><span>12 s · 1080×1920</span></div>
+    <p class="hook">An AI clicked &quot;I&#x27;m not a robot&quot;</p>
+    <p class="post">July 2025: an AI agent clicked Cloudflare&#x27;s &quot;Verify you are human&quot; box. Its own note: &quot;This step is necessary to prove I&#x27;m not a bot.&quot; #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep06/captcha.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep06-secretword">
+  <video controls playsinline preload="metadata" src="media/ep06/secretword.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">WHO&#x27;S HUMAN HERE?</span><span>22 s · 1080×1920</span></div>
+    <p class="hook">The FBI&#x27;s advice for AI voice scams is one word</p>
+    <p class="post">Voices can be copied now. The FBI&#x27;s advice (Dec 2024) is low-tech: agree a secret word or phrase with your family. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep06/secretword.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep06-bots">
+  <video controls playsinline preload="metadata" src="media/ep06/bots.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">WHO&#x27;S HUMAN HERE?</span><span>12 s · 1080×1920</span></div>
+    <p class="hook">Most of the internet isn&#x27;t people any more</p>
+    <p class="post">In 2025, 53% of all web traffic was automated (Imperva). Out of every 100 visits to a website, 53 weren&#x27;t people. #ai #turingtest #chatgpt #bots #deepfake #internet #tech #psychology #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep06/bots.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+</section><section id="ep07" class="ep">
+  <div><span class="eyebrow">EP07 · The Thirty-Year Delay</span><h2 class="ep-title">Why AI hasn&#x27;t changed productivity (yet)</h2></div>
+  <article class="card wide" id="ep07-full">
+  <img class="thumb" src="media/ep07/ep07_thumb.jpg" alt="Why AI Hasn&#x27;t Made Companies More Productive (Yet): the YouTube thumbnail" loading="lazy">
+  <div class="body">
+    <div class="meta"><span class="chip">THE FULL FILM · YOUTUBE · Fri 9 Oct</span><span>2:35 · 16:9 · the 1080p file is in the chat</span></div>
+    <p class="hook">Why AI Hasn&#x27;t Made Companies More Productive (Yet)</p>
+    <p class="post">In February 2026, economists asked 6,000 bosses what AI had done for their companies. Nearly nine in ten said: nothing. This has happened before, almost exactly.
+
+In this video: why electricity took decades to show up in factory productivity (one big motor on the old shaft), the redesign that finally made it pay, Robert Solow&#x27;s computer paradox, why 95% of company AI pilots made no measurable return, and a labelled what-if: an office designed from zero around AI.
+
+Sources:
+• NBER survey of ~6,000 executives in the US, UK, Germany and Australia, Feb 2026: nearly 90% of firms reported no impact of AI on employment or productivity over the past three years; executives who used AI averaged about 1.5 hours a week (Fortune, 17 Feb 2026)
+• Edison&#x27;s Pearl Street Station, New York, September 1882
+• Paul A. David, &quot;The Dynamo and the Computer: An Historical Perspective on the Modern Productivity Paradox&quot;, American Economic Review, 1990: electric motors ~5% of US factory mechanical drive in 1900, ~50% by 1920; the productivity surge came in the 1920s with factories redesigned around unit drive
+• Robert Solow, &quot;We&#x27;d better watch out&quot;, New York Times Book Review, 12 July 1987
+• US labour productivity growth picked up from the mid-1990s (BLS)
+• MIT NANDA, &quot;The GenAI Divide: State of AI in Business 2025&quot;: 95% of generative AI pilots with no measurable P&amp;L return
+• The office section is a labelled what-if, not a forecast</p>
+
+    <p class="pin">What would disappear first in an office built from zero around AI? Sources are in the description.</p>
+    <div class="row"><button class="main" type="button" data-copy="hook">Copy title</button>
+      <button class="main" type="button" data-copy="post">Copy description</button>
+      <button type="button" data-save="media/ep07/ep07_thumb.jpg">Save thumbnail</button>
+      <button type="button" data-copy="pin" data-what="Pinned comment">Copy pinned comment</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article>
+  <h3>Suggested order</h3>
+  <div class="plan"><div class="day"><b>Day 9 · Fri 9 Oct</b><span>6,000 bosses were asked what AI did for them</span><span class="plus">AI changed nothing for 9 in 10 companies. So far.</span></div><div class="day"><b>Day 10 · Sat 10 Oct</b><span>Why electricity took decades to pay off</span><span class="plus">The mistake every factory made with electricity</span></div><div class="day"><b>Day 11 · Sun 11 Oct</b><span>AI is stuck at the one-big-motor stage</span><span class="plus">The redesign that finally made electricity pay</span></div><div class="day"><b>Day 12 · Mon 12 Oct</b><span>Why 95% of company AI pilots don&#x27;t pay</span><span class="plus">What an office built from zero around AI loses first</span></div></div>
+  <h3>The whole film, in 3 parts</h3>
+  <div class="grid"><article class="card" id="ep07-part1">
+  <video controls playsinline preload="metadata" src="media/ep07/part1.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE THIRTY-YEAR DELAY · PART 1 OF 3</span><span>39 s · 1080×1920</span></div>
+    <p class="hook">6,000 bosses were asked what AI did for them</p>
+    <p class="post">Nearly nine in ten said: nothing. No change in productivity, no change in jobs (NBER, Feb 2026). This has happened before. Part 1 of 3. #ai #productivity #economics #history #electricity #business #work #tech #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep07/part1.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep07-part2">
+  <video controls playsinline preload="metadata" src="media/ep07/part2.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE THIRTY-YEAR DELAY · PART 2 OF 3</span><span>38 s · 1080×1920</span></div>
+    <p class="hook">Why electricity took decades to pay off</p>
+    <p class="post">Factories swapped the steam engine for one big electric motor and changed nothing else. The gains came when they rebuilt around the motor. Part 2 of 3. #ai #productivity #economics #history #electricity #business #work #tech #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep07/part2.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep07-part3">
+  <video controls playsinline preload="metadata" src="media/ep07/part3.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE THIRTY-YEAR DELAY · PART 3 OF 3</span><span>71 s · 1080×1920</span></div>
+    <p class="hook">AI is stuck at the one-big-motor stage</p>
+    <p class="post">&quot;You can see the computer age everywhere but in the productivity statistics&quot; (Solow, 1987). 95% of company AI pilots made no measurable return (MIT, 2025). Part 3 of 3. #ai #productivity #economics #history #electricity #business #work #tech #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep07/part3.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+  <h3>Highlights</h3>
+  <div class="grid"><article class="card" id="ep07-nothing">
+  <video controls playsinline preload="metadata" src="media/ep07/nothing.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE THIRTY-YEAR DELAY</span><span>22 s · 1080×1920</span></div>
+    <p class="hook">AI changed nothing for 9 in 10 companies. So far.</p>
+    <p class="post">An NBER survey of about 6,000 executives in the US, UK, Germany and Australia (Feb 2026): nearly 90% saw no change in productivity or jobs from AI. The bosses who used it averaged 1.5 hours a week. #ai #productivity #economics #history #electricity #business #work #tech #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep07/nothing.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep07-shaft">
+  <video controls playsinline preload="metadata" src="media/ep07/shaft.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE THIRTY-YEAR DELAY</span><span>18 s · 1080×1920</span></div>
+    <p class="hook">The mistake every factory made with electricity</p>
+    <p class="post">Old factories ran on one steam engine turning one long shaft, with belts to every machine. Owners swapped in one big electric motor and changed nothing else. Same shaft, same belts, small savings. #ai #productivity #economics #history #electricity #business #work #tech #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep07/shaft.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep07-redesign">
+  <video controls playsinline preload="metadata" src="media/ep07/redesign.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE THIRTY-YEAR DELAY</span><span>15 s · 1080×1920</span></div>
+    <p class="hook">The redesign that finally made electricity pay</p>
+    <p class="post">A small motor in every machine, laid out along the flow of the work. By 1920 half of US factory power was electric, and productivity surged (Paul David, 1990). #ai #productivity #economics #history #electricity #business #work #tech #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep07/redesign.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep07-pilots">
+  <video controls playsinline preload="metadata" src="media/ep07/pilots.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE THIRTY-YEAR DELAY</span><span>22 s · 1080×1920</span></div>
+    <p class="hook">Why 95% of company AI pilots don&#x27;t pay</p>
+    <p class="post">MIT&#x27;s 2025 study: 95% of company AI pilots made no measurable return. Mostly bolted onto the old routine. The tool is rarely the bottleneck. The layout is. #ai #productivity #economics #history #electricity #business #work #tech #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep07/pilots.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article><article class="card" id="ep07-office">
+  <video controls playsinline preload="metadata" src="media/ep07/office.mp4"></video>
+  <div class="body">
+    <div class="meta"><span class="chip">THE THIRTY-YEAR DELAY · A WHAT-IF</span><span>25 s · 1080×1920</span></div>
+    <p class="hook">What an office built from zero around AI loses first</p>
+    <p class="post">Not a forecast, a what-if: the weekly status meeting, the inbox, the jobs that only move information from one place to another. #ai #productivity #economics #history #electricity #business #work #tech #thecurve</p>
+    <div class="row"><button class="main" type="button" data-copy>Copy caption</button>
+      <button type="button" data-save="media/ep07/office.mp4">Save video</button></div>
+    <p class="note" aria-live="polite"></p>
+  </div>
+</article></div>
+</section>
+<footer>Every figure in these clips is sourced in its full video's end card. The files were also sent in the chat.</footer>
+</div>
+<script>
+const note=(el,msg)=>{el.textContent=msg;};
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+  const card=b.closest('.card');const el=card.querySelector('.'+(b.dataset.copy||'post'));const text=el.textContent;const n=card.querySelector('.note');
+  try{await navigator.clipboard.writeText(text);note(n,(b.dataset.what||(b.dataset.copy==='hook'?'Title':b.dataset.copy==='post'&&card.classList.contains('wide')?'Description':'Caption'))+' copied.');}
+  catch(e){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();
+    s.removeAllRanges();s.addRange(r);note(n,'Selected: copy it from the menu.');}
+}));
+let downloads=null;
+const saveButtons=[...document.querySelectorAll('[data-save]')];
+saveButtons.forEach(b=>b.hidden=true);
+(async()=>{try{downloads=window.claude&&window.claude.use?await window.claude.use('downloads'):null;}catch(e){downloads=null;}
+  if(!downloads)return;saveButtons.forEach(b=>b.hidden=false);})();
+saveButtons.forEach(b=>b.addEventListener('click',async()=>{
+  const n=b.closest('.card').querySelector('.note');const file=b.dataset.save;
+  if(!downloads){note(n,'Saving isn\'t available in this view: it was also sent in the chat.');return;}
+  b.disabled=true;note(n,'Getting the video…');
+  try{const blob=await (await fetch(file)).blob();await downloads.save({filename:file.split('/').pop(),data:blob});note(n,'Saved.');}
+  catch(e){const c=e&&e.code;note(n,c==='declined'?'Not saved.':c==='rate_limited'?'One save at a time: try again in a moment.':
+    'Couldn\'t save here: the file is also in the chat.');}
+  finally{b.disabled=false;}
+}));
+</script>

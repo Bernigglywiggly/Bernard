@@ -1,0 +1,29 @@
+# Test shot list for the pipeline (SFW, Instagram-safe). Fields: id, scene, outfit, pose, lighting, camera, mood, look, aspect
+shots:
+  - id: cafe_window
+    scene: small neighbourhood cafe in Lisbon, wooden table by the window, a flat white and a croissant on the table
+    outfit: cream cable-knit jumper, thin gold hoop earrings, fine gold chain
+    pose: seated, both hands around the cup, glancing up at the camera mid-laugh
+    lighting: soft overcast daylight through the window, slightly cool shadows
+    camera: friend's phone across the table, eye level, slightly off-centre framing
+    mood: relaxed Sunday morning
+    look: phone
+    aspect: "4:5"
+  - id: street_evening
+    scene: quiet cobbled street in the evening, warm shop lights and a parked scooter behind her, blurred passers-by
+    outfit: black oversized blazer, white t-shirt, straight blue jeans, white sneakers, small shoulder bag
+    pose: walking towards the camera, looking slightly past it, right arm swinging so the inner right wrist shows
+    lighting: mixed tungsten shop light and blue dusk, some motion softness
+    camera: 35mm at waist height, candid street-photography framing
+    mood: confident, on her way somewhere
+    look: 35mm
+    aspect: "4:5"
+  - id: gym_mirror
+    scene: bright modern gym, racks of dumbbells in the background
+    outfit: sage-green sports bra and matching high-waisted leggings, hair in a loose ponytail
+    pose: standing with a water bottle, towel over one shoulder, natural smile
+    lighting: overhead fluorescent gym light, slight sheen of sweat
+    camera: phone held by a friend, chest height
+    mood: post-workout, upbeat
+    look: phone
+    aspect: "4:5"

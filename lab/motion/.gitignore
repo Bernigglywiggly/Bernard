@@ -15,3 +15,6 @@ public/whatif/*/c*.mp4
 public/whatif/*/keys/
 public/whatif/*/sound*.wav
 public/whatif/*/sound*.mp3
+
+# Stand-in trial media (copied from lab/curve_v2/trials)
+public/trials/

@@ -35,7 +35,7 @@ Quotes come from YouTube auto-captions of Tesla's stream. **Play the audio befor
 | Jumped five Teslas (Model 3, Model Y, Cybertruck, Cybercab, Semi) with a full roll, the "kickflip" | **SHOWN live** | Takes about 3 s; 27 ft high according to Tesla (via NBC) | P3, S8, S10 |
 | 0-60 mph in 0.81 s (0.67 s with rollout subtracted) | **SHOWN live, self-timed** | Tesla's own timing, not independent. A test recorded "the other day" was played first (16:06) | P1, P4 |
 | "Flight" | PARTLY SHOWN | Brief hops, self-righting and a hover, lasting seconds. Musk: it "can basically fly like a rocket" (10:09) | P1, S12 |
-| A "standing flip" | REPORTED | Jalopnik lists it. The closing sequence (21:34-22:50) has no narration, so we can't tell which stunt it was | S11 [UNV] |
+| A "standing flip" | REPORTED | Jalopnik lists it. The closing sequence (21:34-22:50) has no narration, so we can't tell which stunt it was → see §13 | S11 [UNV] |
 | Over 230 mph | CLAIMED | Said on stage (20:28). Moravy told Top Gear the day before: 214 mph "for now", a 330 mph version planned | P1, S1 |
 | About Mach 0.5 (roughly 380 mph) | ASPIRATION | Musk (20:41-20:49) | P1 |
 | "Half a mile in the time other cars do a quarter" | CLAIMED | Musk (19:19). No time given | P1 |
@@ -71,7 +71,7 @@ Quotes come from YouTube auto-captions of Tesla's stream. **Play the audio befor
 | Wheelbase | 2,825 mm | S | S1 |
 | Seats | 2. Rocket has 1; its second seat is a gas tank | P / S | P10, S1 |
 | Price | **None announced.** The 2017 price was $200,000 base, $250,000 Founders Series | P / S | S2, S21 |
-| Reservation, US | Performance: $5,000 now (fully refundable) plus $45,000 within 10 days, so **$50,000**. Thrust: $5,000 plus $245,000, so **$250,000**, one per customer. Rocket: invite only | P (Performance) / S (Thrust, US) | P10, S12 |
+| Reservation, US | Performance: $5,000 now (fully refundable) plus $45,000 within 10 days, so **$50,000**. Thrust: $5,000 plus $245,000, so **$250,000**, one per customer. Rocket: invite only → see §13 (Thrust US now read at Tesla) | P (Performance) / S (Thrust, US) | P10, S12 |
 | Reservation, UK | Performance £5,000 + £45,000; Thrust £5,000 + £245,000; left-hand drive only | P | P10 |
 | Production | 2028, at Giga Texas | P / S | P1, S21 |
 | Deliveries | No date | — | — |
@@ -138,7 +138,7 @@ refilling it takes hours.
 | 20:41 | Musk | "crack halfway to the speed of sound" | Mach 0.5 |
 | 20:55 | Musk | "Where we're going, you don't need tires." | — |
 | 21:12 | Musk | "we entered production in 2028" ("enter"), then "actually" | Timeline |
-| X post | Musk | "Turns out the future does have flying cars" | Reported by Fox Business and Interesting Engineering; post URL not found [UNV] |
+| X post | Musk | "Turns out the future does have flying cars" | Reported by Fox Business and Interesting Engineering; post URL not found [UNV] → see §13 (found) |
 
 ## 7. TSLA share price, on and after the event (market data [P], P11)
 
@@ -241,12 +241,12 @@ shots; real clips only as short, credited evidence under our commentary.
 
 ## 11. Open questions (check before scripting)
 
-- [ ] Height and g readings: are the 68 ft, 3.2 g and 27 ft figures readable in a 4K frame of the stream?
-- [ ] Which stunt is the closing sequence (21:34-22:50)? Jalopnik's "standing flip"?
-- [ ] Gas: air (Musk) or nitrogen (Moravy)? Can the car refill itself, or does it take 2-6 h?
-- [ ] Power: 1,340 hp (1 MW) or "1500 horsepower"? Weight: under 1,700 kg or over 4,000 lb?
-- [ ] Find the URL of Musk's "future does have flying cars" X post.
-- [ ] Does Tesla's YouTube channel use Content ID? Unknown.
+- [ ] Height and g readings: are the 68 ft, 3.2 g and 27 ft figures readable in a 4K frame of the stream? *(17 Oct: still open; no new source. §13.6)*
+- [ ] Which stunt is the closing sequence (21:34-22:50)? Jalopnik's "standing flip"? *(17 Oct: mostly answered at [S]: Mashable describes a second, standing kickflip from about 21:39. Frames not checked. §13.6)*
+- [ ] Gas: air (Musk) or nitrogen (Moravy)? Can the car refill itself, or does it take 2-6 h? *(17 Oct: still open; no new Tesla or Musk statement. §13.6)*
+- [ ] Power: 1,340 hp (1 MW) or "1500 horsepower"? Weight: under 1,700 kg or over 4,000 lb? *(17 Oct: power still open; weight leaning to about 1,700 kg (Car and Driver: about 3,700 lb). §13.6)*
+- [x] Find the URL of Musk's "future does have flying cars" X post. *(Resolved: https://x.com/elonmusk/status/2110913107094606330, 16 Oct 2026 01:57:58 UTC. §13.1 #16)*
+- [ ] Does Tesla's YouTube channel use Content ID? Unknown. *(17 Oct: not checked.)*
 
 ## 12. Sources
 
@@ -303,3 +303,178 @@ shots; real clips only as short, credited evidence under our commentary.
 - C9 Carscoops, 8.54 s quarter mile, https://www.carscoops.com/2026/06/koenigsegg-jesko-absolut-quarter-mile/, Jun 2026.
 - C10 TFLcar, ZR1X, https://tflcar.com/2026/01/chevy-corvette-zr1x-quickest-production-car-news/, Jan 2026.
 - C11 TechRepublic, https://www.techrepublic.com/article/news-apac-xpeng-flying-car-deliveries-2027/, Apr 2026; CnEVPost, https://cnevpost.com/2026/07/22/xpeng-aridge-certification-boost-evtol-compliance-list/, 22 Jul 2026.
+
+**17 Oct** (sources for §13; Tesla pages read 17 Oct 2026 about 23:30 BST, everything else 17-18 Oct 2026)
+- U1 Tesla, "Roadster Reservation Agreement, Terms & Conditions", footer "US v.20261015", 2 pages (PDF), https://www.tesla.com/coinorder/api/v4/terms?locale=en_US&model=mt&saleType=PreSale, version dated 15 Oct 2026; read 17 Oct 2026.
+- U2 Tesla, "Roadster Reservation Agreement" (UK, Tesla Motors Limited, Manchester), 3 pages (PDF), https://www.tesla.com/coinorder/api/v4/terms?locale=en_GB&model=mt&saleType=PreSale, read 17 Oct 2026.
+- U3 Tesla, https://www.tesla.com/roadster/reserve?redirect=no (Performance and Thrust panels) and https://www.tesla.com/roadster?redirect=no, read 17 Oct 2026.
+- U4 Elon Musk on X, "Turns out the future does have flying cars" + 15 s video, https://x.com/elonmusk/status/2110913107094606330, 16 Oct 2026 01:57:58 UTC; read via X's own syndication endpoint 18 Oct 2026 04:20 BST. Found embedded in S22.
+- U5 Alef Aeronautics (YouTube): "Alef flying car flying over Tesla Roadster and Tesla Cybertruck (not AI, real video)", https://www.youtube.com/watch?v=stmWapR3CWY, dated 13 Oct 2026 (0:40, 112k views on 17 Oct); "Flying cars: Tesla Roadster vs Alef Model Zero Ultralight", https://www.youtube.com/watch?v=NMZs3WeCepg, 16 Oct 2026.
+- U6 The Drive (Stephen Edelstein), "Tesla 'Cannot Guarantee' Roadster Reservation Holders Will Ever Get a Car", https://www.thedrive.com/news/tesla-cannot-guarantee-roadster-reservation-holders-will-ever-get-a-car, 17 Oct 2026 10:00 EDT.
+- U7 InsideEVs (Rob Stumpf), "Tesla 'Cannot Guarantee' Your Roadster Pre-Order Will Ever Be Delivered", https://insideevs.com/news/812247/tesla-roadster-preorder-delivery-guarantee/, 16 Oct 2026 11:29 ET (first to report the clause).
+- U8 NDTV (edited by Abhinav Singh), "'No Guarantee' Tesla Roadster Will Be Delivered...", https://www.ndtv.com/feature/no-guarantee-tesla-roadster-will-be-delivered-heres-what-legal-fine-print-reveals-12199023, 17 Oct 2026 16:08 IST.
+- U9 InsideEVs (Tim Levin), "Will The Flying Tesla Roadster Be Street Legal? Nope.", https://insideevs.com/news/812154/tesla-roadster-street-legal-elon-musk/, 15 Oct 2026 22:16 ET, updated 16 Oct 08:28 ET (Google News re-listed it 17 Oct).
+- U10 Engadget (Mariella Moon), "The Tesla Roadster is far from the first car to use fans for downforce", https://www.engadget.com/2289646/tesla-roadster-not-first-car-use-fans-for-downforce/, 17 Oct 2026 21:20 UTC.
+- U11 RACER (Peter Corn), "The Tesla Roadster borrowed its trick from the Chaparral 2J", https://racer.com/2026/10/16/the-tesla-roadster-borrowed-its-trick-from-the-chaparral-2j, 17 Oct 2026 10:39 ET.
+- U12 Wikipedia, "Chaparral 2J", "1970 Can-Am season" (entry list, results), "Brabham BT46", "McMurtry Spéirling", read 17 Oct 2026. Used as a cross-check only, never as the sole source.
+- U13 Permian Basin Petroleum Museum (Chaparral Gallery, Midland TX), "Chaparral 2J", https://petroleummuseum.org/chaparral-2j/, undated, read 17 Oct 2026.
+- U14 Motor Sport, December 1970 archive: "Can-Am 1970" (Laguna Seca), https://www.motorsportmagazine.com/archive/article/december-1970/24/can-am-1970/ and "Riverside", https://www.motorsportmagazine.com/archive/article/december-1970/24/riverside/.
+- U15 Motor Sport, "75. 1978 Swedish GP: Brabham fan car wins its one and only race", https://www.motorsportmagazine.com/special-article/the-75-greatest-grands-prix/6/75-1978-swedish-gp-brabham-fan-car-wins-its-one-and-only-race/, 18 Mar 2025.
+- U16 Al Jazeera (video, 1:20), "11-year old flying car company mocks Tesla Roadster", https://www.aljazeera.com/video/newsfeed/2026/10/17/11-year-old-flying-car-company-mocks-tesla-roadster, 17 Oct 2026 07:46 UTC.
+- U17 Electrek (Peter Johnson), "Alef welcomes Tesla to the electric flying car race by flying over the Roadster", https://electrek.co/2026/10/15/alefs-electric-flying-car-flies-over-tesla-roadster-video/, 15 Oct 2026 18:00 PT.
+- U18 Fortune (Bilin Lin), "Tesla is taking $250,000 deposits for a Roadster with SpaceX thrusters. The FAA says it isn't an aircraft", https://fortune.com/2026/10/17/tesla-flying-roadster-spacex-thrusters-2028-production-price/, 17 Oct 2026 06:01 ET.
+- U19 Politico (Oriana Pawlyk, Sam Ogozalek), "FAA: Musk's flying car not our responsibility", https://www.politico.com/news/2026/10/16/faa-tesla-flying-car-01123316, 16 Oct 2026 19:23 BST.
+- U20 Reuters (Abhirup Roy, Mrinmay Dey), "Tesla's new Roadster turns in air with SpaceX thrusters, won't land until 2028", https://www.reuters.com/business/autos-transportation/tesla-set-unveil-next-generation-roadster-sports-ev-after-years-delay-2026-10-15/, first posted 15 Oct 2026 as a preview, updated 16 Oct; Google News listed it 17 Oct 10:10 UTC.
+- U21 Sam Altman on X: https://x.com/sama/status/2111131677351432197 (16 Oct 2026 16:26:29 UTC, 64,358 likes when read); https://x.com/sama/status/1984023663642087831 ("A tale in three acts", 30 Oct 2025 22:24 UTC); https://x.com/sama/status/1985066412470325339 (2 Nov 2025 19:28 UTC). All read via X's syndication endpoint 18 Oct 2026; IDs found embedded in U24 and in https://www.all-ai.de/news/news24/tesla-roadstar-musk-altman.
+- U22 Elon Musk on X: https://x.com/elonmusk/status/1984609637405270387 ("You stole a non-profit") and https://x.com/elonmusk/status/1984611995552006568 (1 Nov 2025 13:22 UTC). Read via X's syndication endpoint 18 Oct 2026.
+- U23 Electric Vehicles (Cláudio Afonso): "Sam Altman Praises Tesla Roadster a Year After Seeking Deposit Refund", https://eletric-vehicles.com/tesla/sam-altman-praises-tesla-roadster-a-year-after-seeking-deposit-refund/, 17 Oct 2026 14:08 ET; and "Musk Says Tesla Roadster Could Hit About 400 MPH, Team Says 214 'for Now'", https://eletric-vehicles.com/tesla/musk-says-tesla-roadster-could-hit-about-400-mph-team-says-214-for-now/, 17 Oct 2026 12:21 ET.
+- U24 Hindustan Times, "Sam Altman praises Elon Musk on Tesla's flying Roadster launch...", https://www.hindustantimes.com/trending/sam-altman-praises-elon-musk-on-teslas-flying-roadster-launch-a-year-after-spat-over-50-000-refund-101792204315724.html, 17 Oct 2026 (used only to find the post IDs).
+- U25 Axios (Joann Muller), "With flying Roadster, Tesla waves goodbye to the car business", https://www.axios.com/2026/10/16/tesla-flying-roadster-goodbye-car-business, 16 Oct 2026 (Google News: 17 Oct 18:37 UTC).
+- U26 WSJ, "What Tesla's Flying Roadster Really Means for the Global Auto Race", https://www.wsj.com/business/autos/what-teslas-flying-roadster-really-means-for-the-global-auto-race-0ede8702, 17 Oct 2026 09:30 UTC. Paywalled (HTTP 401): **not read**.
+- U27 Tesla IR: "Tesla Third Quarter 2026 Production, Deliveries & Deployments", https://ir.tesla.com/press-release/tesla-third-quarter-2026-production-deliveries-and-deployments, 2 Oct 2026; "Q3 2026 Delivery Consensus" (company-compiled, 24 analysts), https://ir.tesla.com/press-release/delivery-consensus-third-quarter-2026, 29 Sep 2026; Q2 2026 release, https://ir.tesla.com/press-release/tesla-second-quarter-2026-production-deliveries-and-deployments, 2 Jul 2026; Q3 2025 release, https://ir.tesla.com/press-release/tesla-third-quarter-2025-production-deliveries-deployments, 2 Oct 2025. Read 18 Oct 2026.
+- U28 Car and Driver (Sebastian Blanco), "Explained: Here's How the Tesla Roadster Flies, Flips, and Sucks", https://www.caranddriver.com/news/a74165059/tesla-roadster-thrusters-fan-system-explained/, 17 Oct 2026 00:46 UTC (quotes Moravy to Hagerty).
+- U29 Mashable (Stan Schroeder), "Tesla Roadster tricks: See them all in one place", https://mashable.com/tech/tesla-roadster-flying-tricks, 16 Oct 2026 12:25 UTC.
+- U30 NDTV (Amulya Srinet), "McMurtry Reminds Tesla Who Drove Upside Down First After Roadster's Viral Video", https://www.ndtv.com/auto/mcmurtry-reminds-tesla-who-drove-upside-down-first-after-roadsters-viral-video-12194525, 16 Oct 2026 15:30 IST; embeds McMurtry's Instagram reel https://www.instagram.com/reel/DeiZO4UqJzH/ (not opened: login wall).
+- U31 Google News RSS, search "Tesla Roadster when:2d", https://news.google.com/rss/search?q=Tesla+Roadster+when:2d&hl=en-US&gl=US&ceid=US:en, pulled 17 Oct 2026 23:28 BST. Index of headlines and times only; every article used was read on the outlet's own site.
+
+---
+
+## 13. Updates, 17 Oct 2026
+
+What was published on 16-17 Oct that the film can use, checked at the source. Researched 17-18 Oct 2026. Codes U1...
+are listed in §12 under "17 Oct". Same tags as the rest of the file.
+
+**The five to use first**
+
+| # | Beat | Tag | Src |
+|---|---|---|---|
+| 1 | Tesla's own US contract: "we cannot guarantee when your vehicle will actually be delivered or if it will be delivered". The version is dated 15 Oct, the day of the show. The UK contract leaves out the "or if" | P | U1, U2 |
+| 2 | Up to $250,000 up front, with no escrow, no interest and no price; Tesla can cancel "for any reason"; anything said on stage is "not binding" | P | U1, U3 |
+| 3 | The Brabham BT46B "fan car" raced in F1 exactly once, and won: Swedish GP, 17 Jun 1978, Niki Lauda. Brabham withdrew it straight after. The Chaparral 2J (1970) took pole in Vic Elford's races (RACER; two of them confirmed by Motor Sport in 1970), won nothing, and was banned | S (2+ sources each) | U15, U12, U11, U13, U14 |
+| 4 | The FAA: "The Tesla vehicle does not meet the FAA's definition of an aircraft." DOT: the car "may appear to defy the laws of physics" but must meet federal safety standards | S | U19 |
+| 5 | Sam Altman, a year after his public refund fight: "Wow the new roadster looks quite amazing, good job @elonmusk." Musk, asked whether Altman had cancelled his cancellation: "Indeed." | P (Altman post) / S (Musk reply) | U21, U23 |
+
+### 13.1 New facts
+
+| # | Fact | Tag | Src |
+|---|---|---|---|
+| 1 | **Tesla's own US reservation agreement, clause 4 "Delivery":** "we cannot guarantee when your vehicle will actually be delivered or if it will be delivered" | P | U1 (reported by U7, U6, U8) |
+| 2 | The US agreement is stamped **"US v.20261015"**: the version is dated the day of the event | P | U1 |
+| 3 | **The UK agreement drops the "or if".** Its clause 4 ends "...when your vehicle will actually be delivered." | P | U2 |
+| 4 | Clause 3: the reservation "does not constitute the purchase or order of a vehicle", only "approximate priority" | P | U1 |
+| 5 | Clause 2: any price is "only an estimate"; Tesla "cannot confirm the exact price just yet" | P | U1 |
+| 6 | Clause 5: until you configure, **either side can cancel "for any reason"**, with a full refund of the Reservation Payment. The Reservation Payment includes the 10-day second payment (clause 1), so the whole $50,000 / $250,000 is refundable, although the page labels only the $5,000 "Fully refundable" | P | U1, U3 |
+| 7 | Clause 6: Tesla will not hold the money "in an escrow or trust fund" and pays no interest; the reservation can't be transferred without Tesla's written consent | P | U1 |
+| 8 | Clause 8: the buyer's "sole and exclusive remedy" is getting the Reservation Payment back | P | U1 |
+| 9 | Clause 9: "Terms relating to the Roadster not expressly contained herein are not binding." Our reading: nothing said on stage (0-60, flight, 2028) is a contractual promise | P (our reading: EST) | U1 |
+| 10 | Clause 10 (US only): disputes go to AAA arbitration, no class actions, opt-out by letter within 30 days | P | U1 |
+| 11 | UK instead: 14-day statutory right of withdrawal, English law, Consumer Rights Act 2015 rights preserved, disputes in the courts (no arbitration clause) | P | U2 |
+| 12 | **Thrust, US, now confirmed at Tesla:** $5,000 today ("Fully refundable") + **$245,000** within 10 days; "restricted to one order per customer"; Tesla may cancel duplicates; "Availability is subject to each region's legal requirements" | P | U3 |
+| 13 | New line on the reserve page: "Refunds for modifications will not be issued." | P | U3 |
+| 14 | Tesla's page on the Rocket: "So yes, it can fly." Footnote: Rocket "is not available in all regions". Under Rocket: "Note: Not approved for public road use." | P | U3 |
+| 15 | Interest Tesla doesn't pay, per car, if the money sits about 2 years (to a 2028 configure invite) at an assumed 4%/yr: **about $20,000 on a Thrust deposit, about $4,000 on Performance** | EST | 250,000 × 4% × 2; 50,000 × 4% × 2. The rate is our assumption |
+| 16 | **Musk's post found:** "Turns out the future does have flying cars", https://x.com/elonmusk/status/2110913107094606330, 16 Oct 2026 01:57:58 UTC (20:57 CDT on 15 Oct, about an hour into the stream), with a 15 s video. 821,107 likes and 45,314 replies when read | P | U4 |
+| 17 | The 2017 deal, for contrast: $50,000 reservation, or $250,000 for one of **1,000 Founders Series** cars; 2020 launch; 0-60 1.9 s; four seats; 620 mi | S | U18, S21 |
+| 18 | Tesla hasn't said what happens to 2017 deposit holders | S | U18 |
+| 19 | Musk, Oct 2024 earnings call: thanked "the long-suffering deposit holders"; the car is "the cherry on the icing on the cake" | S | U18 |
+| 20 | Musk, 2023 shareholder meeting: the Roadster is "definitely not gonna be a huge contributor to revenue" | S | U18 |
+| 21 | Musk on X after the show (just after midnight ET, 17 Oct, replying to Jesse Watters): "a peak speed of >0.5 Mach or ~400 mph". Tesla's stage figure is over 230 mph; Moravy told Top Gear 214 mph "for now" | S | U23, S1 |
+| 22 | Musk on X: owners will be able to ask the car to do "any of the tricks shown autonomously, as it will be sentient", and Tesla will build "a wild looping track (crazier even than Hot Wheels)" at its Texas HQ | S | U23 |
+| 23 | Musk on X, replying to an AI-generated clip: the Roadster could "stick to the underside of an overpass like Spider-Man" | S | U23 |
+| 24 | Moravy to Hagerty: from 0 to 50 mph, where wings do nothing, "we can hold over 2 g's in a corner" | S | U28 |
+| 25 | Car and Driver puts the weight at "around 3700 pounds" (about 1,680 kg) and the power at "up to 1500 horsepower", citing no Tesla document | S | U28 |
+
+### 13.2 Fan-car history (Engadget's list, each checked at two or more other sources)
+
+| Car | When | How the fan worked | Races and results | Why it stopped | Src |
+|---|---|---|---|---|---|
+| **Chaparral 2J** (Jim Hall and Hap Sharp, Midland, Texas) | 1970 Can-Am season | Two 17-inch fans at the back, driven by a separate two-stroke twin (RACER: 45 hp JLO; Petroleum Museum: 55 bhp Rockwell). Lexan skirts sealed the floor. About 1.25-1.5 g of suction, against the Roadster's claimed 2 g | **4 entries, 0 wins.** Watkins Glen, 12 Jul (Jackie Stewart, qualified 3rd, did not win) · Road Atlanta, 13 Sep (Vic Elford) · Laguna Seca, 18 Oct (Elford fastest in qualifying at 58.8 s, then a con rod broke in the warm-up: did not start) · Riverside, 1 Nov (Elford on pole by over 2 s; out on lap 2 with the fan engine dead). RACER: pole at all three of Elford's races | Outlawed after 1970 as a "movable aerodynamic device" after rivals (McLaren) objected; also complaints about debris thrown by the fans. Wikipedia says the SCCA banned it; the Petroleum Museum says "FIA officials" | U11, U12, U13, U14, U10 |
+| **Brabham BT46B "fan car"** (designer Gordon Murray; team owner Bernie Ecclestone) | 1978 Formula 1 | One large rear fan, declared as engine cooling, which also pulled air from under the car through skirts | **Raced once, won once:** Swedish Grand Prix, Anderstorp, **17 Jun 1978**. Niki Lauda won (1 h 41 min 00.606 s); team-mate John Watson retired after 20 laps when a sticking throttle spun him | Brabham **withdrew it voluntarily** and the win stood. Wikipedia: the FIA had ruled it could race the rest of the season; Murray later said Ecclestone pulled it to keep the other teams on side as he took over FOCA. Motor Sport: politics or goodwill | U15, U12, U11, U10 |
+| **McMurtry Spéirling** | Shown 8 Jul 2021; production PURE revealed Jul 2026 | Twin fans; 2,000 kg of downforce at 0 mph; corners at over 3 g | Not raced. Goodwood hillclimb record 39.08 s (26 Jun 2022). Drove upside down on a rotating rig from standstill, about 5 s, 11 Apr 2025 (driver Thomas Yates). PURE: 100 cars (Engadget), £995,000 before tax (C7) | — | U12, C6, C7, U10 |
+
+**Errors in the Engadget piece (don't repeat them):** it says the Spéirling was "unveiled in 2025" (it debuted at Goodwood
+in July 2021); it gives the PURE price as "$132,300" (it is £995,000, about $1.3M, so a digit looks dropped); it calls
+Gordon Murray a "racer" (he is a designer). Its claim that McMurtry posted "Welcome to the club" on Instagram is
+backed by NDTV (U30), so [S]; we couldn't open the post itself (login wall).
+
+### 13.3 Legality and fine print
+
+| Question | Answer | Tag | Src |
+|---|---|---|---|
+| Which trims are road legal? | Tesla's own labels: Performance "Road ready", Thrust "Race ready", Rocket "Air ready" and "Not approved for public road use". Tesla never says "street legal" for any trim | P | U3 |
+| InsideEVs' verdict ("Nope") and reasoning | Musk hedged twice ("not necessarily sure it's legal in all jurisdictions"; "Depends on your street"). Only the Rocket is explicitly not road-approved; Performance's "road ready" suggests it is street legal; Thrust is billed "race ready" | S | U9, P1 |
+| Thrust's availability | "subject to each region's legal requirements and applicable laws" | P | U3 |
+| FAA | Statement to Politico: "The Tesla vehicle does not meet the FAA's definition of an aircraft." So no airworthiness certification. The FAA didn't answer Politico's follow-up about its say over the airspace | S | U19, S4, U18 |
+| DOT / NHTSA | DOT to Politico: the car "may appear to defy the laws of physics", but the maker must make sure it meets the Federal Motor Vehicle Safety Standards. NHTSA "won't hesitate to act to protect the driving public". NHTSA relies on makers to self-certify | S | U19, U18 |
+| A precedent for the gap | The FAA also doesn't regulate Regent's Viceroy seaglider, which is overseen by the Coast Guard | S | U19 |
+| What a buyer is promised | A refundable place in line, no price, no delivery date, and possibly no car (US clause 4). Disputes go to arbitration (US) | P | U1 |
+| Who broke the clause | InsideEVs on 16 Oct; The Drive and NDTV followed on 17 Oct | S | U7, U6, U8 |
+
+### 13.4 Reactions
+
+| Who | What (short) | Tag | Src |
+|---|---|---|---|
+| **Alef Aeronautics** (the "11-year-old flying car company", California) | Flew its car over a Tesla Roadster and a Cybertruck on video; Alef "welcomes the Tesla Roadster to the flying car race"; says it was its 1,000th recorded flight | P | U5, U16 |
+| Alef CEO Jim Dukhovny | "we've been here alone for eleven years"; Alef says the Roadster "became the second flying car in history" | S | U17, U16 |
+| Alef, a timing detail | YouTube dates Alef's fly-over video **13 Oct 2026, two days before Tesla's event** | P | U5 |
+| Alef's own product status | FAA Special Airworthiness Certificate in 2023 (limited purposes) · over 3,600 pre-orders it values at $1 billion · price from $299,999 · hand-building began December · first cars to a few early buyers by end-2026 for controlled testing · shares an early investor (Tim Draper) with Tesla | S | U17 |
+| **McMurtry** | Posted an Instagram reel of the Spéirling hanging upside down, captioned "Welcome to the club". Its rig drive was in April 2025, 18 months before Tesla's ramp | S | U30, U10 |
+| **Sam Altman** | 16 Oct, 16:26 UTC: "Wow the new roadster looks quite amazing, good job @elonmusk" | P | U21 |
+| Musk's reply | Asked under Altman's post whether Altman had cancelled his cancellation, Musk wrote "Indeed." | S | U23 |
+| The refund fight, a year earlier | 30 Oct 2025: Altman posts "A tale in three acts" (screenshots of his July 2018 reservation, the deposit receipt and a refund email that bounced). 1 Nov 2025: Musk replies "You stole a non-profit", then says the refund came "within 24 hours". 2 Nov 2025: Altman: "can't we all just move on?" | P (posts) / S (what the screenshots show) | U21, U22, U23 |
+| Gene Munster (Deepwater) | On X: "an engineering flex with no commercial value" beyond embarrassing other carmakers; says it shows why Musk wants Tesla and SpaceX together | S | U20 |
+| Morningstar (Seth Goldstein) | Note from September: "The Roadster will be Tesla's new halo car" | S | U20 |
+| Sawyer Merritt (Tesla investor, on site) | "the most insane product demo I've ever seen" | S | U20 |
+| eToro (Josh Gilbert) | Q3 margins and cash flow will "carry far more weight" with investors than the reveal | S | U20 |
+| Safety lobby (Cathy Chase, Advocates for Highway and Auto Safety) | The demo "presents numerous questions" about safety on public roads; points to the 230 mph top speed and over 11,000 US speeding deaths in 2024 | S | U19 |
+
+### 13.5 What this says about Tesla (business beat)
+
+| Item | Number | Tag | Src |
+|---|---|---|---|
+| Q3 2026 deliveries | **486,532** (Model 3/Y 478,237 · other models 8,295) | P | U27 |
+| Q3 2026 production | 464,391 | P | U27 |
+| Change on a year ago (Q3 2025: 497,099, then a record) | **−2.1%** | P (our maths) | U27 |
+| Change on the quarter (Q2 2026: 480,126) | +1.3% | P (our maths) | U27 |
+| Against the analyst consensus Tesla itself compiled (24 analysts, mean 461,974) | Beat by about 24,600 (+5.3%) | P (our maths) | U27 |
+| "Other models" (everything but Model 3/Y) | 15,933 in Q3 2025, 8,295 in Q3 2026: **−48%**. Reuters: Tesla stopped selling the Model S and X this year to make room for Optimus production | P / S | U27, U20 |
+| Energy storage | 13.7 GWh (12.5 a year earlier, +9.6%), below the 15.9 GWh consensus | P | U27 |
+| Roadster scale | Even 1,000 Roadsters (the 2017 Founders Series count) would be about 0.06% of the 1.77M deliveries analysts expect for 2026 | EST | 1,000 ÷ 1,767,255, using U27's consensus |
+| Axios's claim (no number given) | The reveal "could be seen as a boisterous farewell to Tesla, the car company": the mainstream lineup is aging and sales have struggled, while Musk focuses on robotaxis, Optimus and AI | S | U25 |
+| Reuters | Sales of the aging lineup "have declined over the past two years", though high gas prices helped Q3 | S | U20 |
+| WSJ, 17 Oct | Paywalled, not read. Headline only: "What Tesla's Flying Roadster Really Means for the Global Auto Race" | UNV | U26 |
+| Next | Q3 results Wed 21 Oct 2026, after the close; webcast 16:30 CT | P | U27 |
+
+**The film line this gives us:** Tesla delivered about 486,500 cars last quarter, 2% fewer than a year earlier. Its
+headline car for the next two years may never reach a customer, by its own contract.
+
+### 13.6 §11 open questions: status after 17 Oct
+
+| Question | Status | Src |
+|---|---|---|
+| 68 ft / 3.2 g / 27 ft readable in a frame? | **Still open.** No 16-17 Oct outlet, Tesla page or Tesla post repeats these numbers | — |
+| What is the closing stunt (21:34-22:50)? | **Mostly answered (S):** Mashable calls it a second kickflip, "launching itself vertically and spinning", from about 21:39. That fits Jalopnik's "standing flip". We haven't checked the frames ourselves | U29, S11 |
+| Air or nitrogen? Self-refill or 2-6 h? | **Still open.** No new Tesla or Musk statement. Coverage on 17 Oct repeats both versions: Musk's air tank that will "puff itself up" (U28), and Top Gear's nitrogen bottle with a 2-6 h refill (U23). Fortune writes "rechargeable compressed air" (U18). Tesla's page just says "cold-gas thrusters" (U3) | U3, U18, U23, U28 |
+| Power: 1,340 hp or 1,500 hp? | **Still open.** Car and Driver says "up to 1500 horsepower"; Top Gear's 1 MW is about 1,341 hp. Tesla publishes no figure | U28, S1, U3 |
+| Weight: under 1,700 kg or over 4,000 lb? | **Leaning towards about 1,700 kg (S):** Car and Driver's "around 3700 pounds" (about 1,680 kg) matches Moravy's target; MKBHD's 4,000+ lb is now the outlier. Still no Tesla figure | U28, S1, S15 |
+| URL of the "future does have flying cars" post | **Resolved (P):** https://x.com/elonmusk/status/2110913107094606330, 16 Oct 2026 01:57:58 UTC | U4 |
+| Does Tesla's YouTube channel use Content ID? | Not checked; outside this brief | — |
+
+### 13.7 Tried, not verified
+
+- **WSJ (17 Oct):** paywalled (HTTP 401) and the browser pane blocks wsj.com. Nothing taken from it beyond the headline.
+- **Bloomberg** "Trump, Pichai and Even Altman Praise Tesla's Flying Roadster EV" (16 Oct): paywalled, not read. Trump's
+  and Pichai's reactions are therefore not in this file.
+- **KTLA** (Alef story) blocks automated readers. Used Alef's own video, Electrek and Al Jazeera instead.
+- **McMurtry's Instagram reel:** not opened (login wall). The "Welcome to the club" wording rests on Engadget and NDTV.
+- **Musk's follow-up posts** (400 mph, "sentient", looping track, Spider-Man): post IDs not retrieved because X's
+  public timeline endpoint was rate-limited. Wording rests on Electric Vehicles (U23). Treat as [S] until the posts
+  are opened.
+- **Mate Rimac's reaction** ("We did a project in 2020 to add cold thrusters", MotorBiscuit headline, 17 Oct) and a
+  **Smithsonian expert** ("We are literally talking about hopping", inkl headline, 16 Oct): headlines seen in Google
+  News, not checked.
+- **Alef's own claims** (1,000 flights, pre-orders "worth $1 billion") are company figures, not independently checked.
+- **Who banned the Chaparral 2J?** Wikipedia says the SCCA; the Petroleum Museum says "FIA officials". Say "banned
+  after the 1970 season" and leave out the body.
+- **The 2J's fan engine:** RACER says a 45 hp JLO; the Petroleum Museum says a 55 bhp Rockwell two-cylinder. Say "a
+  separate small two-stroke engine" and give no horsepower.

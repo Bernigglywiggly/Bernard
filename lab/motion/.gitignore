@@ -21,3 +21,6 @@ public/trials/
 
 # whisper.cpp install + models (scripts/whisper-setup.mjs)
 whisper.cpp/
+
+# Shorts media (cut from footage/ and voiced; rebuild from lab/curve_v2/shorts)
+public/shorts/

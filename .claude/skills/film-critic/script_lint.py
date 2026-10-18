@@ -9,6 +9,8 @@ Reads LINES (How They Profit) or CHAPTERS (The Curve's beats, Money Crimes' para
   STACCATO  three or more sentences of 5 words or fewer in a row
   NUMBERS   a sentence with three or more numbers in it
   HERE'S    stock openers: "Here's the thing", "Let that sink in", "But here's"
+  ISNT-X    "it isn't X, it's Y" in one sentence, or "It isn't X." followed by "It's Y." (added 18 Oct: a critic
+            caught one that the NOT-X rule missed, and it was also misleading)
 Exit code 1 if anything is flagged, so it can gate a voicing step.
 """
 import re
@@ -32,8 +34,14 @@ def narration(path):
     return out
 
 
+ISNT = re.compile(r"\b(isn't|is not|wasn't|aren't|weren't)\b[^.!?]*,\s*(it's|it is|it was|they're|they are)\b", re.I)
+NEG_OPEN = re.compile(r"^(it|this|that|they)\s+(isn't|is not|wasn't|aren't)\b", re.I)
+POS_OPEN = re.compile(r"^(it's|it is|it was|they're|they are)\b", re.I)
+
+
 def lint(path):
     issues, run = [], []
+    prev = ""
     for lid, text in narration(path):
         for s in re.split(r"(?<=[.!?])\s+", text.strip()):
             if not s:
@@ -47,6 +55,9 @@ def lint(path):
                 issues.append((lid, "NUMBERS", s))
             if any(k in low for k in STOCK):
                 issues.append((lid, "HERE'S", s))
+            if ISNT.search(s) or (NEG_OPEN.match(prev) and POS_OPEN.match(s)):
+                issues.append((lid, "ISNT-X", s))
+            prev = s
             run = run + [s] if len(s.split()) <= 5 else []
             if len(run) == 3:
                 issues.append((lid, "STACCATO", " | ".join(run)))

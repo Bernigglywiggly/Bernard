@@ -101,6 +101,7 @@ Full tables, evidence grades and sources: `lab/research/ATTENTION_PLAYBOOK.md`. 
 15. One change per test, logged with 48 h and 7 d numbers against the channel's own median (playbook §6).
 
 ## Learned on our films
+- 18 Oct (Roadster Short 1, after CRITIC_C_v2 scored the 16:9 trial 6/10): (1) frame 0 must show the claim: an upside-down car seen from below reads as "a car on a ramp", so name it on screen ("UPSIDE DOWN") and crop the 4K source tall for 9:16 instead of centre-cropping a 16:9 cut. (2) Tesla's 23.976 fps clip in a 30 fps comp gave 30% duplicate frames (visible stutter): interpolate to 30 fps with RIFE first (`~/tools/rife-ncnn-vulkan-20221029-macos`, model rife-v4.6, `-n <frames>`; about 11 fps at 1080x1920 on the M1 Pro); RIFE also makes clean 20x slow motion. (3) A loop works only if the last frame IS frame 0: end on the reversed opening clip plus a still of frame 0 (measured PSNR 41 dB). (4) `script_lint.py` now flags "isn't X, it's Y" (ISNT-X), which slipped past NOT-X and was also misleading. (5) Diagrams get no bordered card: darken the lower half of the frame into the drawing, labels at 48 px cap height or more, captions never run across a sentence.
 - 14 Oct (first analytics review, `lab/research/REVIEW_2026-10-14.md`): (1) the Escape Short fell from 73% to 47%
   watching between 0:07 and 0:10, during a definition line ("It's the website where..."), and its answer came at 0:44.
   The Steve Short gives the answer in line 1 and runs 35 s; it got 280 views in 2 days, about 37x the Curve median.

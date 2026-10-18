@@ -25,25 +25,25 @@ SEGMENTS = [
 ]
 
 LINES = [
-    # S1 The hang. Frame 0 = the car inverted at the top of the curl (4K punch-in), "WHY ISN'T IT FALLING?".
+    # S1 The hang = Roadster Short 1 as shipped (lab/curve_v2/shorts/short1.py, comp CurveV2-Short1). Keep in sync.
     dict(id="s1_1", seg="S1", facts="P1 P2",
-         text="This Tesla Roadster is hanging upside down, and it isn't falling.",
-         shot="REAL ramp_4k 8x slow-mo punch-in, car fills 60%+ of frame; hook words left third"),
+         text="You're watching a Tesla Roadster being vacuumed to the ceiling.",
+         shot="REAL 20x RIFE slow-mo of the car at the lip; hook 'UPSIDE DOWN AND NOT FALLING?' swaps to VACUUMED"),
     dict(id="s1_2", seg="S1", facts="P1 P10",
-         text="What you can't see are the fans underneath, sucking the air out from between the car and the ramp.",
-         shot="3D X-ray cross-section under the slab: fans spin up, air streams out of the gap"),
+         text="Fans underneath pull the air out from beneath the car, while skirts around the edges seal the gap.",
+         shot="footage tilts up; side-view diagram rises: fans spin, air streams out of the back, skirts seal"),
     dict(id="s1_3", seg="S1", facts="P1",
-         text="Skirts around the edges seal that gap, so the air outside presses the car against the ramp.",
-         shot="3D skirts drop and seal; pressure arrows push in from outside"),
-    dict(id="s1_4", seg="S1", facts="P1 P2 [EST §5]",
-         text="Tesla says that push can reach twice the car's weight, so it hangs there with room to spare.",
-         shot="GFX side-view force diagram: WEIGHT arrow down, SUCTION arrow up at 2x length, 'UP TO 2x'"),
-    dict(id="s1_5", seg="S1", facts="P1 P10",
-         text="But unlike a wing, which only presses down at speed, the fans work even when the car is standing still.",
-         shot="3D split: wing car parked (no arrows) vs fan car parked (arrows on); hard cut on 'standing still'"),
+         text="Tesla says the air outside then pins it to the ramp with up to twice its own weight.",
+         shot="cyan push arrow (2L) vs red WEIGHT arrow (L); badge 'UP TO 2x ITS WEIGHT'"),
+    dict(id="s1_4", seg="S1", facts="P1 P10 U28",
+         text="And unlike a wing, the fans work even when the car is standing still.",
+         shot="bars: speed 100 -> 0 MPH, WING bar drains (v squared), FANS bar stays full"),
+    dict(id="s1_5", seg="S1", facts="P2 S3 S5",
+         text="Then it lets go, and jets of compressed gas roll it the right way up before it lands.",
+         shot="REAL drop at 30 fps (RIFE), GAS JETS ring tracks the plume, smoke landing"),
     dict(id="s1_6", seg="S1", facts="P2",
-         text="So it isn't driving on the ceiling, it's being vacuumed to it.",
-         shot="REAL back to the hang (rhymes with frame 0); 'VACUUMED.' end word"),
+         text="That's how it can hang up there without falling.",
+         shot="rewind to the lip; hook rebuilds; last frame = frame 0"),
 
     # S2 The roll.
     dict(id="s2_1", seg="S2", facts="P2 S3 S5",
@@ -124,25 +124,24 @@ LINES = [
          text="So the flying car flies for seconds, and then it waits for hours.",
          shot="REAL the landing in smoke, then hold on the parked car as the smoke clears"),
 
-    dict(id="b2", seg="BRIDGE", facts="§13 CHECK", check=True,
-         text="In a minute, the racing car that did the vacuum trick first, won the only race it entered, and never "
-              "raced again.",
+    dict(id="b2", seg="BRIDGE", facts="§13.2 (U11-U15)",
+         text="In a minute, the racing car that used this trick in its only race, won it, and was never raced again.",
          shot="3D silhouette of a 1970s single-seater with a fan, lit from behind"),
 
     # S5 The fan car. Every line waits on §13 (Brabham BT46B, Chaparral 2J verified at two sources each).
-    dict(id="s5_1", seg="S5", facts="§13 CHECK", check=True,
+    dict(id="s5_1", seg="S5", facts="§13.2 BT46B (Swedish GP, 17 Jun 1978)",
          text="In 1978, a Formula One team bolted a giant fan to the back of its car, and it won the first race it "
               "entered.",
          shot="3D generic 1978 fan car (no livery, no logos) on a track, fan spinning; 'AN F1 CAR, 1978'"),
-    dict(id="s5_2", seg="S5", facts="§13 CHECK", check=True,
+    dict(id="s5_2", seg="S5", facts="§13.2 BT46B (declared as engine cooling)",
          text="The team said the fan was there to cool the engine, but it was also sucking the car onto the track.",
          shot="3D X-ray of the fan car: cooling arrows, then suction arrows under the floor"),
-    dict(id="s5_3", seg="S5", facts="§13 CHECK", check=True,
-         text="Rival teams protested, and the car never raced again.",
+    dict(id="s5_3", seg="S5", facts="§13.2 BT46B (withdrawn straight after)",
+         text="Brabham withdrew it straight after, and it never raced again.",
          shot="GFX 'RACES: 1 · WINS: 1'"),
-    dict(id="s5_4", seg="S5", facts="§13 CHECK", check=True,
-         text="Eight years earlier, an American team had tried the same idea with two fans driven by a snowmobile "
-              "engine.",
+    dict(id="s5_4", seg="S5", facts="§13.2 Chaparral 2J (1970, 4 entries, 0 wins, banned)",
+         text="Eight years earlier, an American team had tried two fans driven by a separate little engine, and that "
+              "car won nothing and was banned.",
          shot="3D generic boxy 1970 sports racer with twin rear fans"),
     dict(id="s5_5", seg="S5", facts="C6",
          text="And in 2025, a British car called the McMurtry Spéirling used its fans to drive upside down on a "
@@ -186,8 +185,8 @@ LINES = [
     dict(id="s7_2", seg="S7", facts="P1 S21",
          text="The car is due in 2028, after a launch that was first promised for 2020.",
          shot="GFX timeline of the promised dates, each struck through, ending at 2028"),
-    dict(id="s7_3", seg="S7", facts="§13 CHECK (P10 terms)", check=True,
-         text="But the reservation terms say Tesla can't guarantee you'll ever get one.",
+    dict(id="s7_3", seg="S7", facts="§13.1 #1 (U1, US contract clause 4)",
+         text="But Tesla's American contract says it can't guarantee the car will be delivered at all.",
          shot="GFX the terms clause, short fragment, highlighted"),
     dict(id="s7_4", seg="S7", facts="S1 S21",
          text="The range has shrunk too, from a promised six hundred and twenty miles to about half that.",

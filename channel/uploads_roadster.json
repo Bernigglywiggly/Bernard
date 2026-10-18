@@ -24,5 +24,50 @@
   "made_for_kids": false,
   "synthetic": true,
   "kind": "short"
+ },
+ {
+  "channel": "curve",
+  "category": 28,
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "file": "../lab/curve_v2/shorts/out/SHORT2_v1.mp4",
+  "title": "The Tesla Roadster's 0.81 Second Launch",
+  "publish_at": "2026-10-19T11:00:00Z",
+  "tags": [
+   "tesla roadster",
+   "tesla roadster 0-60",
+   "0.81 seconds",
+   "roadster launch",
+   "rimac nevera r",
+   "fastest car",
+   "tesla",
+   "spacex thrusters",
+   "the curve",
+   "shorts"
+  ],
+  "description": "Gas jets fired the new Tesla Roadster from 0 to 60 mph in 0.81 seconds at its 15 October demo, about half the time of a Rimac Nevera R (1.66 s, independently timed by Dewesoft). But the stopwatch was Tesla's own, and nobody outside the company has timed the car yet. Musk says the production car will be quicker still. The 3.4 g on screen is our own arithmetic (60 mph in 0.81 s).\n\nFootage: Tesla, \"The 0-60 | Roadster\" (YouTube, 16 Oct 2026), slowed 8x with frame interpolation: https://www.youtube.com/watch?v=Zg9Q56t7bdo\n\nSources:\nTesla, Roadster Event (15 Oct 2026), 0.81 s and \"the production car will actually do better\": https://www.youtube.com/watch?v=qt5p-_tE8d0\nRimac, Nevera R records (Dewesoft-verified): https://www.rimac-newsroom.com/press-releases/rimac-automobili/rimac-nevera-r-becomes-new-0-400-0-champion-and-sets-24-performance-records\n\nThe graphics are drawn for this Short. Narration uses an AI voice. Not affiliated with or endorsed by Tesla or Rimac.\n\n#TeslaRoadster #Tesla #Shorts"
+ },
+ {
+  "channel": "curve",
+  "category": 28,
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "file": "../lab/curve_v2/shorts/out/SHORT3_v1.mp4",
+  "title": "How Long Can the Tesla Roadster Fly?",
+  "publish_at": "2026-10-20T11:00:00Z",
+  "tags": [
+   "tesla roadster",
+   "tesla roadster fly",
+   "flying car",
+   "spacex thrusters",
+   "cold gas thrusters",
+   "copv",
+   "tesla",
+   "the curve",
+   "shorts"
+  ],
+  "description": "The new Tesla Roadster's flying trick runs on two carbon-wrapped tanks holding about a quarter of a tonne of compressed gas. By our own estimate, the rear nozzles at full power would empty them in about two seconds. Tesla told Top Gear the Thrust version gets a single launch per fill, and that a refill from a high-pressure nitrogen rig takes 2-6 hours today. On stage, Musk said the car can refill its own tank.\n\nOur estimate: about 80 kN of thrust divided by gas leaving at roughly 600 m/s is about 130 kg a second, so about 250 kg lasts about 2 seconds.\n\nFootage: Tesla, \"The Kickflip | Roadster\" (YouTube, 16 Oct 2026), slowed 6x with frame interpolation: https://www.youtube.com/watch?v=r5vsHHPVhJg\nThe x-ray of the tanks and nozzles is our own 3D illustration, not Tesla footage.\n\nSources:\nTesla, Roadster Event (15 Oct 2026), the tanks at 12:11-12:20 and the refill claim at 12:30: https://www.youtube.com/watch?v=qt5p-_tE8d0\nTop Gear interview with Lars Moravy and Franz von Holzhausen (16 Oct 2026): https://www.youtube.com/watch?v=JdkIOhFmbKI\n\nNarration uses an AI voice. Not affiliated with or endorsed by Tesla.\n\n#TeslaRoadster #Tesla #Shorts"
  }
 ]

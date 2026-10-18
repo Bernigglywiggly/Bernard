@@ -185,6 +185,7 @@ const Trims: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (frame < F.trims || frame >= F.gee) return null;
+  const only = spring({ frame: frame - (F.trims + 40), fps, config: { damping: 11, stiffness: 220 } });
   const rows = [
     { name: "ROCKET (OFF-ROAD)", t: "<0.59 s", color: v2.colors.acid },
     { name: "THRUST", t: "<1 s", color: v2.colors.ink },
@@ -203,7 +204,11 @@ const Trims: React.FC = () => {
           </div>
         );
       })}
-      <div style={{ position: "absolute", left: 64, top: 1030, ...HEADC, fontSize: 46, color: "#C3CAD2", ...keyline(0.3, 7) }}>ALL SELF-REPORTED BY TESLA</div>
+      <div style={{ position: "absolute", left: 64, top: 1010, padding: "8px 18px 10px", backgroundColor: v2.colors.acid, color: v2.colors.black,
+        border: "4px solid #000", ...HEADC, fontSize: 52, lineHeight: 1, scale: only, rotate: `${interpolate(only, [0, 1], [-10, -2])}deg`, transformOrigin: "0% 50%" }}>
+        ONLY THE OFF-ROAD ROCKET<br />BEATS 0.81 s
+      </div>
+      <div style={{ position: "absolute", left: 64, top: 1160, ...HEADC, fontSize: 46, color: "#C3CAD2", ...keyline(0.3, 7) }}>ALL SELF-REPORTED BY TESLA</div>
     </AbsoluteFill>
   );
 };

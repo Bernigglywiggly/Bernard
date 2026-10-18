@@ -176,7 +176,7 @@ const Clock: React.FC = () => {
   };
   const [hx, hy] = pt(hours, r - 60);
   return (
-    <AbsoluteFill style={{ opacity: 1 - leave }}>
+    <AbsoluteFill style={{ opacity: 1 - leave, scale: interpolate(frame, [F.clock, F.split], [1, 1.05], CLAMP), transformOrigin: "50% 45%" }}>
       <svg width={1080} height={1920} style={{ position: "absolute", inset: 0, scale: interpolate(enter, [0, 1], [0.75, 1]), transformOrigin: `${cx}px ${cy}px`,
         opacity: interpolate(enter, [0, 0.3], [0, 1], CLAMP) }}>
         <circle cx={cx} cy={cy} r={r} fill="#0B0F17" stroke={v2.colors.ink} strokeWidth={10} />
@@ -208,7 +208,7 @@ const Split: React.FC = () => {
   const vs = spring({ frame: frame - (F.eng - 6), fps, config: { damping: 10, stiffness: 240 } });
   const leave = interpolate(frame, [F.rewind - 6, F.rewind], [0, 1], CLAMP);
   return (
-    <AbsoluteFill style={{ opacity: 1 - leave }}>
+    <AbsoluteFill style={{ opacity: 1 - leave, scale: interpolate(frame, [F.split, F.rewind], [1, 1.06], CLAMP), transformOrigin: "20% 40%" }}>
       <div style={{ position: "absolute", left: 64, top: 290, ...HEADC, opacity: interpolate(a, [0, 0.25], [0, 1], CLAMP), translate: `${(1 - a) * -80}px 0` }}>
         <div style={{ fontSize: 60, color: "#C3CAD2", ...keyline(0.4, 8) }}>MUSK, ON STAGE</div>
         <div style={{ fontSize: 112, color: v2.colors.ink, lineHeight: 0.95, marginTop: 10, ...keyline(0.75, 10) }}>THE CAR<br />REFILLS ITSELF</div>

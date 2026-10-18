@@ -19,6 +19,7 @@ import { HybridCRealVertical } from "./curve_v2/HybridCRealVertical";
 import { HybridCReal2 } from "./curve_v2/HybridCReal2";
 import { CurveV2Short1, SHORT1_FRAMES } from "./curve_v2/CurveV2Short1";
 import { CurveV2Short2, SHORT2_FRAMES } from "./curve_v2/CurveV2Short2";
+import { CurveV2Short3, SHORT3_FRAMES } from "./curve_v2/CurveV2Short3";
 // @new-composition-imports (npm run new adds imports above this line)
 
 export const RemotionRoot: React.FC = () => {
@@ -145,6 +146,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="CurveV2-HybridC-Real-Vertical" component={HybridCRealVertical} width={1080} height={1920} fps={30} durationInFrames={381} defaultProps={{}} />
         <Composition id="CurveV2-Short1" component={CurveV2Short1} width={1080} height={1920} fps={30} durationInFrames={SHORT1_FRAMES} defaultProps={{}} />
         <Composition id="CurveV2-Short2" component={CurveV2Short2} width={1080} height={1920} fps={30} durationInFrames={SHORT2_FRAMES} defaultProps={{}} />
+        <Composition id="CurveV2-Short3" component={CurveV2Short3} width={1080} height={1920} fps={30} durationInFrames={SHORT3_FRAMES} defaultProps={{}} />
       </Folder>
       {/* @new-composition-registrations (npm run new adds compositions above this line) */}
     </>

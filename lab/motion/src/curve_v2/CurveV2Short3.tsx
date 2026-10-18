@@ -19,14 +19,14 @@ import { VO_S3_CAPTIONS } from "./voS3Captions";
 export const SHORT3_FRAMES = 960;
 
 // cuts sit on beats of the 124 BPM bed (one beat = 14.52 frames)
-const F = { hookOut: 88, xray: 175, gauge: 319, drain: 404, quote: 465, clock: 596, rigLabel: 702, split: 755, musk: 791, stamp: 868, eng: 880, rewind: 929, hookBack: 940, hold0: 958 };
+const F = { hookOut: 88, xray: 175, gauge: 319, drain: 392, quote: 465, clock: 596, rigLabel: 702, split: 755, musk: 791, stamp: 868, eng: 880, rewind: 929, hookBack: 940, hold0: 958 };
 
 const HEAD: React.CSSProperties = { fontFamily: v2.fonts.heavy, fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 0.9 };
 const HEADC: React.CSSProperties = { ...HEAD, fontVariationSettings: "'wdth' 82", whiteSpace: "nowrap" };
 const BG = "radial-gradient(ellipse at 50% 40%, #1B0B3A 0%, #0A0418 55%, #000000 100%)";
 const fill: React.CSSProperties = { width: "100%", height: "100%", filter: "saturate(1.1) contrast(1.06) brightness(1.06)" };
 const slowPush = (frame: number, a: number, b: number, to = 1.04) => interpolate(frame, [a, b], [1, to], CLAMP);
-const HOVER_FRAMES = 104; // s3_hover_v2.mp4
+const HOVER_FRAMES = 175; // s3_hover_10x.mp4: RIFE at a true 10x, played at 1.0x (no duplicate frames)
 
 const Footage: React.FC = () => {
   const frame = useCurrentFrame();
@@ -35,7 +35,7 @@ const Footage: React.FC = () => {
     <AbsoluteFill style={{ backgroundColor: v2.colors.black }}>
       <Sequence durationInFrames={F.xray} premountFor={fps}>
         <AbsoluteFill style={{ scale: slowPush(frame, 0, F.xray), transformOrigin: "40% 55%" }}>
-          <Video src={staticFile("shorts/s3_hover_v2.mp4")} muted playbackRate={0.6} style={fill} />
+          <Video src={staticFile("shorts/s3_hover_10x.mp4")} muted style={fill} />
         </AbsoluteFill>
       </Sequence>
       <Sequence from={F.xray} durationInFrames={F.gauge - F.xray} premountFor={fps}>
@@ -47,11 +47,11 @@ const Footage: React.FC = () => {
       {/* back to the hover: the opening plays in reverse and lands on frame 0 */}
       <Sequence from={F.rewind} durationInFrames={F.hold0 - F.rewind} premountFor={fps}>
         <AbsoluteFill style={{ scale: interpolate(frame, [F.rewind, F.hold0], [1.04, 1], { ...CLAMP, easing: EASE_IN_OUT }), transformOrigin: "40% 55%" }}>
-          <Video src={staticFile("shorts/s3_hover_v2_rev.mp4")} muted playbackRate={HOVER_FRAMES / (F.hold0 - F.rewind)} style={fill} />
+          <Video src={staticFile("shorts/s3_hover_10x_rev.mp4")} muted playbackRate={HOVER_FRAMES / (F.hold0 - F.rewind)} style={fill} />
         </AbsoluteFill>
       </Sequence>
       <Sequence from={F.hold0}>
-        <Img src={staticFile("shorts/s3_frame0_v2.png")} style={fill} />
+        <Img src={staticFile("shorts/s3_frame0_v3.png")} style={fill} />
       </Sequence>
     </AbsoluteFill>
   );
@@ -211,7 +211,7 @@ const Split: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (frame < F.split || frame >= F.rewind) return null;
-  const a = spring({ frame: frame - F.musk, fps, config: { damping: 14, stiffness: 200 } });
+  const a = spring({ frame: frame - (F.split + 8), fps, config: { damping: 14, stiffness: 200 } });
   const stamp = spring({ frame: frame - F.stamp, fps, config: { damping: 9, stiffness: 260 } });
   const b = spring({ frame: frame - F.eng, fps, config: { damping: 14, stiffness: 200 } });
   const vs = spring({ frame: frame - (F.eng - 4), fps, config: { damping: 10, stiffness: 240 } });

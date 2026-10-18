@@ -8,6 +8,8 @@ export type CapPage = { startMs: number; durationMs: number; tokens: CapWord[] }
 const FUNCTION = new Set(["the", "a", "an", "to", "of", "and", "with", "from", "in", "it", "for", "on", "at", "its", "is", "up", "that", "his", "but", "so", "then", "has", "about", "can", "would", "will", "be", "what"]);
 const BREAK_BEFORE = new Set(["and", "but", "then", "before", "after", "when", "while", "because", "so", "yet"]);
 
+const NUMBER = /^(\d[\d.,]*|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|twenty|thirty|fifty|hundred)$/;
+const UNIT = /^(seconds?|hours?|minutes?|miles?|mph|kg|g|tonnes?|percent)[.,!?]?$/;
 const bare = (w: CapWord) => w.text.trim().toLowerCase().replace(/[^a-z0-9.']/g, "");
 
 export const makePages = (captions: Caption[]): CapPage[] => {
@@ -36,6 +38,10 @@ export const makePages = (captions: Caption[]): CapPage[] => {
     if (!cur || full || conj) {
       const carry: CapWord[] = [];
       while (cur && cur.tokens.length > 1 && FUNCTION.has(bare(cur.tokens[cur.tokens.length - 1]))) {
+        carry.unshift(cur.tokens.pop() as CapWord);
+      }
+      // a number stays with its unit ("TWO SECONDS", "SIX HOURS")
+      if (cur && cur.tokens.length > 1 && NUMBER.test(bare(cur.tokens[cur.tokens.length - 1])) && UNIT.test(bare(w))) {
         carry.unshift(cur.tokens.pop() as CapWord);
       }
       // a page left holding one function word ("AND", "BUT") joins the next page instead

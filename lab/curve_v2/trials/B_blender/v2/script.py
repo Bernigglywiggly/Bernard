@@ -523,13 +523,13 @@ def xray_group(scan_g):
     lw = nt.nodes.new('ShaderNodeLayerWeight'); lw.inputs['Blend'].default_value = 0.35
     fres = math_node(nt, 'POWER', lw.outputs['Facing'], 2.2)
     stren = math_node(nt, 'ADD', math_node(nt, 'MULTIPLY', fres, 2.4), 0.05)
-    em = nt.nodes.new('ShaderNodeEmission'); em.inputs['Color'].default_value = (0.10, 0.62, 1.0, 1)
+    em = nt.nodes.new('ShaderNodeEmission'); em.inputs['Color'].default_value = (0.05, 0.75, 0.9, 1)
     lk(nt, stren, em.inputs['Strength'])
     tr = nt.nodes.new('ShaderNodeBsdfTransparent')
     holo = nt.nodes.new('ShaderNodeAddShader'); lk(nt, tr.outputs[0], holo.inputs[0]); lk(nt, em.outputs[0], holo.inputs[1])
     mix = nt.nodes.new('ShaderNodeMixShader')
     lk(nt, sm.outputs['Mask'], mix.inputs[0]); lk(nt, gin.outputs['Surface'], mix.inputs[1]); lk(nt, holo.outputs[0], mix.inputs[2])
-    sem = nt.nodes.new('ShaderNodeEmission'); sem.inputs['Color'].default_value = (0.45, 0.92, 1.0, 1)
+    sem = nt.nodes.new('ShaderNodeEmission'); sem.inputs['Color'].default_value = (0.25, 1.0, 0.92, 1)
     lk(nt, math_node(nt, 'MULTIPLY', sm.outputs['Band'], 18.0), sem.inputs['Strength'])
     add = nt.nodes.new('ShaderNodeAddShader'); lk(nt, mix.outputs[0], add.inputs[0]); lk(nt, sem.outputs[0], add.inputs[1])
     lk(nt, add.outputs[0], gout.inputs['Shader'])
@@ -543,14 +543,13 @@ def wrap_xray(mat, nt, out, shader_socket, xg):
 
 def mat_paint(xg):
     m, nt, out = new_mat('paint')
-    p = principled(nt, **{'Base Color': rgba(CAR_PAINT), 'Metallic': 1.0, 'Roughness': 0.30,
-                          'Specular Tint': (1.0, 0.42, 0.36, 1), 'Coat Weight': 1.0, 'Coat Roughness': 0.025,
-                          'Coat IOR': 1.52})
-    # metallic flake: fine noise into base normal only (coat stays mirror-smooth)
+    p = principled(nt, **{'Base Color': (0.80, 0.81, 0.83, 1), 'Metallic': 0.25, 'Roughness': 0.28,
+                          'Coat Weight': 1.0, 'Coat Roughness': 0.02, 'Coat IOR': 1.52,
+                          'Thin Film Thickness': 320.0, 'Thin Film IOR': 1.35})
     tc = node(nt, 'ShaderNodeTexCoord')
     nz = node(nt, 'ShaderNodeTexNoise', {'Scale': 900.0, 'Detail': 1.0})
     lk(nt, tc.outputs['Object'], nz.inputs['Vector'])
-    bump = node(nt, 'ShaderNodeBump', {'Strength': 0.08, 'Distance': 0.001})
+    bump = node(nt, 'ShaderNodeBump', {'Strength': 0.05, 'Distance': 0.001})
     lk(nt, nz.outputs['Fac'], bump.inputs['Height'])
     lk(nt, bump.outputs['Normal'], p.inputs['Normal'])
     wrap_xray(m, nt, out, p.outputs[0], xg)
@@ -873,7 +872,7 @@ patch_side('side_scoop', -0.92, -0.18,
            M_GRILLE)
 # hood vents
 # rear deck louvres
-patch_top('deck_louvre', -2.04, -1.64, lambda x: -0.44, lambda x: 0.44, M_GRILLE, mirror=False)
+pass  # deck louvre removed (fans exhaust at the rear and flanks)
 
 # ---------------- door shut line ----------------
 def door_line():
@@ -1076,12 +1075,12 @@ def make_env(w=2048, h=1024):
     box((0.15, -0.32, 1.0), 46, 4, (1.0, 0.96, 0.92), 1.6, feather=0.35)
     box((0.35, 1.0, 0.32), 22, 16, (1.0, 0.04, 0.55), 7.0)                            # hot magenta, car-left
     box((-0.25, -1.0, 0.30), 22, 16, (0.0, 0.62, 1.0), 7.0)                           # electric cyan, car-right
-    box((-1.0, 0.25, 0.22), 26, 12, (1.0, 0.33, 0.02), 6.0)                           # warm orange, behind
+    box((-1.0, 0.25, 0.22), 26, 12, (0.80, 0.86, 1.0), 4.0)                           # cool white, behind
     box((1.0, -0.45, 0.12), 14, 6, (0.9, 0.95, 1.0), 1.6)                             # small front kicker
     # thin horizon line, colour drifting with azimuth
     hb = np.exp(-((el - 0.035) / 0.012) ** 2)
     hue = 0.5 + 0.5 * np.cos(th)
-    hcol = np.stack([0.9 * hue + 0.2, 0.35 + 0.3 * (1 - hue), 0.9 - 0.4 * hue], -1).astype(np.float32)
+    hcol = np.stack([0.75 * hue + 0.05, 0.25 + 0.45 * (1 - hue), 0.95 - 0.1 * hue], -1).astype(np.float32)
     img += (hb * 0.9)[..., None] * hcol
     rgba_ = np.concatenate([img, np.ones((h, w, 1), np.float32)], -1)
     im = bpy.data.images.new('studio_env', w, h, alpha=True, float_buffer=True)
@@ -1117,7 +1116,8 @@ def build_world():
     bg = nt.nodes.new('ShaderNodeBackground'); bg.inputs['Strength'].default_value = 1.0
     lk(nt, refl, bg.inputs['Color'])
     bgc = nt.nodes.new('ShaderNodeBackground'); bgc.inputs['Strength'].default_value = 0.16
-    lk(nt, proc.outputs['Color'], bgc.inputs['Color'])
+    navy = nt.nodes.new('ShaderNodeVectorMath'); navy.operation = 'MULTIPLY'; navy.inputs[1].default_value = (0.45, 0.62, 1.0)
+    lk(nt, proc.outputs['Color'], navy.inputs[0]); lk(nt, navy.outputs[0], bgc.inputs['Color'])
     lp = nt.nodes.new('ShaderNodeLightPath')
     mix = nt.nodes.new('ShaderNodeMixShader')
     lk(nt, lp.outputs['Is Camera Ray'], mix.inputs[0]); lk(nt, bg.outputs[0], mix.inputs[1]); lk(nt, bgc.outputs[0], mix.inputs[2])
@@ -1173,7 +1173,7 @@ build_world()
 FLOOR = build_floor()
 L_MAG = area('key_magenta', (2.0, 5.6, 3.6), (0, 0, 0.5), (1.0, 0.10, 0.62), 2600, 4.5, 1.6, spec=0.7)
 L_CYA = area('fill_cyan', (-1.6, -5.6, 3.2), (0, 0, 0.5), (0.05, 0.70, 1.0), 2400, 4.5, 1.6, spec=0.7)
-L_ORA = area('rim_orange', (-6.0, 1.4, 2.6), (0, 0, 0.6), (1.0, 0.38, 0.05), 2000, 3.5, 1.4, spec=0.7)
+L_ORA = area('rim_cool', (-6.0, 1.4, 2.6), (0, 0, 0.6), (0.70, 0.80, 1.0), 1600, 3.5, 1.4, spec=0.7)
 L_TOP = area('top_soft', (0.2, 0.0, 5.0), (0, 0, 0), (1.0, 0.97, 0.94), 900, 6.0, 1.8, spec=0.08)
 L_RIM = spot('rim_spot', (-7.2, -2.2, 2.1), (0, 0, 0.55), (0.85, 0.9, 1.0), 7000, 30, 0.7, 0.8)
 L_RIM.data.volume_factor = 0.05
@@ -1227,12 +1227,17 @@ SLAB_Z = 3.6
 def mat_concrete():
     m, nt, out = new_mat('concrete')
     tc = node(nt, 'ShaderNodeTexCoord')
-    nz = node(nt, 'ShaderNodeTexNoise', {'Scale': 2.5, 'Detail': 9.0, 'Roughness': 0.62}); lk(nt, tc.outputs['Object'], nz.inputs['Vector'])
-    col = node(nt, 'ShaderNodeMapRange', {'From Min': 0.3, 'From Max': 0.7, 'To Min': 0.10, 'To Max': 0.22}); lk(nt, nz.outputs['Fac'], col.inputs['Value'])
-    cc = node(nt, 'ShaderNodeCombineXYZ'); lk(nt, col.outputs[0], cc.inputs['X']); lk(nt, col.outputs[0], cc.inputs['Y']); lk(nt, col.outputs[0], cc.inputs['Z'])
-    fine = node(nt, 'ShaderNodeTexNoise', {'Scale': 60.0, 'Detail': 4.0}); lk(nt, tc.outputs['Object'], fine.inputs['Vector'])
-    bump = node(nt, 'ShaderNodeBump', {'Strength': 0.15, 'Distance': 0.002}); lk(nt, fine.outputs['Fac'], bump.inputs['Height'])
-    p = principled(nt, **{'Roughness': 0.82, 'Specular IOR Level': 0.35})
+    sx = node(nt, 'ShaderNodeSeparateXYZ'); lk(nt, tc.outputs['Object'], sx.inputs[0])
+    nz = node(nt, 'ShaderNodeTexNoise', {'Scale': 1.2, 'Detail': 6.0, 'Roughness': 0.55}); lk(nt, tc.outputs['Object'], nz.inputs['Vector'])
+    g = node(nt, 'ShaderNodeMapRange', {'From Min': 0.3, 'From Max': 0.7, 'To Min': 0.19, 'To Max': 0.24}); lk(nt, nz.outputs['Fac'], g.inputs['Value'])
+    lane = node(nt, 'ShaderNodeMapRange', {'From Min': 0.045, 'From Max': 0.030, 'To Min': 0.0, 'To Max': 1.0})
+    lk(nt, math_node(nt, 'ABSOLUTE', math_node(nt, 'SUBTRACT', math_node(nt, 'ABSOLUTE', sx.outputs['Y']), 1.32)), lane.inputs['Value'])
+    col = node(nt, 'ShaderNodeMix', data_type='FLOAT'); lk(nt, lane.outputs[0], col.inputs[0]); lk(nt, g.outputs[0], col.inputs[2]); col.inputs[3].default_value = 0.78
+    cc = node(nt, 'ShaderNodeCombineXYZ')
+    for k in ('X', 'Y', 'Z'): lk(nt, col.outputs[0], cc.inputs[k])
+    fine = node(nt, 'ShaderNodeTexNoise', {'Scale': 70.0, 'Detail': 4.0}); lk(nt, tc.outputs['Object'], fine.inputs['Vector'])
+    bump = node(nt, 'ShaderNodeBump', {'Strength': 0.12, 'Distance': 0.002}); lk(nt, fine.outputs['Fac'], bump.inputs['Height'])
+    p = principled(nt, **{'Roughness': 0.78, 'Specular IOR Level': 0.35})
     lk(nt, cc.outputs[0], p.inputs['Base Color']); lk(nt, bump.outputs['Normal'], p.inputs['Normal'])
     lk(nt, p.outputs[0], out.inputs['Surface'])
     return m
@@ -1240,8 +1245,13 @@ M_CONCRETE = mat_concrete()
 M_STEEL = mat_simple('steel', (0.05, 0.05, 0.055), 0.35, metal=0.9)
 SLAB_OBJS = []
 _b = bmesh.new(); bmesh.ops.create_cube(_b, size=1.0)
-for v in _b.verts: v.co = Vector((v.co.x * 16.0, v.co.y * 12.0, v.co.z * 0.5 + 0.25 + SLAB_Z))
+for v in _b.verts: v.co = Vector((v.co.x * 16.0, v.co.y * 6.0, v.co.z * 0.4 + 0.2 + SLAB_Z))
 _sl = mesh_obj('slab', _b, mats=[M_CONCRETE], smooth=False); add_bevel(_sl, 0.02, 2, 30); SLAB_OBJS.append(_sl)
+M_LED_RED = mat_emit('led_red', (1.0, 0.015, 0.02), 9.0)
+for sy_ in (1, -1):
+    _b = bmesh.new(); bmesh.ops.create_cube(_b, size=1.0)
+    for v in _b.verts: v.co = Vector((v.co.x * 16.0, v.co.y * 0.035 + sy_ * 2.985, v.co.z * 0.035 + SLAB_Z + 0.02))
+    SLAB_OBJS.append(mesh_obj('slab_led', _b, mats=[M_LED_RED], smooth=False))
 for (cx, cy) in ():
     _b = bmesh.new(); bmesh.ops.create_cube(_b, size=1.0)
     for v in _b.verts: v.co = Vector((v.co.x * 0.45 + cx, v.co.y * 0.45 + cy, (v.co.z + 0.5) * SLAB_Z))
@@ -1339,7 +1349,10 @@ def beat_out(nt, name):
 # =====================================================================================================
 # MECHANISM (facts file s2-s4): fans + skirts, two COPVs (200 L boot, 400 L passenger seat), 10 nozzles
 # =====================================================================================================
-AMBER = (1.0, 0.40, 0.05); ICE = (0.22, 0.80, 1.0); WHITE_ICE = (0.85, 0.97, 1.0); ORANGE = (1.0, 0.45, 0.06)
+CYAN = (0.047, 1.0, 0.888)      # #3DFFF2
+MAGENTA = (1.0, 0.024, 0.672)   # #FF2BD6
+ACID = (0.79, 1.0, 0.027)       # #E6FF2E
+AMBER = ACID; ICE = (0.10, 0.85, 0.95); WHITE_ICE = (0.85, 0.97, 1.0); ORANGE = MAGENTA
 
 def mat_mech(name, beat, glow_col, glow_str, normal=None, kind=None):
     """Normal look outside the x-ray (or hidden if normal is None); in the x-ray: invisible until its beat,
@@ -1407,8 +1420,8 @@ def rotate_y_to_x(bm):
 
 # ---------------- fans (two, flat, behind the rear axle): pull air up from under the floor, exhaust out the flanks
 FAN_X, FAN_Y, FAN_Z = -1.75, 0.30, 0.20
-M_FAN_SHROUD = mat_mech('fan_shroud', 'Fans', ICE, 3.0, normal={'Base Color': (0.05, 0.05, 0.055, 1), 'Roughness': 0.35, 'Metallic': 0.8})
-M_FAN_BLADE = mat_mech('fan_blade', 'Fans', WHITE_ICE, 4.5, normal={'Base Color': (0.34, 0.35, 0.37, 1), 'Roughness': 0.25, 'Metallic': 1.0})
+M_FAN_SHROUD = mat_mech('fan_shroud', 'Fans', ACID, 2.6, normal={'Base Color': (0.05, 0.05, 0.055, 1), 'Roughness': 0.35, 'Metallic': 0.8})
+M_FAN_BLADE = mat_mech('fan_blade', 'Fans', ACID, 3.6, normal={'Base Color': (0.34, 0.35, 0.37, 1), 'Roughness': 0.25, 'Metallic': 1.0})
 M_DUCT = mat_mech('fan_duct', 'Fans', ICE, 1.0)
 ROTORS = []; FAN_PARTS = []
 def rotate_y_to_z(bm):
@@ -1460,7 +1473,7 @@ def mat_skirt():
     m.use_transparent_shadow = True
     return m
 
-M_SKIRT = mat_mech('skirt', 'Skirts', ORANGE, 5.5, normal={'Base Color': (0.012, 0.012, 0.014, 1), 'Roughness': 0.25, 'Metallic': 0.2, 'Coat Weight': 1.0})
+M_SKIRT = mat_mech('skirt', 'Skirts', MAGENTA, 4.5, normal={'Base Color': (0.012, 0.012, 0.014, 1), 'Roughness': 0.25, 'Metallic': 0.2, 'Coat Weight': 1.0})
 SKIRTS = []
 for side in (1, -1):
     xs_ = [lerp(-0.90, 0.95, i / 40) for i in range(41)]
@@ -1508,8 +1521,8 @@ NOZ_DEF = [
     ('CRL', (-1.92, 0.74, 0.25), (0, 0, -1), 'corner'), ('CRR', (-1.92, -0.74, 0.25), (0, 0, -1), 'corner'),
     ('YL', (2.02, 0.74, 0.30), (0, 1, 0), 'yaw'), ('YR', (2.02, -0.74, 0.30), (0, -1, 0), 'yaw'),
 ]
-M_NOZM = mat_mech('nozzle', 'lit', WHITE_ICE, 6.0, normal={'Base Color': (0.50, 0.50, 0.53, 1), 'Roughness': 0.3, 'Metallic': 1.0})
-M_FEED = mat_mech('feed_line', 'lit', ICE, 2.6)
+M_NOZM = mat_mech('nozzle', 'lit', ACID, 7.0, normal={'Base Color': (0.50, 0.50, 0.53, 1), 'Roughness': 0.3, 'Metallic': 1.0})
+M_FEED = mat_mech('feed_line', 'lit', CYAN, 2.2)
 bell = lathe([(0.018, 0.0), (0.046, 0.10), (0.053, 0.10), (0.026, 0.0)], 24, closed=True)
 bmesh.ops.rotate(bell, verts=bell.verts, cent=(0, 0, 0), matrix=Matrix.Rotation(pi / 2, 3, 'X'))
 recalc(bell)
@@ -1585,12 +1598,16 @@ def mat_flow():
 
 M_FLOW = mat_flow()
 FLOW_PATHS = []
-for (x0, y0) in ((1.55, 0.22), (1.55, 0.62), (0.55, 0.80), (0.05, 0.36), (-0.75, 0.70)):
+for (x0, y0, out_) in ((1.55, 0.22, 'rear'), (1.55, 0.62, 'flank'), (0.55, 0.80, 'flank'), (0.05, 0.36, 'rear'), (-0.75, 0.70, 'flank')):
     for sy in (1, -1):
         y = sy * y0
-        FLOW_PATHS.append([(x0 + 0.55, y * 1.05, 0.03), (x0, y, 0.035), (-0.55, y * 0.75, 0.04), (-1.40, sy * 0.30, 0.05),
-                           (-1.72, sy * FAN_Y, 0.10), (FAN_X, sy * FAN_Y, 0.30), (-1.85, sy * 0.62, 0.36), (-1.98, sy * 0.95, 0.40),
-                           (-2.06, sy * 1.45, 0.44), (-2.25, sy * 1.95, 0.50), (-2.45, sy * 2.35, 0.55)])
+        wp = [(x0 + 0.55, y * 1.05, 0.03), (x0, y, 0.035), (-0.55, y * 0.75, 0.04), (-1.40, sy * 0.30, 0.05),
+              (-1.72, sy * FAN_Y, 0.10), (FAN_X, sy * FAN_Y, 0.30)]
+        if out_ == 'rear':
+            wp += [(-1.98, sy * FAN_Y, 0.42), (-2.30, sy * (FAN_Y + 0.02), 0.44), (-2.75, sy * (FAN_Y + 0.04), 0.44), (-3.15, sy * (FAN_Y + 0.05), 0.44)]
+        else:
+            wp += [(-1.85, sy * 0.62, 0.42), (-1.97, sy * 0.95, 0.43), (-2.02, sy * 1.35, 0.43), (-2.06, sy * 1.75, 0.43)]
+        FLOW_PATHS.append(wp)
 FLOWS = []
 for i, wp in enumerate(FLOW_PATHS):
     bm, L = tube_mesh('flow', catmull(wp, 10), 0.022)
@@ -1630,7 +1647,7 @@ def half_section_coarse(x):
 def build_wire():
     m, nt, out = new_mat('xray_wire')
     sm = nt.nodes.new('ShaderNodeGroup'); sm.node_tree = SCAN_G
-    em = node(nt, 'ShaderNodeEmission', {'Color': (0.45, 0.88, 1.0, 1), 'Strength': 1.4})
+    em = node(nt, 'ShaderNodeEmission', {'Color': (0.25, 0.95, 1.0, 1), 'Strength': 1.3})
     tr = node(nt, 'ShaderNodeBsdfTransparent')
     mx = node(nt, 'ShaderNodeMixShader'); lk(nt, sm.outputs['Mask'], mx.inputs[0]); lk(nt, tr.outputs[0], mx.inputs[1]); lk(nt, em.outputs[0], mx.inputs[2])
     lk(nt, mx.outputs[0], out.inputs['Surface'])
@@ -1740,13 +1757,21 @@ print('fx built %.1fs' % (time.time() - T0))
 def mat_arrow():
     m, nt, out = new_mat('pressure_arrow')
     m.surface_render_method = 'BLENDED'
-    lw = node(nt, 'ShaderNodeLayerWeight', {'Blend': 0.35})
     at = node(nt, 'ShaderNodeAttribute', attribute_type='OBJECT', attribute_name='fade')
-    st = math_node(nt, 'ADD', math_node(nt, 'MULTIPLY', lw.outputs['Facing'], 3.5), 3.2)
-    em = node(nt, 'ShaderNodeEmission', {'Color': (0.0, 0.55, 1.0, 1)}); lk(nt, st, em.inputs['Strength'])
+    em = node(nt, 'ShaderNodeEmission', {'Color': rgba(CYAN), 'Strength': 1.9})
     tr = node(nt, 'ShaderNodeBsdfTransparent')
-    a = math_node(nt, 'MULTIPLY', at.outputs['Fac'], 0.92, clamp_=True)
+    a = math_node(nt, 'MULTIPLY', at.outputs['Fac'], 1.0, clamp_=True)
     mx = node(nt, 'ShaderNodeMixShader'); lk(nt, a, mx.inputs[0]); lk(nt, tr.outputs[0], mx.inputs[1]); lk(nt, em.outputs[0], mx.inputs[2])
+    lk(nt, mx.outputs[0], out.inputs['Surface'])
+    return m
+
+def mat_outline():
+    m, nt, out = new_mat('arrow_outline')
+    m.surface_render_method = 'BLENDED'; m.use_backface_culling = True
+    at = node(nt, 'ShaderNodeAttribute', attribute_type='OBJECT', attribute_name='fade')
+    em = node(nt, 'ShaderNodeEmission', {'Color': (0.0, 0.01, 0.02, 1), 'Strength': 1.0})
+    tr = node(nt, 'ShaderNodeBsdfTransparent')
+    mx = node(nt, 'ShaderNodeMixShader'); lk(nt, at.outputs['Fac'], mx.inputs[0]); lk(nt, tr.outputs[0], mx.inputs[1]); lk(nt, em.outputs[0], mx.inputs[2])
     lk(nt, mx.outputs[0], out.inputs['Surface'])
     return m
 
@@ -1755,8 +1780,12 @@ def arrow_mesh(length=0.72, shaft_r=0.045, head_r=0.125, head_l=0.24):
     bmesh.ops.rotate(bm, verts=bm.verts, cent=(0, 0, 0), matrix=Matrix.Rotation(pi / 2, 3, 'X'))   # along +Z
     recalc(bm)
     me = bpy.data.meshes.new('arrow'); bm.to_mesh(me); bm.free(); me.shade_smooth()
-    me.materials.append(mat_arrow())
+    me.materials.append(mat_arrow()); me.materials.append(mat_outline())
     return me
+
+def add_outline(ob, width=0.014):
+    so = ob.modifiers.new('outline', 'SOLIDIFY'); so.thickness = width; so.offset = 1.0
+    so.use_flip_normals = True; so.use_rim = False; so.material_offset = 1
 
 ARROWS = []   # (object, base position, direction)
 
@@ -1795,8 +1824,8 @@ if SHOT == 'hang':
     S['fan_rps'] = lambda f: lerp(0.0, 5.5, EASE_IO(clamp((f - F_FANS) / 40.0)))
     S['skirt'] = lambda f: lerp(0.08, 1.0, clamp(spring(sec(f) - sec(F_SKIRT), 2.4, 0.55)))
     S['slab'] = True; S['smoke'] = False
-    S['cam'] = dict(az=[(1, 141, None), (F_END, 129, EASE_SOFT)], el=[(1, -27.0, None), (F_END, -23.0, EASE_SOFT)],
-                    dist=[(1, 4.9, None), (F_END, 4.45, EASE_SOFT)], tx=[(1, -0.40, None), (F_END, -0.30, EASE_SOFT)],
+    S['cam'] = dict(az=[(1, 24, None), (F_END, 36, EASE_SOFT)], el=[(1, -26.0, None), (F_END, -22.0, EASE_SOFT)],
+                    dist=[(1, 5.0, None), (F_END, 4.55, EASE_SOFT)], tx=[(1, -0.25, None), (F_END, -0.20, EASE_SOFT)],
                     tz=[(1, 2.80, None), (F_END, 2.84, EASE_SOFT)], lens=[(1, 36, None), (F_END, 37, EASE_SOFT)],
                     roll=[(1, 0.0, None), (F_END, 0.0, None)], fstop=[(1, 7.0, None), (F_END, 7.0, None)],
                     shy=[(1, 0.0, None), (F_END, 0.0, None)])
@@ -1809,11 +1838,11 @@ elif SHOT == 'xray':
     S['Fans'] = const(0.0); S['Skirts'] = const(0.0); S['Tanks'] = ramp(LIT['copv_400L']); S['Nozzles'] = ramp(LIT['R1'])
     S['flow'] = const(0.0); S['speed'] = const(1.0); S['fan_rps'] = const(0.0); S['skirt'] = const(0.18)
     S['slab'] = False; S['smoke'] = False
-    S['cam'] = dict(az=[(1, 166, None), (F_END, 150, EASE_SOFT)], el=[(1, 54.0, None), (F_END, 49.0, EASE_SOFT)],
-                    dist=[(1, 7.9, None), (F_END, 7.2, EASE_SOFT)], tx=[(1, 0.05, None), (F_END, 0.0, EASE_SOFT)],
-                    tz=[(1, 0.40, None), (F_END, 0.40, None)], lens=[(1, 40, None), (F_END, 41, EASE_SOFT)],
+    S['cam'] = dict(az=[(1, 168, None), (F_END, 153, EASE_SOFT)], el=[(1, 43.0, None), (F_END, 39.0, EASE_SOFT)],
+                    dist=[(1, 5.45, None), (F_END, 4.95, EASE_SOFT)], tx=[(1, -0.10, None), (F_END, -0.05, EASE_SOFT)],
+                    tz=[(1, 0.38, None), (F_END, 0.40, None)], lens=[(1, 42, None), (F_END, 43, EASE_SOFT)],
                     roll=[(1, 0.0, None), (F_END, 0.0, None)], fstop=[(1, 8.0, None), (F_END, 8.0, None)],
-                    shy=[(1, -0.03, None), (F_END, -0.03, None)])
+                    shy=[(1, -0.10, None), (F_END, -0.10, None)])
 else:   # drop
     F_PUSH, F_DETACH, F_ROLL, F_CUSH, F_LAND = 14, 19, (23, 43), (37, 53), 52
     S['root_z'] = keys_fn([(1, HANG_Z + 0.018, None), (F_PUSH, HANG_Z + 0.018, None), (F_DETACH, HANG_Z, EASE_IO),
@@ -1847,6 +1876,9 @@ bake_fn(SUSP, 'location', 2, lambda f: 0.55 + susp_dz(f))
 bake_fn(CONTACT, '["opacity"]', 0, lambda f: clamp(1.0 - root_z(f) / 1.4) ** 1.5)
 for o in SLAB_OBJS:
     o.hide_render = not S['slab']
+if S['slab']:   # neutral bounce under the slab so the ramp concrete reads grey
+    L_SLABFILL = area('slab_fill', (0.0, 0.0, 0.9), (0.0, 0.0, SLAB_Z), (0.92, 0.95, 1.0), 380, 7.0, 4.5, spec=0.15, shadow=False)
+    L_SLABFILL.data.volume_factor = 0.0
 bake_fn(SCAN_G, 'nodes["thr"].outputs[0].default_value', 0, S['thr'])
 for nm in ('Fans', 'Skirts', 'Tanks', 'Nozzles'):
     bake_fn(BEATS_G, 'nodes["%s"].outputs[0].default_value' % nm, 0, S[nm])
@@ -1871,8 +1903,8 @@ if SHOT == 'xray':
         for i in range(3): bake_fn(tk, 'scale', i, lambda f, f0=f0: pop(f0, f) if f >= f0 - 1 else 0.001)
     for (nid, grp, e, p, d, bo) in NOZZLES:
         f0 = LIT[nid]
-        bake_fn(bo, '["lit"]', 0, ramp(f0, 4))
-        for i in range(3): bake_fn(bo, 'scale', i, lambda f, f0=f0: pop(f0, f) if f >= f0 - 1 else 0.001)
+        bake_fn(bo, '["lit"]', 0, lambda f, f0=f0: 0.0 if f < f0 else EASE_OUT(clamp((f - f0) / 3.0)) * (1.0 + 1.1 * exp(-(f - f0) / 5.0)))
+        for i in range(3): bake_fn(bo, 'scale', i, lambda f, f0=f0: 1.5 * pop(f0, f) if f >= f0 - 1 else 0.001)
     for cv in FEEDS:
         f0 = LIT[cv['nid']]
         bake_fn(cv, '["lit"]', 0, ramp(f0 - 6, 4))
@@ -1893,7 +1925,7 @@ elif SHOT == 'hang':
         for sy in (1, -1):
             bases.append(((x, sy * 2.2, HANG_Z + 0.62), (0, -sy, 0)))
     for k, (bp, dv) in enumerate(bases):
-        ob = link(bpy.data.objects.new('arrow_%d' % k, AR_ME)); ob['fade'] = 0.0; ob.visible_shadow = False
+        ob = link(bpy.data.objects.new('arrow_%d' % k, AR_ME)); ob['fade'] = 0.0; ob.visible_shadow = False; add_outline(ob)
         ob.rotation_mode = 'QUATERNION'; ob.rotation_quaternion = Vector((0, 0, 1)).rotation_difference(Vector(dv))
         bp = Vector(bp); dv = Vector(dv)
         f0 = F_ARROWS + (k % 6) * 2

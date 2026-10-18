@@ -54,7 +54,7 @@
   "made_for_kids": false,
   "synthetic": true,
   "kind": "short",
-  "file": "../lab/curve_v2/shorts/out/SHORT3_v1.mp4",
+  "file": "../lab/curve_v2/shorts/out/SHORT3_v2.mp4",
   "title": "How Long Can the Tesla Roadster Fly?",
   "publish_at": "2026-10-20T11:00:00Z",
   "tags": [
@@ -68,6 +68,6 @@
    "the curve",
    "shorts"
   ],
-  "description": "The new Tesla Roadster's flying trick runs on two carbon-wrapped tanks holding about a quarter of a tonne of compressed gas. By our own estimate, the rear nozzles at full power would empty them in about two seconds. Tesla told Top Gear the Thrust version gets a single launch per fill, and that a refill from a high-pressure nitrogen rig takes 2-6 hours today. On stage, Musk said the car can refill its own tank.\n\nOur estimate: about 80 kN of thrust divided by gas leaving at roughly 600 m/s is about 130 kg a second, so about 250 kg lasts about 2 seconds.\n\nFootage: Tesla, \"The Kickflip | Roadster\" (YouTube, 16 Oct 2026), slowed 6x with frame interpolation: https://www.youtube.com/watch?v=r5vsHHPVhJg\nThe x-ray of the tanks and nozzles is our own 3D illustration, not Tesla footage.\n\nSources:\nTesla, Roadster Event (15 Oct 2026), the tanks at 12:11-12:20 and the refill claim at 12:30: https://www.youtube.com/watch?v=qt5p-_tE8d0\nTop Gear interview with Lars Moravy and Franz von Holzhausen (16 Oct 2026): https://www.youtube.com/watch?v=JdkIOhFmbKI\n\nNarration uses an AI voice. Not affiliated with or endorsed by Tesla.\n\n#TeslaRoadster #Tesla #Shorts"
+  "description": "The new Tesla Roadster's flying trick runs on two carbon-wrapped tanks holding about a quarter of a tonne of compressed gas. By our own estimate, the rear nozzles at full power would empty them in about two seconds. Tesla told Top Gear the Thrust version gets a single launch per fill, and that a refill from a high-pressure nitrogen rig takes 2-6 hours today. On stage, Musk said the car can refill its own tank.\n\nOur estimate: about 80 kN of thrust divided by gas leaving at roughly 600 m/s is about 130 kg a second, so about 250 kg lasts about 2 seconds at full thrust; hovering needs far less push, so 8-11 seconds at best.\n\nFootage: Tesla, \"The Kickflip | Roadster\" (YouTube, 16 Oct 2026), slowed 10x with frame interpolation: https://www.youtube.com/watch?v=r5vsHHPVhJg\nThe x-ray of the tanks and nozzles is our own 3D illustration, not Tesla footage.\n\nSources:\nTesla, Roadster Event (15 Oct 2026), the tanks at 12:11-12:20 and the refill claim at 12:30: https://www.youtube.com/watch?v=qt5p-_tE8d0\nTop Gear interview with Lars Moravy and Franz von Holzhausen (16 Oct 2026): https://www.youtube.com/watch?v=JdkIOhFmbKI\n\nNarration uses an AI voice. Not affiliated with or endorsed by Tesla.\n\n#TeslaRoadster #Tesla #Shorts"
  }
 ]

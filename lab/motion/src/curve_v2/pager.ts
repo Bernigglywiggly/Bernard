@@ -5,7 +5,7 @@ import type { Caption } from "@remotion/captions";
 export type CapWord = { text: string; fromMs: number; toMs: number };
 export type CapPage = { startMs: number; durationMs: number; tokens: CapWord[] };
 
-const FUNCTION = new Set(["the", "a", "an", "to", "of", "and", "with", "from", "in", "it", "for", "on", "at", "its", "is", "up", "that", "his", "but", "so", "then"]);
+const FUNCTION = new Set(["the", "a", "an", "to", "of", "and", "with", "from", "in", "it", "for", "on", "at", "its", "is", "up", "that", "his", "but", "so", "then", "has", "about", "can", "would", "will", "be", "what"]);
 const BREAK_BEFORE = new Set(["and", "but", "then", "before", "after", "when", "while", "because", "so", "yet"]);
 
 const bare = (w: CapWord) => w.text.trim().toLowerCase().replace(/[^a-z0-9.']/g, "");
@@ -28,7 +28,10 @@ export const makePages = (captions: Caption[]): CapPage[] => {
   };
   for (const w of words) {
     const len = cur ? cur.tokens.map((t) => t.text).join("").trim().length : 0;
-    const full = cur !== null && (cur.tokens.length >= 4 || len + w.text.length > 16);
+    // keep a proper name together ("TOP GEAR", "TESLA ROADSTER"): two capitalised words in a row stay on one page
+    const prev = cur && cur.tokens.length ? cur.tokens[cur.tokens.length - 1].text.trim() : "";
+    const proper = /^[A-Z]/.test(prev) && /^[A-Z]/.test(w.text.trim()) && !/[.,!?]$/.test(prev);
+    const full = cur !== null && (cur.tokens.length >= 4 || len + w.text.length > (proper ? 21 : 16));
     const conj = cur !== null && cur.tokens.length >= 2 && BREAK_BEFORE.has(bare(w));
     if (!cur || full || conj) {
       const carry: CapWord[] = [];

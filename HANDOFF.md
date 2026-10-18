@@ -1,7 +1,30 @@
-# START HERE: state at Fri 9 Oct 2026, 17:10 UK (written for a Claude with zero history)
+# START HERE: state at Sun 18 Oct 2026, 04:30 UK (written for a Claude with zero history)
 
 This block is the truth. Everything below it in this file is older history, kept for detail only.
 Repo: `~/Bernard`, branch `claude/funny-newton-gd9w8v` ONLY (push with: `git push -q origin claude/funny-newton-gd9w8v 2>/dev/null || git -c http.curloptResolve=github.com:443:140.82.121.4 push -q origin claude/funny-newton-gd9w8v`). Python: `~/youtube/.venv/bin/python`. Videos, voice takes and pictures are on THIS Mac only (not in git): a cloud session cannot render or upload them.
+
+## 0. NOW (Sun 18 Oct, 04:30 UK): read this first, then section 1f
+**Alignment verdict (lab/research/ALIGNMENT_2026-10-17.md, agent, 17 Oct 23:30):** the Roadster film and Musk series
+pay £0 before 2027 (The Curve median 7.5 views, 0 subs, YPP by 1 Feb under 5%). Run the Curve on machine time only,
+**Shorts first**; cut the standalone 8-min film (stitch Shorts into a film only if they average 1,000+ views); the
+quality budget goes to the dated Voyager 1 film (18 Nov). Roadster news decays 40-55% a day: Short 1 must go out
+**Sun 18 Oct 18:00 UK**, then one a day (Mon: 0.81 s self-timed; Tue: 2-6 h refill; Thu: Q3 call only if Roadster news).
+**His hands today (the gate set on 8 Oct, ALIGNMENT_8OCT.md):** (1) send the 38 ready shop messages,
+`sales/reels/send_sheet.html` (30 min; no messages + no doors = "December about £30"); (2) list the low-stim kit
+(`products/lowstim_kit/`, LISTING.md, ~45 min); (3) say yes to the Short 1 upload; (4) narrator pick (default Chris).
+
+| Item | Path | State |
+|---|---|---|
+| Short 1 "How the Tesla Roadster Hangs Upside Down" | `lab/curve_v2/shorts/short1.py` (lint clean) | VO done: `shorts/vo/s1_chris_v4.mp3` (ElevenLabs **eleven_v4**, Chris iP95p4xoKVk53GoZ742B, stability 0.5, style 0.3, speed 1.06, 27.0 s, whisper 100% match, word JSON beside it); fallback v2 take. NEXT: Remotion comp `CurveV2-Short1` 1080x1920 (build on `HybridCRealVertical.tsx` + `HybridCReal2.tsx`), vertical 8x slow-mo re-cut from `footage/.../ramp_4k.webm` (car at 4K x1830-2070 y735-1200; window ~900x1600 at y≈175), one critic pass, -14 LUFS, then ask him before uploading |
+| Film script v1 (8 segments = 7 Shorts) | `lab/curve_v2/film_roadster/script.py` | Lint clean. S5 (fan car) and S7 (fine print) lines are `check=True`: wait for facts §13 |
+| Film clips (Tesla, 4K, 3-7 s each) | `lab/curve_v2/footage/tesla_2026-10-15/film/` | 9 clips + clip log in SOURCES.txt. The livestream (qt5p-_tE8d0) and product film sections fail (ffmpeg code 8) |
+| Agents killed by the session limit at ~23:40 | | Resume with SendMessage (work is saved): critic of C v2 (-> `trials/C_hybrid/CRITIC_C_v2.md`), Blender v2 (-> `trials/B_blender/v2/`, empty so far), facts update (-> `TESLA_ROADSTER_FACTS.md` §13; had found Alef Aeronautics = the "11-year-old flying car company") |
+| New 17 Oct news worth a Short | Google News RSS | The Drive: Tesla "cannot guarantee" reservation holders get a car; Engadget: fan cars since 1970 (Chaparral 2J, Brabham BT46B); FAA "not an aircraft"; Altman praise after refund row |
+
+Mistakes not to repeat: news Shorts need the answer in line 1 and must ship within ~48 h; one critic pass, not
+trial loops; never imply the TSLA drop was a verdict on the Roadster (the Nasdaq fell the same 2%); don't claim the car
+was at 0 mph at the top (it hangs ~1 s in real time); 0.81 s is Tesla's own timing; "about two seconds of gas" is OUR
+estimate (label it).
 
 ## 1. Done this session (9 Oct afternoon) and what is still running
 | Item | File | State |

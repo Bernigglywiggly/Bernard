@@ -1,0 +1,7 @@
+*.mp4
+*.png
+*.jpg
+*.blend
+*.blend1
+frames/
+cache_smoke*/

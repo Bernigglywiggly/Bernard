@@ -3,6 +3,7 @@ import type React from "react";
 import { AbsoluteFill, Easing, Img, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { CLAMP, EASE_IN_OUT, EASE_OUT } from "../lib/anim";
 import { keyline } from "./HybridC";
+import { makePages } from "./pager";
 import { v2 } from "./palette";
 import { VO_S3_CAPTIONS } from "./voS3Captions";
 
@@ -222,39 +223,7 @@ const Split: React.FC = () => {
   );
 };
 
-type Word = { text: string; fromMs: number; toMs: number };
-type Page = { startMs: number; durationMs: number; tokens: Word[] };
-const STOP = new Set(["the", "a", "an", "to", "of", "and", "with", "from", "in", "it", "for"]);
-const PAGES: Page[] = (() => {
-  const words: Word[] = [];
-  for (const c of VO_S3_CAPTIONS) {
-    if (!c.text.startsWith(" ") && words.length > 0) {
-      const w = words[words.length - 1];
-      w.text += c.text;
-      w.toMs = c.endMs;
-    } else {
-      words.push({ text: c.text, fromMs: c.startMs, toMs: c.endMs });
-    }
-  }
-  const out: Page[] = [];
-  let cur: Page | null = null;
-  for (const w of words) {
-    const len = cur ? cur.tokens.map((t) => t.text).join("").trim().length : 0;
-    if (!cur || cur.tokens.length >= 3 || len + w.text.length > 16) {
-      const carry: Word[] = [];
-      if (cur && cur.tokens.length > 1 && STOP.has(cur.tokens[cur.tokens.length - 1].text.trim().toLowerCase())) {
-        carry.push(cur.tokens.pop() as Word);
-        cur.durationMs = cur.tokens[cur.tokens.length - 1].toMs - cur.startMs;
-      }
-      cur = { startMs: carry.length ? carry[0].fromMs : w.fromMs, durationMs: 0, tokens: carry };
-      out.push(cur);
-    }
-    cur.tokens.push(w);
-    cur.durationMs = w.toMs - cur.startMs;
-    if (/[.,!?]$/.test(w.text.trim())) cur = null;
-  }
-  return out;
-})();
+const PAGES = makePages(VO_S3_CAPTIONS);
 
 const Captions: React.FC = () => {
   const frame = useCurrentFrame();

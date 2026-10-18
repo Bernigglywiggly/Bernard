@@ -1,82 +1,97 @@
 import { Audio, Video } from "@remotion/media";
 import type React from "react";
-import { AbsoluteFill, Easing, Img, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { CLAMP, EASE_IN_OUT, EASE_OUT } from "../lib/anim";
+import { AbsoluteFill, Img, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { CLAMP, EASE_OUT } from "../lib/anim";
 import { keyline } from "./HybridC";
+import { makePages } from "./pager";
 import { v2 } from "./palette";
 import { VO_S2_CAPTIONS } from "./voS2Captions";
 
-// Roadster Short 2 (for Mon 19 Oct): "The Tesla Roadster's 0.81 Second Launch". 1080x1920, 30 fps.
-// Footage: Tesla's 4K "The 0-60" upload, RIFE 8x slow motion with a pan that follows the car (public/shorts/s2_launch_8x.mp4).
-// Every number on screen: TESLA_ROADSTER_FACTS.md P4 (0.81 s, Tesla's own timing), C5 (Rimac Nevera R 1.66 s, Dewesoft-
-// verified), P1 19:00 (production car "will actually do better"); 3.4 g is our sum (26.82 m/s / 0.81 s / 9.81), labelled.
-// Narration lab/curve_v2/shorts/vo/s2_chris_v4.mp3 (29.4 s). The last frame is frame 0, so the replay has no seam.
+// Roadster Short 2, v2 (for Mon 19 Oct): "The Tesla Roadster's 0.81 Second Launch". 1080x1920, 30 fps.
+// v2 applies critic round 1 (shorts/out/critic_s2/round1.md): the crop holds still on the car's rear so the gas jets and
+// plume are on screen under "gas jets fire"; "Nevera" re-voiced (Ree-mats Neh-VEH-rah, whisper hears "Nevera"); the race
+// on one true distance scale (0-60 at constant acceleration: Roadster 10.9 m, Rimac 22.3 m); stopwatches sweep in real
+// time; Tesla's claimed times by version instead of a bare "< 0.81 s"; hard cuts; a filled payoff; the bed never dips.
+// Numbers: TESLA_ROADSTER_FACTS.md P4 (0.81 s, Tesla's own timing), C5 (Rimac 1.66 s, Dewesoft), §3 (Rocket <0.59 s,
+// Performance <1.6 s; tesla.com: Thrust under 1 s), P1 19:00; 3.4 g = 26.82 m/s / 0.81 s / 9.81 [EST], labelled.
+// Narration lab/curve_v2/shorts/vo/s2_chris_v4_v2.mp3 (29.6 s). Last frame = frame 0.
 
 export const SHORT2_FRAMES = 897;
 
-const F = { launchEnd: 182, lanes: 182, watch: 364, musk: 519, gee: 618, outro: 717, back: 868, hold0: 894 };
+const F = { lanes: 182, race: 189, watch: 369, own: 412, stamp: 440, trims: 524, gee: 623, outro: 722, sweep: 783, attach: 865, back: 883 };
 
 const HEAD: React.CSSProperties = { fontFamily: v2.fonts.heavy, fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 0.9 };
 const HEADC: React.CSSProperties = { ...HEAD, fontVariationSettings: "'wdth' 82", whiteSpace: "nowrap" };
 const BG = "radial-gradient(ellipse at 50% 38%, #1B0B3A 0%, #0A0418 55%, #000000 100%)";
 const fill: React.CSSProperties = { width: "100%", height: "100%", filter: "saturate(1.1) contrast(1.06) brightness(1.05)" };
+const slowPush = (frame: number, a: number, b: number, to = 1.04) => interpolate(frame, [a, b], [1, to], CLAMP);
 
 const Footage: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const push = interpolate(frame, [0, F.launchEnd], [1, 1.04], CLAMP);
-  const backIn = interpolate(frame, [F.back, F.back + 14], [0, 1], { ...CLAMP, easing: EASE_IN_OUT });
   return (
     <AbsoluteFill style={{ backgroundColor: v2.colors.black }}>
-      <Sequence durationInFrames={F.launchEnd} premountFor={fps}>
-        <AbsoluteFill style={{ scale: push, transformOrigin: "50% 48%" }}>
-          <Video src={staticFile("shorts/s2_launch_8x.mp4")} muted style={fill} />
+      <Sequence durationInFrames={F.lanes} premountFor={fps}>
+        <AbsoluteFill style={{ scale: slowPush(frame, 0, F.lanes), transformOrigin: "50% 48%" }}>
+          <Video src={staticFile("shorts/s2_launch_8x_v2.mp4")} muted style={fill} />
         </AbsoluteFill>
       </Sequence>
-      <Sequence from={F.lanes} durationInFrames={F.musk - F.lanes}>
+      <Sequence from={F.lanes} durationInFrames={F.back - F.lanes}>
         <AbsoluteFill style={{ background: BG }} />
       </Sequence>
-      <Sequence from={F.musk} durationInFrames={F.outro - F.musk}>
-        <Img src={staticFile("shorts/s2_mid.png")} style={{ ...fill, filter: "brightness(0.38) saturate(0.9) blur(2px)" }} />
-      </Sequence>
-      <Sequence from={F.outro}>
-        <AbsoluteFill style={{ background: BG }} />
-        {/* back to the opening picture, so the last frame is frame 0 */}
-        <AbsoluteFill style={{ opacity: backIn }}>
-          <Img src={staticFile("shorts/s2_frame0.png")} style={fill} />
-        </AbsoluteFill>
+      {/* hard cut back to the opening picture: the readout stays put, only the background changes */}
+      <Sequence from={F.back}>
+        <Img src={staticFile("shorts/s2_frame0_v2.png")} style={fill} />
       </Sequence>
     </AbsoluteFill>
   );
 };
 
-// The readout: "0-60 MPH / 0.81 s". It is the hook at frame 0, leaves at 6 s, and returns in the outro to become the
-// hook again in the last frame.
+const StopwatchGlyph: React.FC<{ secs: number; r: number }> = ({ secs, r }) => {
+  const ang = secs * 360; // one revolution = 1 second
+  const rad = (ang * Math.PI) / 180;
+  const R = r;
+  const sector = ang <= 0 ? "" : `M 0 0 L 0 ${-(R - 20)} A ${R - 20} ${R - 20} 0 ${ang > 180 ? 1 : 0} 1 ${Math.sin(rad) * (R - 20)} ${-Math.cos(rad) * (R - 20)} Z`;
+  return (
+    <g>
+      <rect x={-R * 0.13} y={-R - R * 0.26} width={R * 0.26} height={R * 0.19} rx={R * 0.04} fill="#C9CFD6" stroke="#000" strokeWidth={6} />
+      <circle r={R + R * 0.08} fill="#C9CFD6" stroke="#000" strokeWidth={8} />
+      <circle r={R} fill="#0B0F17" stroke="#000" strokeWidth={6} />
+      {Array.from({ length: 20 }).map((_, i) => {
+        const a = (i / 20) * Math.PI * 2 - Math.PI / 2;
+        const long = i % 5 === 0;
+        return <line key={i} x1={Math.cos(a) * (R - (long ? R * 0.17 : R * 0.1))} y1={Math.sin(a) * (R - (long ? R * 0.17 : R * 0.1))}
+          x2={Math.cos(a) * (R - R * 0.04)} y2={Math.sin(a) * (R - R * 0.04)} stroke={long ? v2.colors.ink : "#7C8794"} strokeWidth={long ? 8 : 5} />;
+      })}
+      {sector ? <path d={sector} fill={v2.colors.acid} opacity={0.22} /> : null}
+      <line x1={0} y1={0} x2={Math.sin(rad) * (R - R * 0.12)} y2={-Math.cos(rad) * (R - R * 0.12)} stroke={v2.colors.acid} strokeWidth={Math.max(8, R * 0.05)} strokeLinecap="round" />
+      <circle r={Math.max(12, R * 0.07)} fill={v2.colors.acid} stroke="#000" strokeWidth={5} />
+    </g>
+  );
+};
+
+// The readout is the hook at frame 0 and returns, in the same place, for the payoff, so the hard cut back to frame 0
+// only swaps the background.
 const Readout: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const at = (s: number) => Math.round(s * fps);
-  const inOpening = frame < F.lanes;
-  const inOutro = frame >= F.outro && frame < F.hold0;
+  const inOpening = frame < F.lanes || frame >= F.back;
+  const inOutro = frame >= F.outro && frame < F.back;
   if (!inOpening && !inOutro) return null;
-  const out = interpolate(frame, [F.lanes - 8, F.lanes], [0, 1], { ...CLAMP, easing: Easing.in(Easing.cubic) });
   const outroIn = spring({ frame: frame - F.outro, fps, config: { damping: 14, stiffness: 190 } });
-  const shown = inOpening ? 1 - out : outroIn;
-  const labelShown = inOpening ? 1 - out : interpolate(frame, [F.back, F.back + 12], [0, 1], { ...CLAMP, easing: EASE_OUT });
+  const shown = inOpening ? 1 : outroIn;
   const tag = spring({ frame: frame - at(5.0), fps, config: { damping: 10, stiffness: 230 } });
-  const tagOut = interpolate(frame, [F.lanes - 8, F.lanes], [1, 0], CLAMP);
-  const pulse = inOutro ? interpolate(frame, [at(26.4), at(26.6), at(26.9)], [1, 1.08, 1], CLAMP) : 1;
+  const showTag = frame < F.lanes;
   return (
-    <div style={{ position: "absolute", left: 64, top: 132, ...HEADC, opacity: interpolate(shown, [0, 0.3], [0, 1], CLAMP),
-      translate: `0 ${(1 - shown) * -60}px` }}>
-      <div style={{ fontSize: 96, color: v2.colors.cyan, opacity: labelShown, ...keyline(0.64, 10) }}>0–60 MPH</div>
-      <div style={{ fontSize: 300, color: v2.colors.acid, lineHeight: 0.86, scale: pulse, transformOrigin: "0% 50%", ...keyline(2, 10) }}>
+    <div style={{ position: "absolute", left: 64, top: 132, ...HEADC, opacity: interpolate(shown, [0, 0.3], [0, 1], CLAMP), translate: `0 ${(1 - shown) * -60}px` }}>
+      <div style={{ fontSize: 96, color: v2.colors.cyan, ...keyline(0.64, 10) }}>0–60 MPH</div>
+      <div style={{ fontSize: 300, color: v2.colors.acid, lineHeight: 0.86, ...keyline(2, 10) }}>
         0.81<span style={{ fontSize: 150, marginLeft: 12 }}>s</span>
       </div>
-      {inOpening ? (
+      {showTag ? (
         <div style={{ display: "inline-block", marginTop: 18, padding: "8px 18px 10px", backgroundColor: v2.colors.ink, color: v2.colors.black,
-          fontSize: 54, border: `4px solid ${v2.colors.black}`, scale: tag * tagOut, rotate: `${interpolate(tag, [0, 1], [-14, -2])}deg`,
-          transformOrigin: "0% 50%" }}>
+          fontSize: 54, border: `4px solid ${v2.colors.black}`, scale: tag, rotate: `${interpolate(tag, [0, 1], [-14, -2])}deg`, transformOrigin: "0% 50%" }}>
           TESLA'S OWN TIMING
         </div>
       ) : null}
@@ -84,9 +99,10 @@ const Readout: React.FC = () => {
   );
 };
 
-// Two lanes race to 60 mph at true relative speed (1 s of real time = 2.4 s on screen).
+// One true distance scale: from standstill to 60 mph at constant acceleration the Roadster covers 10.9 m in 0.81 s and
+// the Rimac 22.3 m in 1.66 s. After its flag the Roadster carries on at 60 mph. 1 s of real time = 2.4 s on screen.
 const CarGlyph: React.FC<{ color: string }> = ({ color }) => (
-  <svg width={190} height={64} viewBox="0 0 190 64">
+  <svg width={300} height={100} viewBox="0 0 190 64">
     <path d="M 8 44 C 10 30, 40 24, 70 20 C 92 8, 128 8, 150 22 C 170 26, 184 32, 184 44 Z" fill={color} stroke="#000" strokeWidth={5} strokeLinejoin="round" />
     <circle cx={50} cy={46} r={14} fill="#15181D" stroke="#000" strokeWidth={4} />
     <circle cx={146} cy={46} r={14} fill="#15181D" stroke="#000" strokeWidth={4} />
@@ -98,39 +114,35 @@ const Lanes: React.FC = () => {
   const { fps } = useVideoConfig();
   if (frame < F.lanes || frame >= F.watch) return null;
   const at = (s: number) => Math.round(s * fps);
-  const t0 = at(6.3);
   const scale = 2.4;
-  const enter = interpolate(frame, [F.lanes, F.lanes + 10], [0, 1], { ...CLAMP, easing: EASE_OUT });
-  const leave = interpolate(frame, [F.watch - 8, F.watch], [0, 1], CLAMP);
+  const v = 26.82; // 60 mph in m/s
+  const start = 380;
+  const end = 932; // x of 22.3 m
+  const xOf = (d: number) => start + ((end - start) * d) / 22.3;
+  const real = Math.max(0, (frame - F.race) / fps / scale);
   const lanes = [
-    { name: "TESLA ROADSTER", time: 0.81, color: v2.colors.ink, timeColor: v2.colors.acid, note: "TESLA'S OWN TIMING", top: 600 },
-    { name: "RIMAC NEVERA R", time: 1.66, color: "#8FA3B8", timeColor: v2.colors.ink, note: "DEWESOFT-VERIFIED", top: 930 },
+    { name: "TESLA ROADSTER", time: 0.81, color: v2.colors.ink, timeColor: v2.colors.acid, note: "TESLA'S OWN TIMING", top: 560, noteAt: at(8.4) },
+    { name: "RIMAC NEVERA R", time: 1.66, color: "#8FA3B8", timeColor: v2.colors.ink, note: "DEWESOFT-VERIFIED", top: 960, noteAt: at(10.86) },
   ];
-  const x0 = 70;
-  const x1 = 820;
   return (
-    <AbsoluteFill style={{ opacity: enter * (1 - leave) }}>
-      <div style={{ position: "absolute", left: 64, top: 420, ...HEADC, fontSize: 96, color: v2.colors.cyan, ...keyline(0.64, 10) }}>0–60 MPH</div>
-      {lanes.map((ln, i) => {
-        const real = Math.max(0, (frame - t0) / fps / scale); // real seconds since the start
-        const p = Math.min(1, (real / ln.time) ** 2); // constant acceleration: distance grows with time squared
+    <AbsoluteFill style={{ scale: slowPush(frame, F.lanes, F.watch), transformOrigin: "50% 45%" }}>
+      <div style={{ position: "absolute", left: 64, top: 400, ...HEADC, fontSize: 96, color: v2.colors.cyan, ...keyline(0.64, 10) }}>0–60 MPH</div>
+      {lanes.map((ln) => {
+        const a = v / ln.time;
+        const flagD = 0.5 * v * ln.time;
+        const d = real <= ln.time ? 0.5 * a * real * real : flagD + v * (real - ln.time);
         const done = real >= ln.time;
-        const shownTime = Math.min(real, ln.time);
-        const noteIn = interpolate(frame, [at(i === 0 ? 8.4 : 10.75), at(i === 0 ? 8.4 : 10.75) + 8], [0, 1], { ...CLAMP, easing: EASE_OUT });
+        const noteIn = interpolate(frame, [ln.noteAt, ln.noteAt + 8], [0, 1], { ...CLAMP, easing: EASE_OUT });
         return (
-          <div key={ln.name} style={{ position: "absolute", left: 0, top: ln.top, width: 1080, translate: `${(1 - enter) * (i ? 60 : -60)}px 0` }}>
-            <div style={{ position: "absolute", left: x0, top: 0, ...HEADC, fontSize: 64, color: ln.color, ...keyline(0.43, 9) }}>{ln.name}</div>
-            <div style={{ position: "absolute", left: x0, top: 170, width: x1 - x0 + 120, height: 8, backgroundColor: "rgba(255,255,255,0.35)" }} />
-            <div style={{ position: "absolute", left: x1 + 96, top: 92, width: 10, height: 92, backgroundColor: v2.colors.magenta, border: "3px solid #000" }} />
-            <div style={{ position: "absolute", left: x0 + (x1 - x0) * p, top: 106 }}>
-              <CarGlyph color={ln.color} />
-            </div>
-            <div style={{ position: "absolute", left: x0, top: 196, ...HEADC, fontSize: 104, color: done ? ln.timeColor : "rgba(255,255,255,0.75)",
-              fontVariantNumeric: "tabular-nums", ...keyline(0.7, 10) }}>
-              {shownTime.toFixed(2)} s
-            </div>
-            <div style={{ position: "absolute", left: x0 + 330, top: 222, ...HEADC, fontSize: 46, color: ln.timeColor, opacity: noteIn,
-              ...keyline(0.31, 8) }}>{ln.note}</div>
+          <div key={ln.name} style={{ position: "absolute", left: 0, top: ln.top, width: 1080, height: 380 }}>
+            <div style={{ position: "absolute", left: 64, top: 0, ...HEADC, fontSize: 64, color: ln.color, ...keyline(0.43, 9) }}>{ln.name}</div>
+            <div style={{ position: "absolute", left: 64, top: 186, width: 1016, height: 8, backgroundColor: "rgba(255,255,255,0.35)" }} />
+            <div style={{ position: "absolute", left: xOf(flagD) - 5, top: 86, width: 10, height: 108, backgroundColor: v2.colors.magenta, border: "3px solid #000" }} />
+            <div style={{ position: "absolute", left: xOf(flagD) - 80, top: 50, width: 160, textAlign: "center", ...HEADC, fontSize: 36, color: v2.colors.magenta, ...keyline(0.24, 7) }}>60 MPH</div>
+            <div style={{ position: "absolute", left: xOf(d) - 300, top: 92 }}><CarGlyph color={ln.color} /></div>
+            <div style={{ position: "absolute", left: 64, top: 214, ...HEADC, fontSize: 104, color: done ? ln.timeColor : "rgba(255,255,255,0.75)",
+              fontVariantNumeric: "tabular-nums", ...keyline(0.7, 10) }}>{Math.min(real, ln.time).toFixed(2)} s</div>
+            <div style={{ position: "absolute", left: 400, top: 246, ...HEADC, fontSize: 50, color: ln.timeColor, opacity: noteIn, ...keyline(0.33, 8) }}>{ln.note}</div>
           </div>
         );
       })}
@@ -141,45 +153,23 @@ const Lanes: React.FC = () => {
 const Stopwatch: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  if (frame < F.watch || frame >= F.musk) return null;
-  const at = (s: number) => Math.round(s * fps);
-  const enter = spring({ frame: frame - F.watch, fps, config: { damping: 15, stiffness: 180 } });
-  const leave = interpolate(frame, [F.musk - 8, F.musk], [0, 1], CLAMP);
-  const sweep = interpolate(frame, [F.watch + 4, F.watch + 28], [0, 0.81], { ...CLAMP, easing: EASE_OUT });
-  const ang = (sweep / 1) * 360; // one revolution = 1 second
-  const own = spring({ frame: frame - at(13.55), fps, config: { damping: 11, stiffness: 220 } });
-  const stamp = spring({ frame: frame - at(14.5), fps, config: { damping: 9, stiffness: 260 } });
-  const cx = 540;
-  const cy = 800;
-  const r = 270;
+  if (frame < F.watch || frame >= F.trims) return null;
+  const secs = interpolate(frame, [F.watch + 4, F.watch + 4 + 24], [0, 0.81], CLAMP); // 0.81 s in 24 frames: real time
+  const own = spring({ frame: frame - F.own, fps, config: { damping: 11, stiffness: 220 } });
+  const stamp = spring({ frame: frame - F.stamp, fps, config: { damping: 9, stiffness: 260 } });
   return (
-    <AbsoluteFill style={{ opacity: 1 - leave }}>
-      <svg width={1080} height={1920} style={{ position: "absolute", inset: 0, scale: interpolate(enter, [0, 1], [0.7, 1]),
-        transformOrigin: `${cx}px ${cy}px`, opacity: interpolate(enter, [0, 0.3], [0, 1], CLAMP) }}>
-        <rect x={cx - 34} y={cy - r - 70} width={68} height={50} rx={10} fill="#C9CFD6" stroke="#000" strokeWidth={6} />
-        <circle cx={cx} cy={cy} r={r + 22} fill="#C9CFD6" stroke="#000" strokeWidth={8} />
-        <circle cx={cx} cy={cy} r={r} fill="#0B0F17" stroke="#000" strokeWidth={6} />
-        {Array.from({ length: 20 }).map((_, i) => {
-          const a = (i / 20) * Math.PI * 2 - Math.PI / 2;
-          const long = i % 5 === 0;
-          return (
-            <line key={i} x1={cx + Math.cos(a) * (r - (long ? 46 : 28))} y1={cy + Math.sin(a) * (r - (long ? 46 : 28))}
-              x2={cx + Math.cos(a) * (r - 10)} y2={cy + Math.sin(a) * (r - 10)} stroke={long ? v2.colors.ink : "#7C8794"} strokeWidth={long ? 8 : 5} />
-          );
-        })}
-        <path d={`M ${cx} ${cy} L ${cx} ${cy - r + 20} A ${r - 20} ${r - 20} 0 ${ang > 180 ? 1 : 0} 1 ${cx + Math.sin((ang * Math.PI) / 180) * (r - 20)} ${cy - Math.cos((ang * Math.PI) / 180) * (r - 20)} Z`}
-          fill={v2.colors.acid} opacity={0.22} />
-        <line x1={cx} y1={cy} x2={cx + Math.sin((ang * Math.PI) / 180) * (r - 34)} y2={cy - Math.cos((ang * Math.PI) / 180) * (r - 34)}
-          stroke={v2.colors.acid} strokeWidth={14} strokeLinecap="round" />
-        <circle cx={cx} cy={cy} r={20} fill={v2.colors.acid} stroke="#000" strokeWidth={5} />
+    <AbsoluteFill style={{ scale: slowPush(frame, F.watch, F.trims, 1.05), transformOrigin: "50% 42%" }}>
+      <svg width={1080} height={1920} style={{ position: "absolute", inset: 0 }}>
+        <g transform="translate(540 800)"><StopwatchGlyph secs={secs} r={270} /></g>
       </svg>
-      <div style={{ position: "absolute", left: 0, right: 0, top: cy + 70, textAlign: "center", ...HEADC, fontSize: 96, color: v2.colors.acid,
-        opacity: enter, ...keyline(0.64, 10) }}>{sweep.toFixed(2)} s</div>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 870, textAlign: "center", ...HEADC, fontSize: 96, color: v2.colors.acid, ...keyline(0.64, 10) }}>
+        {secs.toFixed(2)} s
+      </div>
       <div style={{ position: "absolute", left: 70, top: 380, padding: "8px 18px 10px", backgroundColor: v2.colors.ink, color: v2.colors.black,
         ...HEADC, fontSize: 60, border: "4px solid #000", scale: own, rotate: `${interpolate(own, [0, 1], [-12, -3])}deg`, transformOrigin: "0% 50%" }}>
         TESLA'S OWN STOPWATCH
       </div>
-      <div style={{ position: "absolute", left: 0, right: 0, top: 1040, display: "flex", justifyContent: "center" }}>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 1060, display: "flex", justifyContent: "center" }}>
         <div style={{ padding: "12px 26px 14px", border: `10px solid ${v2.colors.warn}`, color: v2.colors.warn, ...HEADC, fontSize: 76,
           textAlign: "center", lineHeight: 0.95, backgroundColor: "rgba(0,0,0,0.55)", scale: interpolate(stamp, [0, 1], [1.8, 1]),
           opacity: interpolate(stamp, [0, 0.2], [0, 1], CLAMP), rotate: "-6deg" }}>
@@ -190,26 +180,42 @@ const Stopwatch: React.FC = () => {
   );
 };
 
-const Musk: React.FC = () => {
+// Musk says the production car will be quicker still: Tesla's own claims, by version (§3).
+const Trims: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  if (frame < F.musk || frame >= F.outro) return null;
-  const at = (s: number) => Math.round(s * fps);
-  const a = spring({ frame: frame - (F.musk + 4), fps, config: { damping: 14, stiffness: 190 } });
-  const aOut = interpolate(frame, [F.gee - 8, F.gee], [0, 1], CLAMP);
-  const g = spring({ frame: frame - F.gee, fps, config: { damping: 12, stiffness: 200 } });
-  const leave = interpolate(frame, [F.outro - 8, F.outro], [0, 1], CLAMP);
-  const quick = spring({ frame: frame - at(19.24), fps, config: { damping: 10, stiffness: 230 } });
+  if (frame < F.trims || frame >= F.gee) return null;
+  const rows = [
+    { name: "ROCKET (OFF-ROAD)", t: "<0.59 s", color: v2.colors.acid },
+    { name: "THRUST", t: "<1 s", color: v2.colors.ink },
+    { name: "PERFORMANCE", t: "<1.6 s", color: "#C3CAD2" },
+  ];
   return (
-    <AbsoluteFill style={{ opacity: 1 - leave }}>
-      <div style={{ position: "absolute", left: 64, top: 360, ...HEADC, opacity: a * (1 - aOut), translate: `${(1 - a) * -60}px 0` }}>
-        <div style={{ fontSize: 70, color: v2.colors.ink, lineHeight: 1, ...keyline(0.47, 9) }}>MUSK: THE PRODUCTION CAR</div>
-        <div style={{ fontSize: 70, color: v2.colors.ink, lineHeight: 1, ...keyline(0.47, 9) }}>WILL BE QUICKER</div>
-        <div style={{ fontSize: 250, color: v2.colors.acid, marginTop: 20, scale: interpolate(quick, [0, 1], [0.6, 1]), transformOrigin: "0% 50%",
-          opacity: interpolate(quick, [0, 0.2], [0, 1], CLAMP), ...keyline(1.6, 10) }}>&lt; 0.81 s</div>
-      </div>
-      <div style={{ position: "absolute", left: 64, top: 380, ...HEADC, opacity: interpolate(g, [0, 0.3], [0, 1], CLAMP),
-        translate: `0 ${(1 - g) * 50}px` }}>
+    <AbsoluteFill style={{ scale: slowPush(frame, F.trims, F.gee), transformOrigin: "30% 40%" }}>
+      <div style={{ position: "absolute", left: 64, top: 360, ...HEADC, fontSize: 70, color: v2.colors.cyan, ...keyline(0.47, 9) }}>TESLA'S CLAIMED 0–60</div>
+      {rows.map((r, i) => {
+        const s = spring({ frame: frame - (F.trims + 6 + i * 8), fps, config: { damping: 14, stiffness: 210 } });
+        return (
+          <div key={r.name} style={{ position: "absolute", left: 64, right: 150, top: 500 + i * 170, display: "flex", justifyContent: "space-between",
+            alignItems: "baseline", ...HEADC, opacity: interpolate(s, [0, 0.3], [0, 1], CLAMP), translate: `${(1 - s) * -60}px 0` }}>
+            <span style={{ fontSize: 62, color: r.color, ...keyline(0.42, 9) }}>{r.name}</span>
+            <span style={{ fontSize: 112, color: r.color, fontVariantNumeric: "tabular-nums", ...keyline(0.75, 10) }}>{r.t}</span>
+          </div>
+        );
+      })}
+      <div style={{ position: "absolute", left: 64, top: 1030, ...HEADC, fontSize: 46, color: "#C3CAD2", ...keyline(0.3, 7) }}>ALL SELF-REPORTED BY TESLA</div>
+    </AbsoluteFill>
+  );
+};
+
+const Gee: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  if (frame < F.gee || frame >= F.outro) return null;
+  const g = spring({ frame: frame - (F.gee + 2), fps, config: { damping: 12, stiffness: 200 } });
+  return (
+    <AbsoluteFill style={{ scale: slowPush(frame, F.gee, F.outro, 1.05), transformOrigin: "20% 30%" }}>
+      <div style={{ position: "absolute", left: 64, top: 380, ...HEADC, opacity: interpolate(g, [0, 0.3], [0, 1], CLAMP), translate: `0 ${(1 - g) * 50}px` }}>
         <div style={{ fontSize: 300, color: v2.colors.acid, lineHeight: 0.86, ...keyline(2, 10) }}>≈3.4 g</div>
         <div style={{ fontSize: 62, color: v2.colors.ink, marginTop: 24, lineHeight: 1.05, ...keyline(0.42, 9) }}>THE AVERAGE PUSH OF</div>
         <div style={{ fontSize: 62, color: v2.colors.ink, lineHeight: 1.05, ...keyline(0.42, 9) }}>0–60 IN 0.81 s</div>
@@ -220,61 +226,34 @@ const Musk: React.FC = () => {
   );
 };
 
-// The outro: the stopwatch clips onto the readout on "stopwatch attached", then falls away as frame 0 returns.
-const Attach: React.FC = () => {
+// The payoff: a stopwatch beside the number sweeps 0.81 s in real time on "0.81", then clips onto it on "attached".
+const Outro: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const at = (s: number) => Math.round(s * fps);
-  const a = at(28.2);
-  if (frame < a - 2 || frame >= F.back + 14) return null;
-  const clip = spring({ frame: frame - a, fps, config: { damping: 9, stiffness: 240 } });
-  const fall = interpolate(frame, [F.back, F.back + 14], [0, 1], { ...CLAMP, easing: Easing.in(Easing.quad) });
+  if (frame < F.outro || frame >= F.back) return null;
+  const inS = spring({ frame: frame - (F.outro + 6), fps, config: { damping: 13, stiffness: 190 } });
+  const secs = interpolate(frame, [F.sweep, F.sweep + 24], [0, 0.81], CLAMP);
+  const clip = spring({ frame: frame - F.attach, fps, config: { damping: 9, stiffness: 240 } });
+  const x = interpolate(clip, [0, 1], [860, 700]);
+  const y = interpolate(clip, [0, 1], [700, 470]);
+  const rot = interpolate(clip, [0, 1], [0, 14]);
   return (
-    <svg width={1080} height={1920} style={{ position: "absolute", inset: 0 }}>
-      <g transform={`translate(${interpolate(clip, [0, 1], [1180, 850])} ${360 + fall * 900}) rotate(${interpolate(clip, [0, 1], [40, 12]) + fall * 60})`}
-        opacity={1 - fall}>
-        <rect x={-14} y={-112} width={28} height={26} rx={6} fill="#C9CFD6" stroke="#000" strokeWidth={5} />
-        <circle r={88} fill="#C9CFD6" stroke="#000" strokeWidth={6} />
-        <circle r={72} fill="#0B0F17" stroke="#000" strokeWidth={4} />
-        <line x1={0} y1={0} x2={52} y2={-34} stroke={v2.colors.acid} strokeWidth={10} strokeLinecap="round" />
+    <svg width={1080} height={1920} style={{ position: "absolute", inset: 0, opacity: interpolate(inS, [0, 0.3], [0, 1], CLAMP) }}>
+      <g transform={`translate(${x} ${y + (1 - inS) * 120}) rotate(${rot}) scale(${interpolate(clip, [0, 1], [1, 0.62])})`}>
+        <StopwatchGlyph secs={secs} r={150} />
       </g>
     </svg>
   );
 };
 
-type Page = { startMs: number; durationMs: number; tokens: { text: string; fromMs: number; toMs: number }[] };
-const PAGES: Page[] = (() => {
-  const words: { text: string; fromMs: number; toMs: number }[] = [];
-  for (const c of VO_S2_CAPTIONS) {
-    if (!c.text.startsWith(" ") && words.length > 0) {
-      const w = words[words.length - 1];
-      w.text += c.text;
-      w.toMs = c.endMs;
-    } else {
-      words.push({ text: c.text, fromMs: c.startMs, toMs: c.endMs });
-    }
-  }
-  const out: Page[] = [];
-  let cur: Page | null = null;
-  for (const w of words) {
-    const len = cur ? cur.tokens.map((t) => t.text).join("").trim().length : 0;
-    if (!cur || cur.tokens.length >= 3 || len + w.text.length > 16) {
-      cur = { startMs: w.fromMs, durationMs: 0, tokens: [] };
-      out.push(cur);
-    }
-    cur.tokens.push(w);
-    cur.durationMs = w.toMs - cur.startMs;
-    if (/[,!?]$/.test(w.text.trim()) || (/\.$/.test(w.text.trim()) && !/^\s*\d+\.$/.test(w.text))) cur = null;
-  }
-  return out;
-})();
+const PAGES = makePages(VO_S2_CAPTIONS);
 
 const Captions: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (frame >= F.back) return null;
   const ms = (frame / fps) * 1000;
-  const page = PAGES.find((p, i) => ms >= p.startMs && ms < (PAGES[i + 1]?.startMs ?? p.startMs + p.durationMs + 400));
+  const page = PAGES.find((p, i) => ms >= p.startMs && ms < (PAGES[i + 1]?.startMs ?? p.startMs + p.durationMs + 600));
   if (!page) return null;
   const pop = interpolate(ms - page.startMs, [0, 90, 160], [0.9, 1.05, 1], CLAMP);
   const startedIdx = page.tokens.reduce((acc, tk, j) => (tk.fromMs <= ms ? j : acc), -1);
@@ -290,50 +269,44 @@ const Captions: React.FC = () => {
 
 const Credit: React.FC = () => {
   const frame = useCurrentFrame();
-  const show = frame < F.lanes || (frame >= F.back && frame < F.hold0);
-  if (!show) return null;
+  if (!(frame < F.lanes || frame >= F.back)) return null;
   return (
     <div style={{ position: "absolute", left: 0, top: 1460, padding: "10px 22px 10px 60px", backgroundColor: "rgba(0,0,0,0.74)",
-      fontFamily: v2.fonts.mono, fontWeight: 500, fontSize: 40, letterSpacing: "0.03em", color: v2.colors.ink }}>
-      FOOTAGE: TESLA · 8× SLOWER
+      fontFamily: v2.fonts.mono, fontWeight: 500, fontSize: 40, letterSpacing: "0.02em", color: v2.colors.ink }}>
+      FOOTAGE: TESLA / YOUTUBE · 8× SLOWER
     </div>
   );
 };
 
 export const CurveV2Short2: React.FC = () => {
-  const { fps } = useVideoConfig();
-  const at = (s: number) => Math.round(s * fps);
   return (
     <AbsoluteFill style={{ backgroundColor: v2.colors.black }}>
       <Footage />
       <Lanes />
       <Stopwatch />
-      <Musk />
+      <Trims />
+      <Gee />
       <Readout />
-      <Attach />
+      <Outro />
       <Captions />
       <Credit />
-      <Sequence from={F.hold0}>
-        <Img src={staticFile("shorts/s2_frame0.png")} style={fill} />
-        <Readout />
-        <Credit />
-      </Sequence>
 
-      <Audio src={staticFile("shorts/s2_chris_v4.mp3")} />
-      <Audio src={staticFile("audio/sample-bed.mp3")}
-        volume={(f) => interpolate(f, [0, 9, SHORT2_FRAMES - 12, SHORT2_FRAMES], [0, 0.13, 0.13, 0], CLAMP)} />
-      <Sequence from={at(1.0)} durationInFrames={at(3.6)}><Audio src={staticFile("sfx/hiss.mp3")} volume={0.8} /></Sequence>
-      <Sequence from={at(5.0)}><Audio src={staticFile("sfx/thock.mp3")} volume={0.6} /></Sequence>
+      <Audio src={staticFile("shorts/s2_chris_v4_v2.mp3")} />
+      {/* the bed holds its level to the last frame, so the replay has no dip */}
+      <Audio src={staticFile("audio/sample-bed.mp3")} volume={(f) => interpolate(f, [0, 2, SHORT2_FRAMES - 2, SHORT2_FRAMES], [0.06, 0.13, 0.13, 0.06], CLAMP)} />
+      <Sequence from={30} durationInFrames={108}><Audio src={staticFile("sfx/hiss.mp3")} volume={0.8} /></Sequence>
+      <Sequence from={150}><Audio src={staticFile("sfx/thock.mp3")} volume={0.6} /></Sequence>
       <Sequence from={F.lanes}><Audio src={staticFile("sfx/whoosh.mp3")} volume={0.45} /></Sequence>
-      <Sequence from={at(6.3)} durationInFrames={at(4.0)}><Audio src={staticFile("sfx/tick_run.mp3")} volume={0.25} /></Sequence>
-      <Sequence from={at(8.25)}><Audio src={staticFile("sfx/thock.mp3")} volume={0.7} /></Sequence>
-      <Sequence from={at(10.3)}><Audio src={staticFile("sfx/thock.mp3")} volume={0.45} /></Sequence>
+      <Sequence from={F.race} durationInFrames={120}><Audio src={staticFile("sfx/tick_run.mp3")} volume={0.25} /></Sequence>
+      <Sequence from={F.race + 58}><Audio src={staticFile("sfx/thock.mp3")} volume={0.7} /></Sequence>
+      <Sequence from={F.race + 120}><Audio src={staticFile("sfx/thock.mp3")} volume={0.45} /></Sequence>
       <Sequence from={F.watch}><Audio src={staticFile("sfx/whoosh.mp3")} volume={0.4} /></Sequence>
-      <Sequence from={at(14.5)}><Audio src={staticFile("sfx/thock.mp3")} volume={0.75} /></Sequence>
-      <Sequence from={F.musk}><Audio src={staticFile("sfx/whoosh.mp3")} volume={0.4} /></Sequence>
+      <Sequence from={F.stamp}><Audio src={staticFile("sfx/thock.mp3")} volume={0.75} /></Sequence>
+      <Sequence from={F.trims}><Audio src={staticFile("sfx/whoosh.mp3")} volume={0.4} /></Sequence>
       <Sequence from={F.gee}><Audio src={staticFile("sfx/form.mp3")} volume={0.45} /></Sequence>
       <Sequence from={F.outro}><Audio src={staticFile("sfx/whoosh.mp3")} volume={0.4} /></Sequence>
-      <Sequence from={at(28.2)}><Audio src={staticFile("sfx/thock.mp3")} volume={0.6} /></Sequence>
+      <Sequence from={F.sweep} durationInFrames={24}><Audio src={staticFile("sfx/tick_run.mp3")} volume={0.3} /></Sequence>
+      <Sequence from={F.attach}><Audio src={staticFile("sfx/thock.mp3")} volume={0.65} /></Sequence>
     </AbsoluteFill>
   );
 };

@@ -5,7 +5,7 @@ Repo: `~/Bernard`, branch `claude/funny-newton-gd9w8v` ONLY (push with: `git pus
 
 ## 0. NOW (Sun 18 Oct, 04:30 UK): read this first, then section 1f
 
-**Mon 19 Oct update:** Short 1 (kRsPY8Ptei8) at 9,276 views, 139 likes, 7 comments. Shorts 2 and 3 are still waiting for his upload yes (manifest channel/uploads_roadster.json, idx 1 and 2). Weekly usage was at 96%, so keep sessions lean.
+**Mon 19 Oct update:** Short 1 (kRsPY8Ptei8) at 9,276 views. Short 2 LIVE as 3v6KK8LmdXA (public 06:21 UTC). Short 3 uploaded, scheduled public Tue 20 Oct 11:00 UTC (see uploads_roadster.done.json). Zapier tip: put the query string IN the url; the separate querystring field is ignored. Python is ~/youtube/.venv/bin/python. Next: track numbers; a Q3-call Short only if there is Roadster news.
 **Alignment verdict (lab/research/ALIGNMENT_2026-10-17.md, agent, 17 Oct 23:30):** the Roadster film and Musk series
 pay £0 before 2027 (The Curve median 7.5 views, 0 subs, YPP by 1 Feb under 5%). Run the Curve on machine time only,
 **Shorts first**; cut the standalone 8-min film (stitch Shorts into a film only if they average 1,000+ views); the

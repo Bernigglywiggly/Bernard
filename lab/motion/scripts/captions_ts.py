@@ -7,6 +7,7 @@ import argparse, json, os
 ap = argparse.ArgumentParser()
 ap.add_argument("json"); ap.add_argument("ts"); ap.add_argument("name")
 ap.add_argument("--fix", nargs="*", default=[])
+ap.add_argument("--script", help="the narration text (or a .py with LINES): caption words come from the script, timings from whisper")
 a = ap.parse_args()
 fixes = dict(f.split("=", 1) for f in a.fix)
 raw = json.load(open(a.json))
@@ -24,6 +25,39 @@ for c in caps:
         if core == k or core.rstrip(".,!?;") == k:
             core = v + core[len(core.rstrip(".,!?;")):] if core != k else v
     c["text"] = lead + core
+if a.script:
+    import difflib, re, runpy
+    if a.script.endswith(".py"):
+        text = " ".join(l["text"] for l in runpy.run_path(a.script)["LINES"])
+    else:
+        text = a.script
+    sw = text.split()
+    norm = lambda w: re.sub(r"[^a-z0-9]", "", w.lower().replace("-", " ").replace("%", "percent"))
+    NUM = {"fifty": "50", "seventy": "70", "nine": "9", "fortythree": "43", "four": "4", "eight": "8", "two": "2", "six": "6"}
+    def key(w):
+        n = norm(w)
+        return NUM.get(n, n)
+    wk = [key(c["text"]) for c in caps]
+    sk = [key(w) for w in sw]
+    out = []
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(a=wk, b=sk, autojunk=False).get_opcodes():
+        if op == "equal":
+            for i, j in zip(range(i1, i2), range(j1, j2)):
+                out.append({**caps[i], "text": " " + sw[j]})
+        elif j2 > j1:
+            # script words without a 1:1 match share the whisper span they replace (or a sliver after the last word)
+            if i2 > i1:
+                t0, t1 = caps[i1]["startMs"], caps[i2 - 1]["endMs"]
+            else:
+                t0 = out[-1]["endMs"] if out else 0
+                t1 = t0 + 120 * (j2 - j1)
+            n = j2 - j1
+            for k, j in enumerate(range(j1, j2)):
+                a0 = t0 + (t1 - t0) * k / n
+                a1 = t0 + (t1 - t0) * (k + 1) / n
+                out.append({"text": " " + sw[j], "startMs": int(a0), "endMs": int(a1), "timestampMs": int(a0), "confidence": 0.5})
+    out[0]["text"] = out[0]["text"].lstrip()
+    caps = out
 src = os.path.relpath(a.json, os.path.dirname(os.path.abspath(a.ts)))
 with open(a.ts, "w") as f:
     f.write(f"// Generated from {os.path.basename(a.json)} by scripts/captions_ts.py; fixes: {', '.join(a.fix) or 'none'}.\n")

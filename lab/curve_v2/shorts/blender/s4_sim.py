@@ -23,6 +23,7 @@ ap.add_argument("--out", required=True)
 ap.add_argument("--frames", default="")
 ap.add_argument("--scale", type=int, default=100)
 ap.add_argument("--samples", type=int, default=16)
+ap.add_argument("--shot", default="grid")  # grid | hero
 A = ap.parse_args(argv)
 
 N, SPACING = 64, 1.7
@@ -260,6 +261,8 @@ POSES = [
     ("p4_crouch", dict(pelvis_z=0.6, lean=20, hip_L=82, knee_L=118, hip_R=82, knee_R=118, sh_L=60, elb_L=40, sh_R=60, elb_R=40)),
     ("p5_fallen_back", dict(hipab_L=22, hipab_R=22, knee_L=30, shab_L=60, shab_R=40, elb_R=60, sh_L=40, whole=(-90, 0, 18))),
     ("p6_fallen_side", dict(hip_L=40, knee_L=60, hip_R=10, knee_R=20, sh_L=80, elb_L=30, shab_R=30, whole=(0, 88, -30))),
+    ("p7_stride_a", dict(lean=4, hip_L=28, knee_L=12, hip_R=-22, knee_R=34, sh_L=-24, elb_L=25, sh_R=26, elb_R=30)),
+    ("p8_stride_b", dict(lean=4, hip_R=28, knee_R=12, hip_L=-22, knee_L=34, sh_R=-24, elb_R=25, sh_L=26, elb_L=30)),
 ]
 
 poses_coll = bpy.data.collections.new("RobotPoses")
@@ -342,8 +345,24 @@ pick = nn.new("ShaderNodeMix"); pick.data_type = "FLOAT"
 ln.new(isfall.outputs[0], pick.inputs["Factor"])
 ln.new(up_i.outputs[0], pick.inputs["A"])
 ln.new(fa_o.outputs[0], pick.inputs["B"])
+walk3 = nn.new("ShaderNodeMath"); walk3.operation = "MULTIPLY"; walk3.inputs[1].default_value = 2.999
+ln.new(r2.outputs["Value"], walk3.inputs[0])
+walk_i = nn.new("ShaderNodeMath"); walk_i.operation = "FLOOR"
+ln.new(walk3.outputs[0], walk_i.inputs[0])
+walk_gt = nn.new("ShaderNodeMath"); walk_gt.operation = "GREATER_THAN"; walk_gt.inputs[1].default_value = 0.5
+ln.new(walk_i.outputs[0], walk_gt.inputs[0])
+walk_off = nn.new("ShaderNodeMath"); walk_off.operation = "MULTIPLY"; walk_off.inputs[1].default_value = 6.0
+ln.new(walk_gt.outputs[0], walk_off.inputs[0])
+walk_idx = nn.new("ShaderNodeMath"); walk_idx.operation = "ADD"
+ln.new(walk_i.outputs[0], walk_idx.inputs[0]); ln.new(walk_off.outputs[0], walk_idx.inputs[1])
+is_rev = nn.new("ShaderNodeMath"); is_rev.operation = "GREATER_THAN"; is_rev.inputs[1].default_value = 300.0
+ln.new(stime.outputs["Frame"], is_rev.inputs[0])
+pick2 = nn.new("ShaderNodeMix"); pick2.data_type = "FLOAT"
+ln.new(is_rev.outputs[0], pick2.inputs["Factor"])
+ln.new(pick.outputs["Result"], pick2.inputs["A"])
+ln.new(walk_idx.outputs[0], pick2.inputs["B"])
 pick_i = nn.new("FunctionNodeFloatToInt"); pick_i.rounding_mode = "ROUND"
-ln.new(pick.outputs["Result"], pick_i.inputs[0])
+ln.new(pick2.outputs["Result"], pick_i.inputs[0])
 # yaw: mostly facing the camera side, a little scatter
 yaw = nn.new("FunctionNodeRandomValue"); yaw.data_type = "FLOAT"
 yaw.inputs["Min"].default_value = rad(-35); yaw.inputs["Max"].default_value = rad(35)
@@ -495,11 +514,64 @@ for ob in hero_objs:
                         for k in fc.keyframe_points:
                             k.interpolation = "CONSTANT"
 
-# ------------------------------------------------------------------------------------------------ render
+# ------------------------------------------------------------------------------------------------ hero shot (balance)
+import json  # noqa: E402
 import os  # noqa: E402
+from bpy_extras.object_utils import world_to_camera_view  # noqa: E402
+
+if A.shot == "hero":
+    SC.frame_start, SC.frame_end = 1, 140
+    near.inputs["B"].default_value = 7.0         # a clearing around the hero; the grid stays behind, out of focus
+    for ob in hero_objs:
+        ob.animation_data_clear()
+        ob.hide_render = True
+    kick = hero_objs[2]
+    kick.hide_render = False
+    pivot = bpy.data.objects.new("pivot", None)
+    SC.collection.objects.link(pivot)
+    pivot.location = (0.11, 0.0, 0.0)          # the stance foot
+    kick.parent = pivot
+    kick.location = (-0.11, 0.0, 0.0)
+    kick.rotation_euler = (0, 0, rad(-90))      # profile to the camera: kick leg points left of frame
+    for f in range(1, 141):
+        t = (f - 1) / FPS
+        ax = 1.6 * math.sin(2 * math.pi * 1.3 * t) + 0.5 * math.sin(2 * math.pi * 3.7 * t + 1.0)
+        ay = 0.9 * math.sin(2 * math.pi * 0.9 * t + 0.4)
+        pivot.rotation_euler = (rad(ay), rad(ax), 0)
+        pivot.keyframe_insert("rotation_euler", frame=f)
+    for c in list(cam.constraints):
+        cam.constraints.remove(c)
+    cam.animation_data_clear()
+    tgt.animation_data_clear()
+    cam_d.lens = 62
+    cam_d.dof.use_dof = True
+    cam_d.dof.focus_object = kick
+    cam_d.dof.aperture_fstop = 1.2
+    tc2 = cam.constraints.new("TRACK_TO")
+    tc2.target = tgt
+    tc2.track_axis = "TRACK_NEGATIVE_Z"
+    tc2.up_axis = "UP_Y"
+    key(cam, 1, (0.5, -6.4, 1.05)); key(tgt, 1, (0.0, 0.0, 0.92))
+    key(cam, 140, (0.35, -5.7, 1.0)); key(tgt, 140, (0.0, 0.0, 0.92))
+    track = []
+    for f in range(1, 141):
+        SC.frame_set(f)
+        M = pivot.matrix_world
+        com = M @ Vector((-0.11, 0.0, 0.98))
+        foot = M @ Vector((0.0, 0.0, 0.0))
+        pts = []
+        for P in (com, foot):
+            v = world_to_camera_view(SC, cam, P)
+            pts.append([round(v.x * 1080, 1), round((1 - v.y) * 1920, 1)])
+        track.append(pts)
+    os.makedirs(A.out, exist_ok=True)
+    json.dump(track, open(os.path.join(A.out, "track.json"), "w"))
+
+# ------------------------------------------------------------------------------------------------ render
 
 os.makedirs(A.out, exist_ok=True)
-frames = [int(x) for x in A.frames.split(",") if x] if A.frames else list(range(1, 71)) + list(range(101, 246)) + list(range(301, 437))
+default_frames = list(range(1, 141)) if A.shot == "hero" else list(range(1, 71)) + list(range(101, 246)) + list(range(301, 437))
+frames = [int(x) for x in A.frames.split(",") if x] if A.frames else default_frames
 for f in frames:
     SC.frame_set(f)
     SC.render.filepath = os.path.join(A.out, f"f_{f:04d}.png")

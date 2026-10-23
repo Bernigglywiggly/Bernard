@@ -11,7 +11,7 @@ Shot kinds: REAL = Tesla's own clip (3-7 s, credited, our narration on top, ZACK
 GFX = Remotion graphics. Facts codes: lab/research/TESLA_ROADSTER_FACTS.md §12.
 """
 
-TITLE_WORKING = "How the Tesla Roadster Really Flies"
+TITLE_WORKING = "How the Flying Tesla Roadster Actually Works"
 
 SEGMENTS = [
     dict(id="S1", name="The hang", short="How the Tesla Roadster Hangs Upside Down"),
@@ -21,6 +21,7 @@ SEGMENTS = [
     dict(id="S5", name="The fan car", short="The Fan Car That Won Once and Vanished"),
     dict(id="S6", name="Is it legal?", short="Is the Flying Tesla Roadster Legal?"),
     dict(id="S7", name="The deposit", short="What $250,000 Buys You at Tesla"),
+    dict(id="S9", name="The bill", short="Tesla Showed a Flying Car. Then Its Profit Fell 43%"),
     dict(id="S8", name="Verdict", short=None),
 ]
 
@@ -47,8 +48,8 @@ LINES = [
 
     # S2 The roll.
     dict(id="s2_1", seg="S2", facts="P2 S3 S5",
-         text="As it falls, the Tesla Roadster fires jets of gas that roll it the right way up before it lands.",
-         shot="REAL drop_punch at 0.9x: inverted drop, side jets fire, roll; freeze-frame ring on the jet"),
+         text="The jets that turn it the right way up belong to a second machine hidden inside this car.",
+         shot="REAL kick_side inverted over the Semi (RIFE slow); Blender xray_h: the car body fades to glass"),
     dict(id="s2_2", seg="S2", facts="P1 S1 S13",
          text="The gas comes from two carbon-wrapped tanks of the kind SpaceX flies on its rockets, holding about a "
               "quarter of a tonne of it.",
@@ -199,6 +200,22 @@ LINES = [
          shot="GFX the $250,000 counter again, a queue of identical car silhouettes behind it"),
 
     # S8 Verdict (our judgement, CRAFT §1). Ends on the opening picture so the film loops back to frame 0.
+    # S9 The bill (23 Oct): Tesla's Q3 2026 Update, lab/research/TESLA_Q3_2026_FACTS.md (rows), = Curve Short 5 in long form
+    dict(id="s9_1", seg="S9", facts="Q3 #11; event 15 Oct, results 21 Oct",
+         text="Six days after the show, Tesla reported its quarterly results, and its profit had fallen forty-three percent.",
+         shot="REAL the 0-60 launch into smoke; GFX 'PROFIT -43%' slams in"),
+    dict(id="s9_2", seg="S9", facts="Q3 #6",
+         text="Its gross profit, what's left after making what it sells, had actually risen by about nine percent.",
+         shot="GFX horizontal bars, Q3 2025 vs Q3 2026, +9%"),
+    dict(id="s9_3", seg="S9", facts="Q3 #7, P1 Profitability",
+         text="The drop came from spending, with research up about seventy percent and more stock pay, including Musk's 2025 award.",
+         shot="GFX rising columns $1.63B -> $2.76B; Tesla's own sentence typeset, causes highlighted"),
+    dict(id="s9_4", seg="S9", facts="Q3 P1 capacity table",
+         text="And in the same filing, the Roadster's status is listed in two words, design development.",
+         shot="GFX the capacity table row 'Roadster - Design development' (typeset from the filing), push in"),
+    dict(id="s9_5", seg="S9", facts="Q3 P1",
+         text="So the car that flew over a row of trucks is, on paper, still a drawing.",
+         shot="REAL kickflip over the Semi, freeze-frame turns to blueprint lines (GFX)"),
     dict(id="s8_1", seg="S8", facts="-",
          text="So what did Tesla actually show in Texas?",
          shot="REAL wide aerial of the ramp run (Ramp 0:35-0:42), 5 s"),

@@ -1,0 +1,114 @@
+[
+ {
+  "text": "In",
+  "startMs": 90,
+  "endMs": 150,
+  "timestampMs": 180,
+  "confidence": 0.937054
+ },
+ {
+  "text": " a",
+  "startMs": 150,
+  "endMs": 220,
+  "timestampMs": 320,
+  "confidence": 0.998872
+ },
+ {
+  "text": " moment",
+  "startMs": 220,
+  "endMs": 840,
+  "timestampMs": 620,
+  "confidence": 0.999375
+ },
+ {
+  "text": ",",
+  "startMs": 840,
+  "endMs": 950,
+  "timestampMs": 940,
+  "confidence": 0.917821
+ },
+ {
+  "text": " the",
+  "startMs": 950,
+  "endMs": 1010,
+  "timestampMs": 1120,
+  "confidence": 0.974687
+ },
+ {
+  "text": " number",
+  "startMs": 1010,
+  "endMs": 1350,
+  "timestampMs": 1360,
+  "confidence": 0.999329
+ },
+ {
+  "text": " that",
+  "startMs": 1350,
+  "endMs": 1570,
+  "timestampMs": 1580,
+  "confidence": 0.989302
+ },
+ {
+  "text": " decides",
+  "startMs": 1570,
+  "endMs": 2000,
+  "timestampMs": 2000,
+  "confidence": 0.993504
+ },
+ {
+  "text": " how",
+  "startMs": 2000,
+  "endMs": 2250,
+  "timestampMs": 2360,
+  "confidence": 0.8086
+ },
+ {
+  "text": " long",
+  "startMs": 2250,
+  "endMs": 2590,
+  "timestampMs": 2580,
+  "confidence": 0.993024
+ },
+ {
+  "text": " this",
+  "startMs": 2590,
+  "endMs": 2890,
+  "timestampMs": 2840,
+  "confidence": 0.856885
+ },
+ {
+  "text": " car",
+  "startMs": 2890,
+  "endMs": 3120,
+  "timestampMs": 3100,
+  "confidence": 0.993669
+ },
+ {
+  "text": " can",
+  "startMs": 3120,
+  "endMs": 3470,
+  "timestampMs": 3380,
+  "confidence": 0.908275
+ },
+ {
+  "text": " actually",
+  "startMs": 3470,
+  "endMs": 4340,
+  "timestampMs": 3940,
+  "confidence": 0.958729
+ },
+ {
+  "text": " fly",
+  "startMs": 4340,
+  "endMs": 4710,
+  "timestampMs": 4460,
+  "confidence": 0.994461
+ },
+ {
+  "text": ".",
+  "startMs": 4710,
+  "endMs": 4720,
+  "timestampMs": 4680,
+  "confidence": 0.718269
+ }
+]

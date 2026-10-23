@@ -1,0 +1,1066 @@
+[
+ {
+  "text": "The",
+  "startMs": 80,
+  "endMs": 200,
+  "timestampMs": 220,
+  "confidence": 0.971287
+ },
+ {
+  "text": " Tesla",
+  "startMs": 200,
+  "endMs": 530,
+  "timestampMs": 580,
+  "confidence": 0.999275
+ },
+ {
+  "text": " Road",
+  "startMs": 530,
+  "endMs": 760,
+  "timestampMs": 800,
+  "confidence": 0.948855
+ },
+ {
+  "text": "ster",
+  "startMs": 760,
+  "endMs": 1040,
+  "timestampMs": 1000,
+  "confidence": 0.999975
+ },
+ {
+  "text": " can",
+  "startMs": 1040,
+  "endMs": 1310,
+  "timestampMs": 1240,
+  "confidence": 0.996234
+ },
+ {
+  "text": " only",
+  "startMs": 1310,
+  "endMs": 1510,
+  "timestampMs": 1560,
+  "confidence": 0.999104
+ },
+ {
+  "text": " stay",
+  "startMs": 1510,
+  "endMs": 1800,
+  "timestampMs": 1820,
+  "confidence": 0.997466
+ },
+ {
+  "text": " in",
+  "startMs": 1800,
+  "endMs": 1890,
+  "timestampMs": 1920,
+  "confidence": 0.906127
+ },
+ {
+  "text": " the",
+  "startMs": 1890,
+  "endMs": 2030,
+  "timestampMs": 2060,
+  "confidence": 0.994698
+ },
+ {
+  "text": " air",
+  "startMs": 2030,
+  "endMs": 2180,
+  "timestampMs": 2160,
+  "confidence": 0.996145
+ },
+ {
+  "text": " for",
+  "startMs": 2180,
+  "endMs": 2430,
+  "timestampMs": 2360,
+  "confidence": 0.99987
+ },
+ {
+  "text": " a",
+  "startMs": 2430,
+  "endMs": 2510,
+  "timestampMs": 2640,
+  "confidence": 0.999165
+ },
+ {
+  "text": " handful",
+  "startMs": 2510,
+  "endMs": 3070,
+  "timestampMs": 2880,
+  "confidence": 0.997539
+ },
+ {
+  "text": " of",
+  "startMs": 3070,
+  "endMs": 3290,
+  "timestampMs": 3180,
+  "confidence": 0.998483
+ },
+ {
+  "text": " seconds",
+  "startMs": 3290,
+  "endMs": 3900,
+  "timestampMs": 3580,
+  "confidence": 0.999264
+ },
+ {
+  "text": " because",
+  "startMs": 3900,
+  "endMs": 4100,
+  "timestampMs": 4080,
+  "confidence": 0.359959
+ },
+ {
+  "text": " its",
+  "startMs": 4100,
+  "endMs": 4260,
+  "timestampMs": 4320,
+  "confidence": 0.791578
+ },
+ {
+  "text": " rocket",
+  "startMs": 4260,
+  "endMs": 4690,
+  "timestampMs": 4620,
+  "confidence": 0.98046
+ },
+ {
+  "text": " fuel",
+  "startMs": 4690,
+  "endMs": 4980,
+  "timestampMs": 4920,
+  "confidence": 0.988512
+ },
+ {
+  "text": " is",
+  "startMs": 4980,
+  "endMs": 5180,
+  "timestampMs": 5120,
+  "confidence": 0.999634
+ },
+ {
+  "text": " a",
+  "startMs": 5180,
+  "endMs": 5230,
+  "timestampMs": 5340,
+  "confidence": 0.997942
+ },
+ {
+  "text": " tank",
+  "startMs": 5230,
+  "endMs": 5570,
+  "timestampMs": 5500,
+  "confidence": 0.999359
+ },
+ {
+  "text": " of",
+  "startMs": 5570,
+  "endMs": 5730,
+  "timestampMs": 5700,
+  "confidence": 0.999458
+ },
+ {
+  "text": " squeezed",
+  "startMs": 5730,
+  "endMs": 6420,
+  "timestampMs": 6220,
+  "confidence": 0.996242
+ },
+ {
+  "text": " gas",
+  "startMs": 6420,
+  "endMs": 6700,
+  "timestampMs": 6660,
+  "confidence": 0.998917
+ },
+ {
+  "text": ".",
+  "startMs": 6700,
+  "endMs": 6940,
+  "timestampMs": 7020,
+  "confidence": 0.996337
+ },
+ {
+  "text": " By",
+  "startMs": 6940,
+  "endMs": 7080,
+  "timestampMs": 7180,
+  "confidence": 0.999348
+ },
+ {
+  "text": " our",
+  "startMs": 7080,
+  "endMs": 7290,
+  "timestampMs": 7380,
+  "confidence": 0.996736
+ },
+ {
+  "text": " maths",
+  "startMs": 7290,
+  "endMs": 7650,
+  "timestampMs": 7600,
+  "confidence": 0.738161
+ },
+ {
+  "text": ",",
+  "startMs": 7650,
+  "endMs": 7770,
+  "timestampMs": 8020,
+  "confidence": 0.962124
+ },
+ {
+  "text": " the",
+  "startMs": 7770,
+  "endMs": 8050,
+  "timestampMs": 8200,
+  "confidence": 0.990784
+ },
+ {
+  "text": " rear",
+  "startMs": 8050,
+  "endMs": 8280,
+  "timestampMs": 8380,
+  "confidence": 0.997927
+ },
+ {
+  "text": " no",
+  "startMs": 8280,
+  "endMs": 8420,
+  "timestampMs": 8600,
+  "confidence": 0.994372
+ },
+ {
+  "text": "zz",
+  "startMs": 8420,
+  "endMs": 8560,
+  "timestampMs": 8700,
+  "confidence": 0.999699
+ },
+ {
+  "text": "les",
+  "startMs": 8560,
+  "endMs": 8820,
+  "timestampMs": 8760,
+  "confidence": 0.999809
+ },
+ {
+  "text": " at",
+  "startMs": 8820,
+  "endMs": 8980,
+  "timestampMs": 8940,
+  "confidence": 0.97836
+ },
+ {
+  "text": " full",
+  "startMs": 8980,
+  "endMs": 9290,
+  "timestampMs": 9220,
+  "confidence": 0.998308
+ },
+ {
+  "text": " power",
+  "startMs": 9290,
+  "endMs": 9700,
+  "timestampMs": 9600,
+  "confidence": 0.989776
+ },
+ {
+  "text": " would",
+  "startMs": 9700,
+  "endMs": 10060,
+  "timestampMs": 9900,
+  "confidence": 0.99806
+ },
+ {
+  "text": " empty",
+  "startMs": 10060,
+  "endMs": 10420,
+  "timestampMs": 10180,
+  "confidence": 0.999432
+ },
+ {
+  "text": " both",
+  "startMs": 10420,
+  "endMs": 10710,
+  "timestampMs": 10580,
+  "confidence": 0.999622
+ },
+ {
+  "text": " tanks",
+  "startMs": 10710,
+  "endMs": 11070,
+  "timestampMs": 10920,
+  "confidence": 0.999112
+ },
+ {
+  "text": " in",
+  "startMs": 11070,
+  "endMs": 11210,
+  "timestampMs": 11080,
+  "confidence": 0.998049
+ },
+ {
+  "text": " about",
+  "startMs": 11210,
+  "endMs": 11570,
+  "timestampMs": 11260,
+  "confidence": 0.999207
+ },
+ {
+  "text": " two",
+  "startMs": 11570,
+  "endMs": 11790,
+  "timestampMs": 11640,
+  "confidence": 0.99304
+ },
+ {
+  "text": " seconds",
+  "startMs": 11790,
+  "endMs": 12300,
+  "timestampMs": 12200,
+  "confidence": 0.999638
+ },
+ {
+  "text": ".",
+  "startMs": 12300,
+  "endMs": 12580,
+  "timestampMs": 12660,
+  "confidence": 0.99851
+ },
+ {
+  "text": " Tesla",
+  "startMs": 12580,
+  "endMs": 12920,
+  "timestampMs": 12900,
+  "confidence": 0.999683
+ },
+ {
+  "text": " told",
+  "startMs": 12920,
+  "endMs": 13180,
+  "timestampMs": 13160,
+  "confidence": 0.999161
+ },
+ {
+  "text": " Top",
+  "startMs": 13180,
+  "endMs": 13380,
+  "timestampMs": 13480,
+  "confidence": 0.973901
+ },
+ {
+  "text": " Gear",
+  "startMs": 13380,
+  "endMs": 13690,
+  "timestampMs": 13660,
+  "confidence": 0.968758
+ },
+ {
+  "text": " the",
+  "startMs": 13690,
+  "endMs": 13890,
+  "timestampMs": 13960,
+  "confidence": 0.916151
+ },
+ {
+  "text": " thrust",
+  "startMs": 13890,
+  "endMs": 14300,
+  "timestampMs": 14320,
+  "confidence": 0.733131
+ },
+ {
+  "text": " version",
+  "startMs": 14300,
+  "endMs": 14780,
+  "timestampMs": 14720,
+  "confidence": 0.998426
+ },
+ {
+  "text": " gets",
+  "startMs": 14780,
+  "endMs": 15080,
+  "timestampMs": 14960,
+  "confidence": 0.998487
+ },
+ {
+  "text": " a",
+  "startMs": 15080,
+  "endMs": 15150,
+  "timestampMs": 15240,
+  "confidence": 0.999306
+ },
+ {
+  "text": " single",
+  "startMs": 15150,
+  "endMs": 15600,
+  "timestampMs": 15500,
+  "confidence": 0.998757
+ },
+ {
+  "text": " launch",
+  "startMs": 15600,
+  "endMs": 16090,
+  "timestampMs": 15820,
+  "confidence": 0.997025
+ },
+ {
+  "text": " per",
+  "startMs": 16090,
+  "endMs": 16300,
+  "timestampMs": 16060,
+  "confidence": 0.990282
+ },
+ {
+  "text": " fill",
+  "startMs": 16300,
+  "endMs": 16600,
+  "timestampMs": 16400,
+  "confidence": 0.993256
+ },
+ {
+  "text": ",",
+  "startMs": 16600,
+  "endMs": 16780,
+  "timestampMs": 16820,
+  "confidence": 0.913847
+ },
+ {
+  "text": " about",
+  "startMs": 16780,
+  "endMs": 17130,
+  "timestampMs": 17020,
+  "confidence": 0.787742
+ },
+ {
+  "text": " five",
+  "startMs": 17130,
+  "endMs": 17410,
+  "timestampMs": 17340,
+  "confidence": 0.986143
+ },
+ {
+  "text": " seconds",
+  "startMs": 17410,
+  "endMs": 17900,
+  "timestampMs": 17680,
+  "confidence": 0.99806
+ },
+ {
+  "text": " of",
+  "startMs": 17900,
+  "endMs": 18040,
+  "timestampMs": 17860,
+  "confidence": 0.992494
+ },
+ {
+  "text": " push",
+  "startMs": 18040,
+  "endMs": 18340,
+  "timestampMs": 18200,
+  "confidence": 0.999546
+ },
+ {
+  "text": ".",
+  "startMs": 18340,
+  "endMs": 18340,
+  "timestampMs": 18320,
+  "confidence": 0.66557
+ },
+ {
+  "text": " But",
+  "startMs": 18340,
+  "endMs": 18540,
+  "timestampMs": 18540,
+  "confidence": 0.99955
+ },
+ {
+  "text": " filling",
+  "startMs": 18540,
+  "endMs": 18980,
+  "timestampMs": 18780,
+  "confidence": 0.957068
+ },
+ {
+  "text": " the",
+  "startMs": 18980,
+  "endMs": 19160,
+  "timestampMs": 18980,
+  "confidence": 0.998395
+ },
+ {
+  "text": " tanks",
+  "startMs": 19160,
+  "endMs": 19490,
+  "timestampMs": 19220,
+  "confidence": 0.988508
+ },
+ {
+  "text": " back",
+  "startMs": 19490,
+  "endMs": 19740,
+  "timestampMs": 19460,
+  "confidence": 0.973134
+ },
+ {
+  "text": " up",
+  "startMs": 19740,
+  "endMs": 19870,
+  "timestampMs": 19700,
+  "confidence": 0.998045
+ },
+ {
+  "text": " isn",
+  "startMs": 19870,
+  "endMs": 20060,
+  "timestampMs": 20100,
+  "confidence": 0.992953
+ },
+ {
+  "text": "'t",
+  "startMs": 20060,
+  "endMs": 20180,
+  "timestampMs": 20160,
+  "confidence": 0.999989
+ },
+ {
+  "text": " quick",
+  "startMs": 20180,
+  "endMs": 20500,
+  "timestampMs": 20540,
+  "confidence": 0.999455
+ },
+ {
+  "text": ".",
+  "startMs": 20500,
+  "endMs": 20740,
+  "timestampMs": 20900,
+  "confidence": 0.993384
+ },
+ {
+  "text": " Lars",
+  "startMs": 20740,
+  "endMs": 20990,
+  "timestampMs": 21100,
+  "confidence": 0.978792
+ },
+ {
+  "text": " Mor",
+  "startMs": 20990,
+  "endMs": 21200,
+  "timestampMs": 21380,
+  "confidence": 0.602351
+ },
+ {
+  "text": "avi",
+  "startMs": 21200,
+  "endMs": 21370,
+  "timestampMs": 21580,
+  "confidence": 0.639738
+ },
+ {
+  "text": ",",
+  "startMs": 21370,
+  "endMs": 21490,
+  "timestampMs": 21800,
+  "confidence": 0.876411
+ },
+ {
+  "text": " who",
+  "startMs": 21490,
+  "endMs": 21660,
+  "timestampMs": 22020,
+  "confidence": 0.998963
+ },
+ {
+  "text": " runs",
+  "startMs": 21660,
+  "endMs": 21930,
+  "timestampMs": 22240,
+  "confidence": 0.99814
+ },
+ {
+  "text": " vehicle",
+  "startMs": 21930,
+  "endMs": 22380,
+  "timestampMs": 22640,
+  "confidence": 0.905996
+ },
+ {
+  "text": " engineering",
+  "startMs": 22380,
+  "endMs": 23140,
+  "timestampMs": 23080,
+  "confidence": 0.997189
+ },
+ {
+  "text": " at",
+  "startMs": 23140,
+  "endMs": 23380,
+  "timestampMs": 23340,
+  "confidence": 0.98174
+ },
+ {
+  "text": " Tesla",
+  "startMs": 23380,
+  "endMs": 24000,
+  "timestampMs": 23700,
+  "confidence": 0.999641
+ },
+ {
+  "text": ",",
+  "startMs": 24000,
+  "endMs": 24000,
+  "timestampMs": 24040,
+  "confidence": 0.969115
+ },
+ {
+  "text": " said",
+  "startMs": 24000,
+  "endMs": 24250,
+  "timestampMs": 24220,
+  "confidence": 0.997927
+ },
+ {
+  "text": " a",
+  "startMs": 24250,
+  "endMs": 24300,
+  "timestampMs": 24380,
+  "confidence": 0.991711
+ },
+ {
+  "text": " refill",
+  "startMs": 24300,
+  "endMs": 24650,
+  "timestampMs": 24720,
+  "confidence": 0.998578
+ },
+ {
+  "text": " from",
+  "startMs": 24650,
+  "endMs": 24820,
+  "timestampMs": 24980,
+  "confidence": 0.997965
+ },
+ {
+  "text": " a",
+  "startMs": 24820,
+  "endMs": 24950,
+  "timestampMs": 25180,
+  "confidence": 0.994936
+ },
+ {
+  "text": " high",
+  "startMs": 24950,
+  "endMs": 25190,
+  "timestampMs": 25420,
+  "confidence": 0.998182
+ },
+ {
+  "text": "-",
+  "startMs": 25190,
+  "endMs": 25310,
+  "timestampMs": 25420,
+  "confidence": 0.50733
+ },
+ {
+  "text": "pressure",
+  "startMs": 25310,
+  "endMs": 25740,
+  "timestampMs": 25700,
+  "confidence": 0.998791
+ },
+ {
+  "text": " nitrogen",
+  "startMs": 25740,
+  "endMs": 26280,
+  "timestampMs": 26240,
+  "confidence": 0.815843
+ },
+ {
+  "text": " rig",
+  "startMs": 26280,
+  "endMs": 26660,
+  "timestampMs": 26540,
+  "confidence": 0.957463
+ },
+ {
+  "text": " takes",
+  "startMs": 26660,
+  "endMs": 27020,
+  "timestampMs": 26940,
+  "confidence": 0.956061
+ },
+ {
+  "text": " hours",
+  "startMs": 27020,
+  "endMs": 27380,
+  "timestampMs": 27440,
+  "confidence": 0.999253
+ },
+ {
+  "text": " today",
+  "startMs": 27380,
+  "endMs": 27770,
+  "timestampMs": 27900,
+  "confidence": 0.996884
+ },
+ {
+  "text": ".",
+  "startMs": 27770,
+  "endMs": 27980,
+  "timestampMs": 27960,
+  "confidence": 0.978036
+ },
+ {
+  "text": " His",
+  "startMs": 28060,
+  "endMs": 28200,
+  "timestampMs": 28220,
+  "confidence": 0.98998
+ },
+ {
+  "text": " target",
+  "startMs": 28200,
+  "endMs": 28650,
+  "timestampMs": 28580,
+  "confidence": 0.999264
+ },
+ {
+  "text": " is",
+  "startMs": 28650,
+  "endMs": 28800,
+  "timestampMs": 28920,
+  "confidence": 0.999123
+ },
+ {
+  "text": " under",
+  "startMs": 28800,
+  "endMs": 29170,
+  "timestampMs": 29160,
+  "confidence": 0.998491
+ },
+ {
+  "text": " half",
+  "startMs": 29170,
+  "endMs": 29470,
+  "timestampMs": 29500,
+  "confidence": 0.990588
+ },
+ {
+  "text": " an",
+  "startMs": 29470,
+  "endMs": 29610,
+  "timestampMs": 29680,
+  "confidence": 0.992971
+ },
+ {
+  "text": " hour",
+  "startMs": 29610,
+  "endMs": 29920,
+  "timestampMs": 29920,
+  "confidence": 0.99987
+ },
+ {
+  "text": ".",
+  "startMs": 29920,
+  "endMs": 30180,
+  "timestampMs": 30360,
+  "confidence": 0.998692
+ },
+ {
+  "text": " Elon",
+  "startMs": 30180,
+  "endMs": 30480,
+  "timestampMs": 30520,
+  "confidence": 0.999222
+ },
+ {
+  "text": " Musk",
+  "startMs": 30480,
+  "endMs": 30780,
+  "timestampMs": 30780,
+  "confidence": 0.995657
+ },
+ {
+  "text": " said",
+  "startMs": 30780,
+  "endMs": 31070,
+  "timestampMs": 31020,
+  "confidence": 0.987392
+ },
+ {
+  "text": " on",
+  "startMs": 31070,
+  "endMs": 31290,
+  "timestampMs": 31140,
+  "confidence": 0.902106
+ },
+ {
+  "text": " stage",
+  "startMs": 31290,
+  "endMs": 31620,
+  "timestampMs": 31500,
+  "confidence": 0.988116
+ },
+ {
+  "text": " that",
+  "startMs": 31620,
+  "endMs": 31810,
+  "timestampMs": 31780,
+  "confidence": 0.886925
+ },
+ {
+  "text": " the",
+  "startMs": 31810,
+  "endMs": 31960,
+  "timestampMs": 31980,
+  "confidence": 0.990152
+ },
+ {
+  "text": " car",
+  "startMs": 31960,
+  "endMs": 32120,
+  "timestampMs": 32120,
+  "confidence": 0.999173
+ },
+ {
+  "text": " can",
+  "startMs": 32120,
+  "endMs": 32330,
+  "timestampMs": 32320,
+  "confidence": 0.999047
+ },
+ {
+  "text": " refill",
+  "startMs": 32330,
+  "endMs": 32760,
+  "timestampMs": 32740,
+  "confidence": 0.995915
+ },
+ {
+  "text": " the",
+  "startMs": 32760,
+  "endMs": 32940,
+  "timestampMs": 33000,
+  "confidence": 0.999371
+ },
+ {
+  "text": " tank",
+  "startMs": 32940,
+  "endMs": 33270,
+  "timestampMs": 33220,
+  "confidence": 0.999237
+ },
+ {
+  "text": " itself",
+  "startMs": 33270,
+  "endMs": 33690,
+  "timestampMs": 33740,
+  "confidence": 0.99671
+ },
+ {
+  "text": ",",
+  "startMs": 33690,
+  "endMs": 33860,
+  "timestampMs": 33740,
+  "confidence": 0.958559
+ },
+ {
+  "text": " which",
+  "startMs": 33860,
+  "endMs": 34190,
+  "timestampMs": 34040,
+  "confidence": 0.999378
+ },
+ {
+  "text": " is",
+  "startMs": 34190,
+  "endMs": 34320,
+  "timestampMs": 34160,
+  "confidence": 0.996968
+ },
+ {
+  "text": " a",
+  "startMs": 34320,
+  "endMs": 34380,
+  "timestampMs": 34400,
+  "confidence": 0.997284
+ },
+ {
+  "text": " long",
+  "startMs": 34380,
+  "endMs": 34620,
+  "timestampMs": 34600,
+  "confidence": 0.99958
+ },
+ {
+  "text": " way",
+  "startMs": 34620,
+  "endMs": 34860,
+  "timestampMs": 34860,
+  "confidence": 0.997653
+ },
+ {
+  "text": " from",
+  "startMs": 34860,
+  "endMs": 35040,
+  "timestampMs": 35080,
+  "confidence": 0.98494
+ },
+ {
+  "text": " what",
+  "startMs": 35040,
+  "endMs": 35220,
+  "timestampMs": 35180,
+  "confidence": 0.990841
+ },
+ {
+  "text": " his",
+  "startMs": 35220,
+  "endMs": 35350,
+  "timestampMs": 35320,
+  "confidence": 0.992661
+ },
+ {
+  "text": " engineer",
+  "startMs": 35350,
+  "endMs": 35740,
+  "timestampMs": 35720,
+  "confidence": 0.99867
+ },
+ {
+  "text": " told",
+  "startMs": 35740,
+  "endMs": 36020,
+  "timestampMs": 35980,
+  "confidence": 0.970667
+ },
+ {
+  "text": " Top",
+  "startMs": 36020,
+  "endMs": 36230,
+  "timestampMs": 36320,
+  "confidence": 0.997385
+ },
+ {
+  "text": " Gear",
+  "startMs": 36230,
+  "endMs": 36510,
+  "timestampMs": 36480,
+  "confidence": 0.998807
+ },
+ {
+  "text": ".",
+  "startMs": 36510,
+  "endMs": 36720,
+  "timestampMs": 36780,
+  "confidence": 0.994863
+ },
+ {
+  "text": " So",
+  "startMs": 36720,
+  "endMs": 36920,
+  "timestampMs": 37060,
+  "confidence": 0.998837
+ },
+ {
+  "text": " the",
+  "startMs": 36920,
+  "endMs": 37180,
+  "timestampMs": 37380,
+  "confidence": 0.715789
+ },
+ {
+  "text": " flying",
+  "startMs": 37180,
+  "endMs": 37710,
+  "timestampMs": 37660,
+  "confidence": 0.991696
+ },
+ {
+  "text": " car",
+  "startMs": 37710,
+  "endMs": 38030,
+  "timestampMs": 37900,
+  "confidence": 0.998045
+ },
+ {
+  "text": " flies",
+  "startMs": 38030,
+  "endMs": 38440,
+  "timestampMs": 38320,
+  "confidence": 0.998631
+ },
+ {
+  "text": " for",
+  "startMs": 38440,
+  "endMs": 38700,
+  "timestampMs": 38580,
+  "confidence": 0.998601
+ },
+ {
+  "text": " seconds",
+  "startMs": 38700,
+  "endMs": 39340,
+  "timestampMs": 39020,
+  "confidence": 0.998803
+ },
+ {
+  "text": ",",
+  "startMs": 39340,
+  "endMs": 39340,
+  "timestampMs": 39320,
+  "confidence": 0.595313
+ },
+ {
+  "text": " and",
+  "startMs": 39340,
+  "endMs": 39540,
+  "timestampMs": 39520,
+  "confidence": 0.999386
+ },
+ {
+  "text": " then",
+  "startMs": 39540,
+  "endMs": 39810,
+  "timestampMs": 39620,
+  "confidence": 0.99846
+ },
+ {
+  "text": " it",
+  "startMs": 39810,
+  "endMs": 39940,
+  "timestampMs": 39780,
+  "confidence": 0.989851
+ },
+ {
+  "text": " waits",
+  "startMs": 39940,
+  "endMs": 40230,
+  "timestampMs": 39980,
+  "confidence": 0.999523
+ },
+ {
+  "text": " for",
+  "startMs": 40230,
+  "endMs": 40490,
+  "timestampMs": 40280,
+  "confidence": 0.999134
+ },
+ {
+  "text": " hours",
+  "startMs": 40490,
+  "endMs": 40820,
+  "timestampMs": 40780,
+  "confidence": 0.999836
+ },
+ {
+  "text": ".",
+  "startMs": 40820,
+  "endMs": 41060,
+  "timestampMs": 41000,
+  "confidence": 0.991658
+ }
+]

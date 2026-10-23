@@ -9,6 +9,8 @@ Plan in motion: (1) rebrand The Curve to "the story behind the clip everyone's s
 
 Done 23 Oct (evening): channel description + keywords rewritten (no longer AI-only) and a NEW BANNER uploaded via API (lab/motion/src/curve_v2/Brand.tsx, files in channel/the-curve/brand/v2/). New avatar rendered (channel/the-curve/brand/v2/avatar.png) but the API can't set avatars: HE uploads it in YouTube Studio > Customization > Branding. Kit for new Shorts: lab/motion/src/curve_v2/kit/index.tsx. The 4 research agents (radar, Unitree, Meta, Tesla Q3) died on the weekly limit at ~17:40 (resets 7am Sat); resume them with SendMessage or redo inline. Zapier GET tip: put query params in the "querystring" dict, not the URL (URL query strings get dropped).
 
+**23 Oct, 18:40: Short 4 (Unitree H2-X, "How Unitree's Kung Fu Robot Learned to Fight") rendered + measured: lab/curve_v2/shorts/out/SHORT4_v1.mp4 (-14.3 LUFS, 1% frozen, loop 39.9 dB). Short 5 (Tesla Q3, "Tesla Showed a Flying Car. Then Its Profit Fell 43%") rendered + measured: SHORT5_v1.mp4. Critic round 1 running on both (reports to out/critic_s4/round1.md and out/critic_s5/round1.md). Manifest for both: channel/uploads_curve.json ("public": true = goes live on upload). Uploads still need HIS yes. Next: apply critic fixes, then a UK clocks-go-back Short (Sun 25 Oct) or Meta Class C; then the Roadster long-form.**
+
 ## 0. NOW (Sun 18 Oct, 04:30 UK): read this first, then section 1f
 
 **FORMAT LOCKED 19 Oct: ASCII style retired; "clip, explained" (real clip + Blender/Remotion diagram) is The Curve standard. Slate + recipe: lab/curve_v2/SLATE_2026-10-19.md. Next session: build the reusable template, then Short 4 (the contract).**

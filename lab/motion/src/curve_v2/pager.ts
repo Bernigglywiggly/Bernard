@@ -2,7 +2,7 @@ import type { Caption } from "@remotion/captions";
 
 // Caption pages for the Curve Shorts (v2, 23 Oct 2026, after critics on Shorts 4-5 found pages like "TELLS" alone,
 // "PROFIT HAD" and "FROM TESLA'S"): split the narration into phrases first (at , . ; : ! ? and before a conjunction),
-// then cut each phrase into as few pages as fit (4 words, 18 characters), balanced (5 words = 3 + 2, never 4 + 1),
+// then cut each phrase into as few pages as fit (4 words, 20 characters), balanced (5 words = 3 + 2, never 4 + 1),
 // and move a boundary so a page never ends on a function word, an adjective or a possessive, and a number keeps its
 // unit and a proper name stays whole.
 export type CapWord = { text: string; fromMs: number; toMs: number };
@@ -51,7 +51,7 @@ export const makePages = (captions: Caption[]): CapPage[] => {
   const out: CapPage[] = [];
   for (const ph of phrases) {
     const n = ph.length;
-    const k = Math.max(1, Math.ceil(n / 4), Math.ceil(chars(ph) / 18));
+    const k = Math.max(1, Math.ceil(n / 4), Math.ceil(chars(ph) / 20));
     const sizes = Array.from({ length: k }, (_, i) => Math.floor(n / k) + (i < n % k ? 1 : 0));
     const cuts: number[] = []; // index where each page after the first starts
     let acc = 0;
@@ -62,14 +62,19 @@ export const makePages = (captions: Caption[]): CapPage[] => {
     for (let c = 0; c < cuts.length; c++) {
       const lo = c === 0 ? 0 : cuts[c - 1];
       const hi = c + 1 < cuts.length ? cuts[c + 1] : n;
-      let at = cuts[c];
       const bad = (i: number) => isWeak(ph[i - 1]) || (NUMBER.test(bare(ph[i - 1])) && UNIT.test(bare(ph[i]))) ||
         (isCap(ph[i - 1]) && isCap(ph[i]) && !ends(ph[i - 1]) && i - 1 > lo);
-      // move the cut earlier while the page would end weak (keep at least one word on the page)
-      while (at - 1 > lo && bad(at) && hi - (at - 1) <= 4) at -= 1;
-      // still bad (couldn't move earlier): try later
-      while (at + 1 < hi && bad(at) && at + 1 - lo <= 4) at += 1;
-      cuts[c] = at;
+      // the nearest clean cut on either side that keeps both pages at 1-4 words; else leave it
+      let best = cuts[c];
+      for (let d = 0; d <= 3; d++) {
+        const tries = d === 0 ? [cuts[c]] : [cuts[c] - d, cuts[c] + d];
+        const ok = tries.find((at) => at > lo && at < hi && at - lo <= 4 && hi - at <= 4 && !bad(at));
+        if (ok !== undefined) {
+          best = ok;
+          break;
+        }
+      }
+      cuts[c] = best;
     }
     const bounds = [0, ...cuts, n];
     for (let i = 0; i < bounds.length - 1; i++) {

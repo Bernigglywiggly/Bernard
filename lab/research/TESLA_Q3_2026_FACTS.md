@@ -19,6 +19,7 @@ $ millions unless stated. Columns are Tesla's own: Q3-2025 → Q3-2026. Our arit
 | 11 | Net income attributable to common stockholders (GAAP) | 1,373 | 787 | **−42.7%** | P / EST |
 | 12 | Diluted EPS (GAAP) | $0.39 | $0.22 | | P |
 | 13 | Diluted EPS (non-GAAP) | $0.50 | $0.48 | | P |
+| 13b | Net income attributable to common stockholders (non-GAAP: before stock-based pay, digital-asset and SpaceX-stake marks, certain tax items) | 1,770 | 1,697 | **−4.1%** | P / EST |
 | 14 | Stock-based compensation expense | 663 | 1,165 | +75.7% | P / EST |
 | 15 | Capital expenditures | 2,248 | 4,732 | +110% (more than doubled) | P / EST |
 | 16 | Free cash flow | 3,990 | 1,531 | −61.6% | P / EST |
@@ -30,14 +31,14 @@ $ millions unless stated. Columns are Tesla's own: Q3-2025 → Q3-2026. Our arit
 **Tesla's own explanation (P1, "Profitability"):** YoY operating income was "primarily impacted by" an increase in operating
 expenses "driven by SI and other R&D projects, SBC (including 2025 CEO Performance Award) and SG&A", lower regulatory
 credit revenue and lower energy gross profit, partly offset by growth in services and better vehicle mix.
-(Tesla doesn't define "SI" in the deck; the narration says "research projects", not "AI".)
+**"SI" = "Super Intelligence (SI)"**, Tesla's own term, defined on the deck's Highlights page ("projects spanning Super Intelligence (SI), robotics and renewable energy"); the capacity table lists "SI Training Compute" (Cortex 1 >105 MW, Cortex 2 >120 MW). (Corrected 23 Oct after critic round 1; the first draft said SI was undefined.)
 
 **Other lines from P1:** "unveiled the Next Gen Roadster on October 15"; Roadster status in the capacity table: "Design
 development"; Optimus: "Early Ramp" (California), "Construction" (Texas); "Launched Cybercab into the Robotaxi fleet in
 Austin" (rides from 3 Sep); "Produced and delivered our 10 millionth vehicle"; battery availability "continued to be the
 limiting factor"; a $2,002M "Purchase of SpaceX equity investment" in Q1-2026 (cash-flow statement).
 
-**For the Short (EST, our arithmetic):** R&D of $2,761M over the 92 days of Q3 ≈ $30M a day. Profit fell 42.7%, said "forty-three percent".
+**For the Short (EST, our arithmetic):** R&D of $2,761M over the 92 days of Q3 ≈ $30M a day. GAAP net income fell 42.7% (say "forty-three percent" and label it GAAP on screen); Tesla's own non-GAAP net income fell 4.1% (say "about four percent"). The −43% is our arithmetic on Tesla's numbers, so the narration says Tesla "reported", not "said", the drop.
 
 ## Sources
 - P1 Tesla, Inc., Form 8-K, 21 Oct 2026, exhibit 99.1 (Q3 2026 Update): https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm

@@ -67,7 +67,7 @@ export const Credit: React.FC<{ text: string; show: [number, number][]; top?: nu
   if (!inRanges(frame, show)) return null;
   return (
     <div style={{ position: "absolute", left: 0, top, padding: "10px 22px 10px 60px", backgroundColor: "rgba(0,0,0,0.74)", ...MONO,
-      fontSize: 40, color: C.ink }}>{text}</div>
+      fontSize: 44, color: C.ink }}>{text}</div>
   );
 };
 

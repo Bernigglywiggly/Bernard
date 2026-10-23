@@ -20,6 +20,7 @@ import { HybridCReal2 } from "./curve_v2/HybridCReal2";
 import { CurveV2Short1, SHORT1_FRAMES } from "./curve_v2/CurveV2Short1";
 import { CurveV2Short2, SHORT2_FRAMES } from "./curve_v2/CurveV2Short2";
 import { CurveV2Short3, SHORT3_FRAMES } from "./curve_v2/CurveV2Short3";
+import { CurveAvatar, CurveBanner } from "./curve_v2/Brand";
 // @new-composition-imports (npm run new adds imports above this line)
 
 export const RemotionRoot: React.FC = () => {
@@ -147,6 +148,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="CurveV2-Short1" component={CurveV2Short1} width={1080} height={1920} fps={30} durationInFrames={SHORT1_FRAMES} defaultProps={{}} />
         <Composition id="CurveV2-Short2" component={CurveV2Short2} width={1080} height={1920} fps={30} durationInFrames={SHORT2_FRAMES} defaultProps={{}} />
         <Composition id="CurveV2-Short3" component={CurveV2Short3} width={1080} height={1920} fps={30} durationInFrames={SHORT3_FRAMES} defaultProps={{}} />
+        <Still id="Curve-Banner" component={CurveBanner} width={2560} height={1440} defaultProps={{}} />
+        <Still id="Curve-Avatar" component={CurveAvatar} width={800} height={800} defaultProps={{}} />
       </Folder>
       {/* @new-composition-registrations (npm run new adds compositions above this line) */}
     </>

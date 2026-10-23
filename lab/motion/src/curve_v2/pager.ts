@@ -5,7 +5,7 @@ import type { Caption } from "@remotion/captions";
 export type CapWord = { text: string; fromMs: number; toMs: number };
 export type CapPage = { startMs: number; durationMs: number; tokens: CapWord[] };
 
-const FUNCTION = new Set(["the", "a", "an", "to", "of", "and", "with", "from", "in", "it", "for", "on", "at", "its", "is", "up", "that", "his", "but", "so", "then", "has", "about", "can", "would", "will", "be", "what"]);
+const FUNCTION = new Set(["the", "a", "an", "to", "of", "and", "with", "from", "in", "it", "for", "on", "at", "its", "is", "up", "that", "his", "but", "so", "then", "has", "about", "can", "would", "will", "be", "what", "by", "as", "its", "their", "our", "your", "this", "into", "than"]);
 const BREAK_BEFORE = new Set(["and", "but", "then", "before", "after", "when", "while", "because", "so", "yet"]);
 
 const NUMBER = /^(\d[\d.,]*|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|twenty|thirty|fifty|hundred)$/;

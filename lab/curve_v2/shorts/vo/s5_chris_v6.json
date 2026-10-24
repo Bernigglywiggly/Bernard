@@ -1,0 +1,849 @@
+[
+ {
+  "text": "Tesla",
+  "startMs": 80,
+  "endMs": 350,
+  "timestampMs": 400,
+  "confidence": 0.994797
+ },
+ {
+  "text": " just",
+  "startMs": 350,
+  "endMs": 580,
+  "timestampMs": 700,
+  "confidence": 0.994203
+ },
+ {
+  "text": " reported",
+  "startMs": 580,
+  "endMs": 1100,
+  "timestampMs": 1160,
+  "confidence": 0.998761
+ },
+ {
+  "text": " that",
+  "startMs": 1100,
+  "endMs": 1360,
+  "timestampMs": 1320,
+  "confidence": 0.992932
+ },
+ {
+  "text": " its",
+  "startMs": 1360,
+  "endMs": 1550,
+  "timestampMs": 1500,
+  "confidence": 0.903894
+ },
+ {
+  "text": " net",
+  "startMs": 1550,
+  "endMs": 1790,
+  "timestampMs": 1760,
+  "confidence": 0.992277
+ },
+ {
+  "text": " profit",
+  "startMs": 1790,
+  "endMs": 2280,
+  "timestampMs": 2140,
+  "confidence": 0.99697
+ },
+ {
+  "text": " fell",
+  "startMs": 2280,
+  "endMs": 2720,
+  "timestampMs": 2420,
+  "confidence": 0.963999
+ },
+ {
+  "text": " 43",
+  "startMs": 2720,
+  "endMs": 3560,
+  "timestampMs": 3140,
+  "confidence": 0.990545
+ },
+ {
+  "text": "%,",
+  "startMs": 3560,
+  "endMs": 4000,
+  "timestampMs": 3940,
+  "confidence": 0.299836
+ },
+ {
+  "text": " six",
+  "startMs": 4000,
+  "endMs": 4190,
+  "timestampMs": 4380,
+  "confidence": 0.974494
+ },
+ {
+  "text": " days",
+  "startMs": 4190,
+  "endMs": 4450,
+  "timestampMs": 4820,
+  "confidence": 0.999012
+ },
+ {
+  "text": " after",
+  "startMs": 4450,
+  "endMs": 4780,
+  "timestampMs": 5120,
+  "confidence": 0.999268
+ },
+ {
+  "text": " you",
+  "startMs": 4780,
+  "endMs": 4970,
+  "timestampMs": 5280,
+  "confidence": 0.998075
+ },
+ {
+  "text": " watched",
+  "startMs": 4970,
+  "endMs": 5430,
+  "timestampMs": 5520,
+  "confidence": 0.649641
+ },
+ {
+  "text": " this",
+  "startMs": 5430,
+  "endMs": 5820,
+  "timestampMs": 5760,
+  "confidence": 0.990274
+ },
+ {
+  "text": " flying",
+  "startMs": 5820,
+  "endMs": 6080,
+  "timestampMs": 6100,
+  "confidence": 0.929557
+ },
+ {
+  "text": " road",
+  "startMs": 6080,
+  "endMs": 6340,
+  "timestampMs": 6300,
+  "confidence": 0.736176
+ },
+ {
+  "text": "ster",
+  "startMs": 6340,
+  "endMs": 6620,
+  "timestampMs": 6600,
+  "confidence": 0.999949
+ },
+ {
+  "text": ".",
+  "startMs": 6620,
+  "endMs": 6840,
+  "timestampMs": 6920,
+  "confidence": 0.797403
+ },
+ {
+  "text": " Yet",
+  "startMs": 6840,
+  "endMs": 7050,
+  "timestampMs": 7020,
+  "confidence": 0.998216
+ },
+ {
+  "text": " its",
+  "startMs": 7050,
+  "endMs": 7260,
+  "timestampMs": 7200,
+  "confidence": 0.722268
+ },
+ {
+  "text": " gross",
+  "startMs": 7260,
+  "endMs": 7570,
+  "timestampMs": 7520,
+  "confidence": 0.998517
+ },
+ {
+  "text": " profit",
+  "startMs": 7570,
+  "endMs": 8030,
+  "timestampMs": 7940,
+  "confidence": 0.999054
+ },
+ {
+  "text": ",",
+  "startMs": 8030,
+  "endMs": 8200,
+  "timestampMs": 8260,
+  "confidence": 0.980782
+ },
+ {
+  "text": " what",
+  "startMs": 8200,
+  "endMs": 8440,
+  "timestampMs": 8400,
+  "confidence": 0.998121
+ },
+ {
+  "text": "'s",
+  "startMs": 8440,
+  "endMs": 8560,
+  "timestampMs": 8520,
+  "confidence": 0.998544
+ },
+ {
+  "text": " left",
+  "startMs": 8560,
+  "endMs": 8800,
+  "timestampMs": 8660,
+  "confidence": 0.998875
+ },
+ {
+  "text": " after",
+  "startMs": 8800,
+  "endMs": 9170,
+  "timestampMs": 8940,
+  "confidence": 0.998056
+ },
+ {
+  "text": " making",
+  "startMs": 9170,
+  "endMs": 9460,
+  "timestampMs": 9180,
+  "confidence": 0.998654
+ },
+ {
+  "text": " what",
+  "startMs": 9460,
+  "endMs": 9710,
+  "timestampMs": 9380,
+  "confidence": 0.995528
+ },
+ {
+  "text": " it",
+  "startMs": 9710,
+  "endMs": 9820,
+  "timestampMs": 9520,
+  "confidence": 0.992297
+ },
+ {
+  "text": " sells",
+  "startMs": 9820,
+  "endMs": 10160,
+  "timestampMs": 9860,
+  "confidence": 0.9976
+ },
+ {
+  "text": ",",
+  "startMs": 10160,
+  "endMs": 10160,
+  "timestampMs": 10260,
+  "confidence": 0.976548
+ },
+ {
+  "text": " actually",
+  "startMs": 10160,
+  "endMs": 10880,
+  "timestampMs": 10540,
+  "confidence": 0.999401
+ },
+ {
+  "text": " rose",
+  "startMs": 10880,
+  "endMs": 11250,
+  "timestampMs": 11020,
+  "confidence": 0.992735
+ },
+ {
+  "text": " about",
+  "startMs": 11250,
+  "endMs": 11700,
+  "timestampMs": 11320,
+  "confidence": 0.95535
+ },
+ {
+  "text": " 9",
+  "startMs": 11700,
+  "endMs": 11970,
+  "timestampMs": 11720,
+  "confidence": 0.943864
+ },
+ {
+  "text": "%.",
+  "startMs": 11970,
+  "endMs": 12360,
+  "timestampMs": 12320,
+  "confidence": 0.990252
+ },
+ {
+  "text": " The",
+  "startMs": 12360,
+  "endMs": 12530,
+  "timestampMs": 12540,
+  "confidence": 0.999108
+ },
+ {
+  "text": " difference",
+  "startMs": 12530,
+  "endMs": 13090,
+  "timestampMs": 12820,
+  "confidence": 0.998891
+ },
+ {
+  "text": " is",
+  "startMs": 13090,
+  "endMs": 13330,
+  "timestampMs": 13080,
+  "confidence": 0.996348
+ },
+ {
+  "text": " spending",
+  "startMs": 13330,
+  "endMs": 13720,
+  "timestampMs": 13540,
+  "confidence": 0.998993
+ },
+ {
+  "text": ",",
+  "startMs": 13720,
+  "endMs": 13720,
+  "timestampMs": 13740,
+  "confidence": 0.773519
+ },
+ {
+  "text": " with",
+  "startMs": 13720,
+  "endMs": 14070,
+  "timestampMs": 13960,
+  "confidence": 0.999256
+ },
+ {
+  "text": " research",
+  "startMs": 14070,
+  "endMs": 14690,
+  "timestampMs": 14280,
+  "confidence": 0.994211
+ },
+ {
+  "text": " up",
+  "startMs": 14690,
+  "endMs": 14800,
+  "timestampMs": 14500,
+  "confidence": 0.990966
+ },
+ {
+  "text": " about",
+  "startMs": 14800,
+  "endMs": 15200,
+  "timestampMs": 14720,
+  "confidence": 0.98981
+ },
+ {
+  "text": " 70",
+  "startMs": 15200,
+  "endMs": 15660,
+  "timestampMs": 15200,
+  "confidence": 0.998186
+ },
+ {
+  "text": "%",
+  "startMs": 15660,
+  "endMs": 15790,
+  "timestampMs": 15520,
+  "confidence": 0.807077
+ },
+ {
+  "text": " and",
+  "startMs": 15790,
+  "endMs": 16000,
+  "timestampMs": 15940,
+  "confidence": 0.933223
+ },
+ {
+  "text": " more",
+  "startMs": 16000,
+  "endMs": 16340,
+  "timestampMs": 16160,
+  "confidence": 0.999729
+ },
+ {
+  "text": " stock",
+  "startMs": 16340,
+  "endMs": 16740,
+  "timestampMs": 16520,
+  "confidence": 0.99625
+ },
+ {
+  "text": " pay",
+  "startMs": 16740,
+  "endMs": 17000,
+  "timestampMs": 16780,
+  "confidence": 0.963738
+ },
+ {
+  "text": ",",
+  "startMs": 17000,
+  "endMs": 17000,
+  "timestampMs": 17040,
+  "confidence": 0.9128
+ },
+ {
+  "text": " including",
+  "startMs": 17000,
+  "endMs": 17590,
+  "timestampMs": 17400,
+  "confidence": 0.999077
+ },
+ {
+  "text": " Elon",
+  "startMs": 17590,
+  "endMs": 17850,
+  "timestampMs": 17780,
+  "confidence": 0.997377
+ },
+ {
+  "text": " Musk",
+  "startMs": 17850,
+  "endMs": 18110,
+  "timestampMs": 18020,
+  "confidence": 0.996824
+ },
+ {
+  "text": "'s",
+  "startMs": 18110,
+  "endMs": 18240,
+  "timestampMs": 18320,
+  "confidence": 0.998872
+ },
+ {
+  "text": " 2025",
+  "startMs": 18240,
+  "endMs": 19070,
+  "timestampMs": 18840,
+  "confidence": 0.989904
+ },
+ {
+  "text": " award",
+  "startMs": 19070,
+  "endMs": 19340,
+  "timestampMs": 19300,
+  "confidence": 0.844562
+ },
+ {
+  "text": ".",
+  "startMs": 19340,
+  "endMs": 19560,
+  "timestampMs": 19620,
+  "confidence": 0.997128
+ },
+ {
+  "text": " The",
+  "startMs": 19560,
+  "endMs": 19730,
+  "timestampMs": 19740,
+  "confidence": 0.999424
+ },
+ {
+  "text": " credits",
+  "startMs": 19730,
+  "endMs": 20140,
+  "timestampMs": 19980,
+  "confidence": 0.990059
+ },
+ {
+  "text": " it",
+  "startMs": 20140,
+  "endMs": 20250,
+  "timestampMs": 20160,
+  "confidence": 0.992502
+ },
+ {
+  "text": " sells",
+  "startMs": 20250,
+  "endMs": 20530,
+  "timestampMs": 20380,
+  "confidence": 0.995501
+ },
+ {
+  "text": " to",
+  "startMs": 20530,
+  "endMs": 20650,
+  "timestampMs": 20580,
+  "confidence": 0.990724
+ },
+ {
+  "text": " other",
+  "startMs": 20650,
+  "endMs": 21010,
+  "timestampMs": 20820,
+  "confidence": 0.99859
+ },
+ {
+  "text": " car",
+  "startMs": 21010,
+  "endMs": 21110,
+  "timestampMs": 21040,
+  "confidence": 0.993826
+ },
+ {
+  "text": " makers",
+  "startMs": 21110,
+  "endMs": 21500,
+  "timestampMs": 21300,
+  "confidence": 0.780663
+ },
+ {
+  "text": " also",
+  "startMs": 21500,
+  "endMs": 21750,
+  "timestampMs": 21860,
+  "confidence": 0.999622
+ },
+ {
+  "text": " shr",
+  "startMs": 21750,
+  "endMs": 21940,
+  "timestampMs": 22140,
+  "confidence": 0.959056
+ },
+ {
+  "text": "ank",
+  "startMs": 21940,
+  "endMs": 22130,
+  "timestampMs": 22220,
+  "confidence": 0.999376
+ },
+ {
+  "text": " by",
+  "startMs": 22130,
+  "endMs": 22240,
+  "timestampMs": 22400,
+  "confidence": 0.996789
+ },
+ {
+  "text": " about",
+  "startMs": 22240,
+  "endMs": 22560,
+  "timestampMs": 22600,
+  "confidence": 0.998372
+ },
+ {
+  "text": " three",
+  "startMs": 22560,
+  "endMs": 22870,
+  "timestampMs": 22860,
+  "confidence": 0.702676
+ },
+ {
+  "text": " quarters",
+  "startMs": 22870,
+  "endMs": 23370,
+  "timestampMs": 23220,
+  "confidence": 0.873367
+ },
+ {
+  "text": ".",
+  "startMs": 23370,
+  "endMs": 23600,
+  "timestampMs": 23660,
+  "confidence": 0.981601
+ },
+ {
+  "text": " Leave",
+  "startMs": 23600,
+  "endMs": 23950,
+  "timestampMs": 23820,
+  "confidence": 0.998965
+ },
+ {
+  "text": " out",
+  "startMs": 23950,
+  "endMs": 24080,
+  "timestampMs": 24000,
+  "confidence": 0.99846
+ },
+ {
+  "text": " the",
+  "startMs": 24080,
+  "endMs": 24260,
+  "timestampMs": 24140,
+  "confidence": 0.997858
+ },
+ {
+  "text": " stock",
+  "startMs": 24260,
+  "endMs": 24570,
+  "timestampMs": 24400,
+  "confidence": 0.999035
+ },
+ {
+  "text": " pay",
+  "startMs": 24570,
+  "endMs": 24740,
+  "timestampMs": 24620,
+  "confidence": 0.995175
+ },
+ {
+  "text": " and",
+  "startMs": 24740,
+  "endMs": 24920,
+  "timestampMs": 24800,
+  "confidence": 0.959814
+ },
+ {
+  "text": " a",
+  "startMs": 24920,
+  "endMs": 25050,
+  "timestampMs": 24960,
+  "confidence": 0.992824
+ },
+ {
+  "text": " few",
+  "startMs": 25050,
+  "endMs": 25160,
+  "timestampMs": 25080,
+  "confidence": 0.999836
+ },
+ {
+  "text": " other",
+  "startMs": 25160,
+  "endMs": 25450,
+  "timestampMs": 25280,
+  "confidence": 0.997128
+ },
+ {
+  "text": " items",
+  "startMs": 25450,
+  "endMs": 25800,
+  "timestampMs": 25600,
+  "confidence": 0.999592
+ },
+ {
+  "text": ",",
+  "startMs": 25800,
+  "endMs": 25800,
+  "timestampMs": 25820,
+  "confidence": 0.58645
+ },
+ {
+  "text": " and",
+  "startMs": 25800,
+  "endMs": 26020,
+  "timestampMs": 26040,
+  "confidence": 0.999237
+ },
+ {
+  "text": " Tesla",
+  "startMs": 26020,
+  "endMs": 26400,
+  "timestampMs": 26280,
+  "confidence": 0.996489
+ },
+ {
+  "text": "'s",
+  "startMs": 26400,
+  "endMs": 26530,
+  "timestampMs": 26400,
+  "confidence": 0.998951
+ },
+ {
+  "text": " adjusted",
+  "startMs": 26530,
+  "endMs": 27150,
+  "timestampMs": 26860,
+  "confidence": 0.994996
+ },
+ {
+  "text": " profit",
+  "startMs": 27150,
+  "endMs": 27590,
+  "timestampMs": 27240,
+  "confidence": 0.99771
+ },
+ {
+  "text": " fell",
+  "startMs": 27590,
+  "endMs": 27900,
+  "timestampMs": 27560,
+  "confidence": 0.995433
+ },
+ {
+  "text": " about",
+  "startMs": 27900,
+  "endMs": 28420,
+  "timestampMs": 27820,
+  "confidence": 0.997413
+ },
+ {
+  "text": " 4",
+  "startMs": 28420,
+  "endMs": 28500,
+  "timestampMs": 28120,
+  "confidence": 0.959357
+ },
+ {
+  "text": "%.",
+  "startMs": 28500,
+  "endMs": 28840,
+  "timestampMs": 28780,
+  "confidence": 0.964247
+ },
+ {
+  "text": " So",
+  "startMs": 28920,
+  "endMs": 28980,
+  "timestampMs": 29100,
+  "confidence": 0.997531
+ },
+ {
+  "text": " the",
+  "startMs": 28980,
+  "endMs": 29190,
+  "timestampMs": 29420,
+  "confidence": 0.594729
+ },
+ {
+  "text": " flying",
+  "startMs": 29190,
+  "endMs": 29590,
+  "timestampMs": 29700,
+  "confidence": 0.995813
+ },
+ {
+  "text": " car",
+  "startMs": 29590,
+  "endMs": 29820,
+  "timestampMs": 30020,
+  "confidence": 0.995638
+ },
+ {
+  "text": " got",
+  "startMs": 29820,
+  "endMs": 30030,
+  "timestampMs": 30220,
+  "confidence": 0.997333
+ },
+ {
+  "text": " the",
+  "startMs": 30030,
+  "endMs": 30260,
+  "timestampMs": 30380,
+  "confidence": 0.997219
+ },
+ {
+  "text": " headlines",
+  "startMs": 30260,
+  "endMs": 30910,
+  "timestampMs": 30780,
+  "confidence": 0.988919
+ },
+ {
+  "text": ",",
+  "startMs": 30910,
+  "endMs": 31040,
+  "timestampMs": 31160,
+  "confidence": 0.575427
+ },
+ {
+  "text": " the",
+  "startMs": 31040,
+  "endMs": 31280,
+  "timestampMs": 31280,
+  "confidence": 0.99398
+ },
+ {
+  "text": " bill",
+  "startMs": 31280,
+  "endMs": 31590,
+  "timestampMs": 31480,
+  "confidence": 0.995205
+ },
+ {
+  "text": " was",
+  "startMs": 31590,
+  "endMs": 31830,
+  "timestampMs": 31720,
+  "confidence": 0.987961
+ },
+ {
+  "text": " stock",
+  "startMs": 31830,
+  "endMs": 32220,
+  "timestampMs": 32040,
+  "confidence": 0.986609
+ },
+ {
+  "text": " pay",
+  "startMs": 32220,
+  "endMs": 32480,
+  "timestampMs": 32340,
+  "confidence": 0.996508
+ },
+ {
+  "text": ",",
+  "startMs": 32480,
+  "endMs": 32480,
+  "timestampMs": 32760,
+  "confidence": 0.708761
+ },
+ {
+  "text": " and",
+  "startMs": 32480,
+  "endMs": 32700,
+  "timestampMs": 32820,
+  "confidence": 0.999455
+ },
+ {
+  "text": " Tesla",
+  "startMs": 32700,
+  "endMs": 33070,
+  "timestampMs": 33220,
+  "confidence": 0.992267
+ },
+ {
+  "text": "'s",
+  "startMs": 33070,
+  "endMs": 33210,
+  "timestampMs": 33440,
+  "confidence": 0.994917
+ },
+ {
+  "text": " bets",
+  "startMs": 33210,
+  "endMs": 33510,
+  "timestampMs": 33600,
+  "confidence": 0.98101
+ },
+ {
+  "text": " on",
+  "startMs": 33510,
+  "endMs": 33700,
+  "timestampMs": 33860,
+  "confidence": 0.997394
+ },
+ {
+  "text": " what",
+  "startMs": 33700,
+  "endMs": 33990,
+  "timestampMs": 34020,
+  "confidence": 0.999222
+ },
+ {
+  "text": " comes",
+  "startMs": 33990,
+  "endMs": 34330,
+  "timestampMs": 34260,
+  "confidence": 0.997965
+ },
+ {
+  "text": " next",
+  "startMs": 34330,
+  "endMs": 34760,
+  "timestampMs": 34680,
+  "confidence": 0.999805
+ },
+ {
+  "text": ".",
+  "startMs": 34760,
+  "endMs": 34880,
+  "timestampMs": 34800,
+  "confidence": 0.996174
+ }
+]

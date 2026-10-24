@@ -37,6 +37,9 @@ export const ClipScene: React.FC<{ src: string; from: number; dur: number; rate?
   );
 };
 
+const QUIET = new Set(["a", "an", "the", "and", "or", "but", "so", "to", "of", "in", "on", "at", "by", "for", "with", "from", "it", "its", "is", "are",
+  "was", "were", "be", "that", "this", "as", "than", "then", "yet", "also", "you're", "it's", "there"]);
+
 // Word-by-word captions from makePages(); the word being spoken is acid. Long pages shrink to one line instead of
 // wrapping (Short 3 lesson). Hidden in `hide` ranges, where the scene's own text would collide.
 export const CaptionTrack: React.FC<{ pages: CapPage[]; top?: number; left?: number; right?: number; hide?: [number, number][];
@@ -51,11 +54,12 @@ export const CaptionTrack: React.FC<{ pages: CapPage[]; top?: number; left?: num
   const size = Math.min(maxSize, Math.floor(width / (Math.max(chars, 1) * 0.6)));
   const s = interpolate(ms - page.startMs, [0, 90, 160], [0.9, 1.05, 1], CLAMP);
   const cur = page.tokens.reduce((acc, tk, j) => (tk.fromMs <= ms ? j : acc), -1);
+  const plain = (t: string) => QUIET.has(t.trim().toLowerCase().replace(/[^a-z']/g, ""));
   return (
     <div style={{ position: "absolute", left, right, top, textAlign: "center", ...HEAD, fontVariationSettings: "'wdth' 88",
       fontSize: size, lineHeight: 1.04, textTransform: "uppercase", whiteSpace: "nowrap", scale: s }}>
       {page.tokens.map((t, i) => (
-        <span key={t.fromMs} style={{ color: i === cur ? C.acid : C.ink, ...keyline(0.6, 11) }}>{t.text}</span>
+        <span key={t.fromMs} style={{ color: i === cur && !plain(t.text) ? C.acid : C.ink, ...keyline(0.6, 11) }}>{t.text}</span>
       ))}
     </div>
   );
@@ -134,10 +138,10 @@ export const HBars: React.FC<{ rows: Bar[]; at: number; max: number; top: number
         const k = interpolate(frame, [at + i * stagger, at + i * stagger + grow], [0, 1], { ...CLAMP, easing: EASE_OUT });
         const v = r.value * k;
         return (
-          <div key={r.label} style={{ position: "absolute", left: 0, top: i * rowH, width: width + 260 }}>
+          <div key={r.label} style={{ position: "absolute", left: 0, top: i * rowH, width: width + 600 }}>
             <div style={{ ...HEADC, fontSize: labelSize, color: C.ink, ...keyline(labelSize / 140, 9) }}>{r.label}</div>
             <div style={{ display: "flex", alignItems: "center", gap: 22, marginTop: 10 }}>
-              <div style={{ width: Math.max(8, (width * v) / max), height: 74, backgroundColor: r.color, border: `5px solid ${C.black}` }} />
+              <div style={{ width: Math.max(8, (width * v) / max), height: 74, flexShrink: 0, backgroundColor: r.color, border: `5px solid ${C.black}` }} />
               <div style={{ ...HEADC, fontSize: valueSize, color: r.color, fontVariantNumeric: "tabular-nums", ...keyline(valueSize / 140, 10) }}>{r.show(v)}</div>
             </div>
             {r.note ? <div style={{ ...HEADC, fontSize: 40, color: "#C3CAD2", marginTop: 6, opacity: k, ...keyline(0.28, 7) }}>{r.note}</div> : null}

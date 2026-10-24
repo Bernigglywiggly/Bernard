@@ -45,5 +45,29 @@
     "made_for_kids": false,
     "synthetic": true,
     "kind": "short"
+  },
+  {
+    "file": "../lab/curve_v2/film_roadster/out/FILM_ROADSTER_v1.mp4",
+    "title": "How the Flying Tesla Roadster Actually Works",
+    "description": "Tesla's new Roadster hung upside down on a ramp, flipped over a row of trucks and hit 60 mph in 0.81 seconds at its 15 October 2026 demo. Here's how each trick actually works, what the numbers really say, and what Tesla's own contract and filings add.\n\nChapters\n0:00 Upside down and not falling\n0:26 The second machine: SpaceX-style jets\n1:06 0.81 seconds, on Tesla's own stopwatch\n1:46 Seconds in the air, hours to refill\n2:35 The fan car that won once and vanished\n3:14 Is the flying Roadster legal?\n3:53 What $250,000 buys you\n4:23 The bill: profit down 43%\n4:54 Verdict: a vacuum cleaner and a very short rocket\n\nWhat we found\n- The hang: fans pull the air from under the car while skirts seal the gap; Tesla says the push reaches up to twice the car's weight, even standing still.\n- The jets: two carbon-wrapped tanks (about 250 kg of compressed gas) feed 10 nozzles; the four rear nozzles give over 80 kN.\n- 0.81 s was Tesla's own timing; nobody outside Tesla has timed the car yet.\n- By our estimate the rear nozzles at full power would empty the tanks in about two seconds; a refill takes 2-6 hours on a nitrogen rig today (Lars Moravy to Top Gear).\n- The trick isn't new: the Chaparral 2J (1970) and Brabham BT46B (1978) used fans, and the McMurtry Spéirling drove upside down in 2025.\n- The FAA says the car isn't an aircraft; Tesla's own site says the Rocket version isn't approved for public roads.\n- Tesla's US reservation agreement says it can't guarantee \"if\" the car will be delivered.\n- Six days later, Tesla's Q3 2026 GAAP net income was down 43% (adjusted, about 4%), and its own filing lists the Roadster as \"Design development\".\n\nFootage: Tesla, \"The Ramp\", \"The Kickflip\" and \"The 0-60\" (YouTube, 16 Oct 2026), used in short clips under our commentary and diagrams, some slowed with frame interpolation. The x-ray, tank and drop scenes are our own 3D illustrations, not Tesla footage.\n\nSources\nTesla, Roadster Event (15 Oct 2026): https://www.youtube.com/watch?v=qt5p-_tE8d0\nTesla Roadster page: https://www.tesla.com/roadster\nTop Gear interview with Lars Moravy and Franz von Holzhausen (16 Oct 2026): https://www.youtube.com/watch?v=JdkIOhFmbKI\nCar and Driver on the fans and thrusters (17 Oct 2026): https://www.caranddriver.com/news/a74165059/tesla-roadster-thrusters-fan-system-explained/\nRimac Nevera R records (Dewesoft-verified): https://www.rimac-newsroom.com/press-releases/rimac-automobili/rimac-nevera-r-becomes-new-0-400-0-champion-and-sets-24-performance-records\nRACER on the Chaparral 2J (16 Oct 2026): https://racer.com/2026/10/16/the-tesla-roadster-borrowed-its-trick-from-the-chaparral-2j\nTesla Q3 2026 Update (Form 8-K exhibit 99.1, 21 Oct 2026): https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm\nMore sources for every number: lab notes available on request.\n\nNarration uses an AI voice. Not affiliated with or endorsed by Tesla.\n\n#TeslaRoadster #Tesla #FlyingCar",
+    "tags": [
+      "tesla roadster",
+      "flying tesla roadster",
+      "tesla roadster explained",
+      "how does the tesla roadster fly",
+      "tesla roadster thrusters",
+      "spacex thrusters",
+      "fan car",
+      "tesla roadster 0-60",
+      "tesla roadster price",
+      "tesla q3 2026",
+      "the curve"
+    ],
+    "channel": "the-curve",
+    "public": true,
+    "category": "28",
+    "made_for_kids": false,
+    "synthetic": true,
+    "kind": "long"
   }
 ]

@@ -1,0 +1,9 @@
+.env
+*.env
+pipeline/out/
+pipeline/cache/
+assets/
+concepts/
+COMMUNITY_INSIGHTS_*.md
+POST_READY/
+research_refs/

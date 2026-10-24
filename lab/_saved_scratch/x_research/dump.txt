@@ -1,0 +1,156 @@
+=== RoundtableSpace/2105209785335373948 Wed Sep 30 08:15:00 +0000 2026 likes 2236
+this might be the only prompt you need for high-end motion graphics with Claude Opus 5.5.
+
+it turns Claude into a full motion design pipeline:
+
+•⁠  ⁠studies reference videos frame by frame  
+•⁠  ⁠storyboards before animating  
+•⁠  ⁠builds scenes in GSAP + Three.js  
+•⁠  ⁠renders and critiques every section  
+•⁠  ⁠checks motion, contrast, audio and transitions  
+•⁠  ⁠keeps iterating until the final video passes the quality bar  
+
+it also uses this open-source motion kit:
+
+⁠ https://t.co/r2MwiJ8fv2 ⁠
+
+full prompt below.
+=== deedydas/2104957026199900220 Tue Sep 29 15:30:37 +0000 2026 likes 2055
+I've spend 10+ hrs perfecting how to get the best out of Opus 5.5 for video generation workflow:
+
+- Use it with Claude Code, not the app.
+- Use OpenRouter API to access all the other models (image gen, video gen, audio gen) with one key
+- Use Gemini 3.8 TTS and make it create a skill from the API to put emotion into the voice.
+- Use Manim, Hyperframes, Motion Canvas for motion graphics for HTML web grounded video
+- Use GPT 2.5 Image Sunburst for keyframes and Veo 3.1 / Seedance 2.5 for generation. Seedance does better with motion shots.  Ensure you have reference images for consistency and generate an animatic before full video.
+- Add a script writing planning skill. Use OpenTimelineIO to assemble.
+- Explicitly tell it to avoid Claudisms like short punchy sentences and a lot of numbers. “Narrate like a university professor.”
+- Allow it to use yt-dlp with search to inject clips from real videos (creative commons) in composition
+- Use ElevenLabs for music gen in the background
+- Add a caption skill which uses any decent ASR model to get word-level timed subtitles on the final video
+- Add a critic skill which takes screenshots and uses transcription to validation the audio and video quality
+
+In the prompt, specify a) what you want b) aspect ratio c) length d) style preferences. ffmpeg handles most of the actual video manipulation tasks.
+
+Here's an example of a 4 minute Neocloud business explainer:
+=== Remotion/2013628043105890779 Tue Jan 20 15:01:51 +0000 2026 likes 3620
+Here's how we created the above video!
+
+Full prompt history: https://gist.github.com/JonnyBurger/5b801182176f1b76447901fbeb5a84ac
+=== itsolelehmann/2014740993208188959 Fri Jan 23 16:44:19 +0000 2026 likes 1213
+http://x.com/i/article/2014726050979135488
+ARTICLE: {"image": "https://pbs.twimg.com/media/G_XL8pgXQAEqAax.jpg", "preview_text": "I'm going to show you how to put Claude Code on steroids so it creates viral animated product videos for you that used to cost $1000s of dollars.\nI'm as non technical as potato, so this is a beginners", "title": "How to create viral animated videos with Claude Code (for non-technical people)"}
+=== liu8in/2044827628700684463 Thu Apr 16 17:17:52 +0000 2026 likes 1868
+http://x.com/i/article/2044724546637619200
+ARTICLE: {"image": "https://pbs.twimg.com/media/HGBmTRPakAAPV78.jpg", "preview_text": "AI agents can write, can code, can talk, and operate autonomously \u2014 but they still cannot edit videos \u2014 now they can.\nToday we're open-sourcing HyperFrames \u2014 an HTML-based video toolchain and", "title": "Agentic Video is HTML: Open Sourcing HyperFrames"}
+=== petergyang/2068333151186022460 Sat Jun 20 14:00:25 +0000 2026 likes 1722
+You can now make videos like this using HTML.
+
+I didn’t believe it at first until the HyperFrames team showed me how they do it directly in Codex and Claude Code.
+
+Best of all, the tool is 100% free and open source.
+
+But you need to learn the right workflows to make the videos look great - including generating a frame.md, storyboards, and more.
+
+📌 Subscribe to get our full tutorial tomorrow:
+=== Mrooo03/2105195950142566783 Wed Sep 30 07:20:01 +0000 2026 likes 162
+用claude跑了一周的视频，几乎覆盖了所有的类型的视频场景。
+结论确实很强，但大家吹得还是有点过了，短板太明显了，面对seedance领域的动画时，claude的能力是完全不能覆盖的。
+目前非常适合做一些小视频，小宣传。最实用的skill和我个人的使用方式已经整理好了，大家自取 https://x.com/i/article/2105179014742851584
+ARTICLE: {"image": "https://pbs.twimg.com/media/HTcnudtbgAAJ8np.jpg", "preview_text": "0. \u5c0f\u603b\u7ed3\n\u8fd9\u4e00\u5468\uff0c\u6211\u7528 Claude \u505a\u4e86\u50cf\u7d20 MV\u3001\u6241\u5e73\u52a8\u753b\u3001\u79d1\u666e\u77ed\u7247\uff0c\u4e5f\u8bd5\u4e86 2D \u89d2\u8272\u52a8\u753b\u548c 3D \u4eba\u7269\u3002\u5168\u90e8\u8bd5\u5b8c\u540e\uff0c\u5c31\u4f1a\u53d1\u73b0\u7f51\u4e0a\u7684\u4eba\u5b9e\u5728\u628aopus5.5\u5439\u5f97\u8fc7\u4e8e\u79bb\u8c31\u4e86\u3002", "title": "\u5168\u7f51\u6700\u5168Claude\u89c6\u9891\u5236\u4f5c\u6307\u5357"}
+=== maarcoofdezz/2078162454744346803 Fri Jul 17 16:58:34 +0000 2026 likes 124
+esto antes era un secreto industrial. ahora está abierto.
+
+Seedance 2.0 on Higgsfield AI
+
+PROMPT 👇
+
+[VISUAL] Shot on ARRI Alexa 35 with anamorphic lenses, cinematic film look, rich color science, organic highlight rolloff, subtle halation, fine film grain, practical in-camera lighting only, real haze, atmospheric particles, natural lens flares, no CGI.
+
+Continuing on the empty NYC street between tall buildings, under a harsh midday sun with heat haze rising from the asphalt. The young Latino man walks slowly, exhausted by the heat, handheld camera following from behind at hip height with a slight Dutch angle.
+
+He suddenly stops, noticing something ahead. The camera arcs around into a low-angle medium close-up as he stares in confusion. About six meters in front of him, a cold aluminum soda bottle floats at chest height, glowing with a soft white light. Faint cold mist curls from its surface as it gently levitates and slowly rotates, casting a subtle pool of white light onto the asphalt.
+
+The camera pushes past his shoulder to reveal the bottle, then tracks forward as he cautiously walks toward it. The bottle’s cool glow softly lights one side of his face while the warm sunlight lights the other. He stops a couple of meters away and slowly raises his hand.
+
+The bottle immediately stops drifting and smoothly descends into his open palm. As it touches his hand, the glow fades away, leaving an ordinary cold bottle covered in condensation. The camera tilts up to his face as he looks at it with a small, relieved smile.
+
+Slow-motion emphasizes the reveal, the approach, and the bottle descending into his hand before returning to real time.
+
+[AUDIO] No music. SFX only. Distant city ambience, warm wind, footsteps, breathing, a faint harmonic hum from the floating bottle, subtle hiss of cold mist, a gentle whoosh as it descends, a soft metallic touch when it lands in his hand, and silence as the glow disappears.
+=== obaid/2015708306996883612 Mon Jan 26 08:48:05 +0000 2026 likes 9
+The remotion agent skill was amazing but it was missing the key element for making a good video -- background music + voice overs.
+
+So I used the remotion + @resembleai  skill that instantly made my Claude Code a powerful video editor. 
+
+This is just 1 of 5 ideas it generated via a single prompt. 🤯
+
+It's super simple to start: 
+
+npx skills add resemble-ai/remotion-resemble-skill 
+
+and then ask it:
+
+"Create a promo video for [brand website] with voice over and background music. Make it in the style of [style requirements].
+
+Get started at
+QUOTE: Remotion now has Agent Skills - make videos just with Claude Code!
+
+$ npx skills add remotion-dev/skills
+
+This animation was created just by prompting 👇
+=== liu8in/2045568327746306152 Sat Apr 18 18:21:08 +0000 2026 likes 470
+what HyperFrames + Claude Code can do:
+
+motion video done with 2 prompts, 10 mins.
+
+here's a quick 4-min tutorial on how you do it yourself
+
+link in thread:
+QUOTE: Introducing Claude Design by Anthropic Labs: make prototypes, slides, and one-pagers by talking to Claude.
+
+Powered by Claude Opus 4.7, our most capable vision model. Available in research preview on the Pro, Max, Team, and Enterprise plans, rolling out throughout the day.
+=== heygen/2044827454460871072 Thu Apr 16 17:17:10 +0000 2026 likes 8340
+We built our launch video in Claude Code using HyperFrames.
+
+Now it's yours.
+
+Open source, agent-native framework. HTML to MP4.
+
+$ npx skills add heygen-com/hyperframes
+
+RT + Comment "HyperFrames" to get the full source code of this launch video (must follow)
+=== ajith_io/2103449416325890146 Fri Sep 25 11:39:55 +0000 2026 likes 4074
+WTF?
+Made with claude OPUS 5.5
+
+Prompt
+
+"make a dynamic 15-second motion graphics video that shows what an incredible motion designer you are, like it's your showreel for a résumé. go all out."
+
+That's it..
+=== zolihonig/2033911539913167145 Tue Mar 17 14:21:14 +0000 2026 likes 3
+I used remotion + claude code to make this animation in ten minutes. 
+
+This used to take days and thousands of dollars. 
+
+Every news organization should have someone on this full time
+QUOTE: Remotion now has Agent Skills - make videos just with Claude Code!
+
+$ npx skills add remotion-dev/skills
+
+This animation was created just by prompting 👇
+=== learn2vibecode/2014213425409499260 Thu Jan 22 05:47:57 +0000 2026 likes 22
+Full Prompt I gave to @vibecodeapp (The only web based app builder that uses Claude Code and Claude Skills)
+
+PROMPT:
+---
+Please add a Claude Code Skill along with an inteface for video animation.
+
+I want you to create an app that very simply allows us to use the ReMotion skill, read more here: npx skills add remotion-dev/remotion
+
+And after you create this skill you will then be able to ask you to edit a video in a canvas.
+
+So the sole purpose of the app should be a little canvas that you can edit and manipulate and change it so you can make a video. Optimize this for openness and being able to edit each scene in the video after the first generation.
+
+Since you are running in a browser on

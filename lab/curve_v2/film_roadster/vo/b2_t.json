@@ -1,0 +1,163 @@
+[
+ {
+  "text": "In",
+  "startMs": 90,
+  "endMs": 150,
+  "timestampMs": 180,
+  "confidence": 0.977357
+ },
+ {
+  "text": " a",
+  "startMs": 150,
+  "endMs": 220,
+  "timestampMs": 360,
+  "confidence": 0.997927
+ },
+ {
+  "text": " minute",
+  "startMs": 220,
+  "endMs": 840,
+  "timestampMs": 540,
+  "confidence": 0.996234
+ },
+ {
+  "text": ",",
+  "startMs": 840,
+  "endMs": 890,
+  "timestampMs": 840,
+  "confidence": 0.951067
+ },
+ {
+  "text": " the",
+  "startMs": 890,
+  "endMs": 1000,
+  "timestampMs": 1040,
+  "confidence": 0.980166
+ },
+ {
+  "text": " racing",
+  "startMs": 1000,
+  "endMs": 1320,
+  "timestampMs": 1320,
+  "confidence": 0.996605
+ },
+ {
+  "text": " car",
+  "startMs": 1320,
+  "endMs": 1500,
+  "timestampMs": 1540,
+  "confidence": 0.996751
+ },
+ {
+  "text": " that",
+  "startMs": 1500,
+  "endMs": 1750,
+  "timestampMs": 1720,
+  "confidence": 0.985364
+ },
+ {
+  "text": " used",
+  "startMs": 1750,
+  "endMs": 1990,
+  "timestampMs": 2000,
+  "confidence": 0.991768
+ },
+ {
+  "text": " this",
+  "startMs": 1990,
+  "endMs": 2220,
+  "timestampMs": 2240,
+  "confidence": 0.981094
+ },
+ {
+  "text": " trick",
+  "startMs": 2220,
+  "endMs": 2530,
+  "timestampMs": 2500,
+  "confidence": 0.989802
+ },
+ {
+  "text": " in",
+  "startMs": 2530,
+  "endMs": 2560,
+  "timestampMs": 2620,
+  "confidence": 0.732721
+ },
+ {
+  "text": " its",
+  "startMs": 2560,
+  "endMs": 2720,
+  "timestampMs": 2760,
+  "confidence": 0.908748
+ },
+ {
+  "text": " only",
+  "startMs": 2720,
+  "endMs": 3200,
+  "timestampMs": 3180,
+  "confidence": 0.945286
+ },
+ {
+  "text": " race",
+  "startMs": 3200,
+  "endMs": 3980,
+  "timestampMs": 3660,
+  "confidence": 0.978978
+ },
+ {
+  "text": " won",
+  "startMs": 3980,
+  "endMs": 4370,
+  "timestampMs": 4240,
+  "confidence": 0.285223
+ },
+ {
+  "text": " it",
+  "startMs": 4370,
+  "endMs": 4800,
+  "timestampMs": 4580,
+  "confidence": 0.992392
+ },
+ {
+  "text": " and",
+  "startMs": 4800,
+  "endMs": 4890,
+  "timestampMs": 4940,
+  "confidence": 0.650535
+ },
+ {
+  "text": " was",
+  "startMs": 4890,
+  "endMs": 5090,
+  "timestampMs": 5140,
+  "confidence": 0.960662
+ },
+ {
+  "text": " never",
+  "startMs": 5090,
+  "endMs": 5460,
+  "timestampMs": 5540,
+  "confidence": 0.986141
+ },
+ {
+  "text": " raced",
+  "startMs": 5460,
+  "endMs": 5970,
+  "timestampMs": 5860,
+  "confidence": 0.896717
+ },
+ {
+  "text": " again",
+  "startMs": 5970,
+  "endMs": 6470,
+  "timestampMs": 6260,
+  "confidence": 0.99497
+ },
+ {
+  "text": ".",
+  "startMs": 6470,
+  "endMs": 6560,
+  "timestampMs": 6440,
+  "confidence": 0.886409
+ }
+]

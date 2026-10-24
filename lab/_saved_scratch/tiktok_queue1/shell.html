@@ -1,0 +1,96 @@
+<title>TikTok Queue, 5–14 Oct</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* layout: a posting run-sheet; one block per day, one row per account (video left, caption and actions right) */
+:root{
+  --bg:#F3F5F4; --panel:#FFFFFF; --line:#DCE3E1; --ink:#14201E; --muted:#5D6D6A; --accent:#0E8F84;
+  --curve:#0E8F84; --crimes:#A0702A; --profit:#3F5BC4; --on:#FFFFFF;
+  --display:"Familjen Grotesk",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --body:"Familjen Grotesk",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0B1110; --panel:#121A19; --line:#24302E; --ink:#E3ECEA; --muted:#93A5A1; --accent:#35D6C6;
+  --curve:#35D6C6; --crimes:#E0A85A; --profit:#8EA2F2; --on:#06100F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1110; --panel:#121A19; --line:#24302E; --ink:#E3ECEA; --muted:#93A5A1; --accent:#35D6C6;
+  --curve:#35D6C6; --crimes:#E0A85A; --profit:#8EA2F2; --on:#06100F; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body)}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:24px 56px;display:grid;gap:28px}
+header{display:grid;gap:12px}
+.eyebrow{font:500 11.5px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+h1{font:700 clamp(26px,6vw,38px)/1.1 var(--display);margin:0;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:62ch}
+.how{margin:0;padding-left:20px;display:grid;gap:6px;max-width:66ch}
+.how code{font:500 13px var(--mono);background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:1px 5px;word-break:break-all}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13.5px;color:var(--muted)}
+.day{display:grid;gap:12px}
+.day h2{font:600 15px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;margin:0;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.posts{display:grid;gap:12px}
+.post{display:grid;grid-template-columns:132px minmax(0,1fr);gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+.post video{width:100%;max-width:100%;aspect-ratio:9/16;background:#000;border-radius:8px;display:block}
+.info{display:grid;gap:8px;align-content:start;min-width:0}
+.who{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0;font-size:13px;color:var(--muted)}
+.chip{font:600 12.5px/1 var(--body);padding:5px 9px;border-radius:999px;color:var(--on)}
+.chip.c{background:var(--curve)} .chip.m{background:var(--crimes)} .chip.p{background:var(--profit)}
+.time{font:500 13px var(--mono);color:var(--ink);font-variant-numeric:tabular-nums;margin-left:auto}
+h3{font:600 16.5px/1.3 var(--display);margin:0;text-wrap:balance}
+textarea{width:100%;box-sizing:border-box;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:13.5px/1.45 var(--body);resize:vertical}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.btn{font:600 14px/1 var(--body);border-radius:8px;padding:10px 13px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on)}
+.btn:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn:disabled{opacity:.6}
+.done{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);margin-left:auto}
+.done input{width:18px;height:18px;accent-color:var(--accent)}
+.post.is-done{opacity:.55}
+.note{margin:0;font-size:13px;color:var(--muted);min-height:1em}
+@media (max-width:520px){.post{grid-template-columns:96px minmax(0,1fr);gap:10px;padding:10px}}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px}
+</style>
+<div class="wrap">
+<header>
+  <p class="eyebrow">TikTok · %%N%% posts · three accounts</p>
+  <h1>TikTok Queue, 5–14 Oct</h1>
+  <p class="lede">One post a day per account, the same Shorts that go out on YouTube. Schedule up to 10 days ahead in one sitting.</p>
+  <ol class="how">
+    <li>Tap <b>Save video</b> on each card (they go to your Files or Photos).</li>
+    <li>In Safari: page menu → <b>Request Desktop Website</b>, open <code>tiktok.com/tiktokstudio/upload</code>, logged in as the right account.</li>
+    <li>Upload the video, paste the caption, switch on <b>AI-generated content</b>, then <b>Schedule</b> for the day and time on the card.</li>
+    <li>Tick <b>Scheduled</b> here so you know where you are.</li>
+  </ol>
+  <p class="legend"><span><span class="chip p">How They Profit</span> was archivepearls</span><span><span class="chip c">The Curve</span> was issolaurent</span><span><span class="chip m">Money Crimes</span> new account</span></p>
+</header>
+%%DAYS%%
+<footer>Times are UK time; TikTok's evening is its busiest. Money Crimes captions carry the Kevin MacLeod music credit, which the licence needs, so keep it in.</footer>
+</div>
+<script>
+const dlp = (window.claude && window.claude.use) ? window.claude.use("downloads") : Promise.resolve(null);
+const say = (el, s) => { if (el) el.textContent = s; };
+document.addEventListener("click", async ev => {
+  const b = ev.target.closest("button"); if (!b) return;
+  const out = b.closest(".post")?.querySelector(".note");
+  if (b.dataset.copy) {
+    const el = document.getElementById(b.dataset.copy);
+    try { await navigator.clipboard.writeText(el.value); const t = b.textContent; b.textContent = "Copied"; setTimeout(() => b.textContent = t, 1400); }
+    catch (e) { el.focus(); el.select(); say(out, "Text selected: copy it from the menu."); }
+    return;
+  }
+  if (b.dataset.save) {
+    b.disabled = true; say(out, "Fetching the video...");
+    try {
+      const d = await dlp;
+      if (!d) { say(out, "Saving works in the Claude app or on claude.ai."); b.disabled = false; return; }
+      const r = await fetch(b.dataset.save); if (!r.ok) throw new Error(r.status);
+      await d.save({ filename: b.dataset.name, data: await r.blob() }); say(out, "Saved: " + b.dataset.name);
+    } catch (e) { say(out, e && e.code === "declined" ? "Not saved." : "Couldn't save. Tap again to retry."); }
+    b.disabled = false;
+  }
+});
+document.querySelectorAll(".done input").forEach(c => {
+  const post = c.closest(".post"), key = "tq-" + post.dataset.id;
+  try { c.checked = localStorage.getItem(key) === "1"; } catch (e) {}
+  post.classList.toggle("is-done", c.checked);
+  c.addEventListener("change", () => { post.classList.toggle("is-done", c.checked); try { localStorage.setItem(key, c.checked ? "1" : "0"); } catch (e) {} });
+});
+</script>

@@ -1,0 +1,273 @@
+[
+ {
+  "index": 22,
+  "channel": "curve",
+  "original": "lab/season1/build/the_curve_season1.mp4",
+  "saved": "media/2026-10-05_youtube/the_curve/22_the_curve_season1.mp4",
+  "parts": [
+   "media/2026-10-05_youtube/the_curve/22_the_curve_season1.mp4.part00",
+   "media/2026-10-05_youtube/the_curve/22_the_curve_season1.mp4.part01"
+  ],
+  "thumbnail": "22_thumb_thumb_a.jpg",
+  "mb": 136.7
+ },
+ {
+  "index": 23,
+  "channel": "curve",
+  "original": "lab/curvelf/lf03_held/out/short_test_9x16.mp4",
+  "saved": "media/2026-10-05_youtube/the_curve/23_short_test_9x16.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 8.0
+ },
+ {
+  "index": 26,
+  "channel": "curve",
+  "original": "lab/curvelf/lf03_held/out/short_knew_9x16.mp4",
+  "saved": "media/2026-10-05_youtube/the_curve/26_short_knew_9x16.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 10.4
+ },
+ {
+  "index": 29,
+  "channel": "crimes",
+  "original": "lab/longform/ponzi/out/ponzi_1080p.mp4",
+  "saved": "media/2026-10-05_youtube/money_crimes/29_ponzi_1080p.mp4",
+  "parts": [
+   "media/2026-10-05_youtube/money_crimes/29_ponzi_1080p.mp4.part00",
+   "media/2026-10-05_youtube/money_crimes/29_ponzi_1080p.mp4.part01",
+   "media/2026-10-05_youtube/money_crimes/29_ponzi_1080p.mp4.part02"
+  ],
+  "thumbnail": "29_thumb_thumb_a.jpg",
+  "mb": 258.6
+ },
+ {
+  "index": 32,
+  "channel": "curve",
+  "original": "lab/ep09/build/shorts/toddler.mp4",
+  "saved": "media/2026-10-05_youtube/the_curve/32_toddler.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 4.0
+ },
+ {
+  "index": 33,
+  "channel": "crimes",
+  "original": "lab/longform/ponzi/out/short_run_9x16.mp4",
+  "saved": "media/2026-10-05_youtube/money_crimes/33_short_run_9x16.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 13.8
+ },
+ {
+  "index": 35,
+  "channel": "curve",
+  "original": "lab/season2/build/the_curve_season2.mp4",
+  "saved": "media/2026-10-05_youtube/the_curve/35_the_curve_season2.mp4",
+  "parts": [
+   "media/2026-10-05_youtube/the_curve/35_the_curve_season2.mp4.part00",
+   "media/2026-10-05_youtube/the_curve/35_the_curve_season2.mp4.part01"
+  ],
+  "thumbnail": "35_thumb_thumb_a.jpg",
+  "mb": 95.9
+ },
+ {
+  "index": 36,
+  "channel": "curve",
+  "original": "lab/ep10/build/shorts/dinosaur.mp4",
+  "saved": "media/2026-10-05_youtube/the_curve/36_dinosaur.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 1.9
+ },
+ {
+  "index": 37,
+  "channel": "crimes",
+  "original": "lab/longform/ponzi/out/short_today_9x16.mp4",
+  "saved": "media/2026-10-05_youtube/money_crimes/37_short_today_9x16.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 10.1
+ },
+ {
+  "index": 39,
+  "channel": "curve",
+  "original": "lab/ep11/build/shorts/birthday.mp4",
+  "saved": "media/2026-10-05_youtube/the_curve/39_birthday.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 2.1
+ },
+ {
+  "index": 40,
+  "channel": "crimes",
+  "original": "lab/longform/ponzi/out/short_zarossi_9x16.mp4",
+  "saved": "media/2026-10-05_youtube/money_crimes/40_short_zarossi_9x16.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 9.2
+ },
+ {
+  "index": 41,
+  "channel": "profit",
+  "original": "lab/ch2/ep02/build/shorts/part4.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/41_part4.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 6.0
+ },
+ {
+  "index": 42,
+  "channel": "profit",
+  "original": "lab/ch2/ep03/out/ep03_1080p.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/42_ep03_1080p.mp4",
+  "parts": [],
+  "thumbnail": "42_thumb_thumb_a.jpg",
+  "mb": 31.9
+ },
+ {
+  "index": 43,
+  "channel": "profit",
+  "original": "lab/ch2/ep03/build/shorts/part1.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/43_part1.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 2.4
+ },
+ {
+  "index": 44,
+  "channel": "curve",
+  "original": "lab/ep12/build/shorts/paper.mp4",
+  "saved": "media/2026-10-05_youtube/the_curve/44_paper.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 2.4
+ },
+ {
+  "index": 45,
+  "channel": "crimes",
+  "original": "lab/longform/ponzi/out/short_barron_9x16.mp4",
+  "saved": "media/2026-10-05_youtube/money_crimes/45_short_barron_9x16.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 12.0
+ },
+ {
+  "index": 46,
+  "channel": "profit",
+  "original": "lab/ch2/ep02/build/shorts/part5.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/46_part5.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 4.7
+ },
+ {
+  "index": 47,
+  "channel": "profit",
+  "original": "lab/ch2/ep03/build/shorts/part2.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/47_part2.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 6.4
+ },
+ {
+  "index": 48,
+  "channel": "curve",
+  "original": "lab/ep05/build/shorts/japan.mp4",
+  "saved": "media/2026-10-05_youtube/the_curve/48_japan.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 2.5
+ },
+ {
+  "index": 49,
+  "channel": "crimes",
+  "original": "lab/longform/ponzi/out/short_end_9x16.mp4",
+  "saved": "media/2026-10-05_youtube/money_crimes/49_short_end_9x16.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 10.3
+ },
+ {
+  "index": 50,
+  "channel": "profit",
+  "original": "lab/ch2/ep03/build/shorts/part3.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/50_part3.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 6.4
+ },
+ {
+  "index": 51,
+  "channel": "profit",
+  "original": "lab/ch2/ep03/build/shorts/part4.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/51_part4.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 5.1
+ },
+ {
+  "index": 52,
+  "channel": "profit",
+  "original": "lab/ch2/ep03/build/shorts/part5.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/52_part5.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 4.0
+ },
+ {
+  "index": 53,
+  "channel": "profit",
+  "original": "lab/ch2/ep04/out/ep04_1080p.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/53_ep04_1080p.mp4",
+  "parts": [],
+  "thumbnail": "53_thumb_thumb_a.jpg",
+  "mb": 32.8
+ },
+ {
+  "index": 54,
+  "channel": "profit",
+  "original": "lab/ch2/ep04/build/shorts/part1.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/54_part1.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 2.4
+ },
+ {
+  "index": 55,
+  "channel": "profit",
+  "original": "lab/ch2/ep04/build/shorts/part2.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/55_part2.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 6.4
+ },
+ {
+  "index": 56,
+  "channel": "profit",
+  "original": "lab/ch2/ep04/build/shorts/part3.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/56_part3.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 8.7
+ },
+ {
+  "index": 57,
+  "channel": "profit",
+  "original": "lab/ch2/ep04/build/shorts/part4.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/57_part4.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 5.0
+ },
+ {
+  "index": 58,
+  "channel": "profit",
+  "original": "lab/ch2/ep04/build/shorts/part5.mp4",
+  "saved": "media/2026-10-05_youtube/how_they_profit/58_part5.mp4",
+  "parts": [],
+  "thumbnail": null,
+  "mb": 3.4
+ }
+]

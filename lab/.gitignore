@@ -1,0 +1,44 @@
+# renders and intermediates are rebuilt from the code; mp3s, the pilot's chat cut and the timing JSON are kept
+*.wav
+*.part*.mp4
+out/visual/
+out/*.png
+pilot/build/*
+!pilot/build/lines.json
+!pilot/build/events.json
+!pilot/build/music_arr.json
+!pilot/build/THE_CURVE_pilot_chat.mp4
+page/media/
+page/index.built.html
+out/music/stems/
+**/__pycache__/
+
+# third-party inspo media stays local (analysis lives in inspo/*.md)
+inspo/tt1/
+ep01/build/*
+!ep01/build/lines.json
+!ep01/build/events.json
+!ep01/build/music_arr.json
+
+ep02/build/*
+!ep02/build/lines.json
+!ep02/build/events.json
+!ep02/build/music_arr.json
+ep03/build/*
+!ep03/build/lines.json
+!ep03/build/events.json
+!ep03/build/music_arr.json
+stickman/build/
+
+# analyse.py pictures
+out/music/**/*_spec.png
+
+# more third-party inspo (media and scraped listings stay local)
+inspo/tt*/
+inspo/*.jsonl
+inspo/err.log
+
+# films staged to send in chat
+out/share/
+# variant builds (EP_BUILD=build_<name>)
+**/build_*/

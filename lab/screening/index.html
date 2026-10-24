@@ -1,0 +1,87 @@
+<title>The Curve Screening Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a dark screening room. The trailer up top, then the films one under another (big players on a phone), then a swipeable row of Shorts. */
+:root{
+  --ink:#030607; --panel:#0A1314; --line:#18292A; --turq:#35D6C6; --gold:#F2D9A0; --text:#E6F1EF; --muted:#8CA4A1;
+  --display:"Michroma",ui-sans-serif,system-ui,sans-serif; --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+body{background:var(--ink);color:var(--text);font:15px/1.55 var(--body)}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:grid;gap:36px}
+h1{font:400 clamp(24px,6vw,40px)/1.1 var(--display);letter-spacing:.06em;margin:0;text-wrap:balance}
+h2{font:600 19px/1.3 var(--body);margin:0;text-wrap:balance}
+h3{font:600 16px/1.3 var(--body);margin:0;text-wrap:balance}
+p{margin:0}
+.eyebrow{font:500 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--turq)}
+.lede{color:var(--muted);max-width:60ch;margin-top:8px}
+video{display:block;width:100%;max-width:100%;background:#000;border-radius:10px}
+.wide{aspect-ratio:16/9}
+.hero{display:grid;gap:10px}
+.films{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.film{display:grid;gap:8px;min-width:0}
+.meta{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.meta span{font:500 12px/1.2 var(--mono);color:var(--gold);letter-spacing:.06em}
+.film p{color:var(--muted);font-size:14px}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(170px,210px);gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+.short{display:grid;gap:6px;scroll-snap-align:start;min-width:0}
+.short video{aspect-ratio:9/16;border-radius:12px}
+.short p{font-size:13px;color:var(--text);line-height:1.35}
+.short span{font:500 11px/1.2 var(--mono);color:var(--muted)}
+footer{color:var(--muted);font-size:13px;max-width:70ch}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
+</style>
+<div class="wrap">
+<header>
+  <span class="eyebrow">AI explained · a YouTube channel in the making</span>
+  <h1>THE CURVE</h1>
+  <p class="lede">The hidden mechanism behind the AI headlines. Short films narrated over moving line art, with every number sourced on screen.</p>
+</header>
+
+<section class="hero" aria-label="Trailer">
+  <video class="wide" controls playsinline preload="metadata" poster="media/poster_trailer.jpg" src="media/trailer.mp4"></video>
+  <div class="meta"><h2>Channel trailer</h2><span>0:39</span></div>
+</section>
+
+<section aria-label="Films" style="display:grid;gap:14px">
+  <div><span class="eyebrow">The films</span><h2>Six short documentaries</h2></div>
+  <div class="films">
+    <article class="film"><video class="wide" controls playsinline preload="none" poster="media/poster_ep05.jpg" src="media/ep05.mp4"></video>
+      <div class="meta"><h3>Why AI Is Leaving the Planet</h3><span>2:51</span></div><p>Data centres in orbit: the power problem behind the space race for AI.</p></article>
+    <article class="film"><video class="wide" controls playsinline preload="none" poster="media/poster_ep08.jpg" src="media/ep08.mp4"></video>
+      <div class="meta"><h3>Why Cheaper AI Means More Data Centres</h3><span>2:15</span></div><p>The Jevons paradox: better engines made Britain burn more coal.</p></article>
+    <article class="film"><video class="wide" controls playsinline preload="none" poster="media/poster_ep04.jpg" src="media/ep04.mp4"></video>
+      <div class="meta"><h3>Who's Really Inside the Robots?</h3><span>2:51</span></div><p>Robots, war, and the person still in the loop.</p></article>
+    <article class="film"><video class="wide" controls playsinline preload="none" poster="media/poster_ep06.jpg" src="media/ep06.mp4"></video>
+      <div class="meta"><h3>They Picked the AI as the Human</h3><span>2:16</span></div><p>How an AI passed the Turing test, and how to prove you're you.</p></article>
+    <article class="film"><video class="wide" controls playsinline preload="none" poster="media/poster_ep07.jpg" src="media/ep07.mp4"></video>
+      <div class="meta"><h3>Why AI Hasn't Paid Off (Yet)</h3><span>2:36</span></div><p>Electricity took decades to pay off. AI is at the same stage.</p></article>
+    <article class="film"><video class="wide" controls playsinline preload="none" poster="media/poster_ep03.jpg" src="media/ep03.mp4"></video>
+      <div class="meta"><h3>Who Really Gets Rich in the AI Gold Rush</h3><span>3:16</span></div><p>The shovel sellers: who made money in every gold rush.</p></article>
+  </div>
+</section>
+
+<section aria-label="Shorts" style="display:grid;gap:14px">
+  <div><span class="eyebrow">Shorts</span><h2>For TikTok, Reels and YouTube Shorts</h2><p class="lede">Swipe sideways for more.</p></div>
+  <div class="strip">
+    <article class="short"><video controls playsinline preload="none" poster="media/poster_short_ep04_cagefight.jpg" src="media/short_ep04_cagefight.mp4"></video><p>Man vs six-foot robot. Who was really fighting?</p><span>0:25</span></article>
+    <article class="short"><video controls playsinline preload="none" poster="media/poster_short_ep06_picked.jpg" src="media/short_ep06_picked.mp4"></video><p>They picked the AI as the human 73% of the time</p><span>0:19</span></article>
+    <article class="short"><video controls playsinline preload="none" poster="media/poster_short_ep08_light.jpg" src="media/short_ep08_light.mp4"></video><p>Light got 3,000x cheaper. We used 40,000x more.</p><span>0:21</span></article>
+    <article class="short"><video controls playsinline preload="none" poster="media/poster_short_ep05_suncatcher.jpg" src="media/short_ep05_suncatcher.mp4"></video><p>Google is putting its AI chips into orbit</p><span>0:13</span></article>
+    <article class="short"><video controls playsinline preload="none" poster="media/poster_short_ep04_patriot.jpg" src="media/short_ep04_patriot.mp4"></video><p>A $4.2 million missile vs a $20,000 drone</p><span>0:20</span></article>
+    <article class="short"><video controls playsinline preload="none" poster="media/poster_short_ep06_secretword.jpg" src="media/short_ep06_secretword.mp4"></video><p>The FBI's advice for AI voice scams is one word</p><span>0:22</span></article>
+    <article class="short"><video controls playsinline preload="none" poster="media/poster_short_ep07_nothing.jpg" src="media/short_ep07_nothing.mp4"></video><p>AI changed nothing for 9 in 10 companies. So far.</p><span>0:22</span></article>
+    <article class="short"><video controls playsinline preload="none" poster="media/poster_short_ep04_tesla.jpg" src="media/short_ep04_tesla.mp4"></video><p>The most famous robot in the world was a person</p><span>0:17</span></article>
+    <article class="short"><video controls playsinline preload="none" poster="media/poster_short_ep05_bigmac.jpg" src="media/short_ep05_bigmac.mp4"></video><p>Sending one Big Mac to space costs about 250 Big Macs</p><span>0:15</span></article>
+  </div>
+</section>
+
+<footer>Narrated with an AI voice. Every figure is sourced on screen and in each film's description.</footer>
+</div>
+<script>
+// one video at a time: starting one pauses the rest
+const vids = [...document.querySelectorAll("video")];
+vids.forEach(v => v.addEventListener("play", () => vids.forEach(o => { if (o !== v && !o.paused) o.pause(); })));
+</script>

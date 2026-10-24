@@ -150,6 +150,7 @@ Full tables, evidence grades and sources: `lab/research/ATTENTION_PLAYBOOK.md`. 
   in short bursts; 5 stretches of 2.5-3.6 s); The Curve LF03 moves throughout except its 17 s end card; Money Crimes
   (Ponzi) is the liveliest. HTP needs continuous camera drift and object motion inside each beat, not move-then-hold.
 - 4 Oct: our finished films peaked at -0.2 dBTP (target -1). Cause: the mix is mastered to -1.5 dBTP, but the end-card
+- 24 Oct (analytics, 17-24 Oct, Roadster Shorts): Short 1 "upside down and not falling" 15,420 views, 50% engaged (stayed past the first seconds), 80.8% average viewed; Shorts 2 (0.81 s) and 3 (flight time) 1,100-1,269 views at 42-46% engaged but 84% average viewed. Retention after the swipe was BETTER on 2-3; the swipe decision lost them 10x the distribution. So frame 0 and the first second decide everything: open on the single most physically impossible-looking frame with a question about it (a visual mystery), never on a number or a claim card. Subscribers: 6 from 17.8k views (0.03%): every Short now ends on the channel's promise visually (the rebrand) and the film links back to the series.
   step re-encoded the film's AAC track a second time. `ch2/endcard.py` now joins the WAVs and encodes once (EP04 test:
   -1.1 dBTP, -14.2 LUFS). The Curve and Money Crimes encode once but mastered at a -1.0 ceiling, so AAC's ~0.8 dB overshoot
   gave -0.2: `longform/doc.py` and `shorts/reel.py` now master at -1.5 dBTP like `engine/mix.py`. Applies to new renders.

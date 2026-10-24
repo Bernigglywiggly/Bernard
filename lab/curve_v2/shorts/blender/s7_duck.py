@@ -649,7 +649,7 @@ if A.shot == "variants":
     SC.frame_start, SC.frame_end = 1, 360
     add_floor(90)
     SEG = {"W": 1, "V1": 61, "V2": 121, "V3": 181, "V4": 241, "V5": 301}
-    rowp = [Vector((i * 1.4, i * 3.4, 0.0)) for i in range(5)]
+    rowp = [Vector((i * 3.4, i * 1.4, 0.0)) for i in range(5)]     # sideways row: no duck sits in another's camera line
     cam_off = Vector((-1.6, -4.8, 0.0))
     face = math.degrees(math.atan2(cam_off.y, cam_off.x)) + 8      # ducks turn to the camera side
     dview = (-cam_off).normalized()                                 # camera look direction on the floor
@@ -667,8 +667,9 @@ if A.shot == "variants":
     d3 = hero("p9_split", name="d_slip")
     d4 = hero("p3_crouch", name="d_batt")
     d5 = hero("p0_stand", name="d_shove")
+    yaw_of = {"d_heavy": face + 72}       # the heavy one turns its back a little so the weight shows
     for ob, p in zip((d1, d2, d3, d4, d5), rowp):
-        place(ob, p, face)
+        place(ob, p, yaw_of.get(ob.name, face))
 
     def mesh_obj(name, build, mat):
         ob = bpy.data.objects.new(name, bpy.data.meshes.new(name))
@@ -684,11 +685,11 @@ if A.shot == "variants":
 
     # 1 heavier: a lead weight strapped behind the neck
     top1 = TOPS["p3_crouch"]["trunk"]
-    lead = mesh_obj("lead", lambda bm: bmesh.ops.create_cube(bm, size=1.0, matrix=Matrix.Diagonal((0.5, 0.56, 0.34, 1))),
+    lead = mesh_obj("lead", lambda bm: bmesh.ops.create_cube(bm, size=1.0, matrix=Matrix.Diagonal((0.44, 0.5, 0.3, 1))),
                     principled("lead_mat", (0.16, 0.17, 0.19), 0.28, metal=1.0))
     bv = lead.modifiers.new("bevel", "BEVEL"); bv.width = 0.05; bv.segments = 3
     lead.parent = d1
-    lead.location = (top1.x - 0.22, 0.0, top1.z + 0.16)
+    lead.location = (top1.x + 0.06, 0.0, top1.z + 0.14)
     for pg in lead.data.polygons:
         pg.use_smooth = False
     # 2 off balance: a centre-of-mass marker pushed out to the side; the duck leans after it
@@ -721,9 +722,9 @@ if A.shot == "variants":
     for f in range(1, 361):
         t = (f - 1) / FPS
         # heavy: slow sag under the weight
-        place(d1, rowp[0], face, lift=-0.035 * (0.5 + 0.5 * math.sin(2 * math.pi * 0.55 * t)))
+        place(d1, rowp[0], face + 72, lift=-0.035 * (0.5 + 0.5 * math.sin(2 * math.pi * 0.55 * t)))
         # off balance: lean towards the shifted mass (screen left/right)
-        lean = 8 + 3.5 * math.sin(2 * math.pi * 0.7 * t)
+        lean = 13 + 4 * math.sin(2 * math.pi * 0.7 * t)
         place(d2, rowp[1], face, tip_deg=-lean, axis=tip_axis)
         com_p = rowp[1] + right * (0.62 + 0.04 * math.sin(2 * math.pi * 0.7 * t)) + Vector((0, 0, 1.3))
         com.location = com_p
@@ -732,7 +733,7 @@ if A.shot == "variants":
         place(d3, rowp[2] + right * slide, face + 9 * math.sin(2 * math.pi * 0.6 * t), tip_deg=5 * math.sin(2 * math.pi * 1.2 * t), axis=tip_axis)
         # low battery: sag, battery bobs, red bar blinks
         place(d4, rowp[3], face, lift=-0.02 * (0.5 + 0.5 * math.sin(2 * math.pi * 0.4 * t)))
-        bz = 3.25 + 0.05 * math.sin(2 * math.pi * 0.8 * t)
+        bz = 2.95 + 0.05 * math.sin(2 * math.pi * 0.8 * t)
         batt.location = rowp[3] + Vector((0, 0, bz))
         batt.rotation_euler = (0, 0, rad(byaw))
         bar.location = batt.location
@@ -754,11 +755,18 @@ if A.shot == "variants":
             u = (ph - hit) / FPS
             tip = 26 * math.exp(-u * 4.0) * math.sin(u * 8.5 + 0.35)
         place(d5, rowp[4], face, tip_deg=-tip, axis=tip_axis)
+        arrow.hide_render = not (f <= 60 or f >= 301)       # the pusher belongs to the wide shot and V5 only
+        arrow.keyframe_insert("hide_render", frame=f)
         for ob in (d1, d2, d3, d4, d5, com, batt, bar, arrow):
             ob.keyframe_insert("location", frame=f)
             ob.keyframe_insert("rotation_euler", frame=f)
         bar.keyframe_insert("hide_render", frame=f)
     interp(bar, "CONSTANT")
+    interp(arrow, "LINEAR")
+    for fc in all_fcurves(arrow):
+        if fc.data_path == "hide_render":
+            for k in fc.keyframe_points:
+                k.interpolation = "CONSTANT"
 
     cam_d.lens = 42
     cam_d.dof.use_dof = True
@@ -773,13 +781,16 @@ if A.shot == "variants":
         key(foc, f0, focus); key(foc, f1, focus)
 
     mid = rowp[2]
-    seg_keys(1, 60, mid + Vector((-6.6, -13.0, 4.2)), mid + Vector((-5.9, -11.6, 3.8)), mid + Vector((0.0, 0.4, 0.9)), rowp[1] + Vector((0, 0, 1.0)))
+    seg_keys(1, 60, rowp[0] + Vector((-4.6, -10.4, 4.0)), rowp[0] + Vector((-4.0, -9.2, 3.6)), mid + Vector((0.0, 0.0, 0.9)), mid + Vector((0, 0, 1.0)))
     for i, name in enumerate(("V1", "V2", "V3", "V4", "V5")):
         f0 = SEG[name]
         p = rowp[i]
-        up = 1.0 if name != "V4" else 1.55
-        seg_keys(f0, f0 + 59, p + cam_off * 1.04 + Vector((0, 0, 1.6 + 0.25 * (name == "V4"))), p + cam_off * 0.9 + Vector((0, 0, 1.5 + 0.25 * (name == "V4"))),
-                 p + Vector((0, 0, up)), p + Vector((0, 0, 1.0)))
+        up = 1.0 if name != "V4" else 1.7
+        lift = 0.45 if name == "V4" else 0.0
+        shift = right * (0.62 if name == "V1" else 0.0)
+        far = 1.3 if name == "V1" else 1.0      # the heavy one is side-on and longer: pull back
+        seg_keys(f0, f0 + 59, p + shift + cam_off * 1.04 * far + Vector((0, 0, 1.6 + lift)), p + shift + cam_off * 0.9 * far + Vector((0, 0, 1.5 + lift)),
+                 p + shift + Vector((0, 0, up)), p + Vector((0, 0, 1.0)))
     for ob in (cam, tgt, foc):
         interp(ob, "LINEAR")
         for fc in all_fcurves(ob):

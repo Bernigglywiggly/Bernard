@@ -25,6 +25,7 @@ import { CurveV2Short4, SHORT4_FRAMES } from "./curve_v2/CurveV2Short4";
 import { CurveV2Short5, SHORT5_FRAMES } from "./curve_v2/CurveV2Short5";
 import { FILM_FRAMES, FILM_ORDER, FilmRoadster } from "./curve_v2/film/FilmRoadster";
 import { segFrames } from "./curve_v2/film/util";
+import { ThumbA, ThumbB, ThumbC } from "./curve_v2/film/Thumbs";
 // @new-composition-imports (npm run new adds imports above this line)
 
 export const RemotionRoot: React.FC = () => {
@@ -158,6 +159,9 @@ export const RemotionRoot: React.FC = () => {
         {FILM_ORDER.map(([seg, Comp]) => (
           <Composition key={seg} id={`Film-${seg}`} component={Comp} width={1920} height={1080} fps={30} durationInFrames={segFrames(seg)} defaultProps={{}} />
         ))}
+        <Still id="Thumb-Roadster-A" component={ThumbA} width={1280} height={720} defaultProps={{}} />
+        <Still id="Thumb-Roadster-B" component={ThumbB} width={1280} height={720} defaultProps={{}} />
+        <Still id="Thumb-Roadster-C" component={ThumbC} width={1280} height={720} defaultProps={{}} />
         <Still id="Curve-Banner" component={CurveBanner} width={2560} height={1440} defaultProps={{}} />
         <Still id="Curve-Avatar" component={CurveAvatar} width={800} height={800} defaultProps={{}} />
       </Folder>

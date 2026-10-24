@@ -34,7 +34,7 @@ const Footage: React.FC = () => {
           <ClipScene src="shorts/s1_hang_8x.mp4" from={0} dur={F.rewind - F.verdict} push={[1, 1]} style={{ filter: "brightness(0.45) saturate(1.05)" }} />
         </AbsoluteFill>
       </Sequence>
-      <ClipScene src="shorts/s5_hook_rev.mp4" from={F.rewind} dur={SHORT5_FRAMES - F.rewind} rate={117 / (SHORT5_FRAMES - F.rewind)} push={[1, 1]} />
+      <ClipScene src="shorts/s5_hook_rev.mp4" from={F.rewind} dur={SHORT5_FRAMES - F.rewind} rate={117 / (SHORT5_FRAMES - F.rewind - 1)} push={[1, 1]} />
     </AbsoluteFill>
   );
 };

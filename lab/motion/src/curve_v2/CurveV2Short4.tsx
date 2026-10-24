@@ -64,7 +64,7 @@ const Footage: React.FC = () => {
       {/* verdict: our 3D copy mid-kick match-cuts into the real robot's kick */}
       <ClipScene src="shorts/s4_sim_hero.mp4" from={F.verdict} dur={F.real - F.verdict} trimBefore={60} push={[1.04, 1.1]} origin="50% 50%" />
       <ClipScene src="shorts/s4_kick.mp4" from={F.real} dur={F.rewind - F.real} push={[1.02, 1.07]} style={{ filter: "brightness(0.5) saturate(0.95)" }} />
-      <ClipScene src="shorts/s4_real_rev.mp4" from={F.rewind} dur={SHORT4_FRAMES - F.rewind} rate={18 / (SHORT4_FRAMES - F.rewind)} push={[1, 1]} />
+      <ClipScene src="shorts/s4_real_rev.mp4" from={F.rewind} dur={SHORT4_FRAMES - F.rewind} rate={17 / (SHORT4_FRAMES - F.rewind - 1)} push={[1, 1]} />
     </AbsoluteFill>
   );
 };

@@ -40,7 +40,7 @@ export const ClipScene: React.FC<{ src: string; from: number; dur: number; rate?
 // Word-by-word captions from makePages(); the word being spoken is acid. Long pages shrink to one line instead of
 // wrapping (Short 3 lesson). Hidden in `hide` ranges, where the scene's own text would collide.
 export const CaptionTrack: React.FC<{ pages: CapPage[]; top?: number; left?: number; right?: number; hide?: [number, number][];
-  until?: number; maxSize?: number; width?: number }> = ({ pages, top = 1318, left = 70, right = 140, hide = [], until = Infinity, maxSize = 88, width = 860 }) => {
+  until?: number; maxSize?: number; width?: number }> = ({ pages, top = 1318, left = 70, right = 150, hide = [], until = Infinity, maxSize = 88, width = 800 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (frame >= until || inRanges(frame, hide)) return null;
@@ -48,7 +48,7 @@ export const CaptionTrack: React.FC<{ pages: CapPage[]; top?: number; left?: num
   const page = pages.find((p, i) => ms >= p.startMs && ms < (pages[i + 1]?.startMs ?? p.startMs + p.durationMs + 600));
   if (!page) return null;
   const chars = page.tokens.map((t) => t.text).join("").trim().length;
-  const size = Math.min(maxSize, Math.floor(width / (Math.max(chars, 1) * 0.56)));
+  const size = Math.min(maxSize, Math.floor(width / (Math.max(chars, 1) * 0.6)));
   const s = interpolate(ms - page.startMs, [0, 90, 160], [0.9, 1.05, 1], CLAMP);
   const cur = page.tokens.reduce((acc, tk, j) => (tk.fromMs <= ms ? j : acc), -1);
   return (

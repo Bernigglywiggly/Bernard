@@ -19,7 +19,7 @@ import { VO_S4_CAPTIONS } from "./voS4Captions";
 
 export const SHORT4_FRAMES = 1044;
 
-const F = { replay: 18, tease: 102, mocap: 218, practise: 348, reveal: 508, balance: 639, print: 769, knife: 857, verdict: 929,
+const F = { replay: 18, tease: 117, mocap: 218, practise: 348, reveal: 508, balance: 639, print: 769, knife: 857, verdict: 929,
   real: 947, rewind: 1022, hold0: 1034 };
 const PAGES = makePages(VO_S4_CAPTIONS);
 const DARKEN: React.CSSProperties = { position: "absolute", left: 0, right: 0, top: 0, height: 820,
@@ -39,12 +39,12 @@ const Footage: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: C.black }}>
       <ClipScene src="shorts/s4_real.mp4" from={0} dur={F.replay} push={[1, 1.01]} origin="50% 30%" />
-      <ClipScene src="shorts/s4_hook.mp4" from={F.replay} dur={F.tease - F.replay} rate={92 / 84} push={[1, 1.06]} origin="50% 30%" />
+      <ClipScene src="shorts/s4_hook.mp4" from={F.replay} dur={F.tease - F.replay} rate={92 / 99} push={[1, 1.06]} origin="50% 30%" />
       {/* the bodyguard tease: Unitree's knife scene at full width, so the attacker and the woman are both in frame */}
       <Sequence from={F.tease} durationInFrames={F.mocap - F.tease} premountFor={fps}>
         <BlurBg src="shorts/s4_knife_wide.mp4" />
-        <div style={{ position: "absolute", left: 0, top: 560, width: 1080, height: 608, scale: slowPush(frame, F.tease, F.mocap, 1.04) }}>
-          <Video src={staticFile("shorts/s4_knife_wide.mp4")} muted style={{ width: 1080, height: 608, display: "block" }} />
+        <div style={{ position: "absolute", left: -270, top: 520, width: 1350, height: 760, scale: slowPush(frame, F.tease, F.mocap, 1.04), transformOrigin: "80% 50%" }}>
+          <Video src={staticFile("shorts/s4_knife_wide.mp4")} muted style={{ width: 1350, height: 760, display: "block" }} />
         </div>
       </Sequence>
       <Sequence from={F.mocap} durationInFrames={F.practise - F.mocap}><AbsoluteFill style={{ background: BG_NIGHT }} /></Sequence>
@@ -57,15 +57,14 @@ const Footage: React.FC = () => {
       </Sequence>
       <Sequence from={F.knife} durationInFrames={F.verdict - F.knife} premountFor={fps}>
         <BlurBg src="shorts/s4_knife_wide.mp4" trim={60} />
-        <div style={{ position: "absolute", left: 0, top: 640, width: 1080, height: 608, scale: slowPush(frame, F.knife, F.verdict, 1.05) }}>
-          <Video src={staticFile("shorts/s4_knife_wide.mp4")} muted trimBefore={60} style={{ width: 1080, height: 608, display: "block" }} />
+        <div style={{ position: "absolute", left: -270, top: 600, width: 1350, height: 760, scale: slowPush(frame, F.knife, F.verdict, 1.05), transformOrigin: "80% 50%" }}>
+          <Video src={staticFile("shorts/s4_knife_wide.mp4")} muted trimBefore={60} style={{ width: 1350, height: 760, display: "block" }} />
         </div>
       </Sequence>
       {/* verdict: our 3D copy mid-kick match-cuts into the real robot's kick */}
       <ClipScene src="shorts/s4_sim_hero.mp4" from={F.verdict} dur={F.real - F.verdict} trimBefore={60} push={[1.04, 1.1]} origin="50% 50%" />
-      <ClipScene src="shorts/s4_kick.mp4" from={F.real} dur={F.rewind - F.real} rate={0.8} push={[1.02, 1.07]} style={{ filter: "brightness(0.5) saturate(0.95)" }} />
-      <ClipScene src="shorts/s4_real_rev.mp4" from={F.rewind} dur={F.hold0 - F.rewind} rate={1.5} push={[1, 1]} />
-      <Sequence from={F.hold0}><Img src={staticFile("shorts/s4_frame0.png")} style={FILL} /></Sequence>
+      <ClipScene src="shorts/s4_kick.mp4" from={F.real} dur={F.rewind - F.real} push={[1.02, 1.07]} style={{ filter: "brightness(0.5) saturate(0.95)" }} />
+      <ClipScene src="shorts/s4_real_rev.mp4" from={F.rewind} dur={SHORT4_FRAMES - F.rewind} rate={18 / (SHORT4_FRAMES - F.rewind)} push={[1, 1]} />
     </AbsoluteFill>
   );
 };
@@ -82,7 +81,7 @@ const Hook: React.FC = () => {
         <div style={{ ...HEADC, fontSize: 110, color: C.ink, ...keyline(0.75, 11) }}>UNITREE SAYS</div>
         <div style={{ ...HEADC, fontSize: 168, color: C.acid, lineHeight: 0.86, ...keyline(1.1, 11) }}>IT&apos;S REAL.</div>
         <div style={{ display: "inline-block", marginTop: 16, padding: "6px 16px 9px", backgroundColor: C.ink, color: C.black, ...HEADC,
-          fontSize: 52, border: `4px solid ${C.black}` }}>NOW READ THE SMALL PRINT ↓</div>
+          fontSize: 52, border: `4px solid ${C.black}`, opacity: frame >= 20 && frame < F.tease ? 1 : 0 }}>NOW READ THE SMALL PRINT ↓</div>
       </div>
       {receipt > 0 ? (
         <div style={{ position: "absolute", left: 60, top: 1170, width: 880, opacity: receipt, translate: `${(1 - receipt) * -80}px 0`,
@@ -128,7 +127,7 @@ const Mocap: React.FC = () => {
       <Tag at={F.mocap + 2} left={64} top={170} bg={C.acid} size={52}>STEP 1</Tag>
       <Headline at={F.mocap + 6} top={250} lines={[{ text: "COPY A PERSON", size: 132, color: C.ink }]} />
       <svg width={1080} height={1920} style={{ position: "absolute", inset: 0 }}>
-        <g opacity={interpolate(s, [0, 0.4], [0, 1], CLAMP)}>
+        <g opacity={interpolate(s, [0, 0.4], [0, 1], CLAMP)} transform={`rotate(${Math.sin(frame / 9) * 2} ${HX + 205} ${BY + 380})`}>
           {BONES.map(([a, b]) => {
             const [x1, y1] = P(HX, a); const [x2, y2] = P(HX, b);
             return <line key={a + b} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#4A5068" strokeWidth={38} strokeLinecap="round" />;
@@ -139,7 +138,7 @@ const Mocap: React.FC = () => {
             return <circle key={k} cx={P(HX, k)[0]} cy={P(HX, k)[1]} r={on ? 14 : 11} fill={C.magenta} stroke={C.ink} strokeWidth={on ? 5 : 3} />;
           })}
         </g>
-        <g opacity={interpolate(robotIn, [0, 0.4], [0, 1], CLAMP)} transform={`translate(0 ${(1 - robotIn) * 40})`}>
+        <g opacity={interpolate(robotIn, [0, 0.4], [0, 1], CLAMP)} transform={`translate(0 ${(1 - robotIn) * 40}) rotate(${Math.sin(frame / 9 + 0.6) * 2} ${RX + 205} ${BY + 380})`}>
           {BONES.map(([a, b]) => {
             const [x1, y1] = P(RX, a); const [x2, y2] = P(RX, b);
             return <line key={a + b} x1={x1} y1={y1} x2={x2} y2={y2} stroke={C.ink} strokeWidth={30} strokeLinecap="round" />;
@@ -226,7 +225,7 @@ const Balance: React.FC = () => {
     <AbsoluteFill>
       <div style={DARKEN} />
       <div style={DISCLOSE}>OUR 3D ILLUSTRATION</div>
-      <Headline at={F.balance + 4} top={230} lines={[{ text: "THE CONTROLLER ADJUSTS IT", size: 76 }]} />
+      <Headline at={F.balance + 4} top={230} lines={[{ text: "THE CONTROLLER ADJUSTS IT", size: 64 }]} />
       <Headline at={F.balance + 66} top={320} lines={[{ text: "50× A SECOND", size: 150, color: C.acid }]} stroke={11} />
       <svg width={1080} height={120} style={{ position: "absolute", left: 0, top: 480 }}>
         {Array.from({ length: 50 }).map((_, k) => (
@@ -259,18 +258,19 @@ const SmallPrint: React.FC = () => {
   const k = interpolate(z, [0, 1], [1080 / 1920, 1000 / 760]);
   const left = interpolate(z, [0, 1], [0, 40 - 1160 * (1000 / 760)]);
   const top = interpolate(z, [0, 1], [640, 640 - 30 * (1000 / 760)]);
+  const drift = interpolate(frame, [F.print + 34, F.knife], [1, 1.05], CLAMP);
   const box8 = interpolate(frame, [805, 813], [0, 1], { ...CLAMP, easing: EASE_OUT });  // "eight-hour" 26.8 s
   const under = interpolate(frame, [838, 852], [0, 1], { ...CLAMP, easing: EASE_OUT }); // "standing" 28.0 s
   return (
     <AbsoluteFill>
       <Tag at={F.print + 2} left={64} top={250} bg={C.ink} size={56}>THE VIDEO&apos;S OWN SMALL PRINT</Tag>
       <div style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080, transformOrigin: "0 0",
-        translate: `${left}px ${top + (1 - inS) * 60}px`, scale: k, opacity: interpolate(inS, [0, 0.3], [0, 1], CLAMP) }}>
+        translate: `${left}px ${top + (1 - inS) * 60}px`, scale: k * drift, opacity: interpolate(inS, [0, 0.3], [0, 1], CLAMP) }}>
         <Img src={staticFile("shorts/s4_src_24.png")} style={{ width: 1920, height: 1080, display: "block" }} />
         <div style={{ position: "absolute", left: 1752, top: 86, width: 142, height: 50, border: `${7 / k}px solid ${C.acid}`, opacity: box8 }} />
         <div style={{ position: "absolute", left: 1224, top: 130, height: 9, width: 178 * under, backgroundColor: C.acid }} />
       </div>
-      <div style={{ position: "absolute", left: 64, top: 860, ...HEADC, fontSize: 84, color: C.acid, opacity: under, ...keyline(0.6, 10),
+      <div style={{ position: "absolute", left: 64, top: 860, ...HEADC, fontSize: 70, color: C.acid, opacity: under, ...keyline(0.5, 10),
         translate: `0 ${(1 - under) * 30}px` }}>STANDING, NOT FIGHTING</div>
     </AbsoluteFill>
   );
@@ -298,8 +298,8 @@ const Verdict: React.FC = () => {
   return (
     <AbsoluteFill>
       <Headline at={F.verdict + 6} top={400} lines={[{ text: "THE KICKS", size: 150 }]} />
-      <Tag at={939} left={64} top={570} bg={C.acid} size={96} rot={[-10, -3]}>REAL</Tag>
-      <Headline at={968} top={800} lines={[{ text: "THE BODYGUARD", size: 140 }]} />
+      <Tag at={948} left={64} top={570} bg={C.acid} size={96} rot={[-10, -3]}>REAL</Tag>
+      <Headline at={968} top={800} lines={[{ text: "THE BODYGUARD", size: 116 }]} />
       <Stamp at={980} left={64} top={960} size={104}>STILL A DEMO</Stamp>
     </AbsoluteFill>
   );
@@ -316,7 +316,7 @@ export const CurveV2Short4: React.FC = () => (
     <KnifeLabel />
     <Verdict />
     <Hook />
-    <CaptionTrack pages={PAGES} hide={[[0, 46]]} until={F.rewind} />
+    <CaptionTrack pages={PAGES} hide={[[0, 21]]} until={F.rewind} />
     <Credit text="FOOTAGE: UNITREE · REAL SPEED" show={[[0, F.replay], [F.hold0, SHORT4_FRAMES]]} />
     <Credit text="FOOTAGE: UNITREE · 7× SLOWER" show={[[F.replay, F.tease]]} />
     <Credit text="FOOTAGE: UNITREE" show={[[F.tease, F.mocap], [F.knife, F.verdict]]} />
@@ -324,7 +324,7 @@ export const CurveV2Short4: React.FC = () => (
 
     <Audio src={staticFile("shorts/s4_vo.mp3")} />
     {/* the bed holds one level, dips before the twist ("But the small print") and lands back on the hit */}
-    <Audio src={staticFile("audio/sample-bed.mp3")} volume={(f) => interpolate(f, [0, 2, F.print - 16, F.print - 6, F.print + 1, F.print + 4,
+    <Audio src={staticFile("audio/sample-bed.mp3")} volume={(f) => interpolate(f, [0, 2, F.print - 18, F.print - 8, F.print + 2, F.print + 6,
       SHORT4_FRAMES - 2, SHORT4_FRAMES], [0.06, 0.12, 0.12, 0.0, 0.0, 0.12, 0.12, 0.06], CLAMP)} />
     <Sfx at={F.replay} name="whoosh" volume={0.35} />
     <Sfx at={F.tease} name="whoosh" volume={0.4} />
@@ -337,11 +337,12 @@ export const CurveV2Short4: React.FC = () => (
     <Sfx at={F.balance} name="whoosh" volume={0.35} />
     <Sfx at={F.balance + 70} name="tick_run" volume={0.18} dur={56} />
     <Sfx at={F.print - 30} name="riser" volume={0.35} />
-    <Sfx at={F.print} name="thock" volume={0.85} />
+    <Sfx at={F.print} name="thock" volume={1} />
+    <Sfx at={F.print} name="settle" volume={0.6} />
     <Sfx at={F.knife} name="whoosh" volume={0.4} />
     <Sfx at={902} name="thock" volume={0.75} />
     <Sfx at={F.verdict} name="whoosh" volume={0.4} />
-    <Sfx at={939} name="thock" volume={0.55} />
+    <Sfx at={948} name="thock" volume={0.55} />
     <Sfx at={980} name="thock" volume={0.75} />
     <Sfx at={F.rewind} name="rewind" volume={0.45} />
   </AbsoluteFill>

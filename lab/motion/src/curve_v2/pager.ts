@@ -23,8 +23,11 @@ const chars = (ws: CapWord[]) => ws.map((t) => t.text.trim()).join(" ").length;
 
 export const makePages = (captions: Caption[]): CapPage[] => {
   const words: CapWord[] = [];
-  for (const c of captions) {
-    if (!c.text.startsWith(" ") && words.length > 0) {
+  for (const c0 of captions) {
+    const forced = c0.text.includes("¶");
+    const c = forced ? { ...c0, text: c0.text.replace("¶", "") } : c0;
+    if (forced) words.push({ text: "¶", fromMs: c.startMs, toMs: c.startMs });
+    if (!c.text.startsWith(" ") && words.length > 0 && words[words.length - 1].text !== "¶") {
       const w = words[words.length - 1];
       w.text += c.text;
       w.toMs = c.endMs;
@@ -35,13 +38,19 @@ export const makePages = (captions: Caption[]): CapPage[] => {
   // 1. phrases
   const phrases: CapWord[][] = [];
   let cur: CapWord[] = [];
+  const hasForced = words.some((w) => w.text === "¶");
   for (const w of words) {
-    if (cur.length >= 2 && BREAK_BEFORE.has(bare(w))) {
+    if (w.text === "¶") {
+      if (cur.length) phrases.push(cur);
+      cur = [];
+      continue;
+    }
+    if (!hasForced && cur.length >= 2 && BREAK_BEFORE.has(bare(w))) {
       phrases.push(cur);
       cur = [];
     }
     cur.push(w);
-    if (ends(w)) {
+    if (!hasForced && ends(w)) {
       phrases.push(cur);
       cur = [];
     }
@@ -51,7 +60,10 @@ export const makePages = (captions: Caption[]): CapPage[] => {
   const out: CapPage[] = [];
   for (const ph of phrases) {
     const n = ph.length;
-    const k = Math.max(1, Math.ceil(n / 4), Math.ceil(chars(ph) / 20));
+    // manual pages (the script's " / " breaks) stay whole unless they're over 5 words or 26 characters
+    const k = hasForced
+      ? (n > 5 || chars(ph) > 26 ? Math.max(2, Math.ceil(chars(ph) / 24)) : 1)
+      : Math.max(1, Math.ceil(n / 4), Math.ceil(chars(ph) / 20));
     const sizes = Array.from({ length: k }, (_, i) => Math.floor(n / k) + (i < n % k ? 1 : 0));
     const cuts: number[] = []; // index where each page after the first starts
     let acc = 0;

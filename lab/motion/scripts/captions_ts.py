@@ -28,10 +28,23 @@ for c in caps:
 if a.script:
     import difflib, re, runpy
     if a.script.endswith(".py"):
-        text = " ".join(l["text"] for l in runpy.run_path(a.script)["LINES"])
+        lines = runpy.run_path(a.script)["LINES"]
+        text = " ".join(l.get("cap", l["text"]) for l in lines)
     else:
         text = a.script
-    sw = text.split()
+    breaks = set()
+    sw = []
+    for tok in text.split():
+        if tok == "/":
+            breaks.add(len(sw))
+            continue
+        sw.append(tok)
+    # a new line in the script is a break too
+    if a.script.endswith(".py"):
+        n = 0
+        for l in lines:
+            breaks.add(n)
+            n += len([t for t in l.get("cap", l["text"]).split() if t != "/"])
     norm = lambda w: re.sub(r"[^a-z0-9]", "", w.lower().replace("-", " ").replace("%", "percent"))
     NUM = {"fifty": "50", "seventy": "70", "nine": "9", "fortythree": "43", "four": "4", "eight": "8", "two": "2", "six": "6"}
     def key(w):
@@ -56,6 +69,10 @@ if a.script:
                 a0 = t0 + (t1 - t0) * k / n
                 a1 = t0 + (t1 - t0) * (k + 1) / n
                 out.append({"text": " " + sw[j], "startMs": int(a0), "endMs": int(a1), "timestampMs": int(a0), "confidence": 0.5})
+    # mark forced page breaks: the first word of each manual page gets a leading pilcrow
+    for j, c in enumerate(out):
+        if j in breaks and j > 0:
+            c["text"] = " ¶" + c["text"].lstrip()
     out[0]["text"] = out[0]["text"].lstrip()
     caps = out
 src = os.path.relpath(a.json, os.path.dirname(os.path.abspath(a.ts)))

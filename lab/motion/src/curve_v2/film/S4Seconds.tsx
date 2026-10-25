@@ -149,8 +149,8 @@ const Payoff: React.FC = () => {
 
 export const S4Seconds: React.FC = () => (
   <AbsoluteFill style={{ backgroundColor: C.black }}>
-    <ClipScene src="film/kick_under_slow.mp4" from={0} dur={X.drain} push={[1.42, 1.52]} origin="51% 30%"
-      style={{ filter: "brightness(1.6) contrast(1.08) saturate(1.1)" }} />
+    <ClipScene src="film/kick_under_slow.mp4" from={0} dur={X.drain} trimBefore={14} push={[1.42, 1.52]} origin="51% 30%"
+      style={{ filter: "brightness(1.9) contrast(1.12) saturate(1.1)" }} />
     <ClipScene src="film/ramp4k_flight.mp4" from={X.quote} dur={X.clock - X.quote} push={[1, 1.05]} origin="45% 40%" />
     <ClipScene src="film/blender_refill.mp4" from={X.clock} dur={240} push={[1, 1.02]} />
     <HoldStill src="film/blender_refill_last.png" from={X.clock + 240} dur={Math.max(1, X.split - X.clock - 240)} push={[1.02, 1.05]} />

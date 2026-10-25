@@ -1,3 +1,5 @@
+**ACCOUNT B working on (since Sun 25 Oct 11:30 UK): the Roadster long-form film (critic round 1 fixes -> render v2 -> critic round 2) + research.** Files B touches: `lab/curve_v2/film_roadster/**`, `lab/motion/src/curve_v2/film/**`, `lab/motion/public/film/**`, `lab/research/**` (not the Shorts). Account A = Shorts.
+
 # START HERE: state at Sun 18 Oct 2026, evening (written for a Claude with zero history)
 
 This block is the truth. Everything below it in this file is older history, kept for detail only.

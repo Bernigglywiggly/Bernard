@@ -28,8 +28,9 @@ between accounts. The shared memory is the set of FILES below. Read them in this
 - Run the film-critic (`~/Bernard/.claude/skills/film-critic/`) before any upload.
 - Save the handoff BEFORE limits hit, to all locations: HANDOFF.md, ~/RESUME_HERE_2026-10-05.md, ~/youtube/CURRENT_STATE.md, ~/CLAUDE_HANDOFF_BUNDLE/HANDOFF.md, ~/Downloads/CLAUDE_HANDOFF/HANDOFF.md, and ~/Downloads/GoldenPlate_Vault/{00_RESUME_HERE,00_START_HERE,00_CURRENT_STATE,CURRENT_STATE}.md. Keep them identical.
 
-## Two accounts, one repo: avoid collisions
-- Split the work by area. **Account A (first) = Shorts. Account B (this one) = the Roadster long-form film and research**, unless he says otherwise.
+## Five accounts, one repo: read `TEAM.md` next (from 25 Oct 17:50)
+- **`TEAM.md` is the lane map, file ownership, queue and sync rules.** A = Curve Shorts · B = Curve long-form + strategy · C = trend desk, facts, QA critic · D = money now (off YouTube) · E = channels 2 and 3.
+- Split the work by area, as TEAM.md says, unless he says otherwise.
 - Before starting, `git pull`. Commit only your own files (`git add <paths>`, never `git add -A`). Push often.
 - Write what you are doing at the top of HANDOFF.md ("ACCOUNT B working on: ...") so the other session sees it.
 

@@ -1,5 +1,7 @@
 **ACCOUNT B working on (since Sun 25 Oct 11:30 UK): the Roadster long-form film (critic round 1 fixes -> render v2 -> critic round 2) + research.** Files B touches: `lab/curve_v2/film_roadster/**`, `lab/motion/src/curve_v2/film/**`, `lab/motion/public/film/**`, `lab/research/**` (not the Shorts). Account A = Shorts.
 
+**25 Oct 17:50: FIVE ACCOUNTS from now (he is adding C, D, E). Read `TEAM.md`: lanes A Shorts / B long-form + strategy / C trend desk, facts, QA critic / D money now / E channels 2-3, file ownership, the queue (B's paused items are queued there for C, D, E), heavy-job lock `lab/tools/heavy.sh`.**
+
 **ACCOUNT B PAUSED by him, Sun 25 Oct 17:38 UK ("pause all work for time being"). Nothing is running. Resume ONLY when he says so, in this order:**
 1. **Critic round 2** on `lab/curve_v2/film_roadster/out/FILM_ROADSTER_v2.mp4` (fresh agent, film-critic skill; measurements already in `out/critic_v2/`: motion 3% frozen / 5% near-still, no stretch >= 2 s; -14.1 LUFS, -1.2 dBTP). The round-2 agent was stopped before writing anything: start a new one with the round-1 report `out/critic/round1.md`. Then fixes, then ask him for the upload yes (manifest index 3; title + thumbnail D are proposals).
 2. **Research for his pitch** (both agents stopped before writing): `lab/research/RETENTION_PLAYBOOK_2026-10-25.md` (retention rules + 3 style recipes for test shots) and `lab/research/MONEY_MAP_2026-10-25.md` (niches for 2 more channels, affiliate/credit programmes, other platforms' payouts, 12-month projections). Re-launch both.

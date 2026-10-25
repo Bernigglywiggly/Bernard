@@ -115,8 +115,9 @@ M_DARK = principled("servo", (0.035, 0.038, 0.045), 0.5, metal=0.2)
 M_ORANGE = principled("beak", (1.0, 0.36, 0.05), 0.42, coat=0.3)
 M_LENS = principled("lens", (0.005, 0.005, 0.008), 0.08, coat=1.0)
 M_RING = principled("eye_ring", (0.85, 1.0, 0.0), 0.35, emit=(0.85, 1.0, 0.0), emit_strength=1.2)
-MATS = (M_SHELL, M_DARK, M_ORANGE, M_LENS, M_RING)
-WHITE, DARK, ORANGE, LENS, RING = range(5)
+M_TRUNK = principled("trunk_shell", (0.88, 0.89, 0.9), 0.38, coat=0.5)     # same look as the shell; its own slot so one shot can x-ray it
+MATS = (M_SHELL, M_DARK, M_ORANGE, M_LENS, M_RING, M_TRUNK)
+WHITE, DARK, ORANGE, LENS, RING, TRUNK = range(6)
 
 
 # ------------------------------------------------------------------------------------------------ geometry helpers
@@ -188,7 +189,7 @@ def build_duck(P0):
     bm = bmesh.new()
     parts = {}
     # trunk
-    rbox(bm, (-2, 0, 124), (78, 66, 58), WHITE, "trunk", parts, round_=0.55)
+    rbox(bm, (-2, 0, 124), (78, 66, 58), TRUNK, "trunk", parts, round_=0.55)
     rbox(bm, (-4, 0, 99), (52, 46, 14), DARK, "trunk", parts, round_=0.4)            # belly plate between the hips
     for s in (1, -1):
         side = "L" if s > 0 else "R"
@@ -493,7 +494,7 @@ poses_coll.hide_viewport = True
 
 
 # ------------------------------------------------------------------------------------------------ the grid (Geometry Nodes)
-def build_grid(hole=0.0, seed_shift=0, fall_from=(1, 110), fall_p=(0.6, 0.12)):
+def build_grid(hole=0.0, seed_shift=0, fall_from=(1, 110), fall_p=(0.6, 0.12), n=N):
     grid_ob = bpy.data.objects.new("DuckGrid", bpy.data.meshes.new("gridpts"))
     SC.collection.objects.link(grid_ob)
     ng = bpy.data.node_groups.new("DuckGridGN", "GeometryNodeTree")
@@ -516,10 +517,10 @@ def build_grid(hole=0.0, seed_shift=0, fall_from=(1, 110), fall_p=(0.6, 0.12)):
 
     out = nn.new("NodeGroupOutput")
     grid = nn.new("GeometryNodeMeshGrid")
-    grid.inputs["Size X"].default_value = SPACING * (N - 1)
-    grid.inputs["Size Y"].default_value = SPACING * (N - 1)
-    grid.inputs["Vertices X"].default_value = N
-    grid.inputs["Vertices Y"].default_value = N
+    grid.inputs["Size X"].default_value = SPACING * (n - 1)
+    grid.inputs["Size Y"].default_value = SPACING * (n - 1)
+    grid.inputs["Vertices X"].default_value = n
+    grid.inputs["Vertices Y"].default_value = n
     pts = nn.new("GeometryNodeMeshToPoints")
     ln.new(grid.outputs["Mesh"], pts.inputs["Mesh"])
     geo = pts.outputs["Points"]
@@ -608,7 +609,7 @@ if A.shot == "grid":
 # ------------------------------------------------------------------------------------------------ shot: tripod
 if A.shot == "tripod":
     SC.frame_start, SC.frame_end = 1, 150
-    build_grid(hole=SPACING * 2.2, seed_shift=7, fall_from=(1, 150), fall_p=(0.35, 0.35))
+    build_grid(hole=SPACING * 2.2, seed_shift=7, fall_from=(1, 150), fall_p=(0.35, 0.35), n=20)
     add_floor(SPACING * N * 0.8)
     duck = hero("p8_head_tripod", yaw=0)
     cam_d.lens = 58
@@ -624,8 +625,9 @@ if A.shot == "tripod":
         a = rad(-118 + 40 * (f - 1) / 149)
         r = 6.4 - 0.7 * (f - 1) / 149
         key(cam, f, (cen.x + r * math.cos(a), cen.y + r * math.sin(a), 2.1 - 0.25 * (f - 1) / 149))
-    key(tgt, 1, (cen.x, cen.y, 0.75))
-    key(tgt, 150, (cen.x, cen.y, 0.7))
+    aim = cen.lerp(tri[0], 0.42)          # pulls the head towards the middle of the frame
+    key(tgt, 1, (aim.x, aim.y, 0.75))
+    key(tgt, 150, (aim.x, aim.y, 0.7))
     interp(tgt)
     track = []
     for f in range(1, 151):
@@ -811,3 +813,330 @@ if A.shot == "variants":
     os.makedirs(A.out, exist_ok=True)
     json.dump({"segments": SEG, "track": track}, open(os.path.join(A.out, "variants.json"), "w"))
     render(frames_arg(list(range(1, 361))))
+
+
+# ------------------------------------------------------------------------------------------------ shot: crowd (v2)
+# ~50 visibly different ducks (size, bulk, lean, tint) toppling over and resetting like simulator episodes; the camera
+# drifts, then pushes into the one in the middle. Critic round 1: no counter, no far-off carpet of tiny ducks.
+SHELLS = [(0.88, 0.89, 0.9), (0.93, 0.86, 0.74), (0.74, 0.8, 0.88), (0.86, 0.9, 0.8), (0.95, 0.8, 0.82)]
+
+
+def tinted_shell(i, rgb):
+    return principled(f"shell_{i}", rgb, 0.38, coat=0.5)
+
+
+def override(ob, slot, mat):
+    ob.material_slots[slot].link = "OBJECT"
+    ob.material_slots[slot].material = mat
+
+
+if A.shot == "crowd":
+    import random
+    rng = random.Random(7)
+    SC.frame_start, SC.frame_end = 1, 152
+    add_floor(80)
+    tints = [tinted_shell(i, c) for i, c in enumerate(SHELLS)]
+    src = next(o for o in pose_objs if o.name == "p0_stand")
+    G = 3.2
+    for gi in range(7):
+        for gj in range(7):
+            k = gi * 7 + gj
+            base = Vector(((gi - 3) * G + rng.uniform(-0.4, 0.4), (gj - 3) * G + rng.uniform(-0.4, 0.4), 0.0))
+            ob = src.copy()
+            ob.data = src.data
+            ob.name = f"crowd_{k}"
+            SC.collection.objects.link(ob)
+            hero_duck = (gi, gj) == (3, 3)
+            sc = 1.0 if hero_duck else rng.uniform(0.86, 1.14)
+            bulk = 1.0 if hero_duck else rng.uniform(1.0, 1.1)
+            tint = tints[0] if hero_duck else tints[rng.randrange(len(tints))]
+            override(ob, WHITE, tint)
+            override(ob, TRUNK, tint)
+            yaw = rad(rng.uniform(-125, -65))
+            lean = 0.0 if hero_duck else rng.uniform(-5, 5)
+            piv = bpy.data.objects.new(f"piv_{k}", None)
+            SC.collection.objects.link(piv)
+            ob.parent = piv
+            ob.scale = (sc * bulk, sc * bulk, sc)
+            ob.rotation_euler = (0, rad(lean), yaw)
+            if hero_duck:
+                piv.location = base
+                for f in (1, 152):
+                    sway = 1.5 * math.sin(f / 14.0)
+                    piv.rotation_euler = (rad(sway * 0.5), rad(sway), 0)
+                    piv.keyframe_insert("rotation_euler", frame=f)
+                continue
+            # episode loop: stand, topple, lie, reset
+            ang = rng.uniform(0, 2 * math.pi)
+            fall_dir = Vector((math.cos(ang), math.sin(ang), 0))
+            axis = Vector((-fall_dir.y, fall_dir.x, 0))
+            edge = 0.42 * sc
+            piv.location = base + fall_dir * edge
+            ob.location = -fall_dir * edge
+            f = 1 - rng.randint(0, 40)
+            events = []
+            while f < 160:
+                stand = rng.randint(16, 56)
+                events.append(("stand", f, f + stand))
+                f += stand
+                fall = rng.randint(8, 12)
+                events.append(("fall", f, f + fall))
+                f += fall
+                lie = rng.randint(10, 22)
+                events.append(("lie", f, f + lie))
+                f += lie
+                events.append(("reset", f, f + 4))
+                f += 4
+                # the share that falls drops as they "learn": later episodes stand longer
+                if f > 70 and rng.random() < 0.5:
+                    events.append(("stand", f, f + 200))
+                    break
+            for fr in range(1, 153):
+                ev = next((e for e in events if e[1] <= fr < e[2]), ("stand", fr, fr + 1))
+                kind, a, b = ev
+                u = (fr - a) / max(1, (b - a))
+                tilt = 0.0
+                s_pop = 1.0
+                if kind == "fall":
+                    tilt = 92 * (u ** 2.2)
+                elif kind == "lie":
+                    tilt = 92 - 6 * math.exp(-u * 6) * math.sin(u * 14)
+                elif kind == "reset":
+                    tilt = 0.0
+                    s_pop = 0.15 + 0.85 * (u ** 0.6)
+                else:
+                    tilt = 1.2 * math.sin((fr + k * 7) / 9.0)
+                q = Matrix.Rotation(rad(tilt), 3, axis).to_euler()
+                piv.rotation_euler = q
+                piv.scale = (s_pop, s_pop, s_pop)
+                piv.keyframe_insert("rotation_euler", frame=fr)
+                piv.keyframe_insert("scale", frame=fr)
+    cam_d.lens = 34
+    cam_d.dof.use_dof = True
+    cam_d.dof.aperture_fstop = 2.8
+    foc = bpy.data.objects.new("focus", None)
+    SC.collection.objects.link(foc)
+    cam_d.dof.focus_object = foc
+    key(cam, 1, (-7.5, -21.0, 7.6)); key(tgt, 1, (0.0, 0.0, 0.6)); key(foc, 1, (0.0, 0.0, 1.0))
+    key(cam, 108, (-4.5, -19.0, 6.4)); key(tgt, 108, (0.0, 0.0, 0.8)); key(foc, 108, (0.0, 0.0, 1.0))
+    key(cam, 152, (-1.0, -6.6, 2.1)); key(tgt, 152, (0.0, 0.0, 1.35)); key(foc, 152, (0.0, 0.0, 1.2))
+    for ob in (cam, tgt, foc):
+        interp(ob)
+    render(frames_arg(list(range(1, 153))))
+
+# ------------------------------------------------------------------------------------------------ shot: wrong (v2)
+# One duck, one continuous take (251 frames = the m5 line). The wrong-body changes land on the spoken words and stay:
+# heavier (t=102), off balance (t=123), slippery (t=152), low battery (t=177), shoved (t=209, hit t=215).
+if A.shot == "wrong":
+    SC.frame_start, SC.frame_end = 1, 251
+    T_HEAVY, T_OFF, T_SLIP, T_BATT, T_SHOVE = 102, 123, 152, 177, 209
+    HIT = T_SHOVE + 6
+    add_floor(80)
+    src = next(o for o in pose_objs if o.name == "p0_stand")
+    piv = bpy.data.objects.new("piv", None)
+    SC.collection.objects.link(piv)
+    duck = src.copy()
+    duck.data = src.data
+    duck.name = "wrong_duck"
+    SC.collection.objects.link(duck)
+    duck.parent = piv
+    cam_dir = Vector((0.36, -0.93, 0.0)).normalized()             # floor direction from the duck to the camera
+    yaw = math.degrees(math.atan2(cam_dir.y, cam_dir.x)) + 14
+    duck.rotation_euler = (0, 0, rad(yaw))
+    right = Vector((-cam_dir.y, cam_dir.x, 0.0)) * -1             # screen right on the floor
+    right = Vector((cam_dir.y * -1, cam_dir.x, 0)) if False else Vector((-cam_dir.y, cam_dir.x, 0)) * -1
+    view_axis = (-cam_dir).normalized()
+    # background copies, soft focus, so "every copy" has copies
+    tints = [tinted_shell(i, c) for i, c in enumerate(SHELLS)]
+    for i in range(7):
+        b = src.copy()
+        b.data = src.data
+        b.name = f"bg_{i}"
+        SC.collection.objects.link(b)
+        b.location = (-7.5 + i * 2.6 + (i % 2) * 0.6, 7.0 + (i % 3) * 2.2, 0)
+        b.rotation_euler = (0, 0, rad(-100 + i * 9))
+        s_ = 0.9 + 0.04 * (i % 4)
+        b.scale = (s_, s_, s_)
+        override(b, WHITE, tints[i % len(tints)])
+        override(b, TRUNK, tints[i % len(tints)])
+    # trunk x-ray from "off balance": the torso fades to glass so the balance point inside shows
+    nt = M_TRUNK.node_tree
+    outn = next(n for n in nt.nodes if n.type == "OUTPUT_MATERIAL")
+    prev = outn.inputs["Surface"].links[0].from_socket
+    tr = nt.nodes.new("ShaderNodeBsdfTransparent")
+    mx = nt.nodes.new("ShaderNodeMixShader")
+    nt.links.new(prev, mx.inputs[1])
+    nt.links.new(tr.outputs["BSDF"], mx.inputs[2])
+    nt.links.new(mx.outputs["Shader"], outn.inputs["Surface"])
+    try:
+        M_TRUNK.surface_render_method = "BLENDED"
+    except Exception:
+        pass
+    fac = mx.inputs["Fac"]
+    fac.default_value = 0.0
+    fac.keyframe_insert("default_value", frame=T_OFF)
+    fac.default_value = 0.62
+    fac.keyframe_insert("default_value", frame=T_OFF + 8)
+    # centre-of-mass marker inside the torso (shift exaggerated, labelled so in the edit)
+    TB, TT = CONTACTS["p0_stand"]["trunk"], TOPS["p0_stand"]["trunk"]
+    tc_local = Vector(((TB.x + TT.x) / 2, 0.0, (TB.z + TT.z) / 2))
+    cmm = new_mat("com_mat")
+    pb = next(n for n in cmm.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+    ckn = cmm.node_tree.nodes.new("ShaderNodeTexChecker"); ckn.inputs["Scale"].default_value = 2.0
+    ckn.inputs["Color1"].default_value = (0.85, 1.0, 0.0, 1); ckn.inputs["Color2"].default_value = (0.01, 0.01, 0.01, 1)
+    cmm.node_tree.links.new(ckn.outputs["Color"], pb.inputs["Base Color"])
+    pb.inputs["Emission Color"].default_value = (0.85, 1.0, 0.0, 1)
+    pb.inputs["Emission Strength"].default_value = 0.6
+    com = bpy.data.objects.new("com", bpy.data.meshes.new("com"))
+    bm = bmesh.new(); bmesh.ops.create_uvsphere(bm, u_segments=24, v_segments=16, radius=0.085); bm.to_mesh(com.data); bm.free()
+    for pg in com.data.polygons:
+        pg.use_smooth = True
+    com.data.materials.append(cmm)
+    SC.collection.objects.link(com)
+    com.parent = duck
+    # battery gauge on the torso's front face
+    front_x = TT.x + 0.0
+    gauge = bpy.data.objects.new("gauge", bpy.data.meshes.new("gauge"))
+    bm = bmesh.new()
+    bmesh.ops.create_cube(bm, size=1.0, matrix=Matrix.Diagonal((0.03, 0.42, 0.2, 1)))
+    bmesh.ops.create_cube(bm, size=1.0, matrix=Matrix.Translation((0, 0.235, 0)) @ Matrix.Diagonal((0.03, 0.05, 0.1, 1)))
+    bm.to_mesh(gauge.data); bm.free()
+    gauge.data.materials.append(principled("gauge_shell", (0.04, 0.045, 0.05), 0.4))
+    SC.collection.objects.link(gauge)
+    gauge.parent = duck
+    gx = 0.38       # trunk front (x) in the duck's local frame, scaled
+    gauge.location = (gx + 0.02, 0.0, tc_local.z + 0.02)
+    bar = bpy.data.objects.new("bar", bpy.data.meshes.new("bar"))
+    bm = bmesh.new()
+    bmesh.ops.create_cube(bm, size=1.0, matrix=Matrix.Translation((0, 0.18, 0)) @ Matrix.Diagonal((0.035, 0.36, 0.14, 1)))
+    bm.to_mesh(bar.data); bar.data.materials.clear(); bm.free()
+    bar_mat = new_mat("bar_mat")
+    bp = next(n for n in bar_mat.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+    bp.inputs["Base Color"].default_value = (0.2, 1.0, 0.3, 1)
+    bp.inputs["Emission Color"].default_value = (0.2, 1.0, 0.3, 1)
+    bp.inputs["Emission Strength"].default_value = 4.0
+    bar.data.materials.append(bar_mat)
+    SC.collection.objects.link(bar)
+    bar.parent = duck
+    bar.location = (gx + 0.03, -0.18, tc_local.z + 0.02)
+    for fr, w, col in ((T_BATT, 1.0, (0.2, 1.0, 0.3)), (T_BATT + 22, 0.18, (1.0, 0.1, 0.05))):
+        bar.scale = (1, w, 1)
+        bar.keyframe_insert("scale", frame=fr)
+        bp.inputs["Base Color"].default_value = (*col, 1)
+        bp.inputs["Emission Color"].default_value = (*col, 1)
+        bp.inputs["Base Color"].keyframe_insert("default_value", frame=fr)
+        bp.inputs["Emission Color"].keyframe_insert("default_value", frame=fr)
+    gauge.hide_render = True
+    bar.hide_render = True
+    gauge.keyframe_insert("hide_render", frame=1)
+    bar.keyframe_insert("hide_render", frame=1)
+    gauge.hide_render = False
+    bar.hide_render = False
+    gauge.keyframe_insert("hide_render", frame=T_BATT - 2)
+    bar.keyframe_insert("hide_render", frame=T_BATT - 2)
+    # ice under the feet from "slippery"
+    ice = add_floor(1.25, loc=(0, 0, 0.004), gloss=True, name="ice")
+    im = ice.data.materials[0]
+    o2 = next(n for n in im.node_tree.nodes if n.type == "OUTPUT_MATERIAL")
+    pv = o2.inputs["Surface"].links[0].from_socket
+    tr2 = im.node_tree.nodes.new("ShaderNodeBsdfTransparent")
+    mx2 = im.node_tree.nodes.new("ShaderNodeMixShader")
+    im.node_tree.links.new(tr2.outputs["BSDF"], mx2.inputs[1])
+    im.node_tree.links.new(pv, mx2.inputs[2])
+    im.node_tree.links.new(mx2.outputs["Shader"], o2.inputs["Surface"])
+    try:
+        im.surface_render_method = "BLENDED"
+    except Exception:
+        pass
+    f2 = mx2.inputs["Fac"]
+    f2.default_value = 0.0
+    f2.keyframe_insert("default_value", frame=T_SLIP - 2)
+    f2.default_value = 0.9
+    f2.keyframe_insert("default_value", frame=T_SLIP + 6)
+    # the pusher
+    arrow = bpy.data.objects.new("pusher", bpy.data.meshes.new("pusher"))
+    bm = bmesh.new()
+    bmesh.ops.create_cone(bm, cap_ends=True, segments=24, radius1=0.12, radius2=0.12, depth=1.2,
+                          matrix=Matrix.Translation((-0.8, 0, 0)) @ Euler((0, rad(90), 0)).to_matrix().to_4x4())
+    bmesh.ops.create_cone(bm, cap_ends=True, segments=24, radius1=0.3, radius2=0.0, depth=0.5,
+                          matrix=Matrix.Translation((0.05, 0, 0)) @ Euler((0, rad(90), 0)).to_matrix().to_4x4())
+    bm.to_mesh(arrow.data); bm.free()
+    arrow.data.materials.append(principled("arrow_mat", (0.85, 1.0, 0.0), 0.35, emit=(0.85, 1.0, 0.0), emit_strength=3.0))
+    SC.collection.objects.link(arrow)
+    ayaw = math.degrees(math.atan2(-right.y, -right.x))
+    for fr in range(1, 252):
+        t = fr
+        # heavier: squash, then 5% bigger for the rest of the shot
+        if t < T_HEAVY:
+            sc = 1.0
+            sz = 1.0
+        else:
+            u = (t - T_HEAVY) / 12.0
+            sc = 1.0 + 0.05 * min(1.0, u)
+            sz = sc * (1 - 0.07 * math.exp(-u * 3) * math.sin(min(u, 1.2) * math.pi))
+        duck.scale = (sc, sc, sz)
+        duck.keyframe_insert("scale", frame=fr)
+        # off balance: the marker slides off-centre, the duck leans after it
+        off = 0.0 if t < T_OFF else min(1.0, (t - T_OFF) / 10.0)
+        com.location = tc_local + Vector((0.0, 0.17 * off, 0.0))
+        com.keyframe_insert("location", frame=fr)
+        lean = 6.0 * off + (1.2 * math.sin(t / 7.0) if t >= T_OFF else 0.0)
+        # slippery: a skid to one side and back
+        slip = 0.0 if t < T_SLIP else 0.3 * math.sin(min(math.pi, (t - T_SLIP) / 22.0 * math.pi)) * math.exp(-max(0, t - T_SLIP - 22) / 20)
+        wob = 0.0 if t < T_SLIP else 5.0 * math.exp(-(t - T_SLIP) / 18.0) * math.sin((t - T_SLIP) / 2.6)
+        # low battery: a slow sag
+        sag = 0.0 if t < T_BATT else -0.05 * min(1.0, (t - T_BATT) / 24.0)
+        # shoved: damped stagger after the hit
+        tip = 0.0
+        if t >= HIT:
+            v = (t - HIT) / FPS
+            tip = 24 * math.exp(-v * 3.6) * math.sin(v * 8.0 + 0.3)
+        M = Matrix.Translation(right * slip + Vector((0, 0, sag))) @ Matrix.Rotation(rad(lean + wob - tip), 4, view_axis)
+        piv.matrix_world = M
+        piv.keyframe_insert("location", frame=fr)
+        piv.keyframe_insert("rotation_euler", frame=fr)
+        # the pusher comes in from screen right, hits, pulls back
+        if t < T_SHOVE:
+            ax = 4.0
+        elif t < HIT:
+            ax = 2.6 - (t - T_SHOVE) / (HIT - T_SHOVE) * 1.95
+        elif t < HIT + 14:
+            ax = 0.65
+        else:
+            ax = 0.65 + (t - HIT - 14) / 20.0 * 2.5
+        arrow.location = right * ax + Vector((0, 0, 1.2))
+        arrow.rotation_euler = (0, 0, rad(ayaw))
+        arrow.hide_render = t < T_SHOVE - 1
+        arrow.keyframe_insert("location", frame=fr)
+        arrow.keyframe_insert("rotation_euler", frame=fr)
+        arrow.keyframe_insert("hide_render", frame=fr)
+    for ob in (gauge, bar, arrow):
+        for fc in all_fcurves(ob):
+            if fc.data_path == "hide_render":
+                for k in fc.keyframe_points:
+                    k.interpolation = "CONSTANT"
+    # camera: duck ~40% of the frame height, head at ~36%, slow 4% push
+    cam_d.lens = 45
+    cam_d.dof.use_dof = True
+    cam_d.dof.aperture_fstop = 2.0
+    cam_d.dof.focus_object = duck
+    T = Vector((0.0, 0.0, 1.72))
+    for fr, dist in ((1, 8.25), (251, 7.92)):
+        key(cam, fr, T + cam_dir * dist + Vector((0, 0, 0.55)))
+        key(tgt, fr, T)
+    interp(cam, "LINEAR"); interp(tgt, "LINEAR")
+    from bpy_extras.object_utils import world_to_camera_view
+    track = []
+    for fr in range(1, 252):
+        SC.frame_set(fr)
+
+        def pj(P):
+            v = world_to_camera_view(SC, cam, P)
+            return [round(v.x * 1080, 1), round((1 - v.y) * 1920, 1)]
+        cw = com.matrix_world.translation
+        track.append({"com": pj(cw), "floor": pj(Vector((cw.x, cw.y, 0.0))), "head": pj(duck.matrix_world @ (TOPS["p0_stand"]["head"])),
+                      "feet": pj(duck.matrix_world @ CONTACTS["p0_stand"]["footL"])})
+    os.makedirs(A.out, exist_ok=True)
+    json.dump({"cues": {"heavy": T_HEAVY, "off": T_OFF, "slip": T_SLIP, "batt": T_BATT, "shove": T_SHOVE, "hit": HIT}, "track": track},
+              open(os.path.join(A.out, "wrong.json"), "w"))
+    render(frames_arg(list(range(1, 252))))

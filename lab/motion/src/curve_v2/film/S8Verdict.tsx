@@ -1,18 +1,18 @@
 import { Video } from "@remotion/media";
 import { evolvePath } from "@remotion/paths";
 import type React from "react";
-import { AbsoluteFill, Easing, Img, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Easing, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { CLAMP, EASE_IN_OUT, EASE_OUT } from "../../lib/anim";
-import { BG_NIGHT, C, ClipScene, Credit, FILL, HEADC, Headline, keyline, MONO, pop, Sfx, slowPush, Stamp, Tag } from "../kit";
-import { BlueprintGrid, BlueprintLines, FREEZE_SRC, PAY_ORIGIN, PAY_SCALE_END } from "./S9Bill";
+import { BG_NIGHT, C, ClipScene, Credit, FILL, HEADC, Headline, keyline, MONO, pop, slowPush, Stamp, Tag } from "../kit";
+import { EvidenceStamp, SAFE_TOP, Sfx } from "./fx";
 import { cue, segFrames } from "./util";
 
 // Roadster film, segment S8 ("Verdict", 41.8 s), the film's last word before the end card. Facts:
 // lab/research/TESLA_ROADSTER_FACTS.md §2 (over 2 g with the fans vs about 1.26 g on tyres, Tesla's figures), §4 (refill
 // 2-6 h, Moravy to Top Gear; 10 nozzles on Rocket, 4 on Thrust; COPV tanks based on Falcon hardware), §5 (about 2 s at
 // full thrust: our estimate), §0 (SpaceX's McGregor test site), P10 (Rocket "not approved for public road use").
-// Opens on S9's last picture (the kickflip as line-work) winding back into Tesla's footage; ends on the hang with the
-// film's opening question answered. Tesla footage < half the runtime; the 3D shots are ours (labelled).
+// v2: opens on Tesla's wide shot of the car climbing the curl (S9 was cut, so its blueprint hand-over went with it);
+// ends on the hang with the film's opening question answered. Tesla footage < half the runtime; the 3D shots are ours (labelled).
 
 const SEG = "S8";
 const W = (word: string, nth = 1) => cue(SEG, word, nth);
@@ -47,31 +47,17 @@ const OURS = "3D ILLUSTRATION · THE CURVE";
 const ease = (frame: number, a: number, b: number, easing = EASE_OUT) => interpolate(frame, [a, b], [0, 1], { ...CLAMP, easing });
 
 // ------------------------------------------------------------------------------------------------- 1. the question
-// Frame 0 is S9's last picture (the kickflip as line-work). The lines wind back, the photo returns, and the clip plays
-// on from the frozen frame: what actually happened in Texas.
-const RESUME = 22;
+// Tesla's wide shot of the climb (unused before v2), pushed in so the car reads on a phone.
 const Open: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
   if (frame >= F.grip + 2) return null;
-  const pull = interpolate(frame, [0, 30], [PAY_SCALE_END, 1], { ...CLAMP, easing: EASE_IN_OUT });
-  const drift = slowPush(frame, 30, F.grip, 1.035);
-  const unDraw = interpolate(frame, [4, 24], [1, 0], { ...CLAMP, easing: EASE_IN_OUT });
-  const photo = ease(frame, 4, 22, EASE_IN_OUT);
   const out = ease(frame, F.grip - 10, F.grip + 2, EASE_IN_OUT);
   return (
     <AbsoluteFill style={{ opacity: 1 - out }}>
-      <AbsoluteFill style={{ scale: pull * drift, transformOrigin: PAY_ORIGIN }}>
-        <BlueprintGrid opacity={1 - ease(frame, 2, 20)} />
-        {frame <= RESUME ? <Img src={staticFile(FREEZE_SRC)} style={{ ...FILL, opacity: photo, filter: `brightness(${0.45 + photo * 0.6})` }} /> : null}
-        <Sequence from={RESUME} durationInFrames={F.grip + 2 - RESUME} premountFor={fps}>
-          <Video src={staticFile("film/kick_side_slow.mp4")} muted trimBefore={120} style={FILL} />
-        </Sequence>
-        {unDraw > 0.001 ? <BlueprintLines draw={unDraw} under={0.55 * photo} /> : null}
-      </AbsoluteFill>
-      <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 38%)" }} />
-      <Headline at={T.so - 2} left={100} top={96} lines={[{ text: "SO WHAT DID TESLA", size: 104 }]} />
-      <Headline at={T.actually - 2} left={100} top={196} lines={[{ text: "ACTUALLY SHOW?", size: 150, color: C.acid }]} />
+      <ClipScene src="film/ramp_climb_wide.mp4" from={0} dur={F.grip + 2} push={[1.6, 1.7]} origin="30% 50%" />
+      <AbsoluteFill style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 55%)" }} />
+      <Headline at={T.so - 2} left={100} top={SAFE_TOP} lines={[{ text: "SO WHAT DID TESLA", size: 104 }]} />
+      <Headline at={T.actually - 2} left={100} top={SAFE_TOP + 100} lines={[{ text: "ACTUALLY SHOW?", size: 150, color: C.acid }]} />
     </AbsoluteFill>
   );
 };
@@ -143,8 +129,8 @@ const GMeter: React.FC = () => {
           ...keyline(1.5, 11) }}>{frame >= T.g2 ? ">2 g" : `${(sweep * 2).toFixed(2)} g`}</div>
         <div style={{ ...MONO, fontSize: 44, color: C.ink, marginTop: 14 }}>CORNERING WITH THE FANS ON</div>
       </div>
-      <Tag at={F.grip + 4} left={100} top={100} size={60}>TESLA SAYS</Tag>
-      <div style={{ position: "absolute", right: 100, top: 100, textAlign: "right", opacity: frameIn, translate: `${(1 - frameIn) * 30}px 0` }}>
+      <EvidenceStamp kind="tesla" at={F.grip + 4} left={100} top={SAFE_TOP} />
+      <div style={{ position: "absolute", right: 100, top: SAFE_TOP, textAlign: "right", opacity: frameIn, translate: `${(1 - frameIn) * 30}px 0` }}>
         <div style={{ ...HEADC, fontSize: 84, color: C.ink, ...keyline(0.6, 9) }}>CORNERING GRIP</div>
         <div style={{ ...MONO, fontSize: 44, color: DIM, marginTop: 10 }}>IN g · 1 g = GRAVITY</div>
       </div>
@@ -177,7 +163,7 @@ const RealEngineering: React.FC = () => {
           ...keyline(0.5, 9) }}>IT HUNG HERE</div>
       </AbsoluteFill>
       <AbsoluteFill style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0) 62%)" }} />
-      <Headline at={T.grip - 2} left={100} top={96} stagger={6} lines={[{ text: "GRIP WITHOUT", size: 124, color: C.cyan }, { text: "SPEED", size: 200, color: C.cyan }]} />
+      <Headline at={T.grip - 2} left={100} top={SAFE_TOP} stagger={6} lines={[{ text: "GRIP WITHOUT", size: 124, color: C.cyan }, { text: "SPEED", size: 200, color: C.cyan }]} />
       <Stamp at={T.real - 2} left={104} top={500} color={C.cyan} size={84} rot={-5}>THE REAL<br />ENGINEERING</Stamp>
       <Headline at={T.could - 2} left={100} top={790} lines={[{ text: "AND IT COULD MATTER ON A RACE TRACK", size: 62 }]} stroke={9} />
     </AbsoluteFill>
@@ -199,21 +185,22 @@ const Spectacle: React.FC = () => {
     <AbsoluteFill>
       <ClipScene src="film/blender_xray.mp4" from={F.spec} dur={F.legal + 2 - F.spec} push={[1, 1.05]} origin="66% 50%" />
       <AbsoluteFill style={{ background: "linear-gradient(90deg, rgba(10,4,24,0.94) 0%, rgba(10,4,24,0.8) 40%, rgba(10,4,24,0) 64%)" }} />
-      <Headline at={T.thrusters - 2} left={100} top={96} lines={[{ text: "THE THRUSTERS ARE", size: 84 }]} stroke={9} />
-      <Stamp at={T.spectacle - 2} left={104} top={198} color={C.magenta} size={112} rot={-5}>THE SPECTACLE</Stamp>
-      <div style={{ position: "absolute", left: 100, top: 420, opacity: timerIn }}>
+      <Headline at={T.thrusters - 2} left={100} top={SAFE_TOP} lines={[{ text: "THE THRUSTERS ARE", size: 84 }]} stroke={9} />
+      <Stamp at={T.spectacle - 2} left={104} top={236} color={C.magenta} size={112} rot={-5}>THE SPECTACLE</Stamp>
+      <div style={{ position: "absolute", left: 100, top: 440, opacity: timerIn }}>
         <div style={{ ...HEADC, fontSize: 190, color: C.magenta, fontVariantNumeric: "tabular-nums", ...keyline(1.2, 11) }}>
           {(run * 2).toFixed(1)} S
         </div>
-        <div style={{ ...MONO, fontSize: 44, color: C.ink, marginTop: 10 }}>OF FULL THRUST · OUR ESTIMATE</div>
+        <div style={{ ...MONO, fontSize: 44, color: C.ink, marginTop: 10 }}>OF FULL THRUST</div>
         <div style={{ position: "relative", marginTop: 22, width: 640, height: 40, border: `5px solid ${C.ink}`, borderRadius: 22, overflow: "hidden" }}>
           <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: `${level * 100}%`, backgroundColor: frame < T.hours ? C.magenta : C.acid }} />
         </div>
       </div>
+      {frame >= t0 - 8 ? <EvidenceStamp kind="ours" at={t0} left={620} top={490} size={48} /> : null}
       <div style={{ position: "absolute", left: 100, top: 776, opacity: hrs, translate: `0 ${(1 - hrs) * 24}px` }}>
         <div style={{ ...HEADC, fontSize: 84, color: C.acid, ...keyline(0.6, 9) }}>THEN 2–6 HOURS TO REFILL</div>
-        <div style={{ ...MONO, fontSize: 44, color: DIM, marginTop: 10 }}>LARS MORAVY, TESLA, TO TOP GEAR</div>
       </div>
+      <EvidenceStamp kind="tesla" at={T.hours + 4} left={100} top={874} size={46} text="TESLA'S ENGINEER, TO TOP GEAR" />
     </AbsoluteFill>
   );
 };
@@ -265,7 +252,7 @@ const NotForRoads: React.FC = () => {
   const b = rowIn(F.legal + 10);
   return (
     <AbsoluteFill style={{ scale: slowPush(frame, F.legal, F.spacex, 1.04), transformOrigin: "40% 55%" }}>
-      <Headline at={F.legal + 2} left={100} top={96} lines={[{ text: "THE VERSION WITH THE MOST THRUSTERS", size: 72 }]} stroke={9} />
+      <Headline at={F.legal + 2} left={100} top={SAFE_TOP} lines={[{ text: "THE VERSION WITH THE MOST THRUSTERS", size: 72 }]} stroke={9} />
       <div style={{ opacity: interpolate(a, [0, 0.3], [0, 1], CLAMP) * (1 - dimA * 0.68) }}>
         <div style={{ position: "absolute", left: 100, top: 290, ...HEADC, fontSize: 96, color: C.ink, ...keyline(0.7, 10) }}>THRUST</div>
         <div style={{ position: "absolute", left: 100, top: 392, ...MONO, fontSize: 44, color: DIM }}>4 NOZZLES</div>
@@ -313,19 +300,19 @@ const FromSpaceX: React.FC = () => {
   if (frame < F.spacex || frame >= F.two) return null;
   return (
     <AbsoluteFill style={{ scale: slowPush(frame, F.spacex, F.two, 1.04), transformOrigin: "50% 60%" }}>
-      <Headline at={T.almost - 2} left={100} top={96} lines={[{ text: "ALMOST EVERYTHING THAT MAKES IT FLY", size: 72 }]} stroke={9} />
-      <Headline at={T.came - 2} left={96} top={186} lines={[{ text: "CAME FROM SPACEX", size: 150, color: C.magenta }]} />
+      <Headline at={T.almost - 2} left={100} top={SAFE_TOP} lines={[{ text: "ALMOST EVERYTHING THAT MAKES IT FLY", size: 72 }]} stroke={9} />
+      <Headline at={T.came - 2} left={96} top={SAFE_TOP + 88} lines={[{ text: "CAME FROM SPACEX", size: 150, color: C.magenta }]} />
       {PARTS.map((p, pi) => {
         // a faint pencil row is up from the start ("what makes it fly"); each part inks in when the narration names it
-        const ghost = ease(frame, F.spacex + 8 + pi * 10, F.spacex + 44 + pi * 10, EASE_IN_OUT);
+        const ghost = ease(frame, F.spacex + 2 + pi * 6, F.spacex + 22 + pi * 6, EASE_IN_OUT);
         const d = ease(frame, p.at, p.at + 18, EASE_IN_OUT);
         const t = pop(frame, p.at + 10, fps, 220, 14);
         return (
           <div key={p.title}>
-            <svg width={420} height={300} viewBox="-210 -150 420 300" style={{ position: "absolute", left: p.x - 210, top: 400 }}>
+            <svg width={504} height={360} viewBox="-210 -150 420 300" style={{ position: "absolute", left: p.x - 252, top: 350 }}>
               {p.icon.map((path, i) => {
                 const g = evolvePath(ghost, path);
-                return <path key={`g${i}`} d={path} fill="none" stroke={C.ink} strokeOpacity={0.22} strokeWidth={i === 0 ? 6 : 3} strokeLinecap="round"
+                return <path key={`g${i}`} d={path} fill="none" stroke={C.ink} strokeOpacity={0.42} strokeWidth={i === 0 ? 6 : 3} strokeLinecap="round"
                   strokeLinejoin="round" strokeDasharray={g.strokeDasharray} strokeDashoffset={g.strokeDashoffset} />;
               })}
               {d > 0 ? p.icon.map((path, i) => {
@@ -334,9 +321,9 @@ const FromSpaceX: React.FC = () => {
                   strokeLinejoin="round" strokeDasharray={ev.strokeDasharray} strokeDashoffset={ev.strokeDashoffset} />;
               }) : null}
             </svg>
-            <div style={{ position: "absolute", left: p.x - 120, width: 240, top: 690, height: 4, backgroundColor: "rgba(255,255,255,0.22)",
+            <div style={{ position: "absolute", left: p.x - 120, width: 240, top: 722, height: 4, backgroundColor: "rgba(255,255,255,0.22)",
               scale: `${ghost} 1`, opacity: 1 - interpolate(t, [0, 0.3], [0, 1], CLAMP) }} />
-            <div style={{ position: "absolute", left: p.x - 300, width: 600, top: 722, textAlign: "center", opacity: interpolate(t, [0, 0.3], [0, 1], CLAMP),
+            <div style={{ position: "absolute", left: p.x - 300, width: 600, top: 746, textAlign: "center", opacity: interpolate(t, [0, 0.3], [0, 1], CLAMP),
               translate: `0 ${(1 - t) * 24}px` }}>
               <div style={{ ...HEADC, fontSize: 68, color: C.ink, ...keyline(0.5, 9) }}>{p.title}</div>
               <div style={{ ...MONO, fontSize: 44, lineHeight: 1.12, color: DIM, marginTop: 12 }}>{p.sub[0]}<br />{p.sub[1]}</div>
@@ -398,7 +385,7 @@ const TwoMachines: React.FC = () => {
   const rockFeat = ease(frame, T.machines + 8, T.machines + 26, EASE_IN_OUT);
   const topBand = ease(frame, T.brilliant - 10, T.brilliant + 2, EASE_IN_OUT);
   const botBand = ease(frame, T.and3 - 4, T.and3 + 8, EASE_IN_OUT);
-  const sc = interpolate(split, [0, 1], [1, 0.78]);
+  const sc = interpolate(split, [0, 1], [1.28, 0.86]);
   // the outline is 1200 x 300 (plus arrows and plumes); centre it, then send the layers to the two bands
   const place = (dy: number): React.CSSProperties => ({ position: "absolute", left: 960 - 600, top: 540 - 160, width: 1200, height: 320,
     scale: sc, translate: `${split * 160}px ${(dy - 22) * split}px`, transformOrigin: "50% 50%" });
@@ -422,14 +409,14 @@ const TwoMachines: React.FC = () => {
       {split > 0 ? <div style={{ position: "absolute", left: 0, top: 536, width: 1920 * split, height: 8, backgroundColor: C.black }} /> : null}
 
       {/* the outline: white, then two coloured layers pulling apart */}
-      <div style={{ ...place(0), opacity: 1 - split }}><Side color={C.ink} draw={draw} /></div>
+      <div style={{ ...place(0), opacity: 1 - split }}><Side color={C.ink} draw={draw} width={9} /></div>
       {split > 0 ? (
         <>
           <div style={{ ...place(-240), opacity: interpolate(split, [0, 0.3], [0, 1], CLAMP) * (1 - topBand * 0.85) }}>
-            <Side color={C.cyan} draw={1} extra={VAC} extraDraw={vacFeat} />
+            <Side color={C.cyan} draw={1} extra={VAC} extraDraw={vacFeat} width={8} />
           </div>
           <div style={{ ...place(240), opacity: interpolate(split, [0, 0.3], [0, 1], CLAMP) * (1 - botBand * 0.85) }}>
-            <Side color={C.magenta} draw={1} extra={ROCK} extraDraw={rockFeat} plumes={rockFeat} />
+            <Side color={C.magenta} draw={1} extra={ROCK} extraDraw={rockFeat} plumes={rockFeat} width={8} />
           </div>
         </>
       ) : null}
@@ -437,7 +424,7 @@ const TwoMachines: React.FC = () => {
       <Tag at={T.machines - 2} until={T.brilliant - 6} left={760} top={500} bg={C.acid} size={64} rot={[-6, -2]}>TWO MACHINES · ONE BODY</Tag>
       <Headline at={T.brilliant - 2} left={100} top={250} lines={[{ text: "A BRILLIANT", size: 72 }, { text: "VACUUM CLEANER", size: 132, color: C.cyan }]} />
       <Headline at={T.very - 4} left={100} top={720} lines={[{ text: "A VERY SHORT", size: 72 }, { text: "ROCKET", size: 160, color: C.magenta }]} />
-      <div style={{ position: "absolute", right: 100, top: 100, ...MONO, fontSize: 44, color: C.ink, opacity: topBand }}>FANS · SKIRTS</div>
+      <div style={{ position: "absolute", right: 100, top: SAFE_TOP, ...MONO, fontSize: 44, color: C.ink, opacity: topBand }}>FANS · SKIRTS</div>
       <div style={{ position: "absolute", right: 100, top: 590, ...MONO, fontSize: 44, color: C.ink, opacity: botBand }}>TANKS · NOZZLES</div>
     </AbsoluteFill>
   );
@@ -469,8 +456,8 @@ const Finale: React.FC = () => {
         </Sequence>
       </AbsoluteFill>
       <AbsoluteFill style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 45%)" }} />
-      <Tag at={T.for - 2} left={100} top={100} size={56}>FOR NOW,</Tag>
-      <div style={{ position: "absolute", left: 100, top: 196, ...HEADC }}>
+      <Tag at={T.for - 2} left={100} top={SAFE_TOP} size={56}>FOR NOW,</Tag>
+      <div style={{ position: "absolute", left: 100, top: 220, ...HEADC }}>
         {[
           { text: "UPSIDE DOWN", at: T.upside - 2, size: 140, color: C.ink },
           { text: "AND NOT", at: T.and4 - 2, size: 140, color: C.ink },
@@ -519,15 +506,14 @@ export const S8Verdict: React.FC = () => (
     <FromSpaceX />
     <TwoMachines />
     <Finale />
-    <Credit text={FOOTAGE} top={CREDIT_LOW} show={[[4, F.grip]]} />
+    <Credit text={FOOTAGE} top={CREDIT_LOW} show={[[0, F.grip]]} />
     <Credit text={FOOTAGE} top={CREDIT_TOP} show={[[F.real, F.spec]]} />
     <Credit text={FOOTAGE} top={CREDIT_LOW} show={[[F.final, F.end]]} />
     <Credit text="SOURCE: TESLA ROADSTER EVENT, 15 OCT 2026" top={CREDIT_TOP} show={[[F.grip, F.real]]} />
     <Credit text={OURS} top={CREDIT_TOP} show={[[F.spec, F.legal], [T.brilliant - 10, F.final]]} />
     <Credit text="SOURCES: TESLA.COM · TESLA EVENT · TOP GEAR" top={CREDIT_TOP} show={[[F.legal, F.two]]} />
 
-    <Sfx at={2} name="rewind" volume={0.3} />
-    <Sfx at={RESUME} name="whoosh" volume={0.28} />
+    <Sfx at={0} name="whoosh" volume={0.3} />
     <Sfx at={F.grip} name="whoosh" volume={0.38} />
     <Sfx at={F.grip + 2} name="form" volume={0.32} />
     <Sfx at={T.fans - 2} name="riser" volume={0.22} dur={T.g2 - T.fans + 2} />

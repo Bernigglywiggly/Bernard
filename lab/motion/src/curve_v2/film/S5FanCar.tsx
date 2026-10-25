@@ -2,7 +2,8 @@ import { Video } from "@remotion/media";
 import type React from "react";
 import { AbsoluteFill, Easing, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { CLAMP, EASE_IN_OUT, EASE_OUT } from "../../lib/anim";
-import { BG_NIGHT, C, Credit, HEADC, keyline, MONO, pop, Sfx, Stamp, Tag } from "../kit";
+import { BG_NIGHT, C, Credit, HEADC, keyline, MONO, pop, Stamp, Tag } from "../kit";
+import { Sfx } from "./fx";
 import { cue } from "./util";
 
 // Roadster film, segment S5 ("The fan car", 38.6 s). A camera travels one long night track that is also the timeline:

@@ -2,7 +2,8 @@ import type React from "react";
 import { AbsoluteFill, Easing, interpolate, random, useCurrentFrame, useVideoConfig } from "remotion";
 import { CLAMP, EASE_IN_OUT, EASE_OUT } from "../../lib/anim";
 import { theme } from "../../theme";
-import { BG_NIGHT, C, HEADC, keyline, MONO, pop, Sfx, slowPush, Tag } from "../kit";
+import { BG_NIGHT, C, HEADC, keyline, MONO, pop, slowPush, Tag } from "../kit";
+import { EvidenceStamp, Sfx } from "./fx";
 import { BODY, GREY, Jet, Roadster, ROADSTER_NOZZLE, WS } from "./S5FanCar";
 import { cue } from "./util";
 
@@ -15,11 +16,13 @@ import { cue } from "./util";
 // 310-320 mi per Moravy to Top Gear, 620 mi promised in 2017; no price announced), §13.1 rows 1-3 and 17 (US clause 4
 // "we cannot guarantee when your vehicle will actually be delivered or if it will be delivered", stamped
 // US v.20261015; the UK clause ends "...will actually be delivered."; the 2017 deal promised a 2020 launch).
+// v2 (critic round 1): the refund clause (§13.1 #6-7: refundable, no interest, no escrow) is stamped under the money, and
+// the board carries the filing's status for the car, "Design development" (TESLA_Q3_2026_FACTS.md, capacity table).
 
 const S = "S7";
 const Q = {
   reserve: cue(S, "reserve"), thrusters: cue(S, "thrusters"), quarter: cue(S, "quarter"), dollars: cue(S, "dollars"),
-  upfront: cue(S, "upfront"), car: cue(S, "car"), y2028: cue(S, "2028"), after: cue(S, "after"), promised: cue(S, "promised"),
+  upfront: cue(S, "upfront"), refundable: cue(S, "refundable"), interest: cue(S, "interest"), escrow: cue(S, "escrow"), car: cue(S, "car"), y2028: cue(S, "2028"), after: cue(S, "after"), promised: cue(S, "promised"),
   y2020: cue(S, "2020"), but: cue(S, "But"), american: cue(S, "American"), guarantee: cue(S, "guarantee"),
   delivered: cue(S, "delivered"), all: cue(S, "all"), range: cue(S, "range"), shrunk: cue(S, "shrunk"),
   m620: cue(S, "620"), half: cue(S, "half"), so: cue(S, "So"), deposit: cue(S, "deposit"), place: cue(S, "place"),
@@ -70,9 +73,13 @@ const Money: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
         scale: String(punch), transformOrigin: "0% 50%", ...keyline(2, 10) }}>{money(shown)}</div>
       <Tag at={-30} until={Q.upfront - 2} left={150} top={608} bg={C.ink} size={60} style={WS}>PAID TODAY</Tag>
       <Tag at={Q.upfront - 2} left={150} top={608} bg={C.acid} size={60} rot={[8, -2]} style={WS}>UP FRONT</Tag>
-      <Rise at={Q.quarter} left={156} top={716} size={44} color={C.ink} frame={frame} fps={fps} font={MONO}>$5,000 TODAY</Rise>
-      <Rise at={Q.quarter + 4} left={156} top={772} size={44} color={C.ink} frame={frame} fps={fps} font={MONO}>+ $245,000 WITHIN 10 DAYS</Rise>
-      <Rise at={Q.upfront + 4} left={156} top={828} size={44} color={GREY} frame={frame} fps={fps} font={MONO}>THRUST VERSION, US</Rise>
+      <Rise at={Q.quarter} until={Q.refundable - 2} left={156} top={716} size={44} color={C.ink} frame={frame} fps={fps} font={MONO}>$5,000 TODAY</Rise>
+      <Rise at={Q.quarter + 4} until={Q.refundable - 2} left={156} top={772} size={44} color={C.ink} frame={frame} fps={fps} font={MONO}>+ $245,000 WITHIN 10 DAYS</Rise>
+      <Rise at={Q.upfront + 4} until={Q.refundable - 2} left={156} top={828} size={44} color={GREY} frame={frame} fps={fps} font={MONO}>THRUST VERSION, US</Rise>
+      <Tag at={Q.refundable - 2} left={150} top={712} bg={C.acid} size={62} rot={[-8, -2]} style={WS}>REFUNDABLE</Tag>
+      <Tag at={Q.interest - 2} left={560} top={712} bg={C.warn} color={C.ink} size={62} rot={[8, 2]} style={WS}>NO INTEREST</Tag>
+      <Tag at={Q.escrow - 2} left={1000} top={712} bg={C.warn} color={C.ink} size={62} rot={[-8, -1]} style={WS}>NO ESCROW</Tag>
+      <EvidenceStamp kind="tesla" at={Q.refundable + 6} left={150} top={836} size={46} text="TESLA'S US AGREEMENT" note="RESERVATION AGREEMENT, CLAUSES 5–6" />
     </AbsoluteFill>
   );
 };
@@ -203,7 +210,7 @@ const RangeAndQueue: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
   const slotX = SLOT0 + YOU * SLOT_W + creep;
   const carX = carX0 + (slotX - carX0) * toQueue;
   const carY = BAR.y + (QUEUE_Y - BAR.y) * toQueue;
-  const carS = 0.2 + (0.22 - 0.2) * toQueue;
+  const carS = 0.34 + (0.22 - 0.34) * toQueue;
   const travel = frame < Q.half - 4 ? range : 620 - (620 - range) * 1;
   const wheel = (travel * 2.4 + creep * 3) % 360;
   const rangeOp = 1 - toQueue;
@@ -284,6 +291,7 @@ const ROWS = [
   { label: "RANGE", value: "620 → ~315 MI", c: C.cyan, moving: [9], pool: "0123456789" },
   { label: "PRICE", value: "NOT ANNOUNCED", c: C.ink, moving: [], pool: "" },
   { label: "DELIVERY", value: "NOT GUARANTEED", c: C.warn, moving: [], pool: "" },
+  { label: "STATUS", value: "DESIGN DEVELOPMENT", c: C.acid, moving: [], pool: "" },
 ];
 const Board: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
   if (frame < T4 + 12 || frame >= T5 + 10) return null;
@@ -295,14 +303,16 @@ const Board: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
         const at = T4 + 14 + i * 5;
         const k = pop(frame, at, fps, 220, 15);
         return (
-          <div key={r.label} style={{ position: "absolute", left: 150, top: 150 + i * 124, display: "flex", alignItems: "center", gap: 36,
+          <div key={r.label} style={{ position: "absolute", left: 150, top: 150 + i * 106, display: "flex", alignItems: "center", gap: 36,
             opacity: interpolate(k, [0, 0.3], [0, 1], CLAMP), translate: `${(1 - k) * -50}px 0` }}>
             <div style={{ width: 330, ...HEADC, fontSize: 64, color: C.ink, ...keyline(0.43, 9) }}>{r.label}</div>
-            <FlapRow text={r.value} frame={frame} land={at + 6} seed={`r${i}`} w={70} h={98} size={68} color={r.c} wobble={wob} wobbleAt={r.moving} wpool={r.pool || undefined} />
+            <FlapRow text={r.value} frame={frame} land={at + 6} seed={`r${i}`} w={r.value.length > 15 ? 62 : 70} h={88} size={60} color={r.c} wobble={wob}
+              wobbleAt={r.moving} wpool={r.pool || undefined} />
           </div>
         );
       })}
-      <Rise at={Q.numbers - 4} left={156} top={660} size={44} color={GREY} frame={frame} fps={fps} font={MONO}>THE NUMBERS ON THE CAR YOU&apos;RE QUEUING FOR</Rise>
+      <Rise at={Q.numbers - 4} left={156} top={688} size={44} color={GREY} frame={frame} fps={fps} font={MONO}>THE NUMBERS ON THE CAR YOU&apos;RE QUEUING FOR</Rise>
+      <Rise at={Q.numbers + 4} left={156} top={740} size={40} color={GREY} frame={frame} fps={fps} font={MONO}>STATUS: TESLA&apos;S Q3 2026 UPDATE, 21 OCT</Rise>
     </AbsoluteFill>
   );
 };

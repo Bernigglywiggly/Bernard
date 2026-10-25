@@ -1,7 +1,8 @@
 import type React from "react";
 import { AbsoluteFill, Easing, interpolate, random, useCurrentFrame, useVideoConfig } from "remotion";
 import { CLAMP, EASE_IN_OUT, EASE_OUT } from "../../lib/anim";
-import { BG_NIGHT, C, ClipScene, Credit, HEAD, HEADC, keyline, MONO, pop, Sfx, slowPush, Stamp, Tag } from "../kit";
+import { BG_NIGHT, C, ClipScene, Credit, HEAD, HEADC, keyline, MONO, pop, slowPush, Stamp, Tag } from "../kit";
+import { EvidenceStamp, Sfx } from "./fx";
 import { BODY, GREY, Jet, Roadster, ROADSTER_NOZZLE, TYRE, WS } from "./S5FanCar";
 import { cue } from "./util";
 
@@ -22,7 +23,7 @@ const Q = {
   american: cue(S, "American"), flying: cue(S, "flying"), it: cue(S, "it"), isnt: cue(S, "isn't"), aircraft: cue(S, "aircraft"),
   leaves: cue(S, "leaves"), road: cue(S, "road"), regulator2: cue(S, "regulator", 2), up: cue(S, "up"), federal: cue(S, "federal"),
   keep: cue(S, "keep"), but: cue(S, "But"), website: cue(S, "website"), rocket: cue(S, "rocket"), flies: cue(S, "flies"),
-  approved: cue(S, "approved"), all: cue(S, "all"), even: cue(S, "Even"), thrust: cue(S, "thrust"), legal: cue(S, "legal"),
+  approved: cue(S, "approved"), all: cue(S, "all"), top: cue(S, "Top"), thrust: cue(S, "thrust"), legal: cue(S, "legal"),
   thrusters: cue(S, "thrusters"), meant: cue(S, "meant"), jet: cue(S, "jet"), strong: cue(S, "strong"), loose: cue(S, "loose"),
   projectiles: cue(S, "projectiles"), musk: cue(S, "Musk"), sure: cue(S, "sure"), legal2: cue(S, "legal", 2), so: cue(S, "So"),
   fly: cue(S, "fly"), somewhere: cue(S, "somewhere"), calls: cue(S, "calls"),
@@ -47,9 +48,9 @@ const KEYS: Key[] = [
   { f: Q.rocket + 20, x: 1520 + PAGE_X, y: 552 + ROAD_Y, z: 1.12 },
   { f: Q.approved - 6, x: 1522 + PAGE_X, y: 554 + ROAD_Y, z: 1.125, e: SINE },
   { f: Q.approved + 16, x: 1500 + PAGE_X, y: 610 + ROAD_Y, z: 1.16 },
-  { f: Q.even - 2, x: 1502 + PAGE_X, y: 612 + ROAD_Y, z: 1.165, e: SINE },
-  { f: Q.even + 26, x: 970 + PAGE_X, y: 560 + ROAD_Y, z: 1.0 },
-  { f: GRAVEL, x: 970 + PAGE_X, y: 560 + ROAD_Y, z: 1.04, e: SINE },
+  { f: Q.top - 2, x: 1502 + PAGE_X, y: 612 + ROAD_Y, z: 1.165, e: SINE },
+  { f: Q.top + 24, x: 960 + PAGE_X, y: 1520 + ROAD_Y, z: 1.0 },
+  { f: GRAVEL, x: 960 + PAGE_X, y: 1520 + ROAD_Y, z: 1.04, e: SINE },
 ];
 const camAt = (f: number): Cam => {
   if (f <= KEYS[0].f) return KEYS[0];
@@ -187,12 +188,12 @@ const Marker: React.FC<{ p: number; children: React.ReactNode; color?: string }>
 const Page: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
   const focus = (i: number) => {
     if (frame < Q.rocket - 2) return 1;
-    if (frame < Q.even) return i === 2 ? 1 : 0.16;
+    if (frame < Q.top) return i === 2 ? 1 : 0.16;
     return i === 1 ? 1 : i === 2 ? 0.5 : 0.24;
   };
   const fly = interpolate(frame, [Q.flies - 8, Q.flies + 6], [0, 1], { ...CLAMP, easing: EASE_OUT });
   const hi = interpolate(frame, [Q.approved, Q.all + 4], [0, 1], { ...CLAMP, easing: Easing.inOut(Easing.quad) });
-  const header = interpolate(frame, [Q.rocket - 6, Q.rocket + 2, Q.even + 10, Q.even + 22], [1, 0, 0, 1], CLAMP);
+  const header = interpolate(frame, [Q.rocket - 6, Q.rocket + 2], [1, 0], CLAMP);
   return (
     <div style={{ position: "absolute", left: PAGE_X, top: ROAD_Y, width: 1920, height: 1080 }}>
       <div style={{ position: "absolute", left: -160, top: -140, width: 3200, height: 1400, backgroundColor: "#EEF0F3", rotate: "-0.8deg",
@@ -205,21 +206,17 @@ const Page: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
       </div>
       {[690, 1260].map((x) => <div key={x} style={{ position: "absolute", left: x, top: 330, width: 3, height: 470, backgroundColor: "#DDE1E6" }} />)}
       {COLS.map((c, i) => (
-        <div key={c.name} style={{ position: "absolute", left: c.x, top: 330, width: 520, opacity: focus(i) }}>
-          <div style={{ ...HEADC, fontSize: 72, color: PAGE_INK }}>{c.name}</div>
-          <div style={{ ...HEAD, fontWeight: 800, fontVariationSettings: "'wdth' 92", fontSize: 62, color: "#2A2F36", marginTop: 26, letterSpacing: "-0.01em" }}>{c.label}</div>
+        <div key={c.name} style={{ position: "absolute", left: c.x, top: 330, width: 540, opacity: focus(i) }}>
+          <div style={{ ...HEADC, fontSize: 90, color: PAGE_INK }}>{c.name}</div>
+          <div style={{ ...HEAD, fontWeight: 800, fontVariationSettings: "'wdth' 92", fontSize: 76, color: "#2A2F36", marginTop: 26, letterSpacing: "-0.01em" }}>{c.label}</div>
           {i === 2 ? (
             <div style={{ ...HEAD, fontVariationSettings: "'wdth' 92", letterSpacing: "-0.005em", lineHeight: 1.18, color: PAGE_INK }}>
-              <div style={{ fontWeight: 700, fontSize: 50, marginTop: 40 }}><Marker p={fly} color={C.cyan}>So yes, it can fly.</Marker></div>
-              <div style={{ fontWeight: 800, fontSize: 56, marginTop: 40 }}>Note: <Marker p={hi}>Not approved for public road use.</Marker></div>
+              <div style={{ fontWeight: 700, fontSize: 60, marginTop: 40 }}><Marker p={fly} color={C.cyan}>So yes, it can fly.</Marker></div>
+              <div style={{ fontWeight: 800, fontSize: 66, marginTop: 40 }}>Note: <Marker p={hi}>Not approved for public road use.</Marker></div>
             </div>
           ) : null}
         </div>
       ))}
-      {/* our annotations, in the film's own tags */}
-      <Tag at={Q.legal - 4} left={716} top={566} bg={C.cyan} size={60} style={WS}>ROAD LEGAL</Tag>
-      <Tag at={Q.meant - 10} left={716} top={664} bg={C.warn} color={C.ink} size={56} rot={[8, -2]} style={WS}>THRUSTERS:<br />NOT FOR<br />PUBLIC ROADS</Tag>
-      <Rise at={Q.meant} left={722} top={886} size={44} color="#5E6670" frame={frame} fps={fps} font={MONO}>TESLA TO TOP GEAR</Rise>
     </div>
   );
 };
@@ -370,6 +367,24 @@ const AerialShot: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) =>
 };
 
 // ------------------------------------------------------------------------------------------------ the segment
+// Under Tesla's page (the camera has dropped below it): Top Gear's claim, outside Tesla's words (critic round 1: the
+// v1 badge sat inside the page and read as Tesla's own). Facts: S1 (Top Gear, on the Thrust version), §13.3 (Tesla's
+// page says Thrust is "Race ready", never "street legal").
+const TopGear: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
+  if (frame < Q.top + 14 || frame >= GRAVEL) return null;
+  const legal = pop(frame, Q.legal - 4, fps, 230, 12);
+  return (
+    <AbsoluteFill>
+      <EvidenceStamp kind="tesla" at={Q.top + 14} left={150} top={400} text="TOP GEAR WAS TOLD" note="ON THE THRUST VERSION" />
+      {frame >= Q.legal - 4 ? (
+        <div style={{ position: "absolute", left: 150, top: 560, ...HEADC, ...WS, fontSize: 170, color: C.cyan, opacity: interpolate(legal, [0, 0.3], [0, 1], CLAMP),
+          translate: `0 ${(1 - legal) * 30}px`, ...keyline(1.1, 11) }}>ROAD LEGAL</div>
+      ) : null}
+      <Tag at={Q.meant - 10} left={156} top={780} bg={C.warn} color={C.ink} size={66} rot={[8, -2]} style={WS}>BUT ITS THRUSTERS: NOT FOR PUBLIC ROADS</Tag>
+    </AbsoluteFill>
+  );
+};
+
 export const S6Legal: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -392,6 +407,7 @@ export const S6Legal: React.FC = () => {
           </div>
         </AbsoluteFill>
       ) : null}
+      <TopGear frame={frame} fps={fps} />
       <GravelShot frame={frame} fps={fps} />
       <QuoteShot frame={frame} fps={fps} />
       <AerialShot frame={frame} fps={fps} />

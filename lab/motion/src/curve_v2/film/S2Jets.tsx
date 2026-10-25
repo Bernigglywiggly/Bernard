@@ -1,8 +1,8 @@
 import type React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { CLAMP, EASE_OUT } from "../../lib/anim";
-import { BG_NIGHT, C, ClipScene, HEADC, Headline, keyline, MONO, pop, Sfx, slowPush, Tag } from "../kit";
-import { Disclose, HoldStill, M, Shade, TeslaCredit } from "./fx";
+import { BG_NIGHT, C, ClipScene, HEADC, Headline, keyline, MONO, pop, slowPush, Tag } from "../kit";
+import { Disclose, HoldStill, M, SAFE_TOP, Sfx, Shade, TeslaCredit } from "./fx";
 import { cue, segFrames } from "./util";
 
 // Roadster film S2 "The jets". Facts: TESLA_ROADSTER_FACTS.md §4 (two COPVs based on Falcon hardware, 600 L, about
@@ -37,7 +37,7 @@ const Tanks: React.FC = () => {
   return (
     <AbsoluteFill>
       <Shade from="left" strength={0.6} />
-      <Tag at={T.tanks} left={M} top={170} bg={C.acid} size={72}>TWO CARBON-WRAPPED TANKS</Tag>
+      <Tag at={T.tanks} left={M} top={SAFE_TOP + 20} bg={C.acid} size={72}>TWO CARBON-WRAPPED TANKS</Tag>
       <Tag at={T.spacex} left={M} top={290} bg={C.ink} size={56}>THE KIND SPACEX FLIES ON FALCON</Tag>
       <Tag at={T.quarter} left={M} top={760} bg={C.cyan} size={110} rot={[-8, -2]}>≈250 KG OF GAS</Tag>
     </AbsoluteFill>
@@ -63,9 +63,10 @@ const NozzleMap: React.FC = () => {
   const valves = pop(frame, T.fraction, fps, 220, 11);
   return (
     <AbsoluteFill style={{ background: BG_NIGHT, scale: slowPush(frame, X.map, X.thrust, 1.04), transformOrigin: "55% 55%" }}>
-      <Headline at={X.map + 2} left={M} top={70} lines={[{ text: "WHERE THE GAS COMES OUT", size: 96 }]} />
+      <Headline at={X.map + 2} left={M} top={SAFE_TOP} lines={[{ text: "WHERE THE GAS COMES OUT", size: 96 }]} />
       <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
-        {/* car, top view */}
+        {/* car, top view: 1.3x and right of centre (critic round 1: small object in an empty frame at 0:39) */}
+        <g transform="translate(1150 560) scale(1.3) translate(-1050 -560)">
         <rect x={720} y={380} width={660} height={360} rx={150} fill="#1E2230" stroke={C.ink} strokeWidth={8} />
         <rect x={930} y={440} width={240} height={240} rx={60} fill="#11141B" stroke="#59606E" strokeWidth={5} />
         <text x={1050} y={575} textAnchor="middle" fill="#8C93A3" fontFamily="Archivo" fontWeight={900} fontSize={34}>FRONT →</text>
@@ -79,19 +80,20 @@ const NozzleMap: React.FC = () => {
         <g opacity={aUp}><line x1={800} y1={850} x2={800} y2={850 - 120 * aUp} stroke={C.magenta} strokeWidth={18} /><path d="M 782 735 L 800 705 L 818 735 Z" fill={C.magenta} /></g>
         <g opacity={aDown}><line x1={1250} y1={250} x2={1250} y2={250 + 110 * aDown} stroke={C.magenta} strokeWidth={18} /><path d="M 1232 360 L 1250 390 L 1268 360 Z" fill={C.magenta} /></g>
         <g opacity={aSide}><line x1={1420} y1={560} x2={1420 + 150 * aSide} y2={560} stroke={C.acid} strokeWidth={18} /><path d={`M ${1570 * 1} 542 L ${1600} 560 L ${1570} 578 Z`} fill={C.acid} /></g>
+        </g>
       </svg>
       <div style={{ position: "absolute", left: M, top: 300 }}>
         <div style={{ ...HEADC, fontSize: 220, color: C.ink, fontVariantNumeric: "tabular-nums", ...keyline(1.4, 11) }}>{count}</div>
         <div style={{ ...HEADC, fontSize: 70, color: C.ink, ...keyline(0.5, 8) }}>NOZZLES</div>
       </div>
-      <div style={{ position: "absolute", left: M, top: 640, ...MONO, fontSize: 36, lineHeight: 1.5, color: C.ink, opacity: count >= 10 ? 1 : 0 }}>
-        <span style={{ color: C.cyan }}>●</span> 4 REAR: THRUST<br /><span style={{ color: C.magenta }}>●</span> 4 CORNERS: POINT DOWN<br />
+      <div style={{ position: "absolute", left: M, top: 610, ...HEADC, fontSize: 52, lineHeight: 1.25, color: C.ink, opacity: count >= 10 ? 1 : 0, ...keyline(0.35, 8) }}>
+        <span style={{ color: C.cyan }}>●</span> 4 REAR: THRUST<br /><span style={{ color: C.magenta }}>●</span> 4 CORNERS: DOWN<br />
         <span style={{ color: C.acid }}>●</span> 2 FRONT: STEER
       </div>
       <div style={{ position: "absolute", right: M, bottom: 120, textAlign: "right", opacity: interpolate(valves, [0, 0.3], [0, 1], CLAMP),
         translate: `0 ${(1 - valves) * 30}px` }}>
         <div style={{ ...HEADC, fontSize: 84, color: C.acid, ...keyline(0.6, 9) }}>IN A FRACTION OF A SECOND</div>
-        <div style={{ ...MONO, fontSize: 32, color: "#D2CBE3", marginTop: 8 }}>VALVES BORROWED FROM TESLA&apos;S OPTIMUS ROBOT</div>
+        <div style={{ ...MONO, fontSize: 40, color: "#D2CBE3", marginTop: 8 }}>VALVES BORROWED FROM TESLA&apos;S OPTIMUS ROBOT</div>
       </div>
     </AbsoluteFill>
   );

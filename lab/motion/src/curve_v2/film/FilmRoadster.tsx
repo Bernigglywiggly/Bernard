@@ -14,17 +14,20 @@ import { S5FanCar } from "./S5FanCar";
 import { S6Legal } from "./S6Legal";
 import { S7Deposit } from "./S7Deposit";
 import { S8Verdict } from "./S8Verdict";
-import { S9Bill } from "./S9Bill";
 import { LEAD, segFrames } from "./util";
+import { VO_SECONDS } from "./words";
 
 // "How the Flying Tesla Roadster Actually Works" (The Curve, long form, 1920x1080, 30 fps). Script:
-// lab/curve_v2/film_roadster/script.py (v2, 23 Oct 2026); facts: TESLA_ROADSTER_FACTS.md, TESLA_Q3_2026_FACTS.md.
-// Each segment opens on its own hook and closes on its own payoff, so it cuts out as a Short.
+// lab/curve_v2/film_roadster/script.py (v2 pickups 25 Oct 2026); facts: TESLA_ROADSTER_FACTS.md.
+// v2 (critic round 1): S9 "the bill" is cut, the narration is lab/curve_v2/film_roadster/vo/v2 (vo_v2.py), and the end
+// card speaks a pointer to the Roadster Shorts. Each segment still opens on its own hook and closes on its own payoff.
 export const FILM_ORDER: [string, React.FC][] = [
   ["S1", S1Hang], ["S2", S2Jets], ["S3", S3Launch], ["b1", B1Bridge], ["S4", S4Seconds], ["b2", B2Bridge],
-  ["S5", S5FanCar], ["S6", S6Legal], ["S7", S7Deposit], ["S9", S9Bill], ["S8", S8Verdict],
+  ["S5", S5FanCar], ["S6", S6Legal], ["S7", S7Deposit], ["S8", S8Verdict],
 ];
 export const FILM_FRAMES = FILM_ORDER.reduce((a, [s]) => a + segFrames(s), 0) + END_FRAMES;
+const END_AT = FILM_FRAMES - END_FRAMES;
+const END_VO_DONE = END_AT + LEAD + Math.ceil(VO_SECONDS.END * 30);
 
 export const FilmRoadster: React.FC = () => (
   <AbsoluteFill style={{ backgroundColor: C.black }}>
@@ -32,13 +35,16 @@ export const FilmRoadster: React.FC = () => (
       {FILM_ORDER.map(([seg, Comp]) => (
         <Series.Sequence key={seg} durationInFrames={segFrames(seg)} premountFor={30}>
           <Comp />
-          <Sequence from={LEAD}><Audio src={staticFile(`film/vo_${seg}.mp3`)} /></Sequence>
+          <Sequence from={LEAD}><Audio src={staticFile(`film/v2/vo_${seg}.mp3`)} /></Sequence>
         </Series.Sequence>
       ))}
-      <Series.Sequence durationInFrames={END_FRAMES}><EndCard /></Series.Sequence>
+      <Series.Sequence durationInFrames={END_FRAMES}>
+        <EndCard />
+        <Sequence from={LEAD}><Audio src={staticFile("film/v2/vo_END.mp3")} /></Sequence>
+      </Series.Sequence>
     </Series>
-    {/* one bed under the whole film, ducked under the narration, up a little on the end card */}
+    {/* one bed under the whole film, ducked under the narration (the end card's pointer included), up a little after it */}
     <Audio src={staticFile("audio/sample-bed.mp3")} loop
-      volume={(f) => interpolate(f, [0, 15, FILM_FRAMES - END_FRAMES, FILM_FRAMES - END_FRAMES + 20, FILM_FRAMES - 30, FILM_FRAMES], [0, 0.09, 0.09, 0.2, 0.2, 0], CLAMP)} />
+      volume={(f) => interpolate(f, [0, 15, END_VO_DONE, END_VO_DONE + 15, FILM_FRAMES - 30, FILM_FRAMES], [0, 0.09, 0.09, 0.2, 0.2, 0], CLAMP)} />
   </AbsoluteFill>
 );

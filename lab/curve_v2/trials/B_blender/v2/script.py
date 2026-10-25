@@ -43,7 +43,7 @@ A = ap.parse_args(argv)
 SHOT = A.shot
 VERT = A.aspect == 'v'
 FPS = A.fps
-F_END = int(round({'hang': 6.0, 'xray': 6.0, 'drop': 5.0}.get(SHOT, 6.0) * FPS))
+F_END = int(round({'hang': 6.0, 'xray': 6.0, 'drop': 5.0, 'gauge': 2.0, 'refill': 8.0}.get(SHOT, 6.0) * FPS))
 CUTS = []
 T0 = time.time()
 
@@ -1171,8 +1171,9 @@ def spot(name, loc, target, color, energy, size_deg, blend=0.6, radius=0.3):
 
 build_world()
 FLOOR = build_floor()
-L_MAG = area('key_magenta', (2.0, 5.6, 3.6), (0, 0, 0.5), (1.0, 0.10, 0.62), 2600, 4.5, 1.6, spec=0.7)
-L_CYA = area('fill_cyan', (-1.6, -5.6, 3.2), (0, 0, 0.5), (0.05, 0.70, 1.0), 2400, 4.5, 1.6, spec=0.7)
+L_MAG = area('key_magenta', (2.0, 5.6, 3.6), (0, 0, 0.5), (1.0, 0.10, 0.62), 950, 4.5, 1.6, spec=0.6)
+L_KEYW = area('key_white', (3.6, 3.4, 3.0), (0, 0, 0.6), (1.0, 0.98, 0.96), 1700, 4.0, 2.2, spec=0.55)
+L_CYA = area('fill_cyan', (-1.6, -5.6, 3.2), (0, 0, 0.5), (0.05, 0.70, 1.0), 1150, 4.5, 1.6, spec=0.6)
 L_ORA = area('rim_cool', (-6.0, 1.4, 2.6), (0, 0, 0.6), (0.70, 0.80, 1.0), 1600, 3.5, 1.4, spec=0.7)
 L_TOP = area('top_soft', (0.2, 0.0, 5.0), (0, 0, 0), (1.0, 0.97, 0.94), 900, 6.0, 1.8, spec=0.08)
 L_RIM = spot('rim_spot', (-7.2, -2.2, 2.1), (0, 0, 0.55), (0.85, 0.9, 1.0), 7000, 30, 0.7, 0.8)
@@ -1247,10 +1248,10 @@ SLAB_OBJS = []
 _b = bmesh.new(); bmesh.ops.create_cube(_b, size=1.0)
 for v in _b.verts: v.co = Vector((v.co.x * 16.0, v.co.y * 6.0, v.co.z * 0.4 + 0.2 + SLAB_Z))
 _sl = mesh_obj('slab', _b, mats=[M_CONCRETE], smooth=False); add_bevel(_sl, 0.02, 2, 30); SLAB_OBJS.append(_sl)
-M_LED_RED = mat_emit('led_red', (1.0, 0.015, 0.02), 9.0)
+M_LED_RED = mat_emit('led_red', (1.0, 0.0, 0.008), 2.6)
 for sy_ in (1, -1):
     _b = bmesh.new(); bmesh.ops.create_cube(_b, size=1.0)
-    for v in _b.verts: v.co = Vector((v.co.x * 16.0, v.co.y * 0.035 + sy_ * 2.985, v.co.z * 0.035 + SLAB_Z + 0.02))
+    for v in _b.verts: v.co = Vector((v.co.x * 16.0, v.co.y * 0.022 + sy_ * 2.99, v.co.z * 0.022 + SLAB_Z + 0.012))
     SLAB_OBJS.append(mesh_obj('slab_led', _b, mats=[M_LED_RED], smooth=False))
 for (cx, cy) in ():
     _b = bmesh.new(); bmesh.ops.create_cube(_b, size=1.0)
@@ -1372,7 +1373,21 @@ def mat_mech(name, beat, glow_col, glow_str, normal=None, kind=None):
         h1 = math_node(nt, 'SINE', math_node(nt, 'MULTIPLY', math_node(nt, 'ADD', u, v), 2 * pi))
         h2 = math_node(nt, 'SINE', math_node(nt, 'MULTIPLY', math_node(nt, 'SUBTRACT', u, v), 2 * pi))
         bands = math_node(nt, 'POWER', math_node(nt, 'MAXIMUM', math_node(nt, 'MAXIMUM', h1, h2), 0.0), 8.0)
+        # 'drain' (object property, 0 = full, 1 = empty) moves a fill front along the tank's length like a charging
+        # bar (Generated Y runs 0-1 end to end); the empty part keeps a faint carbon wrap, the front is a bright band
+        drain = node(nt, 'ShaderNodeAttribute', attribute_type='OBJECT', attribute_name='drain').outputs['Fac']
+        sg = node(nt, 'ShaderNodeSeparateXYZ'); lk(nt, tc.outputs['Generated'], sg.inputs[0]); gy = sg.outputs['Y']
+        level = math_node(nt, 'SUBTRACT', 1.02, math_node(nt, 'MULTIPLY', drain, 1.04))
+        fill = node(nt, 'ShaderNodeMapRange', {'To Min': 1.0, 'To Max': 0.0}, interpolation_type='SMOOTHSTEP')
+        lk(nt, math_node(nt, 'SUBTRACT', level, 0.008), fill.inputs['From Min']); lk(nt, math_node(nt, 'ADD', level, 0.008), fill.inputs['From Max'])
+        lk(nt, gy, fill.inputs['Value'])
+        men = node(nt, 'ShaderNodeMapRange', {'From Min': 0.0, 'From Max': 0.025, 'To Min': 1.0, 'To Max': 0.0}, interpolation_type='SMOOTHSTEP')
+        lk(nt, math_node(nt, 'ABSOLUTE', math_node(nt, 'SUBTRACT', gy, level)), men.inputs['Value'])
         st = math_node(nt, 'ADD', math_node(nt, 'MULTIPLY', bands, glow_str * 2.4), glow_str * 0.45)
+        empty = math_node(nt, 'ADD', math_node(nt, 'MULTIPLY', bands, glow_str * 0.35), glow_str * 0.02)
+        st = math_node(nt, 'ADD', math_node(nt, 'MULTIPLY', st, fill.outputs[0]),
+                       math_node(nt, 'ADD', math_node(nt, 'MULTIPLY', men.outputs[0], glow_str * 4.0),
+                                 math_node(nt, 'MULTIPLY', empty, math_node(nt, 'SUBTRACT', 1.0, fill.outputs[0]))))
         base = principled(nt, **{'Base Color': (0.022, 0.022, 0.025, 1), 'Roughness': 0.38, 'Coat Weight': 1.0,
                                  'Coat Roughness': 0.06})
         bump = node(nt, 'ShaderNodeBump', {'Strength': 0.3, 'Distance': 0.002}); lk(nt, bands, bump.inputs['Height'])
@@ -1726,7 +1741,7 @@ def mat_jet(name, core=False):
     a = math_node(nt, 'MULTIPLY', a, 1.4 if core else 0.95, clamp_=True)
     tr = node(nt, 'ShaderNodeBsdfTransparent')
     if core:
-        sh = node(nt, 'ShaderNodeEmission', {'Color': (0.72, 0.92, 1.0, 1), 'Strength': 10.0}); so = sh.outputs[0]
+        sh = node(nt, 'ShaderNodeEmission', {'Color': (0.72, 0.92, 1.0, 1), 'Strength': 14.0}); so = sh.outputs[0]
     else:
         frost = principled(nt, **{'Base Color': (0.22, 0.25, 0.28, 1), 'Roughness': 1.0, 'Specular IOR Level': 0.0})
         em = node(nt, 'ShaderNodeEmission', {'Color': (0.78, 0.93, 1.0, 1)})
@@ -1843,8 +1858,26 @@ elif SHOT == 'xray':
                     tz=[(1, 0.38, None), (F_END, 0.40, None)], lens=[(1, 42, None), (F_END, 43, EASE_SOFT)],
                     roll=[(1, 0.0, None), (F_END, 0.0, None)], fstop=[(1, 8.0, None), (F_END, 8.0, None)],
                     shy=[(1, -0.10, None), (F_END, -0.10, None)])
+elif SHOT in ('gauge', 'refill'):   # gauge: rear jets empty the tanks in ~1.6 s; refill: no jets, the tanks fill slowly
+    F_DRAIN = (3, 51) if SHOT == 'gauge' else (8, F_END - 10)
+    S['root_z'] = const(0.0); S['roll'] = const(0.0); S['pitch'] = const(0.0); S['susp'] = const(0.0)
+    S['thr'] = const(-2.8)
+    S['Fans'] = const(0.0); S['Skirts'] = const(0.0); S['Tanks'] = const(1.0); S['Nozzles'] = const(1.0)
+    S['flow'] = const(0.0); S['speed'] = const(1.0); S['fan_rps'] = const(0.0); S['skirt'] = const(0.08)
+    S['slab'] = False; S['smoke'] = False
+    S['cam'] = dict(az=[(1, 122, None), (F_END, 116, EASE_SOFT)], el=[(1, 44.0, None), (F_END, 41.0, EASE_SOFT)],
+                    dist=[(1, 3.6, None), (F_END, 3.3, EASE_SOFT)], tx=[(1, -1.15, None), (F_END, -1.15, None)],
+                    tz=[(1, 0.45, None), (F_END, 0.45, None)], lens=[(1, 36, None), (F_END, 37, EASE_SOFT)],
+                    roll=[(1, 0.0, None), (F_END, 0.0, None)], fstop=[(1, 6.3, None), (F_END, 6.3, None)],
+                    shy=[(1, -0.06, None), (F_END, -0.06, None)])
+    if SHOT == 'refill':   # tighter on the two tanks (critic: the gauge fills 60% of the frame or more), slow push
+        S['cam'] = dict(az=[(1, 120, None), (F_END, 113, EASE_SOFT)], el=[(1, 47.0, None), (F_END, 43.0, EASE_SOFT)],
+                        dist=[(1, 2.75, None), (F_END, 2.45, EASE_SOFT)], tx=[(1, -0.92, None), (F_END, -0.92, None)],
+                        tz=[(1, 0.52, None), (F_END, 0.52, None)], lens=[(1, 38, None), (F_END, 39, EASE_SOFT)],
+                        roll=[(1, 0.0, None), (F_END, 0.0, None)], fstop=[(1, 6.3, None), (F_END, 6.3, None)],
+                        shy=[(1, -0.04, None), (F_END, -0.04, None)])
 else:   # drop
-    F_PUSH, F_DETACH, F_ROLL, F_CUSH, F_LAND = 14, 19, (23, 43), (37, 53), 52
+    F_PUSH, F_DETACH, F_ROLL, F_CUSH, F_LAND = 14, 19, (23, 43), (34, 53), 52
     S['root_z'] = keys_fn([(1, HANG_Z + 0.018, None), (F_PUSH, HANG_Z + 0.018, None), (F_DETACH, HANG_Z, EASE_IO),
                            (45, 0.40, EASE_FALL), (F_LAND, 0.0, EASE_CUSH), (F_LAND + 6, 0.035, EASE_OUT), (F_LAND + 12, 0.0, EASE_IN),
                            (F_END + 9, 0.0, None)])
@@ -1862,8 +1895,8 @@ else:   # drop
     S['skirt'] = const(1.0)
     S['slab'] = True; S['smoke'] = True
     S['cam'] = dict(az=[(1, 34, None), (F_END, 26, EASE_SOFT)], el=[(1, 2.0, None), (F_DETACH, 2.0, None), (60, 5.0, EASE_IO), (F_END, 5.5, EASE_SOFT)],
-                    dist=[(1, 7.4, None), (F_END, 6.6, EASE_SOFT)], tx=[(1, 0.15, None), (F_END, 0.1, EASE_SOFT)],
-                    tz=[(1, 1.75, None), (F_END, 1.62, EASE_SOFT)], lens=[(1, 44, None), (F_END, 46, EASE_SOFT)],
+                    dist=[(1, 7.4, None), (F_END, 6.7, EASE_SOFT)], tx=[(1, 0.15, None), (F_END, 0.1, EASE_SOFT)],
+                    tz=[(1, 1.55, None), (F_END, 1.45, EASE_SOFT)], lens=[(1, 50, None), (F_END, 52, EASE_SOFT)],
                     roll=[(1, 0.0, None), (F_ROLL[0], 0.0, None), (F_ROLL[0] + 8, -4.0, EASE_OUT), (F_ROLL[1] + 4, 2.0, EASE_IO), (F_LAND + 8, 0.0, EASE_IO), (F_END, 0.0, None)],
                     fstop=[(1, 7.0, None), (F_END, 7.0, None)],
                     shy=[(1, -0.04, None), (F_END, -0.04, None)])
@@ -1938,17 +1971,34 @@ elif SHOT == 'hang':
         for i in range(3):
             bake_fn(ob, 'location', i, lambda f, i=i, bp=bp, dv=dv, ph=ph, f0=f0: (bp + dv * (0.42 * (EASE_IO(ph(f)) if f >= f0 else 0.0)))[i])
         ARROWS.append(ob)
+elif SHOT in ('gauge', 'refill'):
+    for tk in (TANK_P, TANK_B):
+        tk['lit'] = 1.0
+        tk['drain'] = 0.0   # the custom property must exist before its keys can drive the shader
+        if SHOT == 'gauge':
+            bake_fn(tk, '["drain"]', 0, lambda f: clamp((f - F_DRAIN[0]) / float(F_DRAIN[1] - F_DRAIN[0])))
+        else:
+            bake_fn(tk, '["drain"]', 0, lambda f: 1.0 - EASE_IO(clamp((f - F_DRAIN[0]) / float(F_DRAIN[1] - F_DRAIN[0]))))
+    for (nid, grp, e, p, d, bo) in NOZZLES:
+        bo['lit'] = 1.0 if (grp == 'rear' and SHOT == 'gauge') else 0.3
+    for cv in FEEDS: cv['lit'] = 1.0
+    for o in FAN_PARTS + SKIRTS + FLOWS + [SUCTION]:
+        o.hide_render = True
 else:   # drop: opaque car, no x-ray parts
     for o in FAN_PARTS + FLOWS + [SUCTION, WIRE]:
         o.hide_render = True
 
 # ---------------- jets (drop shot) ----------------
 def jet_fire(nid, grp, f):
+    if SHOT == 'gauge':
+        if grp != 'rear': return 0.0
+        v = (1.0 - EASE_IO(clamp((f - (F_DRAIN[1] - 6)) / 8.0))) * (1.0 - 0.35 * clamp((f - F_DRAIN[0]) / float(F_DRAIN[1] - F_DRAIN[0])))
+        return v * (0.9 + 0.1 * mnoise.noise(Vector((f * 0.4, (sum(map(ord, nid)) % 97) * 0.37, 0.0))))
     if SHOT != 'drop': return 0.0
     v = 0.0
     if grp == 'corner':
-        v = max(v, pulse_env(f, F_PUSH, F_PUSH + 6, 2, 5))
-        if nid.endswith('R'): v = max(v, 0.85 * pulse_env(f, F_ROLL[0], F_ROLL[0] + 7, 2, 5))
+        v = max(v, pulse_env(f, F_PUSH, F_ROLL[0] + 2, 2, 5))
+        if nid.endswith('R'): v = max(v, pulse_env(f, F_ROLL[0], F_ROLL[0] + 10, 2, 5))
         v = max(v, pulse_env(f, F_CUSH[0], F_CUSH[1], 2, 8))
     elif grp == 'yaw':
         a0 = 31 if nid == 'YL' else 35
@@ -1956,22 +2006,28 @@ def jet_fire(nid, grp, f):
     flick = 0.88 + 0.12 * mnoise.noise(Vector((f * 0.28, (sum(map(ord, nid)) % 97) * 0.37, 0.0)))
     return v * flick
 
+NOZ_LOCAL_Z = {n[0]: n[3].z for n in NOZZLES}
 def jet_len(nid, grp, f, fire):
+    if SHOT == 'gauge':
+        return max(0.05, fire * 1.75)
     if grp == 'corner' and f >= F_CUSH[0] - 2:
-        return max(0.05, fire * min(1.9, max(0.55, 0.35 + root_z(f) + 0.25)))
-    return max(0.05, fire * (0.75 if grp == 'corner' else 0.85))
+        return max(0.05, fire * min(2.1, max(0.6, 0.35 + root_z(f) + 0.35)))
+    if grp == 'corner' and f < F_ROLL[0] + 3:      # inverted: jet column up to the slab underside
+        gap = SLAB_Z - (root_z(f) + 1.1 - NOZ_LOCAL_Z[nid]) - 0.10
+        return max(0.05, fire * max(0.15, gap + 0.06))
+    return max(0.05, fire * (1.45 if grp == 'corner' else 1.1))
 
 for (nid, grp, po, co, p, d) in JETS:
-    if SHOT != 'drop':
+    if SHOT not in ('drop', 'gauge') or (SHOT == 'gauge' and grp != 'rear'):
         po.hide_render = co.hide_render = True
         continue
     fire = lambda f, nid=nid, grp=grp: jet_fire(nid, grp, f)
     bake_fn(po, '["fire"]', 0, fire); bake_fn(co, '["fire"]', 0, fire)
     bake_fn(po, 'scale', 2, lambda f, nid=nid, grp=grp: jet_len(nid, grp, f, jet_fire(nid, grp, f)))
-    bake_fn(co, 'scale', 2, lambda f, nid=nid, grp=grp: 0.6 * jet_len(nid, grp, f, jet_fire(nid, grp, f)))
+    bake_fn(co, 'scale', 2, lambda f, nid=nid, grp=grp: 0.78 * jet_len(nid, grp, f, jet_fire(nid, grp, f)))
     for i in (0, 1):
-        bake_fn(po, 'scale', i, lambda f, nid=nid, grp=grp: 0.75 + 0.35 * jet_fire(nid, grp, f))
-        bake_fn(co, 'scale', i, lambda f, nid=nid, grp=grp: 0.85 + 0.15 * jet_fire(nid, grp, f))
+        bake_fn(po, 'scale', i, lambda f, nid=nid, grp=grp: 0.8 + 0.5 * jet_fire(nid, grp, f))
+        bake_fn(co, 'scale', i, lambda f, nid=nid, grp=grp: 1.0 + 0.3 * jet_fire(nid, grp, f))
 print('animation baked %.1fs' % (time.time() - T0))
 
 
@@ -1988,43 +2044,41 @@ def build_smoke():
     dom = mesh_obj('smoke_domain', bm, smooth=False)
     dom.scale = (7.2, 6.0, SLAB_Z); dom.location = (0.0, 0.0, SLAB_Z / 2)
     md = dom.modifiers.new('Fluid', 'FLUID'); md.fluid_type = 'DOMAIN'; ds = md.domain_settings
-    ds.domain_type = 'GAS'; ds.resolution_max = 128
+    ds.domain_type = 'GAS'; ds.resolution_max = 112
     ds.cache_directory = SMOKE_DIR; ds.cache_type = 'ALL'
     ds.cache_frame_start = 1; ds.cache_frame_end = F_END
     ds.use_collision_border_top = True; ds.use_collision_border_bottom = True
-    ds.alpha = -0.12; ds.beta = 0.0; ds.vorticity = 0.3
-    ds.use_dissolve_smoke = True; ds.dissolve_speed = int(3.2 * FPS); ds.use_dissolve_smoke_log = True
+    ds.alpha = -0.12; ds.beta = 0.0; ds.vorticity = 0.45
+    ds.use_dissolve_smoke = True; ds.dissolve_speed = int(4.5 * FPS); ds.use_dissolve_smoke_log = True
     m, nt, out = new_mat('smoke')
     tc = node(nt, 'ShaderNodeTexCoord')
     nz = node(nt, 'ShaderNodeTexNoise', {'Scale': 6.0, 'Detail': 6.0, 'Roughness': 0.6}, noise_dimensions='4D')
     lk(nt, tc.outputs['Object'], nz.inputs['Vector']); lk(nt, math_node(nt, 'MULTIPLY', clock_out(nt), 0.5), nz.inputs['W'])
-    dn = math_node(nt, 'MULTIPLY', math_node(nt, 'ADD', math_node(nt, 'MULTIPLY', nz.outputs['Fac'], 1.1), 0.25), 7.0)
+    dn = math_node(nt, 'MULTIPLY', math_node(nt, 'ADD', math_node(nt, 'MULTIPLY', nz.outputs['Fac'], 1.1), 0.25), 16.0)
     vol = node(nt, 'ShaderNodeVolumePrincipled', {'Color': (0.86, 0.92, 1.0, 1), 'Anisotropy': 0.3,
                                                  'Emission Color': (0.55, 0.85, 1.0, 1), 'Emission Strength': 0.02})
     lk(nt, dn, vol.inputs['Density'])
     lk(nt, vol.outputs[0], out.inputs['Volume'])
     dom.data.materials.append(m)
-    em_me = bpy.data.meshes.new('smoke_em'); b2 = bmesh.new(); bmesh.ops.create_icosphere(b2, subdivisions=2, radius=0.065)
+    em_me = bpy.data.meshes.new('smoke_em'); b2 = bmesh.new(); bmesh.ops.create_icosphere(b2, subdivisions=2, radius=0.14)
     b2.to_mesh(em_me); b2.free()
     for (nid, grp, po, co, p, d) in JETS:
         if grp not in ('corner', 'yaw'): continue
         e = [n for n in NOZZLES if n[0] == nid][0][2]
         eo = link(bpy.data.objects.new('smoke_em_' + nid, em_me)); eo.parent = e; eo.location = (0, 0, 0.22); eo.hide_render = True
         fm = eo.modifiers.new('Fluid', 'FLUID'); fm.fluid_type = 'FLOW'; fs = fm.flow_settings
-        fs.flow_type = 'SMOKE'; fs.flow_behavior = 'INFLOW'; fs.flow_source = 'MESH'; fs.surface_distance = 0.07
+        fs.flow_type = 'SMOKE'; fs.flow_behavior = 'INFLOW'; fs.flow_source = 'MESH'; fs.surface_distance = 0.12
         fs.smoke_color = (0.92, 0.96, 1.0); fs.density = 1.0; fs.use_initial_velocity = True; fs.velocity_factor = 0.0
         dloc = Vector(d)
         bake_fn(eo, 'modifiers["Fluid"].flow_settings.use_inflow', 0, lambda f, nid=nid, grp=grp: 1.0 if jet_fire(nid, grp, f) > 0.3 else 0.0)
         for i in range(3):
-            bake_fn(eo, 'modifiers["Fluid"].flow_settings.velocity_coord', i, lambda f, i=i, dloc=dloc: (rig_rot(f) @ dloc)[i] * 7.5)
+            bake_fn(eo, 'modifiers["Fluid"].flow_settings.velocity_coord', i, lambda f, i=i, dloc=dloc: (rig_rot(f) @ dloc)[i] * 10.0)
         for fc in channelbag(eo).fcurves:
             if fc.data_path.endswith('use_inflow'):
                 for kp in fc.keyframe_points: kp.interpolation = 'CONSTANT'
     xs = stations(XT, XN, LTP, LNP, 3, 5, 0.14)
     pb = loft(xs, half_section_coarse, 'proxy')
-    px = mesh_obj('smoke_proxy', pb, smooth=False); px.hide_render = True; set_parent(px, SUSP)
-    fe = px.modifiers.new('Fluid', 'FLUID'); fe.fluid_type = 'EFFECTOR'; fe.effector_settings.effector_type = 'COLLISION'
-    fe.effector_settings.use_effector = True; fe.effector_settings.surface_distance = 0.02
+    px = mesh_obj('smoke_proxy', pb, smooth=False); px.hide_render = True; set_parent(px, SUSP)   # (no effector: faster bake)
     return dom
 
 SMOKE = build_smoke() if (S['smoke'] and not A.nosmoke) else None

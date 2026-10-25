@@ -1,4 +1,6 @@
-"""The Curve: the Tesla Roadster film (v2 style). Script v1, 17 Oct 2026.
+"""The Curve: the Tesla Roadster film (v2 style). Script v1, 17 Oct 2026; v2 pickups 25 Oct 2026 (critic round 1:
+promise beat s1_1b, loop-back line s1_6 cut, bridges re-aimed two segments ahead, s6_4 attributed to Top Gear,
+refund clause s7_1b, S9 cut, end-card pointer).
 
 Shape (ZACK_D_SKELETON.md §11, varied): eight segments, each opening on its own impact line and closing on its own
 payoff, so each one cuts out as a Short with no editing. Two forward teases sit between segments (CRAFT §2, §9.7).
@@ -21,15 +23,19 @@ SEGMENTS = [
     dict(id="S5", name="The fan car", short="The Fan Car That Won Once and Vanished"),
     dict(id="S6", name="Is it legal?", short="Is the Flying Tesla Roadster Legal?"),
     dict(id="S7", name="The deposit", short="What $250,000 Buys You at Tesla"),
-    dict(id="S9", name="The bill", short="Tesla Showed a Flying Car. Then Its Profit Fell 43%"),
     dict(id="S8", name="Verdict", short=None),
 ]
 
 LINES = [
-    # S1 The hang = Roadster Short 1 as shipped (lab/curve_v2/shorts/short1.py, comp CurveV2-Short1). Keep in sync.
+    # S1 The hang = Roadster Short 1 (lab/curve_v2/shorts/short1.py) re-cut for the film: a promise beat after the hook
+    # (s1_1b), and no loop-back line at the end (the Short keeps "That's how it can hang up there without falling.").
     dict(id="s1_1", seg="S1", facts="P1 P2",
          text="You're watching a Tesla Roadster being vacuumed to the ceiling.",
-         shot="REAL 20x RIFE slow-mo of the car at the lip; hook 'UPSIDE DOWN AND NOT FALLING?' swaps to VACUUMED"),
+         shot="REAL 20x RIFE slow-mo of the car at the lip, pushed in 1.6x; hook 'UPSIDE DOWN AND NOT FALLING?' swaps to VACUUMED"),
+    dict(id="s1_1b", seg="S1", facts="P4 · [EST §5] · §13.1 #1 (U1)",
+         text="We'll time its launch, count its seconds of gas, and read a contract that can't guarantee delivery.",
+         shot="promise beat, three hard cuts: 0.81 s over the launch (TESLA'S OWN TIMING) · ≈2 SECONDS OF GAS over our x-ray "
+              "(OUR MATHS) · the US clause '...or if it will be delivered.' (TESLA'S OWN CONTRACT)"),
     dict(id="s1_2", seg="S1", facts="P1 P10",
          text="Fans underneath pull the air out from beneath the car, while skirts around the edges seal the gap.",
          shot="footage tilts up; side-view diagram rises: fans spin, air streams out of the back, skirts seal"),
@@ -42,9 +48,6 @@ LINES = [
     dict(id="s1_5", seg="S1", facts="P2 S3 S5",
          text="Then it lets go, and jets of compressed gas roll it the right way up before it lands.",
          shot="REAL drop at 30 fps (RIFE), GAS JETS ring tracks the plume, smoke landing"),
-    dict(id="s1_6", seg="S1", facts="P2",
-         text="That's how it can hang up there without falling.",
-         shot="rewind to the lip; hook rebuilds; last frame = frame 0"),
 
     # S2 The roll.
     dict(id="s2_1", seg="S2", facts="P2 S3 S5",
@@ -92,9 +95,9 @@ LINES = [
          text="So for now, zero point eight one is a promise with a stopwatch attached.",
          shot="GFX the 0.81 read-out again, the stopwatch clips onto it"),
 
-    dict(id="b1", seg="BRIDGE", facts="-",
-         text="In a moment, the number that decides how long this car can actually fly.",
-         shot="3D tank gauge needle twitches; push through the gauge glass into S4"),
+    dict(id="b1", seg="BRIDGE", facts="§13.2 BT46B (raced once, won once, withdrawn)",
+         text="In a minute, the Formula One fan car that won its only race and was never raced again.",
+         shot="teases S5 (two segments ahead): the 1978 fan car in silhouette, backlit, filling the frame, fan spinning"),
 
     # S4 Seconds, then hours. The film's own sum (authorship, CRAFT §1): label it OUR ESTIMATE on screen.
     dict(id="s4_1", seg="S4", facts="[EST §5] P1",
@@ -125,9 +128,9 @@ LINES = [
          text="So the flying car flies for seconds, and then it waits for hours.",
          shot="REAL the landing in smoke, then hold on the parked car as the smoke clears"),
 
-    dict(id="b2", seg="BRIDGE", facts="§13.2 (U11-U15)",
-         text="In a minute, the racing car that used this trick in its only race, won it, and was never raced again.",
-         shot="3D silhouette of a 1970s single-seater with a fan, lit from behind"),
+    dict(id="b2", seg="BRIDGE", facts="S4 · §13.3 (FAA, DOT)",
+         text="Later on, whether this car counts as an aircraft, and who that leaves in charge of it.",
+         shot="teases S6 (two segments ahead): the car hovering on its jets under a question, AIRCRAFT? / CAR?"),
 
     # S5 The fan car. Every line waits on §13 (Brabham BT46B, Chaparral 2J verified at two sources each).
     dict(id="s5_1", seg="S5", facts="§13.2 BT46B (Swedish GP, 17 Jun 1978)",
@@ -166,9 +169,9 @@ LINES = [
          text="But Tesla's own website says the Rocket version, the one that flies, isn't approved for public roads "
               "at all.",
          shot="GFX recreated spec line from tesla.com with 'NOT APPROVED FOR PUBLIC ROAD USE' circled"),
-    dict(id="s6_4", seg="S6", facts="P10 S1",
-         text="Even on the Thrust version, which is road legal, the thrusters aren't meant for public roads.",
-         shot="3D the Thrust car on a road, nozzles capped/dark; 'ROAD LEGAL · THRUSTERS OFF'"),
+    dict(id="s6_4", seg="S6", facts="S1 · §13.3 (Tesla's page: Thrust 'Race ready'; never 'street legal')",
+         text="Top Gear was told the Thrust version is road legal, although its thrusters aren't meant for public roads.",
+         shot="camera drops below Tesla's page: 'TOP GEAR WAS TOLD: ROAD LEGAL' outside the page, then THRUSTERS: NOT FOR PUBLIC ROADS"),
     dict(id="s6_4b", seg="S6", facts="S1 S13",
          text="A jet that strong turns loose gravel into projectiles.",
          shot="3D low angle: a thruster fires over a gravel shoulder, stones fly toward camera"),
@@ -183,6 +186,9 @@ LINES = [
     dict(id="s7_1", seg="S7", facts="P10 S12",
          text="To reserve a Tesla Roadster with thrusters, you pay a quarter of a million dollars up front.",
          shot="GFX deposit counter rolls to $250,000 ('$5,000 NOW + $245,000 IN 10 DAYS' small under it)"),
+    dict(id="s7_1b", seg="S7", facts="§13.1 #6-7 (U1 clauses 5-6)",
+         text="It's refundable, though Tesla pays no interest on it and doesn't hold it in escrow.",
+         shot="stamp 'REFUNDABLE · NO INTEREST · NO ESCROW', source line US reservation agreement clauses 5-6"),
     dict(id="s7_2", seg="S7", facts="P1 S21",
          text="The car is due in 2028, after a launch that was first promised for 2020.",
          shot="GFX timeline of the promised dates, each struck through, ending at 2028"),
@@ -194,28 +200,15 @@ LINES = [
          shot="GFX range bar shrinking from 620 to about 310-320 mi"),
     dict(id="s7_5", seg="S7", facts="S1 P1",
          text="So the deposit holds a place in the queue for a car whose numbers are still moving.",
-         shot="GFX spec sheet with values flickering between the quoted figures (power, weight, top speed)"),
+         shot="GFX split-flap board: launch, range, price, delivery, and STATUS 'DESIGN DEVELOPMENT' (Tesla Q3 2026 Update, "
+              "capacity table; moved here from the cut S9)"),
     dict(id="s7_6", seg="S7", facts="P10 S12",
          text="That's a quarter of a million dollars for a place in a queue.",
          shot="GFX the $250,000 counter again, a queue of identical car silhouettes behind it"),
 
+    # S9 "The bill" was cut in v2 (critic round 1: it strayed from the title and read as if the Roadster caused the
+    # profit drop). Its Q3 numbers live in Curve Short 5; S7 now carries the filing's "Design development".
     # S8 Verdict (our judgement, CRAFT §1). Ends on the opening picture so the film loops back to frame 0.
-    # S9 The bill (23 Oct): Tesla's Q3 2026 Update, lab/research/TESLA_Q3_2026_FACTS.md (rows), = Curve Short 5 in long form
-    dict(id="s9_1", seg="S9", facts="Q3 #11; event 15 Oct, results 21 Oct",
-         text="Six days after the show, Tesla reported its quarterly results, and its profit had fallen forty-three percent.",
-         shot="REAL the 0-60 launch into smoke; GFX 'PROFIT -43%' slams in"),
-    dict(id="s9_2", seg="S9", facts="Q3 #6",
-         text="Its gross profit, what's left after making what it sells, had actually risen by about nine percent.",
-         shot="GFX horizontal bars, Q3 2025 vs Q3 2026, +9%"),
-    dict(id="s9_3", seg="S9", facts="Q3 #7, P1 Profitability",
-         text="The drop came from spending, with research up about seventy percent and more stock pay, including Musk's 2025 award.",
-         shot="GFX rising columns $1.63B -> $2.76B; Tesla's own sentence typeset, causes highlighted"),
-    dict(id="s9_4", seg="S9", facts="Q3 P1 capacity table",
-         text="And in the same filing, the Roadster's status is listed in two words, design development.",
-         shot="GFX the capacity table row 'Roadster - Design development' (typeset from the filing), push in"),
-    dict(id="s9_5", seg="S9", facts="Q3 P1",
-         text="So the car that flew over a row of trucks is, on paper, still a drawing.",
-         shot="REAL kickflip over the Semi, freeze-frame turns to blueprint lines (GFX)"),
     dict(id="s8_1", seg="S8", facts="-",
          text="So what did Tesla actually show in Texas?",
          shot="REAL wide aerial of the ramp run (Ramp 0:35-0:42), 5 s"),
@@ -241,4 +234,9 @@ LINES = [
     dict(id="s8_7", seg="S8", facts="P2",
          text="And for now, the most impressive thing it does is hang upside down and not fall.",
          shot="REAL the hang, same framing as frame 0; hard stop"),
+
+    # End card (8 s, right half kept clear for YouTube's end-screen elements).
+    dict(id="end_1", seg="END", facts="Roadster Shorts 1-3, live on the channel",
+         text="The hang, the launch and the flight time each have their own Short on this channel.",
+         shot="end card: the Curve mark and name on the left, right half empty for end-screen boxes"),
 ]

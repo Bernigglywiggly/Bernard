@@ -60,3 +60,24 @@ export const ThumbC: React.FC = () => (
     <Mark />
   </AbsoluteFill>
 );
+
+// D (v2, for the title "Tesla Won't Promise the Flying Roadster Arrives"): the real car hanging upside down, Tesla's
+// own US contract clause on a strip of paper, "OR IF?" (facts §13.1 #1). Complements the title instead of repeating it.
+export const ThumbD: React.FC = () => (
+  <AbsoluteFill style={{ backgroundColor: C.black }}>
+    <Img src={staticFile("film/thumb_hang.png")} style={{ position: "absolute", left: 420, top: 20, width: 1080, height: 608, scale: "1.3",
+      transformOrigin: "35% 30%", filter: "saturate(1.1) contrast(1.12) brightness(1.15)" }} />
+    <div style={{ position: "absolute", left: 0, top: 0, width: 700, height: 720, background: "linear-gradient(90deg, rgba(0,0,0,0.9) 55%, rgba(0,0,0,0) 100%)" }} />
+    <div style={{ position: "absolute", left: 40, top: 120 }}>
+      <div style={{ ...HEADC, fontSize: 230, color: C.acid, lineHeight: 0.86, ...keyline(1.6, 16) }}>OR IF?</div>
+    </div>
+    <div style={{ position: "absolute", left: 36, top: 430, width: 700, padding: "18px 26px 22px", backgroundColor: "#FFFFFF", rotate: "-3deg",
+      boxShadow: "0 16px 40px rgba(0,0,0,0.7)", border: "4px solid #000" }}>
+      <div style={{ ...MONO, fontSize: 22, color: "#5E6670" }}>TESLA&apos;S US RESERVATION AGREEMENT</div>
+      <div style={{ fontFamily: "Georgia, serif", fontSize: 40, lineHeight: 1.25, color: "#111318", marginTop: 6 }}>
+        …will actually be delivered <span style={{ backgroundColor: C.acid, padding: "0 6px" }}>or if it will be delivered.</span>
+      </div>
+    </div>
+    <Mark />
+  </AbsoluteFill>
+);

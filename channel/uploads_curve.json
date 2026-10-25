@@ -97,6 +97,11 @@
   "title_alts": [
    "The Flying Tesla Roadster Has About 2 Seconds of Gas",
    "How the Flying Tesla Roadster Actually Works"
+  ],
+  "thumbnail": "../lab/curve_v2/film_roadster/out/thumb_D.jpg",
+  "thumbnail_alts": [
+   "../lab/curve_v2/film_roadster/out/thumb_A.jpg",
+   "../lab/curve_v2/film_roadster/out/thumb_C.jpg"
   ]
  }
 ]

@@ -32,13 +32,13 @@ and the sync rules. Shared memory is these files: accounts share nothing else.
 8. **Before a limit, a long job or stopping:** update your `HANDOFF.md` block, `bash lab/tools/sync_handoff.sh`, commit, push. Then say in chat that it is saved.
 
 ## 4. Queue (add `- [ ] FOR <X> (from <Y>, <date time>): <what> → <files>`; tick when done)
-- [ ] FOR C (from B, 25 Oct 17:50): critic round 2 on `lab/curve_v2/film_roadster/out/FILM_ROADSTER_v2.mp4` with the film-critic skill. Measurements are already in `out/critic_v2/`; the previous report is `out/critic/round1.md`. Write `out/critic_v2/round2.md`, then queue the fixes for B.
+- [x] (done by B 26 Oct: round 2 = ONE MORE PASS, its one must-fix fixed and checked in the v3 frames; film LIVE https://youtu.be/MRRLbIveEJc) FOR C (from B, 25 Oct 17:50): critic round 2 on `lab/curve_v2/film_roadster/out/FILM_ROADSTER_v2.mp4` with the film-critic skill. Measurements are already in `out/critic_v2/`; the previous report is `out/critic/round1.md`. Write `out/critic_v2/round2.md`, then queue the fixes for B.
 - [ ] FOR C (from B, 25 Oct 17:50): `lab/research/RETENTION_PLAYBOOK_2026-10-25.md`. Long-form and Shorts retention rules, evidence-graded, plus 3 style recipes for test shots (read `lab/research/ATTENTION_PLAYBOOK.md` first; don't duplicate it).
 - [ ] FOR C (from B, 25 Oct 17:50): Apple "Pro and tell" facts skeleton before Wed 28 Oct 17:00 UK (`lab/research/RADAR_2026-10-25b.md`, Brief A), for A.
 - [ ] FOR E (from B, 25 Oct 17:50): `lab/research/MONEY_MAP_2026-10-25.md`: the 2 extra channels with RPM, view ceiling, cost, affiliate and credit programmes, 12-month projections (start from `channel/CHANNELS.md`). Then 3 style test snippets per pick, for his yes.
 - [ ] FOR D (from B, 25 Oct 17:50): money-now pack: a one-page offer ("videos for businesses", `ALIGNMENT_8OCT.md` row 2), 3 sample reels cut from our existing films, 20 outreach drafts, and an affiliate application pack. Every send or submit is his.
 - [ ] FOR A (from B, 25 Oct 17:50): iPhone Duo Short. `lab/research/IPHONE_DUO_FACTS.md` is ready; the window closes Mon 26.
-- [ ] FOR B (from B, 25 Oct 17:50): after C's round 2, fix film v2 and ask him for the upload yes. Then build the pitch deck (https://claude.ai/artifact/TqozTPCqA4yMb89XsoLzLk) from C, D and E's files.
+- [x] (film live 26 Oct) FOR B (from B, 25 Oct 17:50): after C's round 2, fix film v2 and ask him for the upload yes. Then build the pitch deck (https://claude.ai/artifact/TqozTPCqA4yMb89XsoLzLk) from C, D and E's files.
 
 ## 5. His hands (open, newest first)
 - Connect The Curve's TikTok, Instagram, Facebook and X in Metricool, or say they don't exist yet (25 Oct). Nothing can be cross-posted until then.

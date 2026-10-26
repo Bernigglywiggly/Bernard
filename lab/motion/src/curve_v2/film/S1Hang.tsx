@@ -74,7 +74,7 @@ const PromiseGas: React.FC = () => {
       <div style={{ position: "absolute", left: M, top: 560, scale: interpolate(n, [0, 1], [1.25, 1]), transformOrigin: "0% 70%",
         opacity: interpolate(n, [0, 0.2], [0, 1], CLAMP) }}>
         <div style={{ ...HEADC, fontSize: 230, color: C.ink, lineHeight: 0.86, ...keyline(1.6, 12) }}>≈2 SECONDS</div>
-        <div style={{ ...HEADC, fontSize: 120, color: C.cyan, ...keyline(0.8, 10) }}>OF GAS</div>
+        <div style={{ ...HEADC, fontSize: 84, color: C.cyan, ...keyline(0.6, 10) }}>OF GAS AT FULL THRUST</div>
       </div>
       <EvidenceStamp kind="ours" at={P.gas + 4} left={1220} top={850} />
     </AbsoluteFill>
@@ -130,7 +130,7 @@ const Mechanism: React.FC = () => {
         <line x1={1480} y1={900} x2={1480} y2={900 - 460 * push} stroke={C.cyan} strokeWidth={26} markerEnd="url(#headC)" />
       </svg>
       <div style={{ position: "absolute", left: 1170, top: 250, ...HEADC, fontSize: 64, color: C.warn, opacity: weight, ...keyline(0.45, 8) }}>WEIGHT</div>
-      <div style={{ position: "absolute", left: 1260, top: 920, ...HEADC, fontSize: 64, color: C.cyan, opacity: push, ...keyline(0.45, 8) }}>AIR PUSHING UP</div>
+      <div style={{ position: "absolute", left: 960, top: 880, ...HEADC, fontSize: 64, color: C.cyan, opacity: push, ...keyline(0.45, 8) }}>AIR PUSHING UP</div>
       <div style={{ position: "absolute", left: M, top: 700, padding: "12px 26px 16px", backgroundColor: C.acid, color: C.black, border: "5px solid #000",
         ...HEADC, fontSize: 96, scale: badge, rotate: `${interpolate(badge, [0, 1], [-10, -2])}deg`, transformOrigin: "0% 50%" }}>
         UP TO 2× ITS WEIGHT

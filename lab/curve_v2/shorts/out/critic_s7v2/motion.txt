@@ -1,0 +1,3 @@
+lab/curve_v2/shorts/out/SHORT7_v2.mp4: 33.4s sampled
+frozen        0.0s (0%)  stretches >= 2.0s: 0
+near-still    0.0s (0%)  stretches >= 2.0s: 0

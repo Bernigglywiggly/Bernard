@@ -29,7 +29,7 @@ const Q = {
   queue: cue(S, "queue"), numbers: cue(S, "numbers"), moving: cue(S, "moving"), thats: cue(S, "That's"),
   quarter2: cue(S, "quarter", 2), place2: cue(S, "place", 2), queue2: cue(S, "queue", 2),
 };
-const T1 = Q.car - 6; // money -> timeline
+const T1 = Q.car + 12; // money -> timeline (v2: holds NO ESCROW ~1 s longer)
 const T2 = Q.but - 4; // timeline -> contract
 const T3 = Q.range + 26; // contract -> range
 const T4 = Q.place - 14; // range -> queue (the car drops into its slot on "place in the queue")
@@ -139,7 +139,7 @@ const Timeline: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
         );
       })}
       <Rise at={Q.y2028 - 2} left={1300} top={350} size={200} color={C.acid} frame={frame} fps={fps} stroke={10}>2028</Rise>
-      <Rise at={Q.y2028 + 4} left={1308} top={552} size={60} color={C.acid} frame={frame} fps={fps}>LATEST DATE</Rise>
+      <Rise at={Q.y2028 + 4} left={1308} top={552} size={60} color={C.acid} frame={frame} fps={fps}>TESLA SAYS</Rise>
       <Rise at={Q.promised - 2} left={200} top={300} size={62} color={C.cyan} frame={frame} fps={fps}>PROMISED IN 2017:</Rise>
       <Rise at={Q.y2020 - 2} left={yx(2020) + 34} top={372} size={170} color={C.cyan} frame={frame} fps={fps} stroke={10}>2020</Rise>
       <Rise at={Q.y2020 + 12} left={(yx(2020) + yx(2028)) / 2 - 380} top={AX.y + 140} size={96} color={C.warn} frame={frame} fps={fps} stroke={10}>8 YEARS LATER</Rise>

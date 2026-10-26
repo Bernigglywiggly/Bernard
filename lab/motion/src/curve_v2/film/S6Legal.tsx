@@ -207,7 +207,7 @@ const Page: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
       {[690, 1260].map((x) => <div key={x} style={{ position: "absolute", left: x, top: 330, width: 3, height: 470, backgroundColor: "#DDE1E6" }} />)}
       {COLS.map((c, i) => (
         <div key={c.name} style={{ position: "absolute", left: c.x, top: 330, width: 540, opacity: focus(i) }}>
-          <div style={{ ...HEADC, fontSize: 90, color: PAGE_INK }}>{c.name}</div>
+          <div style={{ ...HEADC, fontSize: 66, color: PAGE_INK }}>{c.name}</div>
           <div style={{ ...HEAD, fontWeight: 800, fontVariationSettings: "'wdth' 92", fontSize: 76, color: "#2A2F36", marginTop: 26, letterSpacing: "-0.01em" }}>{c.label}</div>
           {i === 2 ? (
             <div style={{ ...HEAD, fontVariationSettings: "'wdth' 92", letterSpacing: "-0.005em", lineHeight: 1.18, color: PAGE_INK }}>

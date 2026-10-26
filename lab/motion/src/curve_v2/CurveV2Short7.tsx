@@ -155,20 +155,21 @@ const Wrong: React.FC = () => {
   return (
     <AbsoluteFill>
       <div style={{ ...DARKEN, height: 760 }} />
-      <div style={DISCLOSE}>OUR 3D ILLUSTRATION · RANGES FROM POLLEN&apos;S CODE</div>
+      {/* two set lines (critic round 2: the one long line wrapped onto the chip stack) */}
+      <div style={{ ...DISCLOSE, top: 128, lineHeight: 1.15 }}>OUR 3D ILLUSTRATION<br />RANGES FROM POLLEN&apos;S CODE</div>
       {SPECS.map(([at, text], k) => {
         if (frame < at) return null;
         const s = pop(frame, at, fps, 230, 12);
         return (
-          <div key={text} style={{ position: "absolute", left: 64, top: 214 + k * 90, ...HEADC, fontSize: 64, lineHeight: 1, color: C.black,
+          <div key={text} style={{ position: "absolute", left: 64, top: 246 + k * 90, ...HEADC, fontSize: 64, lineHeight: 1, color: C.black,
             backgroundColor: k === SPECS.length - 1 ? C.acid : C.ink, border: `5px solid ${C.black}`, padding: "4px 16px 8px",
             opacity: interpolate(s, [0, 0.3], [0, 1], CLAMP), translate: `${(1 - s) * -60}px 0` }}>{text}</div>
         );
       })}
       {/* the shifted balance point inside the glass torso: drawn bigger than ±8 mm, and labelled so */}
       {exIn > 0 ? (
-        <div style={{ position: "absolute", left: Math.min(e.com[0] + 70, 760), top: e.com[1] - 34, opacity: exIn, ...HEADC, fontSize: 48, color: C.acid,
-          ...keyline(0.36, 8) }}>← SHIFT EXAGGERATED</div>
+        <div style={{ position: "absolute", left: Math.min(e.com[0] + 70, 620), top: e.com[1] - 52, opacity: exIn, ...HEADC, fontSize: 48, lineHeight: 1,
+          color: C.acid, ...keyline(0.36, 8) }}>← SHIFT<br />EXAGGERATED</div>
       ) : null}
     </AbsoluteFill>
   );

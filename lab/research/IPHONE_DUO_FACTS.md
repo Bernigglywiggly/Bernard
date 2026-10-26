@@ -9,6 +9,8 @@ Quotes are kept to short fragments. "his words" = JerryRigEverything's auto-capt
 
 ## Sources
 
+- P6 MacRumors (26 Oct 2026), Apple's statement on the iPhone Duo inner-display cracks: https://www.macrumors.com/2026/10/26/iphone-duo-crack-apple-response/ (added 26 Oct from the radar).
+
 - **A1** Apple Newsroom press release, "Apple unveils iPhone Duo", 9 Sep 2026.
   https://www.apple.com/newsroom/2026/09/apple-unveils-iphone-duo/
 - **A2** Apple Newsroom, "Open up to new possibilities with iPhone Duo" (pre-orders), 15 Oct 2026.
@@ -103,7 +105,9 @@ All V as Apple's claims. None is independently measured.
 | 31 | No glass thickness, fold radius, layer thicknesses, crease depth, or panel maker | our check | V (absence) |
 | 32 | For contrast, Samsung publishes numbers: its UTG "passed 200,000 fold tests" (2020); Fold2 panel 200,000 folds (Bureau Veritas) | S3, S4 | V |
 | 33 | Panel made by Samsung Display: reported by Korean press (e.g. https://www.koreaherald.com/article/10868949, not read in full); JRE says it on camera (5:18). Apple has not said | press; J1 | U |
-| 34 | Apple statement on the JRE video: none found. P1 has no Apple comment; Apple Newsroom has no durability post (RSS checked 11:37 UK today) | P1, Newsroom RSS | U: re-check before publishing |
+| 34 | **Updated 26 Oct:** Apple told MacRumors it is aware of "an issue impacting the inner display on a small number" of units; affected owners should contact AppleCare for a replacement. No cause given. (Before this, 25 Oct 11:37: no statement found.) | P6 https://www.macrumors.com/2026/10/26/iphone-duo-crack-apple-response/ | V (Apple's words via MacRumors) |
+| 34b | MacRumors: the reported cracks run along the hinge, on the lower half of the inner screen; owners describe a stuck feel and a pop first. It also says some crack images going round are AI-generated: use JRE's footage, never owner photos | P6 | U (MacRumors' reading of owner reports) |
+| 34c | Kuba Klawiter's fold test stopped at 75,000 folds (Polish video, not checked). iFixit's teardown found more than one possible cause of the hinge failure (via MacRumors; teardown not read) | P6, radar 26 Oct | U |
 
 ## 4. JerryRigEverything's test, in order (J1)
 
@@ -210,7 +214,7 @@ If the line is too thin to read at Shorts size, open on J1 ~6:52 (the matte laye
 - That JRE disproved IP68 (rows 11, 65): the dust jammed the hinge; he says it didn't get in through the screen or frame.
 - That JRE's green line runs along the fold, or why it is green, or what caused it (rows 56-57).
 - A widespread defect or "Crackgate" as fact (row 63): anecdotes, no failure rate.
-- That Apple responded (row 34).
+- That Apple gave a cause, a number of affected units, or a recall: it said "a small number", AppleCare replacements, no cause (row 34). Never use owner crack photos (row 34b).
 - Repair prices as Apple's ($49, $999, $1,499): reported, not seen on Apple's page (rows 48-49).
 - His other spec lines (no telephoto, 12 MP / 4 MP selfie cameras, 35 W, 25 W): unchecked; Apple says the main camera
   gives an "optical-quality 2x Telephoto" crop (A1), so "no telephoto" is at least arguable.

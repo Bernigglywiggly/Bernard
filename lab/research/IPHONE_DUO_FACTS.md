@@ -9,7 +9,7 @@ Quotes are kept to short fragments. "his words" = JerryRigEverything's auto-capt
 
 ## Sources
 
-- P6 MacRumors (26 Oct 2026), Apple's statement on the iPhone Duo inner-display cracks: https://www.macrumors.com/2026/10/26/iphone-duo-crack-apple-response/ (added 26 Oct from the radar).
+- P9 MacRumors (26 Oct 2026), Apple's statement on the iPhone Duo inner-display cracks: https://www.macrumors.com/2026/10/26/iphone-duo-crack-apple-response/ (added 26 Oct from the radar).
 
 - **A1** Apple Newsroom press release, "Apple unveils iPhone Duo", 9 Sep 2026.
   https://www.apple.com/newsroom/2026/09/apple-unveils-iphone-duo/
@@ -105,9 +105,9 @@ All V as Apple's claims. None is independently measured.
 | 31 | No glass thickness, fold radius, layer thicknesses, crease depth, or panel maker | our check | V (absence) |
 | 32 | For contrast, Samsung publishes numbers: its UTG "passed 200,000 fold tests" (2020); Fold2 panel 200,000 folds (Bureau Veritas) | S3, S4 | V |
 | 33 | Panel made by Samsung Display: reported by Korean press (e.g. https://www.koreaherald.com/article/10868949, not read in full); JRE says it on camera (5:18). Apple has not said | press; J1 | U |
-| 34 | **Updated 26 Oct:** Apple told MacRumors it is aware of "an issue impacting the inner display on a small number" of units; affected owners should contact AppleCare for a replacement. No cause given. (Before this, 25 Oct 11:37: no statement found.) | P6 https://www.macrumors.com/2026/10/26/iphone-duo-crack-apple-response/ | V (Apple's words via MacRumors) |
-| 34b | MacRumors: the reported cracks run along the hinge, on the lower half of the inner screen; owners describe a stuck feel and a pop first. It also says some crack images going round are AI-generated: use JRE's footage, never owner photos | P6 | U (MacRumors' reading of owner reports) |
-| 34c | Kuba Klawiter's fold test stopped at 75,000 folds (Polish video, not checked). iFixit's teardown found more than one possible cause of the hinge failure (via MacRumors; teardown not read) | P6, radar 26 Oct | U |
+| 34 | **Updated 26 Oct:** Apple told MacRumors it is aware of "an issue impacting the inner display on a small number" of units; affected owners should contact AppleCare for a replacement. No cause given. (Before this, 25 Oct 11:37: no statement found.) | P9 https://www.macrumors.com/2026/10/26/iphone-duo-crack-apple-response/ | V (Apple's words via MacRumors) |
+| 34b | MacRumors: the reported cracks run along the hinge, on the lower half of the inner screen; owners describe a stuck feel and a pop first. It also says some crack images going round are AI-generated: use JRE's footage, never owner photos | P9 | U (MacRumors' reading of owner reports) |
+| 34c | Kuba Klawiter's fold test stopped at 75,000 folds (Polish video, not checked). iFixit's teardown found more than one possible cause of the hinge failure (via MacRumors; teardown not read) | P9, radar 26 Oct | U |
 
 ## 4. JerryRigEverything's test, in order (J1)
 

@@ -108,6 +108,10 @@ All V as Apple's claims. None is independently measured.
 | 34 | **Updated 26 Oct:** Apple told MacRumors it is aware of "an issue impacting the inner display on a small number" of units; affected owners should contact AppleCare for a replacement. No cause given. (Before this, 25 Oct 11:37: no statement found.) | P9 https://www.macrumors.com/2026/10/26/iphone-duo-crack-apple-response/ | V (Apple's words via MacRumors) |
 | 34b | MacRumors: the reported cracks run along the hinge, on the lower half of the inner screen; owners describe a stuck feel and a pop first. It also says some crack images going round are AI-generated: use JRE's footage, never owner photos | P9 | U (MacRumors' reading of owner reports) |
 | 34c | Kuba Klawiter's fold test stopped at 75,000 folds (Polish video, not checked). iFixit's teardown found more than one possible cause of the hinge failure (via MacRumors; teardown not read) | P9, radar 26 Oct | U |
+| 34d | **Added 27 Oct (C):** Apple's full sentence, as given to several outlets: "aware of an issue impacting the inner display on a small number of iPhone Duo units"; owners contact AppleCare for a replacement. Reuters: "Apple says it will replace iPhone Duo units showing screen problems". Still no cause from Apple | MacTech https://www.mactech.com/2026/10/26/apple-is-aware-of-an-issue-impacting-the-inner-display-on-a-small-number-of-iphone-duo-units/ · CNBC https://www.cnbc.com/2026/10/26/apple-responds-to-user-reports-of-broken-iphone-duo-screens.html · Reuters via Investing.com https://www.investing.com/news/stock-market-news/apple-says-it-will-replace-iphone-duo-units-showing-screen-problems-4973703 | V |
+| 34e | iFixit's teardown points to a display cable running over the centre of the hinge as a stress point during folding (as reported; iFixit page not read) | via iClarified https://www.iclarified.com/103098/apple-acknowledges-iphone-duo-inner-display-issue-offers-replacements and others | U |
+| 34f | Reported symptoms: horizontal bright lines from the hinge; Reuters and Inven place them along the central hinge (Inven: at the bottom of the inner display). Reports say Apple told outlets most units aren't susceptible and affected ones fail soon after use (wording not seen in Apple's own words) | CNBC, Reuters, Inven Global https://www.invenglobal.com/articles/27728/apple-addresses-iphone-duo-screen-cracks-contact-applecare-for-replacement | U |
+| 34g | Out-of-warranty inner-screen repair: $999, "on Apple's website" per one outlet (matches row 49's P3 figure) | https://shattered.io/apple-replace-iphone-duo-inner-display-applecare-999-2026/ | U (Apple's page not read) |
 
 ## 4. JerryRigEverything's test, in order (J1)
 
@@ -186,6 +190,7 @@ Spare: J1 10:36-11:03 (stuck open with dust). A7 0:08-0:14 (Apple's unfolding sh
 | 91 | Normal 0.5 mm phone glass at the same fold: 0.5 / 2.8 | **18% stretch**, about 17x more. It would shatter |
 | 92 | Same 30 µm glass at 2 mm: 0.75%. At 1 mm: 1.5% | Every 0.1 mm of radius matters |
 | 93 | "Book pages", illustrative stack, NOT Duo numbers: 10 layers x 30 µm = 0.3 mm. Glued solid at 1.4 mm: 0.3 / 2.8 | **10.7%**. Free to slide: each layer 0.03 / 2.8 = **1.1%**. Sliding cuts the peak stretch 10x |
+| 93b | **Added 27 Oct (C):** the same illustrative stack at Short 8's ~1.9 mm fold: glued 0.3 / 3.8 = **7.9%**; sliding 0.03 / 3.8 = **0.8%** | Use these next to the 30 µm, ~1.9 mm numbers so the Short never shows two figures for one layer |
 | 94 | Duo inference: a 180° loop inside HTX's ~3.85 mm teardrop must curve at 3.85 / 2 = 1.9 mm radius or tighter somewhere | A 30 µm layer there would stretch 0.78% or more. Inference only: Apple publishes neither number |
 
 ### The chain, for the diagram (rows in brackets)

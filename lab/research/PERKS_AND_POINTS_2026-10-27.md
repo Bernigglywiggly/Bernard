@@ -27,10 +27,10 @@ single-blog claim. **E** = our estimate. **[K]** = background knowledge, not re-
 
 | Bank | Bonus | Conditions reported | Ends | Evidence |
 |---|---|---|---|---|
-| **Barclays** (Bank Account) | **up to £300** (Premier £600, needs £75k salary or £100k savings) | Full switch; terms on Barclays' page | Started 1 Oct 2026, no end date given | P (Barclays page) + C (Which?) |
-| HSBC (Bank Account) | £220 (Advance/Premier higher) | 2 direct debits, £2,000 deposit, £500 card spend | not given | C (Which?) |
+| **Barclays** (Bank Account) | **up to £300**: £150 after the switch + £30 a month for up to 5 months (Premier £600, needs £75k salary or £100k savings) | Open in the Barclays app; full switch with **3+ active direct debits**; **£2,000+ salary paid in within 30 days** (an employer's BACS payment: transfers and self-employed income reportedly don't count); each £30 month needs 10+ debit-card payments and the salary. Not for anyone with a Barclays current account open on or before 1 Oct 2026, or who has had a Barclays switch bonus before | Started 1 Oct 2026; runs until withdrawn | P (Barclays terms) + C (Which?, Depositscout) |
+| HSBC (Bank Account) | £220 (Advance/Premier higher) | 2 direct debits, £2,000 paid in, £500 card spend within 60 days; not if he's had HSBC or First Direct since 1 Jan 2023 | not given | C (Which?, Be Clever With Your Cash) |
 | Lloyds (Club Lloyds) | £200 | Full switch | **9 Dec 2026** | C (Finder, Which?) |
-| NatWest | £200 | £1,250 paid in within 60 days | not given | C (Finder, Which?, Save the Student) |
+| NatWest | £200 | £1,250 paid in within 60 days, Reward/Select/Premier accounts, once per person | not given | C (Finder, Which?, Save the Student) |
 | First Direct | £175-210 (sources differ) | £1,000 deposit, 5 card payments in 45 days | not given | C (Forbes, Finder, Which?) |
 | Nationwide | £175 | Eligible current account | not given | C (Which?, Forbes) |
 | Santander | (£240 ended 7 Oct) | - | ended | C (Forbes, Moneyfacts) |
@@ -38,6 +38,8 @@ single-blog claim. **E** = our estimate. **[K]** = background knowledge, not re-
 - Each bank pays its bonus once per person, usually with a "not if you've had a switching bonus from us since..." date: check before applying. **[K]**
 - A switch moves his direct debits and closes the old account; his salary has to land in the new one. Chain them: switch into Barclays now, out to Lloyds before 9 Dec, and so on. **E**
 - Tax treatment of switch bonuses wasn't checked this session.
+
+**The first one, step by step (Barclays, ~45 min of his time):** (1) check he has never had a Barclays current account bonus and has no Barclays current account open; (2) open the Bank Account in the Barclays app and choose a full switch (Current Account Switch Service) from his salary account; (3) make sure 3+ direct debits come across and his salary (£2,000+) lands within 30 days; (4) pay for everyday things on the card, 10+ times a month, for the next five months (£30 each month). The £150 lands after the switch conditions are met. **Needs an employer salary of £2,000+ a month: if he doesn't have one, start with NatWest (£1,250 paid in) instead.**
 
 ### Row 2: 3D/360 property tours
 - UK benchmarks: a Matterport tour of an average home about £350-400 (Yorkshire Evening Post, undated); a UK commercial provider from £500. US 2026 guides: $150-500 a property, Matterport scans $200-1,500 + hosting. **D**

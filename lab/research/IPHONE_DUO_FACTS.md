@@ -248,6 +248,7 @@ Rows 100+ are for the long film only. The Short's rows above still apply.
 | 101 | iFixit built a 3D model from teardown footage, patents and CT scans and compared it with the reported damage to find its two possible causes (row 34e) | F1, F2 | V (method as reported) |
 | 102 | iFixit's verdict, as quoted: "For a first attempt, Apple has done well", with a warning about the screen | F1 via Yahoo | U (quote via extract) |
 | 103 | HTX Studio: crease 48 µm on a new Duo, 167 µm after 3,000 folds (about 3.5x deeper); slope across the centre 1.24°; two unnamed rival foldables also deepened | F3 | U (one rig, two outlets report it) |
+| 103b | **Pages opened 27 Oct ~14:10 (C, Mac):** iThinkDifferent (Imran Hussain, 22 Oct) prints HTX's "peak-to-valley height of 48 microns" new and "167 microns" after 3,000 machine folds; slope across the centre "under 0.1 degrees" → "1.24 degrees"; no scanner or method named. Notebookcheck (22 Oct) has **no depth numbers**: it confirms 3,000 folds and that the Duo's crease "became deeper than that of two other foldables" (unnamed). So the µm figures rest on one outlet relaying HTX: on screen say "HTX STUDIO'S SCAN, VIA ITHINKDIFFERENT", or watch HTX's own video and cite that | F3 | U (numbers, one relay); V (3,000 folds, deeper than two rivals) |
 | 104 | Joanna Stern: 32,640 machine folds over four nights, "no noticeable deterioration" in the hinge, slightly stiffer after; the crease got deeper and easier to feel | F4, row 61 | V |
 | 105 | Tim Pan: 10,000 folds, then cold (-20 °C / -4 °F): crease deeper, hinge strong | F4, row 60 | U |
 | 106 | Kuba Klawiter's "75,000 folds" (radar 26 Oct, a video title): **not found in search today. Don't use unless someone watches the video** | radar 26 Oct | U |
@@ -268,7 +269,7 @@ Rows 100+ are for the long film only. The Short's rows above still apply.
 ### The film's beats (rows in brackets)
 1. 0:00-0:08: the crack along the fold + Apple's sentence on screen (34d, 34f; JRE's footage credited as his bend test, rows 54-57).
 2. Inside the screen: "more than 10" layers, exploded in 3D; why only the fold line bends; strain = t ÷ 2r (20-26, 70-80, 90-94, 93b).
-3. Plastic on top, not glass (21, 43-46), then the hinge: iFixit's two possible causes, labelled as theories (34e, 100-101). Re-engage near 3:00 with the CT/3D model.
+3. Plastic on top, not glass (21, 43-46), then the hinge: iFixit's "lots of possible culprits" where hinge edges meet, its simulation's "one possible answer" (the centre support bar not dropping far enough), all labelled as theories (34h, 100-101; not "two causes"). Re-engage near 3:00 with the CT/3D model.
 4. Fold counts as time: a month, three months, eleven months, against Samsung's fourteen years (103-107, 120-124).
 5. Verdict: what to do if yours cracks (110); stop within 15 s.
 

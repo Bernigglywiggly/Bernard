@@ -1,5 +1,7 @@
 # Sendable outreach: 24 Staffordshire prospects for the explainer-video offer (Tue 27 Oct 2026)
 
+> ⚠️ **Send from `PROSPECTS_DRAFTS_QA_2026-10-27.md`, not from the drafts below.** An independent check (27 Oct, 18:40) passed 6 as written, rewrote 13 (five offered a video the firm already has, e.g. Parker's 29 s "What is ThinkAutomation?" at 53,884 views) and dropped 2 (#2 Akixi, #23 Coton House Farm). "The Curve Studio" in the sign-off was invented by the drafting agent: his name goes there.
+
 Checked Tue 27 Oct 2026, 13:05–13:45 GMT (UK time) on Companies House and each firm's own site. Nothing was sent.
 
 Input: `PROSPECTS_VIDEO_OFFER_2026-10-27.md` (24 firms) and `OUTREACH_RULES_UK_2026-10-27.md`. Rule applied (UK PECR, ICO page): a limited company or LLP may get a cold marketing email if it says who is sending and gives an easy opt-out. Sole traders and some partnerships count as individuals, so they get a phone call (after a TPS check) or a letter. UK GDPR still covers a named person's work email: every draft says where the address came from, and any "stop" is final. Only addresses that the firm publishes itself are used. None are guessed.

@@ -77,7 +77,7 @@ Physics
 |---|---|---|---|
 | 20 | Two touchscreen MacBook Pros, 14-inch and 16-inch, with OLED displays | G2, G3, G8 | REPORTED (Bloomberg) |
 | 21 | Chips: M5 Pro and M5 Max (the March 2026 chips), not M6 Pro/Max | G8 | REPORTED |
-| 22 | Also: an M6 iMac and an entry 14-inch MacBook Pro with M6, **no touch, no OLED** | G3, G8 | REPORTED |
+| 22 | **CONFIRMED Tue 27 Oct (Apple Newsroom):** "Apple introduces the new 14-inch MacBook Pro with M6" (mini-LED, no touch) and a 24-inch iMac with M6. So the touchscreen OLED model is still to come, reportedly Wed 28 | https://www.apple.com/newsroom/2026/10/apple-introduces-the-new-14-inch-macbook-pro-with-m6/ ; CNN, Engadget | V |
 | 23 | Dynamic Island around a hole-punch camera in place of the notch; lighter bodies | G7, G8 | REPORTED |
 | 24 | **"Touch-friendly, not touch-first":** touch is an extra, alongside keyboard and trackpad | G5, G2 | REPORTED |
 | 25 | macOS ("Golden Gate", per AppleInsider) changes controls depending on whether you last touched the screen or the trackpad; touching a button can open a menu around your finger; Dock and menu bar made touch-friendly | G4 | REPORTED (one outlet) |
@@ -153,7 +153,7 @@ Where: Apple Newsroom press release (apple.com/newsroom) · product page and **t
 | 107 | Weight and thickness vs the current model | ⏳ | |
 | 108 | Apple's film: URL, length, the timestamp of the first finger-on-screen shot (frame 0 candidate) | ⏳ | |
 | 109 | Anything Apple says about why now, or about ergonomics (quote verbatim) | ⏳ | |
-| 110 | M6 iMac and M6 MacBook Pro: names, prices, dates | ⏳ | |
+| 110 | M6 iMac and M6 MacBook Pro: names, prices, dates | **Filled 27 Oct 17:45 (cloud C):** 14-inch MacBook Pro with M6 from $1,999 (US; 16 GB, 1 TB; space black, silver). iMac with M6 from $1,499 (10-core) / $1,699 (12-core). Pre-orders Wed 28 Oct, in stores Fri 6 Nov, 35 countries. Apple claims GPU up to 30% faster for graphics and up to 25% for AI than M5. UK prices not yet read | Apple Newsroom (MacBook Pro release URL above); iMac details via CNN, Engadget, CineD (Apple's iMac page not read) |
 
 ## 6. The Short: two branches
 

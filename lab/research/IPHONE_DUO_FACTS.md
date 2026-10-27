@@ -109,7 +109,7 @@ All V as Apple's claims. None is independently measured.
 | 34b | MacRumors: the reported cracks run along the hinge, on the lower half of the inner screen; owners describe a stuck feel and a pop first. It also says some crack images going round are AI-generated: use JRE's footage, never owner photos | P9 | U (MacRumors' reading of owner reports) |
 | 34c | Kuba Klawiter's fold test stopped at 75,000 folds (Polish video, not checked). iFixit's teardown found more than one possible cause of the hinge failure (via MacRumors; teardown not read) | P9, radar 26 Oct | U |
 | 34d | **Added 27 Oct (C):** Apple's full sentence, as given to several outlets: "aware of an issue impacting the inner display on a small number of iPhone Duo units"; owners contact AppleCare for a replacement. Reuters: "Apple says it will replace iPhone Duo units showing screen problems". Still no cause from Apple | MacTech https://www.mactech.com/2026/10/26/apple-is-aware-of-an-issue-impacting-the-inner-display-on-a-small-number-of-iphone-duo-units/ · CNBC https://www.cnbc.com/2026/10/26/apple-responds-to-user-reports-of-broken-iphone-duo-screens.html · Reuters via Investing.com https://www.investing.com/news/stock-market-news/apple-says-it-will-replace-iphone-duo-units-showing-screen-problems-4973703 | V |
-| 34e | iFixit's teardown points to a display cable running over the centre of the hinge as a stress point during folding (as reported; iFixit page not read) | via iClarified https://www.iclarified.com/103098/apple-acknowledges-iphone-duo-inner-display-issue-offers-replacements and others | U |
+| 34e | **Corrected 27 Oct (C):** iFixit's teardown (25 Oct) names two *possible* hinge causes, neither confirmed: a centre bar that may not drop far enough, leaving a stress point where the screen folds against it, or a curved guide rail that may not retract. The damaged spot sits slightly below where the display cable passes through the hinge (the cable itself isn't blamed). Dust getting into the hinge could also crunch the screen | iFixit https://www.ifixit.com/News/119895/iphone-duo-teardown · 9to5Mac https://9to5mac.com/2026/10/25/ifixit-tears-down-iphone-duo-finds-possible-causes-of-early-screen-failures/ · TechRepublic https://www.techrepublic.com/article/news-iphone-duo-ifixit-screen-failures/ | V (that iFixit says it); cause U |
 | 34f | Reported symptoms: horizontal bright lines from the hinge; Reuters and Inven place them along the central hinge (Inven: at the bottom of the inner display). Reports say Apple told outlets most units aren't susceptible and affected ones fail soon after use (wording not seen in Apple's own words) | CNBC, Reuters, Inven Global https://www.invenglobal.com/articles/27728/apple-addresses-iphone-duo-screen-cracks-contact-applecare-for-replacement | U |
 | 34g | Out-of-warranty inner-screen repair: $999, "on Apple's website" per one outlet (matches row 49's P3 figure) | https://shattered.io/apple-replace-iphone-duo-inner-display-applecare-999-2026/ | U (Apple's page not read) |
 
@@ -226,3 +226,54 @@ If the line is too thin to read at Shorts size, open on J1 ~6:52 (the matte laye
 - "First folding phone with dual ultra-thin glass" (row 40): his claim.
 - That the Stern test equals "a year of use" (P5's estimate) or that the Galaxy Z Fold8 passed the same test (forum comment).
 - Anything from his case segment (13:00-14:45): sponsor content (dbrand).
+
+## 10. Film additions: "iPhone Duo Crack: Why Folding Screens Break" (Fri 30 Oct)
+
+Added Tue 27 Oct 2026, ~04:50 UK, by account C (web search extracts; pages not opened, see the method note in `MOTO_WATER_FACTS.md`).
+Rows 100+ are for the long film only. The Short's rows above still apply.
+
+### Sources
+- **F1** iFixit, "iPhone Duo Teardown: The Most Repairable Foldable Has a Huge Screen Problem", 25 Oct 2026. https://www.ifixit.com/News/119895/iphone-duo-teardown
+- **F2** 9to5Mac on F1, 25 Oct. https://9to5mac.com/2026/10/25/ifixit-tears-down-iphone-duo-finds-possible-causes-of-early-screen-failures/ · TechRepublic https://www.techrepublic.com/article/news-iphone-duo-ifixit-screen-failures/
+- **F3** HTX Studio crease test (3,000 folds), via iThinkDiff https://www.ithinkdiff.com/iphone-duo-crease-test-3000-folds/ and Notebookcheck https://www.notebookcheck.net/iPhone-Duo-crease-put-to-the-test-revealing-some-interesting-quirks.1431319.0.html
+- **F4** Joanna Stern's 32,640-fold rig, via iPhone in Canada https://www.iphoneincanada.ca/2026/10/21/iphone-duo-hinge-32000-folds-test/ · Tim Pan's 10,000 folds: https://www.iphoneincanada.ca/2026/10/23/youtuber-folds-iphone-duo-10000-times-to-test-its-limits-video/
+- **F5** Samsung Display / Bureau Veritas, 500,000-fold panel test (Galaxy Z Fold7), via Tom's Guide https://www.tomsguide.com/phones/samsung-phones/samsung-galaxy-z-fold-7-can-survive-half-a-million-folds-according-to-independent-testing-and-thats-a-massive-upgrade and FN News https://en.fnnews.com/news/202507221438414514 · Fold5/Flip5 200,000 folds: SamMobile https://www.sammobile.com/?p=15042003
+- **F6** 9to5Mac on Apple's support documents for Duo hinge problems (won't fully open or close, unexpected noise): https://9to5mac.com/?p=1075554
+
+### Facts
+| # | Fact | Source | Status |
+|---|---|---|---|
+| 100 | iFixit gives the Duo a provisional 5/10 for repairability, the highest it has given a foldable; the inner display and hinge cost the most points. Provisional because parts aren't on sale yet | F1, F2 | V |
+| 101 | iFixit built a 3D model from teardown footage, patents and CT scans and compared it with the reported damage to find its two possible causes (row 34e) | F1, F2 | V (method as reported) |
+| 102 | iFixit's verdict, as quoted: "For a first attempt, Apple has done well", with a warning about the screen | F1 via Yahoo | U (quote via extract) |
+| 103 | HTX Studio: crease 48 µm on a new Duo, 167 µm after 3,000 folds (about 3.5x deeper); slope across the centre 1.24°; two unnamed rival foldables also deepened | F3 | U (one rig, two outlets report it) |
+| 104 | Joanna Stern: 32,640 machine folds over four nights, "no noticeable deterioration" in the hinge, slightly stiffer after; the crease got deeper and easier to feel | F4, row 61 | V |
+| 105 | Tim Pan: 10,000 folds, then cold (-20 °C / -4 °F): crease deeper, hinge strong | F4, row 60 | U |
+| 106 | Kuba Klawiter's "75,000 folds" (radar 26 Oct, a video title): **not found in search today. Don't use unless someone watches the video** | radar 26 Oct | U |
+| 107 | Samsung: Galaxy Z Fold5/Flip5 certified for 200,000 folds at 25 °C (Bureau Veritas). Z Fold7's **panel** passed 500,000 folds over 13 days at 25 °C; Samsung Display says that's 10+ years at about 100 folds a day, 6+ years at 200 | F5 | V (maker + certifier) |
+| 108 | Apple publishes no fold rating for the Duo (row 30) | A1-A5 | V (absence) |
+| 109 | Apple support documents cover Duo hinge problems: won't fully open or close, unexpected noise | F6 | U |
+| 110 | What an owner can do: Apple says contact AppleCare for a replacement (rows 34, 34d); out of warranty, the inner screen is $999 (reported, row 34g) | rows 34, 34d, 34g | V / U |
+
+### OUR MATHS (label every one on screen)
+| # | Sum | Result |
+|---|---|---|
+| 120 | Samsung's own usage assumption, 100 folds a day = 36,500 a year. HTX's 3,000 folds | **about a month** of use |
+| 121 | Tim Pan's 10,000 folds at 100 a day | **about 3 months** |
+| 122 | Stern's 32,640 folds at 100 a day | **about 11 months** |
+| 123 | Samsung's 500,000-fold panel at 100 a day | **about 14 years** (Samsung says "more than 10") |
+| 124 | HTX's 167 µm crease against the user study's "good" line of 60 µm (row 84) | **almost 3x past "good" after about a month's folds** (illustrative: different rigs and methods) |
+
+### The film's beats (rows in brackets)
+1. 0:00-0:08: the crack along the fold + Apple's sentence on screen (34d, 34f; JRE's footage credited as his bend test, rows 54-57).
+2. Inside the screen: "more than 10" layers, exploded in 3D; why only the fold line bends; strain = t ÷ 2r (20-26, 70-80, 90-94, 93b).
+3. Plastic on top, not glass (21, 43-46), then the hinge: iFixit's two possible causes, labelled as theories (34e, 100-101). Re-engage near 3:00 with the CT/3D model.
+4. Fold counts as time: a month, three months, eleven months, against Samsung's fourteen years (103-107, 120-124).
+5. Verdict: what to do if yours cracks (110); stop within 15 s.
+
+### Do not claim (film)
+- iFixit's theories as *the* cause (34e): they are possible causes; Apple has given none.
+- Kuba's 75,000 folds (106) unless watched.
+- Samsung's 500,000 as a hinge or whole-phone figure: it's the panel (107).
+- A recall, a failure rate or "most units": Apple says "a small number"; "most aren't susceptible" is reported, not seen in Apple's words (34f).
+- That HTX's or Stern's rigs equal real use: label the conversions as our maths (120-124).

@@ -35,6 +35,7 @@ knowledge, not re-checked today. Money is "by 31 Dec" unless stated; £ per his 
 ## 2. Route notes (the numbers behind the table)
 
 ### Reels pack (row 1)
+- **Route correction (05:05):** cold DMs, emails or texts to sole traders and ordinary partnerships need consent (PECR; the ICO counts social-media DMs as electronic mail). DM only limited companies; walk in or post a QR card to the rest; screen phone numbers against TPS/CTPS. `OUTREACH_RULES_UK_2026-10-27.md`. **P** (ICO)
 - 52 personalised reels: 34 to send by Facebook, 14 by phone, 4 on Instagram (send sheet). QC on 6 Oct: 31 of 35 checked = SEND, 4 = FIX, 0 = don't send. **P**
 - Price £79-99 a month for 4 reels; managed social for restaurants runs £299-449 + VAT a month elsewhere (ALIGNMENT_8OCT). **C**
 - Buy rate 1-3% is untested (ALIGNMENT_2026-10-25). 52 × 1-3% ≈ 0.5-1.6 shops ≈ £40-160 a month. **E**

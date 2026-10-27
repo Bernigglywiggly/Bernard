@@ -27,6 +27,27 @@ Press
 - **N7** IPO: BusinessDay/Reuters https://www.businessday.co.za/world/international-companies/2026-05-17-spacex-targets-june-12-for-mega-ipo/ · Wikipedia https://en.wikipedia.org/wiki/Initial_public_offering_of_SpaceX
 - **N8** Launch and constellation counts: KeepTrack https://keeptrack.space/live-count/how-many-satellites-does-spacex-have
 
+## 0. Checked on the SEC filings themselves (Tue 27 Oct ~13:05 UK, account C, Mac session)
+
+E1's 8-K page only furnishes the release; the numbers are in its Exhibit 99.1:
+**E1a** https://www.sec.gov/Archives/edgar/data/1181412/000162828026066482/spaceexplorationtechnologi.htm . All $ in millions as printed.
+**P** = read in the filing. Where a row below says V or U, this table wins.
+
+| # | What | Filing says | Rows it settles |
+|---|---|---|---|
+| 0a | Revenue, Q3 2026 vs Q3 2025 | **14,575** vs 5,576 (+161%) (E2) | 1: P |
+| 0b | Net income; income from operations | **4,404** (Q3 2025: -1,054); **2,791** (Q3 2025: -273) (E2) | 2: P (operating was U) |
+| 0c | Segment revenue, Q3 2026 vs Q3 2025 | SI **7,560** vs 813 · Connectivity **5,248** vs 3,097 · Space **1,767** vs 1,666 (E2) | 10-12: P |
+| 0d | Segment operating income, Q3 2026 vs Q3 2025 | SI **431** vs -1,722 · Connectivity **2,367** vs 1,190 · Space **-7** vs 259 (E1a) | 10-12: P |
+| 0e | Connectivity split | Consumer **3,121** (Q3 2025: 1,986); government and enterprise = 5,248 - 3,121 = 2,127 (OUR MATHS) (E2) | 11: P |
+| 0f | Starlink consumer subscribers; ARPU | **13.6M** at 30 Sep (7.2M a year earlier); ARPU **$69** a month, "improved 5% sequentially", but **$83** a year earlier (E1a). Never say ARPU is rising without "since last quarter" | 11: P |
+| 0g | Cursor | Closed **14 Aug 2026**; added **608** of revenue to 30 Sep; **1,217** of share-based pay "related to acquisitions" in SI (E1a) | 10, 32 (close date): P |
+| 0h | Capital spending | Q3 **19,593** (SI 16,444, Connectivity 1,543, Space 1,606) (E1a). Cash-flow check: 9 months 48,069 (E2) - 6 months 28,476 (E5) = 19,593 | 3: P |
+| 0i | Adjusted EBITDA | **8,809** (E1a). Capex ÷ adjusted EBITDA = 2.2 (OUR MATHS) | 3 ("more than double"): P |
+| 0j | Who rents the compute | **No customer is named.** E2: "Customer A" = **16.6%** of Q3 revenue ("relates to all three segments"); "Customer B" = **34.5%** of Q3 revenue ("relates to the SI segment"; under 10% a year earlier). One customer held 27.7% of receivables. OUR MATHS: 34.5% × 14,575 ≈ 5,030, about two thirds of SI's 7,560 | 13: **never name a customer on screen**. Usable line: "one unnamed customer paid about a third of all SpaceX's revenue" |
+| 0k | The $40B GPU deal | E3, Item 8.01: on **24 Oct 2026** SpaceX "entered into a binding commitment letter to enter into a master finance lease" with "an entity managed by Apollo Global Management, Inc.", which buys "certain graphics processing unit pods and related equipment"; principal payments "to total approximately $40 billion"; master lease "expected to close prior to year end"; schedules "commence during the first half of 2027 upon delivery of the GPUs"; risk "that the transaction may not close on the anticipated terms or timeline, or at all"; "subject to certain specified closing conditions" | 21: P (wording copied) |
+| 0l | 2025 revenue (row 33) | Not checked: E4 is over 10 MB, too big for the page reader. Open it in a browser before using row 33 | 33: still U |
+
 ## 1. The quarter (Q3 2026, three months to 30 Sep; reported 20 Oct)
 
 | # | Fact | Source | Status |

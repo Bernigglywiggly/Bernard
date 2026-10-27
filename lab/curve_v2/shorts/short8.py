@@ -28,11 +28,11 @@ LINES = [
          text="That's still near its limit, so the glass is toughened and the layers slide like book pages.",
          cap="That's still / near its limit, / so the glass is toughened / and the layers slide / like book pages.",
          shot="Apple's film A7 ~1:20-1:28 ('more than 10 ultrathin layers'), then our stack fanning like pages as it bends: "
-              "glued solid 10.7% vs sliding 1.1% (illustrative, row 93)"),
+              "glued solid 7.9% vs sliding 0.8% at the same ~1.9 mm fold (illustrative, row 93b)"),
     dict(id="d5", facts="34 (Apple to MacRumors, 26 Oct)",
          text="Apple says a small number of inner screens have an issue, and it's replacing them.",
          cap="Apple says / a small number of inner screens / have an issue, / and it's replacing them.",
-         shot="typeset card: \"an issue impacting the inner display on a small number\" + 'APPLECARE REPLACEMENT', stamp APPLE TO MACRUMORS"),
+         shot="typeset card: \"an issue impacting the inner display on a small number of iPhone Duo units\" (row 34h) + 'APPLECARE REPLACEMENT', stamp APPLE TO MACRUMORS"),
     dict(id="d6", facts="verdict; 34b (MacRumors: cracks reported along the hinge)",
          text="So the fold is where this screen works hardest, and it's where the reported cracks are.",
          cap="So the fold / is where this screen / works hardest, / and it's where / the reported cracks are.",

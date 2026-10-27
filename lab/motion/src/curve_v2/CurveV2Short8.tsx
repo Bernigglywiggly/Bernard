@@ -188,11 +188,11 @@ const Glass: React.FC = () => {
 };
 
 // ------------------------------------------------------------------------------------------------ 4. the layers, glued vs sliding (book pages)
-const N = 7;
-const LAYER = ["#E9EEF5", "#8FD7FF", "#3DFFF2", "#FF2BD6", "#8FD7FF", "#F2C14E", "#B7BEC8"]; // polymer, glass, OLED, glue, glass, glue, titanium
+const N = 10; // the tag says 10 layers, so draw 10 (thinner strips, closer, same overall size as the old 7)
+const LAYER = ["#E9EEF5", "#8FD7FF", "#3DFFF2", "#FF2BD6", "#8FD7FF", "#F2C14E", "#3DFFF2", "#FF2BD6", "#8FD7FF", "#B7BEC8"]; // polymer, glass, OLED, glue, glass, glue, OLED, glue, glass, titanium
 const Stack: React.FC<{ fold: number; slide: number; hot: number }> = ({ fold, slide, hot }) => {
   const th = Math.PI * fold;
-  const L = 860, A0 = 300, gap = 22;
+  const L = 860, A0 = 300, gap = 15;
   return (
     <svg width={1080} height={1920} style={{ position: "absolute", inset: 0 }}>
       {Array.from({ length: N }).map((_, i) => {
@@ -204,7 +204,7 @@ const Stack: React.FC<{ fold: number; slide: number; hot: number }> = ({ fold, s
         const arm = armGlued + (armSlide - armGlued) * slide;
         const heat = (1 - slide) * (i / (N - 1)) * hot;
         return (
-          <path key={i} d={strip(540, 1300, L, A0, th, off, arm)} fill="none" strokeLinecap="round" strokeWidth={14}
+          <path key={i} d={strip(540, 1300, L, A0, th, off, arm)} fill="none" strokeLinecap="round" strokeWidth={10}
             stroke={heat > 0.05 ? `rgb(255,${Math.round(200 - 140 * heat)},${Math.round(80 - 60 * heat)})` : LAYER[i]} />
         );
       })}
@@ -225,10 +225,10 @@ const Layers: React.FC = () => {
       <Stack fold={fold * 0.92} slide={slide} hot={fold} />
       <div style={{ position: "absolute", left: 64, top: 230, opacity: interpolate(lab, [0, 0.3], [0, 1], CLAMP) }}>
         <div style={{ ...HEADC, fontSize: 92, color: glued ? C.warn : C.cyan, lineHeight: 0.95, ...keyline(0.7, 10) }}>{glued ? "GLUED SOLID" : "SLIDING LIKE"}</div>
-        <div style={{ ...HEADC, fontSize: 92, color: glued ? C.warn : C.cyan, lineHeight: 0.95, ...keyline(0.7, 10) }}>{glued ? "OUTER LAYER 10.7%" : "BOOK PAGES: 1.1%"}</div>
+        <div style={{ ...HEADC, fontSize: 92, color: glued ? C.warn : C.cyan, lineHeight: 0.95, ...keyline(0.7, 10) }}>{glued ? "OUTER LAYER 7.9%" : "BOOK PAGES: 0.8%"}</div>
       </div>
-      <Tag at={S.stack + 10} left={64} top={500} bg={C.ink} size={44} rot={[-5, -2]}>ILLUSTRATIVE · 10 LAYERS OF 30 µm</Tag>
-      <Tag at={T.book + 6} left={64} top={590} bg={C.acid} size={44} rot={[4, 1]}>APPLE: LAYERS &quot;GLIDE&quot; PAST EACH OTHER</Tag>
+      <Tag at={S.stack + 10} left={64} top={500} bg={C.ink} size={44} rot={[-5, -2]}>ILLUSTRATIVE · 10 LAYERS OF 30 µm<br />AT A ~1.9 mm FOLD</Tag>
+      <Tag at={T.book + 6} left={64} top={650}bg={C.acid} size={44} rot={[4, 1]}>APPLE: LAYERS &quot;GLIDE&quot; PAST EACH OTHER</Tag>
     </AbsoluteFill>
   );
 };
@@ -255,8 +255,8 @@ const AppleSays: React.FC = () => {
       <div style={{ ...SHADE_TOP, height: 1100 }} />
       <Tag at={S.apple + 2} left={64} top={200} bg={C.ink} size={48} rot={[-5, -2]}>APPLE, TO MACRUMORS · 26 OCT</Tag>
       <div style={{ position: "absolute", left: 64, top: 300, width: 950, opacity: interpolate(q, [0, 0.3], [0, 1], CLAMP), translate: `0 ${(1 - q) * 30}px` }}>
-        <div style={{ ...HEADC, whiteSpace: "normal", fontSize: 84, color: C.ink, lineHeight: 1.02, ...keyline(0.6, 10) }}>
-          “AN ISSUE IMPACTING THE INNER DISPLAY ON A SMALL NUMBER”
+        <div style={{ ...HEADC, whiteSpace: "normal", fontSize: 72, color: C.ink, lineHeight: 1.02, ...keyline(0.6, 10) }}>
+          “AN ISSUE IMPACTING<br />THE INNER DISPLAY ON<br />A SMALL NUMBER OF<br />IPHONE DUO UNITS”
         </div>
       </div>
       <Stamp at={T.replacing - 2} left={70} top={690} size={74} color={C.acid}>APPLECARE<br />REPLACEMENT</Stamp>
@@ -316,7 +316,7 @@ export const CurveV2Short8: React.FC = () => (
     <Hook />
     <CapScrim />
     <CaptionTrack pages={PAGES} hide={[[0, S.hookEnd], [S.loop, SHORT8_FRAMES]]} top={1360} />
-    <Credit text="JERRYRIGEVERYTHING · YOUTUBE" show={[[0, S.hookEnd], [S.loop, SHORT8_FRAMES]]} />
+    <Credit text="JERRYRIGEVERYTHING · BEND TEST" show={[[0, S.hookEnd], [S.loop, SHORT8_FRAMES]]} />
     <Credit text="APPLE · YOUTUBE" show={[[S.layersShot, S.stack], [S.apple, S.verdict]]} />
     {HAS_VO ? <Sequence from={0}><Audio src={staticFile("shorts/s8_vo.mp3")} /></Sequence> : null}
     <Bed total={SHORT8_FRAMES} level={0.12} />

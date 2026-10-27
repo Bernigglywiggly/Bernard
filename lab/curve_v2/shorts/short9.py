@@ -1,6 +1,6 @@
 """Curve Short 9 (for Wed 28 Oct): "Motorcycle on Water: Why It Didn't Sink".
 
-DRAFT by account C (facts desk), Tue 27 Oct 13:45 UK: script only, not voiced, no picture yet. The Shorts lane (A, or B if
+DRAFT by account C (facts desk), Tue 27 Oct 13:00 UK: script only, not voiced, no picture yet. The Shorts lane (A, or B if
 A is away) owns the build. Blocked on: (1) his footage route (facts §6: he sends ZXMOTO the ask, or a CCTV+ licence, or
 <=5 s credited CGTN Europe / Xinhua shots under our commentary), (2) a voice (this account has no ElevenLabs connector).
 

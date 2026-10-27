@@ -27,7 +27,7 @@ Press
 - **N7** IPO: BusinessDay/Reuters https://www.businessday.co.za/world/international-companies/2026-05-17-spacex-targets-june-12-for-mega-ipo/ · Wikipedia https://en.wikipedia.org/wiki/Initial_public_offering_of_SpaceX
 - **N8** Launch and constellation counts: KeepTrack https://keeptrack.space/live-count/how-many-satellites-does-spacex-have
 
-## 0. Checked on the SEC filings themselves (Tue 27 Oct ~13:05 UK, account C, Mac session)
+## 0. Checked on the SEC filings themselves (Tue 27 Oct ~12:50 UK, account C, Mac session)
 
 E1's 8-K page only furnishes the release; the numbers are in its Exhibit 99.1:
 **E1a** https://www.sec.gov/Archives/edgar/data/1181412/000162828026066482/spaceexplorationtechnologi.htm . All $ in millions as printed.

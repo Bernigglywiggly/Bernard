@@ -1,6 +1,6 @@
 """Curve Short 10 (Sat 31 Oct fallback, needs nobody's permission): "How SpaceX Really Makes Money".
 
-DRAFT by account C (facts desk), Tue 27 Oct 14:00 UK: script only, not voiced, no picture yet. The Shorts lane (A, or B if
+DRAFT by account C (facts desk), Tue 27 Oct 13:01 UK: script only, not voiced, no picture yet. The Shorts lane (A, or B if
 A is away) owns the build; use it if Airport Action doesn't say yes to the crosswind Short (CROSSWIND_737_FACTS.md) and
 the 17:00 radar doesn't find something hotter. Every number was read in SpaceX's own SEC filings on 27 Oct (facts §0):
 the Q3 2026 10-Q and earnings release. The thumbnail carries the twist ("NOT ROCKETS"); the title keeps the search phrase.

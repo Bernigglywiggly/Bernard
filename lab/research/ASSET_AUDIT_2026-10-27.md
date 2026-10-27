@@ -39,7 +39,7 @@ Companion files: `MONEY_ROUTES_ONLINE_2026-10-27.md`, `PERKS_AND_POINTS_2026-10-
 | 11 | **Old films** (`media/2026-10-05_youtube/`, 4 long films, many Shorts) | On YouTube | Cross-post to TikTok/Instagram/Facebook | Account connections are his | £0 (TikTok pays only from 10k followers, videos over 60 s) | £0 cash | Connect accounts for reach, not money |
 | 12 | **Chrome sessions** (Etsy, Gumroad, KDP, Facebook, YouTube Studio) | Logged in | Lets the team prepare everything; he approves each send or publish | n/a | Enabler | n/a | Use for prep only |
 
-**Correction 27 Oct 05:05 (C):** a cold Facebook/Instagram DM selling to a sole trader or ordinary partnership needs their consent under PECR (the ICO counts social-media DMs as electronic mail). Only 1 of the 52 trading names shows "Ltd". Row 1's route changes, not its value: see `OUTREACH_RULES_UK_2026-10-27.md`.
+**Correction 27 Oct 05:03 (C):** a cold Facebook/Instagram DM selling to a sole trader or ordinary partnership needs their consent under PECR (the ICO counts social-media DMs as electronic mail). Only 1 of the 52 trading names shows "Ltd". Row 1's route changes, not its value: see `OUTREACH_RULES_UK_2026-10-27.md`.
 
 ## 3. Costs to check (cut anything that isn't paying)
 
@@ -62,7 +62,7 @@ Companion files: `MONEY_ROUTES_ONLINE_2026-10-27.md`, `PERKS_AND_POINTS_2026-10-
 | # | Ask | His time | £ | £ per his hour | Source file |
 |---|---|---|---|---|---|
 | 1 | **Switch his current account for a bonus** (Barclays up to £300 first; HSBC £220, Lloyds/NatWest £200, First Direct £175-210, Nationwide £175) | 30-45 min each | £175-300 each, one-off | £200-400 | PERKS row 1 |
-| 2 | **Get the 52 reels in front of the owners legally**: Facebook/Instagram only to limited companies; walk in or post a QR card to sole traders and partnerships; phone the 14 after a TPS/CTPS check (`OUTREACH_RULES_UK_2026-10-27.md`, added 05:05) | 45-60 min + 2 walking afternoons | £0-320/month, repeating | £30-120 | §2 row 1 |
+| 2 | **Get the 52 reels in front of the owners legally**: Facebook/Instagram only to limited companies; walk in or post a QR card to sole traders and partnerships; phone the 14 after a TPS/CTPS check (`OUTREACH_RULES_UK_2026-10-27.md`, added 05:03) | 45-60 min + 2 walking afternoons | £0-320/month, repeating | £30-120 | §2 row 1 |
 | 3 | **Yes to the business video offer**, then press send on 20 drafts a day | 5 min + 20 min/day | £0-1,000 by Dec | £60-125 | §2 row 2 |
 | 4 | Publish the 2 Gumroad Christmas products | 10 min | £0-50 | small | §2 row 3 |
 | 5 | Switch off Etsy Plus (if no sale came from it) | 2 min | saves ~£90/yr | high | §3 |

@@ -1,6 +1,6 @@
 # Before anyone sends the 52 reels: UK outreach rules (PECR), checked Tue 27 Oct 2026
 
-Account C, ~05:05 UK. **Read before asking him to send the reels from his Facebook** (HANDOFF B block, 27 Oct 03:00).
+Account C, ~05:03 UK. **Read before asking him to send the reels from his Facebook** (HANDOFF B block, 27 Oct 03:00).
 Method: web search extracts of the ICO's guidance and law-firm summaries; pages not opened. Not legal advice: the live ICO
 pages are the authority.
 

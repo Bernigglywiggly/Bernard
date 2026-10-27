@@ -189,6 +189,7 @@ Spare: J1 10:36-11:03 (stuck open with dust). A7 0:08-0:14 (Apple's unfolding sh
 |---|---|---|
 | 90 | 30 µm glass at 1.4 mm radius: 0.030 / (2 x 1.4) | **1.1% stretch**, right at glass's ~1% cracking range (row 71). Why it must be toughened (rows 75, 79) |
 | 91 | Normal 0.5 mm phone glass at the same fold: 0.5 / 2.8 | **18% stretch**, about 17x more. It would shatter |
+| 91b | **Added 27 Oct (C, critic round 1):** normal 0.5 mm glass at Short 8's ~1.9 mm fold: 0.5 / 3.8 | **13.2% stretch** ("over thirteen percent" in Short 8). At HTX's exact 3.85 mm gap it is 0.5 / 3.85 = 13.0%, and row 94's "or tighter" only raises it |
 | 92 | Same 30 µm glass at 2 mm: 0.75%. At 1 mm: 1.5% | Every 0.1 mm of radius matters |
 | 93 | "Book pages", illustrative stack, NOT Duo numbers: 10 layers x 30 µm = 0.3 mm. Glued solid at 1.4 mm: 0.3 / 2.8 | **10.7%**. Free to slide: each layer 0.03 / 2.8 = **1.1%**. Sliding cuts the peak stretch 10x |
 | 93b | **Added 27 Oct (C):** the same illustrative stack at Short 8's ~1.9 mm fold: glued 0.3 / 3.8 = **7.9%**; sliding 0.03 / 3.8 = **0.8%** | Use these next to the 30 µm, ~1.9 mm numbers so the Short never shows two figures for one layer |

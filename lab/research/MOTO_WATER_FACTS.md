@@ -1,6 +1,6 @@
 # Motorcycle on water: facts for the Short "Motorcycle on Water: Why It Didn't Sink" (Wed 28 Oct)
 
-Checked Tue 27 Oct 2026, 03:45-04:30 UK (GMT), by account C. Radar pick: `RADAR_2026-10-26.md` §1 #3 and §4(a) #2.
+Checked Tue 27 Oct 2026, 03:35-03:50 UK (GMT), by account C. Radar pick: `RADAR_2026-10-26.md` §1 #3 and §4(a) #2.
 Row numbers are what the script's `facts=` fields point at. Anything not in this file does not go on screen or in the voice.
 
 **How this was checked (read this first):** this cloud session's network blocks direct page reads (publishers, YouTube, RSS),

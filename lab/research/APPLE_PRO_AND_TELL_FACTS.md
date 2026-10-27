@@ -1,6 +1,6 @@
 # Apple "Pro and tell", Wed 28 Oct: facts skeleton for the Thu 29 Short ("Touchscreen MacBook: Why It Took 16 Years")
 
-Pre-built Tue 27 Oct 2026, 04:30-05:15 UK (GMT), by account C, from `RADAR_2026-10-25b.md` Brief A and `RADAR_2026-10-26.md` §4(a) #3.
+Pre-built Tue 27 Oct 2026, 03:45-03:55 UK (GMT), by account C, from `RADAR_2026-10-25b.md` Brief A and `RADAR_2026-10-26.md` §4(a) #3.
 Row numbers are what the script's `facts=` fields point at. Anything not in this file does not go on screen or in the voice.
 **⏳ rows are empty until Apple publishes** (§5 says where to look). Fill them from Apple's own pages, then strike the REPORTED label.
 

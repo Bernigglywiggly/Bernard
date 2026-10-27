@@ -17,7 +17,7 @@ import { VO_S8 } from "./voS8Captions";
 
 const PAGES = makePages(VO_S8);
 // the narration: false until shorts/s8_vo.mp3 exists (voS8Captions.ts holds placeholder timings until then)
-const HAS_VO = false;
+const HAS_VO = true;
 const FPS = 30;
 const bare = (s: string) => s.replace(/¶/g, "").trim().toLowerCase().replace(/[^a-z0-9%']/g, "");
 const cue = (word: string, nth = 1, edge: "start" | "end" = "start") => {
@@ -288,6 +288,18 @@ const Verdict: React.FC = () => {
   );
 };
 
+// dark band behind the captions while Apple's bright footage is on screen (white captions vanish on it otherwise)
+const CapScrim: React.FC = () => {
+  const frame = useCurrentFrame();
+  const w = ([[S.layersShot, S.stack], [S.apple, S.verdict]] as [number, number][]).find(([a, b]) => between(frame, a, b));
+  if (!w) return null;
+  const o = Math.min(interpolate(frame, [w[0], w[0] + 6], [0, 1], CLAMP), interpolate(frame, [w[1] - 6, w[1]], [1, 0], CLAMP));
+  return (
+    <div style={{ position: "absolute", left: 0, right: 0, top: 1180, height: 560, opacity: o,
+      background: "linear-gradient(180deg, rgba(6,9,14,0) 0%, rgba(6,9,14,0.74) 32%, rgba(6,9,14,0.74) 76%, rgba(6,9,14,0) 100%)" }} />
+  );
+};
+
 export const CurveV2Short8: React.FC = () => (
   <AbsoluteFill style={{ backgroundColor: C.black }}>
     {/* pictures: the crack at frame 0; Apple's own layer and unfold shots; the crack again for the loop */}
@@ -302,6 +314,7 @@ export const CurveV2Short8: React.FC = () => (
     <AppleSays />
     <Verdict />
     <Hook />
+    <CapScrim />
     <CaptionTrack pages={PAGES} hide={[[0, S.hookEnd], [S.loop, SHORT8_FRAMES]]} top={1360} />
     <Credit text="JERRYRIGEVERYTHING · YOUTUBE" show={[[0, S.hookEnd], [S.loop, SHORT8_FRAMES]]} />
     <Credit text="APPLE · YOUTUBE" show={[[S.layersShot, S.stack], [S.apple, S.verdict]]} />

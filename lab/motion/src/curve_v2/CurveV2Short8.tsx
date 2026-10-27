@@ -2,7 +2,7 @@ import { Audio } from "@remotion/media";
 import type React from "react";
 import { AbsoluteFill, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { CLAMP, EASE_IN_OUT, EASE_OUT } from "../lib/anim";
-import { Bed, C, CaptionTrack, ClipScene, Credit, HEADC, keyline, MONO, pop, Sfx, Stamp } from "./kit";
+import { Bed, C, CaptionTrack, ClipScene, Credit, HEADC, keyline, MONO, pop, Sfx } from "./kit";
 import { makePages } from "./pager";
 import { VO_S8 } from "./voS8Captions";
 
@@ -93,6 +93,34 @@ const Tag8: React.FC<{ children: React.ReactNode; at: number; left: number; top:
   );
 };
 
+// The kit's Stamp lands from 1.8x about its centre, which threw "APPLECARE" off the left edge over the quote (critic round 2):
+// here it lands from 1.3x in 4 frames, scaled from its left edge.
+const Stamp8: React.FC<{ children: React.ReactNode; at: number; left: number; top: number; color?: string; size?: number; rot?: number }> = ({
+  children, at, left, top, color = C.warn, size = 96, rot = -7 }) => {
+  const frame = useCurrentFrame();
+  if (frame < at) return null;
+  return (
+    <div style={{ position: "absolute", left, top, padding: "10px 26px 14px", border: `10px solid ${color}`, color, ...HEADC, fontSize: size,
+      textAlign: "center", lineHeight: 0.95, backgroundColor: "rgba(0,0,0,0.55)", rotate: `${rot}deg`, transformOrigin: "0% 50%",
+      scale: interpolate(frame, [at, at + 4], [1.3, 1], { ...CLAMP, easing: EASE_OUT }), opacity: interpolate(frame, [at, at + 2], [0, 1], CLAMP) }}>
+      {children}
+    </div>
+  );
+};
+
+// The channel's promise from the banner, on two lines clear of the Shorts buttons (x 60-940, y 1466-1600; critic round 2).
+const ChannelPromise: React.FC<{ at: number }> = ({ at }) => {
+  const frame = useCurrentFrame();
+  if (frame < at) return null;
+  return (
+    <div style={{ position: "absolute", left: 60, top: 1466, padding: "6px 18px 10px", backgroundColor: C.acid, color: C.black,
+      border: `4px solid ${C.black}`, ...HEADC, fontSize: 60, lineHeight: 0.92, opacity: interpolate(frame, [at, at + 6], [0, 1], CLAMP),
+      translate: `0 ${interpolate(frame, [at, at + 8], [24, 0], { ...CLAMP, easing: EASE_OUT })}px` }}>
+      THE STORY BEHIND THE CLIP<br />EVERYONE&apos;S SHARING
+    </div>
+  );
+};
+
 // The stretch bar against glass's ~1% limit: the hook's readout (d1), and again at "that's still near its limit" (d4).
 const Meter: React.FC<{ value: number; limitIn: number }> = ({ value, limitIn }) => {
   const hot = Math.min(1, value / 1.0);
@@ -114,8 +142,8 @@ const Hook: React.FC = () => {
   return (
     <AbsoluteFill>
       <div style={{ ...SHADE_TOP, height: 760 }} />
-      <div style={{ position: "absolute", left: 64, top: 250, ...HEADC, fontSize: 136, color: C.ink, lineHeight: 0.92, ...keyline(0.9, 11) }}>WHY DO IPHONE</div>
-      <div style={{ position: "absolute", left: 64, top: 376, ...HEADC, fontSize: 136, color: C.acid, lineHeight: 0.92, ...keyline(0.9, 11) }}>DUOS CRACK?</div>
+      <div style={{ position: "absolute", left: 64, top: 250, ...HEADC, fontSize: 130, color: C.ink, lineHeight: 0.92, ...keyline(0.9, 11) }}>WHY DO IPHONE</div>
+      <div style={{ position: "absolute", left: 64, top: 372, ...HEADC, fontSize: 130, color: C.acid, lineHeight: 0.92, ...keyline(0.9, 11) }}>DUOS CRACK?</div>
     </AbsoluteFill>
   );
 };
@@ -134,7 +162,7 @@ const Bend: React.FC = () => {
   const L = 900, A = 520 / tight, t = 34 * thick;
   const stretch = 0.79 * fold; // % at the real numbers (30 µm, ~1.9 mm fold); the thicker/tighter beats show the rule instead
   const hot = Math.min(1, stretch / 1.0);
-  const formula = pop(frame, T.bend + 2, fps, 220, 13);
+  const formula = pop(frame, T.bend + 6, fps, 220, 13);
   const limitIn = ease(frame, T.far - 3, T.far + 7); // "as far as glass can": readable for 2 s, not 0.6
   return (
     <AbsoluteFill>
@@ -167,16 +195,16 @@ const Bend: React.FC = () => {
         </div>
         <Meter value={stretch} limitIn={limitIn} />
       </div>
-      <Tag8 at={S.hookEnd + 10} until={T.bend - 2} left={64} top={790} bg={C.acid} size={48} rot={[-6, -2]}>OUR MATHS · 30 µm GLASS<br />~1.9 mm FOLD = HTX&apos;S 3.85 mm GAP ÷ 2</Tag8>
+      <Tag8 at={S.hookEnd + 10} until={T.bend - 2} left={64} top={790} bg={C.acid} size={52} rot={[-6, -2]}>OUR MATHS · 30 µm GLASS<br />~1.9 mm FOLD = HTX&apos;S 3.85 mm GAP ÷ 2</Tag8>
       {frame >= T.bend ? (
         <div style={{ position: "absolute", left: 0, right: 0, top: 250, textAlign: "center", opacity: interpolate(formula, [0, 0.3], [0, 1], CLAMP),
           translate: `0 ${(1 - formula) * 30}px` }}>
           <div style={{ ...HEADC, fontSize: 120, color: C.ink, ...keyline(0.8, 11) }}>STRETCH = t ÷ 2r</div>
-          <div style={{ ...MONO, fontSize: 48, color: "#C9D3E0", marginTop: 10 }}>t = THICKNESS · r = BEND RADIUS</div>
+          <div style={{ ...MONO, fontSize: 52, color: "#C9D3E0", marginTop: 10 }}>t = THICKNESS · r = BEND RADIUS</div>
         </div>
       ) : null}
       <Tag8 at={T.thicker - 2} left={64} top={500} bg={C.warn} color={C.ink} size={50} rot={[-6, -2]}>2× THICKER → 2× THE STRETCH</Tag8>
-      <Tag8 at={T.or} left={64} top={600} bg={C.warn} color={C.ink} size={50} rot={[5, 1]}>2× TIGHTER → 2× THE STRETCH</Tag8>
+      <Tag8 at={T.or - 7} left={64} top={600} bg={C.warn} color={C.ink} size={50} rot={[5, 1]}>2× TIGHTER → 2× THE STRETCH</Tag8>
     </AbsoluteFill>
   );
 };
@@ -211,13 +239,13 @@ const Glass: React.FC = () => {
       </svg>
       <div style={{ position: "absolute", left: 64, top: 230, width: 470 }}>
         <div style={{ ...HEADC, fontSize: 64, color: C.ink, whiteSpace: "normal", lineHeight: 1, ...keyline(0.45, 8) }}>ORDINARY PHONE GLASS</div>
-        <div style={{ ...MONO, fontSize: 52, color: "#C9D3E0", marginTop: 8 }}>0.5 mm</div>
+        <div style={{ ...MONO, fontSize: 60, color: "#C9D3E0", marginTop: 8 }}>0.5 mm</div>
         <div style={{ ...HEADC, fontSize: 150, color: C.warn, marginTop: 10, opacity: interpolate(crack, [0, 0.3], [0, 1], CLAMP), ...keyline(1, 11) }}>13%+</div>
         <div style={{ ...HEADC, fontSize: 64, color: C.warn, opacity: interpolate(crack, [0, 0.3], [0, 1], CLAMP), ...keyline(0.45, 8) }}>SHATTERS</div>
       </div>
       <div style={{ position: "absolute", left: 600, top: 230, width: 420 }}>
         <div style={{ ...HEADC, fontSize: 64, color: C.ink, whiteSpace: "normal", lineHeight: 1, ...keyline(0.45, 8) }}>FOLDABLE GLASS</div>
-        <div style={{ ...MONO, fontSize: 52, color: "#C9D3E0", marginTop: 8 }}>30 µm</div>
+        <div style={{ ...MONO, fontSize: 60, color: "#C9D3E0", marginTop: 8 }}>30 µm</div>
         <div style={{ ...HEADC, fontSize: 150, color: C.cyan, marginTop: 10, opacity: interpolate(thin, [0, 0.3], [0, 1], CLAMP), ...keyline(1, 11) }}>0.8%</div>
         <div style={{ ...HEADC, fontSize: 64, color: C.cyan, opacity: interpolate(thin, [0, 0.3], [0, 1], CLAMP), ...keyline(0.45, 8) }}>BENDS</div>
       </div>
@@ -276,7 +304,7 @@ const Layers: React.FC = () => {
   return (
     <AbsoluteFill>
       <div style={DARK} />
-      <Stack fold={fold * 0.92} slide={slide} hot={fold} cy={1180} count={built} />
+      <Stack fold={fold * 0.92} slide={slide} hot={glued ? fold : 0} cy={1180} count={built} />
       {meter > 0 ? (
         <div style={{ position: "absolute", left: 64, top: 230, opacity: meter }}>
           <div style={{ ...HEADC, fontSize: 70, color: C.ink, ...keyline(0.5, 9) }}>STILL NEAR THE LIMIT</div>
@@ -286,13 +314,13 @@ const Layers: React.FC = () => {
       ) : null}
       {frame >= S.glued ? (
         <div style={{ position: "absolute", left: 64, top: 230, opacity: interpolate(lab, [0, 0.3], [0, 1], CLAMP) }}>
-          <div style={{ ...HEADC, fontSize: 92, color: glued ? C.warn : C.cyan, lineHeight: 0.95, ...keyline(0.7, 10) }}>{glued ? "GLUED SOLID" : "SLIDING LIKE"}</div>
+          <div style={{ ...HEADC, fontSize: 92, color: glued ? C.warn : C.cyan, lineHeight: 0.95, ...keyline(0.7, 10) }}>{glued ? "IF GLUED SOLID:" : "SLIDING LIKE"}</div>
           <div style={{ ...HEADC, fontSize: 92, color: glued ? C.warn : C.cyan, lineHeight: 0.95, ...keyline(0.7, 10) }}>{glued ? "OUTER LAYER 7.9%" : "BOOK PAGES: 0.8%"}</div>
         </div>
       ) : null}
-      <Tag8 at={S.glassEnd + 14} until={S.glued} left={64} top={760} bg={C.ink} size={56} rot={[-5, -2]}>APPLE: &quot;MORE THAN 10<br />ULTRATHIN LAYERS&quot;</Tag8>
-      <Tag8 at={S.glued + 4} left={64} top={500} bg={C.ink} size={48} rot={[-5, -2]}>ILLUSTRATIVE · 10 LAYERS OF 30 µm<br />AT A ~1.9 mm FOLD</Tag8>
-      <Tag8 at={T.like + 1} left={64} top={645} bg={C.acid} size={48} rot={[4, 1]}>APPLE: LAYERS &quot;GLIDE&quot; PAST EACH OTHER</Tag8>
+      <Tag8 at={S.glassEnd + 6} until={S.glued + 2} left={64} top={760} bg={C.ink} size={56} rot={[-5, -2]}>APPLE: &quot;MORE THAN 10<br />ULTRATHIN LAYERS&quot;</Tag8>
+      <Tag8 at={S.glued + 4} left={64} top={500} bg={C.ink} size={52} rot={[-5, -2]}>ILLUSTRATIVE · 10 LAYERS OF 30 µm<br />AT A ~1.9 mm FOLD</Tag8>
+      <Tag8 at={T.slide + 2} left={64} top={650} bg={C.acid} size={52} rot={[4, 1]}>APPLE: LAYERS &quot;GLIDE&quot;<br />PAST EACH OTHER</Tag8>
     </AbsoluteFill>
   );
 };
@@ -314,7 +342,7 @@ const AppleSays: React.FC = () => {
       </div>
       {/* the hedge lands on "have an issue" and holds 2 s (critic round 1: it was up for 0.27 s) */}
       <Tag8 at={T.have - 8} left={64} top={930} bg={C.warn} color={C.ink} size={58} rot={[5, 1]}>NO CAUSE GIVEN</Tag8>
-      <Stamp at={T.replacing} left={70} top={690} size={74} color={C.acid}>APPLECARE<br />REPLACEMENT</Stamp>
+      <Stamp8 at={T.have + 8} left={70} top={690} size={74} color={C.acid}>APPLECARE<br />REPLACEMENT</Stamp8>
     </AbsoluteFill>
   );
 };
@@ -329,7 +357,7 @@ const Verdict: React.FC = () => {
   const glow = 0.6 + 0.4 * Math.sin((frame - S.verdict) / 4);
   const h = pop(frame, S.verdict, fps, 220, 12);
   // the sliding stack at fold 0.92 spans cy - 369 to cy + 135, so cy 1055 centres it on y 938 (545-1331 px at 1.5x-1.56x)
-  const grow = 1.5 * interpolate(frame, [S.verdict, S.loop], [1, 1.04], CLAMP);
+  const grow = 1.5 * interpolate(frame, [S.verdict, S.loop], [1, 1.06], CLAMP);
   return (
     <AbsoluteFill>
       <div style={DARK} />
@@ -343,8 +371,8 @@ const Verdict: React.FC = () => {
         <div style={{ ...HEADC, fontSize: 120, color: C.ink, lineHeight: 0.92, ...keyline(0.85, 11) }}>THE FOLD</div>
         <div style={{ ...HEADC, fontSize: 120, color: C.warn, lineHeight: 0.92, ...keyline(0.85, 11) }}>WORKS HARDEST</div>
       </div>
-      <Tag8 at={T.reported - 2} left={64} top={466} bg={C.ink} size={48} rot={[-5, -2]}>REPORTED CRACKS: ALONG THE HINGE</Tag8>
-      <Tag8 at={T.hardest} left={40} top={1478} bg={C.acid} size={40} rot={[0, 0]}>THE STORY BEHIND THE CLIP EVERYONE&apos;S SHARING</Tag8>
+      <Tag8 at={T.reported - 2} left={64} top={466} bg={C.ink} size={52} rot={[-5, -2]}>REPORTED CRACKS: ALONG THE HINGE</Tag8>
+      <ChannelPromise at={T.hardest} />
     </AbsoluteFill>
   );
 };

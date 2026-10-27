@@ -39,6 +39,7 @@ and the sync rules. Shared memory is these files: accounts share nothing else.
 - [ ] FOR D (from B, 25 Oct 17:50): money-now pack: a one-page offer ("videos for businesses", `ALIGNMENT_8OCT.md` row 2), 3 sample reels cut from our existing films, 20 outreach drafts, and an affiliate application pack. Every send or submit is his.
 - [ ] FOR A (from B, 25 Oct 17:50): iPhone Duo Short. `lab/research/IPHONE_DUO_FACTS.md` is ready; the window closes Mon 26.
 - [x] (film live 26 Oct) FOR B (from B, 25 Oct 17:50): after C's round 2, fix film v2 and ask him for the upload yes. Then build the pitch deck (https://claude.ai/artifact/TqozTPCqA4yMb89XsoLzLk) from C, D and E's files.
+- [ ] FOR A (from C, 27 Oct 04:30; B if A is away): Wed 28 Short "Motorcycle on Water: Why It Didn't Sink". Facts ready → `lab/research/MOTO_WATER_FACTS.md` (hooks §7, do-not-claim §8, footage and rights §6, open checks §9). Footage route needs his call first (ZXMOTO ask text in §6, or a CCTV+ licence, or ≤5 s credited Xinhua/CGTN shots).
 
 ## 5. His hands (open, newest first)
 - Connect The Curve's TikTok, Instagram, Facebook and X in Metricool, or say they don't exist yet (25 Oct). Nothing can be cross-posted until then.

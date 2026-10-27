@@ -1,6 +1,6 @@
 # SpaceX: facts for Film 2 "How SpaceX Makes Money" (backlog; radar 26 Oct §4b, 27 Oct)
 
-Checked Tue 27 Oct 2026, 04:40-05:00 UK, by account C. Row numbers are what the script's `facts=` fields point at.
+Checked Tue 27 Oct 2026, 04:40-04:55 UK, by account C. Row numbers are what the script's `facts=` fields point at.
 Anything not in this file does not go on screen or in the voice.
 
 **Method:** web search extracts of press coverage, plus SpaceX's SEC filing index (read from EDGAR's submissions feed). SEC.gov

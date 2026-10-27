@@ -1,6 +1,6 @@
 # Who changes your phone's clock? Facts for a dated Short (US clocks go back Sun 1 Nov 2026, 2 a.m.)
 
-Checked Tue 27 Oct 2026, ~05:10 UK, by account C (web search extracts; pages not opened). Trend board row from 24 Oct
+Checked Tue 27 Oct 2026, ~05:05 UK, by account C (web search extracts; pages not opened). Trend board row from 24 Oct
 ("US cut by Sat 31 Oct"). A permission-free Saturday option: all pictures are ours (diagrams, phone UI we draw).
 Status: **V** = two or more independent sources agree. **U** = one source. **OUR MATHS** = labelled on screen.
 

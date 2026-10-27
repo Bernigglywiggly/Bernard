@@ -15,7 +15,7 @@ Pick long-form topics from the top; anything about real people stays at charged/
 | 24 Oct | Microduck: how a $399 robot duck learned to walk (Pollen's sim-vs-real clip) | The Curve | 22 | **done**: Short 7 live 26 Oct (BurRBxo3ny8) |
 | 24 Oct | How SpaceX will catch a Starship (Flight 15, booster + ship) | The Curve (Short + 8-12 min film) | 20 | pre-build queued for A; [facts](../../lab/research/STARSHIP_FLIGHT15_FACTS.md); NET ~7-21 Nov, no SpaceX page yet |
 | 24 Oct | Why Super Typhoon Champi's eye is calm | The Curve | 19 | closed (window passed) |
-| 24 Oct | Who changes your phone's clock? (UK 25 Oct, US 1 Nov) | The Curve | 19 | open: US cut by Sat 31 Oct |
+| 24 Oct | Who changes your phone's clock? (UK 25 Oct, US 1 Nov) | The Curve | 19 | open: Sat 31 Oct option (US clocks go back Sun 1 Nov); [facts](../../lab/research/PHONE_CLOCK_FACTS.md) |
 | 24 Oct | Why KAIST's robot didn't fall when shoved | The Curve | 18 | closed as a Short; fold into the robots film |
 | 24 Oct | The year robots learned to move (sim-to-real: Microduck, Unitree, KAIST, Optimus) | The Curve (8-12 min film) | — (not scored) | open: long-form candidate (radar §3) |
 | 04 Oct | One strait the insurers closed (Hormuz) | Maps & power | 22 | open |

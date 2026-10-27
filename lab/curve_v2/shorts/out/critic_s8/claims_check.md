@@ -1,6 +1,6 @@
 # Short 8 claims check (before upload)
 
-Account C, Tue 27 Oct 2026, 04:55 UK. **This is the CRAFT §5 claims pass, not the render critic:** C works in the cloud and
+Account C, Tue 27 Oct 2026, 04:45 UK. **This is the CRAFT §5 claims pass, not the render critic:** C works in the cloud and
 can't see `SHORT8_*.mp4`, so this checks every spoken line (`lab/curve_v2/shorts/short8.py`, captions `voS8Captions.ts`),
 every on-screen string in `lab/motion/src/curve_v2/CurveV2Short8.tsx` and the manifest entry (`channel/uploads_curve.json`
 index 4) against `lab/research/IPHONE_DUO_FACTS.md`, plus a fresh search for anything new since 26 Oct. The film-critic
@@ -35,7 +35,7 @@ quick should-fixes. Everything spoken checks out; nothing needs re-voicing.
 | d2 rule + "STRETCH = t ÷ 2r", "2× THICKER → 2× THE STRETCH", "2× TIGHTER → 2× THE STRETCH" | 70, 72, 74 | OK |
 | d3 "Ordinary phone glass bent like this would stretch over thirteen percent and shatter... about thirty microns thick." + "0.5 mm / 13%+ / SHATTERS", "30 µm / 0.8% / BENDS", "OUR MATHS · SAME ~1.9 mm FOLD" | 76, 91, 94 | OK |
 | d4 "...the glass is toughened and the layers slide like book pages." + "APPLE: \"MORE THAN 10 ULTRATHIN LAYERS\"", "APPLE: LAYERS \"GLIDE\" PAST EACH OTHER" | 20, 22, 23, 79 | OK (Apple: "high-strength glass"; add row 22 to the script's facts field) |
-| d5 "Apple says a small number of inner screens have an issue, and it's replacing them." + "APPLECARE REPLACEMENT", "NO CAUSE GIVEN" | 34 | OK; Reuters: "Apple says it will replace iPhone Duo units showing screen problems". Still no cause from Apple (27 Oct 04:50) |
+| d5 "Apple says a small number of inner screens have an issue, and it's replacing them." + "APPLECARE REPLACEMENT", "NO CAUSE GIVEN" | 34 | OK; Reuters: "Apple says it will replace iPhone Duo units showing screen problems". Still no cause from Apple (27 Oct 04:40) |
 | d6 "...the fold is where this screen works hardest, and it's where the reported cracks are." + "REPORTED CRACKS: ALONG THE HINGE" | 34b, 34c | OK: "reported" hedge kept; Reuters and Inven also place the lines along the hinge |
 | Title "iPhone Duo Crack: Why It Happens at the Fold" (44 chars) | 34b, 70-75 | OK: explains where, not what caused it |
 | Description: our maths paragraph, footage credits, AI-voice line, no `<` `>` | 70-94 | OK |

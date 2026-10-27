@@ -21,6 +21,8 @@ $ millions unless stated. Columns are Tesla's own: Q3-2025 → Q3-2026. Our arit
 | 13 | Diluted EPS (non-GAAP) | $0.50 | $0.48 | | P |
 | 13b | Net income attributable to common stockholders (non-GAAP: before stock-based pay, digital-asset and SpaceX-stake marks, certain tax items) | 1,770 | 1,697 | **−4.1%** | P / EST |
 | 14 | Stock-based compensation expense | 663 | 1,165 | +75.7% | P / EST |
+| 14b | Stock-based compensation expense, **net of tax** (non-GAAP reconciliation, Update slide 30; added 27 Oct by C, read on the filing) | 459 | 982 | **+523** (89% of the 586 fall in GAAP net income: OUR MATHS) | P |
+| 14c | The rest of the reconciliation, Q3-25 → Q3-26 (slide 30): digital assets unrealised (gain) loss net of tax (62) → (224); SpaceX equity investment unrealised loss net of tax – → 108; certain tax items – → 44 (pillar two accruals). Check: 787 + 982 − 224 + 108 + 44 = 1,697; 1,373 + 459 − 62 = 1,770 | | | ties rows 11, 13b | P |
 | 15 | Capital expenditures | 2,248 | 4,732 | +110% (more than doubled) | P / EST |
 | 16 | Free cash flow | 3,990 | 1,531 | −61.6% | P / EST |
 | 17 | Cash, cash equivalents and short-term investments | 41,647 | 45,447 | | P |

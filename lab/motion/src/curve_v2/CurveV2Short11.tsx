@@ -14,16 +14,17 @@ import { VO_S11 } from "./voS11Captions";
 // EXTRA_SOURCE from slot 104, HOOK_CLIP/LOOP_CLIP/FIX_CLIP from Apple's own film (add Short 8's CapScrim behind the
 // captions if the footage is bright), the x5 scene from Apple's words (slots 103-104), HAS_VO with the real take. Jobs's
 // words on screen are copied from two recordings of the 2010 event: lab/curve_v2/footage/apple_2026-10-28/JOBS_2010_QUOTE.md.
+// 28 Oct ~18:00: launch filled in (Apple's film hnZI5uUSdEo for the hook, x5 and the loop; x5 labels in Apple's words).
 // Scenes are cued by spoken words (apple, work, bosses, no, sixteen, years, reaching, tires, under, grid, finger, changes,
-// cross, but, hangs, hinge, top, twice, halfway, down, jobs, touch, reach, quicker): a new take retimes them, and a missing
+// cross, but, hangs, hinge, top, twice, halfway, down, hinge #2, pinch, swipe, drag, jobs, touch, reach, quicker): a new take retimes them, and a missing
 // cue word throws, so update T when a line changes.
 
-const HAS_VO = false; // true once public/shorts/s11_vo.mp3 and the real voS11Captions.ts exist
-const HOOK_CLIP: string | null = null; // e.g. "shorts/s11_touch.mp4": Apple's finger-on-screen shot (slot 108), credited
-const LOOP_CLIP: string | null = null; // e.g. "shorts/s11_loop.mp4": HOOK_CLIP's first 30 frames reversed
-const FIX_CLIP: string | null = null; // e.g. "shorts/s11_fix.mp4": Apple's film of the touch features (slot 104)
-const PRODUCT_2026 = "⏳ APPLE'S NAME"; // slot 100: Apple's exact name for the touch model, 17 characters or fewer
-const EXTRA_SOURCE = "MACRUMORS REPORTS →"; // rows 24, 82 (REPORTED); "APPLE, 2026 →" only if slot 104 says touch is optional
+const HAS_VO = true; // true once public/shorts/s11_vo.mp3 and the real voS11Captions.ts exist
+const HOOK_CLIP: string | null = "shorts/s11_touch.mp4"; // e.g. "shorts/s11_touch.mp4": Apple's finger-on-screen shot (slot 108), credited
+const LOOP_CLIP: string | null = "shorts/s11_loop.mp4"; // e.g. "shorts/s11_loop.mp4": HOOK_CLIP's first 30 frames reversed
+const FIX_CLIP: string | null = "shorts/s11_fix.mp4"; // e.g. "shorts/s11_fix.mp4": Apple's film of the touch features (slot 104)
+const PRODUCT_2026 = "TOUCH ON MAC"; // slot 100: Apple's exact name for the touch model, 17 characters or fewer
+const EXTRA_SOURCE = "APPLE, 2026 →"; // rows 24, 82 (REPORTED); "APPLE, 2026 →" only if slot 104 says touch is optional
 
 const PAGES = makePages(VO_S11);
 const FPS = 30;
@@ -48,6 +49,7 @@ const T = {
   changes: cue("changes"), cross: cue("cross"), but: cue("but"), hangs: cue("hangs"), hinge: cue("hinge"), top: cue("top"),
   twice: cue("twice"), halfway: cue("halfway"), down: cue("down", 1, "end"), jobs: cue("jobs"), touch: cue("touch"),
   reach: cue("reach"), quicker: cue("quicker"),
+  hinge2: cue("hinge", 2), pinch: cue("pinch"), swipe: cue("swipe"), drag: cue("drag"),
 };
 // the bed is 124 BPM and starts on a beat: scene cuts move onto the next kick
 const BEAT = (FPS * 60) / 124;
@@ -372,14 +374,33 @@ const Hinge: React.FC = () => {
 // ------------------------------------------------------------------------------------------------ x5: Apple's touch features (⏳)
 const Fix: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   if (!between(frame, S.fix, S.verdict)) return null;
-  if (FIX_CLIP) return null; // the clip itself is placed in the root; its labels go here from Apple's own wording (slot 104)
+  // Apple's own words only (slots 103-104): the hinge sentence, then "pinch to zoom", "a natural swipe", "drag and drop"
+  const words: [string, number, string][] = [["PINCH TO ZOOM", T.pinch, C.acid], ["A NATURAL SWIPE", T.swipe, C.cyan], ["DRAG AND DROP", T.drag, C.acid]];
   return (
     <AbsoluteFill>
-      <div style={DARK} />
-      <Label left={60} top={600} width={960} size={84} color={C.warn}>⏳ APPLE FILM: THE TOUCH FEATURES</Label>
-      <Label left={60} top={820} width={960} size={44} color={C.warn} mono>PLACEHOLDER · THE 17:40 RUN REPLACES THIS SCENE</Label>
+      <div style={SHADE_TOP} />
+      <Tag at={T.hinge2 - 2} left={60} top={150} bg={C.ink} size={60} rot={[-3, -1]}>“A NEWLY DESIGNED HINGE”<br />APPLE, 28 OCT</Tag>
+      {words.map(([w, at, col], i) => (
+        <div key={w} style={{ position: "absolute", left: 60, top: 470 + i * 120, opacity: frame >= at ? 1 : 0, scale: pop(frame, at, fps, 230, 12), transformOrigin: "0% 50%" }}>
+          <Label left={0} top={0} size={96} color={col}>{w}</Label>
+        </div>
+      ))}
     </AbsoluteFill>
+  );
+};
+
+// dark band behind the captions while Apple's bright footage is on screen
+const CapScrim: React.FC = () => {
+  const frame = useCurrentFrame();
+  const w = ([[0, S.timeline], [S.fix, S.verdict], [S.loop, SHORT11_FRAMES + 6]] as [number, number][]).find(([a, b]) => between(frame, a, b));
+  if (!w) return null;
+  const o = w[0] === 0 ? interpolate(frame, [w[1] - 6, w[1]], [1, 0], CLAMP)
+    : Math.min(interpolate(frame, [w[0], w[0] + 6], [0, 1], CLAMP), interpolate(frame, [w[1] - 6, w[1]], [1, 0], CLAMP));
+  return (
+    <div style={{ position: "absolute", left: 0, right: 0, top: 1180, height: 560, opacity: o,
+      background: "linear-gradient(180deg, rgba(6,9,14,0) 0%, rgba(6,9,14,0.74) 32%, rgba(6,9,14,0.74) 76%, rgba(6,9,14,0) 100%)" }} />
   );
 };
 
@@ -392,7 +413,7 @@ const Verdict: React.FC = () => {
   if (!between(frame, S.verdict, S.loop)) return null;
   const rows: [string, string, string, number][] = [
     ["JOBS, 2010 →", "TIRED ARMS", C.warn, S.verdict + 2],
-    [EXTRA_SOURCE, "TOUCH AS AN EXTRA", C.cyan, T.touch - 2],
+    [EXTRA_SOURCE, "TOUCH + TRACKPAD", C.cyan, T.touch - 2],
     ["OUR TAKE →", "WHEN IT’S QUICKER", C.acid, T.quicker - 4],
   ];
   // Jobs's "touch surfaces want to be horizontal": the hand works the trackpad (the cursor follows it), reaches up to
@@ -478,6 +499,7 @@ export const CurveV2Short11: React.FC = () => (
     <Grid />
     <Hinge />
     <Fix />
+    <CapScrim />
     <Verdict />
     <ChannelPromise />
     <LoopEnd />

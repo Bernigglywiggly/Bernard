@@ -17,7 +17,7 @@ mk() {  # name start dur crop(w:h:x:y) slow
   ffmpeg -loglevel error -y -framerate 30 -i $W/$n/out/%04d.png -c:v libx264 -crf 15 -pix_fmt yuv420p $OUT/$n.mp4
   echo "$n: $nin in -> $nf frames ($(python3 -c "print(round($nf/30,2))") s)"
 }
-mk s10_catch   16.95 2.8 1215:2160:1273:0 1.25   # frame 0 and the loop: the booster held in the chopsticks at sunset
+mk s10_catch   16.95 2.8 1215:2160:1273:0 1.9   # frame 0 and the loop: the booster held in the chopsticks at sunset
 mk s10_descent 4.0   4.0 1215:2160:1503:0 1.0    # x3 "rockets... lost money": the booster burning down to the tower
 # loop: the catch's first second, reversed, so the last frame is frame 0
 ffmpeg -loglevel error -y -i $OUT/s10_catch.mp4 -vf "trim=end_frame=30,reverse,setpts=PTS-STARTPTS" -c:v libx264 -crf 15 -pix_fmt yuv420p $OUT/s10_loop.mp4

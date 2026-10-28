@@ -29,10 +29,10 @@ const cue = (word: string, nth = 1, edge: "start" | "end" = "start") => {
 };
 const LAST_MS = VO_S10[VO_S10.length - 1].endMs;
 const LOOP = 30; // the last second: back into the catch, landing on frame 0's picture
-export const SHORT10_FRAMES = Math.round((LAST_MS / 1000) * FPS) + 16 + LOOP;
+export const SHORT10_FRAMES = Math.round((LAST_MS / 1000) * FPS) + 30 + LOOP;
 
 const T = {
-  ai: cue("ai"), starlink: cue("starlink"), its: cue("its", 2), seven: cue("seven"), rockets: cue("rockets", 2),
+  ai: cue("ai"), rockets1: cue("rockets"), starlink: cue("starlink"), its: cue("its", 2), seven: cue("seven"), rockets: cue("rockets", 2),
   twelve: cue("twelve"), lost: cue("lost"), customer: cue("customer"), third: cue("third"), profit: cue("profit"),
   starlink2: cue("starlink", 2), fortyfive: cue("fortyfive"), so: cue("so"), headlines: cue("headlines"),
   starlink3: cue("starlink", 3), ai3: cue("ai", 3), bets: cue("bets"),
@@ -41,7 +41,7 @@ const T = {
 const BEAT = (FPS * 60) / 124;
 const beatAfter = (f: number) => Math.round(Math.ceil(f / BEAT - 1e-6) * BEAT);
 const S = {
-  growth: beatAfter(T.its - 3), rockets: beatAfter(T.rockets - 3), customer: beatAfter(T.customer - 8),
+  growth: beatAfter(T.its + 8), rockets: beatAfter(T.rockets - 3), customer: beatAfter(T.customer - 8),
   starlink: beatAfter(T.profit - 6), verdict: beatAfter(T.so - 3), loop: SHORT10_FRAMES - LOOP,
 };
 const DARK: React.CSSProperties = { position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 40%, #1A1036 0%, #0A0718 55%, #020208 100%)" };
@@ -69,34 +69,39 @@ const Label: React.FC<{ children: React.ReactNode; left: number; top: number; si
 );
 
 // ------------------------------------------------------------------------------------------------ x1: frame 0 + the bars
+const PX = 856 / 7.56; // px per $1B: AI fills the frame's safe width
+const Kicker: React.FC<{ s?: number }> = ({ s = 1 }) => (
+  <div style={{ position: "absolute", left: 60, top: 150, scale: s, transformOrigin: "0% 0%" }}>
+    <Label left={0} top={0} size={84}>SPACEX’S #1 BUSINESS</Label>
+    <Label left={0} top={92} size={84} color={AI}>ISN’T ROCKETS</Label>
+  </div>
+);
 const Hook: React.FC = () => {
   const frame = useCurrentFrame();
   if (frame >= S.growth) return null;
-  const k = grow(frame, T.ai - 4, 20); // the two bars race in on "AI"
-  const head = interpolate(frame, [T.ai - 8, T.ai - 2], [1, 0], CLAMP);
-  const W = 860;
-  const max = 7.56;
+  const ai = grow(frame, 4, 22);
+  const rk = grow(frame, T.rockets1 - 4, 14);
+  const sl = grow(frame, T.starlink - 4, 16);
+  const join = interpolate(frame, [T.starlink + 14, T.starlink + 30], [0, 1], { ...CLAMP, easing: EASE_OUT });
+  const row = (y: number) => 380 + y;
   return (
     <AbsoluteFill>
       <div style={SHADE_TOP} />
-      {/* frame 0: the promise, readable as a thumbnail */}
-      <div style={{ position: "absolute", left: 60, top: 190, opacity: head }}>
-        <Label left={0} top={0} size={104}>SPACEX’S BIGGEST</Label>
-        <Label left={0} top={112} size={104} color={AI}>BUSINESS ISN’T</Label>
-        <Label left={0} top={224} size={104} color={AI}>ROCKETS</Label>
-      </div>
-      {k > 0 ? (
-        <div style={{ position: "absolute", left: 60, top: 210 }}>
-          <Label left={0} top={0} size={56}>AI</Label>
-          <div style={{ position: "absolute", left: 0, top: 66, width: (W * 7.56 * k) / max, height: 96, backgroundColor: AI, border: `5px solid ${C.black}` }} />
-          <Label left={0} top={176} size={72} color={AI}>{money(7.56 * k)}</Label>
-          <Label left={0} top={300} size={56}>STARLINK + ROCKETS</Label>
-          <div style={{ position: "absolute", left: 0, top: 366, width: (W * 5.25 * k) / max, height: 96, backgroundColor: LINK, border: `5px solid ${C.black}` }} />
-          <div style={{ position: "absolute", left: (W * 5.25 * k) / max, top: 366, width: (W * 1.77 * k) / max, height: 96, backgroundColor: ROCK, border: `5px solid ${C.black}` }} />
-          <Label left={0} top={476} size={72} color={LINK}>{money((5.25 + 1.77) * k)}</Label>
-        </div>
+      <Kicker />
+      {ai > 0.02 ? <Label left={60} top={row(0)} size={48} color={AI}>{`AI · ${money(7.56 * ai)}`}</Label> : null}
+      {ai > 0.02 ? <div style={{ position: "absolute", left: 60, top: row(58), width: 7.56 * PX * ai, height: 84, backgroundColor: AI, border: `5px solid ${C.black}` }} /> : null}
+      {sl > 0 ? (
+        <Label left={60} top={row(180)} size={48} color={LINK}>{join > 0.5 ? `STARLINK + ROCKETS · ${money(7.02)}` : `STARLINK · ${money(5.25 * sl)}`}</Label>
       ) : null}
-      <Tag at={T.ai + 10} left={60} top={800} bg={C.ink} size={44} rot={[-5, -2]}>REVENUE · Q3 2026 · SEC FILING</Tag>
+      <div style={{ position: "absolute", left: 60, top: row(238), width: Math.max(0, 5.25 * PX * sl), height: 84, backgroundColor: LINK, border: sl > 0 ? `5px solid ${C.black}` : "none" }} />
+      {rk > 0 ? (
+        <>
+          <Label left={60} top={row(360)} size={48} color={ROCK} opacity={1 - join}>{`ROCKETS · ${money(1.77 * rk)}`}</Label>
+          <div style={{ position: "absolute", left: 60 + 5.25 * PX * join, top: row(418 - 180 * join), width: 1.77 * PX * rk, height: 84,
+            backgroundColor: ROCK, border: `5px solid ${C.black}` }} />
+        </>
+      ) : null}
+      <Tag at={6} left={60} top={row(540)} bg={C.ink} size={44} rot={[-5, -2]}>REVENUE · Q3 2026 · SEC FILING</Tag>
     </AbsoluteFill>
   );
 };
@@ -109,7 +114,7 @@ const Growth: React.FC = () => {
   const b = grow(frame, T.seven - 10, 26);
   const W = 860;
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ scale: interpolate(frame, [S.growth, S.rockets], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
       <Label left={60} top={200} size={72}>SPACEX’S AI ARM</Label>
       <Label left={60} top={290} size={44} color="#B8B2D6">REVENUE IN ONE QUARTER</Label>
@@ -150,7 +155,7 @@ const Rockets: React.FC = () => {
       <Label left={560} top={624} size={40} color="#E5DDFF" opacity={lit}>OUR MATHS</Label>
       <Label left={560} top={672} size={40} color="#E5DDFF" opacity={lit}>$1.77B ÷ $14.58B</Label>
       <Stamp at={T.lost - 2} left={250} top={880} size={92} rot={-6}>LOST $7M</Stamp>
-      <Tag at={T.lost + 14} left={290} top={1060} bg={C.ink} size={40} rot={[-4, -2]}>SPACE SEGMENT · Q3 2026 · SEC</Tag>
+      <Tag at={T.twelve + 10} left={60} top={1060} bg={C.ink} size={44} rot={[-4, -2]}>OPERATING LOSS · SPACE · Q3 2026 · SEC</Tag>
     </AbsoluteFill>
   );
 };
@@ -167,7 +172,7 @@ const Customer: React.FC = () => {
   const cy = 980;
   const r = 170;
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ scale: interpolate(frame, [S.customer, S.starlink], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
       <div style={{ position: "absolute", left: 60, top: 230, width: 960, padding: "34px 38px", backgroundColor: "#F4F0E6", color: C.black,
         border: `6px solid ${C.black}`, scale: card, rotate: `${interpolate(card, [0, 1], [-4, -1.5])}deg`, transformOrigin: "0% 50%" }}>
@@ -198,7 +203,7 @@ const Starlink: React.FC = () => {
   const cy = 700;
   const r = 250;
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ scale: interpolate(frame, [S.starlink, S.verdict], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
       <Label left={60} top={180} size={72} color={LINK}>STARLINK</Label>
       <Label left={60} top={270} size={44} color="#B8B2D6">EVERY $1 OF STARLINK REVENUE</Label>
@@ -208,8 +213,9 @@ const Starlink: React.FC = () => {
           <path d={slice(cx, cy, r, 0.45 * Math.max(0.001, lit))} fill={LINK} stroke={C.black} strokeWidth={6} />
         </g>
       </svg>
-      <Label left={0} top={990} width={1080} align="center" size={130} color={LINK} opacity={lit}>45¢ PROFIT</Label>
-      <Tag at={T.fortyfive + 16} left={60} top={1170} bg={C.cyan} size={42} rot={[-4, -2]}>OUR MATHS · $2.37B ÷ $5.25B · Q3 2026</Tag>
+      <Label left={0} top={980} width={1080} align="center" size={150} color={LINK} opacity={lit}>45¢</Label>
+      <Label left={0} top={1120} width={1080} align="center" size={56} opacity={lit}>OF OPERATING PROFIT</Label>
+      <Tag at={T.fortyfive + 16} left={60} top={1210} bg={C.cyan} size={44} rot={[-4, -2]}>OUR MATHS · $2.37B ÷ $5.25B · Q3 2026</Tag>
     </AbsoluteFill>
   );
 };
@@ -222,12 +228,12 @@ const Verdict: React.FC = () => {
   const row = (at: number) => pop(frame, at, fps, 230, 12);
   const capex = grow(frame, T.ai3 + 6, 16);
   const rows: [string, string, string, number][] = [
-    ["ROCKETS", "HEADLINES", ROCK, T.headlines - 6],
+    ["ROCKETS", "HEADLINES", ROCK, S.verdict + 2],
     ["STARLINK", "PROFIT", LINK, T.starlink3 + 8],
     ["AI", "BETS", AI, T.ai3 - 2],
   ];
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ scale: interpolate(frame, [S.verdict, S.loop], [1, 1.03], CLAMP) }}>
       <div style={DARK} />
       {rows.map(([a, b, col, at], i) => (
         <div key={a} style={{ position: "absolute", left: 60, top: 190 + i * 170, opacity: frame >= at ? 1 : 0, scale: row(at), transformOrigin: "0% 50%" }}>
@@ -236,17 +242,28 @@ const Verdict: React.FC = () => {
         </div>
       ))}
       {frame >= T.ai3 + 4 ? (
-        <div style={{ position: "absolute", left: 60, top: 760 }}>
+        <div style={{ position: "absolute", left: 60, top: 740 }}>
           <Label left={0} top={0} size={44} color="#B8B2D6">THE AI ARM, Q3 2026</Label>
-          <Label left={0} top={70} size={44}>REVENUE</Label>
-          <div style={{ position: "absolute", left: 250, top: 62, width: (460 * 7.56) / 16.44, height: 64, backgroundColor: AI, border: `5px solid ${C.black}` }} />
-          <Label left={250 + (460 * 7.56) / 16.44 + 18} top={70} size={48} color={AI}>$7.56B</Label>
-          <Label left={0} top={170} size={44}>SPENT ON KIT</Label>
-          <div style={{ position: "absolute", left: 250, top: 162, width: Math.max(8, 460 * capex), height: 64, backgroundColor: C.warn, border: `5px solid ${C.black}` }} />
-          <Label left={250 + 460 * capex + 18} top={170} size={48} color={C.warn} opacity={capex}>$16.4B</Label>
-          <Tag at={T.ai3 + 14} left={0} top={270} bg={C.ink} size={38} rot={[-4, -2]}>CAPITAL SPENDING · SEC 10-Q</Tag>
+          <Label left={0} top={70} size={48} color={AI}>REVENUE · $7.56B</Label>
+          <div style={{ position: "absolute", left: 0, top: 132, width: (860 * 7.56) / 16.44, height: 70, backgroundColor: AI, border: `5px solid ${C.black}` }} />
+          <Label left={0} top={232} size={48} color={C.warn} opacity={capex}>CAPITAL SPENDING · $16.4B</Label>
+          <div style={{ position: "absolute", left: 0, top: 294, width: Math.max(8, 860 * capex), height: 70, backgroundColor: C.warn, border: `5px solid ${C.black}` }} />
+          <Tag at={T.ai3 + 14} left={0} top={400} bg={C.ink} size={44} rot={[-4, -2]}>SEC 8-K · Q3 2026</Tag>
         </div>
       ) : null}
+    </AbsoluteFill>
+  );
+};
+
+const LoopEnd: React.FC = () => {
+  const frame = useCurrentFrame();
+  if (frame < S.loop) return null;
+  // eased, not sprung: the kicker must sit at exactly scale 1 on the last frame, as on frame 0
+  const k = interpolate(frame, [S.loop + 14, S.loop + 24], [0, 1], { ...CLAMP, easing: EASE_OUT });
+  return (
+    <AbsoluteFill>
+      <div style={{ ...SHADE_TOP, opacity: interpolate(frame, [S.loop, S.loop + 10], [0, 1], CLAMP) }} />
+      {frame >= S.loop + 14 ? <Kicker s={interpolate(k, [0, 1], [1.25, 1])} /> : null}
     </AbsoluteFill>
   );
 };
@@ -254,7 +271,7 @@ const Verdict: React.FC = () => {
 export const CurveV2Short10: React.FC = () => (
   <AbsoluteFill style={{ backgroundColor: C.black }}>
     {/* pictures: SpaceX's own booster held in the tower (frame 0 and the loop), and its burn down to the tower */}
-    <ClipScene src="shorts/s10_catch.mp4" from={0} dur={S.growth} push={[1, 1.05]} origin="50% 40%" />
+    <ClipScene src="shorts/s10_catch.mp4" from={0} dur={S.growth} push={[1, 1.1]} origin="50% 40%" />
     <ClipScene src="shorts/s10_descent.mp4" from={S.rockets} dur={S.customer - S.rockets} push={[1.02, 1.08]} origin="50% 45%" />
     <ClipScene src="shorts/s10_loop.mp4" from={S.loop} dur={LOOP} push={[1.05, 1]} origin="50% 40%" />
     <Hook />
@@ -263,7 +280,8 @@ export const CurveV2Short10: React.FC = () => (
     <Customer />
     <Starlink />
     <Verdict />
-    <CaptionTrack pages={PAGES} hide={[[0, T.ai + 24], [S.loop, SHORT10_FRAMES]]} top={1360} />
+    <LoopEnd />
+    <CaptionTrack pages={PAGES} hide={[[0, 4], [S.loop, SHORT10_FRAMES]]} top={1360} />
     <Credit text="SPACEX · YOUTUBE" show={[[0, S.growth], [S.rockets, S.customer], [S.loop, SHORT10_FRAMES]]} />
     <Sequence from={0}><Audio src={staticFile("shorts/s10_vo.mp3")} /></Sequence>
     <Bed total={SHORT10_FRAMES} level={0.12} />

@@ -54,6 +54,8 @@ Physics
 
 ## 0. What changed since Brief A (25 Oct)
 
+- **28 Oct 17:41 UK (B, Mac, from Apple's own pages):** Apple announced "MacBook Pro with PROLED XDR Display", 14- and 16-inch, tandem OLED, M5 Pro/Max, "Touch for the first time on Mac", "a newly designed hinge provides greater stability while using Touch", £2899 UK, on sale Fri 6 Nov. **Branch T.** Frame 0 candidate: a finger on the screen from Apple's film hnZI5uUSdEo. Rows 8, 20, 21, 23, 26 (hinge), 28, 29 (tandem) are now Apple's words (§5); row 24 "touch-friendly, not touch-first" and row 25 (menus round your finger) are still REPORTED only.
+
 - Gurman (25 Oct): the touchscreen MacBook Pro is announced **Wednesday 28 Oct**, not Tue 27, and ships **Fri 6 Nov** (G2, G7). Earlier reports had said 27 Oct (MacRumors, 8 Oct).
 - Apple already launched the OLED iPad mini on **Mon 26 Oct** by press release (A1): it's the warm-up, not the event.
 - So the Thu 29 Short is ~40 h after the reveal: inside the ~48 h window (CRAFT, 18 Oct).
@@ -69,7 +71,7 @@ Physics
 | 5 | iPad mini price $699 Wi-Fi, $849 cellular; pre-orders **Wed 28 Oct 10:10 PT (17:10 UK)**; in stores **Fri 6 Nov** | | A1 via MacRumors, Bloomberg | V |
 | 6 | iPad mini price was $599 until now: up $100, Apple's second price rise this year (memory and chip shortages, per Bloomberg) | | MacRumors, Bloomberg | V |
 | 7 | No 120 Hz / ProMotion mentioned in the iPad mini press release or specs page | | 9to5Mac | U |
-| 8 | ⏳ Products announced 28 Oct, names exactly as Apple writes them | | A-newsroom | ⏳ |
+| 8 | Products announced 28 Oct: "MacBook Pro with PROLED XDR Display" (14- and 16-inch) | slot 100 | Apple Newsroom | V (Apple) |
 
 ## 2. Reported, not confirmed (only with "REPORTED" + the outlet on screen)
 
@@ -96,7 +98,7 @@ Physics
 | 43 | 2014 | Craig Federighi to CNET | "We're not all that interested in building one." | H3 | U |
 | 44 | 2018 | Federighi to WIRED: reaching up to poke a screen is fatiguing; hands rest on a Mac's surface | (paraphrase) | H3 | U |
 | 45 | 2020 | Federighi: Big Sur's look wasn't designed with touch in mind | (paraphrase) | H3 | U |
-| 46 | 2026 | ⏳ Apple's first touchscreen Mac, if the 28 Oct press release confirms it | | A-newsroom | ⏳ |
+| 46 | 2026 (28 Oct) | Apple: MacBook Pro "features Touch for the first time" | "Touch for the first time on Mac" | Apple Newsroom (slot 101) | V (Apple) |
 
 OUR MATHS: 2010 → 2026 = **16 years** (the title). Only true if Apple ships touch on 28 Oct: Branch N in §6 otherwise.
 
@@ -143,16 +145,16 @@ Where: Apple Newsroom press release (apple.com/newsroom) · product page and **t
 
 | # | Slot | Value | Source (URL + time read) |
 |---|---|---|---|
-| 100 | Exact product names | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** new 14-inch and 16-inch **MacBook Pro** with a "PROLED XDR" touchscreen display | iClarified https://www.iclarified.com/103155/apple-unveils-macbook-pro-with-proled-xdr-touchscreen-and-dynamic-island ; Tom's Guide live |
-| 101 | Touch confirmed? Apple's own sentence about touch | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** **touch confirmed** (two outlets). Apple's exact sentence not yet read: copy it from the press release | Tom's Guide https://www.tomsguide.com/news/live/apple-touchscreen-macbook-pro-pro-and-tell-event-ipad-mini-8-imac-m6-live-updates ; iClarified |
-| 102 | Display: type (OLED? tandem?), size, brightness (full-screen / peak), refresh rate | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** "PROLED XDR"; Apple's release as quoted: it "uses tandem OLED technology and advances it with breakthrough innovations in every layer..." Brightness and refresh rate not found yet | Engadget live https://www.engadget.com/2299176/apple-pro-and-tell-macbook-event-live-blog/ |
-| 103 | Hinge or display-stiffness wording, if any | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
-| 104 | macOS version name and the touch features Apple describes | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
-| 105 | Chip(s) | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** M5 Pro or M5 Max | iClarified |
-| 106 | US and UK starting prices; pre-order and on-sale dates | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** from **$2,899** (one outlet; matches pre-event reports), a top 16-inch config $14,549 (Engadget); pre-orders 28 Oct, available **Fri 6 Nov**. UK £ not found | iClarified, Engadget |
-| 107 | Weight and thickness vs the current model | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
-| 108 | Apple's film: URL, length, the timestamp of the first finger-on-screen shot (frame 0 candidate) | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
-| 109 | Anything Apple says about why now, or about ergonomics (quote verbatim) | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
+| 100 | Exact product names | **Apple, read 17:41 UK (B, Mac):** "MacBook Pro with PROLED XDR Display", 14- and 16-inch (headline: "Apple unveils groundbreaking MacBook Pro with PROLED XDR Display and Touch for the first time on Mac") | https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/ (17:41 UK) |
+| 101 | Touch confirmed? Apple's own sentence about touch | **Apple:** "MacBook Pro features Touch for the first time, bringing pros a whole new way to interact with their content." Also: "the touch sensor is built directly into the display panel — not layered on top of it — reducing latency". Apple's film title: "The first-ever Mac with Touch" | https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/ (17:41); https://www.youtube.com/watch?v=hnZI5uUSdEo |
+| 102 | Display | **Apple:** PROLED XDR "uses tandem OLED technology"; "up to 2000 nits peak HDR and SDR brightness", "10,000,000:1 contrast ratio", ProMotion "from as low as 10Hz ... up to 120Hz"; 16.3-inch and 14.2-inch | https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/ (17:41) |
+| 103 | Hinge wording | **Apple:** "a newly designed hinge provides greater stability while using Touch" (also: "advanced video stabilization automatically smooths the camera feed in real time while using Touch on a video call") | https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/ (17:41) |
+| 104 | macOS and the touch features | **Apple:** macOS 27 ("macOS 27 Golden Gate" section). Features: "scroll through a webpage with a natural swipe; pinch to zoom in on a photo; drag and drop slides from one presentation to another; and double-tap a window to fill the screen, or flick to tile it into place." Touch "work[s] in tandem with the keyboard shortcuts and trackpad gestures pros know and love." "macOS automatically translates touches into clicks." Nothing about menus opening round a finger (row 25 stays REPORTED) | https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/ (17:41) |
+| 105 | Chip(s) | **Apple:** M5 Pro and M5 Max | https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/ (17:41) |
+| 106 | Prices and dates | **Apple:** 14-inch M5 Pro from $2,899 / **£2899**; 16-inch M5 Pro from $3,399 / **£3399**; M5 Max 14-inch $4,499 / £4499, 16-inch $4,799 / £4799. Pre-order "starting today, October 28"; "availability beginning Friday, November 6" | https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/; https://www.apple.com/uk/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/ (17:41) |
+| 107 | Weight and thickness | **Apple:** "The 14-inch MacBook Pro now weighs half a pound less at 3 pounds, while the 16-inch MacBook Pro weighs just 4 pounds — 0.7 pounds lighter than before." 16-inch "nearly a millimeter thinner", 14-inch "half a millimeter thinner" | https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/ (17:41) |
+| 108 | Apple's film | **Apple YouTube:** "New MacBook Pro with PROLED XDR Display: The first-ever Mac with Touch", 1:57, https://www.youtube.com/watch?v=hnZI5uUSdEo (listed 17:42 UK); also "...and Touch: The world's best laptop display" 0:58, WzuIZLoHqqA. Touch-shot timestamps: see footage/apple_2026-10-28/SOURCES.txt | yt-dlp listing 17:42 UK |
+| 109 | Why now / ergonomics | **Apple:** nothing on ergonomics or why now. Closest: touch "work[s] in tandem with the keyboard shortcuts and trackpad gestures" and "Crafted specifically for the Mac". Johny Srouji: "with the magic of Touch coming to MacBook Pro ... we've created a whole new way for pros to interact with their content" | https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/ (17:41) |
 | 110 | M6 iMac and M6 MacBook Pro: names, prices, dates | **Filled 27 Oct 17:45 (cloud C):** 14-inch MacBook Pro with M6 from $1,999 (US; 16 GB, 1 TB; space black, silver). iMac with M6 from $1,499 (10-core) / $1,699 (12-core). Pre-orders Wed 28 Oct, in stores Fri 6 Nov, 35 countries. Apple claims GPU up to 30% faster for graphics and up to 25% for AI than M5. UK prices not yet read | Apple Newsroom (MacBook Pro release URL above); iMac details via CNN, Engadget, CineD (Apple's iMac page not read) |
 
 ## 6. The Short: two branches

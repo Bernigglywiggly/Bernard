@@ -114,8 +114,15 @@ ffmpeg -hide_banner -i $O/frame0.png -i $O/lastframe.png -lavfi psnr -f null - 2
 - So pick, in this order: (1) the most-viewed NEW clip (last 48 h) of a robot, vehicle, gadget or spacecraft doing
   something surprising, where the maker's own footage exists and one drawn diagram explains the mechanism in 30 s;
   (2) a big launch with the maker's own film; (3) a money story only when it rides a moment people are already sharing.
+- Sharper (alignment check 28 Oct): **only a clip where something familiar is visibly in trouble or beating the odds**
+  (falls, flips, cracks, gets back up) and is already being shared. Test: a stranger with the sound off thinks "wait,
+  what?" within 2 seconds, or skip it. The three "thing in trouble" Shorts (duck, Roadster upside down, iPhone crack)
+  are 85% of all new-format views; same car, same week, "upside down" beat "launch" 14x. Earnings, demos and
+  announcements average ~1,300: that is How They Profit's lane.
 - Title: the question the clip makes people ask, search words first ("How Did This Robot Duck Learn to Get Back Up?").
-- Never a second Short on the same story unless it has new footage with 1M+ views.
+- A slot (b-curve-daily, 17:00): never a story that a live or scheduled Curve Short already covers (titles in
+  `channel/uploads_curve.json`). B slot (a ROTA row, 12:00): may be a sequel to a Curve Short past 5,000 views, made
+  within 7 days of it, answering a NEW question about the same clip; otherwise the next-best clip by this rule.
 
 ## 9. Other channels (same steps 1-8, with these changes). Each channel has its own look, narrator and music:
 YouTube punishes one template re-skinned across channels owned by one person, so never copy the Curve's look.
@@ -132,6 +139,7 @@ YouTube punishes one template re-skinned across channels owned by one person, so
 | Music | its own bed from `lab/music/beds.py`, never the Curve's 124 BPM bed | Kevin MacLeod jazz (`lab/music/jazz/library.py`), credit line in the description | the original Short's bed |
 | Pictures | our charts and drawings, plus the company's own publicity footage at 5 s or less a shot, credited | our drawings, public-domain archive (`lab/longform/tools/commons.py`, credits kept), public court documents; no news-agency footage | the original's, credits kept and translated |
 | Description | sources, then "Not investment advice." | sources; "Charged" or "convicted" stated exactly as the record says | sources in Spanish, plus "Versión en español de The Curve" |
+- **Money Crimes: no new builds** until How They Profit or Curva Explica passes the gate in `channel/ROTA.md` (alignment check 28 Oct: best Short 33 views, footage is hard to clear, defamation risk, and AI reenactments are the style most likely to be flagged as mass-produced). Until then it only gets its finished backlog (ROTA.md BACKLOG PREP).
 - **SETUP (first run per channel):** build the kit (palette, fonts copied into `lab/motion/public/<channel>/fonts`,
   caption style, credit line, a channel promise end plate in its own words), pick and record the narrator, then make
   Short 1 in the same run. Usage guard: SETUP + Short is about 9% of the weekly allowance.

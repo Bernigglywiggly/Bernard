@@ -55,6 +55,8 @@ Input: `PROSPECTS_VIDEO_OFFER_2026-10-27.md` (24 firms) and `OUTREACH_RULES_UK_2
 
 ## Drafts (numbered to match)
 
+**28 Oct 2026 20:58 UK (account B): a proof line was added to every draft, right after the offer line, as rule 3 of the QA asks ("a link to real work, once one exists"): "One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8" (The Curve's Microduck Short, 17,753 views by 28 Oct 20:35, published 26 Oct 18:10; about 15 words more per body). Delete that line from any draft where it doesn't fit.**
+
 Placeholders for him to fill: `[his first name]` and `[phone]`. A script checked every draft: bodies run 81–105 words (greeting to opt-out line), subjects 4–7 words, and each has the opt-out line, the "I found your address" line and the sender block.
 
 ### 1. Parker Software · email, ready
@@ -65,6 +67,8 @@ Hello Stephen,
 ThinkAutomation's menu lists eight popular workflows, from email automation to document processing. That is a lot for a first-time visitor to picture.
 
 I make short animated explainers: a 60-second film that follows one email through one workflow, start to finish, for your homepage and demo follow-ups, at £750.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -84,6 +88,8 @@ Akixi turns call data from Microsoft Teams, Webex and other cloud phone systems 
 
 I make short animated explainers: a 60 to 90-second film that follows one call from ring to report, for your homepage and sales follow-ups, at £750.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your contact form on akixi.com.
@@ -101,6 +107,8 @@ Hello Michelle,
 Your October 2025 news post explains Making Tax Digital for Income Tax, and gov.uk confirms sole traders and landlords over £30,000 must use it from 6 April 2027.
 
 I make short animated explainers: a 60-second MTD video your team can send to every affected client, so the same phone call isn't answered fifty times, at £400 to £500.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -120,6 +128,8 @@ Your site says Plant & Co acts for sole traders and personal tax clients. Gov.uk
 
 I make short animated explainers: a 60-second MTD video with your name on it, to email to those clients before they start ringing, at £400.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your contact form on plantandcoaccountants.co.uk.
@@ -137,6 +147,8 @@ Hello Jessica,
 From 6 April 2027, sole traders and landlords over £30,000 join Making Tax Digital, and every Streets office, Lichfield included, will field the same client questions.
 
 I make short animated explainers: one 60-second MTD video, branded once, that any office can send to clients, at £500.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -156,6 +168,8 @@ Your Boiler Upgrade Scheme page still lists the £9,000 oil and LPG uplift as "i
 
 I make short animated explainers: a 45-second video on what the grant pays and the March 2027 cut-off, for your site and social, at £400 to £500.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your contact form on total-nrg.co.uk.
@@ -173,6 +187,8 @@ Hello Zöe,
 Your battery page recommends starting with a smaller battery, watching how you use it, then adding modules later.
 
 I make short animated explainers: a 45-second film showing daytime solar filling a battery for the evening, and why starting small works, at £400.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -198,6 +214,8 @@ Your homepage leads with two badges, NICEIC for electrical work and MCS for sola
 
 I make short animated explainers: a 45-second film on what each badge means for them, and how solar, a battery and an EV charger work together, at £400.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your address on the contact page of fluxelectric.co.uk.
@@ -215,6 +233,8 @@ Hello Michael,
 Your services page says you handle an EV charger install from informing the DNO to handing over the working app. Customers rarely see those steps laid out.
 
 I make short animated explainers: a 45-second film walking through each step, for your site and your quotes, at £400.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -234,6 +254,8 @@ Your Auctions tab sends buyers to iamsold, and first-time auction buyers tend to
 
 I make short animated explainers: a 60-second "how buying at auction with us works" film for your listings and social, at £400 to £500.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your address on andrewdowningbooth.co.uk.
@@ -251,6 +273,8 @@ Hello Stephen,
 Your landlord page says you still manage properties for clients from 1989. Since 1 May 2026, the Renters' Rights Act has changed the rules those landlords work under.
 
 I make short animated explainers: a 60-second landlord video on what changed and what your management covers, for valuation follow-ups, at £400 to £500.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -270,6 +294,8 @@ Your April blog on the Renters' Rights Act sets out what landlords now face, fro
 
 I make short animated explainers: a 60-second version of that post for landlord valuations and social, at £400.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your address on the contact page of rocketthomerentals.com.
@@ -287,6 +313,8 @@ Hello Samantha,
 Your lettings page still offers 6 or 12-month Assured Shorthold Tenancy agreements. Government guidance says most ASTs were replaced by periodic tenancies on 1 May 2026.
 
 I make short animated explainers: a 60-second landlord video on the new rules and your fully managed service, at £400 to £500.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -306,6 +334,8 @@ Four offices, Eccleshall, Stone, Nantwich and Cheadle, and a Guild Awards West M
 
 I make short animated explainers: a 60-second film on how you sell a home across all four towns, for your site and YouTube channel, at £500.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your address on your Eccleshall contact page.
@@ -323,6 +353,8 @@ Hello Martin,
 Your Critchlow Auctions page pitches a relaunch for homes that didn't sell: "No sale? No fee."
 
 I make short animated explainers: a 45-second film on how your auction service works, for Facebook and your listings, at £400.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -348,6 +380,8 @@ Two offices, Burntwood and Boley Park, and area pages for ten towns from Lichfie
 
 I make short animated explainers: a 60-second film introducing both branches that every area page can reuse, at £400 to £500.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your address on the contact page of lovettco.co.uk.
@@ -365,6 +399,8 @@ Hello Jonathan,
 Your landlords page still says properties are let on an Assured Shorthold Tenancy for an initial 12 months. Government guidance says most ASTs became periodic tenancies on 1 May 2026.
 
 I make short animated explainers: a 60-second landlord video on the new rules and your management service, at £400.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -384,6 +420,8 @@ You already have a 360 venue tour. What you also have is a run of one-off events
 
 I make short animated films: three 20-second event promos built from your own photos, for Instagram and your events page, at £400.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your address on moddershalloaks.com.
@@ -401,6 +439,8 @@ Hello,
 Your weddings page has a limited-date offer for the remaining 2026 and 2027 dates, and a newly refurbished Prince's Suite to show off.
 
 I make short films: a 30-second promo for that offer, built from your own photos, for social and your weddings page, at £400 to £500.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 
@@ -426,6 +466,8 @@ You already have a 360 tour of the renovated Dairy Barn and Oak Barn. What a tou
 
 I make short films: a 60-second film from ceremony to evening, for open-day invites and enquiry replies, at £500 to £750, with one half-day visit to film.
 
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
+
 If you'd like a free 10-second sample idea, just reply "yes".
 
 I found your address on cotonhousefarm.com.
@@ -443,6 +485,8 @@ Hello,
 Your open day is on 8 November, 10am to 3pm, free entry, and you already have a 3D tour.
 
 I make short films: a 20-second promo for the open day this week from your photos, then a 60-second venue film shot on the day if you agree, at £400 to £750.
+
+One of my explainer Shorts got 17,753 views in its first two days: youtube.com/shorts/BurRBxo3ny8
 
 If you'd like a free 10-second sample idea, just reply "yes".
 

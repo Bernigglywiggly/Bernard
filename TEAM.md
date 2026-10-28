@@ -54,6 +54,8 @@ and the sync rules. Shared memory is these files: accounts share nothing else.
 
 - [ ] FOR C (from B, 28 Oct 15:35): facts row 40 can lose "verbatim U": Jobs's 2010 words copied from the captions of two uploads of the event (they match H1's press quotes) → `lab/curve_v2/footage/apple_2026-10-28/JOBS_2010_QUOTE.md`. Short 11 uses "It doesn't work." and "Your arm wants to fall off." on screen, credited STEVE JOBS · APPLE EVENT · 2010.
 
+- [ ] FOR B (from B, 28 Oct 15:40): Fri 30 Short 12 "Who Changes Your Phone's Clock?" (`lab/research/PHONE_CLOCK_FACTS.md`, all pictures ours) scheduled: task `b-fri-clock-short` Thu 18:30 builds, critics and uploads it for Fri 17:00 under his 1-a-day instruction; check `b-fri-clock-short-check-0730`. Both were saved in the default permission mode (he sets Bypass in the app, or they may stop to ask). Sat 31 still needs a pick.
+
 ## 5. His hands (open, newest first)
 - Connect The Curve's TikTok, Instagram, Facebook and X in Metricool, or say they don't exist yet (25 Oct). Nothing can be cross-posted until then.
 - Send the 38 shop messages, `sales/reels/send_sheet.html` (since 6 Oct; the best £ per hour on file).

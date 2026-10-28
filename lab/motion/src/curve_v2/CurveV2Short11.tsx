@@ -14,7 +14,7 @@ import { VO_S11 } from "./voS11Captions";
 // against slot 104, HAS_VO with the real take. Jobs's words on screen are copied from two recordings of the 2010 event:
 // lab/curve_v2/footage/apple_2026-10-28/JOBS_2010_QUOTE.md. Scenes are cued by spoken words (cues: apple, work, bosses, no, sixteen,
 // years, reaching, tires, under, grid, finger, changes, cross, but, hinge, top, twice, halfway, down, jobs, touch,
-// quicker): a new take or a reworded line retimes them, and a missing cue word throws, so update T when a line changes.
+// reach, quicker): a new take or a reworded line retimes them, and a missing cue word throws, so update T when a line changes.
 
 const HAS_VO = false; // true once public/shorts/s11_vo.mp3 and the real voS11Captions.ts exist
 const HOOK_CLIP: string | null = null; // e.g. "shorts/s11_touch.mp4": Apple's finger-on-screen shot (slot 108), credited
@@ -42,7 +42,7 @@ const T = {
   apple: cue("apple"), work: cue("work"), bosses: cue("bosses"), no: cue("no"), sixteen: cue("sixteen"), years: cue("years"),
   reaching: cue("reaching"), tires: cue("tires"), under: cue("under"), grid: cue("grid"), finger: cue("finger"),
   changes: cue("changes"), cross: cue("cross"), but: cue("but"), hinge: cue("hinge"), top: cue("top"), twice: cue("twice"),
-  halfway: cue("halfway"), down: cue("down", 1, "end"), jobs: cue("jobs"), touch: cue("touch"), quicker: cue("quicker"),
+  halfway: cue("halfway"), down: cue("down", 1, "end"), jobs: cue("jobs"), touch: cue("touch"), reach: cue("reach"), quicker: cue("quicker"),
 };
 // the bed is 124 BPM and starts on a beat: scene cuts move onto the next kick
 const BEAT = (FPS * 60) / 124;
@@ -63,9 +63,9 @@ const Label: React.FC<{ children: React.ReactNode; left: number; top: number; si
   <div style={{ position: "absolute", left, top, width, textAlign: align, ...(mono ? MONO : HEADC), whiteSpace: width ? "normal" : "nowrap", fontSize: size,
     lineHeight: 1, color, opacity, ...keyline(size / 140, 10) }}>{children}</div>
 );
-// a fingertip pointing up-left, its tip at (x, y): a capsule with a nail
-const Finger: React.FC<{ x: number; y: number; s?: number; opacity?: number }> = ({ x, y, s = 1, opacity = 1 }) => (
-  <g opacity={opacity} transform={`translate(${x} ${y}) scale(${s}) rotate(-35)`}>
+// a fingertip, its tip at (x, y), pointing up-left by default (rot -90 = pointing left): a capsule with a nail
+const Finger: React.FC<{ x: number; y: number; s?: number; opacity?: number; rot?: number }> = ({ x, y, s = 1, opacity = 1, rot = -35 }) => (
+  <g opacity={opacity} transform={`translate(${x} ${y}) scale(${s}) rotate(${rot})`}>
     <rect x={-46} y={-6} width={92} height={460} rx={46} fill={SKIN} stroke={C.black} strokeWidth={7} />
     <rect x={-26} y={16} width={52} height={62} rx={20} fill="#D9D2EA" stroke={C.black} strokeWidth={4} />
   </g>
@@ -337,6 +337,22 @@ const Verdict: React.FC = () => {
           <Label left={0} top={68} size={100} color={col}>{b}</Label>
         </div>
       ))}
+      {/* Jobs's "touch surfaces want to be horizontal": the hand rests on the base, and reaches up only on "reach" */}
+      <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0, opacity: grow(frame, S.verdict + 6, 10) }}>
+        <rect x={400} y={1230} width={560} height={30} rx={10} fill="#B9B4CC" stroke={C.black} strokeWidth={6} />
+        <g transform="rotate(-14 420 1230)">
+          <rect x={408} y={900} width={24} height={330} rx={9} fill="#D8D4EA" stroke={C.black} strokeWidth={6} />
+        </g>
+        <Finger x={690} y={1216} s={0.6} rot={-90} />
+        {frame >= T.reach - 4
+          ? [0, 1].map((m) => {
+              const p = (((frame - T.reach + 4) / 20 + m / 2) % 1);
+              return <circle key={m} cx={366} cy={1007} r={14 + 60 * p} fill="none" stroke={C.cyan} strokeWidth={5} opacity={1 - p} />;
+            })
+          : null}
+        {frame >= T.reach - 4 ? <Finger x={370} y={1007} s={interpolate(grow(frame, T.reach - 4, 8), [0, 1], [0.75, 0.6])} opacity={grow(frame, T.reach - 4, 6)} /> : null}
+      </svg>
+      <Label left={690} top={1150} size={44} color={DIM} mono opacity={grow(frame, S.verdict + 6, 10)}>TRACKPAD</Label>
     </AbsoluteFill>
   );
 };

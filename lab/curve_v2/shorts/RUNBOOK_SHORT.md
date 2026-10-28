@@ -106,3 +106,35 @@ ffmpeg -hide_banner -i $O/frame0.png -i $O/lastframe.png -lavfi psnr -f null - 2
 - One dated line under "Learned on our films" in `CRAFT.md`: what the critic caught.
 - Tick the line in `TEAM.md` §4; your block at the top of `HANDOFF.md`; `bash lab/tools/sync_handoff.sh`; commit; push.
 - PushNotification (under 200 characters): the link and the publish time, or the blocker and what he must do.
+
+## 8b. The Curve's topic rule (from our analytics, 28 Oct)
+- Winners: a **viral clip of a machine doing something that looks impossible**, explained the day it spreads:
+  Microduck robot 17,753 views in 2 days, Roadster upside down 15,466. Follow-ups on a story we already did fall to
+  ~1,100-1,300 (Roadster 2 and 3); money and earnings angles get ~850-1,700.
+- So pick, in this order: (1) the most-viewed NEW clip (last 48 h) of a robot, vehicle, gadget or spacecraft doing
+  something surprising, where the maker's own footage exists and one drawn diagram explains the mechanism in 30 s;
+  (2) a big launch with the maker's own film; (3) a money story only when it rides a moment people are already sharing.
+- Title: the question the clip makes people ask, search words first ("How Did This Robot Duck Learn to Get Back Up?").
+- Never a second Short on the same story unless it has new footage with 1M+ views.
+
+## 9. Other channels (same steps 1-8, with these changes). Each channel has its own look, narrator and music:
+YouTube punishes one template re-skinned across channels owned by one person, so never copy the Curve's look.
+| | How They Profit (§9a) | Money Crimes (§9b) | Curva Explica (§9c) |
+|---|---|---|---|
+| Channel | HowTheyProfitHQ, UC7BbkaTRGMD44rZnUd3ZI_Q | MoneyCrimesFiles, UCXoYGDg8TxCPvIqx5TdVTkw | Curva Explica, UCuymwi0CdK0XU-CKATzJ3BQ |
+| Zapier connection | `02d0de21-a222-85ea-aea9-5b0920dd34b0` | `02ce9a67-dbe7-8998-8da5-26da5fc35e26` | `020e1621-8ed2-8623-aa3a-11cd759b5c3e` |
+| Manifest (new) | `channel/uploads_htp.json` | `channel/uploads_crimes.json` | `channel/uploads_curva.json` |
+| Format | "How <company> Really Makes Money": one surprising number from the company's own results or filing (this week's earnings first), the money machine drawn as a ledger or flow, our verdict | "How the <scam or heist> Actually Worked": the trick drawn step by step, the one detail that exposed it, our verdict | The Curve's best Shorts by views, in Spanish: Microduck first, then Roadster upside down, then the next by views |
+| Facts | primary only: the company's release, 10-Q/10-K or annual report, numbers copied with the URL | only charged or convicted people: court records, DOJ, SEC, SFO, FCA or police releases; "the story goes" for anything contested | the Curve facts file of the original Short; nothing new is claimed |
+| Look | the ledger look of `lab/ch2/look.py`: navy #0A0F17, paper #EFE7D6, brass #C9A35B, red #B4553F, muted #8C93A0; IBM Plex Serif headings, mono labels with tracking, a "SOURCE ·" line | case-file look (`channel/money-crimes/README.md`): warm tungsten and cool shadows, gold name cards, red rubber-stamp numbers, document and map drawings | the original Short's pictures; every on-screen word translated |
+| Code | `lab/motion/src/htp/` (kit + `HtpShort<N>.tsx`), scripts `lab/ch2/shorts/htp_short<N>.py` | `lab/motion/src/crimes/`, scripts `lab/shorts/crimes/mc_short<N>.py` | copy `CurveV2Short<k>.tsx` to `lab/motion/src/curva/CurvaShort<k>.tsx`, script `lab/curvelf/curva/curva_short<k>.py` |
+| Narrator | an ElevenLabs voice that is not Chris: pick once in SETUP (calm, authoritative), write its id in `channel/channel2/README.md` | a different ElevenLabs voice again (low, measured), id in `channel/money-crimes/README.md` | a native Spanish ElevenLabs voice (eleven_v4 speaks Spanish), id in `channel/ROTA.md` |
+| Music | its own bed from `lab/music/beds.py`, never the Curve's 124 BPM bed | Kevin MacLeod jazz (`lab/music/jazz/library.py`), credit line in the description | the original Short's bed |
+| Pictures | our charts and drawings, plus the company's own publicity footage at 5 s or less a shot, credited | our drawings, public-domain archive (`lab/longform/tools/commons.py`, credits kept), public court documents; no news-agency footage | the original's, credits kept and translated |
+| Description | sources, then "Not investment advice." | sources; "Charged" or "convicted" stated exactly as the record says | sources in Spanish, plus "Versión en español de The Curve" |
+- **SETUP (first run per channel):** build the kit (palette, fonts copied into `lab/motion/public/<channel>/fonts`,
+  caption style, credit line, a channel promise end plate in its own words), pick and record the narrator, then make
+  Short 1 in the same run. Usage guard: SETUP + Short is about 9% of the weekly allowance.
+- All three are new styles on dead channels, so the critic round is not optional: round 1 must say SHIP before upload.
+- Every run on these channels also obeys §0: FCA (never promote credit cards, loans, BNPL, trading, crypto or
+  investing), no email address in requests, no Studio in a browser, one Short per run, private with publishAt.

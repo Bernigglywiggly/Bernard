@@ -291,7 +291,7 @@ const Grid: React.FC = () => {
         {lit ? <circle cx={cx} cy={cy} r={24} fill={C.acid} stroke={C.black} strokeWidth={5} /> : null}
       </svg>
       <Label left={cx - 340} top={cy - 150} size={SMALL} color={C.acid} opacity={frame >= T.cross - 2 ? 1 : 0}>X 6 · Y 3</Label>
-      <Tag at={T.changes + 4} left={60} top={1200} bg={C.cyan} size={60} rot={[-4, -2]}>PROJECTED CAPACITIVE TOUCH</Tag>
+      <Tag at={T.changes + 4} left={60} top={1200} bg={C.cyan} size={60} rot={[-4, -2]}>PROJECTED CAPACITIVE<br />TOUCH</Tag>
     </AbsoluteFill>
   );
 };

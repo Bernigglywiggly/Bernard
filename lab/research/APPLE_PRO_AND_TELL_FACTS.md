@@ -95,8 +95,8 @@ Physics
 | 40 | 2010 (20 Oct) | Steve Jobs at "Back to the Mac" | "Touch surfaces don't want to be vertical." ... "after an extended period of time, your arm wants to fall off. It doesn't work. It's ergonomically terrible." | H1 | V that he said it; **verbatim U: copy from Apple's video** |
 | 41 | 2010 | Jobs's answer then: touch belongs on horizontal surfaces, so Macs got trackpads | (paraphrase) | H1 | V |
 | 42 | 2012 (April) | Tim Cook, earnings call, on merging tablet and laptop | "You can converge a toaster and a refrigerator, but those things are probably not going to be pleasing to the user." (another transcript: "...but those aren't going to be pleasing to the user.") | H2 | V (two transcripts differ slightly: use one, credit ABC News) |
-| 43 | 2014 | Craig Federighi to CNET | "We're not all that interested in building one." | H3 | U |
-| 44 | 2018 | Federighi to WIRED: reaching up to poke a screen is fatiguing; hands rest on a Mac's surface | (paraphrase) | H3 | U |
+| 43 | 2014 | Craig Federighi to CNET | "We don't think it's the right interface, honestly." ... "We're not all that interested in building one." (and on reaching forward to touch a computer screen) | H3: BGR page read 28 Oct 18:05 UK (B), quoting CNET, 17 Oct 2014 | V (one outlet quoting the interview; on screen as "CNET") |
+| 44 | 2018 | Federighi to WIRED: reaching up to poke a screen is fatiguing; hands rest on a Mac's surface | (paraphrase) | H3 | U: **dropped from Short 11 (28 Oct, critic r1)**; MacStories' linked page is a CNET interview about "grafting" touch, not WIRED 2018 |
 | 45 | 2020 | Federighi: Big Sur's look wasn't designed with touch in mind | (paraphrase) | H3 | U |
 | 46 | 2026 (28 Oct) | Apple: MacBook Pro "features Touch for the first time" | "Touch for the first time on Mac" | Apple Newsroom (slot 101) | V (Apple) |
 

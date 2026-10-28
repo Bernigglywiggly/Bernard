@@ -19,10 +19,10 @@ LINES = [
          cap="In 2010, / Apple said / touchscreen Macs / don't work.",
          shot="frame 0 = Apple's film (hnZI5uUSdEo 41.7-44.1 s), a finger on the new MacBook Pro's screen, credited APPLE; "
               "kicker 'APPLE SAID NO / FOR 16 YEARS'; tag '“IT DOESN’T WORK.” · STEVE JOBS, 2010'"),
-    dict(id="x2", facts="40, 43, 44 (Jobs 2010, Federighi 2014 and 2018; Cook 2012 left out: his line was about merging a tablet and a laptop); 80-81 (arm fatigue); OUR MATHS 2026 - 2010 = 16",
+    dict(id="x2", facts="40, 43 (Jobs 2010, Federighi 2014 to CNET; 2018 dropped as unverified; Cook 2012 left out: his line was about merging a tablet and a laptop); 80-81 (arm fatigue); OUR MATHS 2026 - 2010 = 16",
          text="Its bosses kept saying no for sixteen years, because reaching up to a screen tires your arm.",
          cap="Its bosses / kept saying no / for sixteen years, / because reaching up / to a screen / tires your arm.",
-         shot="timeline 2010 JOBS, 2014 FEDERIGHI, 2018 FEDERIGHI, each stamped NO, then 2026 APPLE (slot 100's name) stamped YES; on 'reaching' "
+         shot="timeline 2010 JOBS, 2014 FEDERIGHI, each stamped NO, then 2026 APPLE (slot 100's name) stamped YES; on 'reaching' "
               "an arm reaches a vertical screen and a fatigue bar fills; 'GORILLA ARM' with Jobs's “YOUR ARM WANTS TO FALL OFF.”"),
     dict(id="x3", facts="60, 61, 62 (projected capacitive grid: one set of lines sends, the other receives, each crossing a tiny capacitor)",
          text="Under the glass is a grid of invisible wires, and your finger changes the electric field where two of them cross.",

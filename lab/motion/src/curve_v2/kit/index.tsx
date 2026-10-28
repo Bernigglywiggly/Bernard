@@ -59,7 +59,7 @@ export const CaptionTrack: React.FC<{ pages: CapPage[]; top?: number; left?: num
     <div style={{ position: "absolute", left, right, top, textAlign: "center", ...HEAD, fontVariationSettings: "'wdth' 88",
       fontSize: size, lineHeight: 1.04, textTransform: "uppercase", whiteSpace: "nowrap", scale: s }}>
       {page.tokens.map((t, i) => (
-        <span key={t.fromMs} style={{ color: i === cur && !plain(t.text) ? C.acid : C.ink, ...keyline(0.6, 11) }}>{t.text}</span>
+        <span key={`${t.fromMs}-${i}`} style={{ color: i === cur && !plain(t.text) ? C.acid : C.ink, ...keyline(0.6, 11) }}>{t.text}</span>
       ))}
     </div>
   );

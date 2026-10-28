@@ -21,7 +21,7 @@ mk() {  # name start dur crop(w:h:x:y) slow
   echo "$n: $nin in -> $nf frames ($(python3 -c "print(round($nf/30,2))") s)"
 }
 # from scene detection on SRC (cuts at 41.71, 44.13, 46.30, 46.71, 46.88, 48.26):
-mk s11_touch 42.30 1.80 1215:2160:1180:0 2.1   # frame 0 and the loop: a finger on the MacBook Pro's screen, 3D model
+mk s11_touch 40.35 1.30 1215:2160:1400:0 3.0   # frame 0 and the loop: a hand reaches and touches the MacBook Pro screen, keyboard in frame (critic r1)
 mk s11_fix   46.92 1.30 1215:2160:2000:0 3.6   # x5: two fingers pinch and drag the 3D model on the screen (Apple: pinch to zoom, drag and drop)
 # loop: the hook's first second, reversed, so the last frame is frame 0
 ffmpeg -loglevel error -y -i $OUT/s11_touch.mp4 -vf "trim=end_frame=30,reverse,setpts=PTS-STARTPTS" -c:v libx264 -crf 15 -pix_fmt yuv420p $OUT/s11_loop.mp4

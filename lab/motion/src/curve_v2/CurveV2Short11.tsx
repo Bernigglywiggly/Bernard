@@ -148,13 +148,12 @@ const Hook: React.FC = () => {
 const ROWS: [string, string, string][] = [
   ["2010", "STEVE JOBS", "APPLE EVENT"],
   ["2014", "CRAIG FEDERIGHI", "CNET"],
-  ["2018", "CRAIG FEDERIGHI", "WIRED"],
 ];
 const Timeline: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (!between(frame, S.timeline, S.arm)) return null;
-  const rowTop = (i: number) => 300 + i * 170;
+  const rowTop = (i: number) => 330 + i * 250;
   const line = grow(frame, S.timeline, Math.max(10, T.years - S.timeline));
   // the NOs land between "no" and "sixteen"; 2026 lands on "years"
   const stampAt = (i: number) => Math.round(T.no + ((T.sixteen - T.no) * i) / ROWS.length);
@@ -169,23 +168,23 @@ const Timeline: React.FC = () => {
         const s = pop(frame, at, fps, 230, 13);
         return (
           <div key={yr + where} style={{ position: "absolute", left: 0, top: rowTop(i), scale: interpolate(s, [0, 1], [0.9, 1]), opacity: s, transformOrigin: "0% 50%" }}>
-            <Label left={64} top={0} size={84}>{yr}</Label>
-            <Label left={310} top={2} size={56}>{who}</Label>
-            <Label left={310} top={70} size={48} color={DIM} mono>{where}</Label>
+            <Label left={64} top={0} size={96}>{yr}</Label>
+            <Label left={330} top={2} size={64}>{who}</Label>
+            <Label left={330} top={78} size={56} color={DIM} mono>{where}</Label>
           </div>
         );
       })}
       {ROWS.map(([yr, , where], i) => (
-        <Stamp key={`no${yr}${where}`} at={stampAt(i)} left={812} top={rowTop(i) - 6} size={64} rot={-7}>NO</Stamp>
+        <Stamp key={`no${yr}${where}`} at={stampAt(i)} left={56} top={rowTop(i) + 108} size={72} rot={-7}>NO</Stamp>
       ))}
       {frame >= T.years - 4 ? (
         <div style={{ position: "absolute", left: 0, top: rowTop(ROWS.length), opacity: grow(frame, T.years - 4, 8) }}>
-          <Label left={64} top={0} size={84} color={C.acid}>2026</Label>
-          <Label left={310} top={2} size={60} color={C.acid}>APPLE</Label>
-          <Label left={310} top={70} size={48} color={DIM} mono>{PRODUCT_2026}</Label>
+          <Label left={64} top={0} size={96} color={C.acid}>2026</Label>
+          <Label left={330} top={2} size={64} color={C.acid}>APPLE</Label>
+          <Label left={330} top={78} size={56} color={DIM} mono>{PRODUCT_2026}</Label>
         </div>
       ) : null}
-      <Stamp at={T.years} left={812} top={rowTop(ROWS.length) - 16} size={64} rot={-5} color={C.acid}>YES</Stamp>
+      <Stamp at={T.years} left={56} top={rowTop(ROWS.length) + 108} size={72} rot={-5} color={C.acid}>YES</Stamp>
     </AbsoluteFill>
   );
 };
@@ -464,10 +463,10 @@ const ChannelPromise: React.FC = () => {
   const frame = useCurrentFrame();
   if (!between(frame, S.promise, S.loop)) return null;
   return (
-    <div style={{ position: "absolute", left: 60, top: 1466, padding: "6px 18px 10px", backgroundColor: C.acid, color: C.black,
+    <div style={{ position: "absolute", left: 60, top: 1310, padding: "6px 18px 10px", backgroundColor: C.acid, color: C.black,
       border: `4px solid ${C.black}`, ...HEADC, fontSize: 60, lineHeight: 0.92, opacity: interpolate(frame, [S.promise, S.promise + 6], [0, 1], CLAMP),
       translate: `0 ${interpolate(frame, [S.promise, S.promise + 8], [24, 0], { ...CLAMP, easing: EASE_OUT })}px` }}>
-      THE STORY BEHIND THE CLIP<br />EVERYONE&apos;S SHARING
+      THE CURVE: HOW NEW TECH<br />ACTUALLY WORKS
     </div>
   );
 };

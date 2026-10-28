@@ -12,3 +12,8 @@
 | scaffold | 6 MUST | No channel mark | Short 8's ChannelPromise from "quicker" - 14 to the loop; captions hidden under it; gone before the loop, so the last frame is still frame 0 (PSNR inf) | FIXED 15:55 |
 | scaffold | 7 SHOULD | Arm scene short; bar 84% full by f215 | Bar and sag now linear, with a growing tremor | PART: scene length is set by the voice line; the run can lengthen the line |
 | scaffold | 8 SHOULD | Templated look | The drawn finger now carries through hook, grid, hinge and verdict | PART: the rising-curve mark is not used yet |
+| r1 (v1) | 1 MUST | Stray "A" at the start of caption pages from 11 s on | Root cause: "a" and "screen" share startMs 7850, so the kit's caption spans had duplicate React keys and an orphan node stayed on screen; kit key is now fromMs + index | FIXED v2 |
+| r1 (v1) | 2 MUST | Frame 0 shows no Mac | Hook and loop recut from Apple's wider shot (40.35 s): a hand reaching to the screen, keyboard in frame | FIXED v2 |
+| r1 (v1) | 3 MUST | Federighi 2014/2018 stamped NO on unverified rows; unsourced end plate; stamps in the button strip | 2014 verified (BGR quoting CNET: "We're not all that interested in building one."), 2018 dropped; end plate now "THE CURVE: HOW NEW TECH ACTUALLY WORKS" at y 1310; stamps under each year at x 56 | FIXED v2 |
+| r1 (v1) | 3 MUST (part) | Verdict line is our opinion | Kept: on screen it is split APPLE, 2026 → TOUCH + TRACKPAD (Apple's "in tandem") and OUR TAKE → WHEN IT'S QUICKER | NO CHANGE (labelled) |
+| r1 (v1) | 4-5 SHOULD | Diagrams under 60%; small text | Timeline type 84/56/48 → 96/64/56; diagrams unchanged | PART |

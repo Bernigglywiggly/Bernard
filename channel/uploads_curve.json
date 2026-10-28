@@ -106,7 +106,7 @@
  },
  {
   "file": "../lab/curve_v2/shorts/out/SHORT8_v5.mp4",
-  "title": "iPhone Duo Crack: Why It Happens at the Fold",
+  "title": "iPhone Duo Crack: The Fold Explained",
   "description": "Some iPhone Duo owners are reporting cracked inner screens, and JerryRigEverything's durability test (24 Oct 2026) is the clip everyone's sharing. This is the physics of why a folding screen works hardest at the fold. Bend any layer and its outer face stretches by its thickness divided by twice the bend radius. Ordinary 0.5 mm phone glass at a fold of about 1.9 mm would stretch over 13% and shatter. Foldable glass is about 30 microns thick, and even that stretches about 0.8%, close to the roughly 1% at which glass cracks. That's why foldable glass is toughened, and why Apple says the screen's layers \"glide past one another like the pages of a book\".\n\nApple told MacRumors (26 Oct) it is aware of \"an issue impacting the inner display on a small number of iPhone Duo units\", and that affected owners can get a replacement through AppleCare. It hasn't given a cause. iFixit's teardown found several possible causes in the hinge, none confirmed.\n\nOur maths (labelled on screen): stretch = t / 2r, so 0.03 mm / (2 x 1.9 mm) = about 0.8%, and 0.5 mm / 3.8 mm = about 13%. Apple doesn't publish the Duo's glass thickness or fold radius: the 1.9 mm is our estimate from the folded gap HTX Studio measured, and 30 microns is the typical thickness of foldable glass. The 10-layer stack is illustrative.\n\nFootage: JerryRigEverything (YouTube, 24 Oct 2026): https://youtu.be/5laDGy4INB0 and Apple's iPhone Duo film: https://youtu.be/FUfGcZ092b0, used in short clips under our commentary. The bend and layer diagrams are drawn for this Short.\n\nSources:\nApple's statement via MacRumors (26 Oct 2026): https://www.macrumors.com/2026/10/26/iphone-duo-crack-apple-response/\nHTX Studio's CT scan of the hinge, via iClarified (22 Oct 2026): https://www.iclarified.com/102981/ct-scan-reveals-how-iphone-duos-hinge-works-video\niFixit's teardown (25 Oct 2026): https://www.ifixit.com/News/119895/iphone-duo-teardown\nBending stretch (t / 2r) and glass cracking near 1%: Suo, Vlassak and Wagner, \"Micromechanics of Macroelectronics\", China Particuology 3(6), 2005\nFoldable glass about 30 microns thick: Samsung Display, \"Learn Display 57: UTG\" (4 May 2022): https://global.samsungdisplay.com/30121\n\nNarration uses an AI voice. Not affiliated with or endorsed by Apple or JerryRigEverything.\n\n#iPhoneDuo #Apple #Shorts",
   "tags": [
    "iphone duo crack",
@@ -118,6 +118,37 @@
    "why do folding phones crease",
    "foldable glass",
    "jerryrigeverything iphone duo",
+   "the curve",
+   "shorts"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "title_alts": [
+   "iPhone Duo Crack: Why It Happens at the Fold"
+  ]
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT10_v1.mp4",
+  "title": "How SpaceX Really Makes Money",
+  "title_alts": [
+   "SpaceX's Biggest Business Isn't Rockets"
+  ],
+  "description": "SpaceX's AI business took $7.56 billion in revenue last quarter, more than Starlink ($5.25B) and its rockets ($1.77B) put together. Rockets are about 12 cents of every dollar SpaceX took, and that segment lost $7 million. One customer SpaceX doesn't name paid 34.5% of all its revenue. The profit still comes from Starlink, which kept about 45 cents of operating profit on every dollar. Meanwhile the AI arm spent $16.4 billion on equipment in the quarter, more than twice what it brought in.\n\nAll figures are from SpaceX's own SEC filings for the third quarter of 2026 (three months to 30 September). Revenue by segment: Super Intelligence (AI) 7,560, Connectivity (Starlink) 5,248, Space 1,767, total 14,575 ($ millions). Segment operating income: AI 431, Starlink 2,367, Space -7.\n\nOur maths (labelled on screen): rockets 1,767 / 14,575 = about 12%; Starlink 2,367 / 5,248 = about 45%; AI 7,560 vs 813 a year earlier = about 9x. The filing does not name the customer behind 34.5% of revenue, and neither do we.\n\nFootage: SpaceX, \"Starship's Fifth Flight Test\" (YouTube): https://www.youtube.com/watch?v=hI9HQfCAw64, used in short clips under our commentary. The bars and charts are drawn for this Short.\n\nSources:\nSpaceX Q3 2026 10-Q (filed 22 Oct 2026): https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm\nSpaceX Q3 2026 earnings release, 8-K (filed 20 Oct 2026): https://www.sec.gov/Archives/edgar/data/1181412/000162828026066482/spcx-20261020.htm\n\nNarration uses an AI voice. Not affiliated with or endorsed by SpaceX. Not investment advice.\n\n#SpaceX #Starlink #Shorts",
+  "tags": [
+   "how does spacex make money",
+   "spacex revenue",
+   "spacex earnings",
+   "spacex ai",
+   "starlink profit",
+   "spacex q3 2026",
+   "spacex stock",
+   "spcx",
+   "starlink",
+   "spacex",
    "the curve",
    "shorts"
   ],

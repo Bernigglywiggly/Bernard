@@ -159,5 +159,35 @@
   "synthetic": true,
   "kind": "short",
   "publish_at": "2026-10-28T17:00:00Z"
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT11_v1.mp4",
+  "title": "Touchscreen MacBook: Why It Took 16 Years",
+  "title_alts": [
+   "Apple Said No to Touchscreen Macs for 16 Years",
+   "Why the Touchscreen MacBook Pro Took 16 Years"
+  ],
+  "description": "On 28 October 2026 Apple announced the MacBook Pro with PROLED XDR Display, in 14- and 16-inch sizes, and with it touch on a Mac for the first time: you can swipe, pinch to zoom and drag and drop right on the screen, alongside the keyboard and trackpad. Apple also says a newly designed hinge gives greater stability while using touch. It costs from £2,899 in the UK and goes on sale on 6 November.\n\nIn 2010 Steve Jobs said touch surfaces don't want to be vertical: reach up to a laptop screen for long and your arm gets tired. Apple's bosses kept saying no for 16 years. Here is how the screen finds your finger (a grid of transparent wires, and your finger changes the electric field where two of them cross), why a hinged screen wobbles more when you tap it at the top (twice the distance from the hinge, twice the twist: our maths, torque = force x distance), and our take on why touch is now an extra rather than the main way in.\n\nFootage: Apple. \"New MacBook Pro with PROLED XDR Display: The first-ever Mac with Touch\", https://www.youtube.com/watch?v=hnZI5uUSdEo, used in short clips under our commentary. The diagrams are drawn for this Short.\n\nSources:\nApple Newsroom, 28 Oct 2026: https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/\nUK prices: https://www.apple.com/uk/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/\nSteve Jobs, Back to the Mac event, 20 Oct 2010 (recordings): https://www.youtube.com/watch?v=7zfir0Ide0A and https://www.youtube.com/watch?v=mNVsn1P4GlM\nProjected capacitive touch: https://media.futureelectronics.com/semiconductors/lcd-display-solutions/touch-screens/ProjectedCapacitiveTechnology.pdf\nTorque: OpenStax University Physics Vol. 1, 10.6, https://openstax.org/books/university-physics-volume-1/pages/10-6-torque\nArm fatigue (gorilla arm): Hincapie-Ramos et al., CHI 2014, https://hci.cs.umanitoba.ca/publications/details/consumed-endurance-a-metric-to-quantify-arm-fatigue-of-mid-air-interactions\n\nNarration uses an AI voice. Not affiliated with or endorsed by Apple.\n\n#MacBookPro #Apple #Shorts",
+  "tags": [
+   "touchscreen macbook",
+   "touchscreen macbook pro",
+   "macbook pro touch",
+   "macbook pro proled xdr",
+   "apple touchscreen mac",
+   "macbook pro 2026",
+   "steve jobs touchscreen",
+   "gorilla arm",
+   "how touchscreens work",
+   "apple event october 2026",
+   "the curve",
+   "shorts"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "publish_at": "2026-10-29T17:00:00Z"
  }
 ]

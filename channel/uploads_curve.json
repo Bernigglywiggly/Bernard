@@ -132,7 +132,7 @@
   ]
  },
  {
-  "file": "../lab/curve_v2/shorts/out/SHORT10_v4.mp4",
+  "file": "../lab/curve_v2/shorts/out/SHORT10_v5.mp4",
   "title": "How SpaceX Really Makes Money",
   "title_alts": [
    "SpaceX's Biggest Business Isn't Rockets"
@@ -157,6 +157,7 @@
   "category": "28",
   "made_for_kids": false,
   "synthetic": true,
-  "kind": "short"
+  "kind": "short",
+  "publish_at": "2026-10-28T17:00:00Z"
  }
 ]

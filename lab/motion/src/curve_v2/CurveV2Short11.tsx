@@ -1,25 +1,29 @@
 import { Audio } from "@remotion/media";
 import type React from "react";
 import { AbsoluteFill, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { CLAMP, EASE_OUT } from "../lib/anim";
+import { CLAMP, EASE_IN_OUT, EASE_OUT } from "../lib/anim";
 import { Bed, C, CaptionTrack, ClipScene, Credit, HEADC, keyline, MONO, pop, Sfx, Stamp, Tag } from "./kit";
 import { makePages } from "./pager";
 import { VO_S11 } from "./voS11Captions";
 
 // Curve Short 11 (Thu 29 Oct 2026): "Touchscreen MacBook: Why It Took 16 Years" (branch T). 1080x1920, 30 fps.
 // Script lab/curve_v2/shorts/short11.py; facts lab/research/APPLE_PRO_AND_TELL_FACTS.md. Pre-built by account B on Wed
-// 28 Oct before Apple's 17:00 announcement: the timeline (rows 40-45), the capacitive grid (60-62) and the hinge torque
-// (70-71) are ours and don't depend on the launch. Still to do after the launch (the 17:40 run): HOOK_CLIP and FIX_CLIP
-// from Apple's own film, the x5 scene's words from Apple's press release (slots 103-104), the verdict rows checked
-// against slot 104, HAS_VO with the real take. Jobs's words on screen are copied from two recordings of the 2010 event:
-// lab/curve_v2/footage/apple_2026-10-28/JOBS_2010_QUOTE.md. Scenes are cued by spoken words (cues: apple, work, bosses, no, sixteen,
-// years, reaching, tires, under, grid, finger, changes, cross, but, hinge, top, twice, halfway, down, jobs, touch,
-// reach, quicker): a new take or a reworded line retimes them, and a missing cue word throws, so update T when a line changes.
+// 28 Oct before Apple's 17:00 announcement, then revised after an early critic pass (lab/curve_v2/shorts/out/critic_s11/
+// scaffold_review.md, ledger.md): the timeline (rows 40, 43, 44), the capacitive grid (60-62) and the hinge torque (70-71)
+// are ours and don't depend on the launch. Still to do after the launch (the 17:40 run): PRODUCT_2026 from slot 100,
+// EXTRA_SOURCE from slot 104, HOOK_CLIP/LOOP_CLIP/FIX_CLIP from Apple's own film (add Short 8's CapScrim behind the
+// captions if the footage is bright), the x5 scene from Apple's words (slots 103-104), HAS_VO with the real take. Jobs's
+// words on screen are copied from two recordings of the 2010 event: lab/curve_v2/footage/apple_2026-10-28/JOBS_2010_QUOTE.md.
+// Scenes are cued by spoken words (apple, work, bosses, no, sixteen, years, reaching, tires, under, grid, finger, changes,
+// cross, but, hangs, hinge, top, twice, halfway, down, jobs, touch, reach, quicker): a new take retimes them, and a missing
+// cue word throws, so update T when a line changes.
 
 const HAS_VO = false; // true once public/shorts/s11_vo.mp3 and the real voS11Captions.ts exist
 const HOOK_CLIP: string | null = null; // e.g. "shorts/s11_touch.mp4": Apple's finger-on-screen shot (slot 108), credited
 const LOOP_CLIP: string | null = null; // e.g. "shorts/s11_loop.mp4": HOOK_CLIP's first 30 frames reversed
 const FIX_CLIP: string | null = null; // e.g. "shorts/s11_fix.mp4": Apple's film of the touch features (slot 104)
+const PRODUCT_2026 = "⏳ APPLE'S NAME"; // slot 100: Apple's exact name for the touch model, 17 characters or fewer
+const EXTRA_SOURCE = "MACRUMORS REPORTS →"; // rows 24, 82 (REPORTED); "APPLE, 2026 →" only if slot 104 says touch is optional
 
 const PAGES = makePages(VO_S11);
 const FPS = 30;
@@ -41,22 +45,30 @@ export const SHORT11_FRAMES = Math.round((LAST_MS / 1000) * FPS) + 30 + LOOP;
 const T = {
   apple: cue("apple"), work: cue("work"), bosses: cue("bosses"), no: cue("no"), sixteen: cue("sixteen"), years: cue("years"),
   reaching: cue("reaching"), tires: cue("tires"), under: cue("under"), grid: cue("grid"), finger: cue("finger"),
-  changes: cue("changes"), cross: cue("cross"), but: cue("but"), hinge: cue("hinge"), top: cue("top"), twice: cue("twice"),
-  halfway: cue("halfway"), down: cue("down", 1, "end"), jobs: cue("jobs"), touch: cue("touch"), reach: cue("reach"), quicker: cue("quicker"),
+  changes: cue("changes"), cross: cue("cross"), but: cue("but"), hangs: cue("hangs"), hinge: cue("hinge"), top: cue("top"),
+  twice: cue("twice"), halfway: cue("halfway"), down: cue("down", 1, "end"), jobs: cue("jobs"), touch: cue("touch"),
+  reach: cue("reach"), quicker: cue("quicker"),
 };
 // the bed is 124 BPM and starts on a beat: scene cuts move onto the next kick
 const BEAT = (FPS * 60) / 124;
 const beatAfter = (f: number) => Math.round(Math.ceil(f / BEAT - 1e-6) * BEAT);
 const S = {
   timeline: beatAfter(T.bosses - 6), arm: beatAfter(T.reaching - 4), grid: beatAfter(T.under - 4), hinge: beatAfter(T.but - 4),
-  fix: beatAfter(T.down + 4), verdict: beatAfter(T.jobs - 4), loop: SHORT11_FRAMES - LOOP,
+  fix: beatAfter(T.down + 4), verdict: beatAfter(T.jobs - 4), promise: T.quicker - 14, loop: SHORT11_FRAMES - LOOP,
 };
 const DARK: React.CSSProperties = { position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 40%, #1A1036 0%, #0A0718 55%, #020208 100%)" };
 const SHADE_TOP: React.CSSProperties = { position: "absolute", left: 0, right: 0, top: 0, height: 900,
   background: "linear-gradient(180deg, rgba(2,2,10,0.9) 0%, rgba(2,2,10,0.6) 55%, rgba(2,2,10,0) 100%)" };
 const between = (f: number, a: number, b: number) => f >= a && f < b;
 const grow = (f: number, a: number, dur = 18) => interpolate(f, [a, a + dur], [0, 1], { ...CLAMP, easing: EASE_OUT });
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+// a point (x, y) turned by deg about (cx, cy), as SVG's rotate() turns it
+const turn = (x: number, y: number, cx: number, cy: number, deg: number) => {
+  const r = (deg * Math.PI) / 180;
+  return { x: cx + (x - cx) * Math.cos(r) - (y - cy) * Math.sin(r), y: cy + (x - cx) * Math.sin(r) + (y - cy) * Math.cos(r) };
+};
 const DIM = "#B8B2D6";
+const SMALL = 68; // labels: 48 px cap height or more (CRAFT 18 Oct)
 const SKIN = "#F2EEF8"; // our drawn hand and arm: a plain light glove, nobody's likeness
 const Label: React.FC<{ children: React.ReactNode; left: number; top: number; size?: number; color?: string; opacity?: number;
   width?: number; align?: "left" | "center"; mono?: boolean }> = ({ children, left, top, size = 64, color = C.ink, opacity = 1, width, align = "left", mono }) => (
@@ -68,6 +80,14 @@ const Finger: React.FC<{ x: number; y: number; s?: number; opacity?: number; rot
   <g opacity={opacity} transform={`translate(${x} ${y}) scale(${s}) rotate(${rot})`}>
     <rect x={-46} y={-6} width={92} height={460} rx={46} fill={SKIN} stroke={C.black} strokeWidth={7} />
     <rect x={-26} y={16} width={52} height={62} rx={20} fill="#D9D2EA" stroke={C.black} strokeWidth={4} />
+  </g>
+);
+// the same finger with a palm behind it: a hand seen from the side
+const Hand: React.FC<{ x: number; y: number; s?: number; rot?: number }> = ({ x, y, s = 0.42, rot = -90 }) => (
+  <g transform={`translate(${x} ${y}) scale(${s}) rotate(${rot})`}>
+    <rect x={-100} y={240} width={200} height={260} rx={80} fill={SKIN} stroke={C.black} strokeWidth={8} />
+    <rect x={-46} y={-6} width={92} height={330} rx={46} fill={SKIN} stroke={C.black} strokeWidth={8} />
+    <rect x={-26} y={16} width={52} height={62} rx={20} fill="#D9D2EA" stroke={C.black} strokeWidth={5} />
   </g>
 );
 
@@ -116,15 +136,15 @@ const Hook: React.FC = () => {
       {HOOK_CLIP ? null : <HookDrawing t={frame} />}
       <div style={SHADE_TOP} />
       <Kicker />
-      <Tag at={T.apple + 2} left={60} top={1210} bg={C.ink} size={44} rot={[-4, -2]}>“IT DOESN’T WORK.” · STEVE JOBS, 2010</Tag>
+      <Tag at={T.apple + 2} left={60} top={1130} bg={C.ink} size={60} rot={[-4, -2]}>“IT DOESN’T WORK.”<br />STEVE JOBS, 2010</Tag>
     </AbsoluteFill>
   );
 };
 
 // ------------------------------------------------------------------------------------------------ x2: who said no, then the arm
+// Cook's 2012 toaster-and-fridge line was about merging a tablet and a laptop, not touch on a Mac: not on this list.
 const ROWS: [string, string, string][] = [
   ["2010", "STEVE JOBS", "APPLE EVENT"],
-  ["2012", "TIM COOK", "EARNINGS CALL"],
   ["2014", "CRAIG FEDERIGHI", "CNET"],
   ["2018", "CRAIG FEDERIGHI", "WIRED"],
 ];
@@ -132,15 +152,15 @@ const Timeline: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (!between(frame, S.timeline, S.arm)) return null;
-  const rowTop = (i: number) => 330 + i * 168;
+  const rowTop = (i: number) => 300 + i * 170;
   const line = grow(frame, S.timeline, Math.max(10, T.years - S.timeline));
-  // the four NOs land between "no" and "sixteen"; 2026 lands on "years"
-  const stampAt = (i: number) => Math.round(T.no + ((T.sixteen - T.no) * i) / 4);
+  // the NOs land between "no" and "sixteen"; 2026 lands on "years"
+  const stampAt = (i: number) => Math.round(T.no + ((T.sixteen - T.no) * i) / ROWS.length);
   return (
     <AbsoluteFill style={{ scale: interpolate(frame, [S.timeline, S.arm], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
       <Label left={60} top={170} size={72} color={C.acid}>WHO SAID NO</Label>
-      <div style={{ position: "absolute", left: 40, top: rowTop(0) + 10, width: 8, height: (rowTop(4) - rowTop(0)) * line, backgroundColor: DIM }} />
+      <div style={{ position: "absolute", left: 40, top: rowTop(0) + 10, width: 8, height: (rowTop(ROWS.length) - rowTop(0)) * line, backgroundColor: DIM }} />
       {ROWS.map(([yr, who, where], i) => {
         const at = S.timeline + 2 + i * 4;
         if (frame < at) return null;
@@ -148,50 +168,54 @@ const Timeline: React.FC = () => {
         return (
           <div key={yr + where} style={{ position: "absolute", left: 0, top: rowTop(i), scale: interpolate(s, [0, 1], [0.9, 1]), opacity: s, transformOrigin: "0% 50%" }}>
             <Label left={64} top={0} size={84}>{yr}</Label>
-            <Label left={310} top={2} size={52}>{who}</Label>
-            <Label left={310} top={62} size={44} color={DIM} mono>{where}</Label>
+            <Label left={310} top={2} size={56}>{who}</Label>
+            <Label left={310} top={70} size={48} color={DIM} mono>{where}</Label>
           </div>
         );
       })}
       {ROWS.map(([yr, , where], i) => (
-        <Stamp key={`no${yr}${where}`} at={stampAt(i)} left={820} top={rowTop(i) - 4} size={64} rot={-7}>NO</Stamp>
+        <Stamp key={`no${yr}${where}`} at={stampAt(i)} left={812} top={rowTop(i) - 6} size={64} rot={-7}>NO</Stamp>
       ))}
       {frame >= T.years - 4 ? (
-        <div style={{ position: "absolute", left: 0, top: rowTop(4), opacity: grow(frame, T.years - 4, 8) }}>
+        <div style={{ position: "absolute", left: 0, top: rowTop(ROWS.length), opacity: grow(frame, T.years - 4, 8) }}>
           <Label left={64} top={0} size={84} color={C.acid}>2026</Label>
-          <Label left={310} top={2} size={52} color={C.acid}>APPLE</Label>
-          <Label left={310} top={62} size={44} color={DIM} mono>MACBOOK PRO</Label>
+          <Label left={310} top={2} size={60} color={C.acid}>APPLE</Label>
+          <Label left={310} top={70} size={48} color={DIM} mono>{PRODUCT_2026}</Label>
         </div>
       ) : null}
-      <Stamp at={T.years} left={800} top={rowTop(4) - 4} size={64} rot={-5} color={C.acid}>YES</Stamp>
+      <Stamp at={T.years} left={812} top={rowTop(ROWS.length) - 16} size={64} rot={-5} color={C.acid}>YES</Stamp>
     </AbsoluteFill>
   );
 };
 const Arm: React.FC = () => {
   const frame = useCurrentFrame();
   if (!between(frame, S.arm, S.grid)) return null;
-  const sag = interpolate(frame, [T.tires, S.grid], [0, 16], { ...CLAMP, easing: EASE_OUT }); // degrees the arm sags as it tires
-  const tired = grow(frame, T.reaching, Math.max(8, S.grid - T.reaching - 2));
+  // the arm tires at a steady rate: the bar fills and the arm sags together, with a tremor that grows
+  const tired = interpolate(frame, [T.reaching, S.grid - 2], [0.08, 1], CLAMP);
+  const sag = 16 * interpolate(frame, [T.reaching, S.grid - 2], [0, 1], CLAMP);
+  const shake = 1.6 * tired * Math.sin(frame * 1.9);
   const rad = (d: number) => (d * Math.PI) / 180;
-  const sh = { x: 250, y: 700 };
-  const el = { x: sh.x + 300 * Math.cos(rad(8 + sag)), y: sh.y + 300 * Math.sin(rad(8 + sag)) };
-  const hd = { x: el.x + 290 * Math.cos(rad(-10 + sag * 1.3)), y: el.y + 290 * Math.sin(rad(-10 + sag * 1.3)) };
+  const sh = { x: 250, y: 760 };
+  const el = { x: sh.x + 300 * Math.cos(rad(8 + sag + shake)), y: sh.y + 300 * Math.sin(rad(8 + sag + shake)) };
+  const hd = { x: el.x + 290 * Math.cos(rad(-10 + sag * 1.3 - shake)), y: el.y + 290 * Math.sin(rad(-10 + sag * 1.3 - shake)) };
   const barCol = tired < 0.6 ? C.acid : C.warn;
+  const q = grow(frame, S.arm + 2, 8);
   return (
     <AbsoluteFill style={{ scale: interpolate(frame, [S.arm, S.grid], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
       <Label left={60} top={170} size={84} color={C.warn}>GORILLA ARM</Label>
-      <Label left={60} top={276} size={56} opacity={grow(frame, S.arm + 2, 8)}>“YOUR ARM WANTS TO FALL OFF.”</Label>
-      <Label left={60} top={346} size={44} color={DIM} mono opacity={grow(frame, S.arm + 2, 8)}>STEVE JOBS · APPLE EVENT · 2010</Label>
+      <Label left={60} top={272} size={SMALL} opacity={q}>“YOUR ARM WANTS</Label>
+      <Label left={60} top={344} size={SMALL} opacity={q}>TO FALL OFF.”</Label>
+      <Label left={60} top={424} size={52} color={DIM} opacity={q}>STEVE JOBS, 2010</Label>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
-        <rect x={860} y={430} width={46} height={650} rx={14} fill="#D8D4EA" stroke={C.black} strokeWidth={6} />
+        <rect x={860} y={500} width={46} height={600} rx={14} fill="#D8D4EA" stroke={C.black} strokeWidth={6} />
         <circle cx={sh.x - 30} cy={sh.y - 150} r={70} fill={SKIN} stroke={C.black} strokeWidth={7} />
-        <line x1={sh.x - 20} y1={sh.y - 40} x2={sh.x - 50} y2={sh.y + 330} stroke={SKIN} strokeWidth={70} strokeLinecap="round" />
+        <line x1={sh.x - 20} y1={sh.y - 40} x2={sh.x - 45} y2={sh.y + 280} stroke={SKIN} strokeWidth={70} strokeLinecap="round" />
         <polyline points={`${sh.x},${sh.y} ${el.x},${el.y} ${hd.x},${hd.y}`} fill="none" stroke={C.black} strokeWidth={64} strokeLinecap="round" strokeLinejoin="round" />
         <polyline points={`${sh.x},${sh.y} ${el.x},${el.y} ${hd.x},${hd.y}`} fill="none" stroke={SKIN} strokeWidth={50} strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <Label left={60} top={1130} size={44} color={DIM} mono>YOUR ARM</Label>
-      <div style={{ position: "absolute", left: 60, top: 1185, width: 860, height: 56, border: `5px solid ${C.ink}` }}>
+      <Label left={60} top={1104} size={SMALL}>YOUR ARM</Label>
+      <div style={{ position: "absolute", left: 60, top: 1190, width: 860, height: 56, border: `5px solid ${C.ink}` }}>
         <div style={{ width: `${100 * tired}%`, height: "100%", backgroundColor: barCol }} />
       </div>
     </AbsoluteFill>
@@ -199,82 +223,119 @@ const Arm: React.FC = () => {
 };
 
 // ------------------------------------------------------------------------------------------------ x3: the capacitive grid
-const G = { left: 120, top: 360, size: 840, n: 8 };
+const G = { left: 160, top: 420, size: 760, n: 8 };
 const gx = (i: number) => G.left + ((i + 0.5) * G.size) / G.n;
 const gy = (j: number) => G.top + ((j + 0.5) * G.size) / G.n;
 const HIT = { i: 5, j: 2 }; // the crossing under the finger: column 6, row 3
 const Grid: React.FC = () => {
   const frame = useCurrentFrame();
   if (!between(frame, S.grid, S.hinge)) return null;
+  const cx = gx(HIT.i);
+  const cy = gy(HIT.j);
   const rows = grow(frame, S.grid + 2, 14);
   const cols = grow(frame, S.grid + 10, 14);
   const scanOn = between(frame, T.grid, T.finger - 2);
-  const k = Math.floor((frame - T.grid) * 1.5) % (G.n * G.n);
   const fin = grow(frame, T.finger - 6, 10);
-  const field = grow(frame, T.changes, 12);
-  const hit = frame >= T.cross - 2;
-  const pulse = ((frame - T.changes) % 24) / 24;
+  const field = grow(frame, T.changes, 14);
+  const lit = frame >= T.changes - 2;
+  const zoom = interpolate(frame, [T.changes, T.changes + 24], [1, 1.35], { ...CLAMP, easing: EASE_OUT });
+  const tip = { x: cx + 8, y: cy + 10 };
+  // field lines from the electrodes round the crossing, bowing up into the fingertip as it arrives
+  const arcs = ([[-1, 0], [1, 0], [0, -1], [0, 1]] as [number, number][]).map(([dx, dy]) => {
+    const s = { x: cx + dx * 90, y: cy + dy * 90 };
+    const c = { x: (s.x + tip.x) / 2 + dy * 46, y: (s.y + tip.y) / 2 - dx * 46 };
+    return `M ${s.x} ${s.y} Q ${c.x} ${c.y} ${tip.x} ${tip.y}`;
+  });
   return (
     <AbsoluteFill style={{ scale: interpolate(frame, [S.grid, S.hinge], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
-      <Label left={60} top={170} size={72}>HOW TOUCH WORKS</Label>
-      <Label left={G.left} top={270} size={44} color={C.magenta}>ROWS SEND</Label>
-      <Label left={G.left + 470} top={270} size={44} color={C.cyan}>COLUMNS LISTEN</Label>
+      <Label left={60} top={160} size={72}>HOW TOUCH WORKS</Label>
+      <Label left={60} top={252} size={SMALL} color={C.magenta}>ROWS SEND</Label>
+      <Label left={60} top={328} size={SMALL} color={C.cyan}>COLUMNS LISTEN</Label>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
+        <defs>
+          <clipPath id="s11panel">
+            <rect x={G.left} y={G.top} width={G.size} height={G.size} rx={18} />
+          </clipPath>
+        </defs>
         <rect x={G.left} y={G.top} width={G.size} height={G.size} rx={18} fill="#0E0A22" stroke="#3A3460" strokeWidth={4} />
-        {Array.from({ length: G.n }, (_, j) => (
-          <line key={`r${j}`} x1={G.left + 20} y1={gy(j)} x2={G.left + 20 + (G.size - 40) * rows} y2={gy(j)} stroke={C.magenta}
-            strokeWidth={hit && j === HIT.j ? 10 : 5} opacity={hit && j !== HIT.j ? 0.45 : 1} />
-        ))}
-        {Array.from({ length: G.n }, (_, i) => (
-          <line key={`c${i}`} x1={gx(i)} y1={G.top + 20} x2={gx(i)} y2={G.top + 20 + (G.size - 40) * cols} stroke={C.cyan}
-            strokeWidth={hit && i === HIT.i ? 10 : 5} opacity={hit && i !== HIT.i ? 0.45 : 1} />
-        ))}
-        {scanOn ? <circle cx={gx(k % G.n)} cy={gy(Math.floor(k / G.n))} r={18} fill={C.ink} opacity={0.9} /> : null}
-        {field > 0
-          ? [0, 1, 2].map((m) => {
-              const p = (pulse + m / 3) % 1;
-              return <circle key={m} cx={gx(HIT.i)} cy={gy(HIT.j)} r={20 + 90 * p} fill="none" stroke={C.acid} strokeWidth={6} opacity={(1 - p) * field} />;
-            })
-          : null}
-        {hit ? <circle cx={gx(HIT.i)} cy={gy(HIT.j)} r={22} fill={C.acid} stroke={C.black} strokeWidth={4} /> : null}
-        {fin > 0 ? <Finger x={gx(HIT.i) + 6} y={gy(HIT.j) + 8} s={interpolate(fin, [0, 1], [1.3, 0.8])} opacity={interpolate(fin, [0, 1], [0, 0.92])} /> : null}
+        <g clipPath="url(#s11panel)">
+          <g transform={`translate(${cx} ${cy}) scale(${zoom}) translate(${-cx} ${-cy})`}>
+            {Array.from({ length: G.n }, (_, j) => (
+              <line key={`r${j}`} x1={G.left + 20} y1={gy(j)} x2={G.left + 20 + (G.size - 40) * rows} y2={gy(j)} stroke={C.magenta}
+                strokeWidth={lit && j === HIT.j ? 10 : 5} opacity={lit && j !== HIT.j ? 0.4 : 1} />
+            ))}
+            {Array.from({ length: G.n }, (_, i) => (
+              <line key={`c${i}`} x1={gx(i)} y1={G.top + 20} x2={gx(i)} y2={G.top + 20 + (G.size - 40) * cols} stroke={C.cyan}
+                strokeWidth={lit && i === HIT.i ? 10 : 5} opacity={lit && i !== HIT.i ? 0.4 : 1} />
+            ))}
+            {/* the controller checks every crossing in turn: a dot with a fading trail, one crossing a frame */}
+            {scanOn
+              ? Array.from({ length: 6 }, (_, t) => {
+                  const k = Math.floor(frame - T.grid - t);
+                  if (k < 0) return null;
+                  const kk = k % (G.n * G.n);
+                  return <circle key={t} cx={gx(kk % G.n)} cy={gy(Math.floor(kk / G.n))} r={16} fill={C.ink} opacity={(1 - t / 6) * 0.9} />;
+                })
+              : null}
+            {field > 0
+              ? arcs.map((d, m) => (
+                  <path key={m} d={d} fill="none" stroke={C.acid} strokeWidth={7} strokeLinecap="round" pathLength={1}
+                    strokeDasharray={`${field} 1`} />
+                ))
+              : null}
+          </g>
+        </g>
+        {fin > 0 ? <Finger x={tip.x} y={tip.y} s={interpolate(fin, [0, 1], [1.2, 0.72])} opacity={interpolate(fin, [0, 1], [0, 0.92])} /> : null}
+        {lit ? <circle cx={cx} cy={cy} r={24} fill={C.acid} stroke={C.black} strokeWidth={5} /> : null}
       </svg>
-      <Label left={gx(HIT.i) - 330} top={gy(HIT.j) - 120} size={64} color={C.acid} opacity={hit ? 1 : 0}>X 6 · Y 3</Label>
-      <Tag at={T.changes + 4} left={60} top={1230} bg={C.cyan} size={44} rot={[-4, -2]}>PROJECTED CAPACITIVE TOUCH</Tag>
+      <Label left={cx - 340} top={cy - 150} size={SMALL} color={C.acid} opacity={frame >= T.cross - 2 ? 1 : 0}>X 6 · Y 3</Label>
+      <Tag at={T.changes + 4} left={60} top={1200} bg={C.cyan} size={60} rot={[-4, -2]}>PROJECTED CAPACITIVE TOUCH</Tag>
     </AbsoluteFill>
   );
 };
 
 // ------------------------------------------------------------------------------------------------ x4: torque about the hinge
-const P = { x: 330, y: 1040 }; // the hinge
-const L = 680; // screen length from the hinge, px
+const P = { x: 330, y: 1000 }; // the hinge
+const L = 640; // screen length from the hinge, px
 const Hinge: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
   if (!between(frame, S.hinge, S.fix)) return null;
-  // a tap pushes the screen back (anticlockwise here), then it rings down; the top tap has twice the lever, twice the swing
+  // the lid opens on "hangs"; a tap pushes the screen back (anticlockwise here) and it rings down. Same push, twice the
+  // lever at the top: twice the swing (OUR MATHS, row 71)
   const ring = (at: number, amp: number) => (frame < at ? 0 : -amp * Math.exp(-(frame - at) / 10) * Math.sin(((frame - at) * 2 * Math.PI) / 11));
-  const theta = -14 + ring(T.top, 7) + ring(T.halfway, 3.5);
-  const arrow = (d: number, at: number, col: string) => {
-    if (frame < at - 4) return null;
-    const s = pop(frame, at - 4, fps, 240, 14);
-    const y = P.y - d;
+  const open = interpolate(frame, [T.hangs - 2, T.hangs + 14], [80, -14], { ...CLAMP, easing: EASE_OUT });
+  const theta = open + ring(T.top, 7) + ring(T.halfway, 3.5);
+  const tap = (d: number, at: number) => {
+    if (frame < at - 8 || frame > at + 22) return null;
+    const slide = interpolate(frame, [at - 8, at, at + 14, at + 22], [150, 0, 0, 150], { ...CLAMP, easing: EASE_IN_OUT });
+    return <Finger x={P.x + 18 + slide} y={P.y - d} s={0.5} rot={-90} />;
+  };
+  const bar = (d: number, x: number, col: string, k: number) =>
+    k > 0 ? (
+      <g opacity={k}>
+        <line x1={x} y1={P.y} x2={x} y2={P.y - d * k} stroke={col} strokeWidth={12} strokeLinecap="round" />
+        <line x1={x - 22} y1={P.y - d * k} x2={x + 22} y2={P.y - d * k} stroke={col} strokeWidth={10} strokeLinecap="round" />
+      </g>
+    ) : null;
+  const ghost = (at: number, amp: number) => {
+    if (frame < at || frame > at + 24) return null;
     return (
-      <g opacity={Math.min(1, s)}>
-        <line x1={P.x + 40 + 180 * s} y1={y} x2={P.x + 40} y2={y} stroke={col} strokeWidth={14} strokeLinecap="round" />
-        <path d={`M ${P.x + 22} ${y} L ${P.x + 62} ${y - 24} L ${P.x + 62} ${y + 24} Z`} fill={col} />
-        <line x1={P.x - 44} y1={P.y} x2={P.x - 44} y2={y} stroke={col} strokeWidth={6} strokeDasharray="14 10" />
+      <g transform={`rotate(${-14 - amp * 0.8} ${P.x} ${P.y})`} opacity={interpolate(frame, [at, at + 3, at + 24], [0, 0.35, 0], CLAMP)}>
+        <rect x={P.x - 14} y={P.y - L} width={28} height={L} rx={10} fill="#D8D4EA" />
       </g>
     );
   };
-  const arc = (r: number, sweep: number, col: string, k: number) => {
+  // equal radius, 80 degrees vs 40: the swing arcs are exactly 2 to 1
+  const arc = (sweep: number, col: string, k: number) => {
     if (k <= 0) return null;
-    const a0 = (-80 * Math.PI) / 180;
-    const a1 = a0 - ((sweep * k) * Math.PI) / 180;
-    const p0 = { x: P.x + r * Math.cos(a0), y: P.y + r * Math.sin(a0) };
-    const p1 = { x: P.x + r * Math.cos(a1), y: P.y + r * Math.sin(a1) };
-    return <path d={`M ${p0.x} ${p0.y} A ${r} ${r} 0 ${sweep * k > 180 ? 1 : 0} 0 ${p1.x} ${p1.y}`} fill="none" stroke={col} strokeWidth={12} strokeLinecap="round" />;
+    const r = 120;
+    const a0 = (-20 * Math.PI) / 180;
+    const a1 = a0 - (sweep * k * Math.PI) / 180;
+    return (
+      <path d={`M ${P.x + r * Math.cos(a0)} ${P.y + r * Math.sin(a0)} A ${r} ${r} 0 0 0 ${P.x + r * Math.cos(a1)} ${P.y + r * Math.sin(a1)}`}
+        fill="none" stroke={col} strokeWidth={14} strokeLinecap="round" />
+    );
   };
   const big = grow(frame, T.top, 12);
   const small = grow(frame, T.halfway, 12);
@@ -285,21 +346,25 @@ const Hinge: React.FC = () => {
       <Label left={60} top={170} size={60} opacity={grow(frame, T.top - 6, 10)}>TORQUE = FORCE × DISTANCE</Label>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
         <rect x={P.x - 30} y={P.y + 6} width={640} height={34} rx={12} fill="#B9B4CC" stroke={C.black} strokeWidth={6} />
+        {ghost(T.top, 7)}
+        {ghost(T.halfway, 3.5)}
         <g transform={`rotate(${theta} ${P.x} ${P.y})`}>
+          {bar(L, P.x - 44, C.acid, big)}
+          {bar(L / 2, P.x - 78, C.cyan, small)}
           <rect x={P.x - 14} y={P.y - L} width={28} height={L} rx={10} fill="#D8D4EA" stroke={C.black} strokeWidth={6} />
-          {arrow(L - 30, T.top, C.acid)}
-          {arrow(L / 2, T.halfway, C.cyan)}
+          {tap(L - 8, T.top)}
+          {tap(L / 2, T.halfway)}
         </g>
-        {arc(130, 120, C.acid, big)}
-        {arc(90, 60, C.cyan, small)}
+        {arc(80, C.acid, big)}
+        {arc(40, C.cyan, small)}
         <circle cx={P.x} cy={P.y} r={hingeLit ? 30 : 22} fill={hingeLit ? C.acid : "#8A84A8"} stroke={C.black} strokeWidth={6} />
       </svg>
-      <Label left={440} top={400} size={52} color={C.acid} opacity={big}>TAP AT THE TOP</Label>
-      <Label left={440} top={466} size={84} color={C.acid} opacity={grow(frame, T.twice - 2, 8)}>2× THE TWIST</Label>
-      <Label left={440} top={720} size={52} color={C.cyan} opacity={small}>HALFWAY DOWN</Label>
-      <Label left={440} top={786} size={84} color={C.cyan} opacity={small}>1×</Label>
-      <Label left={P.x + 60} top={P.y - 60} size={44} color={C.ink} opacity={hingeLit ? 1 : 0}>HINGE</Label>
-      <Tag at={T.twice + 8} left={60} top={1230} bg={C.acid} size={44} rot={[-4, -2]}>OUR MATHS · 2× THE DISTANCE, 2× THE TWIST</Tag>
+      <Label left={440} top={400} size={SMALL} color={C.acid} opacity={big}>TAP AT THE TOP</Label>
+      <Label left={440} top={476} size={84} color={C.acid} opacity={grow(frame, T.twice - 2, 8)}>2× THE TWIST</Label>
+      <Label left={440} top={700} size={SMALL} color={C.cyan} opacity={small}>HALFWAY DOWN</Label>
+      <Label left={440} top={776} size={84} color={C.cyan} opacity={small}>1×</Label>
+      <Label left={P.x - 40} top={P.y + 56} size={SMALL} opacity={hingeLit ? 1 : 0}>HINGE</Label>
+      <Tag at={T.twice + 8} left={60} top={1160} bg={C.acid} size={60} rot={[-4, -2]}>OUR MATHS<br />2× DISTANCE = 2× TWIST</Tag>
     </AbsoluteFill>
   );
 };
@@ -319,41 +384,70 @@ const Fix: React.FC = () => {
 };
 
 // ------------------------------------------------------------------------------------------------ x6: the verdict (⏳ slot 104)
+const VP = { x: 350, y: 1240 }; // the verdict laptop's hinge
+const VL = 420;
 const Verdict: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (!between(frame, S.verdict, S.loop)) return null;
   const rows: [string, string, string, number][] = [
     ["JOBS, 2010 →", "TIRED ARMS", C.warn, S.verdict + 2],
-    ["APPLE, 2026 →", "TOUCH AS AN EXTRA", C.cyan, T.touch - 2],
-    ["FOR WHEN IT’S", "QUICKER", C.acid, T.quicker - 4],
+    [EXTRA_SOURCE, "TOUCH AS AN EXTRA", C.cyan, T.touch - 2],
+    ["OUR TAKE →", "WHEN IT’S QUICKER", C.acid, T.quicker - 4],
   ];
+  // Jobs's "touch surfaces want to be horizontal": the hand works the trackpad (the cursor follows it), reaches up to
+  // the screen on "reach", taps, and comes back down
+  const go = interpolate(frame, [T.reach - 8, T.reach + 2], [0, 1], { ...CLAMP, easing: EASE_OUT });
+  const back = interpolate(frame, [T.reach + 12, T.reach + 24], [0, 1], { ...CLAMP, easing: EASE_IN_OUT });
+  const p = go * (1 - back);
+  const slide = 26 * Math.sin((frame - S.verdict) / 9) * (1 - p);
+  const touchAt = turn(VP.x + 12, VP.y - 300, VP.x, VP.y, -14);
+  const cursor = turn(VP.x + 16, VP.y - 210 - slide * 2.2, VP.x, VP.y, -14);
+  const hand = { x: lerp(640 + slide, touchAt.x, p), y: lerp(1222, touchAt.y, p) - 70 * Math.sin(Math.PI * p) };
+  const tapping = between(frame, T.reach + 1, T.reach + 14);
+  const draw = grow(frame, S.verdict + 6, 10);
   return (
     <AbsoluteFill style={{ scale: interpolate(frame, [S.verdict, S.loop], [1, 1.03], CLAMP) }}>
       <div style={DARK} />
       {rows.map(([a, b, col, at], i) => (
-        <div key={a} style={{ position: "absolute", left: 60, top: 260 + i * 220, opacity: frame >= at ? 1 : 0, scale: pop(frame, at, fps, 230, 12), transformOrigin: "0% 50%" }}>
+        <div key={b} style={{ position: "absolute", left: 60, top: 200 + i * 180, opacity: frame >= at ? 1 : 0, scale: pop(frame, at, fps, 230, 12), transformOrigin: "0% 50%" }}>
           <Label left={0} top={0} size={60}>{a}</Label>
           <Label left={0} top={68} size={100} color={col}>{b}</Label>
         </div>
       ))}
-      {/* Jobs's "touch surfaces want to be horizontal": the hand rests on the base, and reaches up only on "reach" */}
-      <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0, opacity: grow(frame, S.verdict + 6, 10) }}>
-        <rect x={400} y={1230} width={560} height={30} rx={10} fill="#B9B4CC" stroke={C.black} strokeWidth={6} />
-        <g transform="rotate(-14 420 1230)">
-          <rect x={408} y={900} width={24} height={330} rx={9} fill="#D8D4EA" stroke={C.black} strokeWidth={6} />
+      <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0, opacity: draw }}>
+        <rect x={VP.x - 20} y={VP.y} width={600} height={34} rx={10} fill="#B9B4CC" stroke={C.black} strokeWidth={6} />
+        <g transform={`rotate(-14 ${VP.x} ${VP.y})`}>
+          <rect x={VP.x - 13} y={VP.y - VL} width={26} height={VL} rx={10} fill="#D8D4EA" stroke={C.black} strokeWidth={6} />
         </g>
-        <Finger x={690} y={1216} s={0.6} rot={-90} />
-        {frame >= T.reach - 4
+        {p < 0.5 ? <circle cx={cursor.x} cy={cursor.y} r={13} fill={C.acid} stroke={C.black} strokeWidth={4} /> : null}
+        {tapping
           ? [0, 1].map((m) => {
-              const p = (((frame - T.reach + 4) / 20 + m / 2) % 1);
-              return <circle key={m} cx={366} cy={1007} r={14 + 60 * p} fill="none" stroke={C.cyan} strokeWidth={5} opacity={1 - p} />;
+              const q = ((frame - T.reach - 1) / 14 + m / 2) % 1;
+              return <circle key={m} cx={touchAt.x} cy={touchAt.y} r={14 + 64 * q} fill="none" stroke={C.cyan} strokeWidth={6} opacity={1 - q} />;
             })
           : null}
-        {frame >= T.reach - 4 ? <Finger x={370} y={1007} s={interpolate(grow(frame, T.reach - 4, 8), [0, 1], [0.75, 0.6])} opacity={grow(frame, T.reach - 4, 6)} /> : null}
+        <Hand x={hand.x} y={hand.y} rot={lerp(-90, -76, p)} />
       </svg>
-      <Label left={690} top={1150} size={44} color={DIM} mono opacity={grow(frame, S.verdict + 6, 10)}>TRACKPAD</Label>
+      <Label left={560} top={820} size={56} color={DIM} opacity={draw}>YOUR ARM</Label>
+      <div style={{ position: "absolute", left: 560, top: 886, width: 340, height: 40, border: `4px solid ${C.ink}`, opacity: draw }}>
+        <div style={{ width: "10%", height: "100%", backgroundColor: C.acid }} />
+      </div>
+      <Label left={720} top={1110} size={52} color={DIM} opacity={draw}>TRACKPAD</Label>
     </AbsoluteFill>
+  );
+};
+
+// the channel's promise, as Short 8 ends (CRAFT 24 Oct): gone before the loop so the last frame stays frame 0
+const ChannelPromise: React.FC = () => {
+  const frame = useCurrentFrame();
+  if (!between(frame, S.promise, S.loop)) return null;
+  return (
+    <div style={{ position: "absolute", left: 60, top: 1466, padding: "6px 18px 10px", backgroundColor: C.acid, color: C.black,
+      border: `4px solid ${C.black}`, ...HEADC, fontSize: 60, lineHeight: 0.92, opacity: interpolate(frame, [S.promise, S.promise + 6], [0, 1], CLAMP),
+      translate: `0 ${interpolate(frame, [S.promise, S.promise + 8], [24, 0], { ...CLAMP, easing: EASE_OUT })}px` }}>
+      THE STORY BEHIND THE CLIP<br />EVERYONE&apos;S SHARING
+    </div>
   );
 };
 
@@ -385,8 +479,9 @@ export const CurveV2Short11: React.FC = () => (
     <Hinge />
     <Fix />
     <Verdict />
+    <ChannelPromise />
     <LoopEnd />
-    <CaptionTrack pages={PAGES} hide={[[0, 4], [S.loop, SHORT11_FRAMES]]} top={1360} />
+    <CaptionTrack pages={PAGES} hide={[[0, 4], [S.promise, SHORT11_FRAMES]]} top={1360} />
     {HOOK_CLIP ? <Credit text="APPLE" show={[[0, S.timeline], [S.loop, SHORT11_FRAMES]]} /> : null}
     {FIX_CLIP ? <Credit text="APPLE" show={[[S.fix, S.verdict]]} /> : null}
     {HAS_VO ? <Sequence from={0}><Audio src={staticFile("shorts/s11_vo.mp3")} /></Sequence> : null}
@@ -395,7 +490,7 @@ export const CurveV2Short11: React.FC = () => (
     <Sfx at={T.no} name="thock" volume={0.4} />
     <Sfx at={S.arm} name="whoosh" volume={0.3} />
     <Sfx at={S.grid} name="whoosh" volume={0.3} />
-    <Sfx at={T.cross - 2} name="settle" volume={0.35} />
+    <Sfx at={T.changes - 2} name="settle" volume={0.35} />
     <Sfx at={S.hinge} name="whoosh" volume={0.3} />
     <Sfx at={T.top - 2} name="thock" volume={0.45} />
     <Sfx at={S.fix} name="whoosh" volume={0.3} />

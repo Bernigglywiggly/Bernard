@@ -11,7 +11,8 @@ import { VO_S11 } from "./voS11Captions";
 // 28 Oct before Apple's 17:00 announcement: the timeline (rows 40-45), the capacitive grid (60-62) and the hinge torque
 // (70-71) are ours and don't depend on the launch. Still to do after the launch (the 17:40 run): HOOK_CLIP and FIX_CLIP
 // from Apple's own film, the x5 scene's words from Apple's press release (slots 103-104), the verdict rows checked
-// against slot 104, HAS_VO with the real take. Scenes are cued by spoken words (cues: apple, work, bosses, no, sixteen,
+// against slot 104, HAS_VO with the real take. Jobs's words on screen are copied from two recordings of the 2010 event:
+// lab/curve_v2/footage/apple_2026-10-28/JOBS_2010_QUOTE.md. Scenes are cued by spoken words (cues: apple, work, bosses, no, sixteen,
 // years, reaching, tires, under, grid, finger, changes, cross, but, hinge, top, twice, halfway, down, jobs, touch,
 // quicker): a new take or a reworded line retimes them, and a missing cue word throws, so update T when a line changes.
 
@@ -115,7 +116,7 @@ const Hook: React.FC = () => {
       {HOOK_CLIP ? null : <HookDrawing t={frame} />}
       <div style={SHADE_TOP} />
       <Kicker />
-      <Tag at={T.apple + 2} left={60} top={1210} bg={C.ink} size={44} rot={[-4, -2]}>STEVE JOBS · APPLE EVENT · 2010</Tag>
+      <Tag at={T.apple + 2} left={60} top={1210} bg={C.ink} size={44} rot={[-4, -2]}>“IT DOESN’T WORK.” · STEVE JOBS, 2010</Tag>
     </AbsoluteFill>
   );
 };
@@ -180,8 +181,10 @@ const Arm: React.FC = () => {
     <AbsoluteFill style={{ scale: interpolate(frame, [S.arm, S.grid], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
       <Label left={60} top={170} size={84} color={C.warn}>GORILLA ARM</Label>
+      <Label left={60} top={276} size={56} opacity={grow(frame, S.arm + 2, 8)}>“YOUR ARM WANTS TO FALL OFF.”</Label>
+      <Label left={60} top={346} size={44} color={DIM} mono opacity={grow(frame, S.arm + 2, 8)}>STEVE JOBS · APPLE EVENT · 2010</Label>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
-        <rect x={860} y={380} width={46} height={700} rx={14} fill="#D8D4EA" stroke={C.black} strokeWidth={6} />
+        <rect x={860} y={430} width={46} height={650} rx={14} fill="#D8D4EA" stroke={C.black} strokeWidth={6} />
         <circle cx={sh.x - 30} cy={sh.y - 150} r={70} fill={SKIN} stroke={C.black} strokeWidth={7} />
         <line x1={sh.x - 20} y1={sh.y - 40} x2={sh.x - 50} y2={sh.y + 330} stroke={SKIN} strokeWidth={70} strokeLinecap="round" />
         <polyline points={`${sh.x},${sh.y} ${el.x},${el.y} ${hd.x},${hd.y}`} fill="none" stroke={C.black} strokeWidth={64} strokeLinecap="round" strokeLinejoin="round" />

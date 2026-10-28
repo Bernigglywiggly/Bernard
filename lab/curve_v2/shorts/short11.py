@@ -9,21 +9,21 @@ Frame 0: Apple's own shot of a finger on the new MacBook Pro's screen (slot 108,
 NO / FOR 16 YEARS". Our diagrams carry the argument and most of the runtime (CRAFT 18 Oct: borrowed footage under half):
 the "said no" timeline (rows 40-45), the capacitive grid under a fingertip (60-62), torque about the hinge (70-71).
 Verdict (our point of view): Jobs was right about tired arms, so touch became an extra (keep only if slot 104 or rows 24-25
-hold). Never in quote marks: Jobs's words, unless copied from a recording of the 2010 event (row 40). Loop: the verdict
+hold). Jobs's words in quote marks only as copied from the 2010 recordings (footage/apple_2026-10-28/JOBS_2010_QUOTE.md). Loop: the verdict
 cuts back to frame 0's touch shot.
 """
 TITLE = "Touchscreen MacBook: Why It Took 16 Years"
 LINES = [
-    dict(id="x1", facts="40, 41 (Jobs, Back to the Mac, 20 Oct 2010; reported speech, no quote marks); ⏳ 101 (touch confirmed)",
+    dict(id="x1", facts="40, 41 (Jobs, Back to the Mac, 20 Oct 2010: words copied from two recordings, footage/apple_2026-10-28/JOBS_2010_QUOTE.md); ⏳ 101 (touch confirmed)",
          text="In 2010, Apple said touchscreen Macs don't work.",
          cap="In 2010, / Apple said / touchscreen Macs / don't work.",
          shot="frame 0 = Apple's film, a finger on the new MacBook Pro's screen (⏳ slot 108; until then our line drawing); "
-              "kicker 'APPLE SAID NO / FOR 16 YEARS'; tag 'STEVE JOBS · APPLE EVENT · 2010'"),
+              "kicker 'APPLE SAID NO / FOR 16 YEARS'; tag '“IT DOESN’T WORK.” · STEVE JOBS, 2010'"),
     dict(id="x2", facts="40, 42, 43, 44 (Jobs 2010, Cook 2012, Federighi 2014 and 2018); 80-81 (arm fatigue); OUR MATHS 2026 - 2010 = 16",
          text="Its bosses kept saying no for sixteen years, because reaching up to a screen tires your arm.",
          cap="Its bosses / kept saying no / for sixteen years, / because reaching up / to a screen / tires your arm.",
          shot="timeline 2010 JOBS, 2012 COOK, 2014 FEDERIGHI, 2018 FEDERIGHI, each stamped NO, then 2026 TOUCH; on 'reaching' "
-              "an arm reaches a vertical screen and a fatigue bar fills; tag 'GORILLA ARM'"),
+              "an arm reaches a vertical screen and a fatigue bar fills; 'GORILLA ARM' with Jobs's “YOUR ARM WANTS TO FALL OFF.”"),
     dict(id="x3", facts="60, 61, 62 (projected capacitive grid: one set of lines sends, the other receives, each crossing a tiny capacitor)",
          text="Under the glass is a grid of invisible wires, and your finger changes the electric field where two of them cross.",
          cap="Under the glass / is a grid / of invisible wires, / and your finger / changes the electric field / where two of them cross.",

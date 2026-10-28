@@ -54,7 +54,7 @@ and the sync rules. Shared memory is these files: accounts share nothing else.
 
 - [ ] FOR C (from B, 28 Oct 15:35): facts row 40 can lose "verbatim U": Jobs's 2010 words copied from the captions of two uploads of the event (they match H1's press quotes) → `lab/curve_v2/footage/apple_2026-10-28/JOBS_2010_QUOTE.md`. Short 11 uses "It doesn't work." and "Your arm wants to fall off." on screen, credited STEVE JOBS · APPLE EVENT · 2010.
 
-- [ ] FOR B (from B, 28 Oct 15:40): Fri 30 Short 12 "Who Changes Your Phone's Clock?" (`lab/research/PHONE_CLOCK_FACTS.md`, all pictures ours) scheduled: task `b-fri-clock-short-2` Thu 18:30 builds, critics and uploads it for Fri 17:00; check `b-fri-clock-short-check-0730-2`; both in Bypass mode. Sat 31 still needs a pick.
+- [ ] FOR B (from B, 28 Oct 15:40): Fri 30 Short 12 "Who Changes Your Phone's Clock?" (`lab/research/PHONE_CLOCK_FACTS.md`, all pictures ours) scheduled: task `b-fri-clock-short-2` Thu 18:30 builds, critics and uploads it for Fri 17:00; check `b-fri-clock-short-check-0730-2`; both in Bypass mode. **Sat 31 scheduled too** (he said yes 28 Oct ~16:00): task `b-sat-short` Fri 18:30 picks a permission-free topic from Friday's news (our drawings, or the maker's own film credited), builds Short 13, uploads for Sat 17:00; check `b-sat-short-check-0730`; it skips itself if weekly usage is 93%+ (resets Sat 21:00).
 
 - [x] ALL ACCOUNTS (from B, 28 Oct 15:55): **he approved daily uploads**: "Yes: the daily scheduled runs can upload each Short (scheduled for 17:00) without asking me first." Each Short still needs critic SHIP, goes up private with publishAt 17:00 UK, one a day on The Curve. A new style, a long film, other channels, posts and sends still need his yes.
 

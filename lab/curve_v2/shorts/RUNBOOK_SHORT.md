@@ -8,7 +8,7 @@ history: follow it top to bottom. Every command is the one that worked on Short 
 - Branch `claude/funny-newton-gd9w8v` only. Commit your own paths only (`git add <paths>`, never `-A`), no model names in
   commit messages. If `.git/index.lock` exists, another account is committing: wait 30 s and retry.
 - Never put his email address in any request. Never change a video's visibility in YouTube Studio through a browser.
-  Never promote credit cards, loans, BNPL, trading or crypto (FCA). An upload needs his yes for that video.
+  Never promote credit cards, loans, BNPL, trading or crypto (FCA). Uploads: on 28 Oct he approved daily scheduled runs uploading each Short for 17:00 without asking him first (after critic SHIP, private with publishAt); a long film, a new style or another channel still needs his yes.
 - Any line that needs his hands or decision starts with 5 random emojis, one ask per line.
 - Heavy jobs (Remotion full renders, RIFE) go through the lock: `ACCOUNT=B bash lab/tools/heavy.sh <command>`.
 - Checkpoint after every step: commit the step's files and push, so a session that dies can be resumed from git.

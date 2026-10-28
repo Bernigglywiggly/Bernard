@@ -170,7 +170,7 @@ const Timeline: React.FC = () => {
           <div key={yr + where} style={{ position: "absolute", left: 0, top: rowTop(i), scale: interpolate(s, [0, 1], [0.9, 1]), opacity: s, transformOrigin: "0% 50%" }}>
             <Label left={64} top={0} size={96}>{yr}</Label>
             <Label left={330} top={2} size={64}>{who}</Label>
-            <Label left={330} top={78} size={56} color={DIM} mono>{where}</Label>
+            <Label left={330} top={76} size={64} color={DIM} mono>{where}</Label>
           </div>
         );
       })}
@@ -181,7 +181,7 @@ const Timeline: React.FC = () => {
         <div style={{ position: "absolute", left: 0, top: rowTop(ROWS.length), opacity: grow(frame, T.years - 4, 8) }}>
           <Label left={64} top={0} size={96} color={C.acid}>2026</Label>
           <Label left={330} top={2} size={64} color={C.acid}>APPLE</Label>
-          <Label left={330} top={78} size={56} color={DIM} mono>{PRODUCT_2026}</Label>
+          <Label left={330} top={76} size={64} color={DIM} mono>{PRODUCT_2026}</Label>
         </div>
       ) : null}
       <Stamp at={T.years} left={56} top={rowTop(ROWS.length) + 108} size={72} rot={-5} color={C.acid}>YES</Stamp>

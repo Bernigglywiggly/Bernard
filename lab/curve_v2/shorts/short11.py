@@ -40,8 +40,8 @@ LINES = [
          shot="Apple's film (hnZI5uUSdEo 46.3-48.3 s): fingers pinch and drag on the MacBook Pro's screen, credited 'APPLE'; "
               "tag 'A NEWLY DESIGNED HINGE · APPLE' on 'hinge', then Apple's words PINCH TO ZOOM / SWIPE / DRAG AND DROP on each word"),
     dict(id="x6", facts="verdict (our point of view); slot 104: Apple says Touch works \"in tandem with the keyboard shortcuts and trackpad gestures\"",
-         text="Jobs was right about tired arms, so Apple made touch the thing you reach for only when it's quicker.",
-         cap="Jobs was right / about tired arms, / so Apple made touch / the thing you reach for / only when / it's quicker.",
+         text="Our take? Jobs was right about tired arms, so touch is the thing you reach for only when it's quicker.",
+         cap="Our take? / Jobs was right / about tired arms, / so touch is the thing / you reach for / only when it's quicker.",
          shot="verdict rows: JOBS, 2010 → TIRED ARMS; APPLE, 2026 → TOUCH + TRACKPAD; OUR TAKE → WHEN IT'S QUICKER; hard cut to frame 0's "
               "touch shot (loop)"),
 ]

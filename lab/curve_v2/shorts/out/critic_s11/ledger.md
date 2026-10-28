@@ -17,3 +17,7 @@
 | r1 (v1) | 3 MUST | Federighi 2014/2018 stamped NO on unverified rows; unsourced end plate; stamps in the button strip | 2014 verified (BGR quoting CNET: "We're not all that interested in building one."), 2018 dropped; end plate now "THE CURVE: HOW NEW TECH ACTUALLY WORKS" at y 1310; stamps under each year at x 56 | FIXED v2 |
 | r1 (v1) | 3 MUST (part) | Verdict line is our opinion | Kept: on screen it is split APPLE, 2026 → TOUCH + TRACKPAD (Apple's "in tandem") and OUR TAKE → WHEN IT'S QUICKER | NO CHANGE (labelled) |
 | r1 (v1) | 4-5 SHOULD | Diagrams under 60%; small text | Timeline type 84/56/48 → 96/64/56; diagrams unchanged | PART |
+| r2 (v2) | 1 MUST | Spoken verdict "so Apple made touch the thing you reach for..." put our take in Apple's mouth | x6 now "Our take? Jobs was right about tired arms, so touch is the thing you reach for only when it's quicker."; re-voiced (Chris take v2b, word-perfect, 31.6 s) | FIXED v3 |
+| r2 (v2) | 3 SHOULD | Timeline sublabels small | 56 → 64 px | FIXED v3 |
+| r2 (v2) | sound | v3 first master peaked -0.9 dBFS | loudnorm TP -2 + limiter: -14.3 LUFS, -1.9 dBFS | FIXED v3 |
+| r2 (v2) | 2, 4, 5 SHOULD | Caption size varies; grid under 80%; tag pops in small; 3-8 s music hot | not changed | OPEN (cosmetic) |

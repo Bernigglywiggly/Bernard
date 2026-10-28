@@ -16,7 +16,7 @@ The scheduled runs read this file. Change a line here to change what a run build
 One Claude Pro account makes everything: one full Short is about 4-5% of the weekly allowance (resets Sat 21:00 UK),
 so about 18 Shorts a week fit with a safety margin.
 
-## Tasks (all on this Mac, Bypass mode; each skips itself when weekly usage is 92% or more)
+## Tasks (all on this Mac; each skips itself when weekly usage is 92% or more; saved in the default permission mode on 28 Oct: set each to Bypass in the app so they never stop to ask)
 | Task | When (UK) | Builds |
 |---|---|---|
 | `b-sun-short` | Sat 31 Oct 21:15, once | The Curve, publishes Sun 1 Nov 17:00 |

@@ -143,21 +143,21 @@ Where: Apple Newsroom press release (apple.com/newsroom) · product page and **t
 
 | # | Slot | Value | Source (URL + time read) |
 |---|---|---|---|
-| 100 | Exact product names | ⏳ | |
-| 101 | Touch confirmed? Apple's own sentence about touch | ⏳ | |
-| 102 | Display: type (OLED? tandem?), size, brightness (full-screen / peak), refresh rate | ⏳ | |
-| 103 | Hinge or display-stiffness wording, if any | ⏳ | |
-| 104 | macOS version name and the touch features Apple describes | ⏳ | |
-| 105 | Chip(s) | ⏳ | |
-| 106 | US and UK starting prices; pre-order and on-sale dates | ⏳ | |
-| 107 | Weight and thickness vs the current model | ⏳ | |
-| 108 | Apple's film: URL, length, the timestamp of the first finger-on-screen shot (frame 0 candidate) | ⏳ | |
-| 109 | Anything Apple says about why now, or about ergonomics (quote verbatim) | ⏳ | |
+| 100 | Exact product names | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** new 14-inch and 16-inch **MacBook Pro** with a "PROLED XDR" touchscreen display | iClarified https://www.iclarified.com/103155/apple-unveils-macbook-pro-with-proled-xdr-touchscreen-and-dynamic-island ; Tom's Guide live |
+| 101 | Touch confirmed? Apple's own sentence about touch | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** **touch confirmed** (two outlets). Apple's exact sentence not yet read: copy it from the press release | Tom's Guide https://www.tomsguide.com/news/live/apple-touchscreen-macbook-pro-pro-and-tell-event-ipad-mini-8-imac-m6-live-updates ; iClarified |
+| 102 | Display: type (OLED? tandem?), size, brightness (full-screen / peak), refresh rate | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** "PROLED XDR"; Apple's release as quoted: it "uses tandem OLED technology and advances it with breakthrough innovations in every layer..." Brightness and refresh rate not found yet | Engadget live https://www.engadget.com/2299176/apple-pro-and-tell-macbook-event-live-blog/ |
+| 103 | Hinge or display-stiffness wording, if any | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
+| 104 | macOS version name and the touch features Apple describes | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
+| 105 | Chip(s) | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** M5 Pro or M5 Max | iClarified |
+| 106 | US and UK starting prices; pre-order and on-sale dates | **Filled 28 Oct 17:25 (cloud C, via press; Apple's pages not opened here: the Mac copies the exact words):** from **$2,899** (one outlet; matches pre-event reports), a top 16-inch config $14,549 (Engadget); pre-orders 28 Oct, available **Fri 6 Nov**. UK £ not found | iClarified, Engadget |
+| 107 | Weight and thickness vs the current model | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
+| 108 | Apple's film: URL, length, the timestamp of the first finger-on-screen shot (frame 0 candidate) | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
+| 109 | Anything Apple says about why now, or about ergonomics (quote verbatim) | ⏳ still open at 17:25 (not in press reports; Mac: read Apple's tech specs page and film) | |
 | 110 | M6 iMac and M6 MacBook Pro: names, prices, dates | **Filled 27 Oct 17:45 (cloud C):** 14-inch MacBook Pro with M6 from $1,999 (US; 16 GB, 1 TB; space black, silver). iMac with M6 from $1,499 (10-core) / $1,699 (12-core). Pre-orders Wed 28 Oct, in stores Fri 6 Nov, 35 countries. Apple claims GPU up to 30% faster for graphics and up to 25% for AI than M5. UK prices not yet read | Apple Newsroom (MacBook Pro release URL above); iMac details via CNN, Engadget, CineD (Apple's iMac page not read) |
 
 ## 6. The Short: two branches
 
-**Branch T (Apple shows touch): "Touchscreen MacBook: Why It Took 16 Years"** (41 chars)
+**→ BRANCH T CONFIRMED 28 Oct (touch announced).** **Branch T (Apple shows touch): "Touchscreen MacBook: Why It Took 16 Years"** (41 chars)
 - Frame 0: Apple's first finger-on-screen shot (slot 108), text "APPLE SAID NO. 2010".
 - Line 1 options (≤ 3 s): "In 2010 Apple said touchscreen Macs don't work." (8 words) · "You can now touch a MacBook's screen, sixteen years after Apple said no." (13: trim)
 - Beats: Jobs 2010 as a quote card, copied from the video (40) → the capacitive grid under a fingertip (60-62) → the wobble, torque about the hinge (70-71) and the reported stiffer hinge (72, or slot 103 if Apple says it) → touch as an option, menus around your finger (24-25 or slot 104) → verdict.
@@ -184,3 +184,4 @@ Where: Apple Newsroom press release (apple.com/newsroom) · product page and **t
 - That gorilla arm is measured on laptops: the paper is about mid-air interaction (rows 80-81).
 - "First touchscreen Mac ever": say "Apple's first", and only once the press release says so.
 - Prices or dates before Apple's pages (slot 106). iPad mini: $699 is US; check the UK price on Apple's UK store.
+- **Added 28 Oct:** the $2,899 price, brightness and weight until read on Apple's own pages; "PROLED XDR" is Apple's name: spell it as Apple does. Apple's first touchscreen Mac: say it only with Apple's own wording from the release.

@@ -21,3 +21,4 @@
 | r2 (v2) | 3 SHOULD | Timeline sublabels small | 56 → 64 px | FIXED v3 |
 | r2 (v2) | sound | v3 first master peaked -0.9 dBFS | loudnorm TP -2 + limiter: -14.3 LUFS, -1.9 dBFS | FIXED v3 |
 | r2 (v2) | 2, 4, 5 SHOULD | Caption size varies; grid under 80%; tag pops in small; 3-8 s music hot | not changed | OPEN (cosmetic) |
+| r4 (v4) | — | Round-3 tag overflow FIXED; no MUST; SHOULDs: "16 years" rests on 2 stamps, small laptop 14.5-17 s, caption size varies, "so touch" ties verdict to Jobs, Jobs tag pops small | none (SHIP) | SHIP; uploaded 0kUMAh_ETt4, publishes 29 Oct 17:00 UK |

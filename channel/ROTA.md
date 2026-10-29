@@ -6,6 +6,15 @@ scheduled runs can upload each Short (scheduled for 17:00) without asking me fir
 
 The scheduled runs read this file. Change a line here to change what a run builds; the tasks stay as they are.
 
+## Usage allocation (his ask, 29 Oct: "allocated towards profit and roi as optimally as possible ... I'm trying not to spread attention")
+| Area | Share of the weekly allowance | What it buys | Why |
+|---|---|---|---|
+| The Curve Shorts | ~50% | 7-10 Shorts a week (A slot daily, B slots when spare) | the only proven traction: 43k views, 8 of 8 new Shorts past 800 |
+| KDP books (Dark Archive Press) | ~30% | up to 14 new titles a week (KDP's safe rate is 2 a day) in the winners' formula | code-built, so the cheapest real £ per unit of usage; a long fuse |
+| Research, gate, alignment | ~10% | the other account does the deep research; this is B's checks | stops usage going to dead ends |
+| Other YouTube channels | 0% until the research verdict says TEST | then 2 tests each, taken from Curve B slots | 302 views between them so far |
+| Reserve | ~10% | re-runs after failures | |
+
 ## Why the Curve gets the most slots (YouTube APIs, 28 Oct 20:35 UK)
 | Channel | Lifetime views | Subs | Best video |
 |---|---|---|---|
@@ -31,25 +40,18 @@ defamation risk): no new Money Crimes build until How They Profit or Curva passe
 | Build (UK) | Run | Channel | Job | Publishes (UK) |
 |---|---|---|---|---|
 | Sat 31 Oct 21:15 | b-sun-short-2 | The Curve | A slot (RUNBOOK_SHORT.md §8b) | Sun 1 Nov 17:00 |
-| Sun 1 Nov 19:00 | rota | How They Profit | SETUP + HTP test 1 (§9a): a clip of a business doing something that looks like it loses money, then the money flow | Mon 2 Nov 17:00 |
-| Mon 2 Nov 07:30 | check | Money Crimes + How They Profit | BACKLOG PREP (below) | the drip dates below |
+| Sun 1 Nov 19:00 | rota | How They Profit, or The Curve | HOLD RULE: only if lab/research/VIABILITY_2026-10-29.md or BREAKOUT_CONCEPTS_2026-10-29.md exists and says TEST or SCALE for How They Profit, do SETUP + HTP test 1 (§9a: a clip of a business doing something that looks like it loses money, then the money flow), publishing Mon 2 Nov 17:00; otherwise build a Curve B slot publishing Mon 2 Nov 12:00 | Mon 2 Nov |
+| Sun 1 Nov 07:30 | check | KDP | KDP AUDIT (`lab/tools/briefs/kdp_factory.md`) | - |
+| Mon 2 to Sat 7 Nov 07:30 | check | KDP | KDP BUILD: the next 2 titles of the plan (same brief), unless kdp/QUEUE.md already holds 10 unpublished | his publish queue |
 | Mon 2 Nov 19:00 | rota | The Curve | B slot: Microduck sequel, a new question about the same robot (§8b) | Tue 3 Nov 12:00 |
-| Tue 3 Nov 19:00 | rota | Curva Explica | SETUP + Spanish Microduck; also Spanish Roadster upside down if weekly usage is under 75% (§9c) | Wed 4 Nov 17:00 (+ Thu 5 Nov 17:00) |
+| Tue 3 Nov 19:00 | rota | Curva Explica, or The Curve | HOLD RULE (as Sun 1 Nov, for Curva Explica): SETUP + Spanish Microduck, also Spanish Roadster upside down if weekly usage is under 75% (§9c), publishing Wed 4 Nov 17:00 (+ Thu 5 Nov 17:00); otherwise a Curve B slot publishing Wed 4 Nov 12:00 | Wed 4 Nov |
 | Wed 4 Nov 19:00 | rota | The Curve | B slot | Thu 5 Nov 12:00 |
-| Thu 5 Nov 19:00 | rota | How They Profit | HTP test 2 | Fri 6 Nov 17:00 |
-| Fri 6 Nov 19:00 | rota | Curva Explica | Spanish iPhone Duo crack (and Roadster if Tuesday skipped it) | Sat 7 Nov 17:00 (+ Sun 8 Nov 17:00) |
+| Thu 5 Nov 19:00 | rota | How They Profit, or The Curve | HOLD RULE: HTP test 2 only if test 1 was built; otherwise a Curve B slot publishing Fri 6 Nov 12:00 | Fri 6 Nov |
+| Fri 6 Nov 19:00 | rota | Curva Explica, or The Curve | HOLD RULE: Spanish iPhone Duo crack (and Roadster if Tuesday skipped it) only if Tuesday built Curva; otherwise a Curve B slot publishing Sat 7 Nov 12:00 | Sat 7 Nov |
 | Sat 7 Nov 19:00 | rota | The Curve | B slot, only if weekly usage is under 75% (the allowance resets at 21:00) | Sun 8 Nov 12:00 |
 | Sun 8 Nov 19:00 | rota | all | GATE (below) + a fresh alignment check (Sonnet agent) + week 2 rows | - |
 
-**BACKLOG PREP (one morning job):** recover the 5 unuploaded Ponzi Shorts (page https://claude.ai/artifact/3dQC4krr7X2cssm2o6CcJK)
-and the 12 old-look How They Profit Shorts (pages https://claude.ai/artifact/PwxaSffr73rhXBtRf7qdNH parts 4-5,
-https://claude.ai/artifact/PktR2P3q7bUJ9kenGWn4cX, https://claude.ai/artifact/HbiwF8JbBuYzAcKVowLLEV) with the Artifact tool
-(list scope "files", then read each path) into `lab/backlog/<channel>/`. Skip any already in `channel/uploads.done.json`.
-One critic skim of the whole batch (film-critic skill, one NEW Sonnet subagent, contact sheets + loudness): drop anything
-broken. Upload, private with publishAt, the 5 Ponzi Shorts on Money Crimes (Tue 3, Thu 5, Sat 7, Mon 9, Wed 11 Nov, 17:00)
-and the best 3 HTP Shorts on How They Profit (Wed 4, Sun 8, Tue 10 Nov, 17:00), using the titles and descriptions in
-`channel/uploads.json`. The 2 old HTP films (Costco, Amazon) are long films: they need his yes, so they wait.
-If the files can't be fetched, skip the job: it is worth ~700 views in total; its use is old look vs new look.
+**BACKLOG PREP: dropped 29 Oct** (his ask: usage to ROI; ~700 views for ~3% of a week). The 5 Ponzi and 12 old How They Profit Shorts stay on their claude.ai pages.
 
 ## The gate (read 72 h after each test Short; first read Sun 8 Nov)
 | Result | Rule | Then |

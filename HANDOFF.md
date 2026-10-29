@@ -1,3 +1,5 @@
+**ACCOUNT B working on: Short 12 phone clock (scheduled run, since 18:31)**
+
 **ACCOUNT B, Thu 29 Oct 17:58 UK: WEEKLY USAGE 91%.** The breakout pull cost ~4%. Friday's Short brief (`~/.claude/scheduled-tasks/b-fri-clock-short-2/SKILL.md`) now only stops before the render above 97% (it stopped at 90% to protect Saturday, which will skip itself anyway at 93%+). Expect: Fri Short builds tonight 18:30 and publishes Fri 17:00; Sat Short skipped; Sun Short builds Sat 21:15 after the reset; KDP audit Sun 07:30. B's main session stays idle until the reset.
 
 **ACCOUNT B, Thu 29 Oct ~17:45 UK: USAGE GOES TO ROI, KDP IS THE SECOND FOCUS (he: "I need it allocated towards profit and roi as optimally as possible ... kdp books are worth building ... a focus on these for now and building them to a good point ... I'm trying not to spread attention").**

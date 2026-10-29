@@ -16,21 +16,21 @@ The scheduled runs read this file. Change a line here to change what a run build
 One Claude Pro account makes everything: one full Short is about 4-5% of the weekly allowance (resets Sat 21:00 UK),
 so about 18 Shorts a week fit with a safety margin.
 
-## Tasks (all on this Mac; each skips itself when weekly usage is 92% or more; saved in the default permission mode on 28 Oct: set each to Bypass in the app so they never stop to ask)
+## Tasks (all on this Mac, Bypass mode since 29 Oct 01:25; each skips itself when weekly usage is 92% or more; their briefs are `lab/tools/briefs/*.md`: edit the brief, not the task)
 | Task | When (UK) | Builds |
 |---|---|---|
-| `b-sun-short` | Sat 31 Oct 21:15, once | The Curve, publishes Sun 1 Nov 17:00 |
-| `b-curve-daily` | every day 21:15, Nov-Dec | The Curve, publishes the next day 17:00 |
-| `b-channels-rota` | every day 19:00, Nov-Dec | the line for today in the table below |
-| `b-daily-check-0730` | every day 07:30, Nov-Dec | finishes any run from last night that stopped before its upload |
+| `b-sun-short-2` | Sat 31 Oct 21:15, once | The Curve, publishes Sun 1 Nov 17:00 |
+| `b-curve-daily-2` | every day 21:15, Nov-Dec | The Curve, publishes the next day 17:00 |
+| `b-channels-rota-2` | every day 19:00, Nov-Dec | the line for today in the table below |
+| `b-daily-check-0730-2` | every day 07:30, Nov-Dec | finishes any run from last night that stopped before its upload |
 
 ## Week 1 (revised 28 Oct 20:55 after the alignment check, `lab/research/ALIGNMENT_2026-10-28.md`: REDIRECT)
-The Curve gets most slots (A slot 17:00 every day from `b-curve-daily`, B slot 12:00 on rota days). How They Profit and
+The Curve gets most slots (A slot 17:00 every day from `b-curve-daily-2`, B slot 12:00 on rota days). How They Profit and
 Curva Explica get real tests. Money Crimes gets only its finished backlog (best Short 33 views, hard footage,
 defamation risk): no new Money Crimes build until How They Profit or Curva passes the gate.
 | Build (UK) | Run | Channel | Job | Publishes (UK) |
 |---|---|---|---|---|
-| Sat 31 Oct 21:15 | b-sun-short | The Curve | A slot (RUNBOOK_SHORT.md §8b) | Sun 1 Nov 17:00 |
+| Sat 31 Oct 21:15 | b-sun-short-2 | The Curve | A slot (RUNBOOK_SHORT.md §8b) | Sun 1 Nov 17:00 |
 | Sun 1 Nov 19:00 | rota | How They Profit | SETUP + HTP test 1 (§9a): a clip of a business doing something that looks like it loses money, then the money flow | Mon 2 Nov 17:00 |
 | Mon 2 Nov 07:30 | check | Money Crimes + How They Profit | BACKLOG PREP (below) | the drip dates below |
 | Mon 2 Nov 19:00 | rota | The Curve | B slot: Microduck sequel, a new question about the same robot (§8b) | Tue 3 Nov 12:00 |

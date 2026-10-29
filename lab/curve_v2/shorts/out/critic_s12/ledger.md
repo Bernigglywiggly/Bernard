@@ -10,3 +10,4 @@
 | self (v2) | - | Releases scene empty ~1.4 s; rule scene empty before "first" | Cards start as the scene opens; the rule line sits dim and lights on each word | FIXED v2 |
 
 v1: -14.2 LUFS, -1.4 dBFS, near-still 5%, loop PSNR 46.7 dB. v2: -14.2 LUFS, -1.4 dBFS, near-still 1%, loop PSNR 46.2 dB.
+| r2 (v2) | - | SHIP: r1 MUSTs 1-2 FIXED, 3 PARTLY, 4-5 STILL PRESENT (SHOULD); new SHOULDs S1-S8 in round2.md | uploaded v2 as judged | SHIPPED h07Jov-tt7Q |

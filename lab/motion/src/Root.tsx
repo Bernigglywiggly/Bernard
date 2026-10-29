@@ -27,6 +27,7 @@ import { CurveV2Short7, SHORT7_FRAMES } from "./curve_v2/CurveV2Short7";
 import { CurveV2Short8, SHORT8_FRAMES } from "./curve_v2/CurveV2Short8";
 import { CurveV2Short10, SHORT10_FRAMES } from "./curve_v2/CurveV2Short10";
 import { CurveV2Short11, SHORT11_FRAMES } from "./curve_v2/CurveV2Short11";
+import { CurveV2Short12, SHORT12_FRAMES } from "./curve_v2/CurveV2Short12";
 import { FILM_FRAMES, FILM_ORDER, FilmRoadster } from "./curve_v2/film/FilmRoadster";
 import { segFrames } from "./curve_v2/film/util";
 import { ThumbA, ThumbB, ThumbC, ThumbD } from "./curve_v2/film/Thumbs";
@@ -163,6 +164,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="CurveV2-Short8" component={CurveV2Short8} width={1080} height={1920} fps={30} durationInFrames={SHORT8_FRAMES} defaultProps={{}} />
         <Composition id="CurveV2-Short10" component={CurveV2Short10} width={1080} height={1920} fps={30} durationInFrames={SHORT10_FRAMES} defaultProps={{}} />
         <Composition id="CurveV2-Short11" component={CurveV2Short11} width={1080} height={1920} fps={30} durationInFrames={SHORT11_FRAMES} defaultProps={{}} />
+        <Composition id="CurveV2-Short12" component={CurveV2Short12} width={1080} height={1920} fps={30} durationInFrames={SHORT12_FRAMES} defaultProps={{}} />
         <Composition id="Film-Roadster" component={FilmRoadster} width={1920} height={1080} fps={30} durationInFrames={FILM_FRAMES} defaultProps={{}} />
         {FILM_ORDER.map(([seg, Comp]) => (
           <Composition key={seg} id={`Film-${seg}`} component={Comp} width={1920} height={1080} fps={30} durationInFrames={segFrames(seg)} defaultProps={{}} />

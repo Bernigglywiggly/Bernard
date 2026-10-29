@@ -189,5 +189,35 @@
   "synthetic": true,
   "kind": "short",
   "publish_at": "2026-10-29T17:00:00Z"
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT12_v2.mp4",
+  "title": "Who Changes Your Phone's Clock?",
+  "title_alts": [
+   "Who Actually Changes Your Phone's Clock on Sunday?",
+   "How Your Phone Knows When the Clocks Go Back"
+  ],
+  "description": "On Sunday 1 November 2026 at 2 a.m., clocks in most of the US go back an hour, and your phone changes its own clock. Nobody sets it by hand. Your phone gets the time from the network (a cell tower or an internet time server), then looks up where you are in the time zone database: a rulebook of the history of local time for places all over the world. Volunteers keep that rulebook, and they publish a new edition whenever a country changes its rules: six editions so far in 2026, the latest (2026f) on 27 October. For most of the US, one line in it says: first Sunday in November, 2 a.m., go back one hour. Hawaii and most of Arizona don't change. Our take: it's the clock you trust most, and it only works because volunteers do the homework.\n\nAll pictures are drawn for this Short. The phone is a generic drawing, not any maker's product.\n\nSources:\nIANA, Time Zone Database (release 2026f, 27 Oct 2026): https://www.iana.org/time-zones\nRFC 6557, Procedures for Maintaining the Time Zone Database (IETF): https://www.rfc-editor.org/rfc/rfc6557\nAndroid Open Source Project, Time source priority (NTP and NITZ): https://source.android.com/docs/core/connect/time-source\nAndroid Open Source Project, Time zone rules: https://source.android.com/docs/core/permissions/timezone-rules\n\nNarration uses an AI voice.\n\n#DaylightSaving #FallBack #Shorts",
+  "tags": [
+   "daylight saving time",
+   "clocks go back",
+   "fall back 2026",
+   "daylight saving time 2026",
+   "phone clock",
+   "time zone database",
+   "tz database",
+   "how does my phone know the time",
+   "NTP",
+   "NITZ",
+   "time zones",
+   "the curve"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "publish_at": "2026-10-30T17:00:00Z"
  }
 ]

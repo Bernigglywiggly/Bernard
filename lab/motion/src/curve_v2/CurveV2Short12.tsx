@@ -47,7 +47,7 @@ const DARK: React.CSSProperties = { position: "absolute", inset: 0, background: 
 const between = (f: number, a: number, b: number) => f >= a && f < b;
 const grow = (f: number, a: number, dur = 18) => interpolate(f, [a, a + dur], [0, 1], { ...CLAMP, easing: EASE_OUT });
 const DIM = "#B8B2D6";
-const SMALL = 68; // labels: 48 px cap height or more (CRAFT 18 Oct)
+const SMALL = 72; // labels: 48 px cap height or more (CRAFT 18 Oct)
 const Label: React.FC<{ children: React.ReactNode; left: number; top: number; size?: number; color?: string; opacity?: number;
   width?: number; align?: "left" | "center"; mono?: boolean }> = ({ children, left, top, size = 64, color = C.ink, opacity = 1, width, align = "left", mono }) => (
   <div style={{ position: "absolute", left, top, width, textAlign: align, ...(mono ? MONO : HEADC), whiteSpace: width ? "normal" : "nowrap", fontSize: size,
@@ -62,7 +62,7 @@ const Phone: React.FC<{ x: number; y: number; w: number; h: number; from: string
     border: "8px solid #D8D4EA", boxShadow: `0 0 ${40 + 80 * glow}px rgba(120,220,255,${0.15 + 0.35 * glow})`, overflow: "hidden" }}>
     <div style={{ position: "absolute", inset: 14, borderRadius: w * 0.11, background: "linear-gradient(160deg, #2B1660 0%, #12082E 60%, #0B0620 100%)" }} />
     <div style={{ position: "absolute", left: w / 2 - 60, top: 30, width: 120, height: 34, borderRadius: 17, backgroundColor: "#05030C" }} />
-    {date ? <Label left={0} top={h * 0.2} width={w - 16} align="center" size={56} color={DIM}>{date}</Label> : null}
+    {date ? <Label left={0} top={h * 0.2} width={w - 16} align="center" size={68} color={DIM}>{date}</Label> : null}
     <div style={{ position: "absolute", left: 0, right: 0, top: h * 0.2 + 76, height: timeSize * 1.05, overflow: "hidden" }}>
       {[from, to].map((t, i) =>
         t === undefined ? null : (
@@ -100,8 +100,8 @@ const HookPicture: React.FC<{ t: number }> = ({ t }) => {
   return (
     <AbsoluteFill style={{ scale: interpolate(t, [0, S.sources], [1, 1.035], CLAMP), transformOrigin: "50% 45%" }}>
       <div style={DARK} />
-      <Phone x={300 - 210 * shift} y={420} w={480} h={820} date="SUN 1 NOV" from="1:59" to="1:00" roll={roll} glow={roll} />
-      {t >= T.rulebook - 2 ? <div style={{ position: "absolute", left: 0, top: drop }}><Book x={600} y={600} rot={6} /></div> : null}
+      <Phone x={260 - 200 * shift} y={400} w={560} h={940} date="SUN 1 NOV" from="1:59" to="1:00" roll={roll} glow={roll} timeSize={240} />
+      {t >= T.rulebook - 2 ? <div style={{ position: "absolute", left: 0, top: drop }}><Book x={630} y={560} rot={6} /></div> : null}
     </AbsoluteFill>
   );
 };
@@ -112,8 +112,8 @@ const Hook: React.FC = () => {
     <AbsoluteFill>
       <HookPicture t={frame} />
       <Kicker />
-      <Tag at={T.change + 4} left={250} top={1120} bg={C.acid} size={60} rot={[-6, -3]} until={T.rulebook}>BACK ONE HOUR</Tag>
-      <Tag at={T.rulebook + 8} left={560} top={1040} bg={C.ink} size={60} rot={[-5, -3]}>KEPT BY<br />VOLUNTEERS</Tag>
+      <Tag at={T.change + 4} left={250} top={1250} bg={C.acid} size={68} rot={[-6, -3]} until={T.rulebook}>BACK ONE HOUR</Tag>
+      <Tag at={T.rulebook + 8} left={60} top={1270} bg={C.ink} size={68} rot={[-4, -2]}>KEPT BY VOLUNTEERS</Tag>
     </AbsoluteFill>
   );
 };
@@ -168,7 +168,7 @@ const Sources: React.FC = () => {
       <Label left={TOWER.x - 170} top={920} size={SMALL} opacity={towerIn}>CELL TOWER</Label>
       <Label left={SERVER.x - 20} top={SERVER.y - 90} size={SMALL} opacity={serverIn}>TIME SERVER</Label>
       <Phone x={PH.x} y={PH.y} w={PH.w} h={PH.h} from="" to="05:59" roll={got ? 1 : interpolate(frame, [T.tower + 4, T.tower + 12], [0, 1], CLAMP)} timeSize={96} glow={0.4} />
-      <Tag at={T.tower + 6} left={60} top={1100} bg={C.cyan} size={60} rot={[-5, -3]}>UTC</Tag>
+      <Tag at={T.tower + 6} left={60} top={1100} bg={C.cyan} size={72} rot={[-5, -3]}>UTC</Tag>
     </AbsoluteFill>
   );
 };
@@ -177,7 +177,7 @@ const Sources: React.FC = () => {
 const ZONES = ["ASIA/TOKYO", "EUROPE/LONDON", "AFRICA/CAIRO", "AMERICA/CHICAGO", "PACIFIC/AUCKLAND", "EUROPE/PARIS", "ASIA/KOLKATA",
   "AMERICA/DENVER", "AUSTRALIA/SYDNEY", "AMERICA/NEW_YORK", "AMERICA/PHOENIX", "EUROPE/BERLIN", "AMERICA/TORONTO", "ASIA/DUBAI"];
 const NY = ZONES.indexOf("AMERICA/NEW_YORK");
-const ROW = 92;
+const ROW = 100;
 const Rulebook: React.FC = () => {
   const frame = useCurrentFrame();
   if (!between(frame, S.book, S.releases)) return null;
@@ -192,13 +192,13 @@ const Rulebook: React.FC = () => {
       <Label left={60} top={170} size={72} color={C.acid}>STEP 2 · THE RULEBOOK</Label>
       <div style={{ position: "absolute", left: 60, top: 300, width: 860, height: 640, scale: interpolate(open, [0, 1], [0.92, 1]), opacity: open,
         backgroundColor: "#EDE6D3", border: `8px solid ${C.black}`, borderRadius: 14, overflow: "hidden" }}>
-        <div style={{ position: "absolute", left: 0, right: 0, top: 274, height: ROW, backgroundColor: hit ? C.acid : "rgba(59,44,122,0.18)" }} />
+        <div style={{ position: "absolute", left: 0, right: 0, top: 268, height: ROW, backgroundColor: hit ? C.acid : "rgba(59,44,122,0.18)" }} />
         {ZONES.map((z, i) => (
-          <div key={z} style={{ position: "absolute", left: 40, top: 280 + i * ROW - y, ...MONO, fontSize: 64, lineHeight: 1, color: "#1A1036",
+          <div key={z} style={{ position: "absolute", left: 40, top: 280 + i * ROW - y, ...MONO, fontSize: 72, lineHeight: 1, color: "#1A1036",
             fontWeight: i === NY && hit ? 800 : 500 }}>{z}</div>
         ))}
       </div>
-      <Tag at={T.history + 2} left={60} top={980} bg={C.ink} size={60} rot={[-4, -2]}>THE TIME ZONE DATABASE</Tag>
+      <Tag at={T.history + 2} left={60} top={980} bg={C.ink} size={68} rot={[-3, -1]}>THE TIME ZONE DATABASE</Tag>
     </AbsoluteFill>
   );
 };
@@ -209,7 +209,7 @@ const Releases: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (!between(frame, S.releases, S.rule)) return null;
-  const at = (i: number) => Math.round(T.whenever + ((T.six + 6 - T.whenever) * i) / (RELEASES.length - 1));
+  const at = (i: number) => Math.round(S.releases + 4 + ((T.six + 6 - S.releases - 4) * i) / (RELEASES.length - 1));
   return (
     <AbsoluteFill style={{ scale: interpolate(frame, [S.releases, S.rule], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
@@ -225,8 +225,8 @@ const Releases: React.FC = () => {
           </div>
         );
       })}
-      <Stamp at={at(5) + 6} left={600} top={860} size={72} rot={-6} color={C.warn}>27 OCT</Stamp>
-      <Tag at={T.six + 2} left={60} top={880} bg={C.ink} size={60} rot={[-4, -2]}>6 IN 2026 · IANA</Tag>
+      <Stamp at={at(5) + 6} left={560} top={870} size={76} rot={-6} color={C.warn}>27 OCT</Stamp>
+      <Tag at={T.six + 2} left={60} top={1010} bg={C.ink} size={72} rot={[-4, -2]}>6 IN 2026 · IANA</Tag>
     </AbsoluteFill>
   );
 };
@@ -246,18 +246,18 @@ const Rule: React.FC = () => {
     <AbsoluteFill style={{ scale: interpolate(frame, [S.rule, S.verdict], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
       <Label left={60} top={170} size={72} color={C.acid}>THE RULE</Label>
-      <Label left={60} top={256} size={SMALL} color={DIM} mono>AMERICA/NEW_YORK</Label>
-      {parts.map(([txt, col, at], i) =>
-        frame < at ? null : (
-          <div key={txt} style={{ position: "absolute", left: 60, top: 380 + i * 150, scale: pop(frame, at, fps, 230, 12), transformOrigin: "0% 50%" }}>
-            <Label left={0} top={0} size={124} color={col}>{txt}</Label>
-          </div>
-        ),
-      )}
-      <Phone x={600} y={860} w={300} h={420} from="1:59" to="1:00" roll={roll} timeSize={110} glow={roll} />
-      <Tag at={T.forr + 4} left={60} top={880} bg={C.ink} size={60} rot={[-4, -2]}>MOST OF THE US</Tag>
-      <Label left={60} top={990} size={56} color={DIM} opacity={grow(frame, T.forr + 10, 8)}>NOT HAWAII OR</Label>
-      <Label left={60} top={1056} size={56} color={DIM} opacity={grow(frame, T.forr + 10, 8)}>MOST OF ARIZONA</Label>
+      <Label left={60} top={256} size={76} color={DIM} mono>AMERICA/NEW_YORK</Label>
+      {/* the whole line sits dim in the rulebook, and each part lights as it is spoken */}
+      {parts.map(([txt, col, at], i) => (
+        <div key={txt} style={{ position: "absolute", left: 60, top: 380 + i * 150, opacity: frame < at ? 0.22 : 1,
+          scale: frame < at ? 1 : interpolate(pop(frame, at, fps, 230, 12), [0, 1], [1.12, 1]), transformOrigin: "0% 50%" }}>
+          <Label left={0} top={0} size={124} color={frame < at ? DIM : col}>{txt}</Label>
+        </div>
+      ))}
+      <Phone x={660} y={860} w={260} h={420} from="1:59" to="1:00" roll={roll} timeSize={96} glow={roll} />
+      <Tag at={T.forr + 4} left={60} top={870} bg={C.ink} size={72} rot={[-4, -2]}>MOST OF THE US</Tag>
+      <Label left={60} top={1000} size={72} color={DIM} opacity={grow(frame, T.forr + 10, 8)}>NOT HAWAII OR</Label>
+      <Label left={60} top={1084} size={72} color={DIM} opacity={grow(frame, T.forr + 10, 8)}>MOST OF ARIZONA</Label>
     </AbsoluteFill>
   );
 };
@@ -277,8 +277,8 @@ const Verdict: React.FC = () => {
       <div style={DARK} />
       {rows.map(([a, b, col, at], i) => (
         <div key={b} style={{ position: "absolute", left: 60, top: 200 + i * 200, opacity: frame >= at ? 1 : 0, scale: pop(frame, at, fps, 230, 12), transformOrigin: "0% 50%" }}>
-          <Label left={0} top={0} size={60}>{a}</Label>
-          <Label left={0} top={70} size={b.length > 14 ? 84 : 100} color={col}>{b}</Label>
+          <Label left={0} top={0} size={68}>{a}</Label>
+          <Label left={0} top={76} size={b.length > 14 ? 84 : 100} color={col}>{b}</Label>
         </div>
       ))}
       <div style={{ opacity: grow(frame, S.verdict + 4, 10) }}>
@@ -295,9 +295,9 @@ const ChannelPromise: React.FC = () => {
   if (!between(frame, S.promise, S.loop)) return null;
   return (
     <div style={{ position: "absolute", left: 60, top: 1340, padding: "6px 18px 10px", backgroundColor: C.acid, color: C.black,
-      border: `4px solid ${C.black}`, ...HEADC, fontSize: 60, lineHeight: 0.92, opacity: interpolate(frame, [S.promise, S.promise + 6], [0, 1], CLAMP),
+      border: `4px solid ${C.black}`, ...HEADC, fontSize: 68, lineHeight: 0.92, opacity: interpolate(frame, [S.promise, S.promise + 6], [0, 1], CLAMP),
       translate: `0 ${interpolate(frame, [S.promise, S.promise + 8], [24, 0], { ...CLAMP, easing: EASE_OUT })}px` }}>
-      THE CURVE: HOW NEW TECH<br />ACTUALLY WORKS
+      THE CURVE: HOW NEW<br />TECH ACTUALLY WORKS
     </div>
   );
 };

@@ -1,4 +1,4 @@
-**ACCOUNT C, Fri 30 Oct 00:38 UK: RESEARCH BRIEF DONE (`lab/tools/briefs/OTHER_ACCOUNT_RESEARCH_2026-10-29.md`). Verdicts first:**
+**ACCOUNT C, Fri 30 Oct 00:36 UK: RESEARCH BRIEF DONE (`lab/tools/briefs/OTHER_ACCOUNT_RESEARCH_2026-10-29.md`). Verdicts first:**
 - **The Curve = SCALE**, plus an evergreen B slot "How engineers solved X" (RUNBOOK §8c; Under Six Minutes Studio L10 494,000), first Wed 4 Nov. B slots publish **23:00 UK** from Sun 1 Nov (12:00 UK was 07:00 ET, the worst US window).
 - **How They Profit = old format KILL → re-pointed to map geography (TEST)**: World Ji Ke (created May 2026) L10 **915,500**, the strongest 2026 channel found. RUNBOOK §9-P1; tests build Sun 1 and Thu 5 Nov. **Money Crimes = Shorts KILL → "Evolution of" (TEST in week 2, §9-P2)**. **Curva = TEST as dubs.** No new channel.
 - **KDP caps new titles at 2 per format a week** (KDP help G202172740; our block on 23 Sep), not 3 a day. Rota: KDP share ~30% → ~6%; Mon 2 Nov builds this week's 2 titles, Tue-Sat none; themes and build order in `kdp/THEMES_RESEARCH.md`. **FOR B: rewrite `kdp_factory.md`** (TEAM §4).

@@ -9,11 +9,12 @@ The scheduled runs read this file. Change a line here to change what a run build
 ## Usage allocation (his ask, 29 Oct: "allocated towards profit and roi as optimally as possible ... I'm trying not to spread attention")
 | Area | Share of the weekly allowance | What it buys | Why |
 |---|---|---|---|
-| The Curve Shorts | ~50% | 7-10 Shorts a week (A slot daily, B slots when spare) | the only proven traction: 43k views, 8 of 8 new Shorts past 800 |
-| KDP books (Dark Archive Press) | ~30% | up to 14 new titles a week (KDP's safe rate is 2 a day) in the winners' formula | code-built, so the cheapest real £ per unit of usage; a long fuse |
+| The Curve Shorts | ~45% (account C, 30 Oct: `lab/research/USAGE_ROI_2026-10-29.md`) | the A slot daily + 2 evergreen B slots (RUNBOOK §8c) | the only proven traction: 43k views, 8 of 8 new Shorts past 800 |
+| KDP books | **~6%** (was 30%) | **2 new paperbacks a week + up to 2 hardcover editions of titles that sell**: KDP allows only 2 new titles per format a week (help page G202172740, read 30 Oct; our own block on 23 Sep). Spend it on quality, in the order of `kdp/THEMES_RESEARCH.md` | the only line that earns real £ per 1% inside 12 months, but capped |
 | Research, gate, alignment | ~10% | the other account does the deep research; this is B's checks | stops usage going to dead ends |
-| Other YouTube channels | 0% until the research verdict says TEST | then 2 tests each, taken from Curve B slots | 302 views between them so far |
-| Reserve | ~10% | re-runs after failures | |
+| Channel tests | **~20%** | How They Profit re-pointed to maps (SETUP + 2 tests), Curva Explica dubs (2) | research verdict 30 Oct: TEST (`VIABILITY_2026-10-29.md`) |
+| Scale-up buffer | **~14%** | if the maps test passes (Sun 8 Nov gate), How They Profit goes to 4 a week at once; else Curve evergreen slots | |
+| Reserve | ~5% | re-runs after failures | |
 
 ## Why the Curve gets the most slots (YouTube APIs, 28 Oct 20:35 UK)
 | Channel | Lifetime views | Subs | Best video |
@@ -43,7 +44,8 @@ defamation risk): no new Money Crimes build until How They Profit or Curva passe
 | Sat 31 Oct 21:15 | b-sun-short-2 | The Curve | A slot (RUNBOOK_SHORT.md §8b) | Sun 1 Nov 17:00 |
 | Sun 1 Nov 19:00 | rota | How They Profit (re-pointed), or The Curve | **How They Profit is re-pointed: BREAKOUT_CONCEPTS_2026-10-29.md says TEST.** SETUP + test 1 in the NEW format, RUNBOOK_SHORT.md §9-P1 map geography ("map curiosities") (§9a's format rows no longer apply), publishing Mon 2 Nov 17:00; if weekly usage is 75% or more, build a Curve B slot publishing Mon 2 Nov 23:00 UK (publishAt 2026-11-02T23:00:00Z) instead | Mon 2 Nov |
 | Sun 1 Nov 07:30 | check | KDP | KDP AUDIT (`lab/tools/briefs/kdp_factory.md`) | - |
-| Mon 2 to Sat 7 Nov 07:30 | check | KDP | KDP BUILD: the next 2 titles of the plan (same brief), unless kdp/QUEUE.md already holds 10 unpublished | his publish queue |
+| Mon 2 Nov 07:30 | check | KDP | KDP BUILD: **this week's 2 titles only**, in `kdp/THEMES_RESEARCH.md`'s build order (week 1: Hearthside Winter, Hearthside Christmas); KDP allows 2 new paperbacks a week (help page G202172740), so never more; keep at most 4 unpublished | his publish queue (2 a week) |
+| Tue 3 to Sat 7 Nov 07:30 | check | KDP | **no new KDP title** (the weekly cap is used); only finish or fix Monday's two | - |
 | Mon 2 Nov 19:00 | rota | The Curve | B slot: Microduck sequel, a new question about the same robot (§8b) | Tue 3 Nov 23:00 UK (publishAt 2026-11-03T23:00:00Z) |
 | Tue 3 Nov 19:00 | rota | Curva Explica, or The Curve | HOLD RULE (as Sun 1 Nov, for Curva Explica): SETUP + Spanish Microduck, also Spanish Roadster upside down if weekly usage is under 75% (§9c), publishing Wed 4 Nov 17:00 (+ Thu 5 Nov 17:00); otherwise a Curve B slot publishing Wed 4 Nov 23:00 UK (publishAt 2026-11-04T23:00:00Z) | Wed 4 Nov |
 | Wed 4 Nov 19:00 | rota | The Curve | **Evergreen B slot test (RUNBOOK_SHORT.md §8c): "How Engineers Solved [X]"**, our own drawings, no clip; read at 72 h against the Curve's latest-10 median | Thu 5 Nov 23:00 UK (publishAt 2026-11-05T23:00:00Z) |

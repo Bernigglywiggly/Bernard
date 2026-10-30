@@ -35,21 +35,21 @@ so about 18 Shorts a week fit with a safety margin.
 
 ## Week 1 (revised 28 Oct 20:55 after the alignment check, `lab/research/ALIGNMENT_2026-10-28.md`: REDIRECT)
 **Re-pointed 30 Oct 00:10 by account C** (`lab/research/BREAKOUT_CONCEPTS_2026-10-29.md`): How They Profit tests map geography (RUNBOOK §9-P1; swapped in at 00:27 after the widening found World Ji Ke, latest-10 median 915,500), Money Crimes will test "Evolution of" after the gate (§9-P2), and Wed 4 Nov becomes the Curve's first evergreen B slot (§8c). Only rows from Sun 1 Nov changed.
-The Curve gets most slots (A slot 17:00 every day from `b-curve-daily-2`, B slot 12:00 on rota days). How They Profit and
+The Curve gets most slots (A slot 17:00 every day from `b-curve-daily-2`, B slot on rota days at **23:00 UK from Sun 1 Nov** = 18:00 ET, moved from 12:00 = 07:00 ET, the worst US window: `lab/research/SHORTS_PLAYBOOK_2026-10-29.md` §6). How They Profit and
 Curva Explica get real tests. Money Crimes gets only its finished backlog (best Short 33 views, hard footage,
 defamation risk): no new Money Crimes build until How They Profit or Curva passes the gate.
 | Build (UK) | Run | Channel | Job | Publishes (UK) |
 |---|---|---|---|---|
 | Sat 31 Oct 21:15 | b-sun-short-2 | The Curve | A slot (RUNBOOK_SHORT.md §8b) | Sun 1 Nov 17:00 |
-| Sun 1 Nov 19:00 | rota | How They Profit (re-pointed), or The Curve | **How They Profit is re-pointed: BREAKOUT_CONCEPTS_2026-10-29.md says TEST.** SETUP + test 1 in the NEW format, RUNBOOK_SHORT.md §9-P1 map geography ("map curiosities") (§9a's format rows no longer apply), publishing Mon 2 Nov 17:00; if weekly usage is 75% or more, build a Curve B slot publishing Mon 2 Nov 12:00 instead | Mon 2 Nov |
+| Sun 1 Nov 19:00 | rota | How They Profit (re-pointed), or The Curve | **How They Profit is re-pointed: BREAKOUT_CONCEPTS_2026-10-29.md says TEST.** SETUP + test 1 in the NEW format, RUNBOOK_SHORT.md §9-P1 map geography ("map curiosities") (§9a's format rows no longer apply), publishing Mon 2 Nov 17:00; if weekly usage is 75% or more, build a Curve B slot publishing Mon 2 Nov 23:00 UK (publishAt 2026-11-02T23:00:00Z) instead | Mon 2 Nov |
 | Sun 1 Nov 07:30 | check | KDP | KDP AUDIT (`lab/tools/briefs/kdp_factory.md`) | - |
 | Mon 2 to Sat 7 Nov 07:30 | check | KDP | KDP BUILD: the next 2 titles of the plan (same brief), unless kdp/QUEUE.md already holds 10 unpublished | his publish queue |
-| Mon 2 Nov 19:00 | rota | The Curve | B slot: Microduck sequel, a new question about the same robot (§8b) | Tue 3 Nov 12:00 |
-| Tue 3 Nov 19:00 | rota | Curva Explica, or The Curve | HOLD RULE (as Sun 1 Nov, for Curva Explica): SETUP + Spanish Microduck, also Spanish Roadster upside down if weekly usage is under 75% (§9c), publishing Wed 4 Nov 17:00 (+ Thu 5 Nov 17:00); otherwise a Curve B slot publishing Wed 4 Nov 12:00 | Wed 4 Nov |
-| Wed 4 Nov 19:00 | rota | The Curve | **Evergreen B slot test (RUNBOOK_SHORT.md §8c): "How Engineers Solved [X]"**, our own drawings, no clip; read at 72 h against the Curve's latest-10 median | Thu 5 Nov 12:00 |
-| Thu 5 Nov 19:00 | rota | How They Profit (re-pointed), or The Curve | HOLD RULE: How They Profit test 2 in the §9-P1 format, only if test 1 was built; otherwise a Curve B slot publishing Fri 6 Nov 12:00 | Fri 6 Nov |
-| Fri 6 Nov 19:00 | rota | Curva Explica, or The Curve | HOLD RULE: Spanish iPhone Duo crack (and Roadster if Tuesday skipped it) only if Tuesday built Curva; otherwise a Curve B slot publishing Sat 7 Nov 12:00 | Sat 7 Nov |
-| Sat 7 Nov 19:00 | rota | The Curve | B slot, only if weekly usage is under 75% (the allowance resets at 21:00) | Sun 8 Nov 12:00 |
+| Mon 2 Nov 19:00 | rota | The Curve | B slot: Microduck sequel, a new question about the same robot (§8b) | Tue 3 Nov 23:00 UK (publishAt 2026-11-03T23:00:00Z) |
+| Tue 3 Nov 19:00 | rota | Curva Explica, or The Curve | HOLD RULE (as Sun 1 Nov, for Curva Explica): SETUP + Spanish Microduck, also Spanish Roadster upside down if weekly usage is under 75% (§9c), publishing Wed 4 Nov 17:00 (+ Thu 5 Nov 17:00); otherwise a Curve B slot publishing Wed 4 Nov 23:00 UK (publishAt 2026-11-04T23:00:00Z) | Wed 4 Nov |
+| Wed 4 Nov 19:00 | rota | The Curve | **Evergreen B slot test (RUNBOOK_SHORT.md §8c): "How Engineers Solved [X]"**, our own drawings, no clip; read at 72 h against the Curve's latest-10 median | Thu 5 Nov 23:00 UK (publishAt 2026-11-05T23:00:00Z) |
+| Thu 5 Nov 19:00 | rota | How They Profit (re-pointed), or The Curve | HOLD RULE: How They Profit test 2 in the §9-P1 format, only if test 1 was built; otherwise a Curve B slot publishing Fri 6 Nov 23:00 UK (publishAt 2026-11-06T23:00:00Z) | Fri 6 Nov |
+| Fri 6 Nov 19:00 | rota | Curva Explica, or The Curve | HOLD RULE: Spanish iPhone Duo crack (and Roadster if Tuesday skipped it) only if Tuesday built Curva; otherwise a Curve B slot publishing Sat 7 Nov 23:00 UK (publishAt 2026-11-07T23:00:00Z) | Sat 7 Nov |
+| Sat 7 Nov 19:00 | rota | The Curve | B slot, only if weekly usage is under 75% (the allowance resets at 21:00) | Sun 8 Nov 23:00 UK (publishAt 2026-11-08T23:00:00Z) |
 | Sun 8 Nov 19:00 | rota | all | GATE (below) + a fresh alignment check (Sonnet agent) + week 2 rows | - |
 
 **BACKLOG PREP: dropped 29 Oct** (his ask: usage to ROI; ~700 views for ~3% of a week). The 5 Ponzi and 12 old How They Profit Shorts stay on their claude.ai pages.

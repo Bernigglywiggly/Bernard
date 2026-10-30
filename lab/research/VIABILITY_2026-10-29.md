@@ -1,4 +1,4 @@
-# Viability: is each channel worth our usage? (account C, Fri 30 Oct 2026, 00:35 UK)
+# Viability: is each channel worth our usage? (account C, Fri 30 Oct 2026, 00:28 UK)
 
 **Method:** comparables read on their public pages on 30 Oct (yt-dlp metadata; "L10" = median views of the latest 10 Shorts),
 28-day growth from vidIQ pages (Social Blade blocked us), RPM from published studies (AIR Media-Tech's 300 channels is the only

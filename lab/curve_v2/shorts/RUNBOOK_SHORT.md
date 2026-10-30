@@ -121,8 +121,19 @@ ffmpeg -hide_banner -i $O/frame0.png -i $O/lastframe.png -lavfi psnr -f null - 2
   announcements average ~1,300: that is How They Profit's lane.
 - Title: the question the clip makes people ask, search words first ("How Did This Robot Duck Learn to Get Back Up?").
 - A slot (b-curve-daily, 17:00): never a story that a live or scheduled Curve Short already covers (titles in
-  `channel/uploads_curve.json`). B slot (a ROTA row, 12:00): may be a sequel to a Curve Short past 5,000 views, made
+  `channel/uploads_curve.json`). B slot (a ROTA row, 23:00 UK from Sun 1 Nov): may be a sequel to a Curve Short past 5,000 views, made
   within 7 days of it, answering a NEW question about the same clip; otherwise the next-best clip by this rule.
+
+- **Playbook rules (account C, 30 Oct; `lab/research/SHORTS_PLAYBOOK_2026-10-29.md` §10, evidence grades there):**
+  1. Frame 0 is the impossible instant **already moving**, one drawn mark on it, a question of 5 words or fewer.
+  2. Our own drawing is on screen **by second 2** (YouTube's 1 Oct 2026 originality change rewards added value).
+  3. No line only describes the clip: each adds a why, a number or our verdict.
+  4. Judge on engaged views and "stayed to watch" (goal 70%); loops and public views don't count toward the Partner Programme.
+  5. End: the channel promise spoken plus "subscribe", then the loop frame (provisional: test T3 in the playbook).
+  6. Set the related-video link on every Short: the matching film, else the previous Short on the same subject.
+  7. Title: the typed question, object and maker first, no hashtags in the title.
+  8. Never the same scene structure three days running.
+  9. A series is one subject with new questions; a sequel only for a Short past 5,000 views (as above).
 
 ## 8c. The Curve's evergreen B slot (account C, 30 Oct: `lab/research/BREAKOUT_CONCEPTS_2026-10-29.md`)
 Only when a ROTA row says "evergreen B slot". Proven by Under Six Minutes Studio (latest-10 median 494,000 views, 27 of 58

@@ -164,32 +164,36 @@ YouTube punishes one template re-skinned across channels owned by one person, so
 - Every run on these channels also obeys §0: FCA (never promote credit cards, loans, BNPL, trading, crypto or
   investing), no email address in requests, no Studio in a browser, one Short per run, private with publishAt.
 
-### 9-P1. How They Profit → "Evolution of" (concept 4; account C, 30 Oct; replaces §9a's format rows)
-Proven by Untold Theory (created 20 Aug 2026; latest-10 median 579,500 views; 7 of 57 Shorts over 1M; 42.5k subscribers),
-and concept 4 has the best subscriber conversion in the breakout sample (median 4.03 subs per 1,000 views; ours 0.84).
+### 9-P1. How They Profit → map geography (concept 5; account C, 30 Oct 00:27, after the web widening; replaces §9a's format rows; tests in week 1)
+Proven best of any 2026 concept: World Ji Ke (created 9 May 2026; latest-10 median **915,500** views; 47 of 66 Shorts over 1M;
+84.6k subscribers), One Map, One Battle (created 7 Oct; 85,000), historicalmiracles (created 23 Sep; 65,000), MapLore (created
+9 Apr; 132.4M views). Maps are pure drawing (no footage), and the map kit already exists from the Hormuz film.
 | Row | Spec |
 |---|---|
-| Format | "Evolution of the [Object]" in 40-50 s: 6-8 eras, one beat each = the year + our drawing of that version + one spec + its price then (today's money in small type); the last beat is today's version; the verdict is ours ("the price fell, the parts tripled"). Loop: today's object morphs back into the first one, which is frame 0 |
-| Topic | an everyday object with a big visual change and a price story: kettle, phone, camera, car key, TV, headphones, calculator, trainers. Search YouTube first: skip it if a live channel posted the same object in the last 30 days, and never Untold Theory's own topics (bicycles, bulletproof vests) |
-| Frame 0 | the oldest version beside today's, "?" between them, 2-6 words ("1876 → 2026?") |
-| Facts | facts file `lab/research/HTP_EVO_<object>_FACTS.md` before the script: each era's date and spec from the maker's history page, a museum (Science Museum Group, Smithsonian) or a patent; each price from a dated catalogue or advert (archive.org) with its URL; today's money via the Bank of England inflation calculator (UK) or BLS CPI (US), named on screen once |
-| Look | the ledger palette (navy #0A0F17, paper #EFE7D6, brass #C9A35B, red #B4553F, muted #8C93A0); each era is a ledger row with a stamped year and a price tag; objects are our own line drawings (Remotion SVG), never AI images or stock photos |
-| Narrator, music | How They Profit's own voice (SETUP picks it, never Chris); its own bed from `lab/music/beds.py` |
-| Pictures | our drawings only; no clip needed |
-| Title, description | "Evolution of the [Object]", 6 words or fewer; description = sources per era + the inflation calculator + "Launch list prices." |
+| Format | "Map curiosities" in 30-45 s: one surprising geographic fact, shown on our own animated map ("[countries or places] that [surprise]"): borders that almost touch, enclaves, a strait that carries a share of the world's trade, a country that changed shape. Build the reveal place by place, one highlight per beat; end on the most surprising one and our one-line verdict. A money angle only where it is natural (a strait, a canal, a tiny rich state) |
+| Series | design every topic so a "Part 2" exists (World Ji Ke's Part 2s pass 1M); say "part 2" on screen only when it is made |
+| Topic | search YouTube first: skip any topic a map channel posted in the last 30 days, and never copy a title or list from World Ji Ke, MapLore or One Map, One Battle; no active wars (limited ads) |
+| Frame 0 | the finished map with the first highlight lit and a 2-5 word question ("THEY ALMOST TOUCH?") |
+| Facts | facts file `lab/research/MAP_<topic>_FACTS.md` before the script: borders and areas from Natural Earth / CIA World Factbook / national statistics, distances measured on the map we draw, two sources for anything contested |
+| Look | the Hormuz map kit (`lab/maps/hormuz`, `lab/maps/style`) in How They Profit's ledger palette (paper #EFE7D6 land, navy #0A0F17 sea, brass #C9A35B highlights, red #B4553F one accent), never the Curve's look; captions in its own style |
+| Narrator, music | How They Profit's own voice (SETUP picks it, calm and authoritative, never Chris); its own bed from `lab/music/beds.py` |
+| Pictures | our maps only |
+| Title, description | the curiosity as a question or list, 6 words or fewer ("Countries That Almost Touch"-style wording is World Ji Ke's: write our own); sources in the description |
 | Pass mark | the ROTA gate: one test 1,000+ views in 72 h, or both 500+ |
-| Name | the channel stays "How They Profit" until he renames it in Studio |
+| Name | the channel keeps the name "How They Profit" until he renames it in Studio (a maps name in his own words) |
 
-### 9-P2. Money Crimes → map history (concept 5; account C, 30 Oct; replaces §9b's format rows; no build before the Sun 8 Nov gate)
-Proven by One Map, One Battle (created 7 Oct 2026; latest-10 median 85,000), History Maps Lore (Malta 1565, 2.3M) and MapLore
-(created 9 Apr 2026, 132.4M views). The map kit already exists from the Hormuz film (`lab/maps/hormuz`, `lab/maps/style`).
+### 9-P2. Money Crimes → "Evolution of" (concept 4; account C, 30 Oct 00:27; replaces §9b's format rows; tests only after the Sun 8 Nov gate)
+Proven by Untold Theory (created 20 Aug 2026; latest-10 median 579,500; 7 of 57 Shorts over 1M; 42.5k subscribers); concept 4
+has the best subscriber conversion in the breakout sample (median 4.03 subs per 1,000 views; ours 0.84).
 | Row | Spec |
 |---|---|
-| Format | "One map, one story" in 60-75 s: open on the decisive moment (one arrow on the map), then the 3-4 facts of the land, water or distance that explain it, then the result; our verdict is "the land decided it because..." |
-| Topic | an event where geography decided the outcome: a siege, a retreat, a strait, a canal, a border; prefer before 1950; no active wars (limited ads, sensitivity). Skip any topic a map channel posted in the last 30 days |
-| Facts | two independent reference sources per claim (Britannica, academic histories, primary documents); troop numbers as "about" with the range; facts file before the script |
-| Look | the Hormuz map kit with its own palette (parchment, ink and one accent), never the Curve's look |
-| Narrator, music | Money Crimes' voice (low, measured; `channel/money-crimes/README.md`); a low drone bed from `lab/music/beds.py` (not the jazz) |
-| Pictures | our maps; public-domain paintings (Wikimedia Commons) at 5 s or less a shot, credited |
-| Title, description | "How [Place] [Did X]", 6 words or fewer; sources in the description |
+| Format | "Evolution of the [Object]" in 40-50 s: 6-8 eras, one beat each = the year + our drawing of that version + one spec + its price then (today's money in small type); the last beat is today's version; the verdict is ours. Loop: today's object morphs back into the first one, which is frame 0 |
+| Topic | an everyday object with a big visual change and a price story: kettle, phone, camera, car key, TV, headphones, calculator, trainers. Search YouTube first; never Untold Theory's own topics (bicycles, bulletproof vests) |
+| Frame 0 | the oldest version beside today's, "?" between them, 2-6 words |
+| Facts | facts file `lab/research/EVO_<object>_FACTS.md` before the script: dates and specs from the maker's history page, a museum (Science Museum Group, Smithsonian) or a patent; prices from dated catalogues or adverts (archive.org); today's money via the Bank of England calculator (UK) or BLS CPI (US) |
+| Look | its own: warm tungsten and paper from the case-file look, gold year stamps, objects as our own line drawings (Remotion SVG), never AI images or stock photos |
+| Narrator, music | Money Crimes' voice (`channel/money-crimes/README.md`); its own bed from `lab/music/beds.py` |
+| Pictures | our drawings only |
+| Title, description | "Evolution of the [Object]", 6 words or fewer; sources per era + the inflation calculator in the description |
 | Pass mark | the ROTA gate, from week 2 |
+| Later (not now) | a long-form animated money-crime documentary line (fern, Coffeezilla, Kento Bento pull 2.75-4.7M per film and long-form pays 23-340x more per view than Shorts) once a channel has subscribers to watch it |

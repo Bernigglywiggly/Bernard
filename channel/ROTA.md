@@ -34,14 +34,14 @@ so about 18 Shorts a week fit with a safety margin.
 | `b-daily-check-0730-2` | every day 07:30, Nov-Dec | finishes any run from last night that stopped before its upload |
 
 ## Week 1 (revised 28 Oct 20:55 after the alignment check, `lab/research/ALIGNMENT_2026-10-28.md`: REDIRECT)
-**Re-pointed 30 Oct 00:45 by account C** (`lab/research/BREAKOUT_CONCEPTS_2026-10-29.md`): How They Profit tests the "Evolution of" format (RUNBOOK §9-P1), Money Crimes will test map history after the gate (§9-P2), and Wed 4 Nov becomes the Curve's first evergreen B slot (§8c). Only rows from Sun 1 Nov changed.
+**Re-pointed 30 Oct 00:10 by account C** (`lab/research/BREAKOUT_CONCEPTS_2026-10-29.md`): How They Profit tests map geography (RUNBOOK §9-P1; swapped in at 00:27 after the widening found World Ji Ke, latest-10 median 915,500), Money Crimes will test "Evolution of" after the gate (§9-P2), and Wed 4 Nov becomes the Curve's first evergreen B slot (§8c). Only rows from Sun 1 Nov changed.
 The Curve gets most slots (A slot 17:00 every day from `b-curve-daily-2`, B slot 12:00 on rota days). How They Profit and
 Curva Explica get real tests. Money Crimes gets only its finished backlog (best Short 33 views, hard footage,
 defamation risk): no new Money Crimes build until How They Profit or Curva passes the gate.
 | Build (UK) | Run | Channel | Job | Publishes (UK) |
 |---|---|---|---|---|
 | Sat 31 Oct 21:15 | b-sun-short-2 | The Curve | A slot (RUNBOOK_SHORT.md §8b) | Sun 1 Nov 17:00 |
-| Sun 1 Nov 19:00 | rota | How They Profit (re-pointed), or The Curve | **How They Profit is re-pointed: BREAKOUT_CONCEPTS_2026-10-29.md says TEST.** SETUP + test 1 in the NEW format, RUNBOOK_SHORT.md §9-P1 "Evolution of the [Object]" (§9a's format rows no longer apply), publishing Mon 2 Nov 17:00; if weekly usage is 75% or more, build a Curve B slot publishing Mon 2 Nov 12:00 instead | Mon 2 Nov |
+| Sun 1 Nov 19:00 | rota | How They Profit (re-pointed), or The Curve | **How They Profit is re-pointed: BREAKOUT_CONCEPTS_2026-10-29.md says TEST.** SETUP + test 1 in the NEW format, RUNBOOK_SHORT.md §9-P1 map geography ("map curiosities") (§9a's format rows no longer apply), publishing Mon 2 Nov 17:00; if weekly usage is 75% or more, build a Curve B slot publishing Mon 2 Nov 12:00 instead | Mon 2 Nov |
 | Sun 1 Nov 07:30 | check | KDP | KDP AUDIT (`lab/tools/briefs/kdp_factory.md`) | - |
 | Mon 2 to Sat 7 Nov 07:30 | check | KDP | KDP BUILD: the next 2 titles of the plan (same brief), unless kdp/QUEUE.md already holds 10 unpublished | his publish queue |
 | Mon 2 Nov 19:00 | rota | The Curve | B slot: Microduck sequel, a new question about the same robot (§8b) | Tue 3 Nov 12:00 |
@@ -57,7 +57,7 @@ defamation risk): no new Money Crimes build until How They Profit or Curva passe
 ## The gate (read 72 h after each test Short; first read Sun 8 Nov)
 | Result | Rule | Then |
 |---|---|---|
-| PASS | one test 1,000+ views, or both 500+ | How They Profit 4 a week, Curva 5 a week; Money Crimes gets 2 new tests in its re-pointed format (map history, RUNBOOK_SHORT.md §9-P2) |
+| PASS | one test 1,000+ views, or both 500+ | How They Profit 4 a week, Curva 5 a week; Money Crimes gets 2 new tests in its re-pointed format ("Evolution of", RUNBOOK_SHORT.md §9-P2) |
 | HOLD | best 300-999 and 70%+ viewed | same slots, 2 more tests |
 | FAIL | both under 300 | 1 a week or park; its slots go to Curve B slots |
 - The Curve: 12 Shorts in week 1, 14 in week 2 (A every day + B slots), as the weekly allowance allows.

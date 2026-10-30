@@ -1,0 +1,9 @@
+U.S. Navy / DoD footage of the F-35C's first arrested landing aboard the future John F. Kennedy (CVN 79), 13-14 Oct 2026
+(VX-23 "Salty Dogs"). Work of the U.S. federal government = public domain. Credit on screen: "U.S. NAVY VIDEO".
+As uploaded 24 Oct 2026 by USA Military Channel: https://www.youtube.com/watch?v=mfV3Cs2fn88
+"F-35C First Landing & Launch on JFK – A First for Ford-Class Carriers" (its description: "The appearance of U.S.
+Department of Defense (DoD) visual information does not imply or constitute DoD endorsement.")
+Downloaded Fri 30 Oct 2026 ~01:55 UK, 1080p30 (format 137), no audio:
+  trap_head.mp4 = 99-115 s (head-on arrested landing; touchdown ~104 s)
+  trap_side.mp4 = 123-138 s (side landing ~126-130 s; stern approach over the wake ~131-133 s)
+The uploader's corner logos (top-left flag, bottom-right YouTube mark) are cropped out in prep/s13_clips.sh.

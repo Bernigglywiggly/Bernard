@@ -70,9 +70,10 @@ KDP AUDIT (one run, Sun 1 Nov; skip at 90%+ weekly usage):
 
 KDP BUILD (the Monday row only; skip at 90%+ weekly usage; stop at once if 4 or more titles are built-but-unpublished):
 - Take the next 2 titles in the build order (see BUILD ORDER).
-- Interior: 100 themed word-search puzzles, one a page, 15-25 words each from a **fresh, hand-checked list for this
-  volume** (no word repeated across the volume, none reused from another of our volumes: 2025-26 account closures
-  cite reused interiors and templates). Grid letters 18-20 pt, answer key at the back, **105-110 pages**, 8.5 × 11 in,
+- Interior: 100 themed word-search puzzles, one a page, each with its own sub-theme title and 15-20 words from a
+  **fresh, hand-checked list for this volume** (no word twice in one puzzle, no word in more than 2 puzzles of a
+  volume, no puzzle list copied from another of our volumes: 2025-26 account closures cite reused interiors and
+  templates). Grid letters 18-20 pt, answer key at the back, **105-110 pages**, 8.5 × 11 in,
   no bleed, all fonts embedded. One short theme line per page is the leaders' extra (a winter fact, a decade memory);
   keep it true and plain. US spellings for US-first titles (avoid words whose spelling differs where you can); UK
   spellings only in the British edition. Make it with the existing generators adapted to themed lists; put new code

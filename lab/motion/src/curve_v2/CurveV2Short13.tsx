@@ -2,7 +2,7 @@ import { Audio, Video } from "@remotion/media";
 import type React from "react";
 import { AbsoluteFill, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { CLAMP, EASE_IN_OUT, EASE_OUT } from "../lib/anim";
-import { Bed, C, CaptionTrack, Credit, HEADC, keyline, MONO, pop, Sfx, Stamp, Tag } from "./kit";
+import { Bed, C, CaptionTrack, Credit, HEADC, keyline, MONO, pop, Sfx, Tag } from "./kit";
 import { makePages } from "./pager";
 import { VO_S13 } from "./voS13Captions";
 
@@ -117,11 +117,11 @@ const Dial: React.FC<{ mph: number; time: boolean }> = ({ mph, time }) => {
         <line x1={DIAL.x} y1={DIAL.y} x2={tip.x} y2={tip.y} stroke={C.acid} strokeWidth={14} strokeLinecap="round" />
         <circle cx={DIAL.x} cy={DIAL.y} r={22} fill={C.acid} stroke={C.black} strokeWidth={5} />
       </svg>
-      <Label left={600} top={1010} size={68} color={DIM}>ABOUT</Label>
-      <Label left={600} top={1074} size={140}>{Math.round(mph)}</Label>
-      <Label left={600} top={1212} size={68} color={DIM}>MPH</Label>
-      {time ? <Label left={600} top={1292} size={68} color={C.cyan}>ABOUT 2 S</Label> : null}
-      <Label left={60} top={1270} size={68} color={DIM}>TYPICAL LANDING</Label>
+      <Label left={650} top={950} size={68} color={DIM}>ABOUT</Label>
+      <Label left={650} top={1014} size={140}>{Math.round(mph)}</Label>
+      <Label left={650} top={1152} size={68} color={DIM}>MPH</Label>
+      {time ? <Label left={60} top={1322} size={68} color={C.cyan}>ABOUT 2 S</Label> : null}
+      <Label left={60} top={1256} size={68} color={DIM}>TYPICAL LANDING</Label>
     </>
   );
 };
@@ -156,6 +156,21 @@ const Carrier: React.FC<{ f: number }> = ({ f }) => {
     </svg>
   );
 };
+// The kit's Stamp lands from 1.8x about its centre, which ran it off the left edge (critic round 2): from 1.3x in 4 frames,
+// scaled from its left edge.
+const Stamp13: React.FC<{ children: React.ReactNode; at: number; left: number; top: number; color?: string; size?: number; rot?: number }> = ({
+  children, at, left, top, color = C.warn, size = 96, rot = -7 }) => {
+  const frame = useCurrentFrame();
+  if (frame < at) return null;
+  return (
+    <div style={{ position: "absolute", left, top, padding: "10px 26px 14px", border: `10px solid ${color}`, color, ...HEADC, fontSize: size,
+      textAlign: "center", lineHeight: 0.95, backgroundColor: "rgba(0,0,0,0.55)", rotate: `${rot}deg`, transformOrigin: "0% 50%",
+      scale: interpolate(frame, [at, at + 4], [1.3, 1], { ...CLAMP, easing: EASE_OUT }), opacity: interpolate(frame, [at, at + 2], [0, 1], CLAMP) }}>
+      {children}
+    </div>
+  );
+};
+
 const First: React.FC = () => {
   const frame = useCurrentFrame();
   if (!between(frame, S.first, S.mech)) return null;
@@ -168,7 +183,7 @@ const First: React.FC = () => {
       <Carrier f={frame} />
       <Label left={60} top={1120} size={76} opacity={grow(frame, S.first + 6, 10)}>JOHN F. KENNEDY</Label>
       <Label left={60} top={1206} size={68} color={DIM} opacity={grow(frame, S.first + 10, 10)}>CVN 79 · FORD CLASS</Label>
-      <Stamp at={T.oct - 2} left={60} top={1280} size={64} rot={-3} color={C.warn}>13 OCT 2026</Stamp>
+      <Stamp13 at={Math.min(T.oct - 2, S.mech - 44)} left={60} top={1280} size={64} rot={-3} color={C.warn}>13 OCT 2026</Stamp13>
     </AbsoluteFill>
   );
 };
@@ -242,7 +257,7 @@ const Mech: React.FC = () => {
         opacity: q, scale: interpolate(q, [0, 1], [1.3, 1]) }}>?</div>
       <Tag at={T.hook} left={60} top={300} bg={C.acid} size={72} rot={[-5, -3]}>TAIL HOOK</Tag>
       <Tag at={T.steel} left={60} top={410} bg={C.cyan} size={72} rot={[-4, -2]}>STEEL WIRE</Tag>
-      <Tag at={T.below + 2} left={60} top={1236} bg={C.ink} size={72} rot={[-4, -2]}>BELOW DECK</Tag>
+      <Tag at={Math.min(T.below + 2, S.aag - 44)} left={60} top={1236} bg={C.ink} size={72} rot={[-4, -2]}>BELOW DECK</Tag>
     </AbsoluteFill>
   );
 };
@@ -299,7 +314,7 @@ const Aag: React.FC = () => {
       <Label left={400} top={874} size={68} color={C.acid} opacity={mIn}>ELECTRIC MOTOR</Label>
       <Label left={60} top={1010} size={72} opacity={grow(frame, T.tune - 6, 8)}>THE PULL</Label>
       <Label left={60} top={1184} size={68} color={DIM} opacity={grow(frame, T.tune, 8)}>LIGHT JET</Label>
-      <Label left={600} top={1184} size={68} color={DIM} opacity={grow(frame, T.tune + 24, 8)}>HEAVY JET</Label>
+      <Label left={600} top={1184} size={68} color={DIM} opacity={grow(frame, Math.min(T.tune + 24, S.bolter - 44), 8)}>HEAVY JET</Label>
     </AbsoluteFill>
   );
 };
@@ -338,7 +353,7 @@ const Bolter: React.FC = () => {
       <Label left={250} top={560} size={68} color={DIM} opacity={grow(frame, S.bolter, 8)}>IDLE</Label>
       <Tag at={T.full + 2} left={420} top={330} bg={C.acid} size={72} rot={[-5, -3]}>FULL POWER</Tag>
       <Tag at={T.misses + 2} left={60} top={1050} bg={C.warn} size={72} rot={[-4, -2]}>HOOK MISSES</Tag>
-      <Tag at={T.flies + 2} left={60} top={1160} bg={C.ink} size={68} rot={[-3, -1]}>BOLTER<br />GO AROUND</Tag>
+      <Tag at={Math.min(T.flies + 2, S.verdict - 44)} left={60} top={1160} bg={C.ink} size={68} rot={[-3, -1]}>BOLTER<br />GO AROUND</Tag>
     </AbsoluteFill>
   );
 };
@@ -361,7 +376,7 @@ const Verdict: React.FC = () => {
     <AbsoluteFill style={{ scale: interpolate(frame, [S.verdict, S.loop], [1, 1.03], CLAMP) }}>
       <div style={DARK} />
       {rows.map(([a, b, col, at], i) => (
-        <div key={b} style={{ position: "absolute", left: 60, top: 170 + i * 196, opacity: frame >= at ? 1 : 0, scale: pop(frame, at, fps, 230, 12), transformOrigin: "0% 50%" }}>
+        <div key={b} style={{ position: "absolute", left: 60, top: 170 + i * 196, opacity: frame >= at ? 1 : 0, scale: pop(frame, at, fps, 230, 24), transformOrigin: "0% 50%" }}>
           <Label left={0} top={0} size={68}>{a}</Label>
           <Label left={0} top={76} size={b.length > 14 ? 88 : 100} color={col}>{b}</Label>
         </div>
@@ -426,7 +441,7 @@ export const CurveV2Short13: React.FC = () => (
     <LoopEnd />
     <Credit text="U.S. NAVY VIDEO · SLOWED" show={[[0, S.mech], [S.loop, SHORT13_FRAMES]]} top={BAND.y + BAND.h - 80} size={56} />
     <CaptionTrack pages={PAGES} hide={[[0, 4], [S.promise, SHORT13_FRAMES]]} top={1400} />
-    <Sequence from={0}><Audio src={staticFile("shorts/s13_vo.mp3")} /></Sequence>
+    <Sequence><Audio src={staticFile("shorts/s13_vo.mp3")} /></Sequence>
     <Bed total={SHORT13_FRAMES} level={0.085} />
     <Sfx at={T.single + 6} name="thock" volume={0.4} />
     <Sfx at={S.first} name="whoosh" volume={0.3} />

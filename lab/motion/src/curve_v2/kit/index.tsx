@@ -66,12 +66,12 @@ export const CaptionTrack: React.FC<{ pages: CapPage[]; top?: number; left?: num
 };
 
 // "FOOTAGE: OWNER / YOUTUBE, DATE · 10× SLOWER", shown whenever borrowed footage is on screen.
-export const Credit: React.FC<{ text: string; show: [number, number][]; top?: number }> = ({ text, show, top = 1460 }) => {
+export const Credit: React.FC<{ text: string; show: [number, number][]; top?: number; size?: number }> = ({ text, show, top = 1460, size = 44 }) => {
   const frame = useCurrentFrame();
   if (!inRanges(frame, show)) return null;
   return (
     <div style={{ position: "absolute", left: 0, top, padding: "10px 22px 10px 60px", backgroundColor: "rgba(0,0,0,0.74)", ...MONO,
-      fontSize: 44, color: C.ink }}>{text}</div>
+      fontSize: size, color: C.ink }}>{text}</div>
   );
 };
 
@@ -82,7 +82,7 @@ export const Tag: React.FC<{ children: React.ReactNode; at: number; left: number
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (frame < at || frame >= until) return null;
-  const s = pop(frame, at, fps, 230, 10);
+  const s = pop(frame, at, fps, 230, 20); // damping 20: ~6% overshoot (10 overshot ~33% into the right edge, Short 13 critic)
   return (
     <div style={{ position: "absolute", left, top, padding: "8px 18px 10px", backgroundColor: bg, color, border: `4px solid ${C.black}`,
       ...HEADC, fontSize: size, lineHeight: 1, scale: s, rotate: `${interpolate(s, [0, 1], rot)}deg`, transformOrigin: "0% 50%", ...style }}>

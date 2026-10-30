@@ -99,9 +99,10 @@ const Kicker: React.FC<{ s?: number }> = ({ s = 1 }) => (
     <Label left={0} top={112} size={104} color={C.acid}>2 SECONDS?</Label>
   </div>
 );
-// our speed dial under the band: 150 MPH at frame 0, down to 0 in exactly 2 s from "single"
+// our speed dial under the band: a TYPICAL landing (facts row 4, MK 7 figures), never this landing's numbers: "ABOUT 150",
+// no counting timer; the needle reaches 0 at the x2 cut
 const DIAL = { x: 300, y: 1230, r: 200 };
-const Dial: React.FC<{ mph: number; secs: number }> = ({ mph, secs }) => {
+const Dial: React.FC<{ mph: number; time: boolean }> = ({ mph, time }) => {
   const a = Math.PI * (1 - mph / 150);
   const tip = { x: DIAL.x + (DIAL.r - 26) * Math.cos(a), y: DIAL.y - (DIAL.r - 26) * Math.sin(a) };
   return (
@@ -116,16 +117,15 @@ const Dial: React.FC<{ mph: number; secs: number }> = ({ mph, secs }) => {
         <line x1={DIAL.x} y1={DIAL.y} x2={tip.x} y2={tip.y} stroke={C.acid} strokeWidth={14} strokeLinecap="round" />
         <circle cx={DIAL.x} cy={DIAL.y} r={22} fill={C.acid} stroke={C.black} strokeWidth={5} />
       </svg>
-      <Label left={570} top={1030} size={150}>{Math.round(mph)}</Label>
-      <Label left={570} top={1186} size={72} color={DIM}>MPH</Label>
-      <Label left={570} top={1268} size={72} color={C.cyan} mono>{`${secs.toFixed(1)} S`}</Label>
+      <Label left={600} top={1010} size={68} color={DIM}>ABOUT</Label>
+      <Label left={600} top={1074} size={140}>{Math.round(mph)}</Label>
+      <Label left={600} top={1212} size={68} color={DIM}>MPH</Label>
+      {time ? <Label left={600} top={1292} size={68} color={C.cyan}>ABOUT 2 S</Label> : null}
+      <Label left={60} top={1270} size={68} color={DIM}>TYPICAL LANDING</Label>
     </>
   );
 };
-const dialAt = (f: number) => ({
-  mph: interpolate(f, [T.single, T.single + 60], [150, 0], CLAMP),
-  secs: interpolate(f, [T.single, T.single + 60], [0, 2], CLAMP),
-});
+const dialAt = (f: number) => ({ mph: interpolate(f, [T.single, S.first - 2], [150, 0], CLAMP), time: f >= T.single });
 const Hook: React.FC = () => {
   const frame = useCurrentFrame();
   if (frame >= S.first) return null;
@@ -135,7 +135,7 @@ const Hook: React.FC = () => {
       <BandEdges />
       {frame < S.side ? <Ring k={frame} opacity={interpolate(frame, [S.side - 6, S.side], [1, 0], CLAMP)} /> : null}
       <Kicker />
-      <Dial mph={d.mph} secs={d.secs} />
+      <Dial mph={d.mph} time={d.time} />
     </AbsoluteFill>
   );
 };
@@ -166,9 +166,9 @@ const First: React.FC = () => {
       <Label left={60} top={276} size={96} color={C.acid} opacity={grow(frame, T.first - 4, 8)}>TO LAND HERE</Label>
       <Tag at={T.stealth + 2} left={740} top={186} bg={C.cyan} size={72} rot={[-6, -3]}>F-35C</Tag>
       <Carrier f={frame} />
-      <Label left={60} top={1150} size={76} opacity={grow(frame, S.first + 6, 10)}>JOHN F. KENNEDY</Label>
-      <Label left={60} top={1236} size={68} color={DIM} opacity={grow(frame, S.first + 10, 10)}>CVN 79 · FORD CLASS</Label>
-      <Stamp at={T.oct - 2} left={560} top={1160} size={76} rot={-6} color={C.warn}>13 OCT 2026</Stamp>
+      <Label left={60} top={1120} size={76} opacity={grow(frame, S.first + 6, 10)}>JOHN F. KENNEDY</Label>
+      <Label left={60} top={1206} size={68} color={DIM} opacity={grow(frame, S.first + 10, 10)}>CVN 79 · FORD CLASS</Label>
+      <Stamp at={T.oct - 2} left={60} top={1280} size={64} rot={-3} color={C.warn}>13 OCT 2026</Stamp>
     </AbsoluteFill>
   );
 };
@@ -260,7 +260,7 @@ const Aag: React.FC = () => {
     <AbsoluteFill style={{ scale: interpolate(frame, [S.aag, S.bolter], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
       <Label left={60} top={170} size={72} color={C.acid}>BELOW DECK</Label>
-      <Tag at={T.ship + 2} left={60} top={268} bg={C.ink} size={68} rot={[-3, -1]}>ADVANCED ARRESTING GEAR</Tag>
+      <Tag at={T.ship + 2} left={60} top={268} bg={C.ink} size={68} rot={[-3, -1]}>ADVANCED<br />ARRESTING GEAR</Tag>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
         {/* the cable comes down from the deck and wraps the drum */}
         <path d="M 0 500 L 230 500" stroke={C.cyan} strokeWidth={8} strokeDasharray="18 12" strokeDashoffset={-spin * 0.9} fill="none" />
@@ -338,7 +338,7 @@ const Bolter: React.FC = () => {
       <Label left={250} top={560} size={68} color={DIM} opacity={grow(frame, S.bolter, 8)}>IDLE</Label>
       <Tag at={T.full + 2} left={420} top={330} bg={C.acid} size={72} rot={[-5, -3]}>FULL POWER</Tag>
       <Tag at={T.misses + 2} left={60} top={1050} bg={C.warn} size={72} rot={[-4, -2]}>HOOK MISSES</Tag>
-      <Tag at={T.flies + 2} left={60} top={1160} bg={C.ink} size={72} rot={[-3, -1]}>BOLTER: GO AROUND</Tag>
+      <Tag at={T.flies + 2} left={60} top={1160} bg={C.ink} size={68} rot={[-3, -1]}>BOLTER<br />GO AROUND</Tag>
     </AbsoluteFill>
   );
 };
@@ -349,11 +349,14 @@ const Verdict: React.FC = () => {
   const { fps } = useVideoConfig();
   if (!between(frame, S.verdict, S.loop)) return null;
   const rows: [string, string, string, number][] = [
-    ["THE CATCH →", "ONE STEEL WIRE", C.cyan, S.verdict + 2],
+    ["THE CATCH →", "A STEEL WIRE", C.cyan, S.verdict + 2],
     ["OUR TAKE →", "A CONTROLLED CRASH", C.acid, T.controlled - 4],
     ["THE CLEVER PART →", "BELOW THE DECK", C.ink, T.clever - 4],
   ];
-  const x = WIRE_X - 6 + 270;
+  const ph = (frame - S.verdict) % 75;
+  const fx = T.wire - 24 + ph;
+  const xm = catchX(fx);
+  const fade = interpolate(ph, [0, 6, 66, 75], [0, 1, 1, 0], CLAMP);
   return (
     <AbsoluteFill style={{ scale: interpolate(frame, [S.verdict, S.loop], [1, 1.03], CLAMP) }}>
       <div style={DARK} />
@@ -366,8 +369,10 @@ const Verdict: React.FC = () => {
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0, opacity: grow(frame, S.verdict + 4, 10) }}>
         <g transform="translate(60 120) scale(0.84)">
           <Deck />
-          <Wire hookX={x + 6} payout={270} />
-          <Jet x={x} y={JET_Y} hook={C.acid} />
+          <g opacity={fade}>
+            <Wire hookX={fx >= T.wire ? xm + 6 : null} payout={fx >= T.wire ? xm - (WIRE_X - 6) : 0} />
+            <Jet x={xm} y={JET_Y} hook={C.acid} />
+          </g>
         </g>
       </svg>
     </AbsoluteFill>
@@ -399,7 +404,7 @@ const LoopEnd: React.FC = () => {
       <BandEdges />
       <Ring k={Math.max(0, LOOP - 1 - j)} />
       {frame >= S.loop + 14 ? <Kicker s={interpolate(k, [0, 1], [1.2, 1])} /> : null}
-      <Dial mph={150} secs={0} />
+      <Dial mph={150} time={false} />
     </AbsoluteFill>
   );
 };
@@ -419,10 +424,10 @@ export const CurveV2Short13: React.FC = () => (
     <Verdict />
     <ChannelPromise />
     <LoopEnd />
-    <Credit text="U.S. NAVY VIDEO · SLOWED" show={[[0, S.mech], [S.loop, SHORT13_FRAMES]]} top={BAND.y + BAND.h - 66} />
+    <Credit text="U.S. NAVY VIDEO · SLOWED" show={[[0, S.mech], [S.loop, SHORT13_FRAMES]]} top={BAND.y + BAND.h - 80} size={56} />
     <CaptionTrack pages={PAGES} hide={[[0, 4], [S.promise, SHORT13_FRAMES]]} top={1400} />
     <Sequence from={0}><Audio src={staticFile("shorts/s13_vo.mp3")} /></Sequence>
-    <Bed total={SHORT13_FRAMES} level={0.12} />
+    <Bed total={SHORT13_FRAMES} level={0.085} />
     <Sfx at={T.single + 6} name="thock" volume={0.4} />
     <Sfx at={S.first} name="whoosh" volume={0.3} />
     <Sfx at={T.oct - 2} name="thock" volume={0.35} />

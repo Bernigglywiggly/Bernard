@@ -6,7 +6,7 @@ HOW HE READS: severe ADHD, visual learner. Lead every reply and file with a tabl
 
 READ FIRST, in order: HANDOFF.md (top 4 blocks: the ACCOUNT C block of 30 Oct 00:36 is the newest strategy), TEAM.md (§3 loop, §4 queue), channel/ROTA.md (what each day builds; B's scheduled runs read it at 19:00 and 21:15 UK), lab/curve_v2/shorts/RUNBOOK_SHORT.md (§8b rules, §8c evergreen slot, §9-P1 maps, §9-P2 "Evolution of"), CRAFT.md, then the 30 Oct research: lab/research/{BREAKOUT_CONCEPTS,VIABILITY,SHORTS_PLAYBOOK,MONEY_ROUTES_INDEPENDENT,USAGE_ROI}_2026-10-29.md and kdp/THEMES_RESEARCH.md.
 
-WHERE THINGS STAND (Fri 30 Oct, 00:40 UK)
+WHERE THINGS STAND (Fri 30 Oct, 00:37 UK)
 | Item | State |
 |---|---|
 | The Curve | SCALE. Short 12 publishes Fri 30 Oct 17:00. Sat 31 Oct's Short was set to skip (account B at 93% weekly usage, resets Sat 21:00). Sun 1 Nov's Short builds Sat 21:15 (B's task) |

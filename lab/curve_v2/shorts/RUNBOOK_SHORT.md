@@ -124,7 +124,24 @@ ffmpeg -hide_banner -i $O/frame0.png -i $O/lastframe.png -lavfi psnr -f null - 2
   `channel/uploads_curve.json`). B slot (a ROTA row, 12:00): may be a sequel to a Curve Short past 5,000 views, made
   within 7 days of it, answering a NEW question about the same clip; otherwise the next-best clip by this rule.
 
+## 8c. The Curve's evergreen B slot (account C, 30 Oct: `lab/research/BREAKOUT_CONCEPTS_2026-10-29.md`)
+Only when a ROTA row says "evergreen B slot". Proven by Under Six Minutes Studio (latest-10 median 494,000 views, 27 of 58
+Shorts over 1M) and The Why Side; it needs no viral clip and no footage permission, which is the A slot's bottleneck.
+- **Format:** "How Engineers Solved [the X Problem]" or "Why [a familiar thing] Is [its odd feature]": one everyday object
+  with an odd feature everyone has seen and few can explain, the problem it solves, the mechanism as our own animated
+  cross-section, one number on screen, our verdict. 30-40 s.
+- **Pick:** cone-shaped train wheels, round plane windows, escalator comb teeth, the ridge on ring-pull cans, and so on.
+  Search YouTube first: skip a topic any channel posted in the last 30 days, and never a leader's own hero topic.
+- **Frame 0:** the object drawn with the odd feature circled, 2-6 words ("WHY ARE THESE CONES?"). Line 1 asks the question
+  with "you" in it.
+- **Facts:** a facts file per Short (manufacturer, standards body or university pages; patents), CRAFT §5.
+- **Pictures:** our own drawings only (Remotion SVG or Blender). The Curve's narrator, look and bed, but vary the scene
+  order from the A-slot Shorts (CRAFT §1).
+- **Title:** the exact question, search words first, 6 words or fewer.
+- **Read at 72 h** against The Curve's latest-10 median (1,300): PASS = 3,000+ views or 60%+ engaged → 2 evergreen B slots a week.
+
 ## 9. Other channels (same steps 1-8, with these changes). Each channel has its own look, narrator and music:
+**PIVOTS (account C, 30 Oct): How They Profit and Money Crimes are re-pointed** (`lab/research/BREAKOUT_CONCEPTS_2026-10-29.md`). For those two, §9-P1 and §9-P2 at the end of this section replace the Format, Facts, Look, Music, Pictures and Description rows of this table; their channel ids, Zapier connections, manifests, code folders and narrator rules still apply.
 YouTube punishes one template re-skinned across channels owned by one person, so never copy the Curve's look.
 | | How They Profit (§9a) | Money Crimes (§9b) | Curva Explica (§9c) |
 |---|---|---|---|
@@ -146,3 +163,33 @@ YouTube punishes one template re-skinned across channels owned by one person, so
 - All three are new styles on dead channels, so the critic round is not optional: round 1 must say SHIP before upload.
 - Every run on these channels also obeys §0: FCA (never promote credit cards, loans, BNPL, trading, crypto or
   investing), no email address in requests, no Studio in a browser, one Short per run, private with publishAt.
+
+### 9-P1. How They Profit → "Evolution of" (concept 4; account C, 30 Oct; replaces §9a's format rows)
+Proven by Untold Theory (created 20 Aug 2026; latest-10 median 579,500 views; 7 of 57 Shorts over 1M; 42.5k subscribers),
+and concept 4 has the best subscriber conversion in the breakout sample (median 4.03 subs per 1,000 views; ours 0.84).
+| Row | Spec |
+|---|---|
+| Format | "Evolution of the [Object]" in 40-50 s: 6-8 eras, one beat each = the year + our drawing of that version + one spec + its price then (today's money in small type); the last beat is today's version; the verdict is ours ("the price fell, the parts tripled"). Loop: today's object morphs back into the first one, which is frame 0 |
+| Topic | an everyday object with a big visual change and a price story: kettle, phone, camera, car key, TV, headphones, calculator, trainers. Search YouTube first: skip it if a live channel posted the same object in the last 30 days, and never Untold Theory's own topics (bicycles, bulletproof vests) |
+| Frame 0 | the oldest version beside today's, "?" between them, 2-6 words ("1876 → 2026?") |
+| Facts | facts file `lab/research/HTP_EVO_<object>_FACTS.md` before the script: each era's date and spec from the maker's history page, a museum (Science Museum Group, Smithsonian) or a patent; each price from a dated catalogue or advert (archive.org) with its URL; today's money via the Bank of England inflation calculator (UK) or BLS CPI (US), named on screen once |
+| Look | the ledger palette (navy #0A0F17, paper #EFE7D6, brass #C9A35B, red #B4553F, muted #8C93A0); each era is a ledger row with a stamped year and a price tag; objects are our own line drawings (Remotion SVG), never AI images or stock photos |
+| Narrator, music | How They Profit's own voice (SETUP picks it, never Chris); its own bed from `lab/music/beds.py` |
+| Pictures | our drawings only; no clip needed |
+| Title, description | "Evolution of the [Object]", 6 words or fewer; description = sources per era + the inflation calculator + "Launch list prices." |
+| Pass mark | the ROTA gate: one test 1,000+ views in 72 h, or both 500+ |
+| Name | the channel stays "How They Profit" until he renames it in Studio |
+
+### 9-P2. Money Crimes → map history (concept 5; account C, 30 Oct; replaces §9b's format rows; no build before the Sun 8 Nov gate)
+Proven by One Map, One Battle (created 7 Oct 2026; latest-10 median 85,000), History Maps Lore (Malta 1565, 2.3M) and MapLore
+(created 9 Apr 2026, 132.4M views). The map kit already exists from the Hormuz film (`lab/maps/hormuz`, `lab/maps/style`).
+| Row | Spec |
+|---|---|
+| Format | "One map, one story" in 60-75 s: open on the decisive moment (one arrow on the map), then the 3-4 facts of the land, water or distance that explain it, then the result; our verdict is "the land decided it because..." |
+| Topic | an event where geography decided the outcome: a siege, a retreat, a strait, a canal, a border; prefer before 1950; no active wars (limited ads, sensitivity). Skip any topic a map channel posted in the last 30 days |
+| Facts | two independent reference sources per claim (Britannica, academic histories, primary documents); troop numbers as "about" with the range; facts file before the script |
+| Look | the Hormuz map kit with its own palette (parchment, ink and one accent), never the Curve's look |
+| Narrator, music | Money Crimes' voice (low, measured; `channel/money-crimes/README.md`); a low drone bed from `lab/music/beds.py` (not the jazz) |
+| Pictures | our maps; public-domain paintings (Wikimedia Commons) at 5 s or less a shot, credited |
+| Title, description | "How [Place] [Did X]", 6 words or fewer; sources in the description |
+| Pass mark | the ROTA gate, from week 2 |

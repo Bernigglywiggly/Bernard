@@ -69,7 +69,7 @@ the latest-10 median shows a format that repeats.
 | Length | 30-40 s | 40-50 s | 60-75 s |
 | Frame 0 | the problem object, mid-failure, drawn | the oldest version beside today's, a "?" between them | the map at the decisive moment, one arrow |
 | Our authorship | cross-section drawn for the film, one number on screen, our verdict | the price ledger (the old How They Profit look) and our verdict on what really changed | our maps, our "why the land decided it" line |
-| Example topics (search YouTube first: skip any a live channel made in the last 30 days; never a leader's own hero topic) | why train wheels are cone-shaped; why plane windows are round; why escalator steps have teeth; why ring-pull cans have a ridge | bicycle, phone, camera, car key, TV, headphones, calculator, trainers | a siege, a retreat, a strait, a canal, a border |
+| Example topics (search YouTube first: skip any a live channel made in the last 30 days; never a leader's own hero topic) | why train wheels are cone-shaped; why plane windows are round; why escalator steps have teeth; why ring-pull cans have a ridge | kettle, phone, camera, car key, TV, headphones, calculator, trainers (not bicycles: Untold Theory's own hit) | a siege, a retreat, a strait, a canal, a border |
 
 ## 5. Do the dead niches have any 2026 breakout? (plain answer)
 

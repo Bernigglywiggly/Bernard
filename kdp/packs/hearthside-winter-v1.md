@@ -7,7 +7,7 @@ Built Fri 30 Oct 2026 by the Hearthside cozy-ws toolchain. Copy-paste in the ord
 | Slug | `hearthside-winter-v1` |
 | Submit by | **Mon 2 Nov 2026** (so it is live by Fri 6 Nov 2026) |
 | Counts against | this week's 2-new-paperbacks cap (KDP help G202172740) |
-| Brand / author | **{BRAND}** (not picked yet: replace everywhere, then re-run the build with `--brand`) |
+| Brand / author | **Teacup Lane Press** |
 | Pages | **120** (even), spine 0.2702 in |
 | Checks passed | kdp_gate.py: PASS; read-back: PASS |
 
@@ -17,12 +17,12 @@ Built Fri 30 Oct 2026 by the Hearthside cozy-ws toolchain. Copy-paste in the ord
 - **Subtitle:** 100 Large Print Puzzles of Snowy Days, Warm Drinks and Fireside Comforts
 - **Series:** Hearthside, number 1
 - **Edition number:** (leave blank)
-- **Author:** {BRAND}   (byte-identical on every title so Amazon links them; do not add a contributor)
+- **Author:** Teacup Lane Press   (byte-identical on every title so Amazon links them; do not add a contributor)
 - **Description** (167 words, paste as plain text; no review requests, no medical claims):
 
 Hearthside Winter is a large print word search book made for slow, snowy days. It holds 100 puzzles, one to a page, and each has its own cozy theme: Snowy Morning, Hot Cocoa Bar, Winter Birds, Knitting Basket, Soup Pot, Ice Skating Pond, Cabin Weekend, Northern Lights and 92 more.
 
-Every grid is 15 by 15 with 20 point letters, set on a clean page with light cell lines, so the letters are easy to see. Each puzzle lists 15 to 20 words in alphabetical order, plus a short, gentle line to read before you begin. Most words run forwards, across, down and on the diagonal, and a few run backwards. A full answer key with the found words shaded is at the back.
+Every grid is 15 by 15 with 20 point letters, set on a clean page with light cell lines, so the letters are easy to see. Each puzzle lists 16 to 19 words in alphabetical order, plus a short, gentle line to read before you begin. Most words run across, down and on the diagonal, and a few run backwards. A full answer key with the found words shaded is at the back.
 
 It makes an easy gift for grandma, grandpa, a parent or a friend who loves puzzles, and a good companion for a quiet afternoon with something warm to drink. The pages are 8.5 x 11 inches, printed in black on white paper.
 
@@ -34,7 +34,7 @@ It makes an easy gift for grandma, grandpa, a parent or a friend who loves puzzl
 3. hygge activity book
 4. fireside word games
 5. easy big font word find
-6. january boredom buster
+6. cozy winter word search
 7. stocking stuffer for grandparents
 - Source: kdp/THEMES_RESEARCH.md row #1, copied as written EXCEPT keyword 4: the research phrase for that slot contains a game-brand trademark that the factory brief bans from every listing (see row #11 of the same file), so it is replaced by "fireside word games".
 - **Categories (3), Amazon display names from THEMES_RESEARCH.md; pick the nearest path in KDP's picker:**

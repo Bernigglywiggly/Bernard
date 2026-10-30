@@ -7,7 +7,7 @@ Built Fri 30 Oct 2026 by the Hearthside cozy-ws toolchain. Copy-paste in the ord
 | Slug | `hearthside-christmas-v1` |
 | Submit by | **Wed 4 Nov 2026** (so it is live by Sun 8 Nov 2026) |
 | Counts against | this week's 2-new-paperbacks cap (KDP help G202172740) |
-| Brand / author | **{BRAND}** (not picked yet: replace everywhere, then re-run the build with `--brand`) |
+| Brand / author | **Teacup Lane Press** |
 | Pages | **120** (even), spine 0.2702 in |
 | Checks passed | kdp_gate.py: PASS; read-back: PASS |
 
@@ -17,12 +17,12 @@ Built Fri 30 Oct 2026 by the Hearthside cozy-ws toolchain. Copy-paste in the ord
 - **Subtitle:** 100 Large Print Puzzles of Carols, Cookies, Candlelight and Holiday Traditions
 - **Series:** Hearthside, number 2
 - **Edition number:** (leave blank)
-- **Author:** {BRAND}   (byte-identical on every title so Amazon links them; do not add a contributor)
+- **Author:** Teacup Lane Press   (byte-identical on every title so Amazon links them; do not add a contributor)
 - **Description** (167 words, paste as plain text; no review requests, no medical claims):
 
 Hearthside Christmas is a large print word search book for the whole season. It holds 100 puzzles, one to a page, and each has its own festive theme: Trimming the Tree, Cookie Exchange, Carols by Candlelight, Nativity, Wrapping Paper, Christmas Dinner and 94 more.
 
-Every grid is 15 by 15 with 20 point letters, set on a clean page with light cell lines, so the letters are easy to see. Each puzzle lists 15 to 20 words in alphabetical order, plus a short, gentle line to read before you begin. Most words run forwards, across, down and on the diagonal, and a few run backwards. A full answer key with the found words shaded is at the back.
+Every grid is 15 by 15 with 20 point letters, set on a clean page with light cell lines, so the letters are easy to see. Each puzzle lists 15 to 19 words in alphabetical order, plus a short, gentle line to read before you begin. Most words run across, down and on the diagonal, and a few run backwards. A full answer key with the found words shaded is at the back.
 
 It makes an easy gift for grandma, grandpa, a parent or a friend who loves puzzles, a handy stocking stuffer or white elephant present, and a good companion for a quiet evening by the tree. The pages are 8.5 x 11 inches, printed in black on white paper.
 

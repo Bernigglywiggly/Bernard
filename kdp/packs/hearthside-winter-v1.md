@@ -18,11 +18,11 @@ Built Sat 31 Oct 2026 by the Hearthside cozy-ws toolchain. Copy-paste in the ord
 - **Series:** Hearthside, number 1
 - **Edition number:** (leave blank)
 - **Author:** Teacup Lane Press   (byte-identical on every title so Amazon links them; do not add a contributor)
-- **Description** (166 words, paste as plain text; no review requests, no medical claims):
+- **Description** (167 words, paste as plain text; no review requests, no medical claims):
 
 Hearthside Winter is a large print word search book made for slow, snowy days. It holds 100 puzzles, one to a page, and each has its own cozy theme: Snowy Morning, Hot Cocoa Bar, Winter Birds, Knitting Basket, Soup Pot, Ice Skating Pond, Cabin Weekend, Northern Lights and 92 more.
 
-Every grid is 15 by 15 with 20 point letters, set on a clean page with light cell lines, so the letters are easy to see. Each puzzle lists 16 to 19 words in alphabetical order, plus a short, gentle line to read before you begin. Most words run across, down and on the diagonal, and a few run backwards. A full answer key with the found words shaded is at the back.
+Every grid is 15 by 15 with 20 point letters, set on a clean page with light cell lines, so the letters are easy to see. Each puzzle lists 16 to 19 words in alphabetical order, plus a short, gentle line to read before you begin. Most words run across and down, some slant, and two in every puzzle run backwards. A full answer key with the found words shaded is at the back.
 
 It makes an easy gift for grandma, grandpa, a parent or a friend who loves puzzles, and a good companion for a quiet afternoon with something warm to drink. The pages are 8.5 x 11 inches, printed in black on white paper.
 

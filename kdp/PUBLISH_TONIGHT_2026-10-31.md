@@ -5,10 +5,11 @@ on KDP ("real-world transactions"), and each listing pack says KDP publishing is
 the read-back check; Winter passed the independent check; Christmas's fresh check is in `kdp/packs/XMAS_RECHECK_2026-10-31.md`
 (upload Christmas only if it says SHIP).
 
-**Update 04:04 UK:** Christmas check = SHIP. Then both books were rebuilt to remove three violent words hiding in the filler
-(NOOSE, STAB, GORE: Winter puzzles 3, 54, 64; Christmas 19, 81; every listed word unchanged) and to make both covers KDP's
-exact width (17.5202 in; Chrome had printed 17.5133). Gate PASS and read-back PASS on both; same file paths as below.
-A last quick check of just those changes is in `kdp/packs/REBUILD_CHECK_2026-10-31.md`.
+**Update 04:10 UK (final files):** Christmas check = SHIP. Both books were then rebuilt to remove offensive or violent words
+hiding in the filler letters (NOOSE, STAB, GORE, WOP, WTF; listed words unchanged except Winter puzzle 55's positions), to make
+both covers KDP's exact width (17.5202 in; Chrome had printed 17.5133), and with a truer direction line in the description
+("Most words run across and down, some slant, and two in every puzzle run backwards."). Gate PASS and read-back PASS on both;
+same file paths as below. The last check of these exact files: `kdp/packs/REBUILD_CHECK_2026-10-31.md` (publish only if it says SHIP).
 
 | Book | KDP state | Interior | Cover | Copy-paste fields |
 |---|---|---|---|---|

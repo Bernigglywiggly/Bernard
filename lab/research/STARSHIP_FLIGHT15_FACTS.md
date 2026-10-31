@@ -4,6 +4,19 @@ Checked Tue 27 Oct 2026, ~05:00 UK, by account C (web search extracts; pages not
 **Re-check the date, the mission page and the catch plan the day it flies:** this file is written before the launch.
 Status: **V** = two or more independent outlets agree. **U** = one outlet. **OUR MATHS** = labelled on screen.
 
+## 0. Re-check Sat 31 Oct 2026, 08:50 UK (account A, for the Short 14 pre-build)
+- **Date: still none from SpaceX.** spacex.com/launches lists no Flight 15 page (fetched 08:50 UK). Trackers and Wikipedia
+  ("SpaceX Starship integrated flight tests", read 08:52 UK) give **NET 8 Nov 2026**, Pad 2 (OLP-2), Booster 22 + Ship 42,
+  booster catch + first ship catch attempt. No FAA licence update found. The Short says only "expected in November" (row 13 stays U).
+- **Booster catches = three, re-checked (row 3 → V):** Flight 5 (13 Oct 2024), Flight 7 (16 Jan 2025), Flight 8 (6 Mar 2025);
+  Flight 6 aborted to the sea; Flights 9-14 no catch (Wikipedia flight table; Space.com on Flight 8; S1). A June 2026 "double catch"
+  page found in search is an unsourced aggregator: ignored.
+- **No ship caught yet (row 4): V** (Wikipedia table, S1, S3).
+- **Footage:** SpaceX's own "Starship's Fifth Flight Test" (youtube.com/watch?v=hI9HQfCAw64), 128-150 s = the first tower catch.
+  Copy + SOURCES.txt in `lab/curve_v2/footage/spacex_flight5/`. Credit "SPACEX VIDEO · SLOWED"; each shot under 5 s of source.
+- **Launch-day swap:** Short 14's date phrase lives in `DATE_PHRASE` at the top of `lab/curve_v2/shorts/short14.py` and the
+  on-screen stamp in `DATE_STAMP` in `CurveV2Short14.tsx`.
+
 ## Sources
 - **S1** Space.com, Flight 14 live updates and wrap-up (28 Sep 2026): https://www.space.com/space-exploration/launches-spacecraft/spacex-starship-megarocket-flight-14-orbital-launch-success
 - **S2** Wikipedia, Starship flight 14: https://en.wikipedia.org/wiki/Starship_flight_14

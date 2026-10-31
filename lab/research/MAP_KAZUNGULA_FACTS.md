@@ -12,7 +12,7 @@ publishes Mon 2 Nov 17:00 UK). The run builds from this file; nothing on screen 
 | **Kazungula (Zambia, Botswana, Zimbabwe, Namibia almost meet; the bridge that bends to avoid two of them)** | Hidden Atlas 352 | **PICK**: barely covered, a pure map reveal, a natural money angle (a US$259M trade bridge), no war |
 Note: Glore posted "Countries That Should Touch… But Never Do" (246,172) this month, a list. Our angle is different (the bent bridge and the border you could walk in two minutes); don't copy its title or list.
 
-## Facts (V = two independent sources agree; P = primary source; read 31 Oct 2026 04:35-04:38 UK)
+## Facts (V = two independent sources agree; P = primary source; read 31 Oct 2026 04:35-04:36 UK)
 | Row | Fact | Grade | Sources |
 |---|---|---|---|
 | 1 | Zambia and Botswana touch along only a tiny stretch of the Zambezi river at Kazungula: about 150 m (CIA World Factbook listed the Botswana-Zambia boundary as 0.15 km; Sovereign Limits gives 135 m). Say "about 150 metres" or "shorter than two football pitches", never an exact figure | V | CIA World Factbook, Botswana, land boundaries (now sunset; archived copies); [Wikipedia: Kazungula Bridge](https://en.wikipedia.org/wiki/Kazungula_Bridge) citing Sovereign Limits ("a short 135-metre border") |

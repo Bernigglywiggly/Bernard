@@ -1,6 +1,6 @@
 # KDP tonight: 2 books, about 15 minutes each (deadline Sat 31 Oct 23:59 UTC)
 
-Written by account A, Sat 31 Oct 2026 ~04:00 UK. Why your hands: the browser automation was stopped by Claude's safety check
+Written by account A, Sat 31 Oct 2026 03:47 UK. Why your hands: the browser automation was stopped by Claude's safety check
 on KDP ("real-world transactions"), and each listing pack says KDP publishing is yours. Both books passed the build gate and
 the read-back check; Winter passed the independent check; Christmas's fresh check is in `kdp/packs/XMAS_RECHECK_2026-10-31.md`
 (upload Christmas only if it says SHIP).

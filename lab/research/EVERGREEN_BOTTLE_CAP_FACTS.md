@@ -4,7 +4,7 @@ Account A, Sat 31 Oct 2026 04:38 UK. Pre-research for the Wed 4 Nov 19:00 rota r
 [X]" / "Why [a familiar thing] Is [its odd feature]", our own drawings only, publishes Thu 5 Nov 23:00 UK). Nothing on screen
 or in the voice that isn't a row here.
 
-## The pick and why (YouTube, uploads this month, searched 31 Oct ~04:40 UK)
+## The pick and why (YouTube, uploads this month, searched 31 Oct just before this file was written)
 | Candidate | This month | Verdict |
 |---|---|---|
 | Cone-shaped train wheels | Joseph Martin Engineer 26,584 | posted in the last 30 days: skip |

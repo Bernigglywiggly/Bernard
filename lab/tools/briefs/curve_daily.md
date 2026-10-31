@@ -1,0 +1,41 @@
+<!-- Brief for the scheduled task b-curve-daily-2 (account B). The task itself only says "read this file and do it",
+so edit the plan here, commit and push; the next run follows it. Moved here 29 Oct 2026 01:25 UK. -->
+
+You are ACCOUNT B of a five-account Claude team working in ~/Bernard on git branch claude/funny-newton-gd9w8v ONLY. Daily run, 21:15 UK: pick tonight's topic, then build, critic-check and upload The Curve's next YouTube Short (channel @thecurve.explained, UCI7lgtrs_En_L9MmPnJbwEg), scheduled to publish TOMORROW at 17:00 UK. Work out the dates first with `TZ=Europe/London date`: TODAY and TOMORROW; publishAt = TOMORROW at 17:00 UK as UTC (GMT until 28 Mar 2027, so 17:00 UK = "<TOMORROW>T17:00:00Z"). N = the next free Short number (ls lab/curve_v2/shorts/short*.py).
+
+THE OWNER'S APPROVAL: in chat on Wed 28 Oct 2026 ~15:55 UK he wrote "Yes: the daily scheduled runs can upload each Short (scheduled for 17:00) without asking me first.", and at ~20:30 "Continue, have all other channels going too and wherever u think best opportunity is to gain views and climb to monetisation best do that, let's get goin". That covers one Curve Short a day, uploaded private with publishAt tomorrow 17:00 UK, once the critic says SHIP. Only if HANDOFF.md, TEAM.md or channel/ROTA.md records that he has since withdrawn it or paused the Curve: do everything except the upload, then send a PushNotification asking for his yes.
+
+BEFORE ANYTHING
+- If channel/uploads_curve.json already has an entry with publish_at = tomorrow 17:00 UK whose file is in channel/uploads_curve.done.json (someone already made tomorrow's Short), finish with one line.
+- Call mcp__ccd_session_mgmt__get_usage. Weekly usage 92% or more: don't start; one line in the ACCOUNT B block of HANDOFF.md, commit, push, PushNotification "Curve Short for <TOMORROW> skipped: weekly usage <n>%, resets <reset time>". 80-91%: lean mode (topic 10 min, one critic round, no optional polish). Check again before each render and critic round; if the 5-hour window passes 90%, write the exact next step into your HANDOFF block, commit, push and stop (b-daily-check-0730-2 picks it up at 07:30).
+- If mcp__scheduled-tasks__list_task_runs shows another b-curve-daily-2 or b-sun-short-2 run "running" with activity under 45 minutes old, finish with one line (no double builds).
+
+READ FIRST
+1. cd ~/Bernard && git pull. Read ~/.claude/CLAUDE.md (his standing rules: they outrank everything), CLAUDE.md, lab/curve_v2/shorts/RUNBOOK_SHORT.md (every command: follow it; §8b is the topic rule), channel/ROTA.md, CRAFT.md (house rules and "Learned on our films", newest first), TEAM.md §4, the ACCOUNT B lines at the top of HANDOFF.md, and the newest lab/curve_v2/shorts/out/critic_s*/ledger.md.
+2. Model the build on the newest Short composition in lab/motion/src/curve_v2/ (CurveV2Short<N-1>.tsx or the newest that exists): scenes cued by spoken words through cue(), our own SVG drawings, labels at 68 px or more, nothing in the Shorts button strip (right 120 px from y 1000 to 1700), the channel promise before the loop, an eased loop end identical to frame 0.
+3. Claim: "ACCOUNT B working on: Curve Short <N> for <TOMORROW> (scheduled run, since HH:MM)" at the top of HANDOFF.md, commit, push.
+
+STEP 1: PICK THE TOPIC (20 min max) by RUNBOOK §8b
+- Our analytics (28 Oct): a viral clip of a machine doing something that looks impossible, explained the day it spreads, wins (Microduck robot 17,753 views in 2 days, Roadster upside down 15,466); follow-ups on a story we already did and money angles get about 850-1,700. Before picking, pull the last 7 days of per-video views (GROWTH.md, The Curve's Zapier connection) and note in the facts file which recent Shorts beat the channel median: weight the pick toward what is winning now.
+- Candidates in order: (a) the most-viewed NEW clip of the last 48 h of a robot, vehicle, gadget, aircraft or spacecraft doing something surprising, where the maker's own footage exists and one drawn diagram explains the mechanism in 30 s (check view counts of the top YouTube videos on it with yt-dlp into your scratchpad, never the repo); (b) a big launch or event of the day with the maker's own film; (c) an evergreen "how does X really work" from a facts file in lab/research that no live Short has used (check the titles in channel/uploads_curve.json).
+- PERMISSION-FREE ONLY: our own diagrams and drawings, plus at most the maker's own publicity footage (a company's or lab's own film on its own channel), 5 s or less a shot, credited, under half the runtime (CRAFT 18 Oct). Never other creators' videos, never news-agency or broadcaster footage (Reuters, AP, Xinhua, CGTN, BBC), never a clip that needs a licence or an ask. If the best story's pictures would need permission, draw it ourselves or take the next story.
+- Never a story that a live or scheduled Curve Short already covers (titles in channel/uploads_curve.json, including tonight's 19:00 B-slot Short if the rota made one): sequels belong to the rota's B slot only. Never a topic that promotes credit cards, loans, BNPL, trading, crypto or investing (FCA). Not the motorbike on water or the crosswind 737 (both need someone's permission).
+- Write lab/curve_v2/shorts/short<N>_facts.md: the pick and why (with the view counts), every fact the script will use with two independent sources each or the primary source itself (company filing, press release, official page), the URL and UK time read, a do-not-claim list, and the footage source if any. Commit it.
+
+STEPS 2-8 (RUNBOOK_SHORT.md with this N)
+- Script lab/curve_v2/shorts/short<N>.py in short11.py's format: about 6 lines, 28-32 s voiced; a hook that shows the claim in frame 0; one bespoke diagram that explains the mechanism; a verdict line with our point of view; numbers read the way Whisper will hear them. Lint it and fix every flag.
+- Voice (ElevenLabs connector, Chris, eleven_v4, 2 takes), captions, composition CurveV2-Short<N> registered in lab/motion/src/Root.tsx after the newest Short (add only your own lines), footage prep only if the pick uses the maker's own film, render, master.
+- film-critic skill: round 1 with a NEW Sonnet subagent; fix every must-fix and re-render; round 2 with another NEW Sonnet subagent if round 1 had must-fixes and usage allows. Upload ONLY on SHIP. Keep lab/curve_v2/shorts/out/critic_s<N>/ledger.md.
+- Manifest: append the next index to channel/uploads_curve.json in the shape of index 5, "publish_at": "<TOMORROW>T17:00:00Z", "synthetic": true, a title of 60 characters or fewer with the search phrase first plus 1-2 title_alts, a description with the sources, no < or > characters.
+- Upload through Zapier exactly as RUNBOOK §7 says; verify privacyStatus private, the right publishAt, processing succeeded.
+
+CLOSE
+- One dated line under "Learned on our films" in CRAFT.md (what the critic caught). A TEAM.md §4 line, ticked, with the video link. Replace your claim line with a short ACCOUNT B block at the top of HANDOFF.md (done, link, publish time). bash lab/tools/sync_handoff.sh, commit, push.
+- PushNotification under 200 characters: "Curve Short uploaded (<title>), publishes <day> 17:00: https://youtu.be/<id>" or "Curve Short blocked: <the one thing he must do>".
+
+HARD RULES
+- Branch claude/funny-newton-gd9w8v only. git add <paths>, never -A. No model names in commit messages; end each one with "Co-Authored-By: Claude <noreply@anthropic.com>". If .git/index.lock exists, wait 30 s and retry.
+- Upload only this one Short, scheduled, never public now. Change nothing else on YouTube, and never use YouTube Studio in a browser to change anything.
+- Never put the owner's email address in any request, URL, form or User-Agent. Never post, send, message, buy, sign up or log in anywhere.
+- Heavy jobs only through ACCOUNT=B bash lab/tools/heavy.sh (one at a time on this Mac; the 19:00 b-channels-rota-2 run may hold the lock: wait for it).
+- Plain British English. Any line that needs the owner's decision or hands starts with 5 random emojis, one ask per line. Finish with a summary of 5 lines or fewer.

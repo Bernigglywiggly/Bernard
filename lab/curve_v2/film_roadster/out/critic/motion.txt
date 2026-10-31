@@ -1,0 +1,7 @@
+lab/curve_v2/film_roadster/out/FILM_ROADSTER_v1.mp4: 348.6s sampled
+frozen       17.2s (5%)  stretches >= 2.0s: 2
+    5:37.3  7.9s
+    5:45.3  2.1s
+near-still   20.2s (6%)  stretches >= 2.0s: 2
+    5:37.3  7.9s
+    5:45.3  2.1s

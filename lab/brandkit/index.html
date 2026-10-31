@@ -1,0 +1,153 @@
+<title>The Curve Brand Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+/* Layout: a phone-first locker. One save-all action, then a card per file (preview, size, where it goes, Save), then the words to paste. */
+:root{
+  --ink:#050A0B; --panel:#0B1516; --line:#1B2B2C; --turq:#35D6C6; --gold:#F2D9A0; --text:#E4F0EE; --muted:#8CA4A1;
+  --display:"Michroma",ui-sans-serif,system-ui,sans-serif; --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+body{background:var(--ink);color:var(--text);font:15px/1.55 var(--body)}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:grid;gap:28px}
+h1{font:400 clamp(22px,5vw,34px)/1.15 var(--display);letter-spacing:.05em;margin:0;text-wrap:balance}
+h2{font:600 18px/1.3 var(--body);margin:0;text-wrap:balance}
+p{margin:0}
+.eyebrow{font:500 12px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--turq)}
+.lede{color:var(--muted);max-width:62ch;margin-top:8px}
+.all{display:flex;flex-wrap:wrap;align-items:center;gap:12px;border:1px solid var(--turq);border-radius:12px;padding:14px 16px;background:var(--panel)}
+.all p{flex:1 1 240px;min-width:0;color:var(--muted)}
+button{font:600 14px/1 var(--body);color:var(--ink);background:var(--turq);border:0;border-radius:999px;padding:11px 16px;cursor:pointer}
+button.ghost{background:transparent;color:var(--turq);border:1px solid var(--turq)}
+button:disabled{opacity:.6;cursor:progress}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;grid-template-rows:auto 1fr;min-width:0}
+.pic{background:#000;display:grid;place-items:center;padding:12px;min-height:150px}
+.pic img{max-width:100%;max-height:220px;display:block}
+.pic.round img{border-radius:50%;max-height:180px}
+.pic.check{background:conic-gradient(#1a2526 25%,#0e1718 0 50%,#1a2526 0 75%,#0e1718 0) 0 0/16px 16px}
+.body{padding:12px 14px 14px;display:grid;gap:8px;align-content:start}
+.spec{font:500 12px/1.3 var(--mono);color:var(--gold);letter-spacing:.04em}
+.use{color:var(--muted);font-size:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.note{font-size:13px;color:var(--muted);min-height:1em}
+.words{display:grid;gap:10px}
+.word{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:8px;min-width:0}
+.word b{font:500 12px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--turq)}
+.word p{overflow-wrap:anywhere}
+#fallback{color:var(--gold);font-size:14px}
+footer{color:var(--muted);font-size:13px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+<div class="wrap">
+<header>
+  <span class="eyebrow">Channel art and profile text</span>
+  <h1>The Curve Brand Kit</h1>
+  <p class="lede">Every picture and line of text for YouTube, TikTok, Instagram and Facebook. Tap Save and the file goes into your phone's Files (or Downloads on a computer).</p>
+</header>
+
+<div class="all" data-card>
+  <p><b>Everything in one go:</b> all 9 pictures, the bios and the full setup guide in one zip (1.6 MB).</p>
+  <button type="button" id="save-all">Save all (zip)</button>
+  <p class="note" aria-live="polite"></p>
+</div>
+<p id="fallback" hidden>Saving isn't available in this view. Press and hold a picture to save it, or use the files sent in the chat.</p>
+
+<section class="grid" aria-label="Pictures">
+  <article class="card" data-card><div class="pic round"><img src="media/avatar.png" alt="The Curve profile picture: a turquoise curve rising to a white point"></div>
+    <div class="body"><span class="spec">800 × 800 PNG</span><h2>Profile picture</h2><p class="use">YouTube, TikTok, Instagram and Facebook. It's designed to read inside a circle.</p>
+    <div class="row"><button type="button" data-save="media/avatar.png" data-name="TheCurve_profile_picture.png">Save</button></div><p class="note" aria-live="polite"></p></div></article>
+  <article class="card" data-card><div class="pic"><img src="media/banner.jpg" alt="The Curve YouTube banner"></div>
+    <div class="body"><span class="spec">2560 × 1440 JPG</span><h2>YouTube banner</h2><p class="use">YouTube Studio → Customisation → Branding → Banner image. The words sit in the middle, so phones show them too.</p>
+    <div class="row"><button type="button" data-save="media/banner.jpg" data-name="TheCurve_youtube_banner.jpg">Save</button></div><p class="note" aria-live="polite"></p></div></article>
+  <article class="card" data-card><div class="pic check"><img src="media/watermark.png" alt="The Curve video watermark, a small curve mark"></div>
+    <div class="body"><span class="spec">150 × 150 PNG · transparent</span><h2>YouTube watermark</h2><p class="use">YouTube Studio → Customisation → Branding → Video watermark, shown for the entire video.</p>
+    <div class="row"><button type="button" data-save="media/watermark.png" data-name="TheCurve_youtube_watermark.png">Save</button></div><p class="note" aria-live="polite"></p></div></article>
+  <article class="card" data-card><div class="pic"><img src="media/facebook_cover.jpg" alt="The Curve Facebook cover"></div>
+    <div class="body"><span class="spec">1640 × 624 JPG</span><h2>Facebook cover</h2><p class="use">Your Facebook Page → Edit cover photo.</p>
+    <div class="row"><button type="button" data-save="media/facebook_cover.jpg" data-name="TheCurve_facebook_cover.jpg">Save</button></div><p class="note" aria-live="polite"></p></div></article>
+  <article class="card" data-card><div class="pic"><img src="media/x_header.jpg" alt="The Curve X header"></div>
+    <div class="body"><span class="spec">1500 × 500 JPG</span><h2>X header</h2><p class="use">Only if you use X (Twitter): Edit profile → header.</p>
+    <div class="row"><button type="button" data-save="media/x_header.jpg" data-name="TheCurve_x_header.jpg">Save</button></div><p class="note" aria-live="polite"></p></div></article>
+  <article class="card" data-card><div class="pic"><img src="media/highlight_films.png" alt="Instagram highlight cover: Films"></div>
+    <div class="body"><span class="spec">1080 × 1920 PNG</span><h2>Instagram highlight: Films</h2><p class="use">Instagram → New highlight → Edit cover. Same for the three below.</p>
+    <div class="row"><button type="button" data-save="media/highlight_films.png" data-name="TheCurve_highlight_films.png">Save</button></div><p class="note" aria-live="polite"></p></div></article>
+  <article class="card" data-card><div class="pic"><img src="media/highlight_space.png" alt="Instagram highlight cover: Space"></div>
+    <div class="body"><span class="spec">1080 × 1920 PNG</span><h2>Instagram highlight: Space</h2><p class="use">For the data-centres-in-orbit and space shorts.</p>
+    <div class="row"><button type="button" data-save="media/highlight_space.png" data-name="TheCurve_highlight_space.png">Save</button></div><p class="note" aria-live="polite"></p></div></article>
+  <article class="card" data-card><div class="pic"><img src="media/highlight_robots.png" alt="Instagram highlight cover: Robots"></div>
+    <div class="body"><span class="spec">1080 × 1920 PNG</span><h2>Instagram highlight: Robots</h2><p class="use">For the robot and humanoid shorts.</p>
+    <div class="row"><button type="button" data-save="media/highlight_robots.png" data-name="TheCurve_highlight_robots.png">Save</button></div><p class="note" aria-live="polite"></p></div></article>
+  <article class="card" data-card><div class="pic"><img src="media/highlight_money.png" alt="Instagram highlight cover: Money"></div>
+    <div class="body"><span class="spec">1080 × 1920 PNG</span><h2>Instagram highlight: Money</h2><p class="use">For the money, prices and Big Mac shorts.</p>
+    <div class="row"><button type="button" data-save="media/highlight_money.png" data-name="TheCurve_highlight_money.png">Save</button></div><p class="note" aria-live="polite"></p></div></article>
+</section>
+
+<section class="words" aria-label="Words to paste">
+  <div><span class="eyebrow">Words to paste</span><h2>Names, bios and keywords</h2></div>
+  <div class="word" data-card><b>Name (everywhere)</b><p class="t">The Curve</p><div class="row"><button type="button" class="ghost" data-copy>Copy</button></div><p class="note" aria-live="polite"></p></div>
+  <div class="word" data-card><b>Instagram name field (it's searchable)</b><p class="t">The Curve · AI explained</p><div class="row"><button type="button" class="ghost" data-copy>Copy</button></div><p class="note" aria-live="polite"></p></div>
+  <div class="word" data-card><b>Handle: try these in order, same one everywhere</b><p class="t">@thecurve.explained  ·  @thecurveai  ·  @curveexplains</p><p class="use">Some apps don't allow dots: then use thecurveexplained.</p></div>
+  <div class="word" data-card><b>Bio for TikTok and Facebook</b><p class="t">AI's hidden mechanisms, in numbers you can picture. Every figure sourced.</p><div class="row"><button type="button" class="ghost" data-copy>Copy</button></div><p class="note" aria-live="polite"></p></div>
+  <div class="word" data-card><b>Bio for Instagram</b><p class="t">The hidden mechanism behind the AI headlines. Every number sourced, every price in Big Macs.</p><div class="row"><button type="button" class="ghost" data-copy>Copy</button></div><p class="note" aria-live="polite"></p></div>
+  <div class="word" data-card><b>YouTube description (About)</b><p class="t">The Curve explains the hidden mechanisms behind the AI headlines: why cheaper AI means more data centres, why a robot can pass an exam but can't fold your shirt, who really gets rich in a gold rush. Every figure is sourced on screen and in the description, and every price comes in Big Macs. New films every week, Shorts every day.</p><div class="row"><button type="button" class="ghost" data-copy>Copy</button></div><p class="note" aria-live="polite"></p></div>
+  <div class="word" data-card><b>YouTube keywords (Settings → Channel → Basic info)</b><p class="t">AI, artificial intelligence, AI explained, technology explained, economics explained, AI news, robots, data centres, Big Mac index, explainer, documentary, science, The Curve</p><div class="row"><button type="button" class="ghost" data-copy>Copy</button></div><p class="note" aria-live="polite"></p></div>
+  <div class="word" data-card><b>Everything above, platform by platform</b><p class="use">The full setup guide: every setting for YouTube, TikTok, Instagram, Facebook and X.</p><div class="row"><button type="button" data-save="media/channel_setup.md" data-name="TheCurve_channel_setup.md">Save the guide</button></div><p class="note" aria-live="polite"></p></div>
+</section>
+
+<footer>Colours: black, turquoise #35D6C6, white. Source files live in the repo at <code>lab/out/brand/</code>.</footer>
+</div>
+<script>
+const say = (el, m) => { if (el) el.textContent = m; };
+let downloads = null;
+const saveBtns = [...document.querySelectorAll("[data-save]")];
+saveBtns.forEach(b => { b.hidden = true; });
+(async () => {
+  try { downloads = window.claude && window.claude.use ? await window.claude.use("downloads") : null; } catch (e) { downloads = null; }
+  if (!downloads) { document.getElementById("fallback").hidden = false; return; }
+  saveBtns.forEach(b => { b.hidden = false; });
+})();
+const ALL = ["avatar.png", "banner.jpg", "watermark.png", "facebook_cover.jpg", "x_header.jpg", "highlight_films.png",
+  "highlight_space.png", "highlight_robots.png", "highlight_money.png", "about.txt", "channel_setup.md"];
+const allBtn = document.getElementById("save-all");
+allBtn.hidden = true;
+(async () => {
+  try { const d = window.claude && window.claude.use ? await window.claude.use("downloads") : null; if (d && window.JSZip) allBtn.hidden = false; } catch (e) {}
+})();
+allBtn.addEventListener("click", async () => {
+  const n = allBtn.closest("[data-card]").querySelector(".note");
+  if (!downloads || !window.JSZip) { say(n, "Saving isn't available here: the files are also in the chat."); return; }
+  allBtn.disabled = true; say(n, "Packing 11 files…");
+  try {
+    const zip = new JSZip();
+    for (const f of ALL) zip.file(f, await (await fetch("media/" + f)).blob());
+    const blob = await zip.generateAsync({ type: "blob" });
+    await downloads.save({ filename: "The_Curve_brand_kit.zip", data: blob });
+    say(n, "Saved to your files.");
+  } catch (e) {
+    const c = e && e.code;
+    say(n, c === "declined" ? "Not saved." : c === "rate_limited" ? "One save at a time: try again in a moment." : "Couldn't save the zip here. Save the pictures one by one below.");
+  } finally { allBtn.disabled = false; }
+});
+saveBtns.forEach(b => b.addEventListener("click", async () => {
+  const n = b.closest("[data-card]").querySelector(".note");
+  if (!downloads) { say(n, "Saving isn't available here: the files are also in the chat."); return; }
+  b.disabled = true; say(n, "Getting the file…");
+  try {
+    const blob = await (await fetch(b.dataset.save)).blob();
+    await downloads.save({ filename: b.dataset.name, data: blob });
+    say(n, "Saved to your files.");
+  } catch (e) {
+    const c = e && e.code;
+    say(n, c === "declined" ? "Not saved." : c === "rate_limited" ? "One save at a time: try again in a moment." : "Couldn't save here. The files are also in the chat.");
+  } finally { b.disabled = false; }
+}));
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  const card = b.closest("[data-card]"); const el = card.querySelector(".t"); const n = card.querySelector(".note");
+  try { await navigator.clipboard.writeText(el.textContent); say(n, "Copied."); }
+  catch (e) { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); say(n, "Selected: copy it from the menu."); }
+}));
+</script>

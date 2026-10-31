@@ -1,0 +1,7 @@
+src/*.png
+src/*.jpg
+src/*.wav
+src/*.mp3
+clips/
+out/
+build/

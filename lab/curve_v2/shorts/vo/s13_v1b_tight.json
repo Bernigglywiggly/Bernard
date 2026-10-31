@@ -1,0 +1,884 @@
+[
+ {
+  "text": "You",
+  "startMs": 40,
+  "endMs": 180,
+  "timestampMs": 140,
+  "confidence": 0.94941
+ },
+ {
+  "text": " land",
+  "startMs": 180,
+  "endMs": 420,
+  "timestampMs": 400,
+  "confidence": 0.998456
+ },
+ {
+  "text": " on",
+  "startMs": 420,
+  "endMs": 540,
+  "timestampMs": 520,
+  "confidence": 0.977543
+ },
+ {
+  "text": " an",
+  "startMs": 540,
+  "endMs": 670,
+  "timestampMs": 720,
+  "confidence": 0.991295
+ },
+ {
+  "text": " aircraft",
+  "startMs": 670,
+  "endMs": 1150,
+  "timestampMs": 1040,
+  "confidence": 0.996086
+ },
+ {
+  "text": " carrier",
+  "startMs": 1150,
+  "endMs": 1560,
+  "timestampMs": 1460,
+  "confidence": 0.998894
+ },
+ {
+  "text": " at",
+  "startMs": 1560,
+  "endMs": 1670,
+  "timestampMs": 1700,
+  "confidence": 0.90305
+ },
+ {
+  "text": " about",
+  "startMs": 1670,
+  "endMs": 1960,
+  "timestampMs": 1880,
+  "confidence": 0.9947
+ },
+ {
+  "text": " 150",
+  "startMs": 1960,
+  "endMs": 2660,
+  "timestampMs": 2820,
+  "confidence": 0.979877
+ },
+ {
+  "text": " miles",
+  "startMs": 2660,
+  "endMs": 3050,
+  "timestampMs": 3180,
+  "confidence": 0.958789
+ },
+ {
+  "text": " an",
+  "startMs": 3050,
+  "endMs": 3190,
+  "timestampMs": 3400,
+  "confidence": 0.98122
+ },
+ {
+  "text": " hour",
+  "startMs": 3190,
+  "endMs": 3500,
+  "timestampMs": 3600,
+  "confidence": 0.998925
+ },
+ {
+  "text": ".",
+  "startMs": 3500,
+  "endMs": 3760,
+  "timestampMs": 3780,
+  "confidence": 0.946647
+ },
+ {
+  "text": " A",
+  "startMs": 3760,
+  "endMs": 3840,
+  "timestampMs": 3980,
+  "confidence": 0.999485
+ },
+ {
+  "text": " single",
+  "startMs": 3840,
+  "endMs": 4310,
+  "timestampMs": 4280,
+  "confidence": 0.999253
+ },
+ {
+  "text": " wire",
+  "startMs": 4310,
+  "endMs": 4630,
+  "timestampMs": 4620,
+  "confidence": 0.996664
+ },
+ {
+  "text": " stops",
+  "startMs": 4630,
+  "endMs": 5020,
+  "timestampMs": 5040,
+  "confidence": 0.998872
+ },
+ {
+  "text": " you",
+  "startMs": 5020,
+  "endMs": 5260,
+  "timestampMs": 5280,
+  "confidence": 0.999249
+ },
+ {
+  "text": " in",
+  "startMs": 5260,
+  "endMs": 5420,
+  "timestampMs": 5480,
+  "confidence": 0.99867
+ },
+ {
+  "text": " two",
+  "startMs": 5420,
+  "endMs": 5720,
+  "timestampMs": 5720,
+  "confidence": 0.990698
+ },
+ {
+  "text": " seconds",
+  "startMs": 5720,
+  "endMs": 6380,
+  "timestampMs": 6200,
+  "confidence": 0.999371
+ },
+ {
+  "text": ".",
+  "startMs": 6380,
+  "endMs": 6480,
+  "timestampMs": 6520,
+  "confidence": 0.995961
+ },
+ {
+  "text": " This",
+  "startMs": 6480,
+  "endMs": 6720,
+  "timestampMs": 6680,
+  "confidence": 0.996945
+ },
+ {
+  "text": " stealth",
+  "startMs": 6720,
+  "endMs": 7150,
+  "timestampMs": 6980,
+  "confidence": 0.953243
+ },
+ {
+  "text": " jet",
+  "startMs": 7150,
+  "endMs": 7350,
+  "timestampMs": 7240,
+  "confidence": 0.997908
+ },
+ {
+  "text": " was",
+  "startMs": 7350,
+  "endMs": 7510,
+  "timestampMs": 7420,
+  "confidence": 0.996276
+ },
+ {
+  "text": " the",
+  "startMs": 7510,
+  "endMs": 7720,
+  "timestampMs": 7600,
+  "confidence": 0.994029
+ },
+ {
+  "text": " first",
+  "startMs": 7720,
+  "endMs": 8040,
+  "timestampMs": 7920,
+  "confidence": 0.999481
+ },
+ {
+  "text": " to",
+  "startMs": 8040,
+  "endMs": 8140,
+  "timestampMs": 8160,
+  "confidence": 0.716136
+ },
+ {
+  "text": " land",
+  "startMs": 8140,
+  "endMs": 8360,
+  "timestampMs": 8320,
+  "confidence": 0.996303
+ },
+ {
+  "text": " on",
+  "startMs": 8360,
+  "endMs": 8490,
+  "timestampMs": 8440,
+  "confidence": 0.999626
+ },
+ {
+  "text": " the",
+  "startMs": 8490,
+  "endMs": 8680,
+  "timestampMs": 8580,
+  "confidence": 0.998342
+ },
+ {
+  "text": " Navy",
+  "startMs": 8680,
+  "endMs": 8940,
+  "timestampMs": 8740,
+  "confidence": 0.901175
+ },
+ {
+  "text": "'s",
+  "startMs": 8940,
+  "endMs": 9070,
+  "timestampMs": 9000,
+  "confidence": 0.999436
+ },
+ {
+  "text": " newest",
+  "startMs": 9070,
+  "endMs": 9510,
+  "timestampMs": 9200,
+  "confidence": 0.99854
+ },
+ {
+  "text": " carrier",
+  "startMs": 9510,
+  "endMs": 9920,
+  "timestampMs": 9740,
+  "confidence": 0.999104
+ },
+ {
+  "text": " on",
+  "startMs": 9920,
+  "endMs": 10040,
+  "timestampMs": 10100,
+  "confidence": 0.922956
+ },
+ {
+  "text": " October",
+  "startMs": 10040,
+  "endMs": 10490,
+  "timestampMs": 10460,
+  "confidence": 0.998887
+ },
+ {
+  "text": " 13",
+  "startMs": 10490,
+  "endMs": 10980,
+  "timestampMs": 10880,
+  "confidence": 0.997375
+ },
+ {
+  "text": "th",
+  "startMs": 10980,
+  "endMs": 11010,
+  "timestampMs": 11240,
+  "confidence": 0.959126
+ },
+ {
+  "text": ".",
+  "startMs": 11010,
+  "endMs": 11240,
+  "timestampMs": 11240,
+  "confidence": 0.997006
+ },
+ {
+  "text": " Its",
+  "startMs": 11240,
+  "endMs": 11470,
+  "timestampMs": 11440,
+  "confidence": 0.856047
+ },
+ {
+  "text": " tail",
+  "startMs": 11470,
+  "endMs": 11780,
+  "timestampMs": 11760,
+  "confidence": 0.99613
+ },
+ {
+  "text": " hook",
+  "startMs": 11780,
+  "endMs": 12110,
+  "timestampMs": 11980,
+  "confidence": 0.698717
+ },
+ {
+  "text": " grabs",
+  "startMs": 12110,
+  "endMs": 12480,
+  "timestampMs": 12280,
+  "confidence": 0.997691
+ },
+ {
+  "text": " a",
+  "startMs": 12480,
+  "endMs": 12540,
+  "timestampMs": 12500,
+  "confidence": 0.998075
+ },
+ {
+  "text": " steel",
+  "startMs": 12540,
+  "endMs": 12920,
+  "timestampMs": 12760,
+  "confidence": 0.995532
+ },
+ {
+  "text": " wire",
+  "startMs": 12920,
+  "endMs": 13230,
+  "timestampMs": 13160,
+  "confidence": 0.999668
+ },
+ {
+  "text": ",",
+  "startMs": 13230,
+  "endMs": 13420,
+  "timestampMs": 13260,
+  "confidence": 0.651917
+ },
+ {
+  "text": " which",
+  "startMs": 13420,
+  "endMs": 13700,
+  "timestampMs": 13600,
+  "confidence": 0.999798
+ },
+ {
+  "text": " pulls",
+  "startMs": 13700,
+  "endMs": 13970,
+  "timestampMs": 13900,
+  "confidence": 0.998445
+ },
+ {
+  "text": " a",
+  "startMs": 13970,
+  "endMs": 14030,
+  "timestampMs": 14060,
+  "confidence": 0.989089
+ },
+ {
+  "text": " machine",
+  "startMs": 14030,
+  "endMs": 14410,
+  "timestampMs": 14400,
+  "confidence": 0.999756
+ },
+ {
+  "text": " hidden",
+  "startMs": 14410,
+  "endMs": 14760,
+  "timestampMs": 14740,
+  "confidence": 0.997394
+ },
+ {
+  "text": " below",
+  "startMs": 14760,
+  "endMs": 15040,
+  "timestampMs": 15080,
+  "confidence": 0.998753
+ },
+ {
+  "text": " the",
+  "startMs": 15040,
+  "endMs": 15210,
+  "timestampMs": 15300,
+  "confidence": 0.99878
+ },
+ {
+  "text": " deck",
+  "startMs": 15210,
+  "endMs": 15430,
+  "timestampMs": 15480,
+  "confidence": 0.999828
+ },
+ {
+  "text": ".",
+  "startMs": 15430,
+  "endMs": 15640,
+  "timestampMs": 15640,
+  "confidence": 0.998849
+ },
+ {
+  "text": " On",
+  "startMs": 15640,
+  "endMs": 15780,
+  "timestampMs": 15800,
+  "confidence": 0.999519
+ },
+ {
+  "text": " this",
+  "startMs": 15780,
+  "endMs": 16060,
+  "timestampMs": 15980,
+  "confidence": 0.9972
+ },
+ {
+  "text": " ship",
+  "startMs": 16060,
+  "endMs": 16340,
+  "timestampMs": 16220,
+  "confidence": 0.999203
+ },
+ {
+  "text": ",",
+  "startMs": 16340,
+  "endMs": 16510,
+  "timestampMs": 16460,
+  "confidence": 0.908748
+ },
+ {
+  "text": " it",
+  "startMs": 16510,
+  "endMs": 16600,
+  "timestampMs": 16540,
+  "confidence": 0.918184
+ },
+ {
+  "text": "'s",
+  "startMs": 16600,
+  "endMs": 16790,
+  "timestampMs": 16660,
+  "confidence": 0.999066
+ },
+ {
+  "text": " water",
+  "startMs": 16790,
+  "endMs": 17030,
+  "timestampMs": 16960,
+  "confidence": 0.999481
+ },
+ {
+  "text": " turbines",
+  "startMs": 17030,
+  "endMs": 17610,
+  "timestampMs": 17420,
+  "confidence": 0.997436
+ },
+ {
+  "text": " and",
+  "startMs": 17610,
+  "endMs": 17750,
+  "timestampMs": 17620,
+  "confidence": 0.695352
+ },
+ {
+  "text": " a",
+  "startMs": 17750,
+  "endMs": 17810,
+  "timestampMs": 17860,
+  "confidence": 0.98769
+ },
+ {
+  "text": " big",
+  "startMs": 17810,
+  "endMs": 18040,
+  "timestampMs": 18000,
+  "confidence": 0.995805
+ },
+ {
+  "text": " electric",
+  "startMs": 18040,
+  "endMs": 18560,
+  "timestampMs": 18360,
+  "confidence": 0.955669
+ },
+ {
+  "text": " motor",
+  "startMs": 18560,
+  "endMs": 18900,
+  "timestampMs": 18680,
+  "confidence": 0.995695
+ },
+ {
+  "text": " that",
+  "startMs": 18900,
+  "endMs": 19190,
+  "timestampMs": 19040,
+  "confidence": 0.999718
+ },
+ {
+  "text": " tune",
+  "startMs": 19190,
+  "endMs": 19480,
+  "timestampMs": 19360,
+  "confidence": 0.980393
+ },
+ {
+  "text": " the",
+  "startMs": 19480,
+  "endMs": 19690,
+  "timestampMs": 19560,
+  "confidence": 0.998883
+ },
+ {
+  "text": " pull",
+  "startMs": 19690,
+  "endMs": 20050,
+  "timestampMs": 19800,
+  "confidence": 0.874808
+ },
+ {
+  "text": " for",
+  "startMs": 20050,
+  "endMs": 20190,
+  "timestampMs": 20040,
+  "confidence": 0.997919
+ },
+ {
+  "text": " each",
+  "startMs": 20190,
+  "endMs": 20480,
+  "timestampMs": 20280,
+  "confidence": 0.999634
+ },
+ {
+  "text": " jet",
+  "startMs": 20480,
+  "endMs": 20720,
+  "timestampMs": 20600,
+  "confidence": 0.99886
+ },
+ {
+  "text": ".",
+  "startMs": 20720,
+  "endMs": 20720,
+  "timestampMs": 20760,
+  "confidence": 0.565962
+ },
+ {
+  "text": " And",
+  "startMs": 20720,
+  "endMs": 20930,
+  "timestampMs": 20960,
+  "confidence": 0.996683
+ },
+ {
+  "text": " pilots",
+  "startMs": 20930,
+  "endMs": 21390,
+  "timestampMs": 21240,
+  "confidence": 0.985774
+ },
+ {
+  "text": " land",
+  "startMs": 21390,
+  "endMs": 21630,
+  "timestampMs": 21520,
+  "confidence": 0.997067
+ },
+ {
+  "text": " at",
+  "startMs": 21630,
+  "endMs": 21770,
+  "timestampMs": 21640,
+  "confidence": 0.992085
+ },
+ {
+  "text": " full",
+  "startMs": 21770,
+  "endMs": 22050,
+  "timestampMs": 21940,
+  "confidence": 0.999531
+ },
+ {
+  "text": " power",
+  "startMs": 22050,
+  "endMs": 22440,
+  "timestampMs": 22340,
+  "confidence": 0.997649
+ },
+ {
+  "text": ",",
+  "startMs": 22440,
+  "endMs": 22570,
+  "timestampMs": 22340,
+  "confidence": 0.64217
+ },
+ {
+  "text": " so",
+  "startMs": 22570,
+  "endMs": 22690,
+  "timestampMs": 22580,
+  "confidence": 0.653115
+ },
+ {
+  "text": " if",
+  "startMs": 22690,
+  "endMs": 22830,
+  "timestampMs": 22680,
+  "confidence": 0.992286
+ },
+ {
+  "text": " the",
+  "startMs": 22830,
+  "endMs": 23020,
+  "timestampMs": 22820,
+  "confidence": 0.998769
+ },
+ {
+  "text": " hook",
+  "startMs": 23020,
+  "endMs": 23350,
+  "timestampMs": 22960,
+  "confidence": 0.998273
+ },
+ {
+  "text": " misses",
+  "startMs": 23350,
+  "endMs": 23720,
+  "timestampMs": 23320,
+  "confidence": 0.997524
+ },
+ {
+  "text": ",",
+  "startMs": 23720,
+  "endMs": 23720,
+  "timestampMs": 23740,
+  "confidence": 0.98349
+ },
+ {
+  "text": " the",
+  "startMs": 23720,
+  "endMs": 23900,
+  "timestampMs": 23880,
+  "confidence": 0.999561
+ },
+ {
+  "text": " jet",
+  "startMs": 23900,
+  "endMs": 24080,
+  "timestampMs": 24020,
+  "confidence": 0.996006
+ },
+ {
+  "text": " just",
+  "startMs": 24080,
+  "endMs": 24320,
+  "timestampMs": 24260,
+  "confidence": 0.999085
+ },
+ {
+  "text": " flies",
+  "startMs": 24320,
+  "endMs": 24610,
+  "timestampMs": 24600,
+  "confidence": 0.996322
+ },
+ {
+  "text": " off",
+  "startMs": 24610,
+  "endMs": 24870,
+  "timestampMs": 24820,
+  "confidence": 0.998689
+ },
+ {
+  "text": " again",
+  "startMs": 24870,
+  "endMs": 25100,
+  "timestampMs": 25140,
+  "confidence": 0.999287
+ },
+ {
+  "text": ".",
+  "startMs": 25100,
+  "endMs": 25320,
+  "timestampMs": 25340,
+  "confidence": 0.972533
+ },
+ {
+  "text": " Our",
+  "startMs": 25320,
+  "endMs": 25570,
+  "timestampMs": 25500,
+  "confidence": 0.998643
+ },
+ {
+  "text": " take",
+  "startMs": 25570,
+  "endMs": 25900,
+  "timestampMs": 25760,
+  "confidence": 0.989549
+ },
+ {
+  "text": "?",
+  "startMs": 25900,
+  "endMs": 26160,
+  "timestampMs": 25900,
+  "confidence": 0.657667
+ },
+ {
+  "text": " It",
+  "startMs": 26160,
+  "endMs": 26280,
+  "timestampMs": 26020,
+  "confidence": 0.997531
+ },
+ {
+  "text": "'s",
+  "startMs": 26280,
+  "endMs": 26400,
+  "timestampMs": 26100,
+  "confidence": 0.999603
+ },
+ {
+  "text": " a",
+  "startMs": 26400,
+  "endMs": 26460,
+  "timestampMs": 26200,
+  "confidence": 0.998822
+ },
+ {
+  "text": " controlled",
+  "startMs": 26460,
+  "endMs": 27060,
+  "timestampMs": 26640,
+  "confidence": 0.996803
+ },
+ {
+  "text": " crash",
+  "startMs": 27060,
+  "endMs": 27400,
+  "timestampMs": 27120,
+  "confidence": 0.999512
+ },
+ {
+  "text": ",",
+  "startMs": 27400,
+  "endMs": 27400,
+  "timestampMs": 27120,
+  "confidence": 0.498351
+ },
+ {
+  "text": " with",
+  "startMs": 27400,
+  "endMs": 27630,
+  "timestampMs": 27560,
+  "confidence": 0.998849
+ },
+ {
+  "text": " the",
+  "startMs": 27630,
+  "endMs": 27800,
+  "timestampMs": 27740,
+  "confidence": 0.969411
+ },
+ {
+  "text": " clever",
+  "startMs": 27800,
+  "endMs": 28140,
+  "timestampMs": 27960,
+  "confidence": 0.992227
+ },
+ {
+  "text": " part",
+  "startMs": 28140,
+  "endMs": 28370,
+  "timestampMs": 28280,
+  "confidence": 0.999192
+ },
+ {
+  "text": " hidden",
+  "startMs": 28370,
+  "endMs": 28710,
+  "timestampMs": 28540,
+  "confidence": 0.998776
+ },
+ {
+  "text": " below",
+  "startMs": 28710,
+  "endMs": 28990,
+  "timestampMs": 28960,
+  "confidence": 0.998769
+ },
+ {
+  "text": " deck",
+  "startMs": 28990,
+  "endMs": 29220,
+  "timestampMs": 29240,
+  "confidence": 0.998334
+ },
+ {
+  "text": ".",
+  "startMs": 29220,
+  "endMs": 29420,
+  "timestampMs": 29400,
+  "confidence": 0.998525
+ },
+ {
+  "text": " Subscribe",
+  "startMs": 29450,
+  "endMs": 29960,
+  "timestampMs": 29860,
+  "confidence": 0.871323
+ },
+ {
+  "text": " for",
+  "startMs": 29960,
+  "endMs": 30140,
+  "timestampMs": 30140,
+  "confidence": 0.994844
+ },
+ {
+  "text": " one",
+  "startMs": 30140,
+  "endMs": 30320,
+  "timestampMs": 30420,
+  "confidence": 0.570402
+ },
+ {
+  "text": " machine",
+  "startMs": 30320,
+  "endMs": 30740,
+  "timestampMs": 30700,
+  "confidence": 0.992555
+ },
+ {
+  "text": " in",
+  "startMs": 30740,
+  "endMs": 30860,
+  "timestampMs": 30900,
+  "confidence": 0.987884
+ },
+ {
+  "text": " trouble",
+  "startMs": 30860,
+  "endMs": 31300,
+  "timestampMs": 31180,
+  "confidence": 0.998492
+ },
+ {
+  "text": " explained",
+  "startMs": 31300,
+  "endMs": 32050,
+  "timestampMs": 31800,
+  "confidence": 0.895755
+ },
+ {
+  "text": " every",
+  "startMs": 32050,
+  "endMs": 32460,
+  "timestampMs": 32520,
+  "confidence": 0.791159
+ },
+ {
+  "text": " day",
+  "startMs": 32460,
+  "endMs": 32710,
+  "timestampMs": 32820,
+  "confidence": 0.999234
+ },
+ {
+  "text": ".",
+  "startMs": 32710,
+  "endMs": 33040,
+  "timestampMs": 32940,
+  "confidence": 0.970815
+ }
+]

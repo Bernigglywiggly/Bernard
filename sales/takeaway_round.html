@@ -1,0 +1,566 @@
+<title>Takeaway Round</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F4F6F4; --card:#FFFFFF; --ink:#15181B; --ink2:#4B535B; --ink3:#7A838C; --line:#D8DDD9; --line2:#E7EAE7;
+  --accent:#0A7C74; --accent-soft:#DDF1EE; --on-accent:#FFFFFF;
+  --good:#1D7A45; --good-soft:#DFF2E6; --warn:#A95F07; --warn-soft:#FBEBD5; --bad:#B0261D; --bad-soft:#F8E0DD; --mute-soft:#ECEFEC;
+  --shadow:0 1px 0 rgba(21,24,27,.04),0 6px 18px -12px rgba(21,24,27,.25);
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#111316; --card:#191C20; --ink:#E8EBEE; --ink2:#A7B0B9; --ink3:#78828C; --line:#2B3037; --line2:#22262B;
+    --accent:#3FD3C6; --accent-soft:#12302E; --on-accent:#081312;
+    --good:#56C98E; --good-soft:#142A1E; --warn:#F2A947; --warn-soft:#2E2210; --bad:#FF8074; --bad-soft:#321715; --mute-soft:#1F2328;
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 8px 22px -14px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#111316; --card:#191C20; --ink:#E8EBEE; --ink2:#A7B0B9; --ink3:#78828C; --line:#2B3037; --line2:#22262B;
+  --accent:#3FD3C6; --accent-soft:#12302E; --on-accent:#081312;
+  --good:#56C98E; --good-soft:#142A1E; --warn:#F2A947; --warn-soft:#2E2210; --bad:#FF8074; --bad-soft:#321715; --mute-soft:#1F2328;
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 8px 22px -14px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:18px 64px}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;margin:0}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+header.top{display:grid;gap:14px;padding-block:6px 14px;border-bottom:2px dashed var(--line)}
+.brand{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand h1{font-family:var(--display);font-weight:800;font-size:clamp(44px,9vw,76px);line-height:.86;letter-spacing:.01em;text-transform:uppercase}
+.brand h1 span{color:var(--accent)}
+.brand p{margin:0;color:var(--ink2);max-width:46ch}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.tile b{display:block;font-family:var(--display);font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
+.tile small{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);display:flex;gap:6px;overflow-x:auto;padding-block:10px;border-bottom:1px solid var(--line);scrollbar-width:none}
+nav.tabs a{flex:0 0 auto;text-decoration:none;color:var(--ink2);font-weight:700;font-size:15px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
+nav.tabs a[aria-current="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+section.panel{padding-top:20px;display:grid;gap:16px}
+section.panel[hidden]{display:none!important}
+.lede{color:var(--ink2);max-width:68ch;margin:0}
+h2.sec{font-family:var(--display);font-weight:800;font-size:40px;line-height:.95;text-transform:uppercase}
+/* ---------- walk */
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.seg button{font:inherit;font-weight:700;font-size:14px;color:var(--ink2);background:none;border:0;padding:9px 12px;min-height:40px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.timing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.timing div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px}
+.timing b{display:block;font-family:var(--mono);font-size:13px;color:var(--accent)}
+.list{display:grid;gap:8px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:52px 1fr;gap:10px;box-shadow:var(--shadow)}
+.row[data-status="sold"]{border-color:var(--good);background:linear-gradient(0deg,var(--good-soft),var(--good-soft)) padding-box}
+.row[data-status="later"]{border-color:var(--warn)}
+.row[data-status="no"]{opacity:.55}
+.row[data-status="visited"],.row[data-status="pitched"]{border-color:var(--accent)}
+.tno{font-family:var(--mono);font-weight:500;font-size:13px;color:var(--ink3);border-right:1px dashed var(--line);padding-right:8px;text-align:center}
+.tno b{display:block;font-family:var(--display);font-size:30px;line-height:1;color:var(--ink)}
+.name{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px}
+.name h3{font-size:18px;line-height:1.2}
+.meta{color:var(--ink2);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;padding:3px 8px;border-radius:999px;background:var(--mute-soft);color:var(--ink2);white-space:nowrap}
+.chip.fsa5{background:var(--good-soft);color:var(--good)}
+.chip.fsa4{background:var(--accent-soft);color:var(--accent)}
+.chip.fsa3{background:var(--warn-soft);color:var(--warn)}
+.chip.fsalow{background:var(--bad-soft);color:var(--bad)}
+.chip.new{background:var(--ink);color:var(--paper)}
+.actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.actions a,.actions button{font:inherit;font-size:13.5px;font-weight:700;min-height:36px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);text-decoration:none;cursor:pointer;display:inline-flex;align-items:center}
+.status{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.status button{font:inherit;font-size:13px;font-weight:700;min-height:36px;padding:5px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer}
+.status button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.status button[data-s="sold"][aria-pressed="true"]{background:var(--good);border-color:var(--good);color:var(--card)}
+.note{display:grid;grid-template-columns:1fr 92px;gap:6px;margin-top:8px}
+.note textarea,.note input{font:inherit;font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px;min-height:40px;width:100%}
+.note textarea{resize:vertical}
+.saved{font-family:var(--mono);font-size:11px;color:var(--ink3);min-height:14px}
+.banner{font-size:14px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px;color:var(--ink2);background:var(--card)}
+/* ---------- tickets (pitch) */
+.ticket{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;position:relative}
+.ticket::before{content:"";position:absolute;left:14px;right:14px;top:-1px;border-top:2px dashed var(--paper)}
+.thead{display:flex;justify-content:space-between;gap:10px;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.thead h3{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.01em}
+.thead span{font-family:var(--mono);font-size:12px;color:var(--ink3);white-space:nowrap}
+.say{border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:0;font-size:17px}
+.say q{quotes:none}
+.why{font-size:14px;color:var(--ink2);margin:0}
+.branch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.branch div{background:var(--paper);border-radius:10px;padding:10px;font-size:14px}
+.branch b{font-family:var(--mono);font-size:12px;color:var(--accent);display:block;letter-spacing:.04em;text-transform:uppercase}
+details.obj{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 14px}
+details.obj summary{cursor:pointer;font-weight:700;padding:13px 0;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details.obj summary::after{content:"+";font-family:var(--mono);color:var(--ink3)}
+details.obj[open] summary::after{content:"–"}
+details.obj p{margin:0 0 14px}
+.ladder{display:grid;gap:8px}
+.rung{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.rung .step{font-family:var(--display);font-weight:800;font-size:30px;color:var(--accent);line-height:1}
+.rung .price{font-family:var(--mono);font-weight:500;font-size:15px;text-align:right;white-space:nowrap}
+.rung p{margin:2px 0 0;font-size:14px;color:var(--ink2)}
+/* ---------- audit */
+.audit{display:grid;gap:8px}
+.check{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(0,.8fr);gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.check h4{margin:0;font-size:15px}
+.check p{margin:0;font-size:14px;color:var(--ink2)}
+.check .offer{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+/* ---------- setup */
+.phase{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px}
+.phase h3{font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase}
+.item{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;padding:8px 0;border-top:1px dashed var(--line2)}
+.item input{width:22px;height:22px;margin-top:2px;accent-color:var(--accent)}
+.item label{font-weight:700}
+.item p{margin:2px 0 0;font-size:14px;color:var(--ink2)}
+.item .links{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13.5px;margin-top:4px}
+/* ---------- numbers */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:4px}
+.stat b{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.stat p{margin:0;font-size:14.5px}
+.stat a{font-size:12.5px}
+table.price{width:100%;border-collapse:collapse;font-size:14.5px}
+table.price th,table.price td{text-align:left;padding:9px 8px;border-bottom:1px dashed var(--line)}
+table.price td.n,table.price th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tablebox{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px 8px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px}
+.calc .fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.calc label{font-size:13px;color:var(--ink2);display:grid;gap:4px}
+.calc input{font:inherit;font-size:16px;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);width:100%}
+.calc output{font-family:var(--display);font-weight:800;font-size:48px;line-height:1}
+.rules{font-size:14px;color:var(--ink2);border-top:2px dashed var(--line);padding-top:14px;margin-top:10px;display:grid;gap:6px}
+@media (max-width:720px){
+  .tiles{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .tile{padding:8px}
+  .tile b{font-size:26px}
+  .tile small{font-size:9.5px}
+  .timing,.branch,.stats{grid-template-columns:1fr}
+  .check{grid-template-columns:1fr;gap:6px}
+  .calc .fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rung{grid-template-columns:auto 1fr}
+  .rung .price{grid-column:2;text-align:left}
+}
+@media (prefers-reduced-motion:no-preference){.row{transition:border-color .2s,background .2s}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <h1>Takeaway<br><span>Round</span></h1>
+    <p>Walk in, show the owner their own Google listing, fix it on the spot. Review stands first, then profiles, then websites. Stone, Newcastle-under-Lyme and Tamworth.</p>
+  </div>
+  <div class="tiles" aria-label="Progress">
+    <div class="tile"><b id="t-visit">0</b><small>Visited / <span id="t-total">85</span></small></div>
+    <div class="tile"><b id="t-pitch">0</b><small>Pitched</small></div>
+    <div class="tile"><b id="t-sold">0</b><small>Sold</small></div>
+    <div class="tile"><b id="t-cash">£0</b><small>Banked</small></div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <a href="#walk" data-tab="walk">Walk</a>
+  <a href="#pitch" data-tab="pitch">Pitch</a>
+  <a href="#audit" data-tab="audit">60-sec audit</a>
+  <a href="#setup" data-tab="setup">Setup &amp; kit</a>
+  <a href="#numbers" data-tab="numbers">Numbers</a>
+</nav>
+
+<!-- ======================================================= WALK -->
+<section class="panel" id="p-walk" data-panel="walk">
+  <h2 class="sec">Walk</h2>
+  <p class="lede">85 independent takeaways and cafés from the food hygiene register (Sept 2026 extracts). Each town is in walking order from the centre. Before each door, tap <b>Google Maps</b>, run the 60-second audit, then walk in with one line about <i>their</i> listing.</p>
+  <div class="timing">
+    <div><b>CAFÉS &amp; BAKERIES</b>2:00–3:30pm, after the lunch rush. Owner is usually in.</div>
+    <div><b>CHIPPIES</b>2:15–4:00pm between lunch and tea, or right as they open.</div>
+    <div><b>CHINESE · INDIAN · KEBAB · PIZZA</b>At opening, about 4:30–5:30pm, before 6pm. Mon–Thu. Never Fri/Sat night.</div>
+  </div>
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Town" id="townSeg">
+      <button data-town="Sto" aria-pressed="true">Stone</button>
+      <button data-town="New" aria-pressed="false">Newcastle</button>
+      <button data-town="Tam" aria-pressed="false">Tamworth</button>
+    </div>
+    <div class="seg" role="group" aria-label="Filter" id="filtSeg">
+      <button data-f="all" aria-pressed="true">All</button>
+      <button data-f="todo" aria-pressed="false">To visit</button>
+      <button data-f="later" aria-pressed="false">Follow up</button>
+      <button data-f="sold" aria-pressed="false">Sold</button>
+    </div>
+  </div>
+  <div class="banner" id="saveMode">Loading your tracker…</div>
+  <div class="list" id="list"></div>
+  <p class="banner">Where's "here" on your list? Tell Claude your home town and it'll pull that council's takeaways from the same register and add them as a fourth route.</p>
+</section>
+
+<!-- ======================================================= PITCH -->
+<section class="panel" id="p-pitch" data-panel="pitch" hidden>
+  <h2 class="sec">Pitch</h2>
+  <p class="lede">Three to five minutes, in this order. The whole trick is that you talk about <b>their</b> listing, with <b>their</b> numbers, on <b>your</b> phone. Nobody else walking in does that.</p>
+
+  <article class="ticket">
+    <div class="thead"><h3>1 · The door</h3><span>10 SEC</span></div>
+    <p class="say"><q>Hiya, is the owner about? I'm local, I'll be sixty seconds. I looked you up on Google on the way here and there are two things costing you orders. Can I show you?</q></p>
+    <p class="why">"Local", "sixty seconds" and "costing you orders" answer the three silent questions: who are you, how long, why should I care. Asking permission lowers their guard.</p>
+    <div class="branch"><div><b>Not the owner</b>"When's best to catch them? I'll pop back." Write the time in the notes.</div><div><b>Busy</b>"No worries, what's quiet tomorrow, three?" Book it and leave.</div></div>
+  </article>
+
+  <article class="ticket">
+    <div class="thead"><h3>2 · The mirror</h3><span>40 SEC</span></div>
+    <p class="say"><q>This is what people see when they search "chinese near me". You're on 4.1 with 63 reviews. The place on the corner is 4.6 with 400. Google shows three places, and people pick on the stars and how many reviews.</q></p>
+    <p class="why">Use their real numbers from the audit, plus one nearby competitor. Hold your phone so they can read it; don't hand it over yet. BrightLocal 2026: 68% of people need at least 4 stars, 47% won't consider fewer than 20 reviews, 74% only look at the last three months.</p>
+  </article>
+
+  <article class="ticket">
+    <div class="thead"><h3>3 · The cost</h3><span>40 SEC</span></div>
+    <p class="say"><q>How many orders on a normal Friday? … Right. If this brings you two extra orders a week at twenty quid, that's about two grand a year. Harvard looked at this: one extra star was worth five to nine percent more revenue for independent restaurants.</q></p>
+    <p class="why">Get them to say their own number and do the sum out loud together. People believe maths they did themselves.</p>
+  </article>
+
+  <article class="ticket">
+    <div class="thead"><h3>4 · The tap</h3><span>30 SEC</span></div>
+    <p class="say"><q>This is all it is. Tap it with your phone.</q></p>
+    <p class="why"><b>Power move:</b> before you walk in, find their Place ID and write their own review link onto a demo card. When they tap it, their own Google review form opens. It's the moment they get it.</p>
+  </article>
+
+  <article class="ticket">
+    <div class="thead"><h3>5 · The offer</h3><span>20 SEC</span></div>
+    <p class="say"><q>Thirty quid. I set it up now with your link, test it on iPhone and Android, and put it where people pay. If it hasn't brought you new reviews in a month, I'll give you your money back.</q></p>
+    <p class="why">Anchor: other shops sell these for £35 to £50 and post them to you to set up yourself. You're on-site, set up, tested and guaranteed.</p>
+  </article>
+
+  <article class="ticket">
+    <div class="thead"><h3>6 · The close</h3><span>10 SEC</span></div>
+    <p class="say"><q>Do you want it on the counter or by the till?</q></p>
+    <p class="why">A choice between two yeses. Take the card payment, fit it, test it with them, take a photo for your portfolio (ask first), and set a follow-up for day 7.</p>
+  </article>
+
+  <article class="ticket">
+    <div class="thead"><h3>7 · Day 7 and day 30</h3><span>FOLLOW-UP</span></div>
+    <p class="say"><q>You've had six new reviews since Tuesday. Two of them mention the wait on Fridays. Want me to reply to them for you, and sort your hours and photos while I'm at it?</q></p>
+    <p class="why">This is where the money is. Results first, then the next rung of the ladder.</p>
+  </article>
+
+  <h3 class="eyebrow">Objections</h3>
+  <details class="obj"><summary>"I haven't got time for this."</summary><p>"That's why it's a stand. Your customers do it, not you. It takes me three minutes, and I'm gone."</p></details>
+  <details class="obj"><summary>"We're always busy, we don't need reviews."</summary><p>"Busy's brilliant. Reviews are for the people who aren't regulars yet: someone new in town, students, anyone searching at 10pm. And more reviews means one bad one can't drag you down."</p></details>
+  <details class="obj"><summary>"Too expensive."</summary><p>"It's thirty quid, one family order. If it doesn't bring reviews in, you get it back. What have you got to lose?"</p></details>
+  <details class="obj"><summary>"We're on Just Eat, that's enough."</summary><p>"Keep it, it's great for reach. But every order through it costs you up to 30%. Reviews on Google send people to your own phone and your own door, at nothing."</p></details>
+  <details class="obj"><summary>"I need to ask my partner."</summary><p>"Course. When are they in? I'll leave this with your own review link already on it. Tap it with them tonight and I'll pop back tomorrow at [time]."</p></details>
+  <details class="obj"><summary>"Is this even allowed?"</summary><p>"Yes, it just opens Google's own review form. We don't give freebies for reviews and we ask every customer, not only the happy ones, which is exactly what Google's rules want."</p></details>
+  <details class="obj"><summary>"Come back later."</summary><p>"No problem, what's quiet tomorrow? Three o'clock?" Book a time, write it in the notes, and turn up on the dot. Being reliable is half the sale.</p></details>
+
+  <h3 class="eyebrow">The upsell ladder</h3>
+  <div class="ladder">
+    <div class="rung"><span class="step">1</span><div><b>Review stand</b><p>NFC plus a QR backup, programmed with their link, tested on iPhone and Android.</p></div><span class="price">£30</span></div>
+    <div class="rung"><span class="step">2</span><div><b>Google profile tune-up</b><p>Correct hours (holidays too), menu, 10 fresh photos taken there and then, categories, description, first posts.</p></div><span class="price">£59</span></div>
+    <div class="rung"><span class="step">3</span><div><b>Reviews &amp; profile care</b><p>Reply to every review within 48 hours from owner-approved templates, a monthly post, photo refresh. 88% would use a business that replies to all reviews (47% if none).</p></div><span class="price">£25/mo</span></div>
+    <div class="rung"><span class="step">4</span><div><b>Website + direct ordering</b><p>Menu, click-to-call, map, the hygiene 5 on show, and ordering at 1.4% + 25p per card order (Square Online) instead of up to 30% to an app.</p></div><span class="price">£300 + £25/mo</span></div>
+    <div class="rung"><span class="step">5</span><div><b>Launch pack</b><p>For new openings: stand + tune-up + site in one go. The "NEW" rows on your list are the warmest leads.</p></div><span class="price">£349</span></div>
+  </div>
+</section>
+
+<!-- ======================================================= AUDIT -->
+<section class="panel" id="p-audit" data-panel="audit" hidden>
+  <h2 class="sec">60-second audit</h2>
+  <p class="lede">Do this on the pavement before you walk in. Each check gives you one sentence to open with. Say it as <i>"I noticed …, which means …, so …"</i>.</p>
+  <div class="audit">
+    <div class="check"><div><h4>Stars under 4.3</h4></div><p>"You're on 4.1. Most people need at least a 4 before they'll try somewhere, so you're invisible to a chunk of searchers."</p><span class="offer">→ stand + replies</span></div>
+    <div class="check"><div><h4>Fewer than 50 reviews</h4></div><p>"Sixty-three reviews in how many years? Nearly half of people won't even consider a place with under 20."</p><span class="offer">→ stand</span></div>
+    <div class="check"><div><h4>Newest review over 3 months old</h4></div><p>"Your last review was in June. Three in four people only look at the last three months, so to them you've gone quiet."</p><span class="offer">→ stand</span></div>
+    <div class="check"><div><h4>Owner never replies</h4></div><p>"Nobody's answered this one-star about the wait. Replying to every review nearly doubles how many people would choose you."</p><span class="offer">→ care plan</span></div>
+    <div class="check"><div><h4>Hours wrong or missing</h4></div><p>"Google says you're open Mondays. If someone turns up to a locked door, that's a one-star waiting to happen."</p><span class="offer">→ tune-up</span></div>
+    <div class="check"><div><h4>Few or bad photos</h4></div><p>"You've got four photos and one's the bins. I can take ten good ones right now while I'm here."</p><span class="offer">→ tune-up</span></div>
+    <div class="check"><div><h4>No website, or only an app link</h4></div><p>"The only way to order you online is through the app, and they're taking up to 30% of every order."</p><span class="offer">→ site + ordering</span></div>
+    <div class="check"><div><h4>Hygiene 5 not shown anywhere</h4></div><p>"You've got a 5 for hygiene and nobody online knows. That should be the first thing they see."</p><span class="offer">→ tune-up + site</span></div>
+    <div class="check"><div><h4>Hygiene 0–2</h4></div><p>Don't lead with reviews (they may mention it). Be tactful: offer the profile tune-up and site, and show the rating page only if they bring it up.</p><span class="offer">→ tune-up first</span></div>
+    <div class="check"><div><h4>Opened in the last year</h4></div><p>"You're new, so the next few months decide your rating for years. Let's get the first fifty reviews in fast."</p><span class="offer">→ launch pack</span></div>
+  </div>
+  <p class="banner">Write what you find in each row's notes (stars, count, last review date, apps they're on). That turns the tracker into your follow-up list, and Claude can read it to draft your day-7 messages.</p>
+</section>
+
+<!-- ======================================================= SETUP -->
+<section class="panel" id="p-setup" data-panel="setup" hidden>
+  <h2 class="sec">Setup &amp; kit</h2>
+  <p class="lede">Everything from ordering the kit to your first walk. Ticks save to your tracker. Prices come from search listings in Sept 2026, so check them at checkout.</p>
+  <div id="setupList"></div>
+</section>
+
+<!-- ======================================================= NUMBERS -->
+<section class="panel" id="p-numbers" data-panel="numbers" hidden>
+  <h2 class="sec">Numbers</h2>
+  <div class="stats">
+    <div class="stat"><b>5–9%</b><p>more revenue from one extra Yelp star for <i>independent</i> restaurants. No effect for chains.</p><a href="https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf">Luca, Harvard Business School, 2011</a></div>
+    <div class="stat"><b>68%</b><p>of people need at least 4 stars before choosing a local business. 97% read reviews first.</p><a href="https://www.brightlocal.com/research/local-consumer-review-survey/">BrightLocal 2026 (US panel)</a></div>
+    <div class="stat"><b>47%</b><p>won't consider a business with fewer than 20 reviews. 74% only look at the last three months.</p><a href="https://www.brightlocal.com/research/local-consumer-review-survey/">BrightLocal 2026</a></div>
+    <div class="stat"><b>88%</b><p>would use a business that replies to all its reviews, against 47% for one that replies to none.</p><a href="https://www.brightlocal.com/research/local-consumer-review-survey/">BrightLocal 2026</a></div>
+    <div class="stat"><b>14–30%</b><p>typical delivery-app commission per order (Uber Eats 15–30%, Deliveroo 14–30%, Just Eat 14–22%). Check the owner's own figure.</p><a href="https://geraeats.com/blog/food-delivery-commission-comparison">2026 comparison</a></div>
+    <div class="stat"><b>£57/wk</b><p>saved by moving 10 app orders a week at £25 from 25% commission to about 2% card fees. That's about £3,000 a year.</p><a href="https://squareup.com/gb/en/online-ordering">Square Online fees</a></div>
+  </div>
+
+  <h3 class="eyebrow">Price sheet and margins</h3>
+  <div class="tablebox">
+    <table class="price">
+      <thead><tr><th>Product</th><th class="n">Price</th><th class="n">Your cost</th><th class="n">Margin</th></tr></thead>
+      <tbody>
+        <tr><td>Review stand (NFC card + A6 acrylic + printed insert)</td><td class="n">£30</td><td class="n">≈ £3–6</td><td class="n">≈ 85%</td></tr>
+        <tr><td>Extra card or sticker</td><td class="n">£15</td><td class="n">≈ £0.50</td><td class="n">≈ 95%</td></tr>
+        <tr><td>Google profile tune-up</td><td class="n">£59</td><td class="n">your time, ~45 min</td><td class="n">time</td></tr>
+        <tr><td>Reviews &amp; profile care</td><td class="n">£25/mo</td><td class="n">~30 min/mo</td><td class="n">time</td></tr>
+        <tr><td>Website (Carrd or Cloudflare Pages + .co.uk)</td><td class="n">£300 + £25/mo</td><td class="n">≈ £20/yr</td><td class="n">≈ 95%</td></tr>
+        <tr><td>Launch pack (stand + tune-up + site)</td><td class="n">£349</td><td class="n">≈ £25</td><td class="n">≈ 93%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="calc" id="calc">
+    <h3 class="eyebrow">Path to £2k a month</h3>
+    <div class="fields">
+      <label for="c-stands">Stands a week<input id="c-stands" type="number" min="0" value="5" inputmode="numeric"></label>
+      <label for="c-tune">Tune-ups a month<input id="c-tune" type="number" min="0" value="4" inputmode="numeric"></label>
+      <label for="c-sites">Sites a month<input id="c-sites" type="number" min="0" value="2" inputmode="numeric"></label>
+      <label for="c-care">Care plans running<input id="c-care" type="number" min="0" value="8" inputmode="numeric"></label>
+    </div>
+    <div><output id="c-out" for="c-stands c-tune c-sites c-care">£0</output> <span class="eyebrow">a month</span></div>
+    <p class="why" id="c-note"></p>
+  </div>
+
+  <div class="rules">
+    <b>Keep every client safe</b>
+    <span>Never write reviews for a client, never offer discounts or freebies for reviews, and ask every customer, not only the happy ones. Google treats incentives as fake engagement (<a href="https://support.google.com/business/answer/3474050?hl=en">Google help</a>), and the UK's DMCC Act 2024 bans fake and concealed-incentive reviews (check the CMA's guidance on gov.uk).</span>
+    <span>Prospect data: Food Standards Agency hygiene register (open data), Stafford, Newcastle-under-Lyme and Tamworth extracts, Jul–Sep 2026. Google ratings, apps and websites haven't been checked yet. That's what the audit is for.</span>
+  </div>
+</section>
+</div>
+
+<script>
+const SEED = [["1195796","Sto",1,"Crown Of India","40 High Street, Stone, ST15 8AU","ST15 8AU","Indian restaurant","5","2026-05-05","","centre"],["1196000","Sto",2,"Arcadia Tea Shop","Unit 4 And 5, High Street Arcade, Stone, ST15 8AU","ST15 8AU","Tea shop","5","2026-04-30","","centre"],["1195354","Sto",3,"Bear Coffee Company Ltd","57 High Street, Stone, ST15 8AD","ST15 8AD","Coffee shop","5","2026-03-12","","centre"],["1338807","Sto",4,"Mojaan","7a Radford Street, Stone, ST15 8DA","ST15 8DA","Unknown (FSA type: restaurant/cafe)","4","2026-06-30","","centre"],["1748271","Sto",5,"Maru Bento","2b Radford Street, Stone, ST15 8DA","ST15 8DA","Japanese-style bento*","4","2025-04-25","","centre"],["1195502","Sto",6,"Millies","14 Radford Street, Stone, ST15 8DA","ST15 8DA","Unknown (FSA type: takeaway/sandwich shop)","4","2025-11-26","","centre"],["1195901","Sto",7,"Little Seeds Bar & Kitchen","16-18 Radford Street, Stone, ST15 8DA","ST15 8DA","Bar & kitchen","5","2026-03-06","","centre"],["1195552","Sto",8,"The Ovilash Restaurant","36 Radford Street, Stone, ST15 8DA","ST15 8DA","Unknown (FSA type: restaurant/cafe)","5","2024-12-19","","centre"],["1195816","Sto",9,"Dragon Palace","6 Oulton Road, Stone, ST15 8DZ","ST15 8DZ","Chinese*","4","2026-05-06","","centre"],["1195891","Sto",10,"Stonefield Fish Bar","19 Old Road, Stone, ST15 8JE","ST15 8JE","Fish & chips*","5","2026-03-11","","centre"],["1195685","Sto",11,"Proven Pizzeria","56 Newcastle Road, Stone, ST15 8LB","ST15 8LB","Pizza","5","2025-07-31","","centre"],["1195166","Sto",12,"The Secret Tea Room","Unit 2, Adies Alley, Stone, ST15 8YQ","ST15 8YQ","Tea room","5","2026-01-21","","centre"],["1195940","Sto",13,"Pasta Di Piazza","12 High Street, Stone, ST15 8AW","ST15 8AW","Italian / pasta","5","2026-02-10","","centre"],["1936488","Sto",14,"Stone Bakehouse","17 High Street, Stone, ST15 8AJ","ST15 8AJ","Bakery","AwaitingInspection","","awaiting inspection","centre"],["1382329","Sto",15,"Red Roosters","13 High Street, Stone, ST15 8AJ","ST15 8AJ","Chicken*","3","2025-07-31","","centre"],["1889467","Sto",16,"Heaven Restaurant Bar & Grill","11 High Street, Stone, ST15 8AJ","ST15 8AJ","Restaurant, bar & grill","5","2026-04-15","","centre"],["1195735","Sto",17,"Stone Kebab House","10 Church Street, Stone, ST15 8BD","ST15 8BD","Kebab","5","2026-03-03","","centre"],["1195941","Sto",18,"Valleys Fast Food","2a Lichfield Street, Stone, ST15 8BB","ST15 8BB","Fast food (type not stated)","5","2026-04-20","","centre"],["1195858","Sto",19,"Priory Fish Bar","7 Lichfield Street, Stone, ST15 8NA","ST15 8NA","Fish & chips*","4","2026-04-09","","centre"],["1195618","Sto",20,"Flames","11 Lichfield Street, Stone, ST15 8NA","ST15 8NA","Unknown (FSA type: takeaway/sandwich shop)","AwaitingInspection","","awaiting inspection","centre"],["1195498","Sto",21,"Cavalli","3 Lichfield Street, Stone, ST15 8NA","ST15 8NA","Unknown (FSA type: restaurant/cafe)","5","2026-05-06","","centre"],["1196193","Sto",22,"Piccolo's Pizza & Kebab Land","14-16 Stafford Street, Stone, ST15 8QW","ST15 8QW","Pizza & kebab","5","2026-04-13","","centre"],["1196110","Sto",23,"Walton Fish Bar","5 Eccleshall Road, Stone, ST15 0HJ","ST15 0HJ","Fish & chips*","5","2026-04-30","","centre"],["1195483","Sto",24,"Sunnyhill","58 Pirehill Lane, Walton, Stone, ST15 0JN","ST15 0JN","Unknown (FSA type: takeaway/sandwich shop)","AwaitingInspection","","awaiting inspection","outer"],["1557000","Sto",25,"The Roll in Stone","Unit 24A Whitebridge Estate, Whitebridge Lane, Stone, ST15 8LQ","ST15 8LQ","Sandwiches / rolls*","5","2026-02-27","","centre"],["85714","New",1,"PIZZARAMA","8 Ryecroft, Newcastle Under Lyme, ST5 1RW","ST5 1RW","Pizza*","5","2025-05-21","","centre"],["1799173","New",2,"FRESCO CAFE & EATERY","39-41 Merrial Street, Newcastle Under Lyme, ST5 2AE","ST5 2AE","Cafe & eatery","5","2025-03-21","","centre"],["1822945","New",3,"PIZZA BAR","15 Merrial Street, Newcastle Under Lyme, ST5 2AE","ST5 2AE","Pizza","5","2025-07-03","","centre"],["1578883","New",4,"MADO CAFE","40 High Street, Newcastle Under Lyme, ST5 1QL","ST5 1QL","Cafe","5","2025-03-25","","centre"],["1845664","New",5,"OASIS FAST FOOD NEWCASTLE","6 The Midway, Newcastle Under Lyme, ST5 1QG","ST5 1QG","Fast food (type not stated)","3","2025-09-08","","centre"],["1889228","New",6,"THE MIDWAY CAFE","12 The Midway, Newcastle Under Lyme, ST5 1QG","ST5 1QG","Cafe","5","2026-01-07","","centre"],["1987198","New",7,"SMASH CASTLE","132 High Street, Newcastle Under Lyme, ST5 1PT","ST5 1PT","Smash burgers*","AwaitingInspection","","awaiting inspection","centre"],["1759579","New",8,"MARMARIS NEWCASTLE","107 High Street, Newcastle Under Lyme, ST5 1PS","ST5 1PS","Kebab / Turkish (the 2015 FSA list had 'MARMARIS KEBABS' here)","3","2026-05-05","","centre"],["1937678","New",9,"DUO PIZZA AND SHAWARMA LTD","89 High Street, Newcastle Under Lyme, ST5 1PS","ST5 1PS","Pizza & shawarma","4","2026-05-13","","centre"],["83640","New",10,"SHAWS","103 High Street, Newcastle Under Lyme, ST5 1PS","ST5 1PS","Unknown (FSA type: takeaway/sandwich shop)","5","2025-03-18","","centre"],["701262","New",11,"THE FOYER","3 Hassell Street, Newcastle under Lyme, ST5 1AH","ST5 1AH","Unknown (FSA type: takeaway/sandwich shop)","5","2025-11-12","","centre"],["1722944","New",12,"NEL","25 Bridge Street, Newcastle Under Lyme, ST5 2RY","ST5 2RY","Unknown (FSA type: takeaway/sandwich shop)","5","2024-10-02","","centre"],["1776097","New",13,"CUISINE CART","64 Liverpool Road, Newcastle Under Lyme, ST5 2AX","ST5 2AX","Unknown (FSA type: takeaway/sandwich shop)","5","2025-02-14","","centre"],["1870542","New",14,"CHEESIOUS PIZZA/PERI PERI HOUSE","54 Liverpool Road, Newcastle Under Lyme, ST5 2AX","ST5 2AX","Pizza & peri-peri","5","2025-09-04","","centre"],["1749342","New",15,"DANCING OCTOPUS","12 Pool Dam, Newcastle Under Lyme, ST5 2RR","ST5 2RR","Unknown (FSA type: takeaway/sandwich shop)","5","2026-08-11","","centre"],["1832506","New",16,"MO'S KITCHEN","10 Pool Dam, Newcastle Under Lyme, ST5 2RR","ST5 2RR","Unknown (FSA type: takeaway/sandwich shop)","5","2025-07-15","","centre"],["1353828","New",17,"TASTY WOK","18 Drayton Street, Newcastle Under Lyme, ST5 2TW","ST5 2TW","Chinese*","5","2025-03-12","","centre"],["1055531","New",18,"CLAY OVEN","12 Drayton Street, Newcastle Under Lyme, ST5 2TW","ST5 2TW","Indian / tandoori*","4","2026-01-27","","centre"],["85327","New",19,"CASTLE OATCAKES","Castle Oatcakes, 78 London Road, Newcastle Under Lyme, ST5 1LZ","ST5 1LZ","Staffordshire oatcakes","5","2026-02-07","","centre"],["1724989","New",20,"TASTE OF SPICE","14 Andrew Place, Newcastle Under Lyme, ST5 1DL","ST5 1DL","Indian*","4","2026-07-01","","centre"],["1685082","New",21,"LIMS CHINESE TAKEAWAY","28 George Street, Newcastle Under Lyme, ST5 1DJ","ST5 1DJ","Chinese","1","2026-03-02","","centre"],["1828058","New",22,"NEWCASTLE KEBAB HOUSE","7 George Street, Newcastle Under Lyme, ST5 1JX","ST5 1JX","Kebab","5","2026-02-17","","centre"],["81344","New",23,"SUN CHINESE TAKEAWAY","3 George Street, Newcastle Under Lyme, ST5 1JX","ST5 1JX","Chinese","1","2026-07-14","","centre"],["1898760","New",24,"GO GRILL","19-21 George Street, Newcastle Under Lyme, ST5 1JX","ST5 1JX","Grill*","1","2026-02-10","","centre"],["1722943","New",25,"THE ONE","1 George Street, Newcastle Under Lyme, ST5 1JX","ST5 1JX","Unknown (FSA type: takeaway/sandwich shop)","5","2026-08-25","","centre"],["1893677","New",26,"RED ROOSTERS","Unit 18, Borough Road, Newcastle Under Lyme, ST5 1TT","ST5 1TT","Chicken*","3","2026-01-15","","centre"],["1772347","New",27,"SHERIF KEBAB HOUSE","Unit 8 Berkeley Court, Borough Road, Newcastle Under Lyme, ST5 1TT","ST5 1TT","Kebab","3","2026-05-19","","centre"],["1877918","New",28,"FAVOURITE CHINESE TAKEAWAY","14 Brunswick Street, Newcastle Under Lyme, ST5 1HL","ST5 1HL","Chinese","5","2025-09-23","","centre"],["1724991","New",29,"BEST KEBAB HOUSE","41 George Street, Newcastle Under Lyme, ST5 1JU","ST5 1JU","Kebab","3","2026-06-08","","centre"],["1004870","New",30,"GOLDEN WOK","43 George Street, Newcastle Under Lyme, ST5 1JU","ST5 1JU","Chinese*","5","2025-02-27","","centre"],["1050314","New",31,"CHILLI JACKS","45-47 George Street, Newcastle Under Lyme, ST5 1JU","ST5 1JU","Unknown (FSA type: takeaway/sandwich shop)","5","2024-11-19","","centre"],["1137166","New",32,"GEORGE STREET FISH AND CHIPS","59 George Street, Newcastle Under Lyme, ST5 1JU","ST5 1JU","Fish & chips","3","2025-12-12","","centre"],["1738218","Tam",1,"ChaNoMa","45-47 Church Street, Tamworth, B79 7DE","B79 7DE","Unknown (FSA type: takeaway/sandwich shop)","4","2024-10-17","","centre"],["1908321","Tam",2,"Brew","Unit 7 Town Hall Place, Market Street, Tamworth, B79 7FJ","B79 7FJ","Cafe / coffee*","5","2026-02-04","","centre"],["1775392","Tam",3,"Papa Gs","63 Church Street, Tamworth, B79 7DF","B79 7DF","Unknown (FSA type: takeaway/sandwich shop)","3","2025-06-04","","centre"],["1692952","Tam",4,"Phat Bites","64 CHURCH STREET, Tamworth, B79 7DF","B79 7DF","Unknown (FSA type: takeaway/sandwich shop)","5","2026-02-25","","centre"],["1589550","Tam",5,"Ephesus Takeaway","11a Church Street, Tamworth, B79 7DH","B79 7DH","Unknown, possibly Turkish (Ephesus is a Turkish place name)","4","2025-03-25","","centre"],["1589615","Tam",6,"China Aroma","68 CHURCH STREET, Tamworth, B79 7DQ","B79 7DQ","Chinese*","5","2025-11-04","","centre"],["1589630","Tam",7,"Tamworth Spice / Kiko Sushi","72 Church Street, Tamworth, B79 7DQ","B79 7DQ","Indian + sushi (two trading names at one address)","5","2025-05-01","","centre"],["1435377","Tam",8,"Rainbow Takeaway / China Palace Takeaway","71 Church Street, Tamworth, B79 7DQ","B79 7DQ","Chinese","3","2025-07-31","","centre"],["1899172","Tam",9,"Jeffrey’s Fine Sandwiches","12A Silver Street, Tamworth, B79 7NH","B79 7NH","Sandwiches","5","2026-02-04","","centre"],["1971681","Tam",10,"VERO Fresh Food LTD","119 Lichfield Street, Tamworth, B79 7BQ","B79 7BQ","Unknown (FSA type: takeaway/sandwich shop)","AwaitingInspection","","awaiting inspection","centre"],["1878614","Tam",11,"Benny's Chicken","104 Lichfield Street, Tamworth, B79 7QB","B79 7QB","Fried chicken","2","2026-03-12","","centre"],["1416191","Tam",12,"Joba's Takeaway","81b Bolebridge Street, Tamworth, B79 7RD","B79 7RD","Unknown (FSA type: takeaway/sandwich shop)","4","2025-05-14","","centre"],["1557638","Tam",13,"Swallow Cantonese Take Away","Swallow Chinese Takeaway, 39A Aldergate, Tamworth, B79 7DD","B79 7DD","Chinese / Cantonese","5","2026-05-05","","centre"],["1904493","Tam",14,"Papudom 4U","39 Aldergate, Tamworth, B79 7DD","B79 7DD","Indian*","5","2026-02-13","","centre"],["1785915","Tam",15,"Pizza Boss","36 ALDERGATE, Tamworth, B79 7DX","B79 7DX","Pizza","5","2025-03-24","","centre"],["1620292","Tam",16,"Steves Fish Bar","35 Lower Gungate, Tamworth, B79 7AT","B79 7AT","Fish & chips*","5","2025-10-28","","centre"],["1901935","Tam",17,"Rayu Pan Asian","29 Lower Gungate, Tamworth, B79 7AT","B79 7AT","Pan-Asian","5","2025-10-13","","centre"],["1957914","Tam",18,"Shake & Take Tamworth","1A Little Church Lane, Tamworth, B79 7AX","B79 7AX","Milkshakes / desserts*","5","2026-07-02","","centre"],["1799468","Tam",19,"Mr. Chips","5C VICTORIA ROAD, Tamworth, B79 7HL","B79 7HL","Fish & chips*","5","2026-01-05","","centre"],["1538176","Tam",20,"T&J Burgers / T&J Desserts","86 - 87 Bolebridge Street, Tamworth, B79 7PD","B79 7PD","Burgers & desserts","4","2025-01-30","","centre"],["1948937","Tam",21,"Piri Fino","7 George Street, Tamworth, B79 7LH","B79 7LH","Peri-peri chicken*","4","2026-06-18","","centre"],["1923797","Tam",22,"Between the Buns","64 Albert Road, Tamworth, B79 7JN","B79 7JN","Burgers*","5","2026-07-08","","centre"],["1688068","Tam",23,"Eat Well","156 Kettlebrook Road, Kettlebrook, Tamworth, B77 1AF","B77 1AF","Unknown (FSA type: takeaway/sandwich shop)","5","2024-05-08","","centre"],["1937050","Tam",24,"The Tamworth Tandoor","332 Tamworth Road, Kettlebrook, Tamworth, B77 1DH","B77 1DH","Indian / tandoori","5","2026-06-11","","outer"],["1664140","Tam",25,"Golden Dragon","49 Greatmead, Kettlebrook, Tamworth, B77 1DL","B77 1DL","Chinese*","4","2025-04-30","","outer"],["1676090","Tam",26,"2 Gates Grill","Unit 2 St Catherine's Court, 104 Tamworth Road, Two Gates, Tamworth, B77 1EG","B77 1EG","Grill","5","2026-01-02","","outer"],["1416200","Tam",27,"Dug Out Fish Bar","461 Watling Street, Two Gates, Tamworth, B77 1EL","B77 1EL","Fish & chips","3","2024-09-12","","outer"],["1923798","Tam",99,"Fu House Chinese Takeaway","1-3 Springfield Road, TWO GATES, Tamworth, B77 1EB","B77 1EB","Chinese","5","2026-07-16","","unknown"]];
+const TOWNS = {Sto:"Stone", New:"Newcastle-under-Lyme", Tam:"Tamworth"};
+const STATUSES = [["todo","To visit"],["visited","Visited"],["pitched","Pitched"],["sold","Sold"],["later","Follow up"],["no","No"]];
+const SETUP = [
+  {phase:"1 · Order the kit (today)", items:[
+    {id:"cards", t:"30 blank NFC cards, NTAG215", p:"ZipNFC about £0.42 each; or an Amazon pack. NTAG213 is enough too.", l:[["ZipNFC NTAG215","https://zipnfc.com/nfc-tag-pvc-card-credit-card-size-ntag215.html"],["Amazon UK","https://www.amazon.co.uk/s?k=ntag215+nfc+card+white+pvc"],["Seritag","https://seritag.com/nfc-tags/cards"]]},
+    {id:"stickers", t:"NFC stickers (and a few on-metal ones for steel counters)", p:"25 mm NTAG213 stickers go on the back of each stand's insert.", l:[["Amazon 100-pack","https://www.amazon.co.uk/NTAG213-NFC-Stickers-Ntag213-Compatible/dp/B0F2F9KFDY"],["Seritag on-metal","https://seritag.com/nfc-tags/30mm-on-metal-pvc-disc-ntag213"]]},
+    {id:"stands", t:"10 A6 acrylic counter stands", p:"Slanted A6 holders; the insert slides in with the sticker behind it.", l:[["Amazon A6 6-pack","https://www.amazon.co.uk/A6-Acrylic-Sign-Holder-Slanted/dp/B07PQJ2XBS"],["Amazon search","https://www.amazon.co.uk/s?k=a6+acrylic+sign+holder"]]},
+    {id:"reader", t:"Card reader", p:"Square Reader £19 + VAT (1.75%), or Zettle £29 + VAT for your first reader. No monthly fee on either.", l:[["Square Reader","https://squareup.com/gb/en/hardware/reader"],["Zettle","https://www.zettle.com/gb/payments/card-reader"]]},
+    {id:"bizcards", t:"100 business cards", p:"Your name, number and the line \"More orders from the listing you already have\".", l:[["Vistaprint UK","https://www.vistaprint.co.uk/business-cards/standard/templates/custom/inexpensive"],["Solopress","https://www.solopress.com/business-cards/"]]},
+    {id:"app", t:"NFC writer app on your phone", p:"NXP TagWriter or NFC Tools. Write the link, test on both phone types, then lock the tag.", l:[["TagWriter Android","https://play.google.com/store/apps/details?id=com.nxp.nfc.tagwriter"],["TagWriter iOS","https://apps.apple.com/us/app/nfc-tagwriter-by-nxp/id1246143221"],["NFC Tools","https://www.wakdev.com/en/apps.html"]]},
+    {id:"domain", t:"A .co.uk domain for your redirect links", p:"Point each chip at yourdomain.co.uk/r/shopname so you can fix a link without rewriting the chip. Host free on Cloudflare Pages.", l:[["Porkbun","https://porkbun.com/products/domains"],["Cloudflare Pages","https://developers.cloudflare.com/pages/platform/limits/index.md"]]},
+  ]},
+  {phase:"2 · Build the demo (one evening)", items:[
+    {id:"insert", t:"Design the stand insert", p:"\"Enjoyed it? Tap here to leave us a Google review\" with a QR backup. No mention of freebies or discounts.", l:[]},
+    {id:"demo3", t:"Make 3 demo stands", p:"One points at a demo page, and two are spare to program on the spot.", l:[]},
+    {id:"placeid", t:"Practise finding a Place ID", p:"Owner's phone: Business Profile → Read reviews → Get more reviews → Copy. Without owner access: Place ID Finder, then search.google.com/local/writereview?placeid=…", l:[["Google help","https://support.google.com/business/answer/16816815?hl=en"],["Place ID Finder","https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder"]]},
+    {id:"demosite", t:"One demo takeaway website on your phone", p:"A made-up takeaway with a menu, click-to-call, map and hygiene 5. Built in an evening with Carrd or Pages.", l:[["Carrd","https://carrd.com/pro"],["Square Online","https://squareup.com/gb/en/online-ordering"]]},
+    {id:"rehearse", t:"Say the pitch out loud 10 times", p:"Record yourself once. Cut every sentence that doesn't mention their listing, their money or their time.", l:[]},
+  ]},
+  {phase:"3 · Admin (30 minutes)", items:[
+    {id:"hmrc", t:"Register as self-employed when you start trading", p:"Register for Self Assessment by 5 October after the end of the tax year you start. The first £1,000 of trading income is covered by the trading allowance. Check gov.uk.", l:[["gov.uk: set up as a sole trader","https://www.gov.uk/set-up-sole-trader"]]},
+    {id:"receipts", t:"Receipts and records", p:"Square or Zettle email receipts. Keep this tracker's notes as your client record.", l:[]},
+  ]},
+  {phase:"4 · Walk day", items:[
+    {id:"route", t:"Pick a town and a window", p:"Stone's centre is about 5 km of walking, Newcastle's about 4 km, and Tamworth's about 5 km (plus four outer ones).", l:[]},
+    {id:"audit10", t:"Audit before every door", p:"60 seconds per shop (see the audit tab). Note stars, count, last review and apps.", l:[]},
+    {id:"first3", t:"First three pitches done", p:"The first three are practice. The fourth is where it clicks.", l:[]},
+  ]},
+  {phase:"5 · Follow-up", items:[
+    {id:"day7", t:"Day-7 visit or message to every buyer", p:"Show them their new reviews, then offer the next rung.", l:[]},
+    {id:"day30", t:"Day-30 results check", p:"Screenshot before and after. That's your best sales tool for the next street.", l:[]},
+  ]},
+];
+
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let state = {};          // id -> {status, notes, value}
+let setupState = {};     // id -> {done}
+let db = null, mode = "local";
+let town = "Sto", filt = "all";
+const rows = SEED.map(r => ({id:r[0], town:r[1], order:r[2], name:r[3], address:r[4], postcode:r[5], cuisine:r[6], fsa:r[7], fsaDate:r[8], flags:r[9] ? r[9].split(",") : [], zone:r[10]}));
+
+function lsGet(k){ try { return JSON.parse(localStorage.getItem(k) || "null"); } catch(e){ return null; } }
+function lsSet(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+try { const t = localStorage.getItem("tr-town"); if (t && TOWNS[t]) town = t; } catch(e){}
+
+function fsaChip(f){
+  if (!f) return "";
+  if (f === "AwaitingInspection" || /await/i.test(f)) return '<span class="chip">Hygiene: awaiting</span>';
+  const n = Number(f);
+  const cls = n >= 5 ? "fsa5" : n === 4 ? "fsa4" : n === 3 ? "fsa3" : "fsalow";
+  return `<span class="chip ${cls}">Hygiene ${n}</span>`;
+}
+
+function render(){
+  const list = $("#list");
+  const inTown = rows.filter(r => r.town === town).sort((a,b) => a.order - b.order);
+  const shown = inTown.filter(r => {
+    const s = (state[r.id] || {}).status || "todo";
+    if (filt === "todo") return s === "todo";
+    if (filt === "later") return s === "later" || s === "pitched" || s === "visited";
+    if (filt === "sold") return s === "sold";
+    return true;
+  });
+  list.innerHTML = shown.map(r => {
+    const st = state[r.id] || {};
+    const s = st.status || "todo";
+    const q = encodeURIComponent(`${r.name} ${r.address}`);
+    const flags = r.flags.map(f => f === "new" ? '<span class="chip new">NEW</span>' : `<span class="chip">${esc(f)}</span>`).join("");
+    return `<article class="row" data-status="${s}" data-id="${r.id}">
+      <div class="tno">stop<b>${String(r.order).padStart(2,"0")}</b>${r.zone === "outer" ? "outer" : ""}</div>
+      <div>
+        <div class="name"><h3>${esc(r.name)}</h3><span class="meta">${esc(r.cuisine)}</span></div>
+        <div class="meta">${esc(r.address)}</div>
+        <div class="chips">${fsaChip(r.fsa)}${r.fsaDate ? `<span class="chip">inspected ${esc(r.fsaDate)}</span>` : ""}${flags}</div>
+        <div class="actions">
+          <a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">Maps ↗</a>
+          <a href="https://ratings.food.gov.uk/business/${esc(r.id)}" target="_blank" rel="noopener">Hygiene ↗</a>
+        </div>
+        <div class="status" role="group" aria-label="Status for ${esc(r.name)}">
+          ${STATUSES.map(([k,l]) => `<button data-s="${k}" aria-pressed="${s===k}">${l}</button>`).join("")}
+        </div>
+        <div class="note">
+          <textarea id="n-${r.id}" rows="1" placeholder="Stars, reviews, last review, apps, who you spoke to, when to return">${esc(st.notes || "")}</textarea>
+          <input id="v-${r.id}" type="number" min="0" inputmode="decimal" placeholder="£ sold" value="${st.value ?? ""}" aria-label="Amount sold to ${esc(r.name)}">
+        </div>
+        <div class="saved" id="sv-${r.id}"></div>
+      </div>
+    </article>`;
+  }).join("") || '<p class="banner">Nothing here yet.</p>';
+  tiles();
+}
+
+function tiles(){
+  const all = Object.values(state);
+  const count = s => rows.filter(r => (state[r.id]||{}).status === s).length;
+  const visited = rows.filter(r => { const s = (state[r.id]||{}).status; return s && s !== "todo"; }).length;
+  $("#t-visit").textContent = visited;
+  $("#t-total").textContent = rows.length;
+  $("#t-pitch").textContent = count("pitched") + count("sold") + count("later");
+  $("#t-sold").textContent = count("sold");
+  const cash = all.reduce((a, s) => a + (Number(s.value) || 0), 0);
+  $("#t-cash").textContent = "£" + cash.toLocaleString("en-GB");
+}
+
+// one write at a time per document
+const queues = {};
+function save(id, patch){
+  const r = rows.find(x => x.id === id);
+  state[id] = Object.assign({}, state[id] || {}, patch);
+  const body = {id, name: r ? r.name : "", town: r ? TOWNS[r.town] : "", status: state[id].status || "todo", notes: state[id].notes || "", value: Number(state[id].value) || 0, updated: new Date().toISOString()};
+  const sv = $("#sv-" + id);
+  if (mode === "local" || !db){
+    lsSet("tr-state", state);
+    if (sv) sv.textContent = "Saved on this phone";
+    tiles();
+    return;
+  }
+  const run = async () => {
+    try { await db.doc("prospects/" + id).set(body); if (sv) sv.textContent = "Saved"; }
+    catch(e){ if (sv) sv.textContent = "Couldn't save (" + (e && e.code || "error") + "). Kept on this phone."; lsSet("tr-state", state); }
+  };
+  queues[id] = (queues[id] || Promise.resolve()).then(run);
+  tiles();
+}
+
+$("#list").addEventListener("click", e => {
+  const b = e.target.closest(".status button");
+  if (!b) return;
+  const row = b.closest(".row");
+  const id = row.dataset.id;
+  save(id, {status: b.dataset.s});
+  row.dataset.status = b.dataset.s;
+  row.querySelectorAll(".status button").forEach(x => x.setAttribute("aria-pressed", x === b));
+});
+$("#list").addEventListener("change", e => {
+  const row = e.target.closest(".row");
+  if (!row) return;
+  const id = row.dataset.id;
+  if (e.target.tagName === "TEXTAREA") save(id, {notes: e.target.value});
+  if (e.target.tagName === "INPUT") save(id, {value: e.target.value, status: e.target.value ? "sold" : (state[id]||{}).status});
+});
+
+$("#townSeg").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  town = b.dataset.town; try { localStorage.setItem("tr-town", town); } catch(err){}
+  document.querySelectorAll("#townSeg button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+$("#filtSeg").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  filt = b.dataset.f;
+  document.querySelectorAll("#filtSeg button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+document.querySelectorAll("#townSeg button").forEach(x => x.setAttribute("aria-pressed", x.dataset.town === town));
+
+// ---------- setup checklist
+function renderSetup(){
+  $("#setupList").innerHTML = SETUP.map(ph => `<div class="phase"><h3>${esc(ph.phase)}</h3>${ph.items.map(it => `
+    <div class="item"><input type="checkbox" id="s-${it.id}" data-id="${it.id}" ${(setupState[it.id]||{}).done ? "checked" : ""}>
+      <div><label for="s-${it.id}">${esc(it.t)}</label><p>${esc(it.p)}</p>${it.l.length ? `<div class="links">${it.l.map(([n,u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(n)} ↗</a>`).join("")}</div>` : ""}</div>
+    </div>`).join("")}</div>`).join("");
+}
+$("#setupList").addEventListener("change", async e => {
+  const id = e.target.dataset.id; if (!id) return;
+  setupState[id] = {done: e.target.checked};
+  if (db && mode === "db"){ try { await db.doc("setup/" + id).set({done: e.target.checked, updated: new Date().toISOString()}); } catch(err){ lsSet("tr-setup", setupState); } }
+  else lsSet("tr-setup", setupState);
+});
+
+// ---------- tabs
+function showTab(name){
+  document.querySelectorAll("[data-panel]").forEach(p => p.hidden = p.dataset.panel !== name);
+  document.querySelectorAll("nav.tabs a").forEach(a => a.setAttribute("aria-current", a.dataset.tab === name));
+}
+document.querySelector("nav.tabs").addEventListener("click", e => {
+  const a = e.target.closest("a"); if (!a) return;
+  e.preventDefault(); showTab(a.dataset.tab);
+  try { history.replaceState(null, "", "#" + a.dataset.tab); } catch(err){}
+});
+const start = (location.hash || "#walk").slice(1);
+showTab(["walk","pitch","audit","setup","numbers"].includes(start) ? start : "walk");
+
+// ---------- calculator
+function calc(){
+  const v = id => Math.max(0, Number($(id).value) || 0);
+  const m = v("#c-stands") * 30 * 4.33 + v("#c-tune") * 59 + v("#c-sites") * 300 + v("#c-care") * 25;
+  $("#c-out").textContent = "£" + Math.round(m).toLocaleString("en-GB");
+  const gap = 2000 - m;
+  $("#c-note").textContent = gap > 0 ? `£${Math.round(gap).toLocaleString("en-GB")} short of £2k. Each care plan adds £25 every month without another walk.` : "Past £2k. Now grow the care plans, because they pay every month.";
+}
+document.querySelectorAll("#calc input").forEach(i => i.addEventListener("input", calc));
+calc();
+
+// ---------- boot: render from local state first, then light up the shared tracker
+state = lsGet("tr-state") || {};
+setupState = lsGet("tr-setup") || {};
+render(); renderSetup();
+$("#saveMode").textContent = "Saving on this phone only until the tracker connects.";
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch(e){ db = null; }
+  if (!db){ $("#saveMode").textContent = "Saving on this phone only (the shared tracker isn't available in this view)."; return; }
+  mode = "db";
+  $("#saveMode").textContent = "Tracker connected. Changes save to your account, so Claude can read them for follow-ups.";
+  db.collection("prospects").onSnapshot(snap => {
+    let changed = false;
+    snap.docs.forEach(d => { const x = d.data(); if (!x) return; const cur = state[d.id] || {};
+      if (cur.status !== x.status || cur.notes !== x.notes || Number(cur.value||0) !== Number(x.value||0)) { state[d.id] = {status:x.status, notes:x.notes, value:x.value || ""}; changed = true; } });
+    const active = document.activeElement;
+    if (changed && !(active && (active.tagName === "TEXTAREA" || active.tagName === "INPUT") && active.closest(".row"))) render(); else tiles();
+  }, err => { $("#saveMode").textContent = "Tracker disconnected (" + err.code + "). Saving on this phone."; mode = "local"; });
+  db.collection("setup").onSnapshot(snap => {
+    snap.docs.forEach(d => { const x = d.data(); if (x) setupState[d.id] = {done: !!x.done}; });
+    if (!(document.activeElement && document.activeElement.closest && document.activeElement.closest("#setupList"))) renderSetup();
+  }, () => {});
+})();
+</script>

@@ -1,0 +1,68 @@
+00 open_00: ratio=0.974
+     ('replace', 'ormuz', 'hormuz')
+02 open_02: ratio=1.000
+     lowprob: [('y', 0.36)]
+06 gap_01: ratio=0.889
+     ('replace', 'larak', 'larac')
+     ('replace', 'cuoin', 'coin')
+     ('replace', 'veintiuna', 'veintiuno')
+     lowprob: [('Coín,', 0.38)]
+08 gap_03: ratio=1.000
+     lowprob: [('con', 0.45)]
+09 gap_04: ratio=0.950
+     ('replace', 'ormuz', 'hormuz')
+10 gap_05: ratio=0.906
+     ('replace', 'tunb', 'tumb')
+     ('replace', 'abu musa', 'abumuza')
+     lowprob: [('Tumb', 0.37)]
+13 flows_01: ratio=1.000
+     lowprob: [('Eso', 0.46)]
+14 flows_02: ratio=1.000
+     lowprob: [('Qatar.', 0.48)]
+17 flows_05: ratio=0.895
+     ('replace', 'ochenta y cuatro', '84')
+18 flows_06: ratio=1.000
+     lowprob: [('Solo', 0.39)]
+21 closing_00: ratio=1.000
+     lowprob: [('y', 0.29)]
+24 closing_03: ratio=0.933
+     ('replace', 'cuatrocientos', '400')
+25 closing_04: ratio=0.930
+     ('replace', 'adonde', 'a donde')
+26 closing_05: ratio=0.899
+     ('replace', 'setenta y un', '71')
+     ('delete', 'dos mil ocho', '')
+35 how_04: ratio=0.962
+     ('replace', 'mil', '000')
+39 around_00: ratio=0.969
+     ('replace', 'yanbu', 'yambu')
+41 around_02: ratio=0.958
+     ('replace', 'habshan', 'hapshan')
+     lowprob: [('en', 0.45)]
+42 around_03: ratio=1.000
+     lowprob: [('sólo', 0.47)]
+44 around_05: ratio=1.000
+     lowprob: [('que', 0.48)]
+46 around_07: ratio=0.967
+     ('replace', 'cuarenta', '40')
+50 october_00: ratio=0.945
+     ('replace', 'contra petroleros', 'contrapetroleros')
+54 october_04: ratio=0.970
+     ('replace', 'qatar', 'catar')
+57 october_07: ratio=1.000
+     lowprob: [('Y', 0.46)]
+61 price_03: ratio=0.967
+     ('replace', 'cien', '100')
+63 price_05: ratio=1.000
+     lowprob: [('y', 0.39)]
+64 price_06: ratio=0.971
+     ('replace', 'quinientos', '500')
+66 price_08: ratio=0.926
+     ('replace', 'treinta y cinco', '35')
+     lowprob: [('3', 0.45)]
+72 verdict_05: ratio=0.964
+     ('replace', 'este', 'oeste')
+75 verdict_08: ratio=1.000
+     lowprob: [('y', 0.44)]
+76 verdict_09: ratio=1.000
+     lowprob: [('aún', 0.46)]

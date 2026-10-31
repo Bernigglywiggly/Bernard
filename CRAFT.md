@@ -1,0 +1,165 @@
+# CRAFT: house rules for every film and Short
+
+Read before writing a script, a storyboard or a prompt for any channel. Distilled from the X and web research in
+`lab/research/x_notes.md` and `lab/research/motion_playbook.md` (Oct 2026), and from what our own critics catch.
+**After every film, add one line under "Learned on our films" for anything a critic or the user caught.** This file
+is how the studio gets better between sessions.
+
+## 1. Survive YouTube's "inauthentic content" rule (the biggest risk to the whole plan)
+Since July 2025 YouTube demonetises "mass-produced, repetitive" channels: templated videos, slideshows with AI
+narration, interchangeable faceless uploads. Channels with 500k+ subscribers lost monetisation in 2026. AI as a tool
+is fine; **no visible author is what gets flagged.**
+- Every film needs a point of view: a judgement, a "here's what I'd do", a verdict the sources don't hand you.
+- **Vary the structure.** How They Profit's fixed seven chapters (price, machine, proof, money, you, what if, close)
+  and "Part N of 5" Shorts are a template. Change the shape every film: cold open in the middle of the story, a
+  myth-vs-fact film, a "follow one dollar" film, a timeline.
+- Original research on screen (filings, court records, maps) is the authorship. Keep sources in every description.
+- Don't flood the channels: about one long film and five to seven Shorts a week per channel is the ceiling.
+
+## 2. Script and narration
+- **Narrate like a university professor, not a hype account.** Ban Claudisms: staccato one-line sentences in a row,
+  "Not X. Y.", colon reveals, three numbers in one sentence, "Here's the thing", rhetorical questions every line.
+- One number per sentence, said the way people say it ("about seven cents in every dollar").
+- Hook: the most surprising true thing in the first 3 s of a Short and the first 8 s of a film. Then a forward
+  tease every 60-90 s ("in a minute, the trick that made it work").
+- Voice first, picture second: voice each line, trim silences, then time the animation to the narration's
+  timestamps (our engines already do this; keep it).
+- ElevenLabs v3, if used: lines over 250 characters are more stable; steer delivery with tags like [whispers] or
+  [sighs] sparingly.
+
+## 3. Look and motion
+- **Banned defaults** (the "AI video" look): centred title on a gradient; everything fading in; corner labels and
+  frame borders; generic particle bursts; glows on UI; constant easing; a small card floating in an empty frame.
+- Something new every 2-4 s. No fully frozen frame over 2 s except the end card. Reading holds get a slow 3-5% push.
+- Frame 0 is a finished, designed composition: it's the Shorts hook and YouTube's fallback thumbnail. No logo or
+  name card in the first 2-3 s of a Short.
+- The lead subject fills 60-85% of the frame. Vary scale: close, wide, overhead, full-frame type.
+- **The foreground becomes the transition**: a number, word or object pushes through the camera into the next
+  scene. One object carries across cuts (a coin, a document, a map pin) so the film reads as one piece.
+- Speed always changes: land slowly enough to read, leave fast. Springs, not linear. Hard cuts on beats when scale
+  and direction match.
+- Pacing dialect for notes: fast 0.2 s, medium 0.4 s, slow 0.6 s, cinematic 1-2 s per move.
+- Maps are a signature for Money Crimes and How They Profit: animated routes, real terrain and real places
+  (see the Austerlitz film in x_notes for the standard).
+
+## 4. Process gates (don't skip; fixing a still costs seconds, fixing a render costs a re-render)
+1. References: 1-2 videos or frames in the target style. Name the style, extract frames with ffmpeg, write a style
+   guide (palette hex, type, shot lengths, transitions) before any code.
+2. Shot list on the narration timeline: time, what's on screen, its job, how it exits, what carries over.
+3. **Stills first**: one frame per scene as a contact sheet. Review, then animate.
+4. Animatic at low resolution for pacing, then the full render.
+5. **Critic gauntlet** (`.claude/skills/film-critic`): a fresh subagent that didn't build the film judges the
+   render, fixes go in, a new critic verifies. Never grade your own film.
+6. Director notes use camera words: "slow every zoom to 0.7x", "hard cut at 4 s", "push in on the number".
+
+## 5. Facts
+- A facts file per film is the only source for on-screen numbers, names and claims. Before render, a separate
+  checker verifies every on-screen claim against its source (adversarial: it hasn't seen the script's reasoning).
+- Label anything generated or imagined ("AI reconstruction", "What if... imagined, not a forecast").
+
+## 6. Packaging
+- Titles: 6 words or fewer, about 30-50 characters, one clear tension. The thumbnail carries the context.
+- Thumbnail text: 3 words ideal, never over 6; it complements the title, never repeats it. High contrast, sans
+  serif, outline on busy backgrounds. Test at phone size.
+- Shorts: the first frame is the hook; make the last line or frame lead back into the first so it loops; aim for
+  70-85% retention.
+
+## 7. AI pictures and clips (Higgsfield)
+- Veo/Kling prompts: 60-90 words. Shot type + subject, one action, one camera move, named light sources ("amber
+  fire glow", not "moody"), and the exact end pose so the next shot can start from it.
+- Seedance: a [VISUAL] block (camera body, lens, grade, grain, "no CGI"), the action as a camera-directed sequence,
+  an [AUDIO] block (SFX only, or nothing).
+- Consistency: character sheets (front, back, close-up, props); one master location image spun into several angles
+  as a reference; one sentence describing each voice in every prompt; leave pauses between dialogue lines.
+- Generate 2-4 representative shots before the rest. Expect to keep 3-4 out of 20.
+- Never show a real person's face in reconstructions (our rule).
+
+## 8. Sound
+- Cuts on beats. If there's a music track, measure its beat grid first (librosa); put state changes on beats and
+  big moments on downbeats.
+- -14 LUFS, true peak at or below -1 dBFS. One soft whoosh per real scene change; clicks only on real on-screen
+  actions. Keep a music-only fallback.
+
+## 9. Attention playbook (10 Oct research)
+Full tables, evidence grades and sources: `lab/research/ATTENTION_PLAYBOOK.md`. Rules marked (test) are unproven.
+1. Frame 0 of a Short is the payoff image plus 2-6 words; line 1 (≤ 3 s) is the most surprising true fact, says "you"
+   once and says the search term out loud.
+2. Judge Shorts on engaged views and "Stayed to watch" (target ≥ 70%), never raw views (every replay counts since Mar 2025).
+3. Shorts: YouTube 20-35 s by default, 50-60 s only if the story holds; TikTok gets its own 61-90 s cut.
+4. No licensed or claimable music in any Short over 60 s: one Content ID claim blocks it worldwide.
+5. Shorts get burned-in captions (2-4 words per chunk); long films get keyword overlays plus CC, not full captions.
+6. Faster is not better: one visual change every 1.5-2.5 s in Shorts, 2-4 s in films, one dimension at a time.
+7. Long films: show the thumbnail's promise by 0:08, a real payoff by 1:00, re-engagement beats near 3:00 and 6:00.
+8. End on the second-best fact plus the verdict, then stop within 15 s (peak-end); never say "to wrap up".
+9. Every promise in a title or thumbnail appears on screen before 1:00 (YouTube removes "egregious clickbait" on news,
+   which covers The Curve and the geopolitics channel).
+10. Titles: a concrete subject with the outcome withheld; true negativity is allowed, invented stakes are not.
+11. Thumbnails need text and one focal subject; faces are optional (no measured edge). 2-3 vs 4-6 words (test).
+12. Every long film goes into Test & Compare with three title/thumbnail combos; it judges by watch time share.
+13. Spend expressive-voice effort on the middle third: AI voices lose most engagement where the story builds.
+14. Repeat brand marks (colour, sting, recurring object, narrator), never the structure: that is the "mass-produced" flag.
+15. One change per test, logged with 48 h and 7 d numbers against the channel's own median (playbook §6).
+
+## Learned on our films
+- 31 Oct (Short 14 Starship catch, pre-built; critic rounds 1-2 = ONE MORE PASS, MUSTs fixed in v4): (1) a hook that describes the clip ("You're watching a tower catch...") hides the twist until 8 s: line 1 is the "nobody has ever" fact, and a drawn object (our ship over the real tower) puts our drawing on frame 0. (2) The kit caption shrinks to fit (`800 / (chars x 0.6)`): keep every caption phrase at 21 characters or fewer and pass width 860, or it drops under 68 px. (3) Both critics missed text running to x 1060: after the stills, scan rendered frames for bright pixels at x 955+ (flames, ground lines, streaks and labels overflow under the slow push). (4) A clock that sweeps part-way reads as a number nobody gave: a full turn for "an hour", or no sweep. (5) Critics judging from 360 px sheets misread 68 px text as ~40 px: check a full-res frame before acting on a size finding. (6) After rewriting a line, re-check every `cue()` word: "under" moved into line 1 and fired the clock early.
+- 30-31 Oct (Short 13 carrier landing, critic rounds 1-3, SHIP on v3): (1) the kit Tag spring (damping 10) overshot ~33% and pushed pop-in tags past the right edge and into the Shorts button strip: the kit now uses damping 20 (~6%); still wrap long tags to two lines and place stamps at x 60. (2) A dial or gauge over real footage reads as that event's own numbers: when the facts file only has typical figures, label it TYPICAL, say ABOUT, and never animate a precise counter (0.0 to 2.0 s). (3) Slowed footage says SLOWED in its credit. (4) Hold every label 1.4 s or more and give a dial's labels their own column. (5) Point the manifest at the version the critic passed before uploading. (6) The 30 Oct playbook rules (moving frame 0 + one drawn mark + a 4-word question, our drawing from frame 0, spoken end line with "subscribe") fit in 35 s.
+- 30 Oct (account C research: `SHORTS_PLAYBOOK`, `VIABILITY`, `BREAKOUT_CONCEPTS` 2026-10-29): (1) our leak is the first second (42-60% engaged, then 80-84% watched): frame 0 must already be moving, carry one drawn mark and a question of 5 words or fewer, and our own drawing must be on screen by second 2. (2) YouTube's 1 Oct 2026 originality change: narration that only describes the clip loses reach; every line adds a why, a number or a verdict. (3) Loops are not engaged views and the Partner Programme counts only engaged ("qualified") views. (4) The formats that repeat in 2026 are drawn, not clip-led: maps (World Ji Ke L10 915,500), "how engineers solved" (Under Six Minutes Studio 494,000), "evolution of" (Untold Theory 579,500); the clip-plus-narration comparable sits at 25,000. (5) Shorts pay $0.03-0.33 per 1,000 views and long-form about $2.30 (AIR, 300 channels): Shorts build subscribers, long-form earns.
+- 29 Oct (Short 12 phone clock, critic rounds 1-2): (1) a two-line tag placed beside a drawing at x 560 overshot into the Shorts button strip when it popped in (the same overflow as Short 11): place pop-in tags at x 60 and size them from the longest word, never beside a right-hand drawing below y 1000. (2) 'SMALL = 68' with this font still read under 48 px cap height for 56-60 px labels: every label, tag, date and end card starts at 68 px, mono at 72. (3) A scene whose objects arrive only on later cue words opens on an empty frame for 1-1.5 s: show the scene's objects dim from its first frame and light them on their words. (4) Open SHOULDs: caption size varies by page, a tag that repeats the caption word for word, wording 'rewrite' and 'only works because' was softer in the facts check than in the voice.
+- 27 Oct (Short 8 iPhone Duo, account C's claims check before upload): (1) two scenes derived numbers from different inputs (a 1.9 mm fold in one, 1.4 mm in the next), so the same 30 µm layer read 0.8% and then 1.1% seconds apart. Every derived number in a film comes from one stated set of inputs, written once at the top of the facts file. (2) A quote that stops mid-phrase ("...on a small number") reads as trimmed: show the whole sentence or a clean fragment. (3) A borrowed clip of a stress test sitting under a "why do they crack?" question implies normal use broke it: name the test in the credit ("BEND TEST").
+- 26 Oct (Roadster film v2 and Short 7 v2, critic round 2; first uploads by account B): (1) enlarging type in one pass broke a layout the critic had passed: "PERFORMANCE" at 90 px ran into the next column on Tesla's page. After any size bump, render a still of every frame that holds that text before the full render. (2) A one-line disclosure that wraps at Shorts width lands on whatever sits under it: set it as explicit lines. (3) Labels that follow a tracked point need a right-edge clamp that leaves the Shorts UI zone (x > 950) empty. (4) YouTube rejects `<` or `>` anywhere in a description (400 invalidDescription), and Zapier drops a query string written in the URL: put `uploadType`/`part` in its querystring field.
+- 24 Oct (analytics, 17-24 Oct, Roadster Shorts): Short 1 "upside down and not falling" 15,420 views, 50% engaged (stayed past the first seconds), 80.8% average viewed; Shorts 2 (0.81 s) and 3 (flight time) 1,100-1,269 views at 42-46% engaged but 84% average viewed. Retention after the swipe was BETTER on 2-3; the swipe decision lost them 10x the distribution. So frame 0 and the first second decide everything: open on the single most physically impossible-looking frame with a question about it (a visual mystery), never on a number or a claim card. Subscribers: 6 from 17.8k views (0.03%): every Short now ends on the channel's promise visually (the rebrand) and the film links back to the series.
+- 18 Oct (Roadster Short 1 live: 1,312 views in its first 4 h, against a channel median of 7.5; critic round 2 scored it 8/10, SHIP): a news "clip, explained" Short with the answer in line 1, shipped within ~60 h of the event, is our best format so far. For the next ones: (1) captions break at phrase ends and never end a page on a function word ("IT TO", "WITH UP" got through); (2) scene cuts on the bed's beat (two landed late); (3) borrowed footage under half the runtime (Tesla's shots were on screen 27 of 33 s, counting the footage left under the diagram); (4) end on our own verdict, not only a second fact; (5) a GROUND arrow beside a car on a curled ramp still reads as "car on a wall": show the curl in profile instead.
+- 18 Oct (Roadster Short 1, after CRITIC_C_v2 scored the 16:9 trial 6/10): (1) frame 0 must show the claim: an upside-down car seen from below reads as "a car on a ramp", so name it on screen ("UPSIDE DOWN") and crop the 4K source tall for 9:16 instead of centre-cropping a 16:9 cut. (2) Tesla's 23.976 fps clip in a 30 fps comp gave 30% duplicate frames (visible stutter): interpolate to 30 fps with RIFE first (`~/tools/rife-ncnn-vulkan-20221029-macos`, model rife-v4.6, `-n <frames>`; about 11 fps at 1080x1920 on the M1 Pro); RIFE also makes clean 20x slow motion. (3) A loop works only if the last frame IS frame 0: end on the reversed opening clip plus a still of frame 0 (measured PSNR 41 dB). (4) `script_lint.py` now flags "isn't X, it's Y" (ISNT-X), which slipped past NOT-X and was also misleading. (5) Diagrams get no bordered card: darken the lower half of the frame into the drawing, labels at 48 px cap height or more, captions never run across a sentence.
+- 14 Oct (first analytics review, `lab/research/REVIEW_2026-10-14.md`): (1) the Escape Short fell from 73% to 47%
+  watching between 0:07 and 0:10, during a definition line ("It's the website where..."), and its answer came at 0:44.
+  The Steve Short gives the answer in line 1 and runs 35 s; it got 280 views in 2 days, about 37x the Curve median.
+  So a Short starts on the twist, and Shorts are cut from the film's reveal, not its cold open. (2) 79% of Curve views
+  and 46% of Money Crimes views came from YouTube search, so the exact search phrase goes in the title. (3) Money
+  Crimes Shorts held 50-63% viewed (best of any channel). The death-certificate Short still lost viewers in its set-up
+  dates and in a callback to the long film: open on the object and cut any callback. (4) 4 uploads sat "processing"
+  for 6 days while public, with 0 views. After every upload, poll `processingDetails` until it says `succeeded`.
+- 11 Oct (first opportunity radar, ~650 videos vs their channel medians): outliers in our niches run long (How They
+  Profit-style ~16 min, Money Crimes-style ~25 min; Visa at 4.3 min is too short for mid-roll ads); winning titles
+  put the search phrase first, then the twist ("How Uber Really Makes Money (It Is Not the Rides)"); winning
+  thumbnails pin the money number to a real, recognisable place, not a number on black. Radar: `lab/research/`.
+- 11 Oct (thumbnails, owner: "too boring, not attention grabbing"): dark, quiet thumbnails vanish in a bright feed.
+  Every thumbnail now comes from `lab/tools/thumbs_v2.py` (rules in `lab/tools/THUMBS.md`): one focal subject at
+  60-70% with a glow rim, 2-5 huge words in fluoro highlighter/neon, a complementary fluoro pair per channel, honest
+  devices (struck-out old number, circle on the detail, crossed-out myth), a small brand mark, checked at 168 px on a
+  white and a dark feed. Three variants per film for Test & Compare.
+- 9 Oct (tunnel and economy pilots, Spanish LF02): (1) the engine stamped "AI-GENERATED" on diagrams drawn in code: a
+  false label that invites "AI slop" comments. A film now sets `ILLUS` in its script ("DIAGRAM · DRAWN FOR THIS FILM").
+  (2) Frame 0 was a near-black blob and the twist landed at 9.3 s: `OPEN_RESOLVED = True` and `LEAD = 0.4` put the first
+  picture up at frame 0, and the twist moved to the first sentence (5.4 s). (3) A critic warned that three channels on
+  one engine look (rail, ASCII resolve, caption plate) is the "mass-produced" pattern: each new channel needs its own
+  visible look before launch. (4) Spanish: "cuando + subjuntivo" needs a future main verb; calques ("de por token")
+  and regional words ("sale en", "inversionistas") were caught only by a Spanish-reading critic. Respell names the
+  voice mangles in the spoken text and keep the real spelling on screen with the `(shown, said)` tuple.
+- 6 Oct (HTP 06 Visa, five critic passes): (1) the working TITLE was a factual claim nobody had checked ("never touches
+  your money"): Visa settles payments and guarantees settlement, per its own 10-K. Put the title and the thesis line in
+  FACTS.md with a source before scripting. (2) In a one-camera film, patching overlaps one at a time failed three
+  times; what worked was structural: each block fades out when its chapter ends, the camera gets over its target
+  before closing in, far moves are single hops, the last chapter is one held frame. (3) The builder's "fixed" was
+  wrong twice: measure (lit-pixel share, black frames) and let a fresh critic mark each item before saying so.
+- 5 Oct (HTP engine): move-then-hold beats measured frozen 69% of EP05's first two minutes. A 3.5% push with a side
+  drift through every beat (`ch2/kit.py` DRIFT) took it to 12%. A slow push still counts as near-still, so each scene
+  also needs something moving inside the beat: a slow float and a light sweep on the recurring $100 note took
+  near-still from 60% to 47% and frozen to 9%.
+- 5 Oct (walk-in Reels): a stamp's "coming down" shadow lasted 7 frames and read as a grey disc. An impact lands in 3-4
+  frames; the anticipation should be felt, not seen.
+- 5 Oct: `script_lint.py` (film-critic skill) on our scripts: Amazon (EP04, before CRAFT) 16 flags (number stacks,
+  staccato, colon reveals); PayPal (EP05, written to CRAFT) 1; LF04 draft 4. All fixed. Lint every script before voicing.
+- 5 Oct (LF04 draft): the first draft opened with "Not because of X... Because of Y", a banned Claudism, caught on
+  re-read. Search every draft for "Not " at the start of a sentence before voicing.
+- 5 Oct (PayPal stills): a bar slice under ~220 px can't hold its label; put it in a callout under the bar
+  (`cut_bar` in ep05/scenes.py). Check node titles fit their boxes at 40 px.
+- 4 Oct: `motion_report.py` on finished films: How They Profit (Amazon) is near-still 70% of the time (frozen 54%,
+  in short bursts; 5 stretches of 2.5-3.6 s); The Curve LF03 moves throughout except its 17 s end card; Money Crimes
+  (Ponzi) is the liveliest. HTP needs continuous camera drift and object motion inside each beat, not move-then-hold.
+- 4 Oct: our finished films peaked at -0.2 dBTP (target -1). Cause: the mix is mastered to -1.5 dBTP, but the end-card
+  step re-encoded the film's AAC track a second time. `ch2/endcard.py` now joins the WAVs and encodes once (EP04 test:
+  -1.1 dBTP, -14.2 LUFS). The Curve and Money Crimes encode once but mastered at a -1.0 ceiling, so AAC's ~0.8 dB overshoot
+  gave -0.2: `longform/doc.py` and `shorts/reel.py` now master at -1.5 dBTP like `engine/mix.py`. Applies to new renders.
+- 28 Oct (Short 10, critic rounds 1-2): every clip must be at least as long as its scene (a short clip freezes on its last frame: slow it with RIFE before the render, and check clip length against scene length); captions start on the first spoken word even under a hook title (keep the title in the top half instead of hiding captions); the loop's last frame must rebuild frame 0's overlays exactly (eased to scale 1, never a spring still settling, and no bar drawn before it grows): measure first vs last frame, 35 dB or more; sources go on the sticker that matches the filing (capex = the 8-K release, not the 10-Q).
+- 28 Oct (Short 11, critic rounds 1-3): caption spans need unique React keys: two Whisper words with the same startMs left an orphan "A" on every later page (kit key is now startMs + index); frame 0 of a product Short must show the product itself (a finger on a 3D app read as "some software": the wider shot with keyboard and screen edge fixed it); never stamp NO on a quote the facts file marks U (verify it or drop it); a verdict voiced after "Apple" reads as Apple's intent: say "Our take?" out loud, not only on screen; a long tag at 60 px overflows the right edge on its pop overshoot: two lines past ~20 characters; re-check true peak after a re-voice (v3 hit -0.9 dBFS, fixed with TP -2 and a limiter).
+- 29 Oct (Short 11, critic round 4 = SHIP on v4): a tag that overflows the right edge at 1080 px wide is a MUST on its own; wrap long tags onto two lines inside x 930 before the first render. Open SHOULDs: say "no in 2010 and again in 2014" rather than "for 16 years" when only two refusals are sourced; lock caption size across pages.

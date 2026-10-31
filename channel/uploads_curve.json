@@ -1,0 +1,283 @@
+[
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT4_v3.mp4",
+  "title": "How Unitree's Kung Fu Robot Learned to Fight",
+  "description": "Unitree says its new H2-X robot's kung fu is real: in its launch video (21 Oct 2026) the robot flips over a car, kicks dents into doors and \"guards\" a woman from a knife, and Unitree labels the footage \"Real Footage Throughout No Speed-Up\". Robots like it start by copying a person's motion, joint by joint, then practise it as thousands of virtual copies in a simulator, falling over until the move works. Unitree's own public training code (unitree_rl_gym) trains 4,096 simulated robots at once by default (its example tasks are walking), and in that code the controller acts every 0.02 seconds (50 times a second). We don't know H2-X's exact training pipeline. But the video's own small print says the \"approximately 8 hours\" of endurance is for standing, and labels the knife scene a \"Security Demonstration\".\n\nFootage: Unitree Robotics, \"Unitree Introducing: H2-X Kung Fu Legend Guardian\" (YouTube, 21 Oct 2026), used in short clips under our commentary, slowed with frame interpolation: https://www.youtube.com/watch?v=Y3zb4o47yqA\nThe simulator scenes and the balance shot are our own 3D illustration, not Unitree footage.\n\nSources:\nUnitree's training code (Train → Play → Sim2Sim → Sim2Real; num_envs = 4096; sim dt 0.005 s x decimation 4): https://github.com/unitreerobotics/unitree_rl_gym\nKungfuBot, how human kung fu motion is retargeted and learned on a Unitree G1 (NeurIPS 2025): https://arxiv.org/abs/2506.12851\nH2-X specs and price not yet published (BigGo Finance): https://finance.biggo.com/news/b25f76b1-9b05-4d74-9d7d-f3df2163154c\n\nNarration uses an AI voice. Not affiliated with or endorsed by Unitree.\n\n#Unitree #HumanoidRobot #Robotics #Shorts",
+  "tags": [
+   "unitree h2-x",
+   "unitree h2x",
+   "kung fu robot",
+   "unitree robot",
+   "humanoid robot",
+   "robot kung fu",
+   "is the unitree robot real",
+   "reinforcement learning",
+   "robotics",
+   "the curve",
+   "shorts"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short"
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT5_v3.mp4",
+  "title": "Tesla Showed a Flying Car. Then Its Profit Fell 43%",
+  "description": "Six days after Tesla's flying-Roadster demo (15 Oct 2026), its Q3 2026 results (21 Oct) showed GAAP net income down 43%, from $1.37B to $787M. But gross profit rose about 9% ($5.05B to $5.49B). The difference is spending: research and development rose 69% in a year ($1.63B to $2.76B), stock-based pay rose from $663M to $1,165M (after tax, +$523M, most of the profit drop), and Tesla's own filing puts the rise in operating expenses down to \"SI and other R&D projects, SBC (including 2025 CEO Performance Award) and SG&A\" (SI is Tesla's term for \"Super Intelligence\"; SBC is stock-based compensation). The regulatory credits Tesla sells to other carmakers fell from $417M to $113M (about three quarters). Leave out stock-based pay and a few other items, and Tesla's own non-GAAP net income fell about 4% ($1.77B to $1.70B). All figures are from Tesla's Q3 2026 Update; the percentages are our arithmetic.\n\nFootage: Tesla, \"The Ramp | Roadster\" and \"The Kickflip | Roadster\" and \"The 0-60 | Roadster\" (YouTube, 16 Oct 2026), slowed with frame interpolation, used in short clips under our commentary.\n\nSource:\nTesla Q3 2026 Update (Form 8-K, exhibit 99.1, 21 Oct 2026): https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm\n\nNarration uses an AI voice. Not financial advice. Not affiliated with or endorsed by Tesla.\n\n#Tesla #TSLA #TeslaRoadster #Shorts",
+  "tags": [
+   "tesla earnings",
+   "tesla q3 2026",
+   "tesla profit",
+   "tsla",
+   "tesla roadster",
+   "tesla stock",
+   "elon musk pay",
+   "regulatory credits",
+   "the curve",
+   "shorts"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short"
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT7_v3.mp4",
+  "title": "How Did This Robot Duck Learn to Get Back Up? (Microduck)",
+  "description": "Pollen Robotics' Microduck (the $399 robot duck in Nvidia's GTC Berlin keynote, 23 Oct 2026) gets shoved flat and stands straight back up. Nobody animated that move: it learned it in a simulator.\n\nHow, from Pollen's own open-source training code (github.com/pollen-robotics/microduck_rl):\n- Reinforcement learning: the robot earns points for staying upright, following the joystick and lifting its feet. The get-up is scored by the end pose only; the path is left for the robot to find.\n- 4,096 virtual ducks train at once (\"~1-2 h for a usable gait at 4096 envs\", per the repo).\n- The policies exploit loopholes. Pollen's notes list a \"head-tripod instead of standing\".\n- Every simulated copy gets a deliberately wrong body: mass and inertia ±5%, balance point shifted by up to ±8 mm, foot grip 0.7-1.3x, battery voltage, sag and delay randomised, and a push every 3-6 seconds. So the real robot is just one more variation.\n\nFootage: Pollen Robotics, \"We made a new robot.\" and \"Microduck Sim 2 Real.\" (YouTube, 27 Aug 2026), shown with credit for commentary. Slow-motion shots are Pollen's own; the simulator shot is slowed 2x.\nThe 3D duck is our own illustration, sized from Pollen's Apache-licensed robot description; it doesn't use Pollen's 3D meshes (their simulator appears only inside their own credited footage).\n\n#robotics #microduck #nvidia #shorts",
+  "tags": [
+   "microduck",
+   "microduck robot",
+   "microduck nvidia",
+   "robot duck",
+   "robot ducks nvidia",
+   "pollen robotics",
+   "nvidia robot",
+   "reinforcement learning",
+   "sim to real",
+   "robotics",
+   "the curve",
+   "shorts"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short"
+ },
+ {
+  "file": "../lab/curve_v2/film_roadster/out/FILM_ROADSTER_v3.mp4",
+  "title": "How the Flying Tesla Roadster Really Works",
+  "description": "Tesla's new Roadster hung upside down on a ramp, flipped over a row of trucks and hit 60 mph in 0.81 seconds at its 15 October 2026 demo. We put the launch next to independently timed records, counted its seconds of gas, and read the reservation contract that says Tesla can't guarantee if the car will be delivered.\n\nChapters\n0:00 Upside down and not falling\n0:30 The second machine: SpaceX-style jets\n1:09 0.81 seconds, on Tesla's own stopwatch\n1:50 Seconds in the air, hours to refill\n2:39 The fan car that won once and vanished\n3:17 Is the flying Roadster legal?\n3:57 What $250,000 buys you\n4:32 Verdict: a vacuum cleaner and a very short rocket\n\nWhat we found\n- The hang: fans pull the air from under the car while skirts seal the gap; Tesla says the push reaches up to twice the car's weight, even standing still.\n- The jets: two carbon-wrapped tanks (about 250 kg of compressed gas) feed 10 nozzles; the four rear nozzles give over 80 kN.\n- 0.81 s was Tesla's own timing; nobody outside Tesla has timed the car yet. The under-1.6 s figure for the version without thrusters comes from press reports of the event.\n- By our estimate the rear nozzles at full power would empty the tanks in about two seconds; Tesla told Top Gear the Thrust version gets one launch per fill, and a refill takes 2-6 hours on a nitrogen rig today (Lars Moravy).\n- The trick isn't new: the Chaparral 2J (1970) and Brabham BT46B (1978) used fans, and the McMurtry Spéirling drove upside down in 2025.\n- The FAA says the car isn't an aircraft; Tesla's own site says the Rocket version isn't approved for public roads. Top Gear was told the Thrust version is road legal.\n- Tesla's US reservation agreement says it can't guarantee \"if\" the car will be delivered. The deposit is refundable, but Tesla pays no interest on it and doesn't hold it in escrow.\n- Tesla's own Q3 2026 Update lists the Roadster's status as \"Design development\".\n\nFootage: Tesla, \"The Ramp\", \"The Kickflip\" and \"The 0-60\" (YouTube, 16 Oct 2026), used in short clips under our commentary and diagrams, some slowed with frame interpolation. The x-ray, tank and drop scenes are our own 3D illustrations, not Tesla footage.\n\nSources\nTesla, Roadster Event (15 Oct 2026): https://www.youtube.com/watch?v=qt5p-_tE8d0\nTesla Roadster page: https://www.tesla.com/roadster\nTop Gear interview with Lars Moravy and Franz von Holzhausen (16 Oct 2026): https://www.youtube.com/watch?v=JdkIOhFmbKI\nCar and Driver on the fans and thrusters (17 Oct 2026): https://www.caranddriver.com/news/a74165059/tesla-roadster-thrusters-fan-system-explained/\nRimac Nevera R records (Dewesoft-verified): https://www.rimac-newsroom.com/press-releases/rimac-automobili/rimac-nevera-r-becomes-new-0-400-0-champion-and-sets-24-performance-records\nRACER on the Chaparral 2J (16 Oct 2026): https://racer.com/2026/10/16/the-tesla-roadster-borrowed-its-trick-from-the-chaparral-2j\nTesla Q3 2026 Update (Form 8-K exhibit 99.1, 21 Oct 2026): https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm\nPolitico, the FAA and DOT/NHTSA statements (16 Oct 2026): https://www.politico.com/news/2026/10/16/faa-tesla-flying-car-01123316\nTesla Roadster Reservation Agreement, US (v.20261015, clauses 4-6): https://www.tesla.com/coinorder/api/v4/terms?locale=en_US&model=mt&saleType=PreSale\nTesla Roadster Reservation Agreement, UK: https://www.tesla.com/coinorder/api/v4/terms?locale=en_GB&model=mt&saleType=PreSale\nTesla Roadster reserve page (deposits): https://www.tesla.com/roadster/reserve\nMotor Sport, the 1978 Swedish GP, Brabham's fan car wins its one and only race: https://www.motorsportmagazine.com/special-article/the-75-greatest-grands-prix/6/75-1978-swedish-gp-brabham-fan-car-wins-its-one-and-only-race/\nMcMurtry, driving upside down (Apr 2025): https://mcmurtry.com/upside-down-driving/\nOur maths (labelled on screen): about 80 kN of rear thrust divided by gas leaving at roughly 600 m/s is about 130 kg a second, so about 250 kg of gas lasts about 2 seconds at full thrust.\n\nNarration uses an AI voice. Not affiliated with or endorsed by Tesla.\n\n#TeslaRoadster #Tesla #FlyingCar",
+  "tags": [
+   "tesla roadster",
+   "flying tesla roadster",
+   "tesla roadster explained",
+   "how does the tesla roadster fly",
+   "tesla roadster thrusters",
+   "spacex thrusters",
+   "fan car",
+   "tesla roadster 0-60",
+   "tesla roadster price",
+   "the curve",
+   "tesla roadster contract"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "long",
+  "title_alts": [
+   "Tesla Won't Promise the Flying Roadster Arrives",
+   "The Flying Tesla Roadster Has About 2 Seconds of Gas"
+  ],
+  "thumbnail": "../lab/curve_v2/film_roadster/out/thumb_D.jpg",
+  "thumbnail_alts": [
+   "../lab/curve_v2/film_roadster/out/thumb_A.jpg",
+   "../lab/curve_v2/film_roadster/out/thumb_C.jpg"
+  ]
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT8_v5.mp4",
+  "title": "iPhone Duo Crack: The Fold Explained",
+  "description": "Some iPhone Duo owners are reporting cracked inner screens, and JerryRigEverything's durability test (24 Oct 2026) is the clip everyone's sharing. This is the physics of why a folding screen works hardest at the fold. Bend any layer and its outer face stretches by its thickness divided by twice the bend radius. Ordinary 0.5 mm phone glass at a fold of about 1.9 mm would stretch over 13% and shatter. Foldable glass is about 30 microns thick, and even that stretches about 0.8%, close to the roughly 1% at which glass cracks. That's why foldable glass is toughened, and why Apple says the screen's layers \"glide past one another like the pages of a book\".\n\nApple told MacRumors (26 Oct) it is aware of \"an issue impacting the inner display on a small number of iPhone Duo units\", and that affected owners can get a replacement through AppleCare. It hasn't given a cause. iFixit's teardown found several possible causes in the hinge, none confirmed.\n\nOur maths (labelled on screen): stretch = t / 2r, so 0.03 mm / (2 x 1.9 mm) = about 0.8%, and 0.5 mm / 3.8 mm = about 13%. Apple doesn't publish the Duo's glass thickness or fold radius: the 1.9 mm is our estimate from the folded gap HTX Studio measured, and 30 microns is the typical thickness of foldable glass. The 10-layer stack is illustrative.\n\nFootage: JerryRigEverything (YouTube, 24 Oct 2026): https://youtu.be/5laDGy4INB0 and Apple's iPhone Duo film: https://youtu.be/FUfGcZ092b0, used in short clips under our commentary. The bend and layer diagrams are drawn for this Short.\n\nSources:\nApple's statement via MacRumors (26 Oct 2026): https://www.macrumors.com/2026/10/26/iphone-duo-crack-apple-response/\nHTX Studio's CT scan of the hinge, via iClarified (22 Oct 2026): https://www.iclarified.com/102981/ct-scan-reveals-how-iphone-duos-hinge-works-video\niFixit's teardown (25 Oct 2026): https://www.ifixit.com/News/119895/iphone-duo-teardown\nBending stretch (t / 2r) and glass cracking near 1%: Suo, Vlassak and Wagner, \"Micromechanics of Macroelectronics\", China Particuology 3(6), 2005\nFoldable glass about 30 microns thick: Samsung Display, \"Learn Display 57: UTG\" (4 May 2022): https://global.samsungdisplay.com/30121\n\nNarration uses an AI voice. Not affiliated with or endorsed by Apple or JerryRigEverything.\n\n#iPhoneDuo #Apple #Shorts",
+  "tags": [
+   "iphone duo crack",
+   "iphone duo screen crack",
+   "iphone duo",
+   "iphone fold",
+   "foldable iphone",
+   "iphone duo durability",
+   "why do folding phones crease",
+   "foldable glass",
+   "jerryrigeverything iphone duo",
+   "the curve",
+   "shorts"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "title_alts": [
+   "iPhone Duo Crack: Why It Happens at the Fold"
+  ]
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT10_v5.mp4",
+  "title": "How SpaceX Really Makes Money",
+  "title_alts": [
+   "SpaceX's Biggest Business Isn't Rockets"
+  ],
+  "description": "SpaceX's AI business took $7.56 billion in revenue last quarter, more than Starlink ($5.25B) and its rockets ($1.77B) put together. Rockets are about 12 cents of every dollar SpaceX took, and that segment lost $7 million. One customer SpaceX doesn't name paid 34.5% of all its revenue. The profit still comes from Starlink, which kept about 45 cents of operating profit on every dollar. Meanwhile the AI arm spent $16.4 billion on equipment in the quarter, more than twice what it brought in.\n\nAll figures are from SpaceX's own SEC filings for the third quarter of 2026 (three months to 30 September). Revenue by segment: Super Intelligence (AI) 7,560, Connectivity (Starlink) 5,248, Space 1,767, total 14,575 ($ millions). Segment operating income: AI 431, Starlink 2,367, Space -7.\n\nOur maths (labelled on screen): rockets 1,767 / 14,575 = about 12%; Starlink 2,367 / 5,248 = about 45%; AI 7,560 vs 813 a year earlier = about 9x. The filing does not name the customer behind 34.5% of revenue, and neither do we.\n\nFootage: SpaceX, \"Starship's Fifth Flight Test\" (YouTube): https://www.youtube.com/watch?v=hI9HQfCAw64, used in short clips under our commentary. The bars and charts are drawn for this Short.\n\nSources:\nSpaceX Q3 2026 10-Q (filed 22 Oct 2026): https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm\nSpaceX Q3 2026 earnings release, 8-K (filed 20 Oct 2026): https://www.sec.gov/Archives/edgar/data/1181412/000162828026066482/spcx-20261020.htm\n\nNarration uses an AI voice. Not affiliated with or endorsed by SpaceX. Not investment advice.\n\n#SpaceX #Starlink #Shorts",
+  "tags": [
+   "how does spacex make money",
+   "spacex revenue",
+   "spacex earnings",
+   "spacex ai",
+   "starlink profit",
+   "spacex q3 2026",
+   "spacex stock",
+   "spcx",
+   "starlink",
+   "spacex",
+   "the curve",
+   "shorts"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "publish_at": "2026-10-28T17:00:00Z"
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT11_v4.mp4",
+  "title": "Touchscreen MacBook: Why It Took 16 Years",
+  "title_alts": [
+   "Apple Said No to Touchscreen Macs for 16 Years",
+   "Why the Touchscreen MacBook Pro Took 16 Years"
+  ],
+  "description": "On 28 October 2026 Apple announced the MacBook Pro with PROLED XDR Display, in 14- and 16-inch sizes, and with it touch on a Mac for the first time: you can swipe, pinch to zoom and drag and drop right on the screen, alongside the keyboard and trackpad. Apple also says a newly designed hinge gives greater stability while using touch. It costs from £2,899 in the UK and goes on sale on 6 November.\n\nIn 2010 Steve Jobs said touch surfaces don't want to be vertical: reach up to a laptop screen for long and your arm gets tired. Apple's bosses kept saying no for 16 years. Here is how the screen finds your finger (a grid of transparent wires, and your finger changes the electric field where two of them cross), why a hinged screen wobbles more when you tap it at the top (twice the distance from the hinge, twice the twist: our maths, torque = force x distance), and our take on why touch is now an extra rather than the main way in.\n\nFootage: Apple. \"New MacBook Pro with PROLED XDR Display: The first-ever Mac with Touch\", https://www.youtube.com/watch?v=hnZI5uUSdEo, used in short clips under our commentary. The diagrams are drawn for this Short.\n\nSources:\nApple Newsroom, 28 Oct 2026: https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/\nUK prices: https://www.apple.com/uk/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/\nSteve Jobs, Back to the Mac event, 20 Oct 2010 (recordings): https://www.youtube.com/watch?v=7zfir0Ide0A and https://www.youtube.com/watch?v=mNVsn1P4GlM\nProjected capacitive touch: https://media.futureelectronics.com/semiconductors/lcd-display-solutions/touch-screens/ProjectedCapacitiveTechnology.pdf\nTorque: OpenStax University Physics Vol. 1, 10.6, https://openstax.org/books/university-physics-volume-1/pages/10-6-torque\nArm fatigue (gorilla arm): Hincapie-Ramos et al., CHI 2014, https://hci.cs.umanitoba.ca/publications/details/consumed-endurance-a-metric-to-quantify-arm-fatigue-of-mid-air-interactions\n\nNarration uses an AI voice. Not affiliated with or endorsed by Apple.\n\n#MacBookPro #Apple #Shorts",
+  "tags": [
+   "touchscreen macbook",
+   "touchscreen macbook pro",
+   "macbook pro touch",
+   "macbook pro proled xdr",
+   "apple touchscreen mac",
+   "macbook pro 2026",
+   "steve jobs touchscreen",
+   "gorilla arm",
+   "how touchscreens work",
+   "apple event october 2026",
+   "the curve",
+   "shorts"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "publish_at": "2026-10-29T17:00:00Z"
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT12_v2.mp4",
+  "title": "Who Changes Your Phone's Clock?",
+  "title_alts": [
+   "Who Actually Changes Your Phone's Clock on Sunday?",
+   "How Your Phone Knows When the Clocks Go Back"
+  ],
+  "description": "On Sunday 1 November 2026 at 2 a.m., clocks in most of the US go back an hour, and your phone changes its own clock. Nobody sets it by hand. Your phone gets the time from the network (a cell tower or an internet time server), then looks up where you are in the time zone database: a rulebook of the history of local time for places all over the world. Volunteers keep that rulebook, and they publish a new edition whenever a country changes its rules: six editions so far in 2026, the latest (2026f) on 27 October. For most of the US, one line in it says: first Sunday in November, 2 a.m., go back one hour. Hawaii and most of Arizona don't change. Our take: it's the clock you trust most, and it only works because volunteers do the homework.\n\nAll pictures are drawn for this Short. The phone is a generic drawing, not any maker's product.\n\nSources:\nIANA, Time Zone Database (release 2026f, 27 Oct 2026): https://www.iana.org/time-zones\nRFC 6557, Procedures for Maintaining the Time Zone Database (IETF): https://www.rfc-editor.org/rfc/rfc6557\nAndroid Open Source Project, Time source priority (NTP and NITZ): https://source.android.com/docs/core/connect/time-source\nAndroid Open Source Project, Time zone rules: https://source.android.com/docs/core/permissions/timezone-rules\n\nNarration uses an AI voice.\n\n#DaylightSaving #FallBack #Shorts",
+  "tags": [
+   "daylight saving time",
+   "clocks go back",
+   "fall back 2026",
+   "daylight saving time 2026",
+   "phone clock",
+   "time zone database",
+   "tz database",
+   "how does my phone know the time",
+   "NTP",
+   "NITZ",
+   "time zones",
+   "the curve"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "publish_at": "2026-10-30T17:00:00Z"
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT13_v3.mp4",
+  "title": "How Do Jets Land on Aircraft Carriers?",
+  "title_alts": [
+   "How a Single Wire Stops a Fighter Jet in 2 Seconds",
+   "Why Navy Pilots Land at Full Power"
+  ],
+  "description": "A fighter jet lands on an aircraft carrier at about 150 miles an hour, and a single steel wire stops it in about two seconds. On 13 October 2026 an F-35C from the Navy's VX-23 test squadron became the first jet to land on the newest carrier, the future John F. Kennedy (CVN 79). Its tail hook grabs a wire across the deck, and the wire pulls a cable to a machine below deck. On Ford-class carriers that machine is the Advanced Arresting Gear: water turbines and a large electric motor that fine-tune the pull for each aircraft. Pilots also push the throttles to full power as they touch down, so if the hook misses every wire (a \"bolter\"), the jet simply flies off and comes round again. Our take: it's a controlled crash, with the clever part hidden below deck.\n\nVideo: U.S. Navy (public domain), slowed with frame interpolation. The appearance of U.S. Department of Defense (DoD) visual information does not imply or constitute DoD endorsement. Diagrams drawn for this Short.\n\nSources:\nThe Aviationist, F-35C lands for the first time on a Ford-class carrier (14 Oct 2026): https://theaviationist.com/2026/10/14/f-35c-lands-first-time-ford-class-aircraft-carrier/\nStars and Stripes (15 Oct 2026): https://www.stripes.com/branches/navy/2026-10-15/f-35-lands-future-john-f-kennedy-carrier-23166655.html\nQinetiQ, Advanced Arresting Gear: https://www.qinetiq.com/en/what-we-do/services-and-products/advanced-arresting-gear\nCNATRA P-1211, T-45 Carrier Qualification (touch-and-go and bolter): https://navyflightmanuals.tpub.com/P-1211/Touch-And-Go-Bolter-49.htm\nWikipedia, Arresting gear: https://en.wikipedia.org/wiki/Arresting_gear\n\nNarration uses an AI voice.\n\n#AircraftCarrier #F35 #Shorts",
+  "tags": [
+   "aircraft carrier landing",
+   "how do jets land on aircraft carriers",
+   "F-35C",
+   "F-35C carrier landing",
+   "arresting gear",
+   "advanced arresting gear",
+   "tailhook",
+   "bolter",
+   "John F. Kennedy CVN 79",
+   "Ford class carrier",
+   "navy jets",
+   "the curve"
+  ],
+  "channel": "the-curve",
+  "public": true,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "publish_at": "2026-10-31T17:00:00Z"
+ },
+ {
+  "file": "../lab/curve_v2/shorts/out/SHORT14_v4.mp4",
+  "title": "How SpaceX Will Catch a Falling Starship",
+  "title_alts": [
+   "Can a Tower Catch Starship's Upper Stage?",
+   "Why SpaceX Wants to Catch Starship, Not Land It"
+  ],
+  "description": "LAUNCH DAY: update the Flight 15 date line before upload.\n\nNobody has ever caught a Starship coming back from space. SpaceX's launch tower has caught the falling Super Heavy booster under it three times, with its giant \"chopstick\" arms (Flights 5, 7 and 8). On Flight 15, expected in November 2026, SpaceX wants to catch the ship as well. As SpaceX's own simulation shows it, the ship falls back from space belly first, steering with its flaps; near the tower it lights its engines, swings upright and drops between the arms, which close around it. Catching it means no landing legs to carry, and Elon Musk's goal is to fly it again in under an hour. Our take: if the arms hold, a rocket stops being thrown away and starts working like an airliner.\n\nVideo: SpaceX, \"Starship's Fifth Flight Test\" (the first booster catch, 13 October 2024), slowed with frame interpolation. Diagrams drawn for this Short.\n\nSources:\nWikipedia, SpaceX Starship integrated flight tests: https://en.wikipedia.org/wiki/SpaceX_Starship_integrated_flight_tests\nSpace.com, Starship Flight 14 (28 Sep 2026): https://www.space.com/space-exploration/launches-spacecraft/spacex-starship-megarocket-flight-14-orbital-launch-success\nGizmodo, SpaceX Is Finally Going for the Starship Double Catch: https://gizmodo.com/spacex-is-finally-going-for-the-starship-double-catch-2000828826\nTechnology.org (23 Oct 2026): https://www.technology.org/2026/10/23/spacex-starship-flight-15-ship-booster-tower-catch-november/\nBGR, why catch instead of landing legs: https://www.bgr.com/2279871/why-spacex-plans-to-catch-starship-instead-of-landing-legs/\n\nNarration uses an AI voice.\n\n#SpaceX #Starship #Shorts",
+  "tags": [
+   "starship ship catch",
+   "spacex catch starship",
+   "starship flight 15",
+   "chopsticks catch",
+   "mechazilla",
+   "super heavy booster catch",
+   "starship tower catch",
+   "spacex",
+   "starship",
+   "rocket reuse",
+   "the curve"
+  ],
+  "channel": "the-curve",
+  "public": false,
+  "category": "28",
+  "made_for_kids": false,
+  "synthetic": true,
+  "kind": "short",
+  "publish_at": null,
+  "prebuilt_note": "Pre-built 31 Oct 2026 (account A). public is false ON PURPOSE (publish_at is null, so a stray 'upload' run would otherwise go live at once). Launch day: update DATE_PHRASE in short14.py + DATE_STAMP in CurveV2Short14.tsx from SpaceX's own date, re-voice x2 if it changed, re-render, run a critic round, point file at the passed version, set public true and publish_at the next 17:00 UK, remove the LAUNCH DAY line from the description."
+ }
+]

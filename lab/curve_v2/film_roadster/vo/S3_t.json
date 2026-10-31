@@ -1,0 +1,891 @@
+[
+ {
+  "text": "Fired",
+  "startMs": 130,
+  "endMs": 360,
+  "timestampMs": 320,
+  "confidence": 0.954201
+ },
+ {
+  "text": " from",
+  "startMs": 360,
+  "endMs": 670,
+  "timestampMs": 560,
+  "confidence": 0.998955
+ },
+ {
+  "text": " a",
+  "startMs": 670,
+  "endMs": 790,
+  "timestampMs": 780,
+  "confidence": 0.997786
+ },
+ {
+  "text": " stand",
+  "startMs": 790,
+  "endMs": 1130,
+  "timestampMs": 980,
+  "confidence": 0.996748
+ },
+ {
+  "text": "still",
+  "startMs": 1130,
+  "endMs": 1660,
+  "timestampMs": 1320,
+  "confidence": 0.952283
+ },
+ {
+  "text": ",",
+  "startMs": 1660,
+  "endMs": 1660,
+  "timestampMs": 1740,
+  "confidence": 0.973957
+ },
+ {
+  "text": " the",
+  "startMs": 1660,
+  "endMs": 1840,
+  "timestampMs": 1820,
+  "confidence": 0.993953
+ },
+ {
+  "text": " Tesla",
+  "startMs": 1840,
+  "endMs": 2140,
+  "timestampMs": 2180,
+  "confidence": 0.998689
+ },
+ {
+  "text": " Road",
+  "startMs": 2140,
+  "endMs": 2380,
+  "timestampMs": 2380,
+  "confidence": 0.94989
+ },
+ {
+  "text": "ster",
+  "startMs": 2380,
+  "endMs": 2620,
+  "timestampMs": 2540,
+  "confidence": 0.999973
+ },
+ {
+  "text": " hit",
+  "startMs": 2620,
+  "endMs": 2790,
+  "timestampMs": 2740,
+  "confidence": 0.529518
+ },
+ {
+  "text": " 60",
+  "startMs": 2790,
+  "endMs": 3350,
+  "timestampMs": 3180,
+  "confidence": 0.993184
+ },
+ {
+  "text": " miles",
+  "startMs": 3350,
+  "endMs": 3460,
+  "timestampMs": 3380,
+  "confidence": 0.954262
+ },
+ {
+  "text": " an",
+  "startMs": 3460,
+  "endMs": 3580,
+  "timestampMs": 3600,
+  "confidence": 0.98144
+ },
+ {
+  "text": " hour",
+  "startMs": 3580,
+  "endMs": 3860,
+  "timestampMs": 3780,
+  "confidence": 0.998932
+ },
+ {
+  "text": " in",
+  "startMs": 3860,
+  "endMs": 4030,
+  "timestampMs": 4040,
+  "confidence": 0.860963
+ },
+ {
+  "text": " 0",
+  "startMs": 4030,
+  "endMs": 4290,
+  "timestampMs": 4400,
+  "confidence": 0.996177
+ },
+ {
+  "text": ".",
+  "startMs": 4290,
+  "endMs": 4550,
+  "timestampMs": 4680,
+  "confidence": 0.999401
+ },
+ {
+  "text": "81",
+  "startMs": 4550,
+  "endMs": 5070,
+  "timestampMs": 5160,
+  "confidence": 0.994662
+ },
+ {
+  "text": " seconds",
+  "startMs": 5070,
+  "endMs": 5680,
+  "timestampMs": 5780,
+  "confidence": 0.997973
+ },
+ {
+  "text": ".",
+  "startMs": 5680,
+  "endMs": 5980,
+  "timestampMs": 5980,
+  "confidence": 0.994332
+ },
+ {
+  "text": " The",
+  "startMs": 5980,
+  "endMs": 6130,
+  "timestampMs": 6140,
+  "confidence": 0.999436
+ },
+ {
+  "text": " version",
+  "startMs": 6130,
+  "endMs": 6490,
+  "timestampMs": 6380,
+  "confidence": 0.999394
+ },
+ {
+  "text": " without",
+  "startMs": 6490,
+  "endMs": 6850,
+  "timestampMs": 6660,
+  "confidence": 0.971658
+ },
+ {
+  "text": " thr",
+  "startMs": 6850,
+  "endMs": 7000,
+  "timestampMs": 7080,
+  "confidence": 0.960702
+ },
+ {
+  "text": "usters",
+  "startMs": 7000,
+  "endMs": 7330,
+  "timestampMs": 7120,
+  "confidence": 0.999098
+ },
+ {
+  "text": " is",
+  "startMs": 7330,
+  "endMs": 7670,
+  "timestampMs": 7500,
+  "confidence": 0.962366
+ },
+ {
+  "text": " quoted",
+  "startMs": 7670,
+  "endMs": 7900,
+  "timestampMs": 7780,
+  "confidence": 0.99854
+ },
+ {
+  "text": " at",
+  "startMs": 7900,
+  "endMs": 8120,
+  "timestampMs": 8040,
+  "confidence": 0.969573
+ },
+ {
+  "text": " under",
+  "startMs": 8120,
+  "endMs": 8710,
+  "timestampMs": 8280,
+  "confidence": 0.996086
+ },
+ {
+  "text": " 1",
+  "startMs": 8710,
+  "endMs": 9060,
+  "timestampMs": 8540,
+  "confidence": 0.987803
+ },
+ {
+  "text": ".",
+  "startMs": 9060,
+  "endMs": 9360,
+  "timestampMs": 8780,
+  "confidence": 0.999733
+ },
+ {
+  "text": "6",
+  "startMs": 9360,
+  "endMs": 9720,
+  "timestampMs": 9260,
+  "confidence": 0.998567
+ },
+ {
+  "text": ",",
+  "startMs": 9720,
+  "endMs": 9720,
+  "timestampMs": 9660,
+  "confidence": 0.579259
+ },
+ {
+  "text": " so",
+  "startMs": 9720,
+  "endMs": 9870,
+  "timestampMs": 9940,
+  "confidence": 0.998304
+ },
+ {
+  "text": " most",
+  "startMs": 9870,
+  "endMs": 10180,
+  "timestampMs": 10300,
+  "confidence": 0.983663
+ },
+ {
+  "text": " of",
+  "startMs": 10180,
+  "endMs": 10320,
+  "timestampMs": 10460,
+  "confidence": 0.999131
+ },
+ {
+  "text": " that",
+  "startMs": 10320,
+  "endMs": 10620,
+  "timestampMs": 10600,
+  "confidence": 0.988172
+ },
+ {
+  "text": " gap",
+  "startMs": 10620,
+  "endMs": 10850,
+  "timestampMs": 10840,
+  "confidence": 0.998049
+ },
+ {
+  "text": " is",
+  "startMs": 10850,
+  "endMs": 11010,
+  "timestampMs": 11060,
+  "confidence": 0.997478
+ },
+ {
+  "text": " compressed",
+  "startMs": 11010,
+  "endMs": 11760,
+  "timestampMs": 11520,
+  "confidence": 0.999504
+ },
+ {
+  "text": " gas",
+  "startMs": 11760,
+  "endMs": 11990,
+  "timestampMs": 11960,
+  "confidence": 0.998502
+ },
+ {
+  "text": ".",
+  "startMs": 11990,
+  "endMs": 12260,
+  "timestampMs": 12260,
+  "confidence": 0.992642
+ },
+ {
+  "text": " That",
+  "startMs": 12260,
+  "endMs": 12480,
+  "timestampMs": 12400,
+  "confidence": 0.999577
+ },
+ {
+  "text": "'s",
+  "startMs": 12480,
+  "endMs": 12590,
+  "timestampMs": 12480,
+  "confidence": 0.999024
+ },
+ {
+  "text": " about",
+  "startMs": 12590,
+  "endMs": 12870,
+  "timestampMs": 12640,
+  "confidence": 0.999161
+ },
+ {
+  "text": " half",
+  "startMs": 12870,
+  "endMs": 13090,
+  "timestampMs": 13000,
+  "confidence": 0.991586
+ },
+ {
+  "text": " the",
+  "startMs": 13090,
+  "endMs": 13260,
+  "timestampMs": 13180,
+  "confidence": 0.994602
+ },
+ {
+  "text": " time",
+  "startMs": 13260,
+  "endMs": 13520,
+  "timestampMs": 13480,
+  "confidence": 0.999371
+ },
+ {
+  "text": " of",
+  "startMs": 13520,
+  "endMs": 13820,
+  "timestampMs": 13620,
+  "confidence": 0.976574
+ },
+ {
+  "text": " a",
+  "startMs": 13820,
+  "endMs": 13950,
+  "timestampMs": 13820,
+  "confidence": 0.996185
+ },
+ {
+  "text": " Rem",
+  "startMs": 13950,
+  "endMs": 14120,
+  "timestampMs": 14020,
+  "confidence": 0.668806
+ },
+ {
+  "text": "atz",
+  "startMs": 14120,
+  "endMs": 14410,
+  "timestampMs": 14160,
+  "confidence": 0.906184
+ },
+ {
+  "text": " Nav",
+  "startMs": 14410,
+  "endMs": 14730,
+  "timestampMs": 14420,
+  "confidence": 0.387435
+ },
+ {
+  "text": "ara",
+  "startMs": 14730,
+  "endMs": 15000,
+  "timestampMs": 14600,
+  "confidence": 0.677404
+ },
+ {
+  "text": " R",
+  "startMs": 15000,
+  "endMs": 15100,
+  "timestampMs": 14940,
+  "confidence": 0.962269
+ },
+ {
+  "text": ",",
+  "startMs": 15100,
+  "endMs": 15320,
+  "timestampMs": 15340,
+  "confidence": 0.936751
+ },
+ {
+  "text": " one",
+  "startMs": 15320,
+  "endMs": 15500,
+  "timestampMs": 15460,
+  "confidence": 0.999295
+ },
+ {
+  "text": " of",
+  "startMs": 15500,
+  "endMs": 15620,
+  "timestampMs": 15540,
+  "confidence": 0.998837
+ },
+ {
+  "text": " the",
+  "startMs": 15620,
+  "endMs": 15800,
+  "timestampMs": 15780,
+  "confidence": 0.99862
+ },
+ {
+  "text": " quickest",
+  "startMs": 15800,
+  "endMs": 16280,
+  "timestampMs": 15960,
+  "confidence": 0.997756
+ },
+ {
+  "text": " cars",
+  "startMs": 16280,
+  "endMs": 16510,
+  "timestampMs": 16320,
+  "confidence": 0.99811
+ },
+ {
+  "text": " ever",
+  "startMs": 16510,
+  "endMs": 17010,
+  "timestampMs": 16780,
+  "confidence": 0.994738
+ },
+ {
+  "text": " independently",
+  "startMs": 17010,
+  "endMs": 17550,
+  "timestampMs": 17380,
+  "confidence": 0.99557
+ },
+ {
+  "text": " timed",
+  "startMs": 17550,
+  "endMs": 17850,
+  "timestampMs": 17840,
+  "confidence": 0.971158
+ },
+ {
+  "text": ".",
+  "startMs": 17850,
+  "endMs": 18060,
+  "timestampMs": 18000,
+  "confidence": 0.883325
+ },
+ {
+  "text": " But",
+  "startMs": 18060,
+  "endMs": 18270,
+  "timestampMs": 18200,
+  "confidence": 0.999165
+ },
+ {
+  "text": " the",
+  "startMs": 18270,
+  "endMs": 18520,
+  "timestampMs": 18380,
+  "confidence": 0.980116
+ },
+ {
+  "text": " stop",
+  "startMs": 18520,
+  "endMs": 18770,
+  "timestampMs": 18600,
+  "confidence": 0.984292
+ },
+ {
+  "text": "watch",
+  "startMs": 18770,
+  "endMs": 19120,
+  "timestampMs": 18780,
+  "confidence": 0.96717
+ },
+ {
+  "text": " was",
+  "startMs": 19120,
+  "endMs": 19340,
+  "timestampMs": 19020,
+  "confidence": 0.995429
+ },
+ {
+  "text": " Tesla",
+  "startMs": 19340,
+  "endMs": 19750,
+  "timestampMs": 19360,
+  "confidence": 0.99859
+ },
+ {
+  "text": "'s",
+  "startMs": 19750,
+  "endMs": 19850,
+  "timestampMs": 19520,
+  "confidence": 0.999451
+ },
+ {
+  "text": " own",
+  "startMs": 19850,
+  "endMs": 20100,
+  "timestampMs": 19820,
+  "confidence": 0.999093
+ },
+ {
+  "text": ",",
+  "startMs": 20100,
+  "endMs": 20100,
+  "timestampMs": 19980,
+  "confidence": 0.687756
+ },
+ {
+  "text": " and",
+  "startMs": 20100,
+  "endMs": 20260,
+  "timestampMs": 20280,
+  "confidence": 0.999802
+ },
+ {
+  "text": " nobody",
+  "startMs": 20260,
+  "endMs": 20580,
+  "timestampMs": 20620,
+  "confidence": 0.997402
+ },
+ {
+  "text": " outside",
+  "startMs": 20580,
+  "endMs": 20960,
+  "timestampMs": 20940,
+  "confidence": 0.99464
+ },
+ {
+  "text": " the",
+  "startMs": 20960,
+  "endMs": 21120,
+  "timestampMs": 21160,
+  "confidence": 0.992059
+ },
+ {
+  "text": " company",
+  "startMs": 21120,
+  "endMs": 21470,
+  "timestampMs": 21420,
+  "confidence": 0.999683
+ },
+ {
+  "text": " has",
+  "startMs": 21470,
+  "endMs": 21790,
+  "timestampMs": 21620,
+  "confidence": 0.994427
+ },
+ {
+  "text": " timed",
+  "startMs": 21790,
+  "endMs": 21930,
+  "timestampMs": 21900,
+  "confidence": 0.996746
+ },
+ {
+  "text": " the",
+  "startMs": 21930,
+  "endMs": 22150,
+  "timestampMs": 22080,
+  "confidence": 0.998551
+ },
+ {
+  "text": " car",
+  "startMs": 22150,
+  "endMs": 22250,
+  "timestampMs": 22220,
+  "confidence": 0.999283
+ },
+ {
+  "text": " yet",
+  "startMs": 22250,
+  "endMs": 22410,
+  "timestampMs": 22480,
+  "confidence": 0.995999
+ },
+ {
+  "text": ".",
+  "startMs": 22410,
+  "endMs": 22620,
+  "timestampMs": 22720,
+  "confidence": 0.999157
+ },
+ {
+  "text": " Musk",
+  "startMs": 22620,
+  "endMs": 22890,
+  "timestampMs": 22900,
+  "confidence": 0.990016
+ },
+ {
+  "text": " says",
+  "startMs": 22890,
+  "endMs": 23160,
+  "timestampMs": 23180,
+  "confidence": 0.996375
+ },
+ {
+  "text": " the",
+  "startMs": 23160,
+  "endMs": 23400,
+  "timestampMs": 23360,
+  "confidence": 0.994131
+ },
+ {
+  "text": " production",
+  "startMs": 23400,
+  "endMs": 24230,
+  "timestampMs": 23740,
+  "confidence": 0.997337
+ },
+ {
+  "text": " car",
+  "startMs": 24230,
+  "endMs": 24310,
+  "timestampMs": 24020,
+  "confidence": 0.990864
+ },
+ {
+  "text": " will",
+  "startMs": 24310,
+  "endMs": 24500,
+  "timestampMs": 24180,
+  "confidence": 0.997261
+ },
+ {
+  "text": " be",
+  "startMs": 24500,
+  "endMs": 24660,
+  "timestampMs": 24420,
+  "confidence": 0.999378
+ },
+ {
+  "text": " quicker",
+  "startMs": 24660,
+  "endMs": 25090,
+  "timestampMs": 24620,
+  "confidence": 0.996976
+ },
+ {
+  "text": " still",
+  "startMs": 25090,
+  "endMs": 25460,
+  "timestampMs": 25100,
+  "confidence": 0.998426
+ },
+ {
+  "text": ",",
+  "startMs": 25460,
+  "endMs": 25460,
+  "timestampMs": 25280,
+  "confidence": 0.690552
+ },
+ {
+  "text": " and",
+  "startMs": 25460,
+  "endMs": 25630,
+  "timestampMs": 25580,
+  "confidence": 0.999584
+ },
+ {
+  "text": " that",
+  "startMs": 25630,
+  "endMs": 25920,
+  "timestampMs": 25700,
+  "confidence": 0.996884
+ },
+ {
+  "text": " the",
+  "startMs": 25920,
+  "endMs": 26020,
+  "timestampMs": 25900,
+  "confidence": 0.998449
+ },
+ {
+  "text": " real",
+  "startMs": 26020,
+  "endMs": 26250,
+  "timestampMs": 26120,
+  "confidence": 0.997215
+ },
+ {
+  "text": " limit",
+  "startMs": 26250,
+  "endMs": 26540,
+  "timestampMs": 26440,
+  "confidence": 0.999253
+ },
+ {
+  "text": " is",
+  "startMs": 26540,
+  "endMs": 26680,
+  "timestampMs": 26700,
+  "confidence": 0.998338
+ },
+ {
+  "text": " not",
+  "startMs": 26680,
+  "endMs": 26890,
+  "timestampMs": 27020,
+  "confidence": 0.999603
+ },
+ {
+  "text": " det",
+  "startMs": 26890,
+  "endMs": 27100,
+  "timestampMs": 27360,
+  "confidence": 0.997826
+ },
+ {
+  "text": "aching",
+  "startMs": 27100,
+  "endMs": 27520,
+  "timestampMs": 27500,
+  "confidence": 0.993553
+ },
+ {
+  "text": " the",
+  "startMs": 27520,
+  "endMs": 27730,
+  "timestampMs": 27760,
+  "confidence": 0.999214
+ },
+ {
+  "text": " driver",
+  "startMs": 27730,
+  "endMs": 28230,
+  "timestampMs": 28000,
+  "confidence": 0.909842
+ },
+ {
+  "text": "'s",
+  "startMs": 28230,
+  "endMs": 28330,
+  "timestampMs": 28260,
+  "confidence": 0.999851
+ },
+ {
+  "text": " ret",
+  "startMs": 28330,
+  "endMs": 28500,
+  "timestampMs": 28360,
+  "confidence": 0.984729
+ },
+ {
+  "text": "inas",
+  "startMs": 28500,
+  "endMs": 28780,
+  "timestampMs": 28600,
+  "confidence": 0.999039
+ },
+ {
+  "text": ".",
+  "startMs": 28780,
+  "endMs": 29020,
+  "timestampMs": 28940,
+  "confidence": 0.968136
+ },
+ {
+  "text": " So",
+  "startMs": 29150,
+  "endMs": 29220,
+  "timestampMs": 29240,
+  "confidence": 0.959964
+ },
+ {
+  "text": " for",
+  "startMs": 29220,
+  "endMs": 29530,
+  "timestampMs": 29460,
+  "confidence": 0.661192
+ },
+ {
+  "text": " now",
+  "startMs": 29530,
+  "endMs": 29840,
+  "timestampMs": 29780,
+  "confidence": 0.998959
+ },
+ {
+  "text": ",",
+  "startMs": 29840,
+  "endMs": 30060,
+  "timestampMs": 30240,
+  "confidence": 0.921691
+ },
+ {
+  "text": " 0",
+  "startMs": 30060,
+  "endMs": 30310,
+  "timestampMs": 30360,
+  "confidence": 0.902883
+ },
+ {
+  "text": ".",
+  "startMs": 30310,
+  "endMs": 30710,
+  "timestampMs": 30620,
+  "confidence": 0.998826
+ },
+ {
+  "text": "81",
+  "startMs": 30710,
+  "endMs": 31100,
+  "timestampMs": 30940,
+  "confidence": 0.98727
+ },
+ {
+  "text": " is",
+  "startMs": 31100,
+  "endMs": 31270,
+  "timestampMs": 31220,
+  "confidence": 0.9806
+ },
+ {
+  "text": " a",
+  "startMs": 31270,
+  "endMs": 31340,
+  "timestampMs": 31540,
+  "confidence": 0.995642
+ },
+ {
+  "text": " promise",
+  "startMs": 31340,
+  "endMs": 31990,
+  "timestampMs": 31800,
+  "confidence": 0.901794
+ },
+ {
+  "text": " with",
+  "startMs": 31990,
+  "endMs": 32250,
+  "timestampMs": 32160,
+  "confidence": 0.932688
+ },
+ {
+  "text": " a",
+  "startMs": 32250,
+  "endMs": 32310,
+  "timestampMs": 32420,
+  "confidence": 0.974377
+ },
+ {
+  "text": " stop",
+  "startMs": 32310,
+  "endMs": 32580,
+  "timestampMs": 32600,
+  "confidence": 0.967899
+ },
+ {
+  "text": "watch",
+  "startMs": 32580,
+  "endMs": 32920,
+  "timestampMs": 32800,
+  "confidence": 0.990478
+ },
+ {
+  "text": " attached",
+  "startMs": 32920,
+  "endMs": 33540,
+  "timestampMs": 33300,
+  "confidence": 0.99899
+ },
+ {
+  "text": ".",
+  "startMs": 33540,
+  "endMs": 33600,
+  "timestampMs": 33480,
+  "confidence": 0.980946
+ }
+]

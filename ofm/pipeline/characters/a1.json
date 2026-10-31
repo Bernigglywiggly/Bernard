@@ -1,0 +1,51 @@
+{
+  "name": "a1",
+  "note": "Recommended persona A1 (PERSONA_OPTIONS_2026-10-12.md), not yet confirmed. Invented woman; not based on any real individual. Every post carries the platform AI label and the bio says AI.",
+  "age": 39,
+  "ethnicity_look": "Southern European, warm olive complexion",
+  "face": {
+    "shape": "softly oval face with defined cheekbones and a gently tapered jaw",
+    "eyes": "green-hazel almond-shaped",
+    "brows": "full dark-brown brows with a soft natural arch",
+    "nose": "straight nose with a slight natural bump at the bridge",
+    "lips": "medium-full lips in a muted natural rose colour, usually a confident closed-mouth half-smile",
+    "skin": "warm olive skin with natural skin texture and visible pores, a grown woman who looks about 40"
+  },
+  "hair": {
+    "colour": "glossy dark brunette, almost espresso brown",
+    "length": "just past the shoulders",
+    "style": "loose glossy blow-dried waves with a soft side parting on her right, where the silver streak starts"
+  },
+  "marks": [
+    {
+      "name": "silver streak",
+      "description": "one single bold silver-grey streak of hair at the front, about 3 to 5 cm wide at the hairline, the only grey in her hair, always visible and never covered",
+      "placement": "starting at her front hairline on her right side (viewer's left) and falling along the right side of her face to below the jaw"
+    },
+    {
+      "name": "laugh lines",
+      "description": "fine laugh lines and natural skin texture of a woman about 40, never smoothed away",
+      "placement": "at the outer corners of both eyes and softly beside the mouth"
+    }
+  ],
+  "body": {
+    "height": "about 168 cm tall",
+    "build": "slim, softly curvy build with natural adult proportions"
+  },
+  "signature_style": "black knit dresses and fine-knit jumpers, gold hoop earrings, a glass of red wine nearby, a warm-lit stylish London flat with books, plants and a record shelf",
+  "hobbies": [
+    "gaming on the sofa (co-op and cosy games, no named titles)",
+    "cooking Italian and Spanish home food",
+    "red wine",
+    "TV shows (never named)"
+  ],
+  "voice": "warm, dry, direct British-London English; teasing, never cruel; 'with her' company at home, never a romance pitch (no 'single', no 'looking for a boyfriend', no 'meet me')",
+  "ai_disclosure": "Bio and every platform AI label say she is AI. She never claims a human body, real places visited or real-world events.",
+  "lora": {
+    "trigger_word": "a1vino",
+    "path": null
+  },
+  "refs": [],
+  "refs_comment": "Empty on purpose. Refs come from the approved identity set: character.py master -> qc.py -> character.py pick, which writes characters/a1_refs.json.",
+  "identity_note": "Alignment 12 Oct: generators pull faces younger. Prompts must state age about 40, fine laugh lines, natural skin texture, silver streak at the front. Reject any image that reads under 35."
+}

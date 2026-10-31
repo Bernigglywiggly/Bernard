@@ -1,0 +1,205 @@
+<title>Chrome &amp; Marl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=Inter+Tight:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --marl:#E7E8EA; --card:#F5F6F7; --ink:#1C1F24; --soft:#6B717C; --line:#C9CDD3; --graphite:#14161A;
+  --turq:#12B8AC; --turq-soft:rgba(18,184,172,.12); --emerald:#12A36E;
+  --display:"Michroma","Eurostile","Arial Black",system-ui,sans-serif;
+  --body:"Inter Tight",-apple-system,"Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--marl);color:var(--ink);font:400 17px/1.6 var(--body);padding-inline:clamp(16px,4vw,44px);padding-block:0 80px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:1080px;margin:0 auto}
+a{color:var(--turq)}
+.eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+h1,h2{font-family:var(--display);font-weight:400;letter-spacing:.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5.4vw,62px);line-height:1.05;margin-block:16px 18px}
+h2{font-size:clamp(20px,2.8vw,28px);line-height:1.15;margin-block:0 8px}
+h3{font:600 17px/1.3 var(--body);margin:0}
+.lede{font-size:clamp(17px,2vw,20px);max-width:62ch;color:#3A3F47;margin:0}
+header{padding-block:48px 28px}
+section{padding-block:52px 6px;border-top:1px solid var(--line)}
+.sub{color:var(--soft);max-width:66ch;margin:4px 0 22px}
+.film{border-radius:18px;overflow:hidden;background:var(--graphite);box-shadow:0 18px 50px rgba(0,0,0,.12)}
+.film video{display:block;width:100%;height:auto;aspect-ratio:16/9}
+.cap{font:400 13px/1.55 var(--mono);color:var(--soft);margin:12px 2px 0}
+.changes{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.chg{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.chg .was{font:500 12px/1.4 var(--mono);color:var(--soft);letter-spacing:.06em;text-transform:uppercase}
+.chg p{margin:6px 0 0;font-size:15px}
+.voices{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.voice{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:10px;align-content:start}
+.voice .arch{font:500 12px/1.4 var(--mono);color:var(--turq);letter-spacing:.12em;text-transform:uppercase}
+.voice p{margin:0;font-size:14.5px;color:#3A3F47}
+.voice audio{width:100%;height:36px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font:500 12px/1 var(--mono);letter-spacing:.06em;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 14px;cursor:pointer}
+.opt:hover{border-color:#9AA2AE}
+.opt:focus-visible{outline:2px solid var(--turq);outline-offset:2px}
+.opt[aria-pressed="true"]{border-color:var(--turq);background:var(--turq-soft);color:#0B7C74}
+.saved{font:500 11px/1.2 var(--mono);color:var(--soft);min-height:13px}
+.status{font:500 12px/1.4 var(--mono);color:var(--soft);margin:0 0 16px}
+.status.live{color:var(--emerald)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+.q .why{font-size:14px;color:var(--soft);margin:4px 0 12px}
+.note{width:100%;margin-top:10px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;font-size:15px;min-height:52px;resize:vertical}
+.note:focus{outline:2px solid var(--turq);outline-offset:1px}
+.rules{margin:0;padding-left:20px;display:grid;gap:8px;max-width:72ch}
+.pr{border:1px solid var(--line);border-radius:14px;background:var(--card);margin-bottom:10px}
+.pr summary{cursor:pointer;list-style:none;display:flex;gap:12px;justify-content:space-between;align-items:center;padding:14px 16px}
+.pr summary::-webkit-details-marker{display:none}
+.pr summary:focus-visible{outline:2px solid var(--turq);border-radius:14px}
+.pr .pt{font:600 15px var(--body)}
+.prbar{display:flex;gap:10px;align-items:center;padding:0 16px 12px}
+.pr pre{margin:0;padding:0 16px 14px;white-space:pre-wrap;word-break:break-word;font:400 12.5px/1.55 var(--mono);color:#3A3F47;max-height:320px;overflow:auto}
+.copied{font:500 11px var(--mono);color:var(--emerald)}
+.block{background:var(--graphite);color:#E9EBEE;border-radius:18px;padding:20px 22px}
+.block code{font:500 13px var(--mono);color:#3FE6D8}
+.refs{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.ref{margin:0;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.ref img{display:block;width:100%;aspect-ratio:30/38;object-fit:cover;background:#111}
+.ref figcaption{padding:10px 12px 12px;display:grid;gap:3px;font-size:13px}
+.ref figcaption b{font:600 14px var(--body)}
+.ref figcaption span{color:var(--soft)}
+.ref figcaption em{font:500 11.5px/1.4 var(--mono);font-style:normal;color:#0B7C74}
+.foot{margin-top:36px;font:400 12px/1.6 var(--mono);color:var(--soft)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">A01 · v6.2 mockup · all dark, layered sound, George · 26 Sep 2026</div>
+  <h1>Calm. Clean. Satisfying.</h1>
+  <p class="lede">Your notes, applied. The original calm voice, no jokes. Every number is translated for several kinds of people, and the benefit to the viewer is spelled out. The camera stays still; lines form things and flow into the next form. Chrome, marl, one turquoise accent. One quiet sound on every motion.</p>
+</header>
+
+<div class="film"><video controls playsinline preload="metadata" poster="media/poster.jpg" src="media/mockup.mp4"></video></div>
+<p class="cap">55.5 s · 1080p30 vector motion graphics · voice: George (your pick) · 607 synced sounds, each placed where its motion is, in one shared room, with swells into the big moments, felt piano as the cards arrive, and a bed that breathes around the voice · -14 LUFS. Headphones on.</p>
+
+<section>
+  <div class="eyebrow">What changed</div>
+  <h2>Your notes, and what they became</h2>
+  <div class="changes">
+    <div class="chg"><div class="was">Dark, not white (v6.2)</div><p>Dark throughout: graphite while things form, slate with a faint dot grid while they're explained, dark glass cards, a light rim on the chrome.</p></div>
+    <div class="chg"><div class="was">More layered (your pick)</div><p>Sounds sit where they happen on screen. Swells breathe in before big moments, soft piano notes rise as cards arrive, and it ends on a hopeful chord.</p></div>
+    <div class="chg"><div class="was">Too chaotic</div><p>Locked-off camera. Changes happen by lines forming and flowing into the next form, never by fast cuts.</p></div>
+    <div class="chg"><div class="was">Colours</div><p>Chrome and heathered marl, one turquoise accent, emerald only for gains.</p></div>
+    <div class="chg"><div class="was">Doesn't click for non-AI people</div><p>One number, four lives: uni degree class, gaming win rate, business mistakes, hours back.</p></div>
+    <div class="chg"><div class="was">What's in it for me</div><p>The hook ends on what it does for you, what it costs, and how people earn with it.</p></div>
+    <div class="chg"><div class="was">Tron formation, line work</div><p>The model cores assemble edge by edge from a seed point, with bright tips and rings.</p></div>
+    <div class="chg"><div class="was">ASCII, Pinterest</div><p>Labels decode from characters, the grid dissolves into ASCII "+14", and every idea sits on a clean editorial card.</p></div>
+  </div>
+</section>
+
+<section id="voices">
+  <div class="eyebrow">Voice trials</div>
+  <h2>Six voices, same calm script</h2>
+  <p class="sub">Archetypes inspired by the characters you named, built from voice traits and not cloned, because a sound-alike of a real actor is a legal risk on a monetised channel. Tap the one to hone in on.</p>
+  <p class="status" id="status">Connecting…</p>
+  <div class="voices" id="voicegrid"></div>
+</section>
+
+<section id="picks">
+  <div class="eyebrow">Your call</div>
+  <h2>Three taps</h2>
+  <div class="q" data-q="look"><h3>The look</h3><p class="why">v6.2: all dark. Chrome and marl with your board: grids, ridgelines, dot matrix, the isometric stack.</p>
+    <div class="opts"><button class="opt" type="button" data-v="yes" aria-pressed="false">This is it</button><button class="opt" type="button" data-v="detail" aria-pressed="false">More intricate detail</button><button class="opt" type="button" data-v="cleaner" aria-pressed="false">Even cleaner</button><button class="opt" type="button" data-v="board" aria-pressed="false">Wait for my board</button></div><div class="saved" id="saved_look"></div></div>
+  <div class="q" data-q="sound"><h3>The sound</h3><p class="why">v6.2, layered: every sound placed where it happens, one shared room, swells, felt piano, a bed that ducks under the voice.</p>
+    <div class="opts"><button class="opt" type="button" data-v="yes" aria-pressed="false">Satisfying, keep it</button><button class="opt" type="button" data-v="more" aria-pressed="false">More layered</button><button class="opt" type="button" data-v="softer" aria-pressed="false">Softer</button></div><div class="saved" id="saved_sound"></div></div>
+  <div class="q" data-q="note"><h3>Anything else?</h3><p class="why">One word is fine.</p><textarea class="note" id="note_note" placeholder="e.g. love the grid, slower formations, bigger type"></textarea><div class="saved" id="saved_note"></div></div>
+</section>
+
+<section id="board">
+  <div class="eyebrow">From your CDE board</div>
+  <h2>What I took, and where it lives</h2>
+  <p class="sub">Your 22 pins plus 30 more from CDE share one language: luminous line work and dot matrix on black, scientific annotation, geometric overlays, thin spectral accents. Everything below is in the video. Maps, iridescent glass hands and grainy gradients were left out of this hook; they suit other topics better (maps for the war-prep video, glass for chrome hero shots).</p>
+  <div class="refs">
+    <figure class="ref"><img src="media/ref_p22.jpg" alt="The Planck Pixel (reference pin)" loading="lazy"><figcaption><b>The Planck Pixel</b><span>Wireframe cube over a glowing grid</span><em>0:00 · the cores sit on a perspective grid with projection lines</em></figcaption></figure>
+    <figure class="ref"><img src="media/ref_p01.jpg" alt="КОЗА poster (reference pin)" loading="lazy"><figcaption><b>КОЗА poster</b><span>HUD brackets, callouts, micro type</span><em>0:03 · brackets and callouts on each core</em></figcaption></figure>
+    <figure class="ref"><img src="media/ref_p06.jpg" alt="Line mountains (reference pin)" loading="lazy"><figcaption><b>Line mountains</b><span>Ridgelines with hidden lines</span><em>0:07 · the bars became a ridgeline landscape</em></figcaption></figure>
+    <figure class="ref"><img src="media/ref_p08.jpg" alt="Terrain with pins (reference pin)" loading="lazy"><figcaption><b>Terrain with pins</b><span>Markers with label plates</span><em>0:07 · 52.3 and 66.4 pinned on their peaks</em></figcaption></figure>
+    <figure class="ref"><img src="media/ref_p03.jpg" alt="Crystal, data matrix (reference pin)" loading="lazy"><figcaption><b>Crystal, data matrix</b><span>Spectral glitch lines</span><em>0:12 · spectral glint and fringe on the chrome +14</em></figcaption></figure>
+    <figure class="ref"><img src="media/ref_p16.jpg" alt="Cosmos .09 (reference pin)" loading="lazy"><figcaption><b>Cosmos .09</b><span>Turquoise particle ring</span><em>0:14 · 'It isn't' bursts a particle ring</em></figcaption></figure>
+    <figure class="ref"><img src="media/ref_b21.jpg" alt="Dot-screen cat (reference pin)" loading="lazy"><figcaption><b>Dot-screen cat</b><span>Halftone dot matrix</span><em>0:15 · the card icons assemble dot by dot</em></figcaption></figure>
+    <figure class="ref"><img src="media/ref_p17.jpg" alt="Exploded map layers (reference pin)" loading="lazy"><figcaption><b>Exploded map layers</b><span>Isometric stacked planes</span><em>0:42 · the four cards tilt into one pierced stack</em></figcaption></figure>
+    <figure class="ref"><img src="media/ref_p09.jpg" alt="ASCII motion (reference pin)" loading="lazy"><figcaption><b>ASCII motion</b><span>Characters that move</span><em>0:43 · the grid dissolves into ASCII +14</em></figcaption></figure>
+    <figure class="ref"><img src="media/ref_b30.jpg" alt="Concentric rings (reference pin)" loading="lazy"><figcaption><b>Concentric rings</b><span>Op-art tunnel</span><em>0:52 · the push through the 0 travels through rings</em></figcaption></figure>
+  </div>
+</section>
+
+<section id="playbook">
+  <div class="eyebrow">The playbook</div>
+  <h2>The rules this follows</h2>
+  <ol class="rules">
+    <li><b>0–10 s:</b> the event and the number, no preamble. <b>10–30 s:</b> "sounds small, it isn't", then the first perspective.</li>
+    <li>A perspective ladder: the same number for 3–5 different people, each ending in their time or money.</li>
+    <li>Chapters answer: what it does for you, what it costs, how people earn with it, what's coming.</li>
+    <li>An open loop every 2–3 minutes; a calm pattern change every 60–90 s (dark to light, card to grid to ASCII to chrome).</li>
+    <li>The camera stays still; the elements transform. One gentle "whoa" per chapter.</li>
+    <li>One quiet sound per motion, one family, synced to the frame. Repeated events climb a scale.</li>
+    <li>Every perspective card becomes a looping Short.</li>
+  </ol>
+  <p class="sub" style="margin-top:14px">Full version with sources: <a href="https://github.com/Bernigglywiggly/Bernard/blob/claude/funny-newton-gd9w8v/a01_v6/PLAYBOOK.md">PLAYBOOK.md</a></p>
+</section>
+
+<section id="prompts">
+  <div class="eyebrow">Offload to GPT</div>
+  <h2>v6 prompts, ready to paste</h2>
+  <p class="sub">Paste the brief first. The voice-design prompt describes traits instead of real people.</p>
+  <div id="promptlist"></div>
+</section>
+
+<p class="foot">Built in skia (vector, 1080p) with synthesised sound design. The scripts are on the claude/funny-newton-gd9w8v branch, in a01_v6/. Picks save to this page's own store.</p>
+</div>
+
+<script>
+const VOICES = [
+  {id:"george", name:"George", arch:"Calm storyteller · closest to your first video", d:"Warm, captivating, British. The mockup uses this one.", len:"52 s"},
+  {id:"bill", name:"Bill", arch:"Wise elder · Freeman-inspired archetype", d:"Wise, mature, balanced; deep and unhurried.", len:"57 s"},
+  {id:"brian", name:"Brian", arch:"Earnest baritone · Kronk-inspired archetype", d:"Deep, resonant, comforting; sincere and friendly.", len:"54 s"},
+  {id:"callum", name:"Callum", arch:"Raspy buddy · Jake-inspired archetype", d:"Husky and gravelly; closest in texture from this library.", len:"63 s"},
+  {id:"liam", name:"Liam", arch:"Gen Z guide", d:"Young, energetic creator voice, kept calm by the script.", len:"51 s"},
+  {id:"alice", name:"Alice", arch:"Clear educator", d:"Clear, engaging, British; the most neutral teacher voice.", len:"58 s"},
+];
+const PROMPTS = [{"title": "The v6 brief", "text": "You are the design and sound department for a calm, premium YouTube channel that explains AI by\ntranslating every number into what it means for ordinary people: their time, their money, their\nwork, their future. Voice: calm, clear, warm; no jokes; curiosity-driven and professional.\nEvery number gets several everyday perspectives (student, gamer, business owner, parent, driver,\n\"your time is money\") so that it clicks for everyone, and every video makes the viewer's benefit\nexplicit: what it does for you, what it costs, how people earn with it, what's coming.\n\nLOOK: \"Chrome & Marl\", always dark. Heathered marl grounds: graphite #14161A for forming and revealing,\nslate #1B1E23 with a faint dot grid for explaining; cards are dark glass. Type and line work in soft\nwhite #E9EBEE. One accent: turquoise #12B8AC (glow #3FE6D8).\nEmerald #12A36E only for gains. Chrome only for hero numbers (white, steel, a thin dark horizon,\na faint turquoise reflection). Type: Michroma for numbers and titles, Inter Tight for sentences,\nIBM Plex Mono for labels and ASCII.\nMOTION: the camera barely moves; the elements move. Lines form objects (Tron: Legacy-style\nformations with bright tips), then flow into the next form (morphs, match cuts); characters\nresolve out of ASCII noise; cards dock onto shelves; percentages fill a 10x10 \"per hundred\" grid.\nSmooth easing, nothing chaotic, one gentle \"whoa\" per chapter. Clean, satisfying, detailed,\nnever overstimulating. Pinterest-editorial layouts: generous margins, one idea per card.\nSOUND: restrained and layered; one quiet sound per visual action from one family (ticks, pips\nclimbing a pentatonic scale, soft thocks, glass chimes, airy morphs, a single sub \"thum\").\nNever stock-trailer, never cartoonish."}, {"title": "Turn my Pinterest board into a design system", "text": "Here are my reference images (attached). For the channel above, extract: the 6-8 visual moves they\nshare (layouts, line work, type treatments, textures, ASCII or dither use, colour habits), how\neach could animate cleanly, and which ones fit the v6 look without making it busy. Then write a\none-page style guide with do/don't examples, and 10 scene ideas for an AI explainer that use them.\nSELF-CHECK: every rule traces back to at least two reference images; nothing contradicts \"calm and clean\"."}, {"title": "Perspective writer", "text": "Number: <e.g. a model scored 14.1 points higher on a coding test: 52.3% -> 66.4% of tasks passed>\nWrite 10 everyday perspectives that make this number click for someone with zero interest in AI:\na student, a gamer, a small-business owner, a parent, a driver, a nurse, a tradesperson, someone\nsaving money, a retiree, \"your time is money\". For each: who -> before -> after -> what it means\nfor their time or money, in one sentence under 20 words. Keep every conversion mathematically\nexact (show the working underneath), and never exaggerate. Mark the 4 strongest and why.\nSELF-CHECK: recompute every conversion; delete any that needs a caveat to be true."}, {"title": "Calm script", "text": "Write the full narration for <topic> in the v6 voice: calm, clear, warm, no jokes, curiosity-driven.\nStructure: 0-10 s the event and the number (no preamble); 10-30 s the reframe (\"sounds small, it\nisn't\") plus the first perspective; a perspective ladder (3-5 people); chapters for what it does for\nyou, what it costs, how people earn with it, what's coming; an open loop every 2-3 minutes; a\npattern change every 60-90 s (say which visual form each section takes: card, grid, formation,\nASCII, chrome); end hopeful and practical (one thing to try today). 150-165 words per minute.\nMark each paragraph with the visual motif it should use.\nResearch: <paste the research brief output>\nSELF-CHECK: read aloud; every number has a source and an everyday translation; the benefit to the\nviewer is explicit at least once a minute."}, {"title": "Voice design", "text": "Design 4 narrator voices from these descriptions, each reading the attached 45-second script:\nA) \"Warm buddy\": laid-back, slightly raspy, big-hearted, relaxed pace, a smile in the voice.\nB) \"Earnest baritone\": deep, friendly, sincere, a little slow, reassuringly simple.\nC) \"Wise elder\": deep, warm, measured, gravel at the bottom, unhurried, trustworthy.\nD) \"Gen Z guide\": early twenties, natural, quick but clear, no slang overload.\nKeep all four calm (no shouting, no hype) and at 150-165 words per minute.\nSELF-CHECK: none of them imitates a real, identifiable person."}, {"title": "Satisfying sound kit", "text": "Design a UI/motion sound kit for the look above. 48 kHz/24-bit WAV, -1 dBTP peaks, tight trims:\nticks x20 (a character resolving: tiny, crisp, slightly varied); pips x15 (a cell filling, tuned to a\npentatonic scale in C, so runs climb musically); formation chirps x20 (a line lighting up: a short\nrising glint); thocks x8 (a card docking: soft, magnetic, tactile); glass chimes x6 (completion, C\nmajor tones); morphs x6 (lines flowing into a new form: airy, tonal, 0.6-1.2 s); thum x3 (one sub\nhit for the big line); shimmer x4 (chrome glints); zoom x3 (a gentle push through a letter).\nCalm, premium, consistent, like a very good operating system.\nSELF-CHECK: play a run of 20 ticks and 15 pips back to back: satisfying, never irritating."}, {"title": "The calm score", "text": "Compose a minimal score for a calm AI explainer: an Am9 pad for the dark \"forming\" sections that\nlifts to Cmaj9 when the room opens, soft felt piano motifs, sub you feel more than hear, no drums\nuntil an optional gentle pulse in the last chapter. 70 BPM. Deliver 3 cues (forming, explaining, outro) as\n60 s loops plus stems. -18 LUFS so the voice sits on top.\nSELF-CHECK: it never masks 1-4 kHz; the Am9-to-Cmaj9 lift is audible on phone speakers."}, {"title": "Formation shots", "text": "Design a Tron: Legacy-style formation for <object: e.g. a chip, a bar chart, a coin, a brain>:\nthe object assembles from light lines on graphite marl, edges lighting outward from a seed point\nwith bright tips, concentric rings sweeping in first, then surfaces filling with chrome. 3-4 s,\nlocked-off camera, the object slowly rotating. Give step-by-step build instructions for Blender\n(geometry nodes or curve bevel with animated factor), TouchDesigner (network outline) and After\nEffects (Trapcode/Plexus or shape layers), plus the exact colour values above.\nSELF-CHECK: it reads at phone size; nothing flickers; it looks deliberate, not busy."}];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+document.getElementById("voicegrid").innerHTML = VOICES.map(v => `
+  <article class="voice" data-q="voice_${v.id}">
+    <div class="arch">${esc(v.arch)}</div>
+    <h3>${esc(v.name)} <span style="font:400 13px var(--mono);color:var(--soft)">${esc(v.len)}</span></h3>
+    <p>${esc(v.d)}</p>
+    <audio controls preload="none" src="media/${v.id}.mp3"></audio>
+    <div class="opts"><button class="opt" type="button" data-v="pick" aria-pressed="false">This one</button><button class="opt" type="button" data-v="maybe" aria-pressed="false">Maybe</button><button class="opt" type="button" data-v="no" aria-pressed="false">No</button></div>
+    <div class="saved" id="saved_voice_${v.id}"></div>
+  </article>`).join("");
+document.getElementById("promptlist").innerHTML = PROMPTS.map((p, i) => `
+  <details class="pr"${i === 0 ? " open" : ""}><summary><span class="pt">${esc(p.title)}</span><span class="eyebrow">${i === 0 ? "paste first" : "task"}</span></summary>
+  <div class="prbar"><button class="opt copy" type="button" data-i="${i}">Copy prompt</button><span class="copied" id="copied_${i}"></span></div>
+  <pre id="ptext_${i}">${esc(p.text)}</pre></details>`).join("");
+document.getElementById("promptlist").addEventListener("click", async e => {
+  const b = e.target.closest(".copy"); if (!b) return;
+  const i = b.dataset.i, msg = document.getElementById("copied_" + i);
+  try { await navigator.clipboard.writeText(PROMPTS[i].text); msg.textContent = "copied ✓"; }
+  catch (err) { const r = document.createRange(); r.selectNodeContents(document.getElementById("ptext_" + i)); const s = getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = "selected: copy with keyboard or long-press"; }
+});
+const state = {}; let db = null, canSave = false;
+function paint(q){ const el = document.querySelector(`[data-q="${q}"]`); if (!el) return;
+  el.querySelectorAll(".opt").forEach(o => o.setAttribute("aria-pressed", String(!!state[q] && o.dataset.v === state[q].choice)));
+  const n = document.getElementById("note_" + q); if (n && state[q] && typeof state[q].note === "string" && document.activeElement !== n) n.value = state[q].note; }
+async function save(q, patch){ state[q] = Object.assign({}, state[q], patch, {at: new Date().toISOString()}); paint(q);
+  const s = document.getElementById("saved_" + q); if (!s) return;
+  if (!canSave){ s.textContent = "not saved in this view: screenshot and send it"; return; }
+  try { await db.doc("picks/" + q).set(state[q]); s.textContent = "saved ✓"; } catch (e){ s.textContent = "couldn't save (" + ((e && e.code) || "error") + ")"; } }
+document.addEventListener("click", e => { const o = e.target.closest(".opt"); if (!o || o.classList.contains("copy")) return; const q = o.closest("[data-q]"); if (q) save(q.dataset.q, {choice: o.dataset.v}); });
+let timer; document.getElementById("note_note").addEventListener("input", e => { clearTimeout(timer); timer = setTimeout(() => save("note", {note: e.target.value}), 900); });
+(async () => { const st = document.getElementById("status");
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db){ st.textContent = "Picks can't be stored in this view. Tap anyway and send a screenshot."; return; }
+  canSave = true; st.textContent = "Live: picks save as you tap"; st.classList.add("live");
+  try { const snap = await db.collection("picks").get(); snap.docs.forEach(d => { const v = d.data(); if (v){ state[d.id] = Object.assign({}, v); paint(d.id); } }); } catch (e) {}
+})();
+</script>

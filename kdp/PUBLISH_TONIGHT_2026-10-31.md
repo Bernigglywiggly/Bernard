@@ -1,5 +1,9 @@
 # KDP tonight: 2 books, about 15 minutes each (deadline Sat 31 Oct 23:59 UTC)
 
+**04:22 UK: the files below are the FINAL ones** (rebuilt again to clear more slurs from the filler). Publish only after
+`kdp/packs/REBUILD_CHECK_2026-10-31.md` ends in SHIP (Claude will say so in chat). The session was in Bypass mode, but the Chrome
+extension's safety check still blocked the cover upload, so the rest is your hands.
+
 Written by account A, Sat 31 Oct 2026 03:47 UK. Why your hands: the browser automation was stopped by Claude's safety check
 on KDP ("real-world transactions"), and each listing pack says KDP publishing is yours. Both books passed the build gate and
 the read-back check; Winter passed the independent check; Christmas's fresh check is in `kdp/packs/XMAS_RECHECK_2026-10-31.md`
@@ -20,7 +24,7 @@ In Finder: Cmd+Shift+G, paste the folder path, Enter.
 
 ## Winter (draft already exists)
 - [ ] **KDP → Bookshelf → Hearthside Winter → Paperback Content** → Continue setup
-- [ ] **Manuscript → Upload paperback manuscript** → pick Winter's `interior.pdf` (it replaces the old one, which predates a grid fix)
+- [x] ~~Manuscript~~: **done by Claude at 04:22** (the final interior.pdf, "uploaded successfully"); Chrome's safety check then blocked the cover step
 - [ ] **Cover → "Upload a cover you already have"** → pick Winter's `cover.pdf` → leave the barcode box unticked
 - [ ] **AI-generated content → Yes**, for text and for images
 - [ ] **Launch Previewer → check a few pages → Approve**

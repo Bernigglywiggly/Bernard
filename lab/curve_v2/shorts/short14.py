@@ -31,13 +31,13 @@ LINES = [
          cap="The ship falls back / from space / belly first, / steering with its flaps / like a skydiver.",
          shot="our drawing: the ship flat on its belly, falling through streaks, four flaps twitching; tags 'BELLY FIRST', 'FLAPS STEER'"),
     dict(id="x4", facts="20 (engines fire near the tower, swings upright, drops between the arms, the arms close)",
-         text="Near the tower, its engines light, it swings upright, and it drops between two giant arms.",
-         cap="Near the tower, / its engines light, / it swings upright, / and it drops / between two giant arms.",
+         text="Near the tower, its engines light, it swings upright, and drops between two giant arms.",
+         cap="Near the tower, / its engines light, / it swings upright, / and drops between / two giant arms.",
          shot="our drawing: flame on 'light', the ship rotates to vertical on 'upright', drops between the tower's arms, which close; "
               "label 'OUR DRAWING OF SPACEX'S PLAN'"),
     dict(id="x5", facts="22 (no landing legs = less mass; Musk's goal: fly again in under an hour)",
-         text="Catching it means no landing legs to carry, and Musk's goal is to fly it again in under an hour.",
-         cap="Catching it means / no landing legs / to carry, / and Musk's goal / is to fly it again / in under an hour.",
+         text="No landing legs means less to carry, and Musk wants it flying again in under an hour.",
+         cap="No landing legs / means less to carry, / and Musk wants it / flying again / in under an hour.",
          shot="our drawing: legs on the ship crossed out, tag 'NO LEGS = LESS WEIGHT'; a clock face sweeps to 'UNDER 1 HOUR', "
               "tag 'MUSK'S GOAL'"),
     dict(id="x6", facts="verdict, ours; the end line is the playbook's T3 line",

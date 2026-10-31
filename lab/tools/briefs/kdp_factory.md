@@ -98,6 +98,7 @@ KDP BUILD (the Monday row only; skip at 90%+ weekly usage; stop at once if 4 or 
   - "submit by" date (3 days before its go-live date).
 - Quality gate:
   - kdp_gate.py passes;
+  - every grid, in all 8 directions, is free of the `RUDE` list in `~/🧧/🏭_TOOLS/📗_kdp_tools/cozy_ws/cozy_common.py` outside the listed words (244 terms since 31 Oct: random filler had spelled SEMEN, NOOSE, STAB, GORE, WOP, WTF, YID, SPIC, LABIA and more; each find goes into the list, list words that carry one are exempted, and the critic runs its own slur list too);
   - a read-back check proves every word is in its grid, no word repeats across the volume and the answer key matches
     (adapt verify_pdf.py);
   - then a NEW Sonnet subagent critic looks at 6 rendered interior pages and the cover as PNGs (plus the 160 px

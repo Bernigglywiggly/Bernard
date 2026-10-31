@@ -1,7 +1,7 @@
 #!/bin/bash
 # Short 14 (How SpaceX Will Catch a Falling Starship): SpaceX's own video of the first Super Heavy tower catch
 # ("Starship's Fifth Flight Test", youtube.com/watch?v=hI9HQfCAw64, 128-150 s; SOURCES.txt in the footage folder).
-# Each clip is a BAND 1080x760: crop 1535x1080 from x 150 (the tower and the arms sit at x ~800), scaled 0.70x.
+# Each clip is a BAND 1080x930: crop 1254x1080 from x 180 (the tower and the arms sit at x ~800), scaled 0.86x (critic round 1: bigger band).
 # 23.976 fps in; RIFE slows each cut x1.5 and lands it on 30 fps so it lasts at least its scene.
 # Shot boundaries in catch_128-150.mp4 (scene detection): 8.17-10.47 s booster settling into the arms at sunset;
 # 16.85-19.81 s caught, wrapped in steam.
@@ -13,7 +13,7 @@ W=/private/tmp/claude-501/s14clips
 mk() {  # name first_frame n_frames slow
   local n=$1 a=$2 cnt=$3 slow=$4
   rm -rf $W/$n && mkdir -p $W/$n/in $W/$n/out
-  ffmpeg -loglevel error -y -i $F/catch_128-150.mp4 -vf "select='between(n\,$a\,$((a+cnt-1)))',crop=1535:1080:150:0,scale=1080:760:flags=lanczos" -vsync 0 -start_number 1 $W/$n/in/%04d.png
+  ffmpeg -loglevel error -y -i $F/catch_128-150.mp4 -vf "select='between(n\,$a\,$((a+cnt-1)))',crop=1254:1080:180:0,scale=1080:930:flags=lanczos" -vsync 0 -start_number 1 $W/$n/in/%04d.png
   local nin=$(ls $W/$n/in | wc -l | tr -d ' ')
   local nf=$(python3 -c "print(round($nin*$slow*30/23.976))")
   $R/rife-ncnn-vulkan -i $W/$n/in -o $W/$n/out -m $R/rife-v4.6 -n $nf -f %04d.png > /dev/null 2>&1

@@ -32,16 +32,17 @@ const LOOP = 30; // the last second: back to frame 0's picture
 export const SHORT14_FRAMES = Math.round((LAST_MS / 1000) * FPS) + 30 + LOOP;
 
 const T = {
-  three: cue("three"), next: cue("next"), shipTop: cue("ship"), nobody: cue("nobody"), flight: cue("flight"), november: cue("november"),
+  three: cue("three"), shipX2: cue("ship"), next: cue("next"), flight: cue("flight"), november: cue("november"),
   shipFalls: cue("ship", 2), belly: cue("belly"), flaps: cue("flaps"), near: cue("near"), light: cue("light"), upright: cue("upright"),
-  drops: cue("drops"), arms: cue("arms"), no: cue("no"), legs: cue("legs"), carry: cue("carry"), musk: cue("musk"), under: cue("under"),
+  drops: cue("drops"), arms: cue("arms"), no: cue("no"), legs: cue("legs"), carry: cue("carry"), musk: cue("musk"), under: cue("under", 2),
   hour: cue("hour", 1, "end"), our: cue("our"), hold: cue("hold"), thrown: cue("thrown"), airliner: cue("airliner"), subscribe: cue("subscribe"),
 };
 // the bed is 124 BPM and starts on a beat: scene cuts move onto the next kick
 const BEAT = (FPS * 60) / 124;
 const beatAfter = (f: number) => Math.round(Math.ceil(f / BEAT - 1e-6) * BEAT);
+// steam: never later than the catch clip (98 frames) runs
 const S = {
-  steam: beatAfter(T.three - 10), plan: beatAfter(T.nobody), fall: beatAfter(T.shipFalls - 8), flip: beatAfter(T.near - 8),
+  steam: Math.min(beatAfter(T.three - 40), Math.floor(97 / BEAT) * BEAT), plan: beatAfter(T.next - 6), fall: beatAfter(T.shipFalls - 8), flip: beatAfter(T.near - 8),
   legs: beatAfter(T.no - 8), verdict: beatAfter(T.our - 6), promise: T.subscribe - 6, loop: SHORT14_FRAMES - LOOP,
 };
 const DARK: React.CSSProperties = { position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 40%, #1A1036 0%, #0A0718 55%, #020208 100%)" };
@@ -58,8 +59,8 @@ const Label: React.FC<{ children: React.ReactNode; left: number; top: number; si
 );
 
 // ------------------------------------------------------------------------------------------------ the footage band
-// SpaceX's video sits in a full-width 1.42:1 band; everything around it is ours.
-const BAND = { y: 330, h: 760 };
+// SpaceX's video sits in a full-width 1.16:1 band; everything around it is ours.
+const BAND = { y: 330, h: 930 };
 const BandClip: React.FC<{ src: string; from: number; dur: number }> = ({ src, from, dur }) => {
   const { fps } = useVideoConfig();
   return (
@@ -77,12 +78,12 @@ const BandEdges: React.FC = () => (
   </>
 );
 // the drawn ring sits on the tower's arms where the booster lands: measured on frames 0, 50 and 97 of s14_catch.mp4
-const TRACK: [number, number, number][] = [[0, 530, 318], [50, 520, 310], [97, 530, 292]];
+const TRACK: [number, number, number][] = [[0, 622, 389], [50, 610, 379], [97, 622, 357]];
 const Ring: React.FC<{ k: number; opacity?: number }> = ({ k, opacity = 1 }) => {
   const keys = TRACK.map((t) => t[0]);
   const x = interpolate(k, keys, TRACK.map((t) => t[1]), CLAMP);
   const y = interpolate(k, keys, TRACK.map((t) => t[2]), CLAMP);
-  const r = 92;
+  const r = 112;
   return (
     <svg width={1080} height={BAND.h} style={{ position: "absolute", left: 0, top: BAND.y, opacity, overflow: "visible" }}>
       <ellipse cx={x} cy={y} rx={r * 1.25} ry={r * 0.8} fill="none" stroke={C.acid} strokeWidth={10} strokeDasharray={`${r * 6.2} 40`}
@@ -98,28 +99,35 @@ const Kicker: React.FC<{ s?: number }> = ({ s = 1 }) => (
     <Label left={0} top={106} size={100} color={C.acid}>THE SHIP?</Label>
   </div>
 );
-// our scoreboard under the band: tower catches so far (facts row 3, section 0), the same on frame 0 and the loop end
+// our scoreboard on a plate in the band's lower edge: tower catches so far (facts row 3, section 0), the same on frame 0
+// and the loop end. A drawn ship hangs above the real tower with a dashed drop line to the arms (our drawing from frame 0).
 const Score: React.FC<{ f: number; shipQ?: boolean }> = ({ f, shipQ = false }) => {
-  const boxes = (n: number, filled: number, y: number, col: string) =>
-    Array.from({ length: n }).map((_, i) => {
-      const pulse = f >= T.three + i * 4 && f < T.three + i * 4 + 10 ? 1.18 : 1;
-      return (
-        <rect key={`${y}-${i}`} x={690 + i * 96} y={y} width={72} height={72} rx={10} fill={i < filled ? col : "none"} stroke={C.ink} strokeWidth={6}
-          transform={`translate(${726 + i * 96} ${y + 36}) scale(${pulse}) translate(${-(726 + i * 96)} ${-(y + 36)})`} />
-      );
-    });
+  const box = (x: number, y: number, on: boolean, col: string, i: number) => {
+    const pulse = f >= T.three + i * 4 && f < T.three + i * 4 + 10 ? 1.18 : 1;
+    return <rect key={`${x}-${y}`} x={x} y={y} width={68} height={68} rx={10} fill={on ? col : "none"} stroke={on ? C.ink : shipQ ? C.acid : C.ink}
+      strokeWidth={6} transform={`translate(${x + 34} ${y + 34}) scale(${on ? pulse : 1}) translate(${-(x + 34)} ${-(y + 34)})`} />;
+  };
   return (
     <>
-      <Label left={60} top={1134} size={68}>BOOSTERS CAUGHT</Label>
-      <Label left={60} top={1232} size={68}>SHIPS CAUGHT</Label>
+      <div style={{ position: "absolute", left: 0, top: 1000, width: 720, height: 254, backgroundColor: "rgba(4,3,12,0.72)" }} />
+      <Label left={60} top={1012} size={68} color={DIM}>CAUGHT SO FAR</Label>
+      <Label left={60} top={1094} size={68} color={C.cyan}>BOOSTERS</Label>
+      <Label left={60} top={1176} size={68} color={C.acid}>SHIPS</Label>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
-        {boxes(3, 3, 1130, C.cyan)}
-        <rect x={690} y={1228} width={72} height={72} rx={10} fill="none" stroke={shipQ ? C.acid : C.ink} strokeWidth={6} />
+        {[0, 1, 2].map((i) => box(440 + i * 92, 1092, true, C.cyan, i))}
+        {box(440, 1174, false, C.acid, 0)}
       </svg>
-      <Label left={786} top={1232} size={68} color={C.acid}>0</Label>
+      <Label left={440} top={1176} size={68} width={68} align="center" color={C.acid}>?</Label>
     </>
   );
 };
+const Ghost: React.FC = () => (
+  <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
+    <path d="M 850 690 Q 820 760 700 700" fill="none" stroke={C.acid} strokeWidth={7} strokeDasharray="18 14" strokeLinecap="round" />
+    <path d="M 712 684 L 694 702 L 718 714" fill="none" stroke={C.acid} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" />
+    <g transform="translate(850 520) scale(0.4)" opacity={0.95}><Ship /></g>
+  </svg>
+);
 const Hook: React.FC = () => {
   const frame = useCurrentFrame();
   if (frame >= S.plan) return null;
@@ -127,8 +135,9 @@ const Hook: React.FC = () => {
     <AbsoluteFill>
       <BandEdges />
       {frame < S.steam ? <Ring k={frame} opacity={interpolate(frame, [S.steam - 6, S.steam], [1, 0], CLAMP)} /> : null}
+      {frame < S.steam ? <Ghost /> : null}
       <Kicker />
-      <Score f={frame} shipQ={frame >= T.shipTop} />
+      <Score f={frame} shipQ={frame >= T.shipX2} />
     </AbsoluteFill>
   );
 };
@@ -158,7 +167,7 @@ const Ship: React.FC<{ flap?: number; flame?: number; glow?: number; legs?: bool
   </g>
 );
 
-// ------------------------------------------------------------------------------------------------ x2: nobody has, Flight 15
+// ------------------------------------------------------------------------------------------------ x2: next, the ship too; Flight 15
 const Stamp14: React.FC<{ children: React.ReactNode; at: number; left: number; top: number; color?: string; size?: number; rot?: number }> = ({
   children, at, left, top, color = C.warn, size = 96, rot = -7 }) => {
   const frame = useCurrentFrame();
@@ -174,32 +183,34 @@ const Stamp14: React.FC<{ children: React.ReactNode; at: number; left: number; t
 const Plan: React.FC = () => {
   const frame = useCurrentFrame();
   if (!between(frame, S.plan, S.fall)) return null;
-  const bob = Math.sin((frame - S.plan) / 9) * 6;
+  const drop = interpolate(frame, [S.plan, S.plan + 22], [-520, 0], { ...CLAMP, easing: EASE_OUT });
+  const bob = frame > S.plan + 22 ? Math.sin((frame - S.plan) / 9) * 6 : 0;
+  const tick = grow(frame, S.plan + 6, 10);
+  const q = 1 + 0.12 * Math.max(0, Math.sin((frame - S.plan) / 5));
   return (
     <AbsoluteFill style={{ scale: interpolate(frame, [S.plan, S.fall], [1, 1.035], CLAMP), transformOrigin: "50% 45%" }}>
       <div style={DARK} />
-      <Label left={60} top={150} size={96}>NEVER DONE</Label>
-      <Label left={60} top={256} size={96} color={C.acid} opacity={grow(frame, S.plan + 4, 8)}>BEFORE</Label>
+      <Label left={60} top={150} size={96}>NEXT:</Label>
+      <Label left={60} top={256} size={96} color={C.acid} opacity={grow(frame, S.plan + 4, 8)}>THE SHIP TOO</Label>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
-        {/* the booster: caught three times */}
-        <g transform="translate(270 880) scale(0.8)">
-          <rect x={-70} y={-330} width={140} height={660} rx={8} fill={STEEL} stroke={C.black} strokeWidth={6} />
-          {[-250, -140].map((y) => <path key={y} d={`M -70 ${y} L -110 ${y + 20} L -110 ${y + 70} L -70 ${y + 60} Z`} fill="#8A8EA0" stroke={C.black} strokeWidth={4} />)}
-          <path d="M -40 -260 L 40 -260" stroke={C.black} strokeWidth={4} />
+        <g transform="translate(270 930)">
+          <rect x={-80} y={-330} width={160} height={660} rx={8} fill={STEEL} stroke={C.black} strokeWidth={6} />
+          {[-250, -140].map((y) => <path key={y} d={`M -80 ${y} L -124 ${y + 20} L -124 ${y + 70} L -80 ${y + 60} Z`} fill="#8A8EA0" stroke={C.black} strokeWidth={4} />)}
         </g>
-        <g transform={`translate(720 ${880 + bob}) scale(0.8)`}>
+        <g transform={`translate(720 ${930 + drop + bob})`}>
           <Ship flap={Math.sin(frame / 7) * 0.4} />
         </g>
-        {/* tick boxes: booster ticked, ship a question */}
-        <rect x={234} y={1170} width={72} height={72} rx={10} fill={C.cyan} stroke={C.ink} strokeWidth={6} />
-        <path d="M 248 1206 L 264 1224 L 294 1186" stroke={C.black} strokeWidth={10} fill="none" strokeLinecap="round" />
-        <rect x={684} y={1170} width={72} height={72} rx={10} fill="none" stroke={C.acid} strokeWidth={6} />
+        <rect x={120} y={1290} width={68} height={68} rx={10} fill={C.cyan} stroke={C.ink} strokeWidth={6} />
+        <path d="M 134 1324 L 150 1342 L 176 1306" stroke={C.black} strokeWidth={10} fill="none" strokeLinecap="round" strokeDasharray={80} strokeDashoffset={80 * (1 - tick)} />
+        <rect x={570} y={1290} width={68} height={68} rx={10} fill="none" stroke={C.acid} strokeWidth={6}
+          transform={`translate(604 1324) scale(${q}) translate(-604 -1324)`} />
       </svg>
-      <Label left={684} top={1172} size={68} width={72} align="center" color={C.acid} opacity={grow(frame, S.plan + 6, 8)}>?</Label>
-      <Label left={150} top={1270} size={68} color={C.cyan}>BOOSTER</Label>
-      <Label left={640} top={1270} size={68} color={C.acid}>SHIP</Label>
+      <Label left={570} top={1292} size={68} width={68} align="center" color={C.acid}>?</Label>
+      <Label left={210} top={1292} size={68} color={C.cyan}>BOOSTER</Label>
+      <Label left={660} top={1292} size={68} color={C.acid}>SHIP</Label>
+      <Label left={540} top={410} size={68} color={DIM} opacity={grow(frame, S.plan + 8, 8)}>NOT TO SCALE</Label>
       <Stamp14 at={Math.min(T.flight - 2, S.fall - 60)} left={60} top={400} size={72} rot={-3} color={C.warn}>FLIGHT 15</Stamp14>
-      <Label left={60} top={516} size={68} color={DIM} opacity={grow(frame, Math.min(T.november - 6, S.fall - 50), 8)}>{DATE_STAMP}</Label>
+      <Label left={60} top={516} size={68} color={C.ink} opacity={grow(frame, Math.min(T.november - 6, S.fall - 50), 8)}>{DATE_STAMP}</Label>
     </AbsoluteFill>
   );
 };
@@ -235,12 +246,13 @@ const Fall: React.FC = () => {
 };
 
 // ------------------------------------------------------------------------------------------------ x4: flip and catch
-const TOWER = { x: 740, w: 130, top: 430, bottom: 1330 };
-const ARM_Y = 600; // the arms' height; the ship's pins land here
+const TOWER = { x: 800, w: 130, top: 600, bottom: 1330 };
+const ARM_Y = 680; // the arms' height; the ship's pins land here
+const PIN = 0.85 * 229; // ship centre below the arms when its pins (scale 0.85) sit on them
 const Tower: React.FC = () => (
   <g>
     <rect x={TOWER.x} y={TOWER.top} width={TOWER.w} height={TOWER.bottom - TOWER.top} fill="#1C1830" stroke={C.ink} strokeWidth={6} />
-    {Array.from({ length: 12 }).map((_, i) => {
+    {Array.from({ length: Math.floor((TOWER.bottom - TOWER.top) / 83) }).map((_, i) => {
       const y = TOWER.top + i * 83;
       return <path key={i} d={`M ${TOWER.x} ${y} L ${TOWER.x + TOWER.w} ${y + 83} M ${TOWER.x + TOWER.w} ${y} L ${TOWER.x} ${y + 83}`} stroke={DIM} strokeWidth={3} opacity={0.6} />;
     })}
@@ -248,40 +260,40 @@ const Tower: React.FC = () => (
   </g>
 );
 const shipY = (f: number) =>
-  interpolate(f, [S.flip, T.light, T.upright + 10, T.arms - 6], [380, 420, 470, ARM_Y + 142], { ...CLAMP, easing: EASE_IN_OUT });
+  interpolate(f, [S.flip, T.light, T.upright + 10, T.arms - 6], [480, 500, 520, ARM_Y + PIN], { ...CLAMP, easing: EASE_IN_OUT });
+// the two arms side on: the back one (darker) and the front one, both swinging in from the tower (short, seen end-on)
+// to full length around the ship
+const Arms: React.FC<{ close: number; lit?: boolean }> = ({ close, lit = false }) => {
+  const len = interpolate(close, [0, 1], [110, TOWER.x - 510]);
+  return (
+    <g>
+      <rect x={TOWER.x - len} y={ARM_Y - 46} width={len + 10} height={30} rx={8} fill={lit ? "#9AA82E" : "#3A3E50"} stroke={C.black} strokeWidth={5} />
+      <rect x={TOWER.x - len - 20} y={ARM_Y - 16} width={len + 30} height={36} rx={8} fill={lit ? C.acid : "#5A5F74"} stroke={C.black} strokeWidth={5} />
+    </g>
+  );
+};
 const Flip: React.FC = () => {
   const frame = useCurrentFrame();
   if (!between(frame, S.flip, S.legs)) return null;
   const rot = interpolate(frame, [T.upright - 10, T.upright + 10], [-90, 0], { ...CLAMP, easing: EASE_IN_OUT });
   const flame = frame >= T.light - 2 && frame < T.arms - 6 ? 0.7 + 0.3 * Math.sin(frame * 1.7) : 0;
   const close = interpolate(frame, [T.arms - 14, T.arms - 4], [0, 1], { ...CLAMP, easing: EASE_OUT });
-  // from above: two arms swing in around the ship's circle
-  const open = interpolate(close, [0, 1], [38, 0]);
   return (
     <AbsoluteFill style={{ scale: interpolate(frame, [S.flip, S.legs], [1, 1.03], CLAMP), transformOrigin: "50% 50%" }}>
       <div style={DARK} />
       <Label left={60} top={150} size={72} color={C.acid}>THE CATCH</Label>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
         <Tower />
-        <g transform={`translate(560 ${shipY(frame)}) rotate(${rot}) scale(0.62)`}>
+        <g transform={`translate(640 ${shipY(frame)}) rotate(${rot}) scale(0.85)`}>
           <Ship flame={flame} flap={rot < -5 ? Math.sin(frame / 5) * 0.6 : 0} />
         </g>
-        {/* the arm, side on: a beam from the tower, in front of the ship */}
-        <rect x={420} y={ARM_Y - 20} width={TOWER.x - 420 + 10} height={36} rx={8} fill={close > 0.5 ? C.acid : "#5A5F74"} stroke={C.black} strokeWidth={5} />
-        {/* inset: from above */}
-        <g transform="translate(250 1040)" opacity={grow(frame, T.drops - 6, 8)}>
-          <rect x={-170} y={-130} width={340} height={260} rx={16} fill={PANEL} stroke={C.ink} strokeWidth={5} />
-          <circle cx={-10} cy={0} r={40} fill={STEEL} stroke={C.black} strokeWidth={5} />
-          <rect x={120} y={-60} width={40} height={120} fill="#1C1830" stroke={C.ink} strokeWidth={4} />
-          <g transform={`rotate(${-open} 130 -40)`}><rect x={-120} y={-58} width={250} height={22} rx={8} fill={close > 0.5 ? C.acid : "#8A8EA0"} stroke={C.black} strokeWidth={4} /></g>
-          <g transform={`rotate(${open} 130 40)`}><rect x={-120} y={36} width={250} height={22} rx={8} fill={close > 0.5 ? C.acid : "#8A8EA0"} stroke={C.black} strokeWidth={4} /></g>
-        </g>
+        <Arms close={close} lit={close > 0.5} />
       </svg>
-      <Label left={92} top={1186} size={56} color={DIM} mono opacity={grow(frame, T.drops - 6, 8)}>FROM ABOVE</Label>
-      <Tag at={T.light} left={470} top={960} bg={C.warn} size={68} rot={[-5, -3]}>ENGINES ON</Tag>
-      <Tag at={T.upright} left={470} top={1060} bg={C.cyan} size={68} rot={[-4, -2]}>SWINGS<br />UPRIGHT</Tag>
-      <Tag at={Math.min(T.arms - 10, S.legs - 44)} left={470} top={1220} bg={C.acid} size={68} rot={[-4, -2]}>ARMS CLOSE</Tag>
-      <Label left={60} top={252} size={56} mono color={DIM} opacity={grow(frame, S.flip, 8)}>SPACEX'S PLAN,<br />DRAWN BY US</Label>
+      <Tag at={T.light} left={60} top={900} bg={C.warn} size={68} rot={[-5, -3]}>ENGINES ON</Tag>
+      <Tag at={T.upright} left={60} top={1000} bg={C.cyan} size={68} rot={[-4, -2]}>SWINGS<br />UPRIGHT</Tag>
+      <Tag at={Math.min(T.arms - 10, S.legs - 44)} left={60} top={1170} bg={C.acid} size={68} rot={[-4, -2]}>ARMS CLOSE</Tag>
+      <Label left={60} top={240} size={68} color={DIM} opacity={grow(frame, S.flip, 8)}>SPACEX'S PLAN,</Label>
+      <Label left={60} top={314} size={68} color={DIM} opacity={grow(frame, S.flip, 8)}>DRAWN BY US</Label>
     </AbsoluteFill>
   );
 };
@@ -295,13 +307,14 @@ const Legs: React.FC = () => {
   const clockIn = grow(frame, T.musk - 6, 10);
   const a = ((sweep - 90) * Math.PI) / 180;
   const CX = 760;
+  // clock sits right of the ship
   const CY = 760;
   return (
     <AbsoluteFill style={{ scale: interpolate(frame, [S.legs, S.verdict], [1, 1.035], CLAMP) }}>
       <div style={DARK} />
       <Label left={60} top={150} size={72} color={C.acid}>WHY CATCH IT?</Label>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
-        <g transform="translate(270 760) scale(0.78)">
+        <g transform={`translate(280 ${760 + Math.sin((frame - S.legs) / 9) * 8}) scale(1.05)`}>
           <Ship legs legsX={x} />
         </g>
         <g opacity={clockIn}>
@@ -344,10 +357,10 @@ const Verdict: React.FC = () => {
         </div>
       ))}
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0, opacity: grow(frame, S.verdict + 4, 10) }}>
-        <g transform="translate(400 560) scale(0.6)">
+        <g transform="translate(100 417) scale(0.75)">
           <Tower />
-          <g transform={`translate(560 ${ARM_Y + 142})  scale(0.62)`}><Ship /></g>
-          <rect x={420} y={ARM_Y - 20} width={TOWER.x - 420 + 10} height={36} rx={8} fill={C.acid} stroke={C.black} strokeWidth={5} />
+          <g transform={`translate(640 ${interpolate(frame, [S.verdict, T.hold], [ARM_Y - 260, ARM_Y + PIN], { ...CLAMP, easing: EASE_IN_OUT })}) scale(0.85)`}><Ship /></g>
+          <Arms close={grow(frame, T.hold - 8, 10)} lit={frame >= T.hold} />
         </g>
       </svg>
     </AbsoluteFill>
@@ -378,6 +391,7 @@ const LoopEnd: React.FC = () => {
     <AbsoluteFill>
       <BandEdges />
       <Ring k={Math.max(0, LOOP - 1 - j)} />
+      <Ghost />
       {frame >= S.loop + 14 ? <Kicker s={interpolate(k, [0, 1], [1.2, 1])} /> : null}
       <Score f={0} />
     </AbsoluteFill>
@@ -398,14 +412,17 @@ export const CurveV2Short14: React.FC = () => (
     <Verdict />
     <ChannelPromise />
     <LoopEnd />
-    <Credit text="SPACEX VIDEO · SLOWED" show={[[0, S.plan], [S.loop, SHORT14_FRAMES]]} top={BAND.y + BAND.h - 70} size={48} />
-    <CaptionTrack pages={PAGES} hide={[[0, 4], [S.promise, SHORT14_FRAMES]]} top={1400} />
+    <Credit text="SPACEX · FLIGHT 5 · SLOWED" show={[[0, S.plan], [S.loop, SHORT14_FRAMES]]} top={BAND.y + 10} size={56} />
+    <CaptionTrack pages={PAGES} hide={[[0, 4], [S.promise, SHORT14_FRAMES]]} top={1410} width={860} />
     <Sequence><Audio src={staticFile("shorts/s14_vo.mp3")} /></Sequence>
     <Bed total={SHORT14_FRAMES} level={0.085} />
     <Sfx at={T.three} name="thock" volume={0.4} />
     <Sfx at={S.steam} name="whoosh" volume={0.3} />
     <Sfx at={S.plan} name="whoosh" volume={0.3} />
     <Sfx at={T.flight - 2} name="thock" volume={0.35} />
+    <Sfx at={S.plan + 6} name="thock" volume={0.3} />
+    <Sfx at={T.upright - 10} name="whoosh" volume={0.25} />
+    <Sfx at={T.hold} name="thock" volume={0.35} />
     <Sfx at={S.fall} name="whoosh" volume={0.3} />
     <Sfx at={T.belly - 2} name="hiss" volume={0.3} />
     <Sfx at={S.flip} name="whoosh" volume={0.3} />

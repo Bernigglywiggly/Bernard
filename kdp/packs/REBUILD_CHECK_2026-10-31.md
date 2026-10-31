@@ -1,18 +1,14 @@
-# Rebuild check, Sat 31 Oct 2026 (independent; files built 04:08-04:09)
+# Rebuild check, Sat 31 Oct 2026, FINAL (independent). Christmas rebuilt 04:25; Winter untouched since 04:19-04:20.
 
-**1. Render: PASS.** Winter 2, 12, 55, 80; Christmas 5, 19, 42, 81; key entries W55, C19: legible, nothing clipped, each listed word at its stored cells once, shading equals those cells. All 100 printed grids, lists, titles and key shading per book match wordlists.json.
+## Christmas: SHIP
+- Puzzle 59 (page 61) and its key entry rendered and looked at: legible, nothing clipped, shading matches. LABIA is gone (cell (2,2) is now H, so the diagonal reads LABHA).
+- Rescan with the 244-term RUDE plus my own list: 0 hits outside a listed word; no violent or medical words in the filler. Every listed word sits at its stored cells once; only 62 and 69 differ in word placement from the backup, as before.
+- All 100 printed grids, lists, titles, key grids and key shading match wordlists.json. Page differences from the backup are exactly the changed puzzles' pages plus their key pages. The changes match 27, 59, 81, 100 (5, 37, 69 render pixel-identical to the builds I checked earlier).
+- kdp_gate.py PASS (exit 0). Cover 17.5202 x 11.2500 in, one page, fonts embedded (interior too).
+- Two backwards words in every puzzle; the pack's 15 to 19 range matches.
 
-**2. Rude scan: PROBLEM.**
-- Toolchain RUDE list (110 terms, 8 directions): 0 hits outside listed words. NOOSE/STAB/GORE/WOP/WTF gone (present in the backup).
-- My own list finds slurs/obscenities in filler that RUDE lacks, same class as WOP (already in the SHIPped files):
-  - Winter: YID p7,11,51,84; WOG 16,61; SPIC 31,33; HEEB 70; FCK 20,99; JAP 67,80 (10,25 from listed-word letters); GYP 34 (45); HOMO 40,70; TARD 7,8,54; FML 60,74,78; LOLI 11.
-  - Christmas: YID/YIDS 34,37,38,69,87,91,98; WOG 19,37,45,91,100; SPIC 49,87; HEEB 70; FCK 58; JAP 59,84; TARD 4,64,78,80; MONG 28; FML 38,42,61; LOLI 25; GYP 62,69 (listed-word letters).
-- Fix: add yid yids wog spic spik heeb jap japs gyp homo tard mong fck fml loli to RUDE, rebuild (about 30 s each), rescan.
+## Winter: SHIP
+- Same build I passed in round 2 (not rebuilt): kdp_gate.py PASS (exit 0), cover 17.5202 x 11.2500 in, fonts embedded, 0 printed-versus-data mismatches, two backwards words in every puzzle, pack range 16 to 19 matches.
+- Against all 244 RUDE terms it has only three hits, none a slur: HIV puzzles 2 and 95, MAIM puzzle 41. I rated these optional in round 2; a Winter rebuild would clear them.
 
-**3. Unchanged puzzles: PASS.** Changed sets exactly as stated; all other puzzles identical to backup (JSON and rendered pages). Changed ones differ only in filler (Winter 55: same words, re-placed).
-
-**4. Covers: PASS.** 17.5202 x 11.2500 in (backup 17.5133), one page, fonts embedded, text and pixels identical to backup; kdp_gate.py PASS (exit 0) for both.
-
-**5. Packs: PASS.** Exactly two backwards words (L, U, UL, DL) in all 100 puzzles per book. Ranges match: Winter 16-19, Christmas 15-19. Minor: across+down is 78% overall but not a majority in Winter 96 and Christmas 28, 32, 59, 66, 86, 94, 96.
-
-**FIX FIRST** (item 2 only; the rest is SHIP)
+**SHIP**

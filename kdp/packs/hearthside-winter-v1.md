@@ -18,7 +18,7 @@ Built Fri 30 Oct 2026 by the Hearthside cozy-ws toolchain. Copy-paste in the ord
 - **Series:** Hearthside, number 1
 - **Edition number:** (leave blank)
 - **Author:** Teacup Lane Press   (byte-identical on every title so Amazon links them; do not add a contributor)
-- **Description** (167 words, paste as plain text; no review requests, no medical claims):
+- **Description** (166 words, paste as plain text; no review requests, no medical claims):
 
 Hearthside Winter is a large print word search book made for slow, snowy days. It holds 100 puzzles, one to a page, and each has its own cozy theme: Snowy Morning, Hot Cocoa Bar, Winter Birds, Knitting Basket, Soup Pot, Ice Skating Pond, Cabin Weekend, Northern Lights and 92 more.
 
@@ -34,7 +34,7 @@ It makes an easy gift for grandma, grandpa, a parent or a friend who loves puzzl
 3. hygge activity book
 4. fireside word games
 5. easy big font word find
-6. cozy winter word search
+6. cold weather activity book
 7. stocking stuffer for grandparents
 - Source: kdp/THEMES_RESEARCH.md row #1, copied as written EXCEPT keyword 4: the research phrase for that slot contains a game-brand trademark that the factory brief bans from every listing (see row #11 of the same file), so it is replaced by "fireside word games".
 - **Categories (3), Amazon display names from THEMES_RESEARCH.md; pick the nearest path in KDP's picker:**

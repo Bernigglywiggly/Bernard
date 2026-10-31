@@ -1,6 +1,6 @@
 # KDP pack: Hearthside Christmas Word Search for Adults & Seniors
 
-Built Fri 30 Oct 2026 by the Hearthside cozy-ws toolchain. Copy-paste in the order below. NEVER publish or edit on KDP from a script: this is for his hands (about 15 minutes).
+Built Sat 31 Oct 2026 by the Hearthside cozy-ws toolchain. Copy-paste in the order below. NEVER publish or edit on KDP from a script: this is for his hands (about 15 minutes).
 
 | | |
 |---|---|
@@ -18,7 +18,7 @@ Built Fri 30 Oct 2026 by the Hearthside cozy-ws toolchain. Copy-paste in the ord
 - **Series:** Hearthside, number 2
 - **Edition number:** (leave blank)
 - **Author:** Teacup Lane Press   (byte-identical on every title so Amazon links them; do not add a contributor)
-- **Description** (167 words, paste as plain text; no review requests, no medical claims):
+- **Description** (166 words, paste as plain text; no review requests, no medical claims):
 
 Hearthside Christmas is a large print word search book for the whole season. It holds 100 puzzles, one to a page, and each has its own festive theme: Trimming the Tree, Cookie Exchange, Carols by Candlelight, Nativity, Wrapping Paper, Christmas Dinner and 94 more.
 
@@ -29,7 +29,7 @@ It makes an easy gift for grandma, grandpa, a parent or a friend who loves puzzl
 - **Publishing rights:** I own the copyright
 - **Primary audience:** adults; not adult content
 - **Keywords (7 boxes, one phrase each):**
-1. christmas word search for seniors
+1. cozy christmas puzzles for seniors
 2. holiday puzzle book for grandma
 3. stocking stuffer for elderly
 4. white elephant gift puzzles

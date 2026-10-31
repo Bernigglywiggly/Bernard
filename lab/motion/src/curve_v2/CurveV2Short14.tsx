@@ -152,10 +152,10 @@ const Ship: React.FC<{ flap?: number; flame?: number; glow?: number; legs?: bool
     <path d="M -55 300 L -55 -170 Q -55 -280 0 -300 Q 55 -280 55 -170 L 55 300 Z" fill={STEEL} stroke={C.black} strokeWidth={6} />
     <path d="M -55 300 L -55 -170 Q -55 -280 0 -300 L 0 300 Z" fill={TILE} stroke={C.black} strokeWidth={6} />
     {/* forward flaps (small) and aft flaps (big); they twitch as it steers */}
-    <path d="M -55 -200 L -100 -170 L -100 -110 L -55 -120 Z" fill="#8A8EA0" stroke={C.black} strokeWidth={5} transform={`rotate(${-flap * 10} -55 -160)`} />
-    <path d="M 55 -200 L 100 -170 L 100 -110 L 55 -120 Z" fill="#8A8EA0" stroke={C.black} strokeWidth={5} transform={`rotate(${flap * 10} 55 -160)`} />
-    <path d="M -55 140 L -120 180 L -120 290 L -55 290 Z" fill="#8A8EA0" stroke={C.black} strokeWidth={5} transform={`rotate(${flap * 8} -55 215)`} />
-    <path d="M 55 140 L 120 180 L 120 290 L 55 290 Z" fill="#8A8EA0" stroke={C.black} strokeWidth={5} transform={`rotate(${-flap * 8} 55 215)`} />
+    <path d="M -55 -200 L -100 -170 L -100 -110 L -55 -120 Z" fill="#8A8EA0" stroke={C.black} strokeWidth={5} transform={`rotate(${-flap * 22} -55 -160)`} />
+    <path d="M 55 -200 L 100 -170 L 100 -110 L 55 -120 Z" fill="#8A8EA0" stroke={C.black} strokeWidth={5} transform={`rotate(${flap * 22} 55 -160)`} />
+    <path d="M -55 140 L -120 180 L -120 290 L -55 290 Z" fill="#8A8EA0" stroke={C.black} strokeWidth={5} transform={`rotate(${flap * 18} -55 215)`} />
+    <path d="M 55 140 L 120 180 L 120 290 L 55 290 Z" fill="#8A8EA0" stroke={C.black} strokeWidth={5} transform={`rotate(${-flap * 18} 55 215)`} />
     <rect x={-80} y={-238} width={26} height={18} fill={C.acid} stroke={C.black} strokeWidth={3} />
     <rect x={54} y={-238} width={26} height={18} fill={C.acid} stroke={C.black} strokeWidth={3} />
     {legs ? (
@@ -208,7 +208,7 @@ const Plan: React.FC = () => {
       <Label left={570} top={1292} size={68} width={68} align="center" color={C.acid}>?</Label>
       <Label left={210} top={1292} size={68} color={C.cyan}>BOOSTER</Label>
       <Label left={660} top={1292} size={68} color={C.acid}>SHIP</Label>
-      <Label left={540} top={410} size={68} color={DIM} opacity={grow(frame, S.plan + 8, 8)}>NOT TO SCALE</Label>
+      <Label left={470} top={410} size={68} color={DIM} opacity={grow(frame, S.plan + 8, 8)}>NOT TO SCALE</Label>
       <Stamp14 at={Math.min(T.flight - 2, S.fall - 60)} left={60} top={400} size={72} rot={-3} color={C.warn}>FLIGHT 15</Stamp14>
       <Label left={60} top={516} size={68} color={C.ink} opacity={grow(frame, Math.min(T.november - 6, S.fall - 50), 8)}>{DATE_STAMP}</Label>
     </AbsoluteFill>
@@ -228,7 +228,7 @@ const Fall: React.FC = () => {
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
         {/* air streaks rush up past the falling ship */}
         {Array.from({ length: 14 }).map((_, i) => {
-          const x = 80 + ((i * 71) % 900);
+          const x = 80 + ((i * 71) % 820);
           const y = 1350 - ((j * 34 + i * 137) % 1100);
           return <line key={i} x1={x} y1={y} x2={x} y2={y + 120} stroke={DIM} strokeWidth={5} opacity={0.45} strokeLinecap="round" />;
         })}
@@ -256,7 +256,7 @@ const Tower: React.FC = () => (
       const y = TOWER.top + i * 83;
       return <path key={i} d={`M ${TOWER.x} ${y} L ${TOWER.x + TOWER.w} ${y + 83} M ${TOWER.x + TOWER.w} ${y} L ${TOWER.x} ${y + 83}`} stroke={DIM} strokeWidth={3} opacity={0.6} />;
     })}
-    <line x1={60} y1={TOWER.bottom} x2={1020} y2={TOWER.bottom} stroke={C.ink} strokeWidth={8} />
+    <line x1={60} y1={TOWER.bottom} x2={920} y2={TOWER.bottom} stroke={C.ink} strokeWidth={8} />
   </g>
 );
 const shipY = (f: number) =>
@@ -284,7 +284,8 @@ const Flip: React.FC = () => {
       <Label left={60} top={150} size={72} color={C.acid}>THE CATCH</Label>
       <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
         <Tower />
-        <g transform={`translate(640 ${shipY(frame)}) rotate(${rot}) scale(0.85)`}>
+        {/* lying flat it sits further left, so the flame stays inside x 950 */}
+        <g transform={`translate(${interpolate(rot, [-90, 0], [500, 640])} ${shipY(frame)}) rotate(${rot}) scale(0.85)`}>
           <Ship flame={flame} flap={rot < -5 ? Math.sin(frame / 5) * 0.6 : 0} />
         </g>
         <Arms close={close} lit={close > 0.5} />
@@ -292,8 +293,8 @@ const Flip: React.FC = () => {
       <Tag at={T.light} left={60} top={900} bg={C.warn} size={68} rot={[-5, -3]}>ENGINES ON</Tag>
       <Tag at={T.upright} left={60} top={1000} bg={C.cyan} size={68} rot={[-4, -2]}>SWINGS<br />UPRIGHT</Tag>
       <Tag at={Math.min(T.arms - 10, S.legs - 44)} left={60} top={1170} bg={C.acid} size={68} rot={[-4, -2]}>ARMS CLOSE</Tag>
-      <Label left={60} top={240} size={68} color={DIM} opacity={grow(frame, S.flip, 8)}>SPACEX'S PLAN,</Label>
-      <Label left={60} top={314} size={68} color={DIM} opacity={grow(frame, S.flip, 8)}>DRAWN BY US</Label>
+      <Label left={60} top={240} size={68} color={C.ink} opacity={grow(frame, S.flip, 8)}>SPACEX'S PLAN,</Label>
+      <Label left={60} top={314} size={68} color={C.ink} opacity={grow(frame, S.flip, 8)}>DRAWN BY US</Label>
     </AbsoluteFill>
   );
 };
@@ -303,10 +304,11 @@ const Legs: React.FC = () => {
   const frame = useCurrentFrame();
   if (!between(frame, S.legs, S.verdict)) return null;
   const x = grow(frame, T.legs, 8);
-  const sweep = interpolate(frame, [T.under - 4, T.hour], [0, 330], { ...CLAMP, easing: EASE_IN_OUT });
+  // one full turn = one hour (critic r2: a partial wedge read as a minute figure SpaceX never gave)
+  const sweep = interpolate(frame, [T.under - 4, T.hour], [0, 360], { ...CLAMP, easing: EASE_IN_OUT });
   const clockIn = grow(frame, T.musk - 6, 10);
   const a = ((sweep - 90) * Math.PI) / 180;
-  const CX = 760;
+  const CX = 700;
   // clock sits right of the ship
   const CY = 760;
   return (
@@ -319,8 +321,8 @@ const Legs: React.FC = () => {
         </g>
         <g opacity={clockIn}>
           <circle cx={CX} cy={CY} r={170} fill={PANEL} stroke={C.ink} strokeWidth={8} />
-          <path d={`M ${CX} ${CY} L ${CX} ${CY - 160} A 160 160 0 ${sweep > 180 ? 1 : 0} 1 ${CX + 160 * Math.cos(a)} ${CY + 160 * Math.sin(a)} Z`}
-            fill={C.cyan} opacity={0.35} />
+          <circle cx={CX} cy={CY} r={160} fill="none" stroke={C.cyan} strokeWidth={14} strokeDasharray={2 * Math.PI * 160}
+            strokeDashoffset={2 * Math.PI * 160 * (1 - sweep / 360)} transform={`rotate(-90 ${CX} ${CY})`} opacity={0.8} />
           {Array.from({ length: 12 }).map((_, i) => {
             const t = (i * 30 * Math.PI) / 180;
             return <line key={i} x1={CX + 140 * Math.sin(t)} y1={CY - 140 * Math.cos(t)} x2={CX + 164 * Math.sin(t)} y2={CY - 164 * Math.cos(t)} stroke={C.ink} strokeWidth={i % 3 === 0 ? 8 : 4} />;
@@ -329,10 +331,11 @@ const Legs: React.FC = () => {
           <circle cx={CX} cy={CY} r={16} fill={C.acid} stroke={C.black} strokeWidth={4} />
         </g>
       </svg>
-      <Tag at={Math.min(T.carry, S.verdict - 60)} left={60} top={1080} bg={C.warn} size={68} rot={[-4, -2]}>NO LEGS =<br />LESS TO CARRY</Tag>
-      <Label left={600} top={960} size={68} opacity={clockIn}>MUSK'S GOAL</Label>
-      <Label left={600} top={1040} size={68} color={C.cyan} opacity={grow(frame, T.under - 4, 8)}>FLY AGAIN IN</Label>
-      <Label left={600} top={1120} size={68} color={C.cyan} opacity={grow(frame, T.under + 4, 8)}>UNDER 1 HOUR</Label>
+      <Tag at={Math.min(T.carry, S.verdict - 60)} left={60} top={1220} bg={C.warn} size={68} rot={[-4, -2]}>NO LEGS =<br />LESS TO CARRY</Tag>
+      <Label left={470} top={960} size={68} opacity={clockIn}>MUSK'S GOAL</Label>
+      <Label left={470} top={1040} size={68} color={C.cyan} opacity={grow(frame, T.under - 4, 8)}>FLY AGAIN IN</Label>
+      <Label left={CX - 120} top={CY - 250} size={68} color={C.ink} opacity={clockIn}>1 HOUR</Label>
+      <Label left={470} top={1120} size={68} color={C.cyan} opacity={grow(frame, T.under + 4, 8)}>UNDER 1 HOUR</Label>
     </AbsoluteFill>
   );
 };

@@ -1,6 +1,7 @@
 # KDP tonight: 2 books, about 15 minutes each (deadline Sat 31 Oct 23:59 UTC)
 
-**04:22 UK: the files below are the FINAL ones** (rebuilt again to clear more slurs from the filler). Publish only after
+**04:26 UK: the files below are the FINAL ones.** Winter = the 04:22 build already on the KDP draft (final check: SHIP). Christmas = rebuilt
+at 04:26 after the last check found LABIA in puzzle 59's filler (the toolchain now bans 244 terms). Publish only after
 `kdp/packs/REBUILD_CHECK_2026-10-31.md` ends in SHIP (Claude will say so in chat). The session was in Bypass mode, but the Chrome
 extension's safety check still blocked the cover upload, so the rest is your hands.
 
